@@ -1,0 +1,2 @@
+class ProtocolsController < ApplicationController
+end

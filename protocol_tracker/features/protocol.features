@@ -1,0 +1,12 @@
+Feature: Protocol Data
+  In order to provide protocol data
+  As a source for protocols
+  I want to return all known protocol data
+
+  Scenerio: Return protocol data
+    Given I have protocol number #STU000123
+    When I make a GET request to resource
+    Then I should recieve protocol #STU000123 and all it's data
+
+
+

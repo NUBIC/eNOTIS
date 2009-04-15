@@ -21,6 +21,7 @@ reqs = ["rake --version '0.8.3'",
   "composite_primary_keys --version '2.2.2'",
   "rspec --version '1.2.4'",
   "rspec-rails --version '1.2.4'",
+  "cucumber",
   #"will_paginate --version '2.2.2'", --installed via gemsonrails
   "capistrano --version '2.5.5'",
   "rcov --version '0.8.1.2.0'",
