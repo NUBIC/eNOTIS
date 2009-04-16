@@ -26,7 +26,7 @@ reqs = ["rake --version '0.8.3'",
   "capistrano --version '2.5.5'",
   "rcov --version '0.8.1.2.0'",
  # "calendar_date_select --version '1.15'", --installed via gemsonrails
-
+  "haml",
   "gemsonrails --version '0.7.2'"
 ]
 
