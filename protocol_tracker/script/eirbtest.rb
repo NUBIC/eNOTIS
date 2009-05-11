@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'http-access2' 
+gem 'soap4r', '>=1.5.8'
 require 'soap/wsdlDriver'
 
  EIRB_SEARCH_ACCESS = "http://riseirbsvr3.itcs.northwestern.edu/ClickXWebServices/DataManagement/SearchServices.asmx"
@@ -24,5 +25,12 @@ require 'soap/wsdlDriver'
 # testing soap4r connectivity 
 driver = SOAP::WSDLDriverFactory.new(EIRB_SEARCH_ACCESS+"?WSDL").create_rpc_driver
 result = driver.login({:storeName => "eIRB-Test", :userName => "blc615", :password => "nuc#1blc"})
-answers = driver.performSearch({:svcSessionToken => result.loginResult,:savedSearchName => "idStatus", :startRow => 1, :numRows => -1,:expandMultiValueCells => false,:parameters => "<parameter name='ID' value='STU00000732'/>"})
-#anwers.performSearchResult.searchResults.columnHeaders.columnHeader #=> gets column headers
+answers = driver.performSearch({:svcSessionToken => result.loginResult,
+                               :savedSearchName => "idStatus", 
+                               :startRow => 1, 
+                               :numRows => -1,
+                               :expandMultiValueCells => false,
+                               :parameters => "<parameters><parameter name='ID' value='STU00000706'/></parameters>"})
+puts answers.performSearchResult.searchResults.columnHeaders.columnHeader.inspect
+puts answers.performSearchResult.searchResults.resultSet.row.value.inspect
+#answers.performSearchResult.searchResults.columnHeaders.columnHeader #=> gets column headers

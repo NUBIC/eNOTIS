@@ -1,5 +1,5 @@
 # Be sure to restart your server when you modify this file
-gem 'soap4r', '>=1.5.8'
+gem 'soap4r', '>=1.5.8' # calling a specfic version of soap4r to use. Soap4r comes with ruby stdlib so explicitly using the gem is required
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
 
