@@ -10,6 +10,12 @@ module NavigationHelpers
     
     when /the homepage/
       '/'
+    when /the new patient_study_listing page/
+      new_patient_study_listing_path
+
+    when /the new patient_registration page/
+      new_patient_registration_path
+
     when /the new frooble page/
       new_frooble_path
 
