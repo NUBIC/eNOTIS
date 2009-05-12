@@ -8,8 +8,8 @@ describe AuthenticationController do
   end
 
   it "accepts credentials and authenticates them" do
-    post 'login', :id => 'abc123'
-    account = mock(User)
-    User.should_receive(:find_by_netid).with("abc123").and_return(account)
+    account = User.new
+    User.should_receive(:validate_user).with("abc123","blah").and_return(account)
+    post 'login', :netid => 'abc123',:password => 'blah'
   end
 end

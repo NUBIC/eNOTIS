@@ -1,3 +1,136 @@
   [4;36;1mPatient Create (0.8ms)[0m   [0;1mINSERT INTO "patients" ("mrd_pt_id", "address_line1", "city", "work_phone", "work_phone_extension", "address_line2", "zip", "type", "birth_date", "death_date", "phone", "first_name", "mrn", "mrn_type", "last_name", "state") VALUES(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)[0m
   [4;35;1mProtocol Create (0.4ms)[0m   [0mINSERT INTO "protocols" ("irb_number") VALUES(NULL)[0m
   [4;36;1mUser Create (0.3ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 20:57:00', NULL, '2009-05-12 20:57:00')[0m
+  [4;36;1mPatient Create (0.5ms)[0m   [0;1mINSERT INTO "patients" ("mrd_pt_id", "address_line1", "city", "work_phone", "work_phone_extension", "address_line2", "zip", "type", "birth_date", "death_date", "phone", "first_name", "mrn", "mrn_type", "last_name", "state") VALUES(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)[0m
+  [4;35;1mProtocol Create (0.3ms)[0m   [0mINSERT INTO "protocols" ("irb_number") VALUES(NULL)[0m
+  [4;36;1mUser Create (0.4ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 20:59:46', NULL, '2009-05-12 20:59:46')[0m
+  [4;36;1mPatientOnProtocol Create (0.4ms)[0m   [0;1mINSERT INTO "patients_on_protocols" ("patient_on_protocol_status_id", "updated_at", "patient_id", "protocol_id", "created_at") VALUES(NULL, '2009-05-12 21:01:01', NULL, NULL, '2009-05-12 21:01:01')[0m
+  [4;35;1mPatient Create (0.3ms)[0m   [0mINSERT INTO "patients" ("mrd_pt_id", "address_line1", "city", "work_phone", "work_phone_extension", "address_line2", "zip", "type", "birth_date", "death_date", "phone", "first_name", "mrn", "mrn_type", "last_name", "state") VALUES(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)[0m
+  [4;36;1mProtocol Create (0.3ms)[0m   [0;1mINSERT INTO "protocols" ("irb_number") VALUES(NULL)[0m
+  [4;35;1mUser Create (0.3ms)[0m   [0mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 21:01:01', NULL, '2009-05-12 21:01:01')[0m
+  [4;36;1mPatientOnProtocol Create (0.4ms)[0m   [0;1mINSERT INTO "patients_on_protocols" ("patient_on_protocol_status_id", "updated_at", "patient_id", "protocol_id", "created_at") VALUES(NULL, '2009-05-12 21:06:12', NULL, NULL, '2009-05-12 21:06:12')[0m
+  [4;35;1mPatient Create (0.3ms)[0m   [0mINSERT INTO "patients" ("mrd_pt_id", "address_line1", "city", "work_phone", "work_phone_extension", "address_line2", "zip", "type", "birth_date", "death_date", "phone", "first_name", "mrn", "mrn_type", "last_name", "state") VALUES(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)[0m
+  [4;36;1mProtocol Create (0.4ms)[0m   [0;1mINSERT INTO "protocols" ("irb_number") VALUES(NULL)[0m
+  [4;35;1mUser Create (0.4ms)[0m   [0mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 21:06:12', NULL, '2009-05-12 21:06:12')[0m
+  [4;36;1mUser Create (0.4ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 21:07:03', NULL, '2009-05-12 21:07:03')[0m
+  [4;36;1mUser Create (0.4ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 21:07:23', NULL, '2009-05-12 21:07:23')[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mUser Create (0.6ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 21:10:14', NULL, '2009-05-12 21:10:14')[0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mUser Create (0.4ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 21:10:42', NULL, '2009-05-12 21:10:42')[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mUser Create (0.4ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 21:11:10', NULL, '2009-05-12 21:11:10')[0m
+  [4;36;1mUser Create (0.4ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 21:12:47', NULL, '2009-05-12 21:12:47')[0m
+  [4;36;1mUser Create (0.6ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 21:17:28', NULL, '2009-05-12 21:17:28')[0m
+  [4;36;1mUser Create (0.5ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 21:18:39', NULL, '2009-05-12 21:18:39')[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mUser Create (0.4ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 21:19:59', NULL, '2009-05-12 21:19:59')[0m
+  [4;36;1mUser Create (0.4ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 21:21:58', NULL, '2009-05-12 21:21:58')[0m
+  [4;36;1mUser Create (0.4ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 21:22:55', NULL, '2009-05-12 21:22:55')[0m
+  [4;36;1mUser Create (0.4ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-12 21:23:08', NULL, '2009-05-12 21:23:08')[0m
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-12 16:23:54) [POST]
+  Parameters: {"id"=>"abc123"}
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-12 16:24:45) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-12 16:27:14) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-12 16:27:40) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-12 16:30:46) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Rendering authentication/login
+Completed in 2ms (View: 0, DB: 0) | 200 OK [http://test.host/authentication/login?netid=abc123&password=blah]
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-12 16:31:23) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Rendering authentication/login
+Completed in 4ms (View: 1, DB: 0) | 200 OK [http://test.host/authentication/login?netid=abc123&password=blah]
+  [4;36;1mSQL (1.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-12 16:32:42) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Rendering authentication/login
+Completed in 2ms (View: 0, DB: 0) | 200 OK [http://test.host/authentication/login?netid=abc123&password=blah]
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-12 16:33:56) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Rendering authentication/login
+Completed in 2ms (View: 0, DB: 0) | 200 OK [http://test.host/authentication/login?netid=abc123&password=blah]
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-12 16:34:06) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Rendering authentication/login
+Completed in 2ms (View: 1, DB: 0) | 200 OK [http://test.host/authentication/login?netid=abc123&password=blah]
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-12 16:34:34) [POST]
+  Parameters: {"params"=>{"netid"=>"abc123", "password"=>"blah"}}
+Rendering authentication/login
+Completed in 2ms (View: 0, DB: 0) | 200 OK [http://test.host/authentication/login?netid=abc123&password=blah]
+  [4;36;1mSQL (0.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-12 16:35:58) [POST]
+  Parameters: {"params"=>{"netid"=>"abc123", "password"=>"blah"}}
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-12 16:36:27) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Rendering authentication/login
+Completed in 2ms (View: 0, DB: 0) | 200 OK [http://test.host/authentication/login?netid=abc123&password=blah]
