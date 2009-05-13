@@ -134,3 +134,117 @@ Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-12 16:36:27) [
   Parameters: {"netid"=>"abc123", "password"=>"blah"}
 Rendering authentication/login
 Completed in 2ms (View: 0, DB: 0) | 200 OK [http://test.host/authentication/login?netid=abc123&password=blah]
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-13 12:07:26) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Redirected to http://test.host/registration
+Completed in 2ms (DB: 0) | 302 Found [http://test.host/authentication/login?netid=abc123&password=blah]
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-13 12:09:07) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Redirected to http://test.host/registration
+Completed in 2ms (DB: 0) | 302 Found [http://test.host/authentication/login?netid=abc123&password=blah]
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-13 12:09:23) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Redirected to http://test.host/registration
+Completed in 2ms (DB: 0) | 302 Found [http://test.host/authentication/login?netid=abc123&password=blah]
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-13 12:09:40) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Redirected to http://test.host/registration
+Completed in 2ms (DB: 0) | 302 Found [http://test.host/authentication/login?netid=abc123&password=blah]
+
+
+Processing RegistrationController#index (for 0.0.0.0 at 2009-05-13 12:09:40) [GET]
+Redirected to http://test.host/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://test.host/registration]
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-13 12:10:40) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Redirected to http://test.host/registration
+Completed in 2ms (DB: 0) | 302 Found [http://test.host/authentication/login?netid=abc123&password=blah]
+
+
+Processing RegistrationController#index (for 0.0.0.0 at 2009-05-13 12:10:40) [GET]
+Redirected to http://test.host/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://test.host/registration]
+
+
+Processing RegistrationController#index (for 0.0.0.0 at 2009-05-13 12:15:19) [GET]
+Redirected to http://test.host/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://test.host/registration]
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-13 12:15:19) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Redirected to http://test.host/registration
+Completed in 2ms (DB: 0) | 302 Found [http://test.host/authentication/login?netid=abc123&password=blah]
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-13 12:15:19) [POST]
+  Parameters: {"netid"=>"foo123"}
+Redirected to http://test.host/registration
+Completed in 0ms (DB: 0) | 302 Found [http://test.host/authentication/login?netid=foo123]
+
+
+Processing RegistrationController#index (for 0.0.0.0 at 2009-05-13 12:16:36) [GET]
+Redirected to http://test.host/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://test.host/registration]
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-13 12:16:36) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Redirected to http://test.host/registration
+Completed in 2ms (DB: 0) | 302 Found [http://test.host/authentication/login?netid=abc123&password=blah]
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-13 12:16:36) [POST]
+  Parameters: {"netid"=>"abc123"}
+Redirected to http://test.host/registration
+Completed in 0ms (DB: 0) | 302 Found [http://test.host/authentication/login?netid=abc123]
+
+
+Processing RegistrationController#index (for 0.0.0.0 at 2009-05-13 12:17:47) [GET]
+Redirected to http://test.host/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://test.host/registration]
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-13 12:17:47) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Redirected to http://test.host/registration
+Completed in 2ms (DB: 0) | 302 Found [http://test.host/authentication/login?netid=abc123&password=blah]
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-13 12:17:47) [POST]
+  Parameters: {"netid"=>"abc123"}
+Redirected to http://test.host/registration
+Completed in 0ms (DB: 0) | 302 Found [http://test.host/authentication/login?netid=abc123]
+
+
+Processing RegistrationController#index (for 0.0.0.0 at 2009-05-13 12:23:18) [GET]
+Redirected to http://test.host/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://test.host/registration]
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-13 12:23:18) [POST]
+  Parameters: {"netid"=>"abc123", "password"=>"blah"}
+Redirected to http://test.host/registration
+Completed in 2ms (DB: 0) | 302 Found [http://test.host/authentication/login?netid=abc123&password=blah]
+
+
+Processing AuthenticationController#login (for 0.0.0.0 at 2009-05-13 12:23:18) [POST]
+  Parameters: {"netid"=>"abc123"}
+Redirected to http://test.host/registration
+Completed in 0ms (DB: 0) | 302 Found [http://test.host/authentication/login?netid=abc123]
