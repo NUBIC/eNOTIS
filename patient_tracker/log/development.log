@@ -1898,3 +1898,16 @@ Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 10:40:21)
 Rendering template within layouts/default
 Rendering authentication/index
 Completed in 5265ms (View: 9, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 11:38:26) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 11:38:26) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 5493ms (View: 9, DB: 0) | 200 OK [http://localhost/authentication]
