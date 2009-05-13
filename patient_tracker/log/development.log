@@ -581,3 +581,1238 @@ Migrating to CreateUsers (20090512205121)
   [4;36;1mSQL (2.5ms)[0m   [0;1mINSERT INTO "schema_migrations" (version) VALUES ('20090415161859')[0m
   [4;35;1mSQL (2.8ms)[0m   [0mINSERT INTO "schema_migrations" (version) VALUES ('20090423174225')[0m
   [4;36;1mSQL (2.3ms)[0m   [0;1mINSERT INTO "schema_migrations" (version) VALUES ('20090512161752')[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (5.5ms)[0m   [0;1mCREATE TABLE "patient_on_protocol_status" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "patient_on_protocol_id" integer, "status" varchar(255), "start_date" date) [0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (2.5ms)[0m   [0;1mCREATE TABLE "patients" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "mrd_pt_id" varchar(255), "type" varchar(255), "mrn" varchar(255), "mrn_type" varchar(255), "last_name" varchar(255), "first_name" varchar(255), "birth_date" date, "death_date" date, "address_line1" varchar(255), "address_line2" varchar(255), "city" varchar(255), "state" varchar(255), "zip" varchar(255), "phone" varchar(255), "work_phone" varchar(255), "work_phone_extension" varchar(255)) [0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (2.9ms)[0m   [0;1mCREATE TABLE "patients_on_protocols" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "patient_id" integer, "protocol_id" integer, "patient_on_protocol_status_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (2.8ms)[0m   [0;1mCREATE TABLE "protocols" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "irb_number" varchar(255)) [0m
+  [4;35;1mSQL (0.6ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (2.7ms)[0m   [0;1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "netid" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (2.4ms)[0m   [0;1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [4;35;1mSQL (2.0ms)[0m   [0mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM "schema_migrations"[0m
+  [4;36;1mSQL (2.0ms)[0m   [0;1mINSERT INTO "schema_migrations" (version) VALUES ('20090512205121')[0m
+  [4;35;1mSQL (2.2ms)[0m   [0mINSERT INTO "schema_migrations" (version) VALUES ('20090415160836')[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mINSERT INTO "schema_migrations" (version) VALUES ('20090415161859')[0m
+  [4;35;1mSQL (2.9ms)[0m   [0mINSERT INTO "schema_migrations" (version) VALUES ('20090423174225')[0m
+  [4;36;1mSQL (2.5ms)[0m   [0;1mINSERT INTO "schema_migrations" (version) VALUES ('20090512161752')[0m
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-05-12 23:14:23) [GET]
+
+ActionController::RoutingError (No route matches "/regitration/login" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-05-12 23:14:34) [GET]
+
+ActionController::RoutingError (No route matches "/registration/login" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#show (for 127.0.0.1 at 2009-05-12 23:15:42) [GET]
+  Parameters: {"id"=>"login"}
+
+NameError (uninitialized constant RegistrationController):
+  
+
+Rendered rescues/_trace (23.6ms)
+Rendered rescues/_request_and_response (1.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#show (for 127.0.0.1 at 2009-05-12 23:18:01) [GET]
+  Parameters: {"id"=>"login"}
+
+LoadError (Expected /Users/brian/Rails/enotis/patient_tracker/app/controllers/registration_controller.rb to define RegistrationController):
+  
+
+Rendered rescues/_trace (23.8ms)
+Rendered rescues/_request_and_response (1.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#show (for 127.0.0.1 at 2009-05-12 23:18:33) [GET]
+  Parameters: {"id"=>"login"}
+
+LoadError (Expected /Users/brian/Rails/enotis/patient_tracker/app/controllers/registration_controller.rb to define RegistrationController):
+  
+
+Rendered rescues/_trace (22.1ms)
+Rendered rescues/_request_and_response (0.2ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#show (for 127.0.0.1 at 2009-05-12 23:19:15) [GET]
+  Parameters: {"id"=>"login"}
+
+LoadError (Expected /Users/brian/Rails/enotis/patient_tracker/app/controllers/registration_controller.rb to define RegistrationController):
+  
+
+Rendered rescues/_trace (25.2ms)
+Rendered rescues/_request_and_response (1.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#show (for 127.0.0.1 at 2009-05-12 23:19:17) [GET]
+  Parameters: {"id"=>"login"}
+
+LoadError (Expected /Users/brian/Rails/enotis/patient_tracker/app/controllers/registration_controller.rb to define RegistrationController):
+  
+
+Rendered rescues/_trace (22.0ms)
+Rendered rescues/_request_and_response (0.2ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#show (for 127.0.0.1 at 2009-05-12 23:19:18) [GET]
+  Parameters: {"id"=>"login"}
+
+LoadError (Expected /Users/brian/Rails/enotis/patient_tracker/app/controllers/registration_controller.rb to define RegistrationController):
+  
+
+Rendered rescues/_trace (21.2ms)
+Rendered rescues/_request_and_response (0.2ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#show (for 127.0.0.1 at 2009-05-12 23:19:18) [GET]
+  Parameters: {"id"=>"login"}
+
+LoadError (Expected /Users/brian/Rails/enotis/patient_tracker/app/controllers/registration_controller.rb to define RegistrationController):
+  
+
+Rendered rescues/_trace (24.6ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#show (for 127.0.0.1 at 2009-05-12 23:19:19) [GET]
+  Parameters: {"id"=>"login"}
+
+LoadError (Expected /Users/brian/Rails/enotis/patient_tracker/app/controllers/registration_controller.rb to define RegistrationController):
+  
+
+Rendered rescues/_trace (21.6ms)
+Rendered rescues/_request_and_response (0.2ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-12 23:20:31) [GET]
+  Parameters: {"id"=>"login"}
+
+ActionController::UnknownAction (No action responded to show. Actions: index):
+  haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendering rescues/layout (not_found)
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-12 23:21:00) [GET]
+  Parameters: {"id"=>"login"}
+
+ActionView::MissingTemplate (Missing template registration/show.erb in view path app/views):
+  haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:32:26) [GET]
+  Parameters: {"id"=>"login"}
+
+NameError (undefined local variable or method `authentication_index' for #<RegistrationController:0x22e54e4>):
+  lib/auth_mod.rb:7:in `authenticate'
+  haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendered rescues/_trace (75.4ms)
+Rendered rescues/_request_and_response (1.2ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 2ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:33:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:34:41) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:41) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:41) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:41) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:41) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:41) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:41) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:41) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:41) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:42) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:42) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:42) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:42) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:42) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:42) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:42) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:42) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:42) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:42) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:42) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:34:42) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:35:04) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:04) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:35:37) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:35:37) [GET]
+
+NoMethodError (undefined method `authenticate' for #<AuthenticationController:0x226cb84>):
+  haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendered rescues/_trace (28.6ms)
+Rendered rescues/_request_and_response (2.5ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:36:25) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:36:25) [GET]
+
+NoMethodError (undefined method `authenticate' for #<AuthenticationController:0x2409c94>):
+  haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendered rescues/_trace (31.6ms)
+Rendered rescues/_request_and_response (0.2ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:38:57) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:38:57) [GET]
+
+NoMethodError (undefined method `authenticate' for #<AuthenticationController:0x22ec528>):
+  haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendered rescues/_trace (27.2ms)
+Rendered rescues/_request_and_response (0.2ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ApplicationController#show (for 127.0.0.1 at 2009-05-13 08:39:43) [GET]
+  Parameters: {"id"=>"login"}
+
+NoMethodError (undefined method `authenticate' for :AuthMod:Symbol):
+  app/controllers/registration_controller.rb:3
+
+Rendered rescues/_trace (23.6ms)
+Rendered rescues/_request_and_response (0.5ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:40:19) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:40:19) [GET]
+
+NoMethodError (undefined method `authenticate' for #<AuthenticationController:0x232bc64>):
+  haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendered rescues/_trace (127.5ms)
+Rendered rescues/_request_and_response (0.2ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:41:17) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:41:17) [GET]
+
+NoMethodError (undefined method `authenticate' for #<AuthenticationController:0x244aac8>):
+  haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendered rescues/_trace (29.9ms)
+Rendered rescues/_request_and_response (0.2ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:41:18) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:41:18) [GET]
+
+NoMethodError (undefined method `authenticate' for #<AuthenticationController:0x23085fc>):
+  haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendered rescues/_trace (84.3ms)
+Rendered rescues/_request_and_response (0.2ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:42:55) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:55) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:55) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:55) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:55) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:55) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:55) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:55) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:55) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:55) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:55) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:55) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:55) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:55) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:56) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:56) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:56) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:56) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:56) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:56) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:42:56) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:48:34) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:34) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:34) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:34) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:34) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:34) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:34) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:34) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:34) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:34) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:34) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:35) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:35) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:35) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:35) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:35) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:35) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:35) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:35) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:35) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:48:35) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:05) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:21) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:21) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:21) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:49:21) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/authentication]
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:51:18) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:51:18) [GET]
+Completed in 4ms (View: 3, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:51:29) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:51:29) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+
+ActionView::TemplateError (wrong number of arguments (1 for 2)) on line #3 of app/views/authentication/index.html.haml:
+1: .login
+2:   %label{:for => 'netid'}
+3:   =text_field('netid')
+4:   =submit_tag('login')
+
+    app/views/authentication/index.html.haml:3:in `text_field'
+    app/views/authentication/index.html.haml:3:in `_run_haml_app47views47authentication47index46html46haml'
+    haml (2.0.9) lib/haml/helpers/action_view_mods.rb:14:in `render'
+    haml (2.0.9) lib/haml/helpers/action_view_mods.rb:14:in `render'
+    haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendered rescues/_trace (36.5ms)
+Rendered rescues/_request_and_response (1.6ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 08:52:29) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 47ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:52:29) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 6ms (View: 4, DB: 0) | 200 OK [http://localhost/authentication]

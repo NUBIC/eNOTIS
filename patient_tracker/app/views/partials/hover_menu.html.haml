@@ -1,0 +1,12 @@
+#menu
+  %h1 eNOTIS
+  #protocol_search
+    -form_tag do 
+      Find protocol
+      =text_field("study_id")
+      =submit_tag("Find Protocol")
+  #patient_search
+    -form_tag do
+      Find patient
+      =text_field("mrn")
+      =submit_tag("Find Patient")
