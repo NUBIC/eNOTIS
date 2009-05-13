@@ -1,5 +1,6 @@
 require 'lib/Edwservices'
 
-class Protocol < ActiveRecord::Base.extend EDWRequests
-
+class Protocol < ActiveRecord::Base.extend ProtocolRequests
+#@xml_node=nil
+include ProtocolNode
 end
