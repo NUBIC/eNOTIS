@@ -4,6 +4,9 @@
   %head
     %title eNotis
   %body
+    #flash
+      message:
+      =flash[:notice]
     %h1 eNotis
     #main
       =yield

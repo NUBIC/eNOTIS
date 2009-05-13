@@ -1,7 +1,10 @@
+%h1 You are not logged
+%h3 Please choose an identity to spoof and login
 .login
-  %label{:for => 'netid'}
-  =text_field_tag('netid')
-  =submit_tag('login')
+  -form_tag(:action => 'login', :method => 'post') do
+    %label{:for => 'netid'}
+    =text_field_tag('netid')
+    =submit_tag('login')
 .netids
   %ul
     -@netids.each do |n|

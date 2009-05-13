@@ -1911,3 +1911,469 @@ Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 11:38:26)
 Rendering template within layouts/default
 Rendering authentication/index
 Completed in 5493ms (View: 9, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-05-13 11:44:51) [GET]
+
+ActionController::RoutingError (No route matches "/regstration" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing RegistrationController#index (for 127.0.0.1 at 2009-05-13 11:45:36) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 11:45:36) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 5326ms (View: 10, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 11:46:34) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 5611ms (View: 5, DB: 0) | 200 OK [http://localhost/authentication]
+/!\ FAILSAFE /!\  Wed May 13 11:47:51 -0500 2009
+  Status: 500 Internal Server Error
+  Illegal route: the :controller must be specified!
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/builder.rb:175:in `build'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:308:in `add_route'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:316:in `add_named_route'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:57:in `method_missing'
+    /Users/brian/Rails/enotis/patient_tracker/config/routes.rb:5
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:226:in `draw'
+    /Users/brian/Rails/enotis/patient_tracker/config/routes.rb:1
+    /Library/Ruby/Gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:145:in `load_without_new_constant_marking'
+    /Library/Ruby/Gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:145:in `load'
+    /Library/Ruby/Gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /Library/Ruby/Gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:145:in `load'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:286:in `load_routes!'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:286:in `each'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:286:in `load_routes!'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:266:in `load!'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:281:in `reload'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:59:in `reload_application'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/reloader.rb:8:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/failsafe.rb:11:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/lock.rb:11:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/lock.rb:11:in `synchronize'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/lock.rb:11:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:106:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/rails-2.3.2/lib/rails/rack/static.rb:31:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:46:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `each'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/rails-2.3.2/lib/rails/rack/log_tailer.rb:17:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/content_length.rb:13:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/chunked.rb:15:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/handler/mongrel.rb:61:in `process'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/handler/mongrel.rb:34:in `run'
+    /Users/brian/.gem/ruby/1.8/gems/rails-2.3.2/lib/commands/server.rb:111
+    /Library/Ruby/Site/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /Library/Ruby/Site/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+/!\ FAILSAFE /!\  Wed May 13 11:48:20 -0500 2009
+  Status: 500 Internal Server Error
+  /Users/brian/Rails/enotis/patient_tracker/config/routes.rb:5: syntax error, unexpected tASSOC, expecting '}'
+  map.default {:controller => :registration_controller, :action => :index}
+                             ^
+    /Library/Ruby/Gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:145:in `load_without_new_constant_marking'
+    /Library/Ruby/Gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:145:in `load'
+    /Library/Ruby/Gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /Library/Ruby/Gems/1.8/gems/activesupport-2.3.2/lib/active_support/dependencies.rb:145:in `load'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:286:in `load_routes!'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:286:in `each'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:286:in `load_routes!'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:266:in `load!'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:281:in `reload'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:59:in `reload_application'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/reloader.rb:8:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/failsafe.rb:11:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/lock.rb:11:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/lock.rb:11:in `synchronize'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/lock.rb:11:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:106:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/rails-2.3.2/lib/rails/rack/static.rb:31:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:46:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `each'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/rails-2.3.2/lib/rails/rack/log_tailer.rb:17:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/content_length.rb:13:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/chunked.rb:15:in `call'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/handler/mongrel.rb:61:in `process'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+    /Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+    /Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/handler/mongrel.rb:34:in `run'
+    /Users/brian/.gem/ruby/1.8/gems/rails-2.3.2/lib/commands/server.rb:111
+    /Library/Ruby/Site/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+    /Library/Ruby/Site/1.8/rubygems/custom_require.rb:31:in `require'
+    script/server:3
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 11:48:46) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 5699ms (View: 2, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 11:49:45) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+ERROR: compiling _run_haml_app47views47authentication47index46html46haml RAISED compile error
+/Users/brian/Rails/enotis/patient_tracker/app/views/authentication/index.html.haml:14: syntax error, unexpected kENSURE, expecting $end
+Function body:           def _run_haml_app47views47authentication47index46html46haml(local_assigns)
+            old_output_buffer = output_buffer;;extend Haml::Helpers;_hamlout = @haml_buffer = Haml::Buffer.new(@haml_buffer, {:autoclose=>["meta", "img", "link", "br", "hr", "input", "area", "param", "col", "base"], :ugly=>false, :format=>:xhtml, :attr_wrapper=>"'", :preserve=>["textarea", "pre"]});_erbout = _hamlout.buffer;__in_erb_template = true;;
+
+
+_hamlout.push_text("<h1>You are not logged</h1>\n<h3>Please choose an identity to spoof and login</h3>\n<div class='login'>\n", false, 1);form_tag(:action => 'login', :method => 'post');
+
+_hamlout.push_text("  <label for='netid'></label>\n  ");haml_temp = text_field_tag('netid');
+haml_temp = _hamlout.push_script(haml_temp, false, false, false, false, false);_hamlout.push_text("  ");haml_temp = submit_tag('login');
+haml_temp = _hamlout.push_script(haml_temp, false, false, false, false, false);end;
+
+_hamlout.push_text("</div>\n<div class='netids'>\n  <ul>\n", false, 1);@netids.each do |n|;
+_hamlout.push_text("    <li>", false, 1);haml_temp = n;
+haml_temp = _hamlout.push_script(haml_temp, nil, true, false, false, false);_hamlout.push_text("</li>\n", true);end;
+_hamlout.push_text("  </ul>\n</div>\n", false, -2);@haml_buffer = @haml_buffer.upper;_erbout;
+          ensure
+            self.output_buffer = old_output_buffer
+          end
+Backtrace: /Users/brian/Rails/enotis/patient_tracker/app/views/authentication/index.html.haml:14:in `compile!'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_view/renderable.rb:61:in `compile'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_view/renderable.rb:28:in `render'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_view/template.rb:194:in `render_template'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_view/base.rb:260:in `render_without_haml'
+/Users/brian/.gem/ruby/1.8/gems/haml-2.0.9/lib/haml/helpers/action_view_mods.rb:14:in `render'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_view/base.rb:343:in `_render_with_layout'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_view/base.rb:257:in `render_without_haml'
+/Users/brian/.gem/ruby/1.8/gems/haml-2.0.9/lib/haml/helpers/action_view_mods.rb:14:in `render'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:1241:in `render_for_file'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:937:in `render_without_benchmark'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/benchmarking.rb:51:in `render'
+/Library/Ruby/Gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+/Library/Ruby/Gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/benchmark.rb:10:in `realtime'
+/Library/Ruby/Gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/benchmarking.rb:51:in `render'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:1317:in `default_render'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:1323:in `perform_action_without_filters'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/filters.rb:617:in `call_filters'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+/Library/Ruby/Gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+/Library/Ruby/Gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/benchmark.rb:10:in `realtime'
+/Library/Ruby/Gems/1.8/gems/activesupport-2.3.2/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/rescue.rb:160:in `perform_action_without_flash'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/flash.rb:141:in `perform_action'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:523:in `send'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:523:in `process_without_filters'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/filters.rb:606:in `sass_old_process'
+/Users/brian/.gem/ruby/1.8/gems/haml-2.0.9/lib/sass/plugin/rails.rb:19:in `process'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:391:in `process'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/base.rb:386:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/routing/route_set.rb:433:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:88:in `dispatch'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:111:in `_call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:82:in `initialize'
+/Library/Ruby/Gems/1.8/gems/activerecord-2.3.2/lib/active_record/query_cache.rb:29:in `call'
+/Library/Ruby/Gems/1.8/gems/activerecord-2.3.2/lib/active_record/query_cache.rb:29:in `call'
+/Library/Ruby/Gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+/Library/Ruby/Gems/1.8/gems/activerecord-2.3.2/lib/active_record/query_cache.rb:9:in `cache'
+/Library/Ruby/Gems/1.8/gems/activerecord-2.3.2/lib/active_record/query_cache.rb:28:in `call'
+/Library/Ruby/Gems/1.8/gems/activerecord-2.3.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/head.rb:9:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/methodoverride.rb:24:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/params_parser.rb:15:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/rewindable_input.rb:25:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/session/cookie_store.rb:93:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/reloader.rb:9:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/failsafe.rb:11:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/lock.rb:11:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/lock.rb:11:in `synchronize'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/lock.rb:11:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/dispatcher.rb:106:in `call'
+/Users/brian/.gem/ruby/1.8/gems/rails-2.3.2/lib/rails/rack/static.rb:31:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:46:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `each'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb:40:in `call'
+/Users/brian/.gem/ruby/1.8/gems/rails-2.3.2/lib/rails/rack/log_tailer.rb:17:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/content_length.rb:13:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/chunked.rb:15:in `call'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/handler/mongrel.rb:61:in `process'
+/Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+/Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+/Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+/Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+/Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+/Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+/Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+/Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+/Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+/Users/brian/.gem/ruby/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+/Users/brian/.gem/ruby/1.8/gems/actionpack-2.3.2/lib/action_controller/vendor/rack-1.0/rack/handler/mongrel.rb:34:in `run'
+/Users/brian/.gem/ruby/1.8/gems/rails-2.3.2/lib/commands/server.rb:111
+/Library/Ruby/Site/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+/Library/Ruby/Site/1.8/rubygems/custom_require.rb:31:in `require'
+script/server:3
+
+ActionView::TemplateError (compile error
+/Users/brian/Rails/enotis/patient_tracker/app/views/authentication/index.html.haml:14: syntax error, unexpected kENSURE, expecting $end) on line #14 of app/views/authentication/index.html.haml:
+11:       %li=n
+
+    app/views/authentication/index.html.haml:14:in `compile!'
+    haml (2.0.9) lib/haml/helpers/action_view_mods.rb:14:in `render'
+    haml (2.0.9) lib/haml/helpers/action_view_mods.rb:14:in `render'
+    haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendered rescues/_trace (32.6ms)
+Rendered rescues/_request_and_response (1.2ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 11:50:19) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 6011ms (View: 60, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing AuthenticationController#login (for 127.0.0.1 at 2009-05-13 11:50:29) [POST]
+  Parameters: {"commit"=>"login", "authenticity_token"=>"gCekDr0N8vv7cWmyoU1fm+T9hJqaO9lwKUWb0S4V1EA=", "method"=>"post", "netid"=>"cpr584"}
+  [4;36;1mUser Create (0.5ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-13 16:50:29', 'cpr584', '2009-05-13 16:50:29')[0m
+
+NoMethodError (undefined method `password' for #<User:0x2461c00>):
+  app/models/user.rb:19:in `authenticate'
+  app/models/user.rb:6:in `validate_user'
+  app/controllers/authentication_controller.rb:11:in `login'
+  haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendered rescues/_trace (94.4ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing AuthenticationController#login (for 127.0.0.1 at 2009-05-13 11:51:05) [POST]
+  Parameters: {"commit"=>"login", "authenticity_token"=>"gCekDr0N8vv7cWmyoU1fm+T9hJqaO9lwKUWb0S4V1EA=", "method"=>"post", "netid"=>"cpr584"}
+  [4;35;1mUser Create (0.5ms)[0m   [0mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-13 16:51:05', 'cpr584', '2009-05-13 16:51:05')[0m
+
+ActionView::MissingTemplate (Missing template authentication/login.erb in view path app/views):
+  haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing AuthenticationController#login (for 127.0.0.1 at 2009-05-13 11:53:49) [POST]
+  Parameters: {"commit"=>"login", "authenticity_token"=>"gCekDr0N8vv7cWmyoU1fm+T9hJqaO9lwKUWb0S4V1EA=", "method"=>"post", "netid"=>"cpr584"}
+  [4;36;1mUser Create (0.4ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-13 16:53:49', 'cpr584', '2009-05-13 16:53:49')[0m
+
+ActionView::MissingTemplate (Missing template authentication/login.erb in view path app/views):
+  haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing AuthenticationController#login (for 127.0.0.1 at 2009-05-13 11:55:20) [POST]
+  Parameters: {"commit"=>"login", "authenticity_token"=>"gCekDr0N8vv7cWmyoU1fm+T9hJqaO9lwKUWb0S4V1EA=", "method"=>"post", "netid"=>"cpr584"}
+  [4;35;1mUser Create (1.1ms)[0m   [0mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-13 16:55:20', 'cpr584', '2009-05-13 16:55:20')[0m
+Redirected to http://localhost:3001/registration
+Completed in 11ms (DB: 1) | 302 Found [http://localhost/authentication/login?method=post]
+
+
+Processing RegistrationController#index (for 127.0.0.1 at 2009-05-13 11:55:20) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 4ms (DB: 0) | 302 Found [http://localhost/registration]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 11:55:20) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 6224ms (View: 3, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing AuthenticationController#login (for 127.0.0.1 at 2009-05-13 11:55:32) [POST]
+  Parameters: {"commit"=>"login", "authenticity_token"=>"gCekDr0N8vv7cWmyoU1fm+T9hJqaO9lwKUWb0S4V1EA=", "method"=>"post", "netid"=>"cpr584"}
+  [4;36;1mUser Create (0.6ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-13 16:55:32', 'cpr584', '2009-05-13 16:55:32')[0m
+Redirected to http://localhost:3001/registration
+Completed in 9ms (DB: 1) | 302 Found [http://localhost/authentication/login?method=post]
+
+
+Processing RegistrationController#index (for 127.0.0.1 at 2009-05-13 11:55:32) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 11:55:32) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 6081ms (View: 3, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 11:58:38) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 6033ms (View: 6, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing AuthenticationController#login (for 127.0.0.1 at 2009-05-13 11:58:48) [POST]
+  Parameters: {"commit"=>"login", "authenticity_token"=>"gCekDr0N8vv7cWmyoU1fm+T9hJqaO9lwKUWb0S4V1EA=", "method"=>"post", "netid"=>"cpr584"}
+  [4;35;1mUser Create (0.4ms)[0m   [0mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-13 16:58:48', 'cpr584', '2009-05-13 16:58:48')[0m
+Redirected to http://localhost:3001/registration
+Completed in 9ms (DB: 0) | 302 Found [http://localhost/authentication/login?method=post]
+
+
+Processing RegistrationController#index (for 127.0.0.1 at 2009-05-13 11:58:49) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 11:58:49) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 5259ms (View: 3, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 12:00:58) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 5246ms (View: 3, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing AuthenticationController#login (for 127.0.0.1 at 2009-05-13 12:01:08) [POST]
+  Parameters: {"commit"=>"login", "authenticity_token"=>"gCekDr0N8vv7cWmyoU1fm+T9hJqaO9lwKUWb0S4V1EA=", "method"=>"post", "netid"=>"cpr584"}
+  [4;36;1mUser Load (0.5ms)[0m   [0;1mSELECT * FROM "users" WHERE (netid ='cpr584') LIMIT 1[0m
+Redirected to http://localhost:3001/registration
+Completed in 4ms (DB: 0) | 302 Found [http://localhost/authentication/login?method=post]
+
+
+Processing RegistrationController#index (for 127.0.0.1 at 2009-05-13 12:01:08) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 12:01:08) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 5430ms (View: 3, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 12:02:39) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 5926ms (View: 3, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 12:03:17) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 5393ms (View: 5, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing AuthenticationController#login (for 127.0.0.1 at 2009-05-13 12:03:29) [POST]
+  Parameters: {"commit"=>"login", "authenticity_token"=>"gCekDr0N8vv7cWmyoU1fm+T9hJqaO9lwKUWb0S4V1EA=", "method"=>"post", "netid"=>"# cpr584"}
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM "users" WHERE (netid ='# cpr584') LIMIT 1[0m
+  [4;36;1mUser Create (0.4ms)[0m   [0;1mINSERT INTO "users" ("updated_at", "netid", "created_at") VALUES('2009-05-13 17:03:29', '# cpr584', '2009-05-13 17:03:29')[0m
+Redirected to http://localhost:3001/registration
+Completed in 9ms (DB: 1) | 302 Found [http://localhost/authentication/login?method=post]
+
+
+Processing RegistrationController#index (for 127.0.0.1 at 2009-05-13 12:03:29) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 12:03:29) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 5348ms (View: 3, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing AuthenticationController#login (for 127.0.0.1 at 2009-05-13 12:03:34) [POST]
+  Parameters: {"commit"=>"login", "authenticity_token"=>"gCekDr0N8vv7cWmyoU1fm+T9hJqaO9lwKUWb0S4V1EA=", "method"=>"post", "netid"=>"cpr584"}
+  [4;35;1mUser Load (0.5ms)[0m   [0mSELECT * FROM "users" WHERE (netid ='cpr584') LIMIT 1[0m
+Redirected to http://localhost:3001/registration
+Completed in 5ms (DB: 0) | 302 Found [http://localhost/authentication/login?method=post]
+
+
+Processing RegistrationController#index (for 127.0.0.1 at 2009-05-13 12:03:34) [GET]
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 12:03:34) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 5358ms (View: 3, DB: 0) | 200 OK [http://localhost/authentication]
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (4.2ms)[0m   [0;1mCREATE TABLE "patient_on_protocol_status" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "patient_on_protocol_id" integer, "status" varchar(255), "start_date" date) [0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (127.2ms)[0m   [0;1mCREATE TABLE "patients" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "mrd_pt_id" varchar(255), "type" varchar(255), "mrn" varchar(255), "mrn_type" varchar(255), "last_name" varchar(255), "first_name" varchar(255), "birth_date" date, "death_date" date, "address_line1" varchar(255), "address_line2" varchar(255), "city" varchar(255), "state" varchar(255), "zip" varchar(255), "phone" varchar(255), "work_phone" varchar(255), "work_phone_extension" varchar(255)) [0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (3.1ms)[0m   [0;1mCREATE TABLE "patients_on_protocols" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "patient_id" integer, "protocol_id" integer, "patient_on_protocol_status_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (0.7ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (3.3ms)[0m   [0;1mCREATE TABLE "protocols" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "irb_number" varchar(255)) [0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (2.7ms)[0m   [0;1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "netid" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (3.0ms)[0m   [0;1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [4;35;1mSQL (3.2ms)[0m   [0mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM "schema_migrations"[0m
+  [4;36;1mSQL (2.2ms)[0m   [0;1mINSERT INTO "schema_migrations" (version) VALUES ('20090512205121')[0m
+  [4;35;1mSQL (2.6ms)[0m   [0mINSERT INTO "schema_migrations" (version) VALUES ('20090415160836')[0m
+  [4;36;1mSQL (3.0ms)[0m   [0;1mINSERT INTO "schema_migrations" (version) VALUES ('20090415161859')[0m
+  [4;35;1mSQL (2.1ms)[0m   [0mINSERT INTO "schema_migrations" (version) VALUES ('20090423174225')[0m
+  [4;36;1mSQL (2.2ms)[0m   [0;1mINSERT INTO "schema_migrations" (version) VALUES ('20090512161752')[0m
