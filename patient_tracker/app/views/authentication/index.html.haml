@@ -2,3 +2,7 @@
   %label{:for => 'netid'}
   =text_field_tag('netid')
   =submit_tag('login')
+.netids
+  %ul
+    -@netids.each do |n|
+      %li=n

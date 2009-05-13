@@ -1816,3 +1816,85 @@ Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 08:52:29)
 Rendering template within layouts/default
 Rendering authentication/index
 Completed in 6ms (View: 4, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 10:34:41) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 10:34:41) [GET]
+
+NoMethodError (undefined method `find_all_coordinator_netids' for ProtocolRequests:Module):
+  app/controllers/authentication_controller.rb:6:in `index'
+  haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendered rescues/_trace (82.6ms)
+Rendered rescues/_request_and_response (1.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 10:35:47) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 0ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 10:35:47) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 31ms (View: 26, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 10:37:58) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 10:37:58) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 74663ms (View: 13, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 10:39:24) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 10:39:24) [GET]
+
+TypeError (can't convert String into Integer):
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/rexml/parent.rb:58:in `[]'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/rexml/parent.rb:58:in `[]'
+  lib/EdwServices.rb:98:in `find_all_coordinator_netids'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/rexml/element.rb:891:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/rexml/xpath.rb:53:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/rexml/element.rb:891:in `each'
+  lib/EdwServices.rb:97:in `find_all_coordinator_netids'
+  app/controllers/authentication_controller.rb:7:in `index'
+  haml (2.0.9) lib/sass/plugin/rails.rb:19:in `process'
+
+Rendered rescues/_trace (29.8ms)
+Rendered rescues/_request_and_response (1.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing RegistrationController#show (for 127.0.0.1 at 2009-05-13 10:40:21) [GET]
+  Parameters: {"id"=>"login"}
+Redirected to http://localhost:3001/authentication
+Filter chain halted as [:authenticate] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/registration/login]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 10:40:21) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 5265ms (View: 9, DB: 0) | 200 OK [http://localhost/authentication]

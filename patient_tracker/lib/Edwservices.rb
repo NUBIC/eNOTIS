@@ -45,7 +45,7 @@ module PatientNode
 end
 
 module ProtocolRequests
-  URL_BASE = "http://209.252.134.167:3000"
+  URL_BASE = "http://localhost:3000"
 
   def get_study_list
     study_list =  []
@@ -79,18 +79,36 @@ module ProtocolRequests
 
   def find_by_coordinator(net_id)
     study_list =  []
-    base = "#{URL_BASE}/coordinators/study_access_list?net_id=" 
-    http_response = Net::HTTP.get_response(URI.parse(base+net_id))
-    xml_response = REXML::Document.new(http_response.body);
-
-    xml_response.elements.each("protocols/protocol") do  |protocol|
-        study = Protocol.new
-        study.xml_node = protocol
-    	study_list << study
+    xml_response = get_payload("#{URL_BASE}/coordinators/study_access_list?net_id=#{net_id}")
+    if xml_response 
+      xml_response.elements.each("protocols/protocol") do  |protocol|
+          study = Protocol.new
+          study.xml_node = protocol
+    	  study_list << study
+      end
     end
     return study_list
   end
 
+  def find_all_coordinator_netids
+    coordinators = []
+    xml_response = get_payload("#{URL_BASE}/coordinators/all_netids")
+    if xml_response
+      xml_response.elements.each("coordinators/coordinator") do |coord|
+        coordinators << coord.elements["netid"].text
+      end
+    end
+    coordinators
+  end
+
+  def get_payload(url)
+    begin
+      http_response = Net::HTTP.get_response(URI.parse(url))
+      REXML::Document.new(http_response.body);
+    rescue StandardError => bang
+      puts "Error pulling data: " + bang
+    end
+  end
 
 end	
 
@@ -107,7 +125,7 @@ module PatientRequests
     	patient_list << patient
     end
     return patient_list
-	
   end
+
 end
 
