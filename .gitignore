@@ -1,10 +1,2 @@
-tmp/**/*
-log/*
-config/database.yml
-config/environments/production.rb
-config/newrelic.yml
-vendor/plugins/newrelic_rpm/
-coverage/*
-.DS_Store
-db/schema.rb
-*.swp
+**/*.swp
+*.log

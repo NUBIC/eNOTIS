@@ -2872,3 +2872,9 @@ Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 12:23:54)
 Rendering template within layouts/default
 Rendering authentication/index
 Completed in 5402ms (View: 3, DB: 0) | 200 OK [http://localhost/authentication]
+
+
+Processing AuthenticationController#index (for 127.0.0.1 at 2009-05-13 12:25:30) [GET]
+Rendering template within layouts/default
+Rendering authentication/index
+Completed in 5952ms (View: 3, DB: 0) | 200 OK [http://localhost/authentication]
