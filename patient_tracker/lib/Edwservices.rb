@@ -66,9 +66,9 @@ module ProtocolRequests
     xml_response.elements.each("protocol") do  |protocol|	
       study = Protocol.new
       study.xml_node = protocol
-      study_list.push(study)
+      return study
     end
-    study_list
+    return nil
         
   end
 
