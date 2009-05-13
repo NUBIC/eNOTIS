@@ -5,11 +5,11 @@ class AuthenticationController < ApplicationController
 
   def index
     @netids = find_all_coordinator_netids
+    @users = User.find(:all)
   end
   
   def login
-    current_user = User.validate_user(params[:netid],params[:password])
-    if current_user
+    if authenticate_user(params[:netid],params[:password])
       redirect_to default_path
     else
       flash[:notice] = "Unable to validate user"
