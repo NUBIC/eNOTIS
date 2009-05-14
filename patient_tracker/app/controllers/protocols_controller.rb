@@ -1,5 +1,6 @@
 class ProtocolsController < ApplicationController
-  
+layout "layouts/loggedin"
+
   def index
 	  @protocols = Protocol.find_by_coordinator(params[:net_id])
 	end

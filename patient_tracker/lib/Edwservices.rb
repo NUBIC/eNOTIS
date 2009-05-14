@@ -45,11 +45,11 @@ module PatientNode
 end
 
 module ProtocolRequests
-  URL_BASE = "http://209.252.134.167:3000"
+  URL_BASE = "http://localhost:3000"
 
   def get_study_list
     study_list =  []
-    xml_response = get_payload("#{URL_BASE}//protocols/study_list")
+    xml_response = get_payload("#{URL_BASE}/protocols/study_list")
     xml_response.elements.each("protocols/protocol") do  |protocol|	
       study = Protocol.new
       study.xml_node = protocol
@@ -86,9 +86,9 @@ module ProtocolRequests
     return study_list
   end
 
-  def find_all_coordinator_netids
+  def find_all_coordinator_netids(limit =nil)
     coordinators = []
-    xml_response = get_payload("#{URL_BASE}/coordinators/all_netids")
+    xml_response = get_payload("#{URL_BASE}/coordinators/all_netids#{limit ? '?limit='+limit.to_s : nil }")
     if xml_response
       xml_response.elements.each("coordinators/coordinator") do |coord|
         coordinators << coord.elements["netid"].text

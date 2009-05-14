@@ -6,9 +6,8 @@ module AuthMod
   end
 
   def logged_in?
-    if session[:current_user]
-      @current_user = User.find(session[:current_user])
-      return true
+    if session[:current_user] and (@current_user = User.find(:first, :conditions => ["id=?",session[:current_user]]))
+        return true
     else
       return false
     end

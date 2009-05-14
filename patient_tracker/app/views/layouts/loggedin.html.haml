@@ -7,7 +7,7 @@
   %body
     #flash
       %span#message= flash[:notice]
-    =render(:partial => "partials/hover_menu", :user => current_user)
+    =render(:partial => "partials/hover_menu", :user => @current_user)
     #main
       =yield
           
