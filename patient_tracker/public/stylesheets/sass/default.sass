@@ -2,11 +2,14 @@
 !BORDER_CHANGE=32
 !FONT_COLOR=#333
 !FONT_INVERT_COLOR=#f0f0f0
-!BODY_BACKGROUND_COLOR=#f0f0f0
+!BODY_COLOR=#f0f0f0
 !NU_PURPLE=#520064
+!DARK_GRAY=#666666
+!LT_GRAY=#A3A3A3
+!LT_YELLOW=#FFFFE0
 
 body
-  :background-color= !BODY_BACKGROUND_COLOR
+  :background-color= !BODY_COLOR
   :font-family Verdana, Arial, sans-serif
   :font-size 62.5% /*this is so we can have nice em's to pix conversion 1.0em ~= 10px, 1.1em ~= 11px, etc...*/
   :color #333
@@ -21,25 +24,33 @@ body
   :color= !FONT_INVERT_COLOR
 
 #menu
-  :border 1px solid #f00
+  :background-color= !DARK_GRAY
+  :color= !FONT_INVERT_COLOR
+
+  input[type='text']
+    :background-color= !BODY_COLOR
+    :font-size 1.2em
+    :border 2px inset #333
+    :border-color= !LT_GRAY
+
   h1
     :float left
     :font-size 2em
     :color= !NU_PURPLE
-    :margin 0.7em
+    :margin 0.6em
     :width 8em
     
   #protocol_search
     :font-size 1.2em
     :float left
     :margin 1em
-    :width 30em
+    :width 35em
 
   #patient_search
     :font-size 1.2em
-    :margin 1em
+    :padding 1em
     :margin-left 50em
-    :width 30em
+    :width 45em
   
 #main
   :padding 0.5em

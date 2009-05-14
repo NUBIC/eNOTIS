@@ -14,23 +14,29 @@ body {
   color: #f0f0f0; }
 
 #menu {
-  border: 1px solid #f00; }
+  background-color: #666666;
+  color: #f0f0f0; }
+  #menu input[type='text'] {
+    background-color: #f0f0f0;
+    font-size: 1.2em;
+    border: 2px inset #333;
+    border-color: #a3a3a3; }
   #menu h1 {
     float: left;
     font-size: 2em;
     color: #520064;
-    margin: 0.7em;
+    margin: 0.6em;
     width: 8em; }
   #menu #protocol_search {
     font-size: 1.2em;
     float: left;
     margin: 1em;
-    width: 30em; }
+    width: 35em; }
   #menu #patient_search {
     font-size: 1.2em;
-    margin: 1em;
+    padding: 1em;
     margin-left: 50em;
-    width: 30em; }
+    width: 45em; }
 
 #main {
   padding: 0.5em; }
