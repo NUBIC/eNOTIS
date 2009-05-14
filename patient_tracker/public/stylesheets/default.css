@@ -1,4 +1,36 @@
 body {
   background-color: #f0f0f0;
   font-family: Verdana, Arial, sans-serif;
-  font-size: 62.5% /*this is so we can have nice em's to rough pix conversion 1.0em ~= 10px, 1.1em ~= 11px, etc...; }
+  font-size: 62.5% /*this is so we can have nice em's to pix conversion 1.0em ~= 10px, 1.1em ~= 11px, etc...*/;
+  color: #333; }
+
+#flash {
+  width: 100%;
+  padding: 0.5em;
+  background-color: #c7360b;
+  border: 0.2em solid #333;
+  border-color: #a71600;
+  font-size: 2em;
+  color: #f0f0f0; }
+
+#menu {
+  border: 1px solid #f00; }
+  #menu h1 {
+    float: left;
+    font-size: 2em;
+    color: #520064;
+    margin: 0.7em;
+    width: 8em; }
+  #menu #protocol_search {
+    font-size: 1.2em;
+    float: left;
+    margin: 1em;
+    width: 30em; }
+  #menu #patient_search {
+    font-size: 1.2em;
+    margin: 1em;
+    margin-left: 50em;
+    width: 30em; }
+
+#main {
+  padding: 0.5em; }

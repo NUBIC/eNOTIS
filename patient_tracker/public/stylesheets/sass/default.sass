@@ -1,4 +1,46 @@
+!ALERT_COLOR=#C7360B
+!BORDER_CHANGE=32
+!FONT_COLOR=#333
+!FONT_INVERT_COLOR=#f0f0f0
+!BODY_BACKGROUND_COLOR=#f0f0f0
+!NU_PURPLE=#520064
+
 body
-  :background-color #f0f0f0
+  :background-color= !BODY_BACKGROUND_COLOR
   :font-family Verdana, Arial, sans-serif
-  :font-size 62.5% /*this is so we can have nice em's to rough pix conversion 1.0em ~= 10px, 1.1em ~= 11px, etc...
+  :font-size 62.5% /*this is so we can have nice em's to pix conversion 1.0em ~= 10px, 1.1em ~= 11px, etc...*/
+  :color #333
+
+#flash
+  :width 100%
+  :padding 0.5em
+  :background-color= !ALERT_COLOR
+  :border 0.2em solid #333
+  :border-color= !ALERT_COLOR - !BORDER_CHANGE
+  :font-size 2em
+  :color= !FONT_INVERT_COLOR
+
+#menu
+  :border 1px solid #f00
+  h1
+    :float left
+    :font-size 2em
+    :color= !NU_PURPLE
+    :margin 0.7em
+    :width 8em
+    
+  #protocol_search
+    :font-size 1.2em
+    :float left
+    :margin 1em
+    :width 30em
+
+  #patient_search
+    :font-size 1.2em
+    :margin 1em
+    :margin-left 50em
+    :width 30em
+  
+#main
+  :padding 0.5em
+  
