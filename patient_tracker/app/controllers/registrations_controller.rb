@@ -1,4 +1,4 @@
-class RegistrationController < ApplicationController
+class RegistrationsController < ApplicationController
   include AuthMod
   before_filter :user_must_be_logged_in
 
