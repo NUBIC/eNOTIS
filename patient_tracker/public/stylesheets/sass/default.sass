@@ -8,11 +8,22 @@
 !LT_GRAY=#A3A3A3
 !LT_YELLOW=#FFFFE0
 
+h1
+  :font-size 3em
+  :margin 1em
+h2
+  :font-size 2.5em
+  :margin 1em
+h3
+  :font-size 2em
+  :margin 1em
+
 body
   :background-color= !BODY_COLOR
   :font-family Verdana, Arial, sans-serif
   :font-size 62.5% /*this is so we can have nice em's to pix conversion 1.0em ~= 10px, 1.1em ~= 11px, etc...*/
   :color #333
+  :line-height 1.5em
 
 #flash
   :width 100%
@@ -23,36 +34,63 @@ body
   :font-size 2em
   :color= !FONT_INVERT_COLOR
 
-#menu
-  :background-color= !DARK_GRAY
-  :color= !FONT_INVERT_COLOR
+.loginbox
+  :border 2px solid #333
+  :border-color= !DARK_GRAY
+  :background-color= !LT_YELLOW
+  :padding 0.5em 1em
+  :font-size 1.5em
+  :margin 1em
+  :width 13em
+  :line-height 1.8em
 
-  input[type='text']
-    :background-color= !BODY_COLOR
-    :font-size 1.2em
-    :border 2px inset #333
-    :border-color= !LT_GRAY
 
-  li#app_name
+ul#menu
+  :margin 0
+  :padding 0
+  :list-style none
+  :width 100%
+      
+
+  li
+    :background-color= !DARK_GRAY
+    :color= !FONT_INVERT_COLOR
+    :float left
+    :height 5em
+
+    div
+      :padding 1em
+      :font-size 1.2em
+
+      input[type='text']
+        :background-color= !BODY_COLOR
+        :font-size 1.2em
+        :border 2px inset #333
+        :border-color= !LT_GRAY
+  
+
+  #app_name
     :font-size 2em
     :color= !NU_PURPLE
-    :margin 0.6em
-    :width 8em
+    :padding 0.6em
+    :width 7em
     
-  li#protocol_search
-    :font-size 1.2em
-    :margin 1em
+  #protocol_search
     :width 35em
 
-  li#patient_search
-    :font-size 1.2em
-    :padding 1em
-    :margin-left 50em
-    :width 45em
+  #patient_search
+    :width 35em
   
-  li#current_user
-    :color #00f
-    :text-decoration underline
+  #current_user
+    :width 7em
+    
 #main
-  :padding 0.5em
+  :padding 0.5em 2em
+  :font-size 1.2em
+
+
+
   
+#clear
+  :clear both
+  :width 1px

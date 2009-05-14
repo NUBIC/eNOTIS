@@ -1,14 +1,21 @@
 %ul#menu
-  %li#app_name eNOTIS
-  %li#protocol_search
-    -form_tag(search_protocols_path, :method => :get) do 
-      Find protocol
-      =text_field_tag("study_id")
-      =submit_tag("Find Protocol")
-  %li#patient_search
-    -form_tag(search_patients_path,:method => :get) do
-      Find patient
-      =text_field_tag("mrn")
-      =submit_tag("Find Patient")
-  %li#current_user
-    =user.netid
+  %li
+    #app_name eNOTIS
+  %li
+    #protocol_search
+      -form_tag(search_protocols_path, :method => :get) do 
+        Find protocol
+        =text_field_tag("study_id")
+        =submit_tag("Find Protocol")
+  %li
+    #patient_search
+      -form_tag(search_patients_path,:method => :get) do
+        Find patient
+        =text_field_tag("mrn")
+        =submit_tag("Find Patient")
+  %li
+    #current_user
+      Logged in as: 
+      =link_to(user.netid, logout_authentication_path)
+#clear
+  &nbsp;

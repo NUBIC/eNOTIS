@@ -13,6 +13,11 @@ module AuthMod
     end
   end
 
+  def logout_user
+    reset_session
+    @current_user = nil
+  end
+
   def user_must_be_logged_in
     unless logged_in?
       redirect_to authentication_index_path

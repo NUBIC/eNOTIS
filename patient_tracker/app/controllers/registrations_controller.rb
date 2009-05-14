@@ -6,7 +6,7 @@ class RegistrationsController < ApplicationController
 
   # The registration landing page
   def index 
-
+    @accessable_protocols = Protocol.find_by_coordinator(@current_user.netid)
   end
 
 end

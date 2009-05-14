@@ -1,17 +1,20 @@
-%h1 You are not logged
+%h1 You are not logged in
 %h3 Please choose an identity to spoof and login
-.login
-  -form_tag(:action => 'login', :method => 'post') do
+.loginbox
+  -form_tag(login_authentication_path, :method => 'post') do
     %label{:for => 'netid'}
+      Please enter your netid:
+      %br
     =text_field_tag('netid')
     =submit_tag('login')
-.netids{:style => "width:400px;float:left;"}
-  All netids:
+
+.netids{:style => "width:300px;float:left;margin-left:2em"}
+  Some netids to choose from:
   %ul
     -@netids.each do |n|
       %li=n
 
-.users{:style => "margin-left:450px;"}
+.users{:style => "margin-left:310px;"}
   Users we've seen:
   %ul
     -@users.each do |u|

@@ -18,5 +18,11 @@ class AuthenticationController < ApplicationController
       redirect_to authentication_index_path
     end
   end
-
+  
+  def logout
+    logout_user   
+    flash[:notice] = "You are now logged out"
+    redirect_to authentication_index_path
+  end
+  
 end
