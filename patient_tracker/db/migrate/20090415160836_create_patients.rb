@@ -1,7 +1,7 @@
 class CreatePatients < ActiveRecord::Migration
   def self.up
   	create_table :patients do |t|
-      t.string :mrn
+      t.string :mrn 
       t.string :mrn_type
       t.string :source
       t.date :last_reconciled
