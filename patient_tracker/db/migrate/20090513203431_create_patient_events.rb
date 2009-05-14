@@ -1,10 +1,11 @@
 class CreatePatientEvents < ActiveRecord::Migration
   def self.up
     create_table :patient_events do |t|
-      t.integer :protocol_id
+      t.integer :patient_id, :not_null => true # Always needed
       t.string :status
       t.date :status_date
-      t.integer :patient_id
+      t.integer :protocol_id #sometimes null if it's patient related and not around a protocol
+      t.text :notes 
       t.timestamps
     end
   end

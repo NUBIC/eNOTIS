@@ -1,3 +1,5 @@
+# User model for application context
+
 class User < ActiveRecord::Base
 
   attr_accessor :password #doesnt do anything for now

@@ -20,7 +20,8 @@ class CreatePatients < ActiveRecord::Migration
       t.string :phone
       t.string :work_phone
       t.string :work_phone_extension
-  	end
+       t.timestamps
+    end
   end
 
   def self.down

@@ -5,7 +5,6 @@ class CreateInvolvements < ActiveRecord::Migration
       t.integer :protocol_id
       t.string :disease_site
       t.text :description
-
       t.timestamps
     end
   end
