@@ -6,8 +6,9 @@ require 'lib/Edwservices'
 # is pulled from the EDW (from the eIRB db export) as needed.
 
 class Protocol < ActiveRecord::Base.extend ProtocolRequests
-include ProtocolNode
-
+	has_many :involvements
+	include ProtocolNode
+  
 end
 
 
