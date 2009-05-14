@@ -1,2 +1,2 @@
-module RegistrationControllerHelper
+module RegistrationsHelper
 end
