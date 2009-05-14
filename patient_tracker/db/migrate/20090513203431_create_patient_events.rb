@@ -5,7 +5,6 @@ class CreatePatientEvents < ActiveRecord::Migration
       t.string :status
       t.date :status_date
       t.integer :patient_id
-
       t.timestamps
     end
   end
