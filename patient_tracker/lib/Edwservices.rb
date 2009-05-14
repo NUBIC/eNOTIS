@@ -13,7 +13,7 @@ module ProtocolNode
     @xml_node.elements["description"].text
   end
 
-  def irb_number
+  def study_id
     @xml_node.elements["irb_number"].text
   end
 
@@ -45,14 +45,11 @@ module PatientNode
 end
 
 module ProtocolRequests
-  URL_BASE = "http://localhost:3000"
+  URL_BASE = "http://209.252.134.167:3000"
 
   def get_study_list
     study_list =  []
-    base = "#{URL_BASE}/protocols/study_list"
-    http_response = Net::HTTP.get_response(URI.parse(base))
-    xml_response = REXML::Document.new(http_response.body);
-
+    xml_response = get_payload("#{URL_BASE}//protocols/study_list")
     xml_response.elements.each("protocols/protocol") do  |protocol|	
       study = Protocol.new
       study.xml_node = protocol
@@ -63,23 +60,22 @@ module ProtocolRequests
 
   def find_by_study_id(study_id)
     study_list=[]
-    base = "#{URL_BASE}/protocols/find_by_studyid?studyid="
-    http_response = Net::HTTP.get_response(URI.parse(base+study_id))
-    xml_response = REXML::Document.new(http_response.body);
-
-    xml_response.elements.each("protocol") do  |protocol|	
-      study = Protocol.new
-      study.xml_node = protocol
-      return study
+    xml_response = get_payload("#{URL_BASE}/protocols/find_by_studyid?studyid=#{study_id}")
+    if xml_response
+      xml_response.elements.each("protocol") do  |protocol|	
+        study = Protocol.new
+        study.xml_node = protocol
+        return study
+      end
+      return nil
     end
-    return nil
         
   end
 
 
   def find_by_coordinator(net_id)
     study_list =  []
-    xml_response = get_payload("#{URL_BASE}/coordinators/study_access_list?net_id=#{net_id}")
+    xml_response = get_payload("#{URL_BASE}/coordinators/study_access_list?netid=#{net_id}")
     if xml_response 
       xml_response.elements.each("protocols/protocol") do  |protocol|
           study = Protocol.new
