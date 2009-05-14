@@ -21,22 +21,23 @@ body {
     font-size: 1.2em;
     border: 2px inset #333;
     border-color: #a3a3a3; }
-  #menu h1 {
-    float: left;
+  #menu li#app_name {
     font-size: 2em;
     color: #520064;
     margin: 0.6em;
     width: 8em; }
-  #menu #protocol_search {
+  #menu li#protocol_search {
     font-size: 1.2em;
-    float: left;
     margin: 1em;
     width: 35em; }
-  #menu #patient_search {
+  #menu li#patient_search {
     font-size: 1.2em;
     padding: 1em;
     margin-left: 50em;
     width: 45em; }
+  #menu li#current_user {
+    color: #00f;
+    text-decoration: underline; }
 
 #main {
   padding: 0.5em; }

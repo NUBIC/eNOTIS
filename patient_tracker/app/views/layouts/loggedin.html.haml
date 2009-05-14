@@ -5,6 +5,9 @@
     %title eNotis
     =stylesheet_link_tag "reset.css", "default.css"
   %body
+    #flash
+      %span#message= flash[:notice]
+    =render(:partial => "partials/hover_menu", :user => current_user)
     #main
       =yield
           
