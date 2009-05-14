@@ -4,7 +4,7 @@ class RegistrationController < ApplicationController
 
   # The registration landing page
   def index 
-   render(:text=> "hello") 
+
   end
 
 end
