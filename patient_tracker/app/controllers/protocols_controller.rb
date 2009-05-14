@@ -8,4 +8,7 @@ class ProtocolsController < ApplicationController
 	  @protocol = Protocol.find_by_study_id(params[:study_id])
 	end
 	
+  def search
+    @protocols = Protocol.find_by_study_id(params[:study_id])
+  end
 end
