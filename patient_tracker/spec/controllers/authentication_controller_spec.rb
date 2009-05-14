@@ -22,15 +22,12 @@ describe AuthenticationController do
     end
 
     it "sets the current user in the session after a successful login" do
-      controller.should_receive(:authenticate_user).with("abc123",nil).and_return(@account)
-      controller.should_receive(:current_user).with(@account)
       post 'login', :netid => 'abc123'
-      session[:current_user].should == @account.id
+      controller.session[:current_user].should == @account.id
       response.should be_redirect # to default page
     end
 
     it "sets the current user when user objet is assigned" do
-      User.should_receive(:find).with(@account.id).and_return(@account)
       controller.current_user = @account
       session[:current_user].should == @account.id
     end
