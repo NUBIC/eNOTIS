@@ -52,31 +52,58 @@
         = protocol.description || "Missing"
   
   .file_details
-    .recent_protocol
-      File icon
-    .recent_consents
-      Consents:
-      %ul
-        %li.consent_file
-          Consent One
-        %li.consent_file
-          Consent Two
-        %li.consent_file
-          Consent Three
+    %strong
+      Protocol Documents
+    %ul
+      %li.protocol_file
+        =image_tag("protocol_icon.gif")
+        %em 
+          Protocol Document
+          =link_to("(view)")
+          &nbsp;
+          =link_to("(download)")
+      %li.protocol_file
+        =image_tag("consent_icon.gif")
+        %em
+          Standard Consent
+          =link_to("(view)")
+          &nbsp;
+          =link_to("(download)")
+      %li.protocol_file
+        =image_tag("consent_icon.gif")
+        %em
+          Standard Assent
+          =link_to("(view)")
+          &nbsp;
+          =link_to("(download)")
+      %li.protocol_file
+        =image_tag("consent_icon.gif")
+        %em
+          Health Volunteer Consent
+          =link_to("(view)")
+          &nbsp;
+          =link_to("(download)")
   .status_history
+    %strong
+      Status History:
     %ul
       %li.status_event.approved
-        Approved
+        =image_tag("info_24.gif")
+        Approved on mm/dd/yyyy
       %li.status_event.renewed
-        Renewed
+        =image_tag("info_24.gif")
+        Renewed on mm/dd/yyyy
       %li.status_event.registered
-        Registered Patient
+        =image_tag("info_24.gif")
+        Registered Patient on mm/dd/yyyy
       %li.status_event.registered
-        Registered Patient
+        =image_tag("info_24.gif")
+        Registered Patient  on mm/dd/yyyy
       %li.status_event.adverse
-        Adverse Event
+        =image_tag("info_24.gif")
+        Adverse Event on mm/dd/yyyy
       %li.status_event.reviewed
-        Reviewed
-
-
-
+        =image_tag("info_24.gif")
+        Reviewed on mm/dd/yyyy
+.clear
+  &nbsp;

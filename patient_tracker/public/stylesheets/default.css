@@ -241,7 +241,9 @@ ul.events li.event {
     background-color: #f0f0f0;
     margin-bottom: 0.5em; }
   #protocol_full .header_details .secondary_data {
-    margin-left: 14.5em;
+    font-size: 1.3em;
+    line-height: 1.5em;
+    margin-left: 11.5em;
     font-weight: bold; }
     #protocol_full .header_details .secondary_data em {
       font-weight: normal; }
@@ -275,16 +277,34 @@ ul.events li.event {
   margin-bottom: 1em;
   float: left;
   width: 45%; }
+  #protocol_full .file_details .protocol_file {
+    padding: 0.5em;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: -1px; }
+    #protocol_full .file_details .protocol_file img {
+      position: relative;
+      top: 3px; }
+    #protocol_full .file_details .protocol_file em {
+      padding-bottom: 0.4em; }
 #protocol_full .status_history {
   -moz-border-radius: 4px 4px;
   background-color: #c3c3c3;
   padding: 0.5em;
   margin-bottom: 1em;
   margin-left: 50%; }
+  #protocol_full .status_history li {
+    padding: 0.5em; }
+#protocol_full .accural_status {
+  -moz-border-radius: 4px 4px;
+  background-color: #c3c3c3;
+  padding: 0.5em;
+  margin-bottom: 1em; }
 
 .add_patients {
   float: right;
-  margin-right: 3em; }
+  margin-right: 1em;
+  margin-top: -1em; }
   .add_patients a {
     display: block;
     border: 1px solid #333;
@@ -298,3 +318,20 @@ ul.events li.event {
   .add_patients a:hover {
     background-color: #ffffe0;
     color: #520064; }
+
+#patient_list {
+  -moz-border-radius: 4px 4px;
+  background-color: #c3c3c3;
+  padding: 1em;
+  margin-bottom: 1em; }
+  #patient_list ul {
+    display: block;
+    width: 80%; }
+    #patient_list ul li {
+      padding: 0.5em;
+      border-top: 1px solid #333;
+      border-bottom: 1px solid #333;
+      margin-bottom: -1px; }
+
+#new_patient_form input {
+  padding: 0.5em; }

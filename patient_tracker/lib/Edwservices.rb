@@ -84,7 +84,7 @@ module PatientNode
 end
  
 module ProtocolRequests
-  URL_BASE = "http://209.252.134.167:3000"
+  URL_BASE = "http://localhost:3000"
  
   def get_study_list
     study_list = []
@@ -148,7 +148,7 @@ module ProtocolRequests
 end  
  
 module PatientRequests
-  URL_BASE = "http://209.252.134.167:3000"
+  URL_BASE = "http://localhost:3000"
 
   def find_by_mrn(mrn)
     patient_list = []
