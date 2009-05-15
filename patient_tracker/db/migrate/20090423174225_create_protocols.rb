@@ -7,7 +7,6 @@ class CreateProtocols < ActiveRecord::Migration
       t.string :approval_status
       t.date :reconciliation_date
       t.string :reconciliation_status
-      t.text :xml_node
       t.timestamps
   end
 	

@@ -20,7 +20,6 @@ class CreatePatients < ActiveRecord::Migration
       t.string :phone
       t.string :work_phone
       t.string :work_phone_extension
-      t.text :xml_node
        t.timestamps
     end
   end
