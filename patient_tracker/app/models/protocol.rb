@@ -8,8 +8,15 @@ require 'lib/Edwservices'
 class Protocol < ActiveRecord::Base.extend ProtocolRequests
 	has_many :involvements
 	include ProtocolNode
+  
+  attr_accessor :xml_node
+
+  def initialize(xml)
+    @xml_node = xml
+  end
+
   def self.save_foreign_protocol(protocol)
-    new_protocol = Protocol.create
+    new_protocol = Protocol.new(protocol)
     new_protocol.irb_number = protocol.study_id
     new_protocol.save
     return new_protocol

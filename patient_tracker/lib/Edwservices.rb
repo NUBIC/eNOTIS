@@ -3,7 +3,6 @@ require 'net/http'
 include REXML
 
 module ProtocolNode
-  attr_accessor :xml_node
 
   def name
     @xml_node.elements["name"].text
@@ -32,23 +31,13 @@ module ProtocolNode
 end
 
 module PatientNode
-  attr_accessor :xml_node
 
   def first_name
-    if @xml_node
       @xml_node.elements["first_name"].text
-    else
-      @first_name
-    end
   end
 
   def last_name
-    if @xml_node
       @xml_node.elements["last_name"].text
-    else
-      @last_name
-    end
-
   end
 
   def mrn
@@ -72,8 +61,7 @@ module ProtocolRequests
     study_list =  []
     xml_response = get_payload("#{URL_BASE}/protocols/study_list")
     xml_response.elements.each("protocols/protocol") do  |protocol|	
-      study = Protocol.new
-      study.xml_node = protocol
+      study = Protocol.new(protocol)
       study_list.push(study)
     end
     study_list
@@ -84,8 +72,7 @@ module ProtocolRequests
     xml_response = get_payload("#{URL_BASE}/protocols/find_by_studyid?studyid=#{study_id}")
     if xml_response
       xml_response.elements.each("protocol") do  |protocol|	
-        study = Protocol.new
-        study.xml_node = protocol
+        study = Protocol.new(protocol)
         return study
       end
       return nil
@@ -99,8 +86,7 @@ module ProtocolRequests
     xml_response = get_payload("#{URL_BASE}/coordinators/study_access_list?netid=#{net_id}")
     if xml_response 
       xml_response.elements.each("protocols/protocol") do  |protocol|
-          study = Protocol.new
-          study.xml_node = protocol
+          study = Protocol.new(protocol)
     	  study_list << study
       end
     end
@@ -139,8 +125,7 @@ module PatientRequests
     xml_response = REXML::Document.new(http_response.body);
 
     xml_response.elements.each("patient") do  |node|
-        patient = Patient.new
-        patient.xml_node = node
+        patient = Patient.new(node)
     	patient_list << patient
     end
     return patient_list

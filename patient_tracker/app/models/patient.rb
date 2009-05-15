@@ -9,6 +9,13 @@ class Patient < ActiveRecord::Base.extend PatientRequests
 	has_many :involments
 	has_many :patient_events
 
+  attr_accessor :xml_node
+
+  def initialize(xml)
+   @xml_node = xml 
+  end
+
+  
   def self.save_foreign_patient(patient)
     new_patient = Patient.new
     new_patient.first_name = patient.first_name
