@@ -1,0 +1,22 @@
+<% if @patient.nil? %>
+<% form_remote_tag( :url=> add_patient_registrations_url ) do |f| %>
+      <%= label_tag 'first_name' %>
+      <%= text_field_tag( :first_name ) %><br/>
+      <%= label_tag 'last_name' %>
+      <%= text_field_tag( :last_name  ) %><br/>
+      <%= label_tag 'd_o_d', "Date of Birth" %>
+      <%= text_field_tag( :d_o_d ) %><br/>
+      <%= submit_tag( "Add Patient" ) %>
+<% end %>
+<%else%>
+<% form_remote_tag( :url=> add_patient_registrations_url ) do |f| %>
+      <%= label_tag 'first_name' %>
+      <%= text_field_tag( :first_name, @patient.last_name, :disabled=>true)%><br/>
+      <%= label_tag 'last_name' %>
+      <%= text_field_tag( :last_name, @patient.last_name,:disabled=>true ) %><br/>
+      <%= label_tag 'd_o_d', "Date of Birth" %>
+      <%= text_field_tag( :d_o_d , @patient.date_of_birth,:disabled=>true) %><br/>
+      <%= submit_tag( "Confirm/Add Patient" ) %>
+<% end %>
+
+<%end%> 

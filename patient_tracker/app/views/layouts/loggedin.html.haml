@@ -4,6 +4,7 @@
   %head
     %title eNotis
     =stylesheet_link_tag "reset.css", "default.css"
+    =javascript_include_tag "jQuery" , "jquery-ui" ,"jrails","facebox" 
   %body
     - if flash[:notice] 
       #flash
