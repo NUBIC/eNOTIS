@@ -1,0 +1,82 @@
+#protocol_full
+  %ul.menu
+    %li.active
+      %a
+        General Info
+    %li.inactive
+      %a
+        Protocol Events
+    %li.inactive
+      %a
+        Patients
+    %li.inactive
+      %a
+        Patient Events
+    %li.inactive
+      %a
+        Budgeting
+
+  .header_details
+    .primary_data
+      .status_icon.approved
+        Approved
+        %small.gray
+          mm/dd/yyyy
+      .study_id="##{protocol.study_id}"
+    .secondary_data
+      .name
+        %em
+          Name:
+        = protocol.name  || "Missing"
+      .phase
+        %em
+          Phase:
+        = protocol.phase || "Missing"
+      .title
+        %em
+          Title:
+        = protocol.short_title || "Missing"
+      .pi
+        %em
+          PI:
+        Investigator, Principal
+      .coord
+        %em
+          Study Coord:
+        Coordinator, Study
+
+    .tertiary_data
+      .description
+        %em
+          Decription:
+        = protocol.description || "Missing"
+  
+  .file_details
+    .recent_protocol
+      File icon
+    .recent_consents
+      Consents:
+      %ul
+        %li.consent_file
+          Consent One
+        %li.consent_file
+          Consent Two
+        %li.consent_file
+          Consent Three
+  .status_history
+    %ul
+      %li.status_event.approved
+        Approved
+      %li.status_event.renewed
+        Renewed
+      %li.status_event.registered
+        Registered Patient
+      %li.status_event.registered
+        Registered Patient
+      %li.status_event.adverse
+        Adverse Event
+      %li.status_event.reviewed
+        Reviewed
+
+
+
