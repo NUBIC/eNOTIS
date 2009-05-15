@@ -8,9 +8,21 @@ module ProtocolNode
   def name
     @xml_node.elements["name"].text
   end
+  
+  def short_title
+    @xml_node.elements["short_title"].text
+  end
 
   def description
     @xml_node.elements["description"].text
+  end
+
+  def short_description
+    @xml_node.elements["short_description"].text
+  end
+
+  def phase
+    @xml_node.elements["phase"].text
   end
 
   def study_id

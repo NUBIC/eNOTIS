@@ -58,7 +58,8 @@ ul#menu {
     font-size: 2em;
     color: #520064;
     padding: 0.6em;
-    width: 7em; }
+    width: 7em;
+    font-weight: bold; }
   ul#menu #protocol_search {
     width: 35em; }
   ul#menu #patient_search {

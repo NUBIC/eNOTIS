@@ -1,1 +1,12 @@
-=@ccessable_protocols.inspect
+
+#events_and_options
+  #recent_events
+    Recent events:
+  #user_options
+    Your user options:
+
+#protocol_list
+  You have access to the following Protocols:
+
+  -@accessable_protocols.each do |p|
+    =render(:partial => "protocol", :object => p)  
