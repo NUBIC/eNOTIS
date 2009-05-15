@@ -104,7 +104,8 @@ ul#menu {
 
 /* used on the coordinator view page */ */
 #events_and_options {
-  width: 100%; }
+  width: 100%;
+  margin-top: -1.5em; }
   #events_and_options #recent_events {
     background-color: #c3c3c3;
     -moz-border-radius: 4px 4px;
