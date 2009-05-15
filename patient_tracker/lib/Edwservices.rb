@@ -35,11 +35,20 @@ module PatientNode
   attr_accessor :xml_node
 
   def first_name
-    @xml_node.elements["first_name"].text
+    if @xml_node
+      @xml_node.elements["first_name"].text
+    else
+      @first_name
+    end
   end
 
   def last_name
-    @xml_node.elements["last_name"].text
+    if @xml_node
+      @xml_node.elements["last_name"].text
+    else
+      @last_name
+    end
+
   end
 
   def mrn
@@ -121,6 +130,8 @@ module ProtocolRequests
 end	
 
 module PatientRequests
+  URL_BASE = "http://localhost:3000"
+  
   def find_by_mrn(mrn)
     patient_list =  []
     base = "#{URL_BASE}/patients/master_patient_lookup?mrn=" 
