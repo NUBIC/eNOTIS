@@ -28,6 +28,18 @@ small
 .gray
   :color= !LT_GRAY
 
+a
+  :color= !FONT_COLOR
+
+a:hover
+  :color #33f
+
+a:hover:visited
+  :color #33f
+
+a:visited
+  :color= !FONT_COLOR
+
 body
   :background-color= !BODY_COLOR
   :font-family Verdana, Arial, sans-serif
@@ -146,17 +158,20 @@ ul#menu
       :font-weight bold
       :font-size 1.5em
       :line-height 1em
+    .name
+      :font-weight bold
+      :font-size 1.5em
+      :line-height 1em
     .description
       :font-weight italic
-      :font-size 0.8em
     .details
       :float right
       :margin-right 2em
-      :margin-top -1em
+      
 
   a.protocol:hover
     :cursor pointer
-    :background-color #fff
+    :background-color= !LT_YELLOW
     :border 1px solid #333
     .details:after
       :content "(click for details)"

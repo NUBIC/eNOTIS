@@ -20,6 +20,18 @@ small {
 .gray {
   color: #c3c3c3; }
 
+a {
+  color: #333333; }
+
+a:hover {
+  color: #33f; }
+
+a:hover:visited {
+  color: #33f; }
+
+a:visited {
+  color: #333333; }
+
 body {
   background-color: #f0f0f0;
   font-family: Verdana, Arial, sans-serif;
@@ -127,16 +139,18 @@ ul#menu {
       font-weight: bold;
       font-size: 1.5em;
       line-height: 1em; }
+    #protocol_list a.protocol .name {
+      font-weight: bold;
+      font-size: 1.5em;
+      line-height: 1em; }
     #protocol_list a.protocol .description {
-      font-weight: italic;
-      font-size: 0.8em; }
+      font-weight: italic; }
     #protocol_list a.protocol .details {
       float: right;
-      margin-right: 2em;
-      margin-top: -1em; }
+      margin-right: 2em; }
   #protocol_list a.protocol:hover {
     cursor: pointer;
-    background-color: #fff;
+    background-color: #ffffe0;
     border: 1px solid #333; }
     #protocol_list a.protocol:hover .details:after {
       content: "(click for details)"; }

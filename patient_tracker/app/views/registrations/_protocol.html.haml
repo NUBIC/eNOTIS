@@ -2,16 +2,20 @@
   %span.study_id=protocol.study_id    
   %span.name
     %small
-      &nbsp;&nbsp;Name:
+      &nbsp;&nbsp;&ndash;&nbsp;
     =protocol.name
   %span.phase
     %small
       &nbsp;&nbsp;Phase:
     =protocol.phase
+  %span.details="&nbsp;"  
+  %br
   %span.title
     %small
       &nbsp;&nbsp;Title:
     =protocol.short_title || protocol.title || "Missing Title!!"
-  %span.details="&nbsp;"
   %br
-  %span.description=protocol.description
+  %span.description
+    %small  
+      &nbsp;&nbsp;Desc:
+    =protocol.description
