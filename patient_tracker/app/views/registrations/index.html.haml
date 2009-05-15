@@ -1,12 +1,32 @@
 
 #events_and_options
   #recent_events
-    Recent events:
+    .heading
+      Recent events:
+    %ul.events
+      %li.event
+        =link_to("John Smith - AE on protocol STU0001924")
+      %li.event
+        =link_to("Sally Sue - Registered on protocol STU0001924")
+      %li.event
+        =link_to("Approval of protocol STU00020135")
+
   #user_options
-    Your user options:
+    .heading
+      eNotis options:
+    %ul
+      %li
+        =link_to("view your profile")
+      %li
+        =link_to("view your audit history")
+      %li
+        =link_to("verify your email address")
+      %li
+        =link_to("edit user settings")
 
 #protocol_list
-  You have access to the following Protocols:
-
-  -@accessable_protocols.each do |p|
-    =render(:partial => "protocol", :object => p)  
+  .heading 
+    You have access to the following Protocols:
+  %ul 
+    -@accessable_protocols.each do |p|
+      %li=render(:partial => "protocol", :object => p)  

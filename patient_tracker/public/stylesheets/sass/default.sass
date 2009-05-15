@@ -5,7 +5,7 @@
 !BODY_COLOR=#f0f0f0
 !NU_PURPLE=#520064
 !DARK_GRAY=#666666
-!LT_GRAY=#A3A3A3
+!LT_GRAY=#C3C3C3
 !LT_YELLOW=#FFFFE0
 
 h1
@@ -18,12 +18,22 @@ h3
   :font-size 2em
   :margin 1em
 
+strong
+  :font-weight bold
+
+small
+  :font-weight normal
+  :font-size 0.75em
+
+.gray
+  :color= !LT_GRAY
+
 body
   :background-color= !BODY_COLOR
   :font-family Verdana, Arial, sans-serif
   :font-size 62.5% /*this is so we can have nice em's to pix conversion 1.0em ~= 10px, 1.1em ~= 11px, etc...*/
   :color #333
-  :line-height 1.5em
+  :line-height 1.8em
 
 #flash
   :width 100%
@@ -44,6 +54,13 @@ body
   :width 13em
   :line-height 1.8em
 
+.heading
+  :line-height 1em
+  :font-weight bold
+  :font-size 1.5em
+  :border-bottom 1px solid #333
+  :border-color= !DARK_GRAY
+  :padding-bottom 0.3em
 
 ul#menu
   :margin 0
@@ -53,7 +70,7 @@ ul#menu
       
 
   li
-    :background-color= !DARK_GRAY
+    :background-color= !NU_PURPLE
     :color= !FONT_INVERT_COLOR
     :float left
     :height 5em
@@ -70,7 +87,6 @@ ul#menu
 
   #app_name
     :font-size 2em
-    :color= !NU_PURPLE
     :padding 0.6em
     :width 7em
     :font-weight bold
@@ -83,14 +99,115 @@ ul#menu
   
   #current_user
     :width 7em
+    a
+      :color= !FONT_INVERT_COLOR
     
 #main
   :padding 0.5em 2em
-  :font-size 1.2em
+  :font-size 1.3em
 
+/* used on the coordinator view page */
+#events_and_options
+  :width 100%
 
+  #recent_events
+    :background-color= !LT_GRAY
+    :-moz-border-radius 4px 4px
+    :width 55%
+    :padding 1.5em
+    :height 10em
+    :float left
 
+  #user_options
+    :background-color= !LT_GRAY
+    :-moz-border-radius 4px 4px
+    :width 35%
+    :margin 1em
+    :margin-left 60%
+    :padding 1.5em
+    :height 10em
+
+#protocol_list
+  :background-color= !LT_GRAY
+  :-moz-border-radius 4px 4px
+  :padding 1.5em
+  :margin 1em 0em
+  :width 95%
+
+  a.protocol
+    :text-decoration none
+    :color= !FONT_COLOR
+    :display block
+    :padding 0.3em
+    :width 100%
+    :border 1px solid #fff
+    :border-color= !LT_GRAY
+    .study_id
+      :font-weight bold
+      :font-size 1.5em
+      :line-height 1em
+    .description
+      :font-weight italic
+      :font-size 0.8em
+    .details
+      :float right
+      :margin-right 2em
+      :margin-top -1em
+
+  a.protocol:hover
+    :cursor pointer
+    :background-color #fff
+    :border 1px solid #333
+    .details:after
+      :content "(click for details)"
+      
+
+/* event based display of info on the user home */
+ul.events
   
-#clear
+  li.event
+    :display inline
+
+    a
+      :padding-left 0.5em
+      :display block
+      :height 2em
+      :line-height 2em
+      :text-decoration none
+      :border 1px solid
+      :border-color= !LT_GRAY
+      :border-bottom-color= !DARK_GRAY
+    
+    a:hover
+      :background-color= !LT_YELLOW
+      :border-left-color= !DARK_GRAY
+      :border-right-color= !DARK_GRAY
+
+    a:hover:after
+      :content '  (click for details)'
+
+.clear
   :clear both
   :width 1px
+
+#footer
+  :background-color #fff
+  :padding 1em
+  :border-top 1px solid #333
+  :text-transform uppercase 
+
+#enotis_header
+  :font-size 3em
+  :background-color= !NU_PURPLE
+  :color= !LT_YELLOW
+  :padding 1.0em
+  :width 100%
+  :line-height 1em
+
+  .app_name
+    :font-weight bold
+
+  .tagline
+    :font-size 0.5em
+    :font-style italic
+

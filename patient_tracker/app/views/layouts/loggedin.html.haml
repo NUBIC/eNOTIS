@@ -13,4 +13,10 @@
     =render(:partial => "partials/hover_menu", :locals => {:user => @current_user})
     #main
       =yield
-          
+    #footer
+      eNOTIS &mdash; Clinical Patient Registraion 
+      =app_version_helper
+      Created by&nbsp; 
+      =link_to("NUBIC")
+      &nbsp;for Nortwestern University
+      

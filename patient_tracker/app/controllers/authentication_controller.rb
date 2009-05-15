@@ -11,7 +11,7 @@ class AuthenticationController < ApplicationController
   
   def login
     if authenticate_user(params[:netid],params[:password])
-      flash[:notice] = "You are logged in"
+      flash[:notice] = "You are logged in as #{params[:netid]}" #TODO-don't do this, scrub first
       redirect_to default_path
     else
       flash[:notice] = "Unable to validate user"

@@ -1,6 +1,17 @@
-%ul
-  %li=protocol.name
-  %li=protocol.short_title
-  %li=protocol.study_id
-  %li=protocol.description
-  %li=protocol.phase
+%a.protocol{:href=> protocol_path(protocol.study_id)}
+  %span.study_id=protocol.study_id    
+  %span.name
+    %small
+      &nbsp;&nbsp;Name:
+    =protocol.name
+  %span.phase
+    %small
+      &nbsp;&nbsp;Phase:
+    =protocol.phase
+  %span.title
+    %small
+      &nbsp;&nbsp;Title:
+    =protocol.short_title || protocol.title || "Missing Title!!"
+  %span.details="&nbsp;"
+  %br
+  %span.description=protocol.description

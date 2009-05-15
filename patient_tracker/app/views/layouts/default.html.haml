@@ -10,6 +10,20 @@
         %span#message
           Message:
           = flash[:notice]
+    #enotis_header
+      .app_name
+        eNOTIS
+      .tagline
+        Clinical Patient Registration made eASY
+  
     #main
       =yield
-          
+    .clear
+      &nbsp;
+    #footer
+      = image_tag("nu_pageheader.jpg")
+      eNOTIS &mdash; Clinical Patient Registraion 
+      =app_version_helper
+      Created by&nbsp; 
+      =link_to("NUBIC")
+      &nbsp;for Nortwestern University
