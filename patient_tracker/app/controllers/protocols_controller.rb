@@ -14,6 +14,7 @@ layout "layouts/loggedin"
 	
   def search
     @protocols = Protocol.find_by_study_id(params[:study_id])
+    render(index)
   end
 
 end

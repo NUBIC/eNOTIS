@@ -246,8 +246,9 @@ ul.events
         :-moz-border-radius 4px 4px 0px 0px
         :background-color= !LT_GRAY
         :width 8em
-        :padding 0.3em 0.5em 1em 0.5em
+        :padding 0.5em 0.5em 1em 0.5em
         :text-align center
+        :font-weight bold
 
     li.inactive
       :padding-top 0.4em
@@ -263,6 +264,7 @@ ul.events
         :text-align center
       a:hover
         :background-color= !LT_YELLOW
+        :color= !NU_PURPLE
       
 
   .header_details
@@ -318,9 +320,31 @@ ul.events
     :background-color= !LT_GRAY
     :padding 0.5em
     :margin-bottom 1em
+    :float left
+    :width 45%
+
     
   .status_history
     :-moz-border-radius 4px 4px
     :background-color= !LT_GRAY
     :padding 0.5em
     :margin-bottom 1em
+    :margin-left 50%
+
+.add_patients
+  :float right
+  :margin-right 3em
+  a
+    :display block
+    :border 1px solid #333
+    :padding 0.3em
+    :font-weight bold
+    :text-decoration none
+    :text-align center
+    :width 8em
+    :background-color= !NU_PURPLE
+    :color= !FONT_INVERT_COLOR
+
+  a:hover
+    :background-color= !LT_YELLOW
+    :color= !NU_PURPLE

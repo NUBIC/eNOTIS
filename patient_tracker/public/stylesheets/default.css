@@ -209,8 +209,9 @@ ul.events li.event {
     -moz-border-radius: 4px 4px 0px 0px;
     background-color: #c3c3c3;
     width: 8em;
-    padding: 0.3em 0.5em 1em 0.5em;
-    text-align: center; }
+    padding: 0.5em 0.5em 1em 0.5em;
+    text-align: center;
+    font-weight: bold; }
   #protocol_full ul.menu li.inactive {
     padding-top: 0.4em;
     margin: 0em 0.2em; }
@@ -224,7 +225,8 @@ ul.events li.event {
       padding: 0.3em 0.5em;
       text-align: center; }
     #protocol_full ul.menu li.inactive a:hover {
-      background-color: #ffffe0; }
+      background-color: #ffffe0;
+      color: #520064; }
 #protocol_full .header_details {
   -moz-border-radius: 4px 4px;
   background-color: #c3c3c3;
@@ -270,9 +272,29 @@ ul.events li.event {
   -moz-border-radius: 4px 4px;
   background-color: #c3c3c3;
   padding: 0.5em;
-  margin-bottom: 1em; }
+  margin-bottom: 1em;
+  float: left;
+  width: 45%; }
 #protocol_full .status_history {
   -moz-border-radius: 4px 4px;
   background-color: #c3c3c3;
   padding: 0.5em;
-  margin-bottom: 1em; }
+  margin-bottom: 1em;
+  margin-left: 50%; }
+
+.add_patients {
+  float: right;
+  margin-right: 3em; }
+  .add_patients a {
+    display: block;
+    border: 1px solid #333;
+    padding: 0.3em;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    width: 8em;
+    background-color: #520064;
+    color: #f0f0f0; }
+  .add_patients a:hover {
+    background-color: #ffffe0;
+    color: #520064; }
