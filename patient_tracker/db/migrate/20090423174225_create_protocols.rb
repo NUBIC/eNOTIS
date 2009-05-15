@@ -8,8 +8,7 @@ class CreateProtocols < ActiveRecord::Migration
       t.date :reconciliation_date
       t.string :reconciliation_status
       t.timestamps
-  end
-	
+    end
   end
 
   def self.down

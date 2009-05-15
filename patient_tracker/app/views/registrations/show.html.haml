@@ -1,0 +1,14 @@
+=render(:partial => "protocols/protocol", :object => @protocol) 
+%strong
+  Patients:
+%span.add_patients
+  = facebox_link_to("Add Patient", :url => new_registration_url,:study_number => {:study_number => @protocol.study_id}, :method=>:get)
+%br
+- if @involvements.nil? or @involvements.empty?
+  There are currently no Patients Associated with this protocol
+
+- else 
+  - @involvements.each do |involvement|
+    %ul
+      %li= render(:partial => 'patient', :object => involvement.patient)
+
