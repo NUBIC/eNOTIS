@@ -16,8 +16,8 @@ class Involvement < ActiveRecord::Base
     end
     if params[:mrn]
       patient = Patient.find_by_mrn(params[:mrn])
-      if patient.id.nil?
-        Patient.save_foreign_patient(patient)
+      if patient.class == Array
+        patient = Patient.save_foreign_patient(patient[0])
       end
     else
       patient = Patient.new

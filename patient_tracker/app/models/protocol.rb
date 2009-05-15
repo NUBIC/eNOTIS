@@ -12,6 +12,7 @@ class Protocol < ActiveRecord::Base.extend ProtocolRequests
     new_protocol = Protocol.create
     new_protocol.irb_number = protocol.study_id
     new_protocol.save
+    return new_protocol
   end  
 end
 

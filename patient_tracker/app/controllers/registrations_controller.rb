@@ -15,7 +15,7 @@ class RegistrationsController < ApplicationController
    session[:study_id]= params[:study_id]
    @protocol = Protocol.find_by_study_id(params[:study_id])
    @protocol_local = Protocol.find_by_irb_number(params[:study_id])
-   if @prootcol_locol
+   if not @protocol_local.nil?
    	@involvements = Involvement.find(:all,:conditions=>["protocol_id = ?",@protocol_local.id])
    end
   end

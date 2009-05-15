@@ -13,6 +13,7 @@ class Patient < ActiveRecord::Base.extend PatientRequests
     new_patient = Patient.new
     new_patient.first_name = patient.first_name
     new_patient.last_name = patient.last_name
+    new_patient.save
   end
 
 end

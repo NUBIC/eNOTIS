@@ -7,8 +7,9 @@ There are currently no Patients Associated with this protocol</br>
 
 <%else %>
 <% @involvements.each do |involvement| %>
-<%= involvement.patient.first_name + +involvement.patient.last_name %>
-
+<%= involvement.patient.first_name%>  
+<%= involvement.patient.last_name %>
+<br/>
 <%end%>
 <%end%>
 <%= facebox_link_to "Add Patient", :url => new_registration_url,:study_number => {:study_number => @protocol.study_id}, :method=>:get%>
