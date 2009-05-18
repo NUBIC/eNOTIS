@@ -1,7 +1,7 @@
 =render(:partial => "protocols/protocol", :object => @protocol) 
 #patient_list
   %strong
-    Patients:
+    Patients registered on this protocol:
   %span.add_patients
     = facebox_link_to("Add Patient", :url => new_registration_url,:study_number => {:study_number => @protocol.study_id}, :method=>:get)
   %br

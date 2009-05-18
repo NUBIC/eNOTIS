@@ -105,7 +105,7 @@ ul#menu
   #app_name
     :font-size 2em
     :padding 0.6em
-    :width 7em
+    :width 5em
     :font-weight bold
     
   #protocol_search
@@ -283,7 +283,9 @@ ul.events
       :margin-bottom 0.5em
 
     .secondary_data
-      :margin-left 14.5em
+      :font-size 1.3em
+      :line-height 1.5em
+      :margin-left 11.5em
       :font-weight bold
       em
         :font-weight normal
@@ -323,7 +325,18 @@ ul.events
     :float left
     :width 45%
 
-    
+    .protocol_file
+      :padding 0.5em
+      :border-top 1px solid #f0f0f0
+      :border-bottom 1px solid #f0f0f0
+      :margin-bottom -1px
+
+      img
+        :position relative
+        :top 3px
+      em
+        :padding-bottom 0.4em
+
   .status_history
     :-moz-border-radius 4px 4px
     :background-color= !LT_GRAY
@@ -331,9 +344,19 @@ ul.events
     :margin-bottom 1em
     :margin-left 50%
 
+    li
+      :padding 0.5em
+
+  .accural_status
+    :-moz-border-radius 4px 4px
+    :background-color= !LT_GRAY
+    :padding 0.5em
+    :margin-bottom 1em
+
 .add_patients
   :float right
-  :margin-right 3em
+  :margin-right 1em
+  :margin-top -1em
   a
     :display block
     :border 1px solid #333
@@ -348,3 +371,23 @@ ul.events
   a:hover
     :background-color= !LT_YELLOW
     :color= !NU_PURPLE
+
+#patient_list
+  :-moz-border-radius 4px 4px
+  :background-color= !LT_GRAY
+  :padding 1em
+  :margin-bottom 1em
+
+  ul
+    :display block
+    :width 80%
+    li
+      :padding 0.5em
+      :border-top 1px solid #333
+      :border-bottom 1px solid #333
+      :margin-bottom -1px
+
+#new_patient_form
+  input
+    :padding 0.5em
+

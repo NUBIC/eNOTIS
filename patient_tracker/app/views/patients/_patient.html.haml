@@ -1,3 +1,12 @@
-%span.first= patient.first_name
-%span.last= patient.last_name
-%span.mrn= patient.mrn
+%span.first
+  %em
+    first name:
+  = patient.first_name
+%span.last
+  %em
+    last name:
+  = patient.last_name
+%span.mrn
+  %em
+    mrn: 
+  = patient.mrn

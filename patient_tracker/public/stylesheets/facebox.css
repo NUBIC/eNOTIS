@@ -7,7 +7,7 @@
 }
 
 #facebox .tr {
-  background:url(../imges/tr.png);
+  background:url(../images/tr.png);
 }
 
 #facebox .bl {
@@ -40,9 +40,15 @@
 }
 
 #facebox .body {
-  padding: 10px;
-  background: #fff;
-  width: 370px;
+  padding: 20px;
+  background: #f0f0f0;
+  width: 470px;
+  font-weight:bold;
+
+}
+
+#facebox input{
+  margin: 0.5em;
 }
 
 #facebox .loading {
