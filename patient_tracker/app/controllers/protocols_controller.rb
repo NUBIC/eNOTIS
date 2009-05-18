@@ -13,8 +13,8 @@ layout "layouts/loggedin"
   end
 	
   def search
-    @protocols = Protocol.find_by_study_id(params[:study_id])
-    render(index)
+    @protocols = [] << Protocol.find_by_study_id(params[:study_id])
+    render(:action => "index")
   end
 
 end
