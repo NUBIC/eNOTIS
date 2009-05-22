@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../soap_mock_helper')
 
 
 describe EirbServices do
@@ -100,10 +101,17 @@ describe EirbServices do
           @driver.should_receive(:performSearch).with(id_search_params).and_return(mock(SOAP::Mapping::Object))          
           @tester.find_status_by_id("STU00000706")
         end
+        
+        describe "search results" do
+                  
+
+            
+          it "returns an empty array for a search with no results" do
+            @search = mocked_search_results([]) 
+          end
+        end
       end
-
     end 
-
    end
 
   describe "working with an invalid session login" do
@@ -124,4 +132,4 @@ describe EirbServices do
     EirbServices::Server.format_search_parameters(test_params).should == final_params 
   end
 
-end
+ end

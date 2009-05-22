@@ -53,7 +53,7 @@ module EirbServices
                                                :parameters => {:id => study_id}})
        search_results = perform_search(search_settings)  
      end
-     
+
 
      # ==== Wrapper methods for calling soap services and formatting parameters ====
     
@@ -64,7 +64,7 @@ module EirbServices
        unless @session.nil?
        params.merge!({:svcSessionToken => @session,
                      :parameters => Server.format_search_parameters(params[:parameters])})
-       @driver.performSearch(params)
+       @driver.performSearch(params) #method that actually calls the soap service
        else
          raise DataServiceError
        end
