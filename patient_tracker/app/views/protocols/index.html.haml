@@ -1,7 +1,7 @@
 %h1
   Protocols
-- @protocols.each do |protocol|
-  %strong=link_to protocol.title, :action=>'show'
+-@protocols.each do |protocol|
+  =render(:partial => "protocol", :object => protocol)
   %br
 
 
