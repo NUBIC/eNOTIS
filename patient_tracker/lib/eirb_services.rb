@@ -52,6 +52,7 @@ module EirbServices
        search_settings = SEARCH_DEFAULTS.merge({:savedSearchName => "idStatus",
                                                :parameters => {:id => study_id}})
        search_results = perform_search(search_settings)  
+       Server.format_search_results(search_results)
      end
 
 
@@ -81,6 +82,32 @@ module EirbServices
        else
          return params
        end
+     end
+
+     # Takes the nasty soap results and converts them to keyed values
+     def self.format_search_results(results)
+        mapped = [] 
+        c_h = results.performSearchResult.searchResults.columnHeaders.columnHeader
+        result_rows =  results.performSearchResult.searchResults.resultSet.row
+        if result_rows.is_a?(Array) #holding multiple values
+          result_rows.each do |row_obj|
+            t_hash = Server.make_hash(row_obj.value,c_h)
+            mapped << t_hash unless t_hash.empty?
+          end
+        else  
+          t_hash =  Server.make_hash(result_rows.value,c_h)
+          mapped << t_hash unless t_hash.empty?
+        end  
+        mapped
+     end
+
+     # creating an array of single hashes (key values) to return
+     def self.make_hash(values,keys)
+        tmp = {}
+        values.each_with_index do |val,idx|
+          tmp.merge!({ keys[idx] => val })
+        end
+        tmp
      end
   end
 

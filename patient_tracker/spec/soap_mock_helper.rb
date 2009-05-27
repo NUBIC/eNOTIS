@@ -22,6 +22,7 @@ module SoapMockHelper
       #        >
       #    >
       #>
+
       # This is what is returned for a single row result:
       ##<SOAP::Mapping::Object:0xc1c758 {http://clickcommerce.com/Extranet/WebServices}
       #  performSearchResult=
@@ -35,7 +36,7 @@ module SoapMockHelper
       #             > {}
       #          resultSet=
       #            #<SOAP::Mapping::Object:0xc19576 {}
-      #              row=
+      #              row= # <= if multiple rows then this is an array
       #                #<SOAP::Mapping::Object:0xc194ea {}
       #                  value=["STU00000706", 
       #                    "A randomized, rater-blinded, split-face comparison of the efficacy of Intense Pulse Light vs. Q-switched Nd:Yag laser for the treatment of melasma.", 
@@ -45,14 +46,19 @@ module SoapMockHelper
       #                    "1/1/1800 2:00:00 AM", 
       #                    "Melasma is a common acquired condition of circumscribed hyperpigmentation that is usually progressive and lasts for many years and is difficult to treat. This study will further evaluate the Q-switched Nd: YAG laser operating at 1064 nm in comparison to intense pulse light in the treatment of melasma lesions. To adequately assess this laser treatment, it will be compared to intense pulsed light. IPL will be used to comparatively evaluate the efficacy of laser treatment because it has shown promise in treating melasma . This study is a randomized, double-blind, single-center prospective clinical study of 20 subjects. Participants in this study will be patients at the dermatology clinic who are clinically diagnosed with melasma. One half of the subject\342\200\231s face will be assigned to receive a total of 3 treatments of Q-switched Nd:Yag laser and the other half of the face will be assigned to receive a total of 3 treatments 0f IPL. The treatment will be conducted at each of weeks 0, 5, and 10 (ie, one treatment on each visit). There will be a follow up visit at 15 weeks to asses the treatment efficacy. Baseline digital photography will be taken at each of these visits. The clinician will assess the subject\342\200\231s melasma using the Melasma Area and Severity Index (MASI) at the baseline visit and at the 15 weeks follow up visit. The subject will also be asked to complete the Melasma Quality of Life questionnaire (MELASQOL) at these visits.",
       #                    "Approved"]
-      #                >
+      #            >
       #            >
       #        >
       #    >
       #>
             
     def self.make_column_headers(payload)
-      payload.map{|hash| hash.keys.first.to_s}
+      if payload.first.is_a?(Array)
+        template = payload.first
+      else
+        template = payload
+      end
+      template.map{|hash| hash.keys.first.to_s}
     end
 
     def self.make_resultSet_values(payload)
@@ -65,14 +71,34 @@ module SoapMockHelper
       header
     end
 
+    def self.make_mock_row(payload)
+      rows = []
+      if payload.first.is_a?(Array)
+        payload.each do |i|
+          row = Mock.new(SOAP::Mapping::Object)
+          row.stub!(:value).and_return(Search.make_resultSet_values(i))
+          rows << row
+        end
+        return rows
+      else
+        row = Mock.new(SOAP::Mapping::Object)
+        row.stub!(:value).and_return(Search.make_resultSet_values(payload))
+        return row
+      end
+    end
+    
     def results(payload = [])
       #mocking out the ugliness that is the soap return object
       search_result = Mock.new(SOAP::Mapping::Object)
       search_result.stub!(:description).and_return("")
 
-      search_result.stub!(:columnHeaders)
-      
-      search_result.stub!(:resultSet)
+      cols =  Mock.new(SOAP::Mapping::Object)
+      cols.stub!(:columnHeader).and_return(Search.make_column_headers(payload))
+      search_result.stub!(:columnHeaders).and_return(cols)
+     
+      res_set = Mock.new(SOAP::Mapping::Object)
+      res_set.stub!(:row).and_return(Search.make_mock_row(payload))
+      search_result.stub!(:resultSet).and_return(res_set)
 
       perform_search_result = Mock.new(SOAP::Mapping::Object)
       perform_search_result.stub!(:searchResults).and_return(search_result)
@@ -126,6 +152,10 @@ describe SoapMockHelper do
       SoapMockHelper::Search.make_column_headers(@payload).should == @correct_headers
     end
 
+    it "converts a payload with multiple arrays into column headers" do
+      SoapMockHelper::Search.make_column_headers([@payload,@payload]).should == @correct_headers
+    end
+
     it "converts a payload array of hash objects in to 'resultSet' values" do 
       SoapMockHelper::Search.make_resultSet_values(@payload).should == @correct_values
     end
@@ -134,8 +164,31 @@ describe SoapMockHelper do
       mock_obj = SoapMockHelper::Search.make_mock_header(@payload)  
       mock_obj.respond_to?(:columnHeader).should be_true
       mock_obj.columnHeader.should == @correct_headers
+    end   
+
+    it "makes a row obj with one value for one payload row" do
+      mock_obj = SoapMockHelper::Search.make_mock_row(@payload)  
+      mock_obj.respond_to?(:value).should be_true
+      mock_obj.value.should == @correct_values
+    end
+    
+    it "makes a row obj as an array for multiple payload rows" do
+      mock_obj = SoapMockHelper::Search.make_mock_row([@payload,@payload]) 
+      mock_obj.is_a?(Array).should be_true
+      mock_obj.first.respond_to?(:value).should be_true
+      mock_obj.second.respond_to?(:value).should be_true
+      mock_obj.first.value.should == @correct_values
+      mock_obj.second.value.should == @correct_values
     end
 
-    
+    it "makes a resultSet object with the value data embedded" do
+      mock_obj = SoapMockHelper::Search.new.results(@payload)
+      mock_obj.performSearchResult.searchResults.respond_to?(:resultSet).should be_true
+      mock_obj.performSearchResult.searchResults.resultSet.respond_to?(:row).should be_true 
+      mock_obj.performSearchResult.searchResults.respond_to?(:columnHeaders).should be_true
+      mock_obj.performSearchResult.searchResults.columnHeaders.respond_to?(:columnHeader).should be_true
+    end
+
   end
+
 end

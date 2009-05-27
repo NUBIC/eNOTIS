@@ -98,16 +98,34 @@ describe EirbServices do
             :startRow => 1, :numRows => -1, :expandMultiValueCells => false,
             :parameters => "<parameters><parameter name='ID' value='STU00000706'/></parameters>"}
          
-          @driver.should_receive(:performSearch).with(id_search_params).and_return(mock(SOAP::Mapping::Object))          
+          @driver.should_receive(:performSearch).with(id_search_params).and_return(SoapMockHelper::Search.new.results([]))
+          
           @tester.find_status_by_id("STU00000706")
         end
         
         describe "search results" do
-                  
-
-            
           it "returns an empty array for a search with no results" do
-            @search = mocked_search_results([]) 
+           empty_search = SoapMockHelper::Search.new.results([])
+           @driver.should_receive(:performSearch).and_return(empty_search)
+           @tester.find_status_by_id("STU123123123").should == []
+          end
+          
+          it "returns the results as a hash for one row results" do
+            payload = [{"ID" => "STU0912301239"}, {"Project State.ID" => "APPROVED"}, {"Name" => "The research study"}, {"Research Type.ID" => "INTERVENTIONAL"}]
+            results = SoapMockHelper::Search.new.results(payload)
+            @driver.should_receive(:performSearch).and_return(results)
+            @tester.find_status_by_id("STU123123123").should == [{"ID" => "STU0912301239", "Project State.ID" => "APPROVED", "Name" => "The research study", "Research Type.ID" => "INTERVENTIONAL"}]
+          end
+            
+          it "returns the results as an array of hashes for multi-row results" do
+            payload = [[{"ID" => "STU0912301239"}, {"Project State.ID" => "APPROVED"}, {"Name" => "The research study"}, {"Research Type.ID" => "INTERVENTIONAL"}],
+              [{"ID" => "STU01239"}, {"Project State.ID" => "Terminated"}, {"Name" => "The other research study"}, {"Research Type.ID" => "INTERVENTIONAL"}]]
+            results = SoapMockHelper::Search.new.results(payload)
+            @driver.should_receive(:performSearch).and_return(results)
+            # it doesnt matter that this particular method will never return 
+            # multiple values. We are just testing the end to end process.
+            @tester.find_status_by_id("STU123123123").should == [{"ID" => "STU0912301239", "Project State.ID" => "APPROVED", "Name" => "The research study", "Research Type.ID" => "INTERVENTIONAL"},
+              {"ID" => "STU01239", "Project State.ID" => "Terminated", "Name" => "The other research study", "Research Type.ID" => "INTERVENTIONAL"}]
           end
         end
       end
@@ -119,17 +137,35 @@ describe EirbServices do
       @tester.authenticated?.should be_false   
     end
   end
+   
+  describe "class methods" do
+    it "can convert a hash to search parameter format of the eirb service" do
+      test_params = {:id => "STU100"}
+      final_params = "<parameters><parameter name='ID' value='STU100'/></parameters>"
+      EirbServices::Server.format_search_parameters(test_params).should == final_params 
+      test_params = { :blah => 123}
+      final_params = "<parameters><parameter name='BLAH' value='123'/></parameters>"    
+      EirbServices::Server.format_search_parameters(test_params).should == final_params 
+      test_params = {:foo => 3.14159265}
+      final_params = "<parameters><parameter name='FOO' value='3.14159265'/></parameters>"
+      EirbServices::Server.format_search_parameters(test_params).should == final_params 
+    end
+    
+    it "can convert returned soap results to a hash" do
+      payload = [{"ID" => "STU0000123415"}, {"status" => "Approved"}]
+      result =  SoapMockHelper::Search.new.results(payload)
+      mapped = EirbServices::Server.format_search_results(result)
+      mapped.first["ID"].should == payload.first["ID"]
+      mapped.first["status"].should == payload.second["status"]
+    end
 
-  it "can convert a hash to search parameter format of the eirb service" do
-    test_params = {:id => "STU100"}
-    final_params = "<parameters><parameter name='ID' value='STU100'/></parameters>"
-    EirbServices::Server.format_search_parameters(test_params).should == final_params 
-    test_params = { :blah => 123}
-    final_params = "<parameters><parameter name='BLAH' value='123'/></parameters>"    
-    EirbServices::Server.format_search_parameters(test_params).should == final_params 
-    test_params = {:foo => 3.14159265}
-    final_params = "<parameters><parameter name='FOO' value='3.14159265'/></parameters>"
-    EirbServices::Server.format_search_parameters(test_params).should == final_params 
+    it "can return soap results as an array of hashes" do
+      
+      payload = [[{"ID" => "STU0000123415"}, {"status" => "Approved"}], [{"ID" => "STU123123"},{"status" => "Terminated"}]]
+      result =  SoapMockHelper::Search.new.results(payload)
+      mapped = EirbServices::Server.format_search_results(result)
+      mapped.should == [{"ID" => "STU0000123415", "status" => "Approved"}, {"ID" => "STU123123","status" => "Terminated"}]
+
+    end
   end
-
  end
