@@ -84,7 +84,7 @@ module PatientNode
 end
  
 module ProtocolRequests
-  URL_BASE = "http://localhost:3000"
+  URL_BASE = "http://165.124.223.180:3000"
  
   def get_study_list
     study_list = []
