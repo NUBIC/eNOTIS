@@ -7,16 +7,13 @@ class RegistrationsController < ApplicationController
 
   # The registration landing page
   def index 
-    @accessable_protocols = Protocol.find_by_coordinator(@current_user.netid)
+    @accessable_protocols = UserProtocol.find_all_by_user_id(@current_user.id)
   end
 
   def show
    session[:study_id]= params[:id]
-   @protocol = Protocol.find_by_study_id(params[:id])
-   @protocol_local = Protocol.find_by_irb_number(params[:id])
-   if not @protocol_local.nil?
-   	@involvements = Involvement.find(:all,:conditions=>["protocol_id = ?",@protocol_local.id])
-   end
+   @protocol = Protocol.find_by_irb_number(params[:id])
+   @involvements = Involvement.find(:all,:conditions=>["protocol_id = ?",@protocol.id]) unless @protocol.nil?
   end
 
   def add_patient
@@ -39,10 +36,8 @@ class RegistrationsController < ApplicationController
   
   def search
     if not params[:no_mrn]
-      @patients = Patient.find_by_mrn(params[:mrn])
-      if @patients.size > 0 
-        @patient =  @patients[0]
-      end
+      @patient = Patient.find_by_mrn(params[:mrn])
+      @involvements = Involvement.find_all_by_patient_id(@patient.id)
     end
     respond_to do |format|
       format.html

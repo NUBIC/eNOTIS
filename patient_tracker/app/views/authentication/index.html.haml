@@ -8,14 +8,4 @@
     =text_field_tag('netid')
     =submit_tag('login')
 
-.netids{:style => "width:300px;float:left;margin-left:2em"}
-  Some netids to choose from:
-  %ul
-    -@netids.each do |n|
-      %li=n
 
-.users{:style => "margin-left:310px;"}
-  Users we've seen:
-  %ul
-    -@users.each do |u|
-      %li=u.netid 

@@ -1,7 +1,7 @@
 # User model for application context
 
 class User < ActiveRecord::Base
-
+  has_many :user_protocols
   attr_accessor :password #doesnt do anything for now
     
   # Rough validation method

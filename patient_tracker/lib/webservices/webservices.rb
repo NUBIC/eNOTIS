@@ -5,7 +5,6 @@ module WebServices
     base.extend(ClassMethods)
   end
 
-
   module ClassMethods
     Dir["lib/webservices/plugins/*.rb"].each {|file| require file}
     $plugins =[]
@@ -16,16 +15,15 @@ module WebServices
         end
       end
 
-     def find(*args)
-        if super.nil? or (super.class == Array and super.size == 0)
-	  result = service_find(*args)
-          if result
-             return result
-          end
-        end
+    def find(*args)
+       if super.nil? or (super.class == Array and super.size == 0)
+	 result = service_find(*args)
+         if result
+            return result
+         end
+       end
        return super
-     end
-
+    end
     def service_find(*args)
       if args.size > 1
 	options = args[1]
@@ -35,7 +33,7 @@ module WebServices
       if conditions.class == Hash
           conditions.each do |key,value|
             get_plugins.each do |plugin| 
-              meth = plugin.public_methods.detect{|method_name| method_name[key.to_s]}
+              meth = plugin.public_methods.detect{|method_name| method_name[key.to_s] and method_name["find"]}
               if meth
     	        result = plugin.send(meth,value)
 	        if result
@@ -46,8 +44,6 @@ module WebServices
           end
       end      
     end
-
-
     def process_result(result)
         if result.class == Hash
 	  return self.new(result)	
@@ -56,7 +52,7 @@ module WebServices
 	  result.each do |entity|
     	    new_result << entity
           end
-          return result
+          return new_result
         else
           return nil
         end      

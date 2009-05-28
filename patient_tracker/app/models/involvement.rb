@@ -8,27 +8,17 @@
 
 class Involvement < ActiveRecord::Base
 	belongs_to :patient
-	belongs_to :protocols 
+	belongs_to :protocol
+
   def self.add_patient_to_protocol(params)
     protocol = Protocol.find_by_irb_number(params[:study_id])
-    if protocol.nil?
-       protocol = Protocol.save_foreign_protocol(Protocol.find_by_study_id(params[:study_id]))
-    end
     if params[:mrn]
       patient = Patient.find_by_mrn(params[:mrn])
-      if patient.class == Array
-        patient = Patient.save_foreign_patient(patient[0])
-      end
     else
-      patient = Patient.new
-      patient.first_name = params[:first_name]
-      patient.last_name  = params[:last_name]
-      patient.save
+      patient = Patient.create( {:first_name => params[:first_name],:last_name=> params[:last_name]})
+      #patient.save
     end
-    involvement = Involvement.create
-    involvement.protocol_id = protocol.id
-    involvement.patient_id = patient.id
-    involvement.save
-    
+    involvement = Involvement.create ({:protocol_id => protocol.id, :patient_id => patient.id})
+    #involvement.save    
   end
 end

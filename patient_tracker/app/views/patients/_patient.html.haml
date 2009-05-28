@@ -1,12 +1,3 @@
-%span.first
-  %em
-    first name:
-  = patient.first_name
-%span.last
-  %em
-    last name:
-  = patient.last_name
-%span.mrn
-  %em
-    mrn: 
-  = patient.mrn
+= patient.first_name
+= patient.last_name
+= facebox_link_to("view detail", :url => patient_url(patient.id) , :method=>:get)
