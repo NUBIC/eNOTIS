@@ -18,7 +18,7 @@ class EirbAdapter
      @config = config
    end
 
-   # Logs in to the eIRB webserivce with the configuration settings
+   # Logs in to the eIRB webservice with the configuration settings
    # Configuration and driver building required before calling this method
    def login
       unless driver.nil?
@@ -40,7 +40,7 @@ class EirbAdapter
    # Accepts a param hash of values and converts hash parameters to formatted 
    # webservice parameters if needed
    def perform_search(params = {})
-     unless authentiated?
+     unless authenticated?
        login
      end 
      params.merge!({:svcSessionToken => @session,
@@ -69,11 +69,11 @@ class EirbAdapter
       result_rows =  results.performSearchResult.searchResults.resultSet.row
       if result_rows.is_a?(Array) #holding multiple values
         result_rows.each do |row_obj|
-          t_hash = self.class.make_hash(row_obj.value,c_h)
+          t_hash = make_hash(row_obj.value,c_h)
           mapped << t_hash unless t_hash.empty?
         end
       else  
-        t_hash = self.class.make_hash(result_rows.value,c_h)
+        t_hash = make_hash(result_rows.value,c_h)
         mapped << t_hash unless t_hash.empty?
       end  
       mapped
