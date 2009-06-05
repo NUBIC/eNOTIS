@@ -1,0 +1,8 @@
+First Name: <%= @patient.first_name %> <br/>
+Last Name: <%= @patient.last_name %> <br/>
+
+Associated Protocols:<br/>
+<%@involvements.each do |involvement| %>
+<%=link_to(involvement.protocol.name, registration_path(involvement.protocol.irb_number ))  %>
+
+<%end%>

@@ -11,11 +11,20 @@
 <%else%>
 <% form_remote_tag( :url=> add_patient_registrations_url ) do |f| %>
       <%= label_tag 'first_name' %>
-      <%= text_field_tag( :first_name, @patient.last_name)%><br/>
+      <%= text_field_tag( :first_name, @patient.first_name)%><br/>
       <%= label_tag 'last_name' %>
       <%= text_field_tag( :last_name, @patient.last_name) %><br/>
       <%= label_tag 'd_o_d', "Date of Birth" %>
-      <%= text_field_tag( :d_o_d , @patient.date_of_birth) %><br/>
+      <%= text_field_tag( :d_o_d , @patient.birth_date) %><br/>
+      <%if @involvements.size > 0 %>
+         Patient Is Associated with the following studies:
+	 <ul>
+         <% @involvements.each do |involvement| %>
+        <li> <%=link_to(involvement.protocol.name, registration_path(involvement.protocol.irb_number )) %></li>
+        <%end%>
+      <%  end %>
+          
+   
       <%= submit_tag( "Confirm/Add Patient" ) %>
 <% end %>
 

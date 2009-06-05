@@ -7,8 +7,7 @@
       %a
         Protocol Events
     %li.inactive
-      %a
-        Patients
+      = link_to("Patients",:controller=> "patients" , :action =>"index", :irb_number => protocol.irb_number )
     %li.inactive
       %a
         Patient Events
@@ -22,7 +21,7 @@
         Approved
         %small.gray
           mm/dd/yyyy
-      .study_id="##{protocol.study_id}"
+      .study_id="##{protocol.irb_number}"
     .secondary_data
       .name
         %em
@@ -35,7 +34,7 @@
       .title
         %em
           Title:
-        = protocol.short_title || "Missing"
+        = protocol.title || "Missing"
       .pi
         %em
           PI:

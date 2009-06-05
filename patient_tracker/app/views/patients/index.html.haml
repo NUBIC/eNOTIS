@@ -1,0 +1,33 @@
+#protocol_full
+  %ul.menu
+    %li.inactive
+      = link_to("General Info",registration_path(@protocol.irb_number))
+    %li.inactive
+      %a
+        Protocol Events
+    %li.active
+      %a
+        Patients
+    %li.inactive
+      %a
+        Patient Events
+    %li.inactive
+      %a.gray
+        Budgeting
+
+
+#patient_list
+  - if @involvements.nil?
+    .heading
+      You are NOT authorized to see patients on this protocol
+  - else
+
+    .heading
+      The following patients are currently associated with this protocol
+    %ul 
+      - @involvements.each do |i|
+        %li=render(:partial => "patient", :object => i.patient)
+
+
+
+
