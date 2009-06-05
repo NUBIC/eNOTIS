@@ -2,6 +2,7 @@
 
 class User < ActiveRecord::Base
   has_many :user_protocols
+  has_many :protocols, :through => :user_protocols
   attr_accessor :password #doesnt do anything for now
     
   # Rough validation method
@@ -17,6 +18,14 @@ class User < ActiveRecord::Base
   
   def authenticate(password)
     #self.password == password  
+    
+    #This retrievs all data currently in the 
+    
+    #new_access_list = Protocols.find_all_by_netid(netid)
+    #old_access_list = self.protocols
+    #new_access_list.each do |study|
+	#self.protocols << study unless old_access_list.include?study
+    #end
     true
   end
 end
