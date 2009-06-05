@@ -35,3 +35,9 @@ puts answers.performSearchResult.searchResults.columnHeaders.columnHeader.inspec
 puts answers.performSearchResult.searchResults.resultSet.row.value.inspect
 #answers.performSearchResult.searchResults.columnHeaders.columnHeader #=> gets column headers
 
+answers = driver.performSearch({:svcSessionToken => result.loginResult,
+                               :savedSearchName => "eNOTIS find_by_study_id", 
+                               :startRow => 1, 
+                               :numRows => -1,
+                               :expandMultiValueCells => false,
+                               :parameters => "<parameters><parameter name='ID' value='STU00000706'/></parameters>"})

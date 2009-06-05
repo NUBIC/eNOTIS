@@ -1,0 +1,4 @@
+class DataServiceError << RuntimeError
+
+
+end
