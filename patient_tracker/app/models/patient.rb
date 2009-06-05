@@ -5,9 +5,26 @@
 require 'lib/webservices/webservices'
 class Patient < ActiveRecord::Base#.extend WebServices
   include WebServices
-  has_many :involments
+  has_many :involvements
   has_many :patient_events
+  has_many :protocols, :through => :involvements
 
+  #vertial attribute to obtain the current status of the patient
+  def current_status
+    
+  end
 
+  def current?
+   self.last_reconciled < 12.hours.ago unless last_reconciled.nil?
+  end
+
+  def confirmed!
+    self.reconciled = true
+    self.save
+  end
+
+  def confirmed?
+    self.reconciled
+  end 
 
 end

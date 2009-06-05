@@ -10,15 +10,19 @@ class Involvement < ActiveRecord::Base
 	belongs_to :patient
 	belongs_to :protocol
 
-  def self.add_patient_to_protocol(params)
-    protocol = Protocol.find_by_irb_number(params[:study_id])
-    if params[:mrn]
-      patient = Patient.find_by_mrn(params[:mrn])
-    else
-      patient = Patient.create( {:first_name => params[:first_name],:last_name=> params[:last_name]})
-      #patient.save
-    end
-    involvement = Involvement.create ({:protocol_id => protocol.id, :patient_id => patient.id})
-    #involvement.save    
+
+  def confirmed?
+    return self.confirmed
+  end
+
+  def confirmed! 
+    self.confirmed = true
+    self.save
   end
 end
+
+
+
+
+
+
