@@ -1,23 +1,12 @@
 development:
-  url:
-  user:
-  password:
-  store:
+  url: "http://riseirbsvr3.itcs.northwestern.edu/ClickXWebServices/DataManagement/SearchServices.asmx?WSDL"
+  userName: "blc615"
+  password: "nuc#1blc"
+  storeName: "eIRB-Test"
 
 test:
-  url:
-  user:
-  password:
-  store:
+  url: "http://riseirbsvr3.itcs.northwestern.edu/ClickXWebServices/DataManagement/SearchServices.asmx?WSDL"
+  userName: "blc615"
+  password: "nuc#1blc"
+  storeName: "eIRB-Test"
 
-staging:
-  url:
-  user:
-  password:
-  store:
-
-production:
-  url:
-  user:
-  password:
-  store:
