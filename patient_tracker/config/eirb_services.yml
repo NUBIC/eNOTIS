@@ -1,0 +1,23 @@
+development:
+  url:
+  user:
+  password:
+  store:
+
+test:
+  url:
+  user:
+  password:
+  store:
+
+staging:
+  url:
+  user:
+  password:
+  store:
+
+production:
+  url:
+  user:
+  password:
+  store:
