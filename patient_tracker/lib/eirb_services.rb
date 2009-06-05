@@ -9,7 +9,8 @@ module EirbServices
   class EirbService
 
     def initialize
-      config = ServiceConfig.new(RAILS_ENV)
+      yml = File.open(File.join(RAILS_ROOT,"config/eirb_services.yml")
+      config = ServiceConfig.new(RAILS_ENV, yml)
 
       @adapter = EirbAdapter(config)
     end
