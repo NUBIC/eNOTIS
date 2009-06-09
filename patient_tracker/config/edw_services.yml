@@ -1,0 +1,10 @@
+development:
+  url: "https://edwbi.nmff.org/ReportServer?%2fReports%2fResearch%2fPSPORE%2fENOTIS+-+TEST&rs:Command=Render&rs:format=XML"
+  username: "nmff-username"
+  password: "secret"
+
+test:
+  url: "https://edwbi.nmff.org/ReportServer?%2fReports%2fResearch%2fPSPORE%2fENOTIS+-+TEST&rs:Command=Render&rs:format=XML"
+  username: "nmff-username"
+  password: "secret"
+
