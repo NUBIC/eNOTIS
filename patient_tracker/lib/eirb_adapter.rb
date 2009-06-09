@@ -22,9 +22,10 @@ class EirbAdapter
    # Configuration and driver building required before calling this method
    def login
       unless driver.nil?
-       @session= driver.login({:storeName => config.storename,
+       result= driver.login({:storeName => config.storename,
                      :userName => config.username,
                      :password => config.password})
+       @session = result.loginResult
        return authenticated?
       else
         raise DataServiceError
@@ -35,7 +36,9 @@ class EirbAdapter
    def authenticated?
      !@session.nil?
    end
-  
+
+   # TODO add webservice logger 
+   #
    # Calls the generated soap driver to perform the search on the remote resource
    # Accepts a param hash of values and converts hash parameters to formatted 
    # webservice parameters if needed
@@ -44,7 +47,7 @@ class EirbAdapter
        login
      end 
      params.merge!({:svcSessionToken => @session,
-                   :parameters => self.class.format_search_parameters(params[:parameters])})
+                   :parameters => self.class.format_search_parameters(params[:parameters])}) 
      search_results = driver.performSearch(params) #method that actually calls the soap service
      self.class.format_search_results(search_results)
    end
@@ -66,16 +69,19 @@ class EirbAdapter
    def self.format_search_results(results)
       mapped = [] 
       c_h = results.performSearchResult.searchResults.columnHeaders.columnHeader
-      result_rows =  results.performSearchResult.searchResults.resultSet.row
-      if result_rows.is_a?(Array) #holding multiple values
-        result_rows.each do |row_obj|
-          t_hash = make_hash(row_obj.value,c_h)
+      r_set = results.performSearchResult.searchResults.resultSet
+      if r_set.respond_to?(:row) 
+        result_rows = r_set.row
+        if result_rows.is_a?(Array) #holding multiple values
+          result_rows.each do |row_obj|
+            t_hash = make_hash(row_obj.value,c_h)
+            mapped << t_hash unless t_hash.empty?
+          end
+        else  
+          t_hash = make_hash(result_rows.value,c_h)
           mapped << t_hash unless t_hash.empty?
         end
-      else  
-        t_hash = make_hash(result_rows.value,c_h)
-        mapped << t_hash unless t_hash.empty?
-      end  
+      end
       mapped
    end
 
