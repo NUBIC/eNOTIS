@@ -38,6 +38,23 @@ describe EirbServices do
       @search.should_receive(:perform_search).with(p)
       @service.stub!(:eirb_adapter).and_return(@search)
       @service.find_study_research_type("STU000123")
+    end  
+
+    it "can find the access list for a study" do
+      p = @params.merge({:savedSearchName => "eNOTIS Study Access", 
+                    :parameters => {"ID" => "STU000123"}})
+      @search.should_receive(:perform_search).with(p)
+      @service.stub!(:eirb_adapter).and_return(@search)
+      @service.find_study_access("STU000123")
+
+    end
+
+    it "can find all access lists for all protocols" do
+      p = @params.merge({:savedSearchName => "eNOTIS Study Access", 
+                    :parameters => nil})
+      @search.should_receive(:perform_search).with(p)
+      @service.stub!(:eirb_adapter).and_return(@search)
+      @service.find_study_access()
     end
   end 
 
