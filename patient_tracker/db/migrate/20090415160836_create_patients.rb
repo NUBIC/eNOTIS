@@ -4,13 +4,13 @@ class CreatePatients < ActiveRecord::Migration
       t.string :mrn 
       t.string :mrn_type
       t.string :source
-      t.date :last_reconciled
+      t.datetime :last_reconciled
       t.string :reconcile_status
       t.string :last_name
-  		t.string :first_name
+      t.string :first_name
       t.boolean :lost_to_follow_up
       t.text :lost_to_follow_up_reason
-  		t.date   :birth_date
+      t.date   :birth_date
       t.date   :death_date 
       t.string :address_line1
       t.string :address_line2

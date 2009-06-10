@@ -7,7 +7,7 @@ class CreateProtocols < ActiveRecord::Migration
       t.string :phase
       t.string :description
       t.string :status
-      t.date :reconciliation_date
+      t.datetime :last_reconciled
       t.timestamps
     end
   end
