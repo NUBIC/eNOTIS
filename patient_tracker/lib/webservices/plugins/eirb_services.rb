@@ -28,7 +28,7 @@ module EirbServices
     default_search("eNOTIS Study Status",{"ID" => study_id})
   end
 
-  def find_study_basics(study_id)
+  def find_by_irb_number(study_id)
     default_search("eNOTIS Study Basics",{"ID" => study_id})      
   end 
 
@@ -36,7 +36,7 @@ module EirbServices
     default_search("eNOTIS Study Research Type",{"ID" => study_id})
   end
 
-  def find_person_details(user_netid=nil)
+  def find_by_netid(user_netid=nil)
     default_search("eNOTIS Person Details",{"NetID" => user_netid})
   end
   
