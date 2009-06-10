@@ -29,7 +29,7 @@ class EirbAdapter
     rescue StandardError => bang
       puts "Error pulling data: " + bang
     end
-
+  end
   def self.format_search_results(results)
     results
   end
