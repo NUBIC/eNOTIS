@@ -1,14 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/../soap_mock_helper')
-require 'eirb_services'
+require 'webservices/plugins/eirb_services'
 
 describe EirbServices do
 
   before(:each) do
-    service_klass = Class.new do 
-      include EirbServices
-    end
-    @service = service_klass.new 
+    @service = EirbServices
     @service.stub!(:connect)
     @params = EirbServices::SEARCH_DEFAULTS
     @search = mock(EirbAdapter) 
@@ -29,7 +26,7 @@ describe EirbServices do
                     :parameters => {"ID" => "STU000123"}})
       @search.should_receive(:perform_search).with(p)
       @service.stub!(:eirb_adapter).and_return(@search)
-      @service.find_study_basics("STU000123")
+      @service.find_by_irb_number("STU000123")
     end
 
     it "can find the study type for a study" do
@@ -65,7 +62,7 @@ describe EirbServices do
                     :parameters => {"NetID" => "abc123"}})
       @search.should_receive(:perform_search).with(p)
       @service.stub!(:eirb_adapter).and_return(@search)
-      @service.find_person_details("abc123")
+      @service.find_by_netid("abc123")
     end
 
   end
@@ -81,7 +78,7 @@ describe EirbServices do
     @service.stub(:connected?).and_return(false)
     #watching the connect method
     @service.should_receive(:connect)
-    @service.find_person_details("abc123")
+    @service.find_by_netid("abc123")
 
   end
 end
