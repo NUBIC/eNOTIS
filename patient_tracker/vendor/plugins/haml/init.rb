@@ -1,8 +1,14 @@
 begin
   require File.join(File.dirname(__FILE__), 'lib', 'haml') # From here
 rescue LoadError
-  require 'haml' # From gem
+  # don't choke if we haven't the gem, e.g. the first time we run rake gems:install
+  # fixes no such file to load -- haml
+  require 'haml' if defined? HAML # From gem
+  # require 'haml' # From gem
 end
 
 # Load Haml and Sass
-Haml.init_rails(binding)
+
+# don't choke if we haven't the gem, e.g. the first time we run rake gems:install
+# fixes no such file to load -- haml
+Haml.init_rails(binding) if defined? HAML
