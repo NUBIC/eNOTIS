@@ -2,11 +2,11 @@ Given /^there is a patient with MRN ([a-zA-Z0-9]+) named ([\w\s]+)$/ do
   pending
 end
 
-When /^I find a patient by MRN ([a-zA-Z0-9]+)$/ do
-  pending
+When /^I find a patient by MRN ([a-zA-Z0-9]+)$/ do |mrn|
+  Patient.find_by_mrn(mrn)
 end
 
-Then /^I should get a patient named ([\w\s]+)$/ do
+Then /^I should get a patient named ([\w\s]+)$/ do |name|
   pending
 end
 

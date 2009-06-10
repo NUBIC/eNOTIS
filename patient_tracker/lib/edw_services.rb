@@ -25,7 +25,12 @@ module EdwServices
     
     # Patient mode
     def find_by_mrn(mrn)
-      @adapter.perform_search({:mrn => mrn})
+      Person.new
+      # @adapter.perform_search({:mrn => mrn})
+    end
+    
+    def find_by_name_and_dob(name, dob)
+      @adapter.perform_search({:name => name, :dob => dob})
     end
     
   end
