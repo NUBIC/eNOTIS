@@ -1,4 +1,4 @@
-require 'EdwServices.rb'
+# require 'EdwServices.rb'
 class AuthenticationController < ApplicationController
   include AuthMod
   layout "layouts/default"

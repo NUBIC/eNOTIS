@@ -26,3 +26,12 @@ config.action_mailer.delivery_method = :test
 # This is necessary if your schema can't be completely dumped by the schema dumper,
 # like if you have constraints or database-specific column types
 # config.active_record.schema_format = :sql
+
+# test environment gems
+config.gem "libxml-ruby", :version => '1.1.3'
+config.gem "webrat", :version => '0.4.4'
+config.gem "rspec", :version => '1.2.6'
+config.gem "rspec-rails", :version => '1.2.6'
+config.gem "rcov", :version => '0.8.1.2.0'
+config.gem "cucumber", :version => '0.3.11' # also installs dependencies: term-ansicolor, polyglot, treetop, diff-lcs, builder
+config.gem "ZenTest", :version => '4.1.1'
