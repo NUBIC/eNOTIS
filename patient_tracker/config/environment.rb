@@ -22,12 +22,12 @@ Rails::Initializer.run do |config|
 
   # see http://www.webficient.com/2008/07/11/ruby-on-rails-gem-dependencies-and-plugin-errors
   # all environments gems
-  config.gem "haml", :version => '2.0.9', :source => "http://gems.rubyforge.org/"
-  config.gem "httpclient", :version => '2.1.5'
-  config.gem "sqlite3-ruby", :version => '1.2.4', :lib => "sqlite3"
-  config.gem "soap4r", :version => '1.5.8', :lib => false # :lib => false fixes no such file to load -- soap4r
-  config.gem "mechanize", :version => '0.9.2'
-  config.gem "mechanize-ntlm", :version => '0.9.1'
+  # config.gem "haml", :version => '2.0.9', :source => "http://gems.rubyforge.org/"
+  # config.gem "httpclient", :version => '2.1.5'
+  # config.gem "sqlite3-ruby", :version => '1.2.4', :lib => "sqlite3"
+  # config.gem "soap4r", :version => '1.5.8', :lib => false # :lib => false fixes no such file to load -- soap4r
+  # config.gem "mechanize", :version => '0.9.2'
+  # config.gem "mechanize-ntlm", :version => '0.9.1'
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

@@ -1,38 +1,38 @@
 require 'edw_adapter'
 
 module EdwServices
-  class EdwService 
 
-    # initialzes the service class 
-    def initialize
-      yml = File.open(File.join(RAILS_ROOT,"config/edw_services.yml"))
-      config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
-      @adapter = EdwAdapter.new(config)
-    end
+  attr_accessor :edw_adapter
+  
+  # initializing the EDW connection
+  def connect
+    yml = File.open(File.join(RAILS_ROOT,"config/edw_services.yml"))
+    config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
+    edw_adapter = EdwAdapter.new(config)
+  end
 
-    # Protocol mode
-    def get_study_list
-    end
+  # Protocol mode
+  def get_study_list
+  end
 
-    def find_by_study_id(study_id)
-    end
+  def find_by_study_id(study_id)
+  end
 
-    def find_by_coordinator(net_id)
-    end
+  def find_by_coordinator_net_id(net_id)
+  end
 
-    def find_all_coordinator_netids(limit =nil)
-    end
-    
-    # Patient mode
-    def find_by_mrn(mrn)
-      Person.new
-      # @adapter.perform_search({:mrn => mrn})
-    end
-    
-    def find_by_name_and_dob(name, dob)
-      @adapter.perform_search({:name => name, :dob => dob})
-    end
-    
+  def find_all_coordinator_netids(limit=nil)
+  end
+  
+  # Patient mode
+  def find_by_mrn(mrn)
+    connect
+    edw_adapter.perform_search({:mrn => mrn})
+  end
+  
+  def find_by_name_and_dob(name, dob)
+    connect
+    edw_adapter.perform_search({:name => name, :dob => dob})
   end
 end
 

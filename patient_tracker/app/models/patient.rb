@@ -9,9 +9,7 @@ class Patient < ActiveRecord::Base #.extend WebServices
   has_many :patient_events 
   has_many :protocols, :through => :involvements
 
-  $plugins = [EdwService]
-
-
+  $plugins = [EdwServices]
 
   def reconcile(values)
     values[:last_reconciled]=Time.now
