@@ -1,74 +1,94 @@
 module WebServices
 # Need to implement some solid hierarchy of plugins
  
-  def  self.included(base)
-    base.extend(ClassMethods)
+  Dir["lib/webservices/plugins/*.rb"].each {|file| require file}
+
+  def web_attribute(attribute)
+    #needs to be inplemented 
   end
 
-  module ClassMethods
-    Dir["lib/webservices/plugins/*.rb"].each {|file| require file}
-    $plugins =[]
-      Dir.new("lib/webservices/plugins").entries.each do |file| 
-        if file[".rb"]
-           mod = Kernel.const_get(file.to_s.gsub(".rb",""))
-           $plugins <<  mod 
-        end
-      end
+  def  self.included(base)
+    base.class_eval do 
+      class << self
+        alias_method :old_find, :find
+        def find(*args)
+           #local_args = args.clone   
+           #options = local_args.extract_options!
+           #unless
+ 	   case args.first
+             when :first then  return local_first(*args)
+             when :all   then  return old_find(*args)
+             else 	       return old_find(*args)
+           end
 
-    def find(*args)
-       if super.nil? or (super.class == Array and super.size == 0)
-	 result = service_find(*args)
-         if result
-            return result
-         end
-       end
-       return super
-    end
-    def service_find(*args)
-      if args.size > 1
-	options = args[1]
-        search_scope = args[0]
-        conditions =  options[:conditions]
-      end
-      if conditions.class == Hash
+        end
+
+        private
+
+        def local_only(*args)
+           old_find(*args)
+        end
+
+        
+        def service_only(*args)
+          #needs to be implementede
+        end
+
+        
+        def local_first(*args)
+          service_result = nil
+          #assumption is only single returns use this method
+          local_result = old_find(*args)
+          service_result = service_search(*args) unless !local_result.nil? and local_result.current?
+          return process_single(service_result,local_result)
+        end
+
+        def process_single(service_result,local_result)
+          if service_result
+	    return local_result.reconcile(service_result.first) unless !local_result
+            return self.new(service_result.first) unless !service_result
+          else local_result
+            return local_result 
+          end
+        end
+
+        def process_multiple(service_result,local_result)
+           
+        end
+
+        def get_plugins
+          $plugins
+        end     
+        
+        def set_plugins(plugins)
+          $plugins = plugins
+
+        end
+
+        def service_first(*args)     
+          #tto be implemented   
+	  #service_result = service_search(*args)
+          #return old_find(*args) unless service_result
+          #local_result = old_find(*args)
+        end
+
+        def service_search(*args)
+          local_args = args.clone
+          options = local_args.extract_options!
+          conditions = options[:conditions]
           conditions.each do |key,value|
             get_plugins.each do |plugin| 
               meth = plugin.public_methods.detect{|method_name| method_name[key.to_s] and method_name["find"]}
               if meth
-    	        result = plugin.send(meth,value)
-	        if result
-		  return process_result(result)
-                end
+    	        return plugin.send(meth,value)
               end
             end  
-          end
-      end      
-    end
-    def process_result(result)
-        if result.class == Hash
-	  return self.new(result)	
-        elsif result.class == Array
-          new_result=[]
-	  result.each do |entity|
-    	    new_result << entity
-          end
-          return new_result
-        else
-          return nil
-        end      
-    end
+          end      
+        end
 
-    def set_plugins(plugins)
-      $plugin = plugins
+      end
     end
-
-    def get_plugins
-       return $plugins
-    end
-
-
   end
- 
 end
 
 
