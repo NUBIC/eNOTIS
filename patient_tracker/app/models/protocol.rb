@@ -12,6 +12,7 @@ class Protocol < ActiveRecord::Base
         has_many :patients, :through => :involvements
 	include WebServices
 
+  $plugins= [EirbService]
   def reconcile(params)
     #To Do
     #Reconciliations Process is as follows

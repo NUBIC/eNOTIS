@@ -3,19 +3,23 @@
 # the EDW. The model stores the reconciliation fields and information about the source system
 # for the data.
 require 'lib/webservices/webservices'
-class Patient < ActiveRecord::Base#.extend WebServices
+class Patient < ActiveRecord::Base #.extend WebServices
   include WebServices
   has_many :involvements
-  has_many :patient_events
+  has_many :patient_events 
   has_many :protocols, :through => :involvements
 
-  #vertial attribute to obtain the current status of the patient
-  def current_status
-    
+  $plugins = [EdwService]
+
+
+
+  def reconcile(values)
+    values[:last_reconciled]=Time.now
+    Patient.update(self.id,values)  
   end
 
   def current?
-   self.last_reconciled < 12.hours.ago unless last_reconciled.nil?
+   self.last_reconciled > 12.hours.ago unless last_reconciled.nil?
   end
 
   def confirmed!
