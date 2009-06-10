@@ -39,7 +39,10 @@ module EirbServices
   def find_person_details(user_netid=nil)
     default_search("eNOTIS Person Details",{"NetID" => user_netid})
   end
-
+  
+  def find_study_access(study_id=nil)
+    default_search("eNOTIS Study Access", (study_id.nil? ? nil : {"ID" => study_id}))
+  end
   # ======== Search helper methods =========
 
   def default_search(search_name, parameters)
