@@ -22,9 +22,9 @@ class EdwAdapter
       # see http://www.mindflowsolutions.net/2009/5/21/ruby-ntlm-mechanize
       agent.basic_auth(config.username, config.password)
 
-      xml_response = agent.get(config.url + "&" + params.to_query)
+      xml_response = agent.get(config.url + "&" + params.to_query).content
       xml_doc = LibXML::XML::Document.string(xml_response)
-      return self.class.format_search_results(xml_doc)
+      return self.class.format_search_results(xml_doc || "")
     rescue StandardError => bang
       puts "Error pulling data: " + bang
     end
