@@ -1,38 +1,44 @@
 require 'edw_adapter'
 
 module EdwServices
-
-  cattr_accessor :edw_adapter
   
-  # initializing the EDW connection
-  def self.connect
-    yml = File.open(File.join(RAILS_ROOT,"config/edw_services.yml"))
-    config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
-    edw_adapter = EdwAdapter.new(config)
-  end
-
-  # Protocol mode
-  def self.get_study_list
-  end
-
-  def self.find_by_study_id(study_id)
-  end
-
-  def self.find_by_coordinator_net_id(net_id)
-  end
-
-  def self.find_all_coordinator_netids(limit=nil)
+  def self.included(base)
+    # add methods in ClassMethods into the meta class
+    base.extend(ClassMethods)
   end
   
-  # Patient mode
-  def self.find_by_mrn(mrn)
-    connect
-    edw_adapter.perform_search({:mrn => mrn})
-  end
+  module ClassMethods
+    mattr_accessor :edw_adapter
+    # initializing the EDW connection
+    def connect
+      yml = File.open(File.join(RAILS_ROOT,"config/edw_services.yml"))
+      config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
+      edw_adapter = EdwAdapter.new(config)
+    end
+
+    # Protocol mode
+    def get_study_list
+    end
+
+    def find_by_study_id(study_id)
+    end
+
+    def find_by_coordinator_net_id(net_id)
+    end
+
+    def find_all_coordinator_netids(limit=nil)
+    end
   
-  def self.find_by_name_and_dob(name, dob)
-    connect
-    edw_adapter.perform_search({:name => name, :dob => dob})
+    # Patient mode
+    def find_by_mrn(mrn)
+      connect
+      edw_adapter.perform_search({:mrn => mrn})
+    end
+  
+    def find_by_name_and_dob(name, dob)
+      connect
+      edw_adapter.perform_search({:name => name, :dob => dob})
+    end
   end
 end
 
