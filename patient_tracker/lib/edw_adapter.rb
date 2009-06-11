@@ -1,4 +1,5 @@
-gem 'mechanize-ntlm'
+require 'mechanize-ntlm'
+require 'libxml'
 
 # Acts as a middle layer between the EirbServices module and the Eirb Webservice.
 # Passes off queries to the eirb and returns queries
@@ -22,14 +23,21 @@ class EdwAdapter
       agent.basic_auth(config.username, config.password)
 
       xml_response = agent.get(config.url + "&" + params.to_query)
-      xml_doc = REXML::Document.new(xml_response)
+      xml_doc = LibXML::XML::Document.string(xml_response)
       return self.class.format_search_results(xml_doc)
     rescue StandardError => bang
       puts "Error pulling data: " + bang
     end
   end
-  def self.format_search_results(results)
-    results
+  def self.format_search_results(doc)
+    # http://www.vitorrodrigues.com/blog/2007/06/13/ruby-libxml-annoyances/
+    nodes = doc.find('//*[local-name()="Detail"]')
+    nodes.map do |detail|
+      hash = {}
+      detail.children.each do |item|
+        hash.merge!({item.name.to_sym => item.content})
+      end
+      hash
+    end
   end
 end
-
