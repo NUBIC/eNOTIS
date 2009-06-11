@@ -1,4 +1,7 @@
-https://edwbi.nmff.org/ReportServer?%2fReports%2fResearch%2fPSPORE%2fENOTIS+-+TEST&rs:Command=Render&rs:format=XML&first_nm="test1"
+https://edwbi.nmff.org/ReportServer?%2fReports%2fResearch%2fPSPORE%2fENOTIS+-+TEST&rs:Command=Render&rs:format=XML&mrd_pt_id=9988101
+
+https://edwbi.nmff.org/Reports/Pages/Report.aspx?ItemPath=%2fReports%2fResearch%2feNOTIS%2fENOTIS+-+TEST
+https://edwbi.nmff.org/ReportServer?%2fReports%2fResearch%2feNOTIS%2fENOTIS+-+TEST&rs:Command=Render&rs:format=XML&mrd_pt_id=9988101
 
 # SOAP Factory
 http://groups.google.com/group/soap4r/browse_thread/thread/5628a93cfbcd684a/?pli=1
@@ -38,3 +41,16 @@ c.get(url)
 # Mechanize
 
 http://www.mindflowsolutions.net/2009/5/21/ruby-ntlm-mechanize#
+
+require 'mechanize-ntlm'
+require 'libxml'
+
+agent = WWW::Mechanize.new    
+agent.basic_auth("EDWeNotis","!0613#Xyz!")    
+url = "https://edwbi.nmff.org/ReportServer?%2fReports%2fResearch%2feNOTIS%2fENOTIS+-+TEST&rs:Command=Render&rs:format=XML&mrd_pt_id=9988101"
+page = agent.get(url)  
+xml = page.content
+
+doc = LibXML::XML::Document.string(xml)
+# http://www.vitorrodrigues.com/blog/2007/06/13/ruby-libxml-annoyances/
+nodes = doc.find('//*[local-name()="Detail"]')
