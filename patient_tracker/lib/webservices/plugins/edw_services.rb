@@ -1,36 +1,36 @@
 require 'edw_adapter'
 
-module EdwServices
-
-  attr_accessor :edw_adapter
+class EdwServices
+  
+  cattr_accessor :edw_adapter
   
   # initializing the EDW connection
-  def connect
+  def self.connect
     yml = File.open(File.join(RAILS_ROOT,"config/edw_services.yml"))
     config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
-    edw_adapter = EdwAdapter.new(config)
+    self.edw_adapter = EdwAdapter.new(config)
   end
 
   # Protocol mode
-  def get_study_list
+  def self.get_study_list
   end
 
-  def find_by_study_id(study_id)
+  def self.find_by_study_id(study_id)
   end
 
-  def find_by_coordinator_net_id(net_id)
+  def self.find_by_coordinator_net_id(net_id)
   end
 
-  def find_all_coordinator_netids(limit=nil)
+  def self.find_all_coordinator_netids(limit=nil)
   end
-  
+
   # Patient mode
-  def find_by_mrn(mrn)
+  def self.find_by_mrd_pt_id(mrd_pt_id)
     connect
-    edw_adapter.perform_search({:mrn => mrn})
+    edw_adapter.perform_search({:mrd_pt_id => mrd_pt_id})
   end
-  
-  def find_by_name_and_dob(name, dob)
+
+  def self.find_by_name_and_dob(name, dob)
     connect
     edw_adapter.perform_search({:name => name, :dob => dob})
   end

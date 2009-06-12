@@ -17,6 +17,7 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = false
 
 # development environment gems
+
 # config.gem "ruby-debug-base", :version => '0.10.3' # also installs dependencies: linecache
 # config.gem "ruby-debug", :version => '0.10.3' # also installs dependencies: columnize
 
