@@ -24,7 +24,7 @@ Rails::Initializer.run do |config|
   # config.gem "sqlite3-ruby", :version => '1.2.4', :lib => "sqlite3"
   # config.gem "soap4r", :version => '1.5.8', :lib => false # :lib => false fixes no such file to load -- soap4r
   # config.gem "libxml-ruby", :version => '1.1.3', :lib => false # :lib => false fixes no such file to load
-  # config.gem "thoughtbot-factory_girl", :version => '1.2.1', :lib => false # :lib => false fixes no such file to load
+  # config.gem "thoughtbot-factory_girl", :version => '1.2.1', :lib    => "factory_girl", :source => "http://gems.github.com"
   # config.gem "populator", :version => '0.2.5'
   # config.gem "faker", :version => '0.3.1'
   # config.gem "mechanize", :version => '0.9.2' # also installs nokogiri
