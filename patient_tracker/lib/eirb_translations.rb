@@ -9,9 +9,9 @@ EIRB_TO_NOTIS = {
 
 NOTIS_TO_EIRB={
 
-"name"         => "Name"
-"title"        => "Study Title"
-"irb_number"   => "ID"
-"description"  => "Description"
+"name"         => "Name",
+"title"        => "Study Title",
+"irb_number"   => "ID",
+"description"  => "Description",
 "status"       => "Project Status.ID"
 }
