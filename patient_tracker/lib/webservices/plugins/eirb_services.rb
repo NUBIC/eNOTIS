@@ -1,4 +1,5 @@
 require 'eirb_adapter'
+require 'eirb_translations'
 
 class EirbServices
 
@@ -27,8 +28,8 @@ class EirbServices
     default_search("eNOTIS Study Status",{"ID" => study_id})
   end
 
-  def self.find_by_irb_number(study_id)
-    default_search("eNOTIS Study Basics",{"ID" => study_id})      
+  def self.find_by_irb_number(conditions)
+    convert_for_notis(default_search("eNOTIS Study Basics",{"ID" => conditions[:irb_number]}) )
   end 
 
   def self.find_study_research_type(study_id)
@@ -49,5 +50,19 @@ class EirbServices
                                             :parameters => parameters})
     connect unless connected?
     eirb_adapter.perform_search(search_settings) if connected?
+  end
+
+  # ======== Attribute converstion Helper Methods =========
+  def self.convert_for_notis(values)
+      results=[]
+      return values unless !values.nil? 
+      values.each do |val|
+        result ={} 
+        val.each do |key,value|
+          result[EIRB_TO_NOTIS[key.to_s].to_sym] = value unless !EIRB_TO_NOTIS.has_key?key.to_s
+        end 
+        results << result
+      end
+      return results
   end
 end

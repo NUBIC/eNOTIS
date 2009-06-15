@@ -1,5 +1,5 @@
 require 'edw_adapter'
-
+require 'edw_translations'
 class EdwServices
   
   cattr_accessor :edw_adapter
@@ -25,16 +25,38 @@ class EdwServices
   end
 
   # Patient mode
-  def self.find_by_mrd_pt_id(mrd_pt_id)
+  def self.find_by_mrn(conditions)
     connect
-    edw_adapter.perform_search({:mrd_pt_id => mrd_pt_id})
+    convert_for_notis(edw_adapter.perform_search({:mrd_pt_id => conditions[:mrn]}))
   end
 
-  def self.find_by_name_and_dob(name, dob)
+  def self.find_by_name_and_dob(conditions)
     connect
-    edw_adapter.perform_search({:name => name, :dob => dob})
+    edw_adapter.perform_search({:name => conditions[name], :dob => conditions[dob]})
   end
+
+  def self.convert_for_notis(values)
+      results=[]
+      return values unless !values.nil?
+      values.each do |val|
+        result ={}
+        val.each do |key,value|
+	  result[EDW_TO_NOTIS[key.to_s].to_sym] = value unless !EDW_TO_NOTIS.has_key?key.to_s
+        end
+        results << result
+      end
+      return results
+  end
+
+  def self.convert_for_edw(values)
+    
+  end
+
 end
+
+
+
+
 
 # 
 # require 'rexml/document'
