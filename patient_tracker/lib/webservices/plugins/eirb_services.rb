@@ -15,7 +15,7 @@ class EirbServices
   def self.connect
     yml = File.open(File.join(RAILS_ROOT,"config/eirb_services.yml"))
     config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
-    eirb_adapter = EirbAdapter.new(config)
+    self.eirb_adapter = EirbAdapter.new(config)
   end
 
   def self.connected?
