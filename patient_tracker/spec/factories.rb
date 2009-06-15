@@ -1,5 +1,6 @@
 require 'populator'
 require 'faker'
+require 'lib/faker/protocol'
 
 LOST_RATE = Array.new(99, false) + Array.new(1, true) # 1 in 100
 DEATH_RATE = Array.new(195, false) + Array.new(5, true) # 5 in 200
@@ -32,10 +33,11 @@ Factory.define :patient do |p|
 end
 
 Factory.define :fake_patient, :parent => :patient do |p|
+  # p.mrn
   p.mrn_type                  {["Epic", "Cerner"].rand}
   p.source                    {(Array.new(10, "EDW") + ["Local"]).rand}
   p.last_reconciled           {Populator.value_in_range(2.days.ago..2.minutes.ago)}
-  # p.reconcile_status          nil
+  # p.reconcile_status
   p.first_name                {Faker::Name.first_name}
   p.last_name                 {Faker::Name.last_name}
   p.lost_to_follow_up         {LOST_RATE.rand}
@@ -68,4 +70,28 @@ Factory.define :fake_user, :parent => :user do |u|
   u.last_name   {Faker::Name.last_name}
   u.email       {|me| Factory.next(:email).gsub(/user/, "#{me.first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{me.last_name.gsub(/[^a-zA-Z]/,'')[0,2]}".downcase)}
   u.netid       {|me| me.email.split("@")[0]}
+end
+
+Factory.sequence :irb_number do |n|
+  "STU009999#{"%03d" % n}"
+end
+
+Factory.define :protocol do |p|
+  p.irb_number            {Factory.next :irb_number}
+  p.name                  {"Randomized Evaluation of Sinusitis With Vitamin A"}
+  p.title                 {"Randomized Evaluation of Sinusitis With Vitamin A"}
+  p.phase                 {"II"}
+  p.description           {"Rem fugit culpa unde facilis earum. Quas et vitae ut cumque nihil quidem aperiam architecto. Et asperiores inventore non nisi libero architecto quibusdam.\r\n\r\nVeniam fugiat voluptas laudantium in assumenda. Blanditiis recusandae illum necessitatibus. Quia nesciunt esse officia neque doloribus vel explicabo provident. Non sit vero iusto quibusdam explicabo. Nobis in architecto quam pariatur sit autem optio."}
+  p.status                {nil}
+  p.reconciliation_date   {3.minutes.ago}
+end
+
+Factory.define :fake_protocol, :parent => :protocol do |p|
+  # p.irb_number
+  p.name                  {Faker::Protocol.title}
+  p.title                 {|me| me.name}
+  p.phase                 {["I","II","III","IV","n/a",nil].rand}
+  p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
+  p.status                {nil}
+  p.reconciliation_date   {Populator.value_in_range(2.days.ago..2.minutes.ago)}
 end
