@@ -2,10 +2,16 @@ require 'populator'
 require 'faker'
 require 'lib/faker/protocol'
 
+# http://github.com/thoughtbot/factory_girl/tree/master
+# http://faker.rubyforge.org/rdoc/
+# http://github.com/ryanb/populator/tree/master
+
+# Constants
 LOST_RATE = Array.new(99, false) + Array.new(1, true) # 1 in 100
 DEATH_RATE = Array.new(195, false) + Array.new(5, true) # 5 in 200
 
-# This will guess the Patient class
+# Basic Models
+
 Factory.sequence :mrn do |n|
   "#{n+9988100}"
 end
@@ -54,6 +60,30 @@ Factory.define :fake_patient, :parent => :patient do |p|
   p.work_phone_extension      {Faker::PhoneNumber.phone_number.split(" x")[1]}
 end
 
+Factory.sequence :irb_number do |n|
+  "STU009999#{"%03d" % n}"
+end
+
+Factory.define :protocol do |p|
+  p.irb_number            {Factory.next :irb_number}
+  p.name                  {"Randomized Evaluation of Sinusitis With Vitamin A"}
+  p.title                 {"Randomized Evaluation of Sinusitis With Vitamin A"}
+  p.phase                 {"II"}
+  p.description           {"Rem fugit culpa unde facilis earum. Quas et vitae ut cumque nihil quidem aperiam architecto. Et asperiores inventore non nisi libero architecto quibusdam.\r\n\r\nVeniam fugiat voluptas laudantium in assumenda. Blanditiis recusandae illum necessitatibus. Quia nesciunt esse officia neque doloribus vel explicabo provident. Non sit vero iusto quibusdam explicabo. Nobis in architecto quam pariatur sit autem optio."}
+  p.status                {"Approved"}
+  p.reconciliation_date   {3.minutes.ago}
+end
+
+Factory.define :fake_protocol, :parent => :protocol do |p|
+  # p.irb_number
+  p.name                  {Faker::Protocol.title}
+  p.title                 {|me| me.name}
+  p.phase                 {["I","II","III","IV","n/a",nil].rand}
+  p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
+  p.status                {Faker::Protocol.eirb_status}
+  p.reconciliation_date   {Populator.value_in_range(2.days.ago..2.minutes.ago)}
+end
+
 Factory.sequence :email do |n|
   "user#{"%03d" % n}@northwestern.edu"
 end
@@ -72,26 +102,28 @@ Factory.define :fake_user, :parent => :user do |u|
   u.netid       {|me| me.email.split("@")[0]}
 end
 
-Factory.sequence :irb_number do |n|
-  "STU009999#{"%03d" % n}"
+# Join/accessory models
+
+Factory.define :involvement do |i|
+  i.association   :patient
+  i.association   :protocol
+  i.confirmed     {true}
+  i.disease_site  {nil}
+  i.description   {Faker::Lorem.words(5).join(" ")}
 end
 
-Factory.define :protocol do |p|
-  p.irb_number            {Factory.next :irb_number}
-  p.name                  {"Randomized Evaluation of Sinusitis With Vitamin A"}
-  p.title                 {"Randomized Evaluation of Sinusitis With Vitamin A"}
-  p.phase                 {"II"}
-  p.description           {"Rem fugit culpa unde facilis earum. Quas et vitae ut cumque nihil quidem aperiam architecto. Et asperiores inventore non nisi libero architecto quibusdam.\r\n\r\nVeniam fugiat voluptas laudantium in assumenda. Blanditiis recusandae illum necessitatibus. Quia nesciunt esse officia neque doloribus vel explicabo provident. Non sit vero iusto quibusdam explicabo. Nobis in architecto quam pariatur sit autem optio."}
-  p.status                {nil}
-  p.reconciliation_date   {3.minutes.ago}
+Factory.define :patient_event do |p|
+  p.association   :patient
+  p.association   :protocol
+  p.status        {"Screened"}
+  p.status_date   {2.weeks.ago}
+  p.notes         {"With flying colors"}
 end
 
-Factory.define :fake_protocol, :parent => :protocol do |p|
-  # p.irb_number
-  p.name                  {Faker::Protocol.title}
-  p.title                 {|me| me.name}
-  p.phase                 {["I","II","III","IV","n/a",nil].rand}
-  p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
-  p.status                {nil}
-  p.reconciliation_date   {Populator.value_in_range(2.days.ago..2.minutes.ago)}
+Factory.define :user_protocol do |u|
+  u.association             :user
+  u.association             :protocol
+  u.role                    {"Coordinator"}
+  u.reconciliation_date     {2.hours.ago}
+  u.reconciliation_status   {"Reconciled"}
 end
