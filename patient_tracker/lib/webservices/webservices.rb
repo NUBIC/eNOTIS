@@ -12,15 +12,16 @@ module WebServices
       class << self
         alias_method :old_find, :find
         def find(*args)
-           #local_args = args.clone   
-           #options = local_args.extract_options!
-           #unless
- 	   case args.first
-             when :first then  return local_first(*args)
-             when :all   then  return old_find(*args)
-             else 	       return old_find(*args)
+           #return args
+           options = args.clone.extract_options!
+           return old_find(*args) unless options[:span]
+           options2 = options.clone
+           options2.delete(:span)
+           case options[:span]
+             when :local then return local_only(args.first,options2)
+             when :foreign then return service_only(args.first,options2)
+             when :global then return global_search(args.first,options2)
            end
-
         end
 
         private
@@ -31,29 +32,43 @@ module WebServices
 
         
         def service_only(*args)
-          #needs to be implementede
+          #this method only calls the webservice
+          service_result = service_search(*args)
+          case args.first
+            when :first then return process_single(service_result,nil)
+            when :all then return process_multiple(service_result,nil)
+          end
+                
         end
 
         
-        def local_first(*args)
+        def global_search(*args)
           service_result = nil
-          #assumption is only single returns use this method
           local_result = old_find(*args)
           service_result = service_search(*args) unless !local_result.nil? and local_result.current?
-          return process_single(service_result,local_result)
+          return process_single(service_result,local_result) unless !(args.first==:first)
+          #return process_multiple(service_result,local_result)
         end
 
         def process_single(service_result,local_result)
-          if service_result
-	    return local_result.reconcile(service_result.first) unless !local_result
-            return self.new(service_result.first) unless !service_result
+          if service_result and service_result.first
+	    return local_result.reconcile(service_result.first) unless local_result.nil?
+            service_result.first[:last_reconciled]=Time.now
+            return self.new(service_result.first)
           else local_result
             return local_result 
           end
         end
 
         def process_multiple(service_result,local_result)
-           
+          # this method simply returns the list of new objects 
+          # created using the search results, no reconciliation is done
+          result=[]
+          return result unless !service_result.nil?
+	  service_result.each do |val| 
+            result << self.new(val)
+          end
+          return result
         end
 
         def get_plugins
@@ -62,30 +77,38 @@ module WebServices
         
         def set_plugins(plugins)
           $plugins = plugins
-
         end
 
-        def service_first(*args)     
-          #tto be implemented   
-	  #service_result = service_search(*args)
-          #return old_find(*args) unless service_result
-          #local_result = old_find(*args)
-        end
 
         def service_search(*args)
           local_args = args.clone
           options = local_args.extract_options!
-          conditions = options[:conditions]
-          conditions.each do |key,value|
-            get_plugins.each do |plugin| 
-              meth = plugin.public_methods.detect{|method_name| method_name[key.to_s] and method_name["find"]}
+          conditions = convert_conditions_to_hash(options[:conditions])
+          keys = conditions.keys
+            get_plugins.each do |plugin|
+	      meth = plugin.public_methods.detect{|method_name| keys.map{|x| method_name.include?(x.to_s)}.uniq == [true]}
               if meth
-    	        return plugin.send(meth,value)
+                return plugin.send(meth,conditions)
               end
-            end  
-          end      
+            end
+         return nil     
         end
 
+        def convert_conditions_to_hash(conditions)
+            result={}
+            if conditions.instance_of?(Hash)
+              return conditions
+	    elsif conditions.instance_of?(String)
+              conditions.split("and").each do |condition|
+	        result[condition.split("=")[0].to_sym] = condition.split("=")[1].gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
+	      end
+            elsif conditions.instance_of?(Array)
+              conditions.first.split("and").each do |condition|
+	        result[condition.split("=")[0].to_sym] = condition.split("=")[1].gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
+	      end
+            end
+            return result
+        end
       end
     end
   end
