@@ -1,4 +1,4 @@
-class UserProtocol < ActiveRecord::Base
+class ProtcolAccess < ActiveRecord::Base
         belongs_to :user
         belongs_to :protocol
-end
+end 

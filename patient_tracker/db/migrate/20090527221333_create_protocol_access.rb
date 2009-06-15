@@ -1,6 +1,6 @@
-class CreateUserProtocols < ActiveRecord::Migration
+class CreateProtocolAccess < ActiveRecord::Migration
   def self.up
-    create_table :user_protocols do |t|
+    create_table :protocol_access do |t|
       t.integer :user_id
       t.integer :protocol_id
       t.string  :role
