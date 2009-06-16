@@ -4,7 +4,7 @@ describe Involvement do
   before(:each) do
     @valid_attributes = {
       :subject_id => 1,
-      :protocol_id => 1,
+      :study_id => 1,
       :disease_site => "value for disease_site",
       :description => "value for description"
     }
