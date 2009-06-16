@@ -1,4 +1,4 @@
-class StudyAccess < ActiveRecord::Base
+class StudyRight < ActiveRecord::Base
         belongs_to :user
         belongs_to :protocol
 

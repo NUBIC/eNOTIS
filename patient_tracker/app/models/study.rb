@@ -7,8 +7,8 @@ require 'lib/webservices/webservices'
 
 class Study < ActiveRecord::Base
 	has_many :involvements
-        has_many :user_studies
-        has_many :users, :through => :user_studies
+        has_many :study_rights
+        has_many :users, :through => :study_rights
         has_many :subjects, :through => :involvements
 	include WebServices
 
@@ -39,8 +39,8 @@ class Study < ActiveRecord::Base
      #check the status of both the protocol and
      if open?
        status = self.current?  and subject.current? #and subject.current?
-       if !Involvement.find_by_protocol_id_and_subject_id(self.id,subject.id) 
-         return Involvement.create(:protocol_id=>self.id,:subject_id=>subject.id,:confirmed=>status) 
+       if !Involvement.find_by_study_id_and_subject_id(self.id,subject.id) 
+         return Involvement.create(:study_id=>self.id,:subject_id=>subject.id,:confirmed=>status) 
        else
        end
      end

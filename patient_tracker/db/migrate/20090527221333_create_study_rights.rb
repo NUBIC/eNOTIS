@@ -1,8 +1,8 @@
-class CreateStudyAccess < ActiveRecord::Migration
+class CreateStudyRights < ActiveRecord::Migration
   def self.up
-    create_table :protocol_access do |t|
+    create_table :study_rights do |t|
       t.integer :user_id
-      t.integer :protocol_id
+      t.integer :study_id
       t.string  :role
       t.date :reconciliation_date
       t.string :reconciliation_status
@@ -12,6 +12,6 @@ class CreateStudyAccess < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :user_studies
+    drop_table :study_rights
   end
 end
