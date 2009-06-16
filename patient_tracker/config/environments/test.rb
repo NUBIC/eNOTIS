@@ -29,9 +29,9 @@ config.action_mailer.delivery_method = :test
 
 # test environment gems
 
-# config.gem "webrat", :version => '0.4.4'
 # config.gem "rspec", :version => '1.2.6', :lib => false
 # config.gem "rspec-rails", :version => '1.2.6', :lib => false
-# config.gem "rcov", :version => '0.8.1.2.0'
-# config.gem "cucumber", :version => '0.3.11' # also installs dependencies: term-ansicolor, polyglot, treetop, diff-lcs, builder
-# config.gem "ZenTest", :version => '4.1.1'
+# config.gem "webrat", :version => '0.4.4', :lib => false
+# config.gem "cucumber", :version => '0.3.11', :lib => false # also installs dependencies: term-ansicolor, polyglot, treetop, diff-lcs, builder
+# # config.gem "rcov", :version => '0.8.1.2.0'
+# # config.gem "ZenTest", :version => '4.1.1'

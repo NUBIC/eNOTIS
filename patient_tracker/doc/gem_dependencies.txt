@@ -2,11 +2,13 @@
 
 sudo gem uninstall --all --ignore-dependencies --executables \
 builder \
+chriseppstein-compass \
 columnize \
 cucumber \
 diff-lcs \
 faker \
 haml \
+haml-edge \
 httpclient \
 libxml-ruby \
 linecache \
