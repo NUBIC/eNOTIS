@@ -1,0 +1,45 @@
+2009-06-16 UI design meeting
+
+Brian, David, Mark, Reggie
+
+Reggie updates
+
+Disclosure statement - on every protocol, everything but the public description is confidential and proprietary. documents, consent forms are not to be distributed
+All studies once approved are open for accrual, studies only get statuses on periodic review
+
+Terminology
+
+Patients | Subjects => Subjects
+Studies | Protocols => Studies
+
+# objects at lowest level of eirb are protocols, but that's just a data name -- Avi
+# eIRB projects: study, continuing review, revision incident -- Avi
+
+Dashboard
+
+login - meaningful error message (user/password wrong, you don't have access)
+events - important to have, truncate long lines
+
+Study Overview
+
+events - patient feed - what happens if they get on to another secret study
+
+Study Subjects
+
+(Add Subjects) - modal window with single MRN input and file upload options
+
+Tab
+
+Dashboard | All Studies | My Subjects | Search [______](go) | Settings
+
+Import File
+
+MRN | Fname | Lname | DOB | Subject Event | Subject Event Date | Subject Event Notes
+
+Subject Events (all past tense): Consented, Screened, Screen Failed, Randomized, Enrolled, Completed, Terminated, Withdrawn
+What and When (optional why)
+
+- lunch -
+- jared python/visualization -
+
+How do we add events to subjects? On the Study Subjects page, under events listing
