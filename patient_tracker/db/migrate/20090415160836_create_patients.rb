@@ -1,6 +1,6 @@
-class CreatePatients < ActiveRecord::Migration
+class CreateSubjects < ActiveRecord::Migration
   def self.up
-  	create_table :patients do |t|
+  	create_table :subjects do |t|
       t.string :mrn 
       t.string :mrn_type
       t.string :source
@@ -25,6 +25,6 @@ class CreatePatients < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :patients
+    drop_table :subjects
   end
 end

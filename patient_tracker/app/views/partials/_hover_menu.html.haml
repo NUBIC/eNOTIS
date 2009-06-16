@@ -3,14 +3,14 @@
     #app_name eNOTIS
   %li
     #protocol_search
-      -form_tag(search_protocols_path, :method => :get) do 
+      -form_tag(search_studies_path, :method => :get) do 
         Find protocol
         =text_field_tag("study_id")
         =submit_tag("Find")
   %li
-    #patient_search
-      -form_tag(search_patients_path,:method => :get) do
-        Find patient
+    #subject_search
+      -form_tag(search_subjects_path,:method => :get) do
+        Find subject
         =text_field_tag("mrn")
         =submit_tag("Find")
   %li

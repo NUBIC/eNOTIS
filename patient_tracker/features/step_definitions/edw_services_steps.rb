@@ -1,23 +1,23 @@
-Given /^there is a patient with MRN ([a-zA-Z0-9]+) named ([\w\s]+)$/ do
+Given /^there is a subject with MRN ([a-zA-Z0-9]+) named ([\w\s]+)$/ do
   pending
 end
 
-When /^I find a patient by MRN ([a-zA-Z0-9]+)$/ do |mrn|
-  Patient.find_by_mrn(mrn)
+When /^I find a subject by MRN ([a-zA-Z0-9]+)$/ do |mrn|
+  Subject.find_by_mrn(mrn)
 end
 
-Then /^I should get a patient named ([\w\s]+)$/ do |name|
+Then /^I should get a subject named ([\w\s]+)$/ do |name|
   pending
 end
 
-Given /^there is a patient named ([\w\s]+) with birthday ([0-9\/\-\. ]+) with address ([\w\s]+)$/ do
+Given /^there is a subject named ([\w\s]+) with birthday ([0-9\/\-\. ]+) with address ([\w\s]+)$/ do
   pending
 end
 
-When /^I find a patient by name ([\w\s]+) and birthday ([0-9\/\-\. ]+)$/ do
+When /^I find a subject by name ([\w\s]+) and birthday ([0-9\/\-\. ]+)$/ do
   pending
 end
 
-Then /^I should get a patient with address ([\w\s]+)$/ do
+Then /^I should get a subject with address ([\w\s]+)$/ do
   pending
 end

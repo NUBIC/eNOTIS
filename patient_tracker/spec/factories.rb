@@ -16,7 +16,7 @@ Factory.sequence :mrn do |n|
   "#{n+9988100}"
 end
 
-Factory.define :patient do |p|
+Factory.define :subject do |p|
   p.mrn                       {Factory.next :mrn}
   p.mrn_type                  {"Cerner"}
   p.source                    {"EDW"}
@@ -38,7 +38,7 @@ Factory.define :patient do |p|
   p.work_phone_extension      {"801"}
 end
 
-Factory.define :fake_patient, :parent => :patient do |p|
+Factory.define :fake_subject, :parent => :subject do |p|
   # p.mrn
   p.mrn_type                  {["Epic", "Cerner"].rand}
   p.source                    {(Array.new(10, "EDW") + ["Local"]).rand}
@@ -76,11 +76,11 @@ end
 
 Factory.define :fake_protocol, :parent => :protocol do |p|
   # p.irb_number
-  p.name                  {Faker::Protocol.title}
+  p.name                  {Faker::Study.title}
   p.title                 {|me| me.name}
   p.phase                 {["I","II","III","IV","n/a",nil].rand}
   p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
-  p.status                {Faker::Protocol.eirb_status}
+  p.status                {Faker::Study.eirb_status}
   p.reconciliation_date   {Populator.value_in_range(2.days.ago..2.minutes.ago)}
 end
 
@@ -105,15 +105,15 @@ end
 # Join/accessory models
 
 Factory.define :involvement do |i|
-  i.association   :patient
+  i.association   :subject
   i.association   :protocol
   i.confirmed     {true}
   i.disease_site  {nil}
   i.description   {Faker::Lorem.words(5).join(" ")}
 end
 
-Factory.define :patient_event do |p|
-  p.association   :patient
+Factory.define :subject_event do |p|
+  p.association   :subject
   p.association   :protocol
   p.status        {"Screened"}
   p.status_date   {2.weeks.ago}

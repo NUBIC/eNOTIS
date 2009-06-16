@@ -11,7 +11,7 @@ class EdwServices
     self.edw_adapter = EdwAdapter.new(config)
   end
 
-  # Protocol mode
+  # Study mode
   def self.get_study_list
   end
 
@@ -24,7 +24,7 @@ class EdwServices
   def self.find_all_coordinator_netids(limit=nil)
   end
 
-  # Patient mode
+  # Subject mode
   def self.find_by_mrn(conditions)
     connect
     convert_for_notis(edw_adapter.perform_search({:mrd_pt_id => conditions[:mrn]}))
@@ -64,7 +64,7 @@ end
 # # require 'net/http'
 # include REXML
 #  
-# module ProtocolNode
+# module StudyNode
 #   attr_accessor :xml_node
 #  
 #   def name
@@ -105,7 +105,7 @@ end
 #  
 # end
 #  
-# module PatientNode
+# module SubjectNode
 #   attr_accessor :xml_node
 #  
 #   def first_name
@@ -145,14 +145,14 @@ end
 #  
 # end
 #  
-# module ProtocolRequests
+# module StudyRequests
 #   URL_BASE = "https://edwbi.nmff.org/ReportServer"
 #  
 #   def get_study_list
 #     study_list = []
-#     xml_response = get_payload("#{URL_BASE}/protocols/study_list")
-#     xml_response.elements.each("protocols/protocol") do |protocol|  
-#       study = Protocol.new
+#     xml_response = get_payload("#{URL_BASE}/studies/study_list")
+#     xml_response.elements.each("studies/protocol") do |protocol|  
+#       study = Study.new
 #       study.xml_node = protocol
 #       study_list.push(study)
 #     end
@@ -161,10 +161,10 @@ end
 #  
 #   def find_by_study_id(study_id)
 #     study_list=[]
-#     xml_response = get_payload("#{URL_BASE}/protocols/find_by_studyid?studyid=#{study_id}")
+#     xml_response = get_payload("#{URL_BASE}/studies/find_by_studyid?studyid=#{study_id}")
 #     if xml_response
 #       xml_response.elements.each("protocol") do |protocol|  
-#         study = Protocol.new
+#         study = Study.new
 #         study.xml_node = protocol
 #         return study
 #       end
@@ -178,8 +178,8 @@ end
 #     study_list = []
 #     xml_response = get_payload("#{URL_BASE}/coordinators/study_access_list?netid=#{net_id}")
 #     if xml_response
-#       xml_response.elements.each("protocols/protocol") do |protocol|
-#           study = Protocol.new
+#       xml_response.elements.each("studies/protocol") do |protocol|
+#           study = Study.new
 #           study.xml_node = protocol
 #        study_list << study
 #       end
@@ -209,7 +209,7 @@ end
 #  
 # end  
 #  
-# module PatientRequests
+# module SubjectRequests
 #   URL_BASE = "https://edwbi.nmff.org/ReportServer"
 # 
 #   #https://edwbi.nmff.org/ReportServer?%2fReports%2fResearch%2fPSPORE%2fENOTIS+-+TEST&rs:Command=Render&rs:format=XML&first_nm="test1"
@@ -218,17 +218,17 @@ end
 #     agent = WWW::Mechanize.new
 #     agent.basic_auth("","")
 #     
-#     patient_list = []
+#     subject_list = []
 #     base = "#{URL_BASE}?%2fReports%2fResearch%2fPSPORE%2fENOTIS+-+TEST&rs:Command=Render&rs:format=XML&mrd_pt_id="
 #     http_response = agent.get(base+mrn)
 #     xml_response = REXML::Document.new(http_response.body);
 #  
-#     xml_response.elements.each("patient") do |node|
-#         patient = Patient.new
-#         patient.xml_node = node
-#       patient_list << patient
+#     xml_response.elements.each("subject") do |node|
+#         subject = Subject.new
+#         subject.xml_node = node
+#       subject_list << subject
 #     end
-#     return patient_list
+#     return subject_list
 #   end
 #  
 # end

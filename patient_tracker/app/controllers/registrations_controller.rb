@@ -7,20 +7,20 @@ class RegistrationsController < ApplicationController
 
   # The registration landing page
   def index 
-    @accessable_protocols = @current_user.protocols 
+    @accessable_studies = @current_user.studies 
   end
 
   def show
    session[:study_id]= params[:id]
-   @protocol = Protocol.find_by_irb_number(params[:id])
+   @protocol = Study.find_by_irb_number(params[:id])
    @involvements = @protocol.involvements
   end
 
-  def add_patient
+  def add_subject
     params[:study_id] = session[:study_id]
-    @patient = Patient.find_by_mrn(params[:mrn])
-    @protocol = Patient.find_by_study_id(session[:study_id])
-    @protocol.add_patient(@patient)
+    @subject = Subject.find_by_mrn(params[:mrn])
+    @protocol = Subject.find_by_study_id(session[:study_id])
+    @protocol.add_subject(@subject)
     respond_to do |format|
       format.html
       format.js {render_to_facebox}
@@ -38,7 +38,7 @@ class RegistrationsController < ApplicationController
   
   def search
     if not params[:no_mrn]
-      @patient = Patient.find_by_mrn(params[:mrn])
+      @subject = Subject.find_by_mrn(params[:mrn])
     end
     respond_to do |format|
       format.html

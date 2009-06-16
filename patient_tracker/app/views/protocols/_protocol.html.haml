@@ -5,12 +5,12 @@
         General Info
     %li.inactive
       %a
-        Protocol Events
+        Study Events
     %li.inactive
-      = link_to("Patients",:controller=> "patients" , :action =>"index", :irb_number => protocol.irb_number )
+      = link_to("Subjects",:controller=> "subjects" , :action =>"index", :irb_number => protocol.irb_number )
     %li.inactive
       %a
-        Patient Events
+        Subject Events
     %li.inactive
       %a.gray
         Budgeting
@@ -52,12 +52,12 @@
   
   .file_details
     %strong
-      Protocol Documents
+      Study Documents
     %ul
       %li.protocol_file
         =image_tag("protocol_icon.gif")
         %em 
-          Protocol Document
+          Study Document
           =link_to("(view)")
           &nbsp;
           =link_to("(download)")
@@ -94,10 +94,10 @@
         Renewed on mm/dd/yyyy
       %li.status_event.registered
         =image_tag("info_24.gif")
-        Registered Patient on mm/dd/yyyy
+        Registered Subject on mm/dd/yyyy
       %li.status_event.registered
         =image_tag("info_24.gif")
-        Registered Patient  on mm/dd/yyyy
+        Registered Subject  on mm/dd/yyyy
       %li.status_event.adverse
         =image_tag("info_24.gif")
         Adverse Event on mm/dd/yyyy

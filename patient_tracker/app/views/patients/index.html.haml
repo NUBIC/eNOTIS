@@ -4,29 +4,29 @@
       = link_to("General Info",registration_path(@protocol.irb_number))
     %li.inactive
       %a
-        Protocol Events
+        Study Events
     %li.active
       %a
-        Patients
+        Subjects
     %li.inactive
       %a
-        Patient Events
+        Subject Events
     %li.inactive
       %a.gray
         Budgeting
 
 
-#patient_list
+#subject_list
   - if @involvements.nil?
     .heading
-      You are NOT authorized to see patients on this protocol
+      You are NOT authorized to see subjects on this protocol
   - else
 
     .heading
-      The following patients are currently associated with this protocol
+      The following subjects are currently associated with this protocol
     %ul 
       - @involvements.each do |i|
-        %li=render(:partial => "patient", :object => i.patient)
+        %li=render(:partial => "subject", :object => i.subject)
 
 
 

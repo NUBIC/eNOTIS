@@ -1,4 +1,4 @@
-class CreateProtocolAccess < ActiveRecord::Migration
+class CreateStudyAccess < ActiveRecord::Migration
   def self.up
     create_table :protocol_access do |t|
       t.integer :user_id
@@ -12,6 +12,6 @@ class CreateProtocolAccess < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :user_protocols
+    drop_table :user_studies
   end
 end

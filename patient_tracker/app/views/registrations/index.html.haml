@@ -26,7 +26,7 @@
 
 #protocol_list
   .heading 
-    You have access to the following Protocols:
+    You have access to the following Studies:
   %ul 
-    -@accessable_protocols.each do |p|
+    -@accessable_studies.each do |p|
       %li=render(:partial => "protocol", :object => p.protocol)  

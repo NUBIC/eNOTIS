@@ -1,5 +1,5 @@
 module Faker
-  class Protocol
+  class Study
     # Data from http://clinicaltrials.gov and eirb via Reggie/Brian
     
     class << self
@@ -28,22 +28,22 @@ module Faker
     end
     
     Formats = [
-      Proc.new { "%s Analogue in Treating Children With %s" % [Protocol.drug, Protocol.condition] },
-      Proc.new { "%s and %s in Treating Patients With %s" % [Protocol.drug, Protocol.drug, Protocol.condition] },
-      Proc.new { "%s Compared to %s in Treating Patients With %s That Has Not Responded to %s" % [Protocol.drug, Protocol.drug, Protocol.condition, Protocol.therapy] },
-      Proc.new { "%s in Preventing %s in Patients Who Are Receiving %s For %s" % [Protocol.drug, Protocol.condition, Protocol.therapy, Protocol.condition] },
-      Proc.new { "%s in Treating Patients Who Are Undergoing %s for %s" % [Protocol.drug, Protocol.therapy, Protocol.condition] },
-      Proc.new { "%s in Treating Patients With %s" % [Protocol.drug, Protocol.condition] },
-      Proc.new { "%s in Treating Patients With %s That Has Been Previously Treated" % [Protocol.drug, Protocol.condition] },
-      Proc.new { "%s With or Without %s in Treating Women With %s" % [Protocol.drug, Protocol.drug, Protocol.condition] },
-      Proc.new { "%s in Treating Patients With Newly Diagnosed %s" % [Protocol.therapy, Protocol.condition] },
-      Proc.new { "Assessment and Tracking of Long-Term %s Safety" % [Protocol.drug] },
-      Proc.new { "Comparison of Combination %s Regimens in Treating Older Women Who Have Undergone Surgery for %s" % [Protocol.drug, Protocol.condition] },
-      Proc.new { "Comparison of Self Adjustment Versus Standard of Care Treatment in Subjects With %s" % [Protocol.condition] },
-      Proc.new { "Efficacy and Safety Protocol of %s for the Treatment of %s or %s" % [Protocol.drug, Protocol.condition, Protocol.condition] },
-      Proc.new { "%s in Treating Patients With %s" % [Protocol.therapy, Protocol.condition] },
-      Proc.new { "%s or Observation After %s in Treating Patients With %s" % [Protocol.therapy, Protocol.therapy, Protocol.condition] },
-      Proc.new { "Randomized Evaluation of %s With %s" % [Protocol.condition, Protocol.drug] }
+      Proc.new { "%s Analogue in Treating Children With %s" % [Study.drug, Study.condition] },
+      Proc.new { "%s and %s in Treating Subjects With %s" % [Study.drug, Study.drug, Study.condition] },
+      Proc.new { "%s Compared to %s in Treating Subjects With %s That Has Not Responded to %s" % [Study.drug, Study.drug, Study.condition, Study.therapy] },
+      Proc.new { "%s in Preventing %s in Subjects Who Are Receiving %s For %s" % [Study.drug, Study.condition, Study.therapy, Study.condition] },
+      Proc.new { "%s in Treating Subjects Who Are Undergoing %s for %s" % [Study.drug, Study.therapy, Study.condition] },
+      Proc.new { "%s in Treating Subjects With %s" % [Study.drug, Study.condition] },
+      Proc.new { "%s in Treating Subjects With %s That Has Been Previously Treated" % [Study.drug, Study.condition] },
+      Proc.new { "%s With or Without %s in Treating Women With %s" % [Study.drug, Study.drug, Study.condition] },
+      Proc.new { "%s in Treating Subjects With Newly Diagnosed %s" % [Study.therapy, Study.condition] },
+      Proc.new { "Assessment and Tracking of Long-Term %s Safety" % [Study.drug] },
+      Proc.new { "Comparison of Combination %s Regimens in Treating Older Women Who Have Undergone Surgery for %s" % [Study.drug, Study.condition] },
+      Proc.new { "Comparison of Self Adjustment Versus Standard of Care Treatment in Subjects With %s" % [Study.condition] },
+      Proc.new { "Efficacy and Safety Study of %s for the Treatment of %s or %s" % [Study.drug, Study.condition, Study.condition] },
+      Proc.new { "%s in Treating Subjects With %s" % [Study.therapy, Study.condition] },
+      Proc.new { "%s or Observation After %s in Treating Subjects With %s" % [Study.therapy, Study.therapy, Study.condition] },
+      Proc.new { "Randomized Evaluation of %s With %s" % [Study.condition, Study.drug] }
       ]
   end
 end

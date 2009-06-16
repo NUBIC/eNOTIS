@@ -1,19 +1,19 @@
-# Represents a patient that has (at some point) been on a clinical trial protocol
-# We store enough data to reconcile the local db store record with the patient data in 
+# Represents a subject that has (at some point) been on a clinical trial protocol
+# We store enough data to reconcile the local db store record with the subject data in 
 # the EDW. The model stores the reconciliation fields and information about the source system
 # for the data.
 require 'lib/webservices/webservices'
-class Patient < ActiveRecord::Base #.extend WebServices
+class Subject < ActiveRecord::Base #.extend WebServices
   include WebServices
   has_many :involvements
-  has_many :patient_events 
-  has_many :protocols, :through => :involvements
+  has_many :subject_events 
+  has_many :studies, :through => :involvements
 
   $plugins = [EdwServices]
 
   def reconcile(values)
     values[:last_reconciled]=Time.now
-    Patient.update(self.id,values)  
+    Subject.update(self.id,values)  
   end
 
   def current?

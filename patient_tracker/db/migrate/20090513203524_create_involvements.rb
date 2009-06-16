@@ -1,7 +1,7 @@
 class CreateInvolvements < ActiveRecord::Migration
   def self.up
     create_table :involvements do |t|
-      t.integer :patient_id
+      t.integer :subject_id
       t.integer :protocol_id
       t.boolean :confirmed
       t.string :disease_site

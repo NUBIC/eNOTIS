@@ -1,6 +1,6 @@
-class CreateProtocols < ActiveRecord::Migration
+class CreateStudies < ActiveRecord::Migration
   def self.up
-    create_table :protocols do |t|
+    create_table :studies do |t|
       t.string :irb_number
       t.string :name
       t.string :title
@@ -13,6 +13,6 @@ class CreateProtocols < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :protocols
+    drop_table :studies
   end
 end

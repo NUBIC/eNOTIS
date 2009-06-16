@@ -56,7 +56,7 @@ describe EirbServices do
 
       end
 
-      it "can find all access lists for all protocols" do
+      it "can find all access lists for all studies" do
         p = @params.merge({:savedSearchName => "eNOTIS Study Access", 
                       :parameters => nil})
         @search.should_receive(:perform_search).with(p)

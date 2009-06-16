@@ -1,8 +1,8 @@
 # User model for application context
 
 class User < ActiveRecord::Base
-  has_many :user_protocols
-  has_many :protocols, :through => :user_protocols
+  has_many :user_studies
+  has_many :studies, :through => :user_studies
   attr_accessor :password #doesnt do anything for now
     
   # Rough validation method
@@ -21,10 +21,10 @@ class User < ActiveRecord::Base
     
     #This retrievs all data currently in the 
     
-    #new_access_list = Protocols.find_all_by_netid(netid)
-    #old_access_list = self.protocols
+    #new_access_list = Studies.find_all_by_netid(netid)
+    #old_access_list = self.studies
     #new_access_list.each do |study|
-	#self.protocols << study unless old_access_list.include?study
+	#self.studies << study unless old_access_list.include?study
     #end
     true
   end

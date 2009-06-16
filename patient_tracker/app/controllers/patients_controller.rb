@@ -1,4 +1,4 @@
-class PatientsController < ApplicationController
+class SubjectsController < ApplicationController
   include AuthMod
   include FaceboxRender
   before_filter :user_must_be_logged_in
@@ -6,13 +6,13 @@ class PatientsController < ApplicationController
 
   def index
     
-    @protocol = Protocol.find_by_irb_number(params[:irb_number])
+    @protocol = Study.find_by_irb_number(params[:irb_number])
     @involvements = @protocol.involvements
   end
 
   def show
-    @patient = Patient.find(params[:id])
-    @involvements = @patient.involvements#Involvement.find_all_by_patient_id(@patient.id)
+    @subject = Subject.find(params[:id])
+    @involvements = @subject.involvements#Involvement.find_all_by_subject_id(@subject.id)
     respond_to do |format|
       format.html
       format.js {render_to_facebox}
@@ -20,7 +20,7 @@ class PatientsController < ApplicationController
   end
 
   def search
-    @patients = Patient.find_by_mrn(params[:mrn])
+    @subjects = Subject.find_by_mrn(params[:mrn])
   end
   
   def create

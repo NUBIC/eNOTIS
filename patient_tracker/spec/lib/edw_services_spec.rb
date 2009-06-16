@@ -25,15 +25,15 @@ describe EdwServices do
       EdwServices.stub!(:edw_adapter).and_return(@adapter)
     end
   
-    describe "finding data about patients" do
-      it "can find the details of a patient by mrn" do
+    describe "finding data about subjects" do
+      it "can find the details of a subject by mrn" do
         p = {:mrd_pt_id => '9021090210'}
         @adapter.should_receive(:perform_search).with(p)
         EdwServices.find_by_mrd_pt_id('9021090210')
 
       end
     
-      it "can find a list of patients by name or dob" do
+      it "can find a list of subjects by name or dob" do
         p = {:name => 'July Fourth', :dob => '7/4/50'}
         @adapter.should_receive(:perform_search).with(p)
         EdwServices.find_by_name_and_dob("July Fourth", '7/4/50')

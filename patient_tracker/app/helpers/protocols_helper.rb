@@ -1,2 +1,2 @@
-module ProtocolsHelper
+module StudiesHelper
 end
