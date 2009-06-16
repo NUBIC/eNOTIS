@@ -36,7 +36,7 @@ module WebServices
           service_result = service_search(*args)
           case args.first
             when :first then return process_single(service_result,nil)
-            when :all then return process_multiple(service_result,nil)
+            when :all   then return process_multiple(service_result,nil)
           end
                 
         end
@@ -46,16 +46,18 @@ module WebServices
           service_result = nil
           local_result = old_find(*args)
           service_result = service_search(*args) unless !local_result.nil? and local_result.current?
-          return process_single(service_result,local_result) unless !(args.first==:first)
-          #return process_multiple(service_result,local_result)
+          case args.first
+            when :first then return process_single(service_result,local_result)
+            when :all   then raise "Incompatible option :all with global search"
+          end
         end
 
         def process_single(service_result,local_result)
           if service_result and service_result.first
-	    return local_result.reconcile(service_result.first) unless local_result.nil?
             service_result.first[:last_reconciled]=Time.now
+	    return local_result.reconcile(service_result.first) unless local_result.nil?
             return self.new(service_result.first)
-          else local_result
+          else 
             return local_result 
           end
         end

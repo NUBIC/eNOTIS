@@ -22,11 +22,12 @@ class Study < ActiveRecord::Base
     #3.If status is open: 
     #4.Alter every given involvement status according to protocol     
     Study.update(self.id,params)
-    self.involvements.each do |involvement|
-      if self.open? and !involvement.confirmed?
-        involvement.confirmed!
-      end
-    end
+    #self.involvements.each do |involvement|
+     # if self.open? and !involvement.confirmed?
+      #  involvement.confirmed!
+      #end
+    #end
+    return self
     
   end
   
@@ -50,7 +51,7 @@ class Study < ActiveRecord::Base
   end
   
   def current?
-    return self.reconciliation_date > 12.hours.ago
+    return self.last_reconciled > 12.hours.ago
   end
 
   def authorized_user?(user)
