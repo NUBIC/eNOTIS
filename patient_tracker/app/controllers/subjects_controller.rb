@@ -43,10 +43,23 @@ class SubjectsController < ApplicationController
   end
   
   def self.check_csv(file)
-    arr_of_arrs = FasterCSV.read(file.path)
+    arr_of_arrs = FasterCSV.read(file.path, :headers => :first_row, :return_headers => false, :header_converters => :symbol)
     bool_arr = arr_of_arrs.map do |row|
-      !row.first.blank? or (!row[1].blank? and !row[2].blank? and !row[3].blank?)
+      !row[:mrn].blank? or (!row[:last_name].blank? and !row[:first_name].blank? and !row[:dob].blank?)
     end
     bool_arr.uniq == [true]
+    
+    # running_total = 0
+    #     FasterCSV.filter( :headers           => true,
+    #                        :return_headers    => true,
+    #                        :header_converters => :symbol,
+    #                        :converters        => :numeric ) do |row|
+    #        if row.header_row?
+    #          row << "Running Total"
+    #        else
+    #          row << (running_total += row[:quantity] * row[:price])
+    #        end
+    #     end
+    
   end
 end
