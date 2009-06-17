@@ -1,20 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe SubjectsController do
-
-  #Delete this example and add some real ones
-  it "should use SubjectsController" do
-    controller.should be_an_instance_of(SubjectsController)
-  end
-  
   describe "importing csv" do
-    # post file to create  
-    # check file
-    # spit it out to csv with errors in another column (check number and names of columns)
-    # redirect to x with success
-    # process file
-    # take me to a processing page
-
     before(:each) do
       @good_csv = "mrn,first_name,last_name,dob,subject_event_type,subject_event_date\r\n9988101,,,,consented,3/4/09\r\n9988102,,,,consented,3/5/09\r\n,test10,last10,12/31/04,consented,3/6/09\r\n,test11,last11,6/11/54,consented,3/7/09\r\n,test12,last12,6/12/54,consented,3/8/09\r\n,test13,last13,6/13/55,consented,3/9/09\r\n,test14,last14,7/26/74,consented,3/10/09\r\n,test15,last15,12/31/04,consented,3/11/09\r\n,test16,last16,6/12/54,consented,3/12/09\r\n"
       @bad_csv = "mrn,first_name,last_name,dob,subject_event_type,subject_event_date\r\n9988101,,,,,3/4/09\r\nfoo,,,,consented,\r\n,,last10,9/1/45,consented,3/6/09\r\n,test11,last11,6/1/10,consented,3/7/09\r\n,test12,last12,13/31/01,consented,3/8/09\r\n,,,6/13/55,consented,3/9/09\r\n,test14,last14,7/26/74,,3/10/09\r\n,test15,last15,12/31/04,consented,\r\n,test16,,6/12/54,consented,3/12/09\r\n"
