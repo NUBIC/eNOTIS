@@ -62,7 +62,7 @@ describe SubjectsController do
     end
     it "should sanity check csv file (failure) and send me back a csv file with a 'import errors' as first header, and a valid column of input errors" do
       post :create, {:file => @bad_csv_file}
-      response.body.should match(/^import errors.*\n.*\n.*\nA subject event type and date is required..*\nA subject event type and date is required..*\n.*\n"A first_name and last_name and dob, or an mrn is required. .*\n"A first_name and last_name and dob, or an mrn is required. .*\n"A first_name and last_name and dob, or an mrn is required. .*\nA subject event type and date is required..*\nA subject event type and date is required..*\n"A first_name and last_name and dob, or an mrn is required. A subject event type and date is required./)
+      response.body.should match(/^import_errors.*\n.*\n.*\nA subject event type and date is required..*\nA subject event type and date is required..*\n.*\n"A first_name and last_name and dob, or an mrn is required. .*\n"A first_name and last_name and dob, or an mrn is required. .*\n"A first_name and last_name and dob, or an mrn is required. .*\nA subject event type and date is required..*\nA subject event type and date is required..*\n"A first_name and last_name and dob, or an mrn is required. A subject event type and date is required./)
       
       # import errors
       # 
