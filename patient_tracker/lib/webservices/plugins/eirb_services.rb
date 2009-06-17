@@ -25,23 +25,28 @@ class EirbServices
 
   # ======== eIRB webservice wrapper methods ========
   def self.find_status(study_id)
-    default_search("eNOTIS Study Status",{"ID" => study_id})
+    result = default_search("eNOTIS Study Status",{"ID" => study_id})
+    convert_for_notis(result)
   end
 
   def self.find_by_irb_number(conditions)
-    convert_for_notis(default_search("eNOTIS Study Basics",{"ID" => conditions[:irb_number]}) )
+    result = default_search("eNOTIS Study Basics",{"ID" => conditions[:irb_number]})
+    convert_for_notis(result)
   end 
 
   def self.find_study_research_type(study_id)
-    default_search("eNOTIS Study Research Type",{"ID" => study_id})
+    result = default_search("eNOTIS Study Research Type",{"ID" => study_id})
+    convert_for_notis(result)
   end
 
   def self.find_by_netid(user_netid=nil)
-    default_search("eNOTIS Person Details",{"NetID" => user_netid})
+    result = default_search("eNOTIS Person Details",{"NetID" => user_netid})
+    convert_for_notis(result)
   end
   
   def self.find_study_access(study_id=nil)
-    default_search("eNOTIS Study Access", (study_id.nil? ? nil : {"ID" => study_id}))
+    result = default_search("eNOTIS Study Access", (study_id.nil? ? nil : {"ID" => study_id}))
+    #convert_for_notis(result)
   end
 
   # ======== Search helper methods =========
@@ -53,13 +58,22 @@ class EirbServices
   end
 
   # ======== Attribute converstion Helper Methods =========
-  def self.convert_for_notis(values)
+
+  def self.convert_for_notis(values) 
+    convert(values,EIRB_TO_NOTIS)
+  end
+
+  def self.convert_for_eirb(values)
+    convert([values],NOTIS_TO_EIRB).first
+  end
+  private
+  def self.convert(values,converter)
       results=[]
       return values unless !values.nil? 
       values.each do |val|
         result ={} 
         val.each do |key,value|
-          result[EIRB_TO_NOTIS[key.to_s].to_sym] = value unless !EIRB_TO_NOTIS.has_key?key.to_s
+          result[converter[key.to_s].to_sym] = value unless !converter.has_key?key.to_s
         end 
         results << result
       end
