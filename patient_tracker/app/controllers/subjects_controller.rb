@@ -24,25 +24,34 @@ class SubjectsController < ApplicationController
   end
   
   def create
-    if (check_csv = self.check_csv(params[:file])) == true
+    passed = self.class.csv_sanity_check(params[:file])
+    
+    if passed == true
       if params[:study]
+        self.queue_import(params[:file])
         redirect_to study_path(:id => params[:study])
       else
-        render :layout => false, :text => ""
+        redirect_to studies_path
       end
     else
-      filename = "foo.csv"
-      headers["Content-Disposition"] = "attachment; filename='#{filename}'"
-      # if request.env['HTTP_USER_AGENT'] =~ /msie/i
-      #   headers.merge({'Pragma' => 'public', "Content-type" => "text/plain", 'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0', 'Expires' => "0"})
-      # else
-        headers["Content-Type"] ||= 'text/csv'        
-      # end
-      send_data(params[:file].to_s, :type => 'text/csv; charset=utf-8; header=present')
+      filename = "results.csv"
+      headers['Content-Disposition'] = "attachment; filename='#{filename}'"
+      if request.env['HTTP_USER_AGENT'] =~ /msie/i
+        headers.merge!({'Pragma' => 'public', 'Content-type' => 'text/plain; charset=utf-8', 'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0', 'Expires' => '0'})
+      else
+        headers['Content-Type'] ||= 'text/csv; charset=utf-8'        
+      end
+      render :text => params[:file].to_s
     end
   end
+
+  def self.queue_import(file)
+    
+  end
   
-  def self.check_csv(file)
+  def self.csv_sanity_check(file)
+    # We may possibly want to sanity check dates with Chronic http://chronic.rubyforge.org/
+    
     attrs = %w(mrn last_name first_name dob subject_event_type subject_event_date).map(&:to_sym)
     errors = []
     FasterCSV.foreach(file.path, :headers => :first_row, :return_headers => false, :header_converters => :symbol) do |r|      

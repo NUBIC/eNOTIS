@@ -31,34 +31,41 @@ describe SubjectsController do
       controller.stub!(:user_must_be_logged_in)
     end
     it "should allow me to post the file to create" do
-      controller.stub!(:check_csv).and_return(true)
+      controller.class.stub!(:csv_sanity_check).and_return(true)
+      controller.stub!(:queue_import)
       post :create, {:file => @good_csv_file}
-      response.should be_success
+      response.should redirect_to(studies_path)
     end
-    it "should check the file (success) and redirect to study" do
-      controller.should_receive(:check_csv).with(@good_csv_file).and_return(true)
+    it "should check the file (success) and queue up the file and redirect to study" do
+      controller.class.should_receive(:csv_sanity_check).with(@good_csv_file).and_return(true)
+      controller.should_receive(:queue_import).and_return(true)
       post :create, {:file => @good_csv_file, :study => 3}
       response.should redirect_to(study_path(:id => 3))
     end
     it "should check the file (failure) and send me back a csv file" do
-      controller.should_receive(:check_csv).with(@bad_csv_file).and_return(false)
+      controller.class.should_receive(:csv_sanity_check).with(@bad_csv_file).and_return(false)
       post :create, {:file => @bad_csv_file, :study => 3}
-      response.headers['Content-Type'].include?("text/csv").should be_true
-      # check file name
-      # response.headers['Content-Type'].include?("text/csv").should be_true
+      response.headers['Content-Type'].should match(/text\/csv/)
+      response.headers['Content-Disposition'].should match(/attachment; filename='.*\.csv'/)
     end
-    it "should chekc the file (failure) and send me back a csv file for IE" do
-      # request.env['HTTP_ACCEPT'] = 'application/json, text/javascript, */*'
-      #       request.env['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
-      #       get :index, :id => 666
+    it "should check the file (failure) and send me back a csv file for IE" do
+      # http://www.calicowebdev.com/blog/show/21
+      controller.class.should_receive(:csv_sanity_check).with(@bad_csv_file).and_return(false)
+      request.env['HTTP_USER_AGENT'] = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)"
+      post :create, {:file => @bad_csv_file, :study => 3}
+      response.headers['Content-Disposition'].should match(/attachment; filename='.*\.csv'/)
+      response.headers['Pragma'].should == 'public'
+      response.headers['Content-type'].should match(/text\/plain/)
+      response.headers['Cache-Control'].should == 'no-cache, must-revalidate, post-check=0, pre-check=0'
+      response.headers['Expires'].should == '0'
     end
     it "should check csv for mrn or (first_name, last_name, dob)" do
-      controller.class.check_csv(@good_csv_file).should be_true
-      controller.class.check_csv(@bad_csv_file).class.should == Array
+      controller.class.csv_sanity_check(@good_csv_file).should be_true
+      controller.class.csv_sanity_check(@bad_csv_file).class.should == Array
     end
     it "should check csv for for mrn or (first_name, last_name, dob) with columns in random order" do
-      controller.class.check_csv(@good_random_cols_file).should be_true
-      controller.class.check_csv(@bad_random_cols_csv_file).class.should == Array
+      controller.class.csv_sanity_check(@good_random_cols_file).should be_true
+      controller.class.csv_sanity_check(@bad_random_cols_csv_file).class.should == Array
     end    
   end
 end
