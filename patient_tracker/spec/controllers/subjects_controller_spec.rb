@@ -19,15 +19,21 @@ describe SubjectsController do
     end
     it "should allow me to post the file to create" do
       controller.class.stub!(:csv_sanity_check).and_return(true)
-      controller.stub!(:queue_import)
+      controller.class.stub!(:queue_import)
       post :create, {:file => @good_csv_file}
       response.should redirect_to(studies_path)
     end
     it "should check the file (success) and queue up the file and redirect to study" do
       controller.class.should_receive(:csv_sanity_check).with(@good_csv_file).and_return(true)
-      controller.should_receive(:queue_import).and_return(true)
+      controller.class.should_receive(:queue_import).and_return(true)
       post :create, {:file => @good_csv_file, :study => 3}
       response.should redirect_to(study_path(:id => 3))
+    end
+    it "should check the file (success) and queue up the file and redirect to studies path" do
+      controller.class.should_receive(:csv_sanity_check).with(@good_csv_file).and_return(true)
+      controller.class.should_receive(:queue_import).and_return(true)
+      post :create, {:file => @good_csv_file}
+      response.should redirect_to(studies_path)
     end
     it "should check the file (failure) and send me back a csv file" do
       controller.class.should_receive(:csv_sanity_check).with(@bad_csv_file).and_return(false)

@@ -27,12 +27,8 @@ class SubjectsController < ApplicationController
     passed = self.class.csv_sanity_check(params[:file])
     
     if passed == true
-      if params[:study]
-        self.queue_import(params[:file])
-        redirect_to study_path(:id => params[:study])
-      else
-        redirect_to studies_path
-      end
+      self.class.queue_import(params[:file])
+      redirect_to params[:study].blank? ? studies_path : study_path(:id => params[:study])
     else
       filename = "results.csv"
       headers['Content-Disposition'] = "attachment; filename='#{filename}'"
