@@ -24,9 +24,9 @@ class SubjectsController < ApplicationController
   end
   
   def create
-    passed = self.class.csv_sanity_check(params[:file])
+    sanity_check_results = self.class.csv_sanity_check(params[:file])
     
-    if passed == true
+    if sanity_check_results == true
       self.class.queue_import(params[:file])
       redirect_to params[:study].blank? ? studies_path : study_path(:id => params[:study])
     else
@@ -37,23 +37,25 @@ class SubjectsController < ApplicationController
       else
         headers['Content-Type'] ||= 'text/csv; charset=utf-8'        
       end
-      render :text => params[:file].to_s
+      
+      render :text => FasterCSV.generate(:row_sep => "\r\n"){|csv| sanity_check_results.each{|row| csv << row}}
     end
   end
-
+  
   def self.queue_import(file)
     
   end
   
   def self.csv_sanity_check(file)
     # We may possibly want to sanity check dates with Chronic http://chronic.rubyforge.org/
-    
-    attrs = %w(mrn last_name first_name dob subject_event_type subject_event_date).map(&:to_sym)
+
+    results = []
     errors = []
-    FasterCSV.foreach(file.path, :headers => :first_row, :return_headers => false, :header_converters => :symbol) do |r|      
+    FasterCSV.foreach(file.path, :headers => :first_row, :return_headers => true, :header_converters => :symbol) do |r|      
       errors << (r[:mrn].blank? ? (r[:last_name].blank? or r[:first_name].blank? or r[:dob].blank?) ? "A first_name and last_name and dob, or an mrn is required. " : "" : "") + \
         ((r[:subject_event_type].blank? or r[:subject_event_date].blank?) ? "A subject event type and date is required." : "")
+      results << (results == [] ? ["import errors"] : [errors.last]) + r.fields
     end
-    errors.uniq == [""] ? true : errors
+    errors.uniq == [""] ? true : results
   end
 end
