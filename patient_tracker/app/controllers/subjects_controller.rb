@@ -24,7 +24,7 @@ class SubjectsController < ApplicationController
   end
   
   def create
-    if self.check_csv params[:file]
+    if (check_csv = self.check_csv(params[:file])) == true
       if params[:study]
         redirect_to study_path(:id => params[:study])
       else
@@ -33,33 +33,22 @@ class SubjectsController < ApplicationController
     else
       filename = "foo.csv"
       headers["Content-Disposition"] = "attachment; filename='#{filename}'"
-      if request.env['HTTP_USER_AGENT'] =~ /msie/i
-        headers.merge({'Pragma' => 'public', "Content-type" => "text/plain", 'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0', 'Expires' => "0"})
-      else
+      # if request.env['HTTP_USER_AGENT'] =~ /msie/i
+      #   headers.merge({'Pragma' => 'public', "Content-type" => "text/plain", 'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0', 'Expires' => "0"})
+      # else
         headers["Content-Type"] ||= 'text/csv'        
-      end
+      # end
       send_data(params[:file].to_s, :type => 'text/csv; charset=utf-8; header=present')
     end
   end
   
   def self.check_csv(file)
-    arr_of_arrs = FasterCSV.read(file.path, :headers => :first_row, :return_headers => false, :header_converters => :symbol)
-    bool_arr = arr_of_arrs.map do |row|
-      !row[:mrn].blank? or (!row[:last_name].blank? and !row[:first_name].blank? and !row[:dob].blank?)
+    attrs = %w(mrn last_name first_name dob subject_event_type subject_event_date).map(&:to_sym)
+    errors = []
+    FasterCSV.foreach(file.path, :headers => :first_row, :return_headers => false, :header_converters => :symbol) do |r|      
+      errors << (r[:mrn].blank? ? (r[:last_name].blank? or r[:first_name].blank? or r[:dob].blank?) ? "A first_name and last_name and dob, or an mrn is required. " : "" : "") + \
+        ((r[:subject_event_type].blank? or r[:subject_event_date].blank?) ? "A subject event type and date is required." : "")
     end
-    bool_arr.uniq == [true]
-    
-    # running_total = 0
-    #     FasterCSV.filter( :headers           => true,
-    #                        :return_headers    => true,
-    #                        :header_converters => :symbol,
-    #                        :converters        => :numeric ) do |row|
-    #        if row.header_row?
-    #          row << "Running Total"
-    #        else
-    #          row << (running_total += row[:quantity] * row[:price])
-    #        end
-    #     end
-    
+    errors.uniq == [""] ? true : errors
   end
 end
