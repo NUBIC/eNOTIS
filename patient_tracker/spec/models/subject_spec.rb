@@ -42,6 +42,13 @@ describe Subject do
       @subject.pre_sync_data.should include("31 Circle Drive")
     end
 
+    it "should not save the old data if we're already synced" do
+      @subject = Factory(:subject, :last_synced => 2.days.ago, :address_line1 => "31 Circle Drive", :pre_sync_data => nil)
+      @subject.sync!({:address_line1 => "314 Circle Dr."})
+      @subject.address_line1.should == "314 Circle Dr."
+      @subject.pre_sync_data.should be_nil
+    end
+
     
   end
   

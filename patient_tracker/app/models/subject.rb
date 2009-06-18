@@ -19,7 +19,7 @@ class Subject < ActiveRecord::Base #.extend WebServices
   end
   def sync!(attrs)
     self.attributes = attrs
-    self.pre_sync_data = self.changes.map{|key, array_value| "#{key} changed from #{array_value[0].to_s} to #{array_value[1].to_s}"}.join(",0")
+    self.pre_sync_data = self.changes.map{|key, array_value| "#{key} changed from #{array_value[0].to_s} to #{array_value[1].to_s}"}.join(",0") unless synced?
     self.save
   end
   
