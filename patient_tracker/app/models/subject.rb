@@ -18,23 +18,28 @@ class Subject < ActiveRecord::Base #.extend WebServices
   def synced?
     !self.last_synced.nil?
   end
-
-  def reconcile(values)
-    values[:last_reconciled]=Time.now
-    Subject.update(self.id,values)  
+  def stale?
+    synced? ? self.last_synced < 12.hours.ago : true 
   end
-
-  def current?
-   self.last_reconciled > 12.hours.ago unless last_reconciled.nil?
+  def sync!(attrs)
+    self.update_attributes(attrs)
   end
-
-  def confirmed!
-    self.reconciled = true
-    self.save
-  end
-
-  def confirmed?
-    self.reconciled
-  end 
+  # def reconcile(values)
+  #   values[:last_reconciled]=Time.now
+  #   Subject.update(self.id,values)  
+  # end
+  # 
+  # def current?
+  #  self.last_reconciled > 12.hours.ago unless last_reconciled.nil?
+  # end
+  # 
+  # def confirmed!
+  #   self.reconciled = true
+  #   self.save
+  # end
+  # 
+  # def confirmed?
+  #   self.reconciled
+  # end 
 
 end

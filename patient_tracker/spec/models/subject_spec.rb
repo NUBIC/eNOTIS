@@ -16,11 +16,23 @@ describe Subject do
 
     it "should tell us when the subject is not synced" do
       @subject = Factory(:subject, :last_synced => nil)
-      @subject.synced?.should be_false
+      @subject.should_not be_synced
     end
     
+    it "should tell us when the subject is stale" do
+      @subject = Factory(:subject, :last_synced => nil)
+      @subject.should be_stale
+      @subject.last_synced = 3.minutes.ago
+      @subject.should_not be_stale
+      @subject.last_synced = 2.days.ago
+      @subject.should be_stale
+    end
     
-    
+    it "should allow us to sync with different data" do
+      @subject = Factory(:subject, :last_synced => nil, :address_line1 => "31 Circle Drive")
+      @subject.sync!({:address_line1 => "314 Circle Dr."})
+      @subject.address_line1.should == "314 Circle Dr."
+    end
   end
   
   
