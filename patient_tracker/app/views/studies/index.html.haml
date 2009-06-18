@@ -1,7 +1,7 @@
 %h1
   Studies
--@studies.each do |protocol|
-  =render(:partial => "protocol", :object => protocol)
+-@studies.each do |study|
+  =render(:partial => "study", :object => study)
   %br
 
 

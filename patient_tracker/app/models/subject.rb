@@ -1,4 +1,4 @@
-# Represents a subject that has (at some point) been on a clinical trial protocol
+# Represents a subject that has (at some point) been on a clinical trial study
 # We store enough data to reconcile the local db store record with the subject data in 
 # the EDW. The model stores the reconciliation fields and information about the source system
 # for the data.

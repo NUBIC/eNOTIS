@@ -1,7 +1,7 @@
-#protocol_full
+#study_full
   %ul.menu
     %li.inactive
-      = link_to("General Info",registration_path(@protocol.irb_number))
+      = link_to("General Info",registration_path(@study.irb_number))
     %li.inactive
       %a
         Study Events
@@ -19,11 +19,11 @@
 #subject_list
   - if @involvements.nil?
     .heading
-      You are NOT authorized to see subjects on this protocol
+      You are NOT authorized to see subjects on this study
   - else
 
     .heading
-      The following subjects are currently associated with this protocol
+      The following subjects are currently associated with this study
     %ul 
       - @involvements.each do |i|
         %li=render(:partial => "subject", :object => i.subject)

@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Study do
   before(:each) do
-    @study= Study.create(:status=>"open",:name=>"test_protocol",:description=>"some test protocol",:last_reconciled=>Time.now)
+    @study= Study.create(:status=>"open",:name=>"test_study",:description=>"some test study",:last_reconciled=>Time.now)
   end
 
 
@@ -32,33 +32,33 @@ describe Study do
     
   end
 
-  it "should change subject on protocol status to confirmed once data is reconciled if status is still open" do
+  it "should change subject on study status to confirmed once data is reconciled if status is still open" do
     p = Subject.create({:first_name=>"david",:last_name=>"kabaka",:mrn=>"123454"})
     @study.last_reconciled = 23.hours.ago
     @study.save
     @study.add_subject(p)
     @study.involvements.size.should ==1
     @study.involvements[0].confirmed.should == false
-    @study.reconcile({:status=>"open",:name=>"test_protocol",:description=>"some test protocol"})
+    @study.reconcile({:status=>"open",:name=>"test_study",:description=>"some test study"})
     @study.involvements.size.should ==1
     @study.involvements[0].confirmed.should == true
   end
 
-  it "should not add a subject to a particular protocol more than once" do
+  it "should not add a subject to a particular study more than once" do
     p = Subject.create({:first_name=>"david",:last_name=>"kabaka",:mrn=>"123454"})
     @study.add_subject(p)
     @study.add_subject(p)
     p.involvements.size.should == 1
   end
 
-  it "should return whether or not a user is authorized to work on a given protocol" do
+  it "should return whether or not a user is authorized to work on a given study" do
      u = User.create
      @study.users << u
      (@study.authorized_user?u).should == true
   end
 
 
-  it "should return false if user is not authorized to work on a given protocol" do
+  it "should return false if user is not authorized to work on a given study" do
     u = User.create
     p = Study.create
     p.users << u

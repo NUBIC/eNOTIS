@@ -89,7 +89,7 @@ ul#menu {
     padding: 0.6em;
     width: 8em;
     font-weight: bold; }
-  ul#menu #protocol_search {
+  ul#menu #study_search {
     width: 35em; }
   ul#menu #subject_search {
     width: 35em; }
@@ -121,13 +121,13 @@ ul#menu {
     padding: 1.5em;
     height: 10em; }
 
-#protocol_list {
+#study_list {
   background-color: #c3c3c3;
   -moz-border-radius: 4px 4px;
   padding: 1.5em;
   margin: 1em 0em;
   width: 95%; }
-  #protocol_list a.protocol {
+  #study_list a.study {
     text-decoration: none;
     color: #333333;
     display: block;
@@ -135,24 +135,24 @@ ul#menu {
     width: 100%;
     border: 1px solid #fff;
     border-color: #c3c3c3; }
-    #protocol_list a.protocol .study_id {
+    #study_list a.study .study_id {
       font-weight: bold;
       font-size: 1.5em;
       line-height: 1em; }
-    #protocol_list a.protocol .name {
+    #study_list a.study .name {
       font-weight: bold;
       font-size: 1.5em;
       line-height: 1em; }
-    #protocol_list a.protocol .description {
+    #study_list a.study .description {
       font-weight: italic; }
-    #protocol_list a.protocol .details {
+    #study_list a.study .details {
       float: right;
       margin-right: 2em; }
-  #protocol_list a.protocol:hover {
+  #study_list a.study:hover {
     cursor: pointer;
     background-color: #ffffe0;
     border: 1px solid #333; }
-    #protocol_list a.protocol:hover .details:after {
+    #study_list a.study:hover .details:after {
       content: "(click for details)"; }
 
 /* event based display of info on the user home */ */
@@ -197,14 +197,14 @@ ul.events li.event {
     font-size: 0.5em;
     font-style: italic; }
 
-#protocol_full ul.menu {
+#study_full ul.menu {
   width: 100%;
   height: 2.5em; }
-  #protocol_full ul.menu li {
+  #study_full ul.menu li {
     display: inline;
     cursor: pointer;
     float: left; }
-  #protocol_full ul.menu li.active a {
+  #study_full ul.menu li.active a {
     display: block;
     -moz-border-radius: 4px 4px 0px 0px;
     background-color: #c3c3c3;
@@ -212,10 +212,10 @@ ul.events li.event {
     padding: 0.5em 0.5em 1em 0.5em;
     text-align: center;
     font-weight: bold; }
-  #protocol_full ul.menu li.inactive {
+  #study_full ul.menu li.inactive {
     padding-top: 0.4em;
     margin: 0em 0.2em; }
-    #protocol_full ul.menu li.inactive a {
+    #study_full ul.menu li.inactive a {
       display: block;
       border: 1px solid #333;
       border-bottom: 0px;
@@ -224,15 +224,15 @@ ul.events li.event {
       width: 8em;
       padding: 0.3em 0.5em;
       text-align: center; }
-    #protocol_full ul.menu li.inactive a:hover {
+    #study_full ul.menu li.inactive a:hover {
       background-color: #ffffe0;
       color: #520064; }
-#protocol_full .header_details {
+#study_full .header_details {
   -moz-border-radius: 4px 4px;
   background-color: #c3c3c3;
   padding: 1em;
   margin-bottom: 1em; }
-  #protocol_full .header_details .primary_data {
+  #study_full .header_details .primary_data {
     font-weight: bold;
     font-size: 2em;
     width: 6.4em;
@@ -240,62 +240,62 @@ ul.events li.event {
     border: 1px solid #333;
     background-color: #f0f0f0;
     margin-bottom: 0.5em; }
-  #protocol_full .header_details .secondary_data {
+  #study_full .header_details .secondary_data {
     font-size: 1.3em;
     line-height: 1.5em;
     margin-left: 11.5em;
     font-weight: bold; }
-    #protocol_full .header_details .secondary_data em {
+    #study_full .header_details .secondary_data em {
       font-weight: normal; }
-  #protocol_full .header_details .tertiary_data {
+  #study_full .header_details .tertiary_data {
     border-top: 1px solid #333;
     clear: both;
     padding: 0.5em;
     font-size: 1.2em; }
-  #protocol_full .header_details .status_icon {
+  #study_full .header_details .status_icon {
     padding: 0.5em;
     border: 1px solid #333;
     width: 5.35em;
     line-height: 1em; }
-  #protocol_full .header_details .study_id {
+  #study_full .header_details .study_id {
     text-align: center;
     width: 100%;
     padding: 0.5em 0em; }
-  #protocol_full .header_details .approved {
+  #study_full .header_details .approved {
     background-color: #3c7c3b;
     color: #f3f3f3; }
-  #protocol_full .header_details .suspended {
+  #study_full .header_details .suspended {
     background-color: #d3d3d3; }
-  #protocol_full .header_details .terminated {
+  #study_full .header_details .terminated {
     background-color: #ff0000; }
-  #protocol_full .header_details .review {
+  #study_full .header_details .review {
     background-color: #d3d3d3; }
-#protocol_full .file_details {
+#study_full .file_details {
   -moz-border-radius: 4px 4px;
   background-color: #c3c3c3;
   padding: 0.5em;
   margin-bottom: 1em;
   float: left;
   width: 45%; }
-  #protocol_full .file_details .protocol_file {
+  #study_full .file_details .study_file {
     padding: 0.5em;
     border-top: 1px solid #f0f0f0;
     border-bottom: 1px solid #f0f0f0;
     margin-bottom: -1px; }
-    #protocol_full .file_details .protocol_file img {
+    #study_full .file_details .study_file img {
       position: relative;
       top: 3px; }
-    #protocol_full .file_details .protocol_file em {
+    #study_full .file_details .study_file em {
       padding-bottom: 0.4em; }
-#protocol_full .status_history {
+#study_full .status_history {
   -moz-border-radius: 4px 4px;
   background-color: #c3c3c3;
   padding: 0.5em;
   margin-bottom: 1em;
   margin-left: 50%; }
-  #protocol_full .status_history li {
+  #study_full .status_history li {
     padding: 0.5em; }
-#protocol_full .accural_status {
+#study_full .accural_status {
   -moz-border-radius: 4px 4px;
   background-color: #c3c3c3;
   padding: 0.5em;

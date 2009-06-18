@@ -2,9 +2,9 @@
   %li
     #app_name eNOTIS
   %li
-    #protocol_search
+    #study_search
       -form_tag(search_studies_path, :method => :get) do 
-        Find protocol
+        Find study
         =text_field_tag("study_id")
         =submit_tag("Find")
   %li

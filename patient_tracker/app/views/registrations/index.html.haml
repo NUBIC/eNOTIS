@@ -5,11 +5,11 @@
       Recent events:
     %ul.events
       %li.event
-        =link_to("John Smith - AE on protocol STU0001924")
+        =link_to("John Smith - AE on study STU0001924")
       %li.event
-        =link_to("Sally Sue - Registered on protocol STU0001924")
+        =link_to("Sally Sue - Registered on study STU0001924")
       %li.event
-        =link_to("Approval of protocol STU00020135")
+        =link_to("Approval of study STU00020135")
 
   #user_options
     .heading
@@ -24,9 +24,9 @@
       %li
         =link_to("edit user settings")
 
-#protocol_list
+#study_list
   .heading 
     You have access to the following Studies:
   %ul 
     -@accessable_studies.each do |p|
-      %li=render(:partial => "protocol", :object => p.protocol)  
+      %li=render(:partial => "study", :object => p.study)  

@@ -163,9 +163,9 @@ end
 #   def get_study_list
 #     study_list = []
 #     xml_response = get_payload("#{URL_BASE}/studies/study_list")
-#     xml_response.elements.each("studies/protocol") do |protocol|  
+#     xml_response.elements.each("studies/study") do |study|  
 #       study = Study.new
-#       study.xml_node = protocol
+#       study.xml_node = study
 #       study_list.push(study)
 #     end
 #     study_list
@@ -175,9 +175,9 @@ end
 #     study_list=[]
 #     xml_response = get_payload("#{URL_BASE}/studies/find_by_studyid?studyid=#{study_id}")
 #     if xml_response
-#       xml_response.elements.each("protocol") do |protocol|  
+#       xml_response.elements.each("study") do |study|  
 #         study = Study.new
-#         study.xml_node = protocol
+#         study.xml_node = study
 #         return study
 #       end
 #       return nil
@@ -190,9 +190,9 @@ end
 #     study_list = []
 #     xml_response = get_payload("#{URL_BASE}/coordinators/study_access_list?netid=#{net_id}")
 #     if xml_response
-#       xml_response.elements.each("studies/protocol") do |protocol|
+#       xml_response.elements.each("studies/study") do |study|
 #           study = Study.new
-#           study.xml_node = protocol
+#           study.xml_node = study
 #        study_list << study
 #       end
 #     end

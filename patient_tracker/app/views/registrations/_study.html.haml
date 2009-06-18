@@ -1,21 +1,21 @@
-%a.protocol{:href=> registration_path(protocol.irb_number)}
-  %span.study_id=protocol.irb_number
+%a.study{:href=> registration_path(study.irb_number)}
+  %span.study_id=study.irb_number
   %span.name
     %small
       &nbsp;&nbsp;&ndash;&nbsp;
-    =protocol.title
+    =study.title
   %span.phase
     %small
       &nbsp;&nbsp;Phase:
-    =protocol.status
+    =study.status
   %span.details="&nbsp;"  
   %br
   %span.title
     %small
       &nbsp;&nbsp;Title:
-    =protocol.title || "Missing Title!!"
+    =study.title || "Missing Title!!"
   %br
   %span.description
     %small  
       &nbsp;&nbsp;Desc:
-    =protocol.description
+    =study.description

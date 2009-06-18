@@ -1,10 +1,10 @@
-=render(:partial => "studies/protocol", :object => @protocol) 
+=render(:partial => "studies/study", :object => @study) 
 #subject_list
   %strong
-    Number of Subjects Currently associated with this protocol:
+    Number of Subjects Currently associated with this study:
     =@involvements.size 
 
   %span.add_subjects
-    -if @protocol.authorized_user(@current_user)
-      = facebox_link_to("Add Subject", :url => new_registration_url,:study_number => {:study_number => @protocol.id}, :method=>:get)
+    -if @study.authorized_user(@current_user)
+      = facebox_link_to("Add Subject", :url => new_registration_url,:study_number => {:study_number => @study.id}, :method=>:get)
 

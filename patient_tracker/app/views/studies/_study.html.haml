@@ -1,4 +1,4 @@
-#protocol_full
+#study_full
   %ul.menu
     %li.active
       %a
@@ -7,7 +7,7 @@
       %a
         Study Events
     %li.inactive
-      = link_to("Subjects",:controller=> "subjects" , :action =>"index", :irb_number => protocol.irb_number )
+      = link_to("Subjects",:controller=> "subjects" , :action =>"index", :irb_number => study.irb_number )
     %li.inactive
       %a
         Subject Events
@@ -21,20 +21,20 @@
         Approved
         %small.gray
           mm/dd/yyyy
-      .study_id="##{protocol.irb_number}"
+      .study_id="##{study.irb_number}"
     .secondary_data
       .name
         %em
           Name:
-        = protocol.name  || "Missing"
+        = study.name  || "Missing"
       .phase
         %em
           Phase:
-        = protocol.phase || "Missing"
+        = study.phase || "Missing"
       .title
         %em
           Title:
-        = protocol.title || "Missing"
+        = study.title || "Missing"
       .pi
         %em
           PI:
@@ -48,34 +48,34 @@
       .description
         %em
           Description:
-        = protocol.description || "Missing"
+        = study.description || "Missing"
   
   .file_details
     %strong
       Study Documents
     %ul
-      %li.protocol_file
-        =image_tag("protocol_icon.gif")
+      %li.study_file
+        =image_tag("study_icon.gif")
         %em 
           Study Document
           =link_to("(view)")
           &nbsp;
           =link_to("(download)")
-      %li.protocol_file
+      %li.study_file
         =image_tag("consent_icon.gif")
         %em
           Standard Consent
           =link_to("(view)")
           &nbsp;
           =link_to("(download)")
-      %li.protocol_file
+      %li.study_file
         =image_tag("consent_icon.gif")
         %em
           Standard Assent
           =link_to("(view)")
           &nbsp;
           =link_to("(download)")
-      %li.protocol_file
+      %li.study_file
         =image_tag("consent_icon.gif")
         %em
           Health Volunteer Consent

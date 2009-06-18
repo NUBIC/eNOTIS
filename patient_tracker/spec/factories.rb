@@ -1,6 +1,6 @@
 require 'populator'
 require 'faker'
-require 'lib/faker/protocol'
+require 'lib/faker/study'
 
 # http://github.com/thoughtbot/factory_girl/tree/master
 # http://faker.rubyforge.org/rdoc/
@@ -65,7 +65,7 @@ Factory.sequence :irb_number do |n|
   "STU009999#{"%03d" % n}"
 end
 
-Factory.define :protocol do |p|
+Factory.define :study do |p|
   p.irb_number            {Factory.next :irb_number}
   p.name                  {"Randomized Evaluation of Sinusitis With Vitamin A"}
   p.title                 {"Randomized Evaluation of Sinusitis With Vitamin A"}
@@ -75,7 +75,7 @@ Factory.define :protocol do |p|
   p.reconciliation_date   {3.minutes.ago}
 end
 
-Factory.define :fake_protocol, :parent => :protocol do |p|
+Factory.define :fake_study, :parent => :study do |p|
   # p.irb_number
   p.name                  {Faker::Study.title}
   p.title                 {|me| me.name}
@@ -107,7 +107,7 @@ end
 
 Factory.define :involvement do |i|
   i.association   :subject
-  i.association   :protocol
+  i.association   :study
   i.confirmed     {true}
   i.disease_site  {nil}
   i.description   {Faker::Lorem.words(5).join(" ")}
@@ -115,15 +115,15 @@ end
 
 Factory.define :subject_event do |p|
   p.association   :subject
-  p.association   :protocol
+  p.association   :study
   p.status        {"Screened"}
   p.status_date   {2.weeks.ago}
   p.notes         {"With flying colors"}
 end
 
-Factory.define :user_protocol do |u|
+Factory.define :user_study do |u|
   u.association             :user
-  u.association             :protocol
+  u.association             :study
   u.role                    {"Coordinator"}
   u.reconciliation_date     {2.hours.ago}
   u.reconciliation_status   {"Reconciled"}

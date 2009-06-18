@@ -6,8 +6,8 @@ class SubjectsController < ApplicationController
   layout "layouts/loggedin"
 
   def index
-    @protocol = Study.find_by_irb_number(params[:irb_number])
-    @involvements = @protocol.involvements
+    @study = Study.find_by_irb_number(params[:irb_number])
+    @involvements = @study.involvements
   end
 
   def show

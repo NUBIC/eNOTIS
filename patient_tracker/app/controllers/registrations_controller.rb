@@ -12,15 +12,15 @@ class RegistrationsController < ApplicationController
 
   def show
    session[:study_id]= params[:id]
-   @protocol = Study.find_by_irb_number(params[:id])
-   @involvements = @protocol.involvements
+   @study = Study.find_by_irb_number(params[:id])
+   @involvements = @study.involvements
   end
 
   def add_subject
     params[:study_id] = session[:study_id]
     @subject = Subject.find_by_mrn(params[:mrn])
-    @protocol = Subject.find_by_study_id(session[:study_id])
-    @protocol.add_subject(@subject)
+    @study = Subject.find_by_study_id(session[:study_id])
+    @study.add_subject(@subject)
     respond_to do |format|
       format.html
       format.js {render_to_facebox}
