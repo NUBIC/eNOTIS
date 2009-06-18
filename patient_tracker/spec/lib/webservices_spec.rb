@@ -17,6 +17,19 @@ describe WebServices do
     @subject_2 = Subject.find(:first,:conditions=>["mrn='9988104'"],:span=>:global)
     @subject_2.mrn.should == "9988104"
   end
+
+  it "should not create a database record for data received from the edw" do
+    @subject_2 = Subject.find(:first,:conditions=>["mrn='9988104'"],:span=>:foreign)
+    @subject_2.id.should == nil
+  end
+
+  it "should retrieve local value if it exists locally and :global is specified" do
+    @subject_2 = Subject.find(:first,:conditions=>["mrn='9988104'"],:span=>:global)
+    @subject_2.save
+    
+    @subject_3 = Subject.find(:first,:conditions=>["mrn='9988104'"],:span=>:global)
+    @subject_3.id.should == @subject_2.id
+  end
   
   it "should not save values retrieved from the edw if they do not exist locally" do
     initial_size = Subject.find(:all)
@@ -60,12 +73,18 @@ describe WebServices do
     @subject_2.first_name.should == "bubu"
   end
 
-  it "should call force a foreign call regardless of local content if option :foreign is specifiend for span" do
+  it "should force a foreign call regardless of local content if option :foreign is specifiend for span" do
     @subject_2 = Subject.find(:first,:conditions=>["mrn='9988104'"],:span=>:global)
     @subject_2.save
     
-    @subject_3 = Subject.find(:first,:conditions=>["mrn='9988104'"],:span=>:global)
-    @subject_3.id.should != @subject_2.id
+    @subject_3 = Subject.find(:first,:conditions=>["mrn='9988104'"],:span=>:foreign)
+    @subject_3.mrn.should == '9988104'
+    @subject_3.id.should == nil
+  end
+
+  it "should return list if :all is used together with foreign" do
+    @result = Subject.find(:all,:conditions=>["mrn='9988104'"],:span=>:foreign)
+    @result.size.should == 1
     
   end
   
