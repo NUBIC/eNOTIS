@@ -3,7 +3,7 @@ begin
 rescue LoadError
   # don't choke if we haven't the gem, e.g. the first time we run rake gems:install
   # fixes no such file to load -- haml
-  require 'haml' if defined? HAML # From gem
+  require 'haml' if defined? Haml # From gem
   # require 'haml' # From gem
 end
 
@@ -11,4 +11,4 @@ end
 
 # don't choke if we haven't the gem, e.g. the first time we run rake gems:install
 # fixes no such file to load -- haml
-Haml.init_rails(binding) if defined? HAML
+Haml.init_rails(binding) if defined? Haml
