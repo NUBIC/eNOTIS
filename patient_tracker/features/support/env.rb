@@ -15,3 +15,19 @@ end
 
 require 'cucumber/rails/rspec'
 require 'webrat/core/matchers'
+
+# # for mocking EDWAdapter
+# require 'spec/adapters/mock_frameworks/rspec'
+# include Spec::Adapters::MockFramework
+# 
+# Before do
+#    setup_mocks_for_rspec
+# end
+# 
+# After do
+#    begin
+#      verify_mocks_for_rspec
+#    ensure
+#      teardown_mocks_for_rspec
+#    end
+# end

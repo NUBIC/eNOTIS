@@ -17,6 +17,7 @@ Factory.sequence :mrn do |n|
 end
 
 Factory.define :subject do |p|
+
   p.mrn                       {Factory.next :mrn}
   p.mrn_type                  {"Cerner"}
   p.source                    {"EDW"}
@@ -37,6 +38,10 @@ Factory.define :subject do |p|
   p.work_phone                {"180 180 1801"}
   p.work_phone_extension      {"801"}
 end
+
+Factory.alias("last_synced", "last_reconciled")
+Factory.alias("sync_status", "reconcile_status")
+
 
 Factory.define :fake_subject, :parent => :subject do |p|
   # p.mrn

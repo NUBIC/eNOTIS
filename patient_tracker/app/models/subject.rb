@@ -10,6 +10,14 @@ class Subject < ActiveRecord::Base #.extend WebServices
   has_many :studies, :through => :involvements
 
   $plugins = [EdwServices]
+  
+  # Also aliased in spec/factories.rb
+  alias_attribute :last_synced, :last_reconciled
+  alias_attribute :sync_status, :reconcile_status
+  
+  def synced?
+    !self.last_synced.nil?
+  end
 
   def reconcile(values)
     values[:last_reconciled]=Time.now
