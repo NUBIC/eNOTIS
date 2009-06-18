@@ -1,0 +1,40 @@
+2009-06-17
+
+subject
+========
+(un)matched to the edw
+synced to medical record - locking/syncing
+details locked for editing
+
+(flag: leave me alone about this person?)
+
+involvement
+===========
+subj (not) locked to mr
+study (not yet) open/synced on eirb
+x calculate status on the fly
+
+involvement_events
+==================
+
+study
+=====
+(un)available to accrue subjects
+
+possible scenarios
+1. EDW down
+2. record not inserted in EDW yet (nightly work)
+3. local user only - pt will never be in EDW (no medical record) 
+
+so a User creates local data
+1-2 resolve themselves - clobber any local data (address/phone/email) - subjects table gets versioned
+3 never resolved
+
+System's purpose is primary source of truth is EDW so:
+take data entered by user, dump it to a data field (notes?)
+mashup into string, append to notes
+arbitrary key/value store postponed to phase x
+
+Reconciled?
+
+Can it be calculated
