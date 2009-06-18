@@ -6,7 +6,7 @@ class CreateSubjects < ActiveRecord::Migration
       t.string :source
       # t.datetime :last_reconciled
       # t.string :reconcile_status
-      t.datetime :last_synced
+      t.datetime :synced_at
       t.text :pre_sync_data
       t.string :last_name
       t.string :first_name

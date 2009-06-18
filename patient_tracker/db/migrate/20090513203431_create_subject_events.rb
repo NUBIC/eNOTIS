@@ -2,9 +2,9 @@ class CreateSubjectEvents < ActiveRecord::Migration
   def self.up
     create_table :subject_events do |t|
       t.integer :subject_id, :not_null => true # Always needed
-      t.string :status
-      t.date :status_date
-      t.integer :protocol_id #sometimes null if it's subject related and not around a protocol
+      t.integer :study_id # sometimes null if it's subject related and not around a study
+      t.string :event
+      t.datetime :occured_at
       t.text :notes 
       t.timestamps
     end

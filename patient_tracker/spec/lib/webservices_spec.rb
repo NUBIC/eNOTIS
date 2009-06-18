@@ -40,23 +40,23 @@ describe WebServices do
   it "should create a reconcile date that equals time of call" do
     initial_time  = Time.now
     @subject_2 = Subject.find(:first,:conditions=>["mrn='9988104'"],:span=>:global)
-    @subject_2.last_reconciled.should >= initial_time
-    @subject_2.last_reconciled.should <= Time.now 
+    @subject_2.synced_at.should >= initial_time
+    @subject_2.synced_at.should <= Time.now 
   end
 
   it "should update last reconliled date if global is called, and local copy is expired" do
     @subject_2 = Subject.find(:first,:conditions=>["mrn='9988104'"],:span=>:global)
-    @subject_2.last_reconciled = 30.hours.ago
+    @subject_2.synced_at = 30.hours.ago
     @subject_2.save
-    last_reconcile_date = @subject_2.last_reconciled
+    last_reconcile_date = @subject_2.synced_at
     @subject_2 = Subject.find(:first,:conditions=>["mrn='9988104'"],:span=>:global)
     @subject_2.save
-    @subject_2.last_reconciled.should > last_reconcile_date
+    @subject_2.synced_at.should > last_reconcile_date
   end
 
   it "should update attributes if global is called and local copy is expired" do 
     @subject_2 = Subject.find(:first,:conditions=>["mrn='9988104'"],:span=>:global)
-    @subject_2.last_reconciled = 30.hours.ago
+    @subject_2.synced_at = 30.hours.ago
     original_name = @subject_2.first_name
     @subject_2.first_name = "bubu"
     @subject_2.save

@@ -3,7 +3,7 @@ class CreateInvolvements < ActiveRecord::Migration
     create_table :involvements do |t|
       t.integer :subject_id
       t.integer :study_id
-      t.boolean :confirmed
+      # t.boolean :confirmed
       t.string :disease_site
       t.text :description
       t.timestamps

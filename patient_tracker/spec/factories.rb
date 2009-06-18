@@ -21,7 +21,7 @@ Factory.define :subject do |p|
   p.mrn                       {Factory.next :mrn}
   p.mrn_type                  {"Cerner"}
   p.source                    {"EDW"}
-  p.last_synced               {3.minutes.ago}
+  p.synced_at               {3.minutes.ago}
   p.pre_sync_data             {nil}
   p.first_name                {"Pi"}
   p.last_name                 {"Patel"}
@@ -43,7 +43,7 @@ Factory.define :fake_subject, :parent => :subject do |p|
   # p.mrn
   p.mrn_type                  {["Epic", "Cerner"].rand}
   p.source                    {(Array.new(10, "EDW") + ["Local"]).rand}
-  p.last_synced               {Populator.value_in_range(2.days.ago..2.minutes.ago)}
+  p.synced_at               {Populator.value_in_range(2.days.ago..2.minutes.ago)}
   # p.pre_sync_data             {nil}
   p.first_name                {Faker::Name.first_name}
   p.last_name                 {Faker::Name.last_name}
@@ -72,7 +72,7 @@ Factory.define :study do |p|
   p.phase                 {"II"}
   p.description           {"Rem fugit culpa unde facilis earum. Quas et vitae ut cumque nihil quidem aperiam architecto. Et asperiores inventore non nisi libero architecto quibusdam.\r\n\r\nVeniam fugiat voluptas laudantium in assumenda. Blanditiis recusandae illum necessitatibus. Quia nesciunt esse officia neque doloribus vel explicabo provident. Non sit vero iusto quibusdam explicabo. Nobis in architecto quam pariatur sit autem optio."}
   p.status                {"Approved"}
-  p.reconciliation_date   {3.minutes.ago}
+  p.synced_at       {3.minutes.ago}
 end
 
 Factory.define :fake_study, :parent => :study do |p|
@@ -82,7 +82,7 @@ Factory.define :fake_study, :parent => :study do |p|
   p.phase                 {["I","II","III","IV","n/a",nil].rand}
   p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
   p.status                {Faker::Study.eirb_status}
-  p.reconciliation_date   {Populator.value_in_range(2.days.ago..2.minutes.ago)}
+  p.synced_at       {Populator.value_in_range(2.days.ago..2.minutes.ago)}
 end
 
 Factory.sequence :email do |n|
@@ -108,7 +108,7 @@ end
 Factory.define :involvement do |i|
   i.association   :subject
   i.association   :study
-  i.confirmed     {true}
+  # i.confirmed     {true}
   i.disease_site  {nil}
   i.description   {Faker::Lorem.words(5).join(" ")}
 end

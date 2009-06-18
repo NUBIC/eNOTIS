@@ -7,7 +7,7 @@ class CreateStudies < ActiveRecord::Migration
       t.string :phase
       t.string :description
       t.string :status
-      t.datetime :last_reconciled
+      t.datetime :synced_at
       t.timestamps
     end
   end

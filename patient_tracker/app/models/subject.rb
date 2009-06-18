@@ -12,10 +12,10 @@ class Subject < ActiveRecord::Base #.extend WebServices
   $plugins = [EdwServices]
   
   def synced?
-    !self.last_synced.nil?
+    !self.synced_at.nil?
   end
   def stale?
-    synced? ? self.last_synced < 12.hours.ago : true 
+    synced? ? self.synced_at < 12.hours.ago : true 
   end
   def sync!(attrs)
     self.attributes = attrs
@@ -23,23 +23,4 @@ class Subject < ActiveRecord::Base #.extend WebServices
     self.pre_sync_data = self.changes.map{|key, array_value| "#{key} changed from #{array_value[0].to_s} to #{array_value[1].to_s}"}.join(",0") unless synced?
     self.save
   end
-  
-  # def reconcile(values)
-  #   values[:last_reconciled]=Time.now
-  #   Subject.update(self.id,values)  
-  # end
-  # 
-  # def current?
-  #  self.last_reconciled > 12.hours.ago unless last_reconciled.nil?
-  # end
-  # 
-  # def confirmed!
-  #   self.reconciled = true
-  #   self.save
-  # end
-  # 
-  # def confirmed?
-  #   self.reconciled
-  # end 
-
 end

@@ -59,7 +59,7 @@ module WebServices
 
         def process_single(service_result,local_result)
           if service_result and service_result.first
-            service_result.first[:last_reconciled]=Time.now
+            service_result.first[:synced_at]=Time.now
 	    return local_result.reconcile(service_result.first) unless local_result.nil?
             return self.new(service_result.first)
           else 

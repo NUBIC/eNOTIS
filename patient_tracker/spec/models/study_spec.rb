@@ -2,67 +2,59 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Study do
   before(:each) do
-    @study= Study.create(:status=>"open",:name=>"test_study",:description=>"some test study",:last_reconciled=>Time.now)
   end
-
-
-  it "should add a new subject, given an open status" do 
-    p = Subject.create({:first_name=>"david",:last_name=>"kabaka",:mrn=>"123454"})
-    @study.save
-    @study.add_subject(p)
-    @study.involvements.size.should ==1
+  
+  it "should create a new instance given valid attributes" do
+    Factory(:study).should be_valid
   end
-
-  it "Should fail to add a new subject if status is not open" do
-
-    p = Subject.create({:first_name=>"david",:last_name=>"kabaka",:mrn=>"123454"})
-    @study.status = "closed"
-    @study.save
-    @study.add_subject(p)
-    @study.involvements.size.should == 0
+  
+  it "should tell us when the study is stale" do
+    @study = Factory(:study, :synced_at => 3.days.ago)
+    @study.should be_stale
+    @study.synced_at = 3.minutes.ago
+    @study.should_not be_stale
   end
-
-  it "should add subject on with unconfirmed status if, current reconciliation status is not valid" do
-    p = Subject.create({:first_name=>"david",:last_name=>"kabaka",:mrn=>"123454"})
-    @study.last_reconciled = 23.hours.ago
-    @study.save
-    @study.add_subject(p)
-    @study.involvements.size.should ==1
-    @study.involvements[0].confirmed.should == false
-    
+  it "should allow us to sync with different data" do
+    @study = Factory(:study, :synced_at => 3.days.ago, :description => "Randomized Evaluation of Sinusitis With Vitamin A")
+    @study.sync!({:description => "Randomized Evaluation of Sinusitis With Vitamin A440"})
+    @study.description.should == "Randomized Evaluation of Sinusitis With Vitamin A440"
+    @study.synced_at.should >= 1.minute.ago
   end
-
-  it "should change subject on study status to confirmed once data is reconciled if status is still open" do
-    p = Subject.create({:first_name=>"david",:last_name=>"kabaka",:mrn=>"123454"})
-    @study.last_reconciled = 23.hours.ago
-    @study.save
-    @study.add_subject(p)
-    @study.involvements.size.should ==1
-    @study.involvements[0].confirmed.should == false
-    @study.reconcile({:status=>"open",:name=>"test_study",:description=>"some test study"})
-    @study.involvements.size.should ==1
-    @study.involvements[0].confirmed.should == true
+  
+  describe "with subjects" do
+    it "should add a new subject, regardless of status(open) or subject syncing" do
+      study = Factory.create(:study, :status => "open")
+      study.add_subject(Factory(:subject, :synced_at => nil))
+      study.add_subject(Factory(:subject, :synced_at => 2.minutes.ago))
+      study.should have(2).involvements
+    end
+    it "should add a new subject, regardless of status(closed) or subject syncing" do
+      study = Factory.create(:study, :status => "closed")
+      study.add_subject(Factory(:subject, :synced_at => nil))
+      study.add_subject(Factory(:subject, :synced_at => 2.minutes.ago))
+      study.should have(2).involvements
+    end
+    it "should add a new subject once and only once" do
+      study = Factory.create(:study, :status => "closed")
+      subject = Factory(:subject, :synced_at => nil)
+      5.times { study.add_subject(subject) }
+      study.should have(1).involvements
+    end
   end
-
-  it "should not add a subject to a particular study more than once" do
-    p = Subject.create({:first_name=>"david",:last_name=>"kabaka",:mrn=>"123454"})
-    @study.add_subject(p)
-    @study.add_subject(p)
-    p.involvements.size.should == 1
+  
+  describe "with users" do
+    it "should authorize users added to study.users" do
+      pending
+      study = Factory.create(:study)
+      user = Factory(:user)
+      study.users << u
+      study.authorized_user?(u).should == true
+    end
+    it "should not authorize other users" do
+      pending
+      study = Factory.create(:study)
+      user = Factory(:user)
+      study.authorized_user?(u).should == false
+    end
   end
-
-  it "should return whether or not a user is authorized to work on a given study" do
-     u = User.create
-     @study.users << u
-     (@study.authorized_user?u).should == true
-  end
-
-
-  it "should return false if user is not authorized to work on a given study" do
-    u = User.create
-    p = Study.create
-    p.users << u
-    (@study.authorized_user?u).should == false
-  end
-
 end

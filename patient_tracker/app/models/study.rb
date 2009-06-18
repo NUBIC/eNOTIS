@@ -12,51 +12,27 @@ class Study < ActiveRecord::Base
         has_many :subjects, :through => :involvements
 	include WebServices
 
-  $plugins= [EirbServices]
-  def reconcile(params)
-    #To Do
-    #Reconciliations Process is as follows
-    #0.Update Study
-    #1.Obtain all involvements related to this study with status 'pending'
-    #2.Check status of updated studyi
-    #3.If status is open: 
-    #4.Alter every given involvement status according to study     
-    Study.update(self.id,params)
-    #self.involvements.each do |involvement|
-     # if self.open? and !involvement.confirmed?
-      #  involvement.confirmed!
-      #end
-    #end
-    return self
-    
-  end
+  validates_presence_of :synced_at
   
+  $plugins= [EirbServices]
 
   def add_subject(subject)
-     #To Do
-     #Adding A subject uses the following logic
-     #check that the study is open
-     #check the status of both the study and
-     if open?
-       status = self.current?  and subject.current? #and subject.current?
-       if !Involvement.find_by_study_id_and_subject_id(self.id,subject.id) 
-         return Involvement.create(:study_id=>self.id,:subject_id=>subject.id,:confirmed=>status) 
-       else
-       end
-     end
+     Involvement.create(:study_id => self.id, :subject_id => subject.id) unless Involvement.find_by_study_id_and_subject_id(self.id,subject.id) 
   end
 
   def open?
-    return self.status == "open"
+    self.status == "open"
   end
-  
-  def current?
-    return self.last_reconciled > 12.hours.ago
+  def stale?
+    self.synced_at < 12.hours.ago # assumed synced is never nil
+  end
+  def sync!(attrs)
+    self.update_attributes(attrs.merge({:synced_at => DateTime.now}))
   end
 
-  def authorized_user?(user)
-    self.users.include?user
-  end
+  # def authorized_user?(user)
+  #   self.users.include?user
+  # end
 
 end
 

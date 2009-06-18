@@ -1,4 +1,3 @@
-
 # Represents the very strong to very loose affiliation a subject can have with a study.
 # This abstraction holds data that is associated with a subjects relationship with a study
 # but is not based around a study event. 
@@ -9,16 +8,16 @@
 class Involvement < ActiveRecord::Base
 	belongs_to :subject
 	belongs_to :study
-
-
-  def confirmed?
-    return self.confirmed
-  end
-
-  def confirmed! 
-    self.confirmed = true
-    self.save
-  end
+	
+  # 
+  # def confirmed?
+  #   return self.confirmed
+  # end
+  # 
+  # def confirmed! 
+  #   self.confirmed = true
+  #   self.save
+  # end
 end
 
 
