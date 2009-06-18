@@ -1,8 +1,10 @@
 # User model for application context
 
 class User < ActiveRecord::Base
-  has_many :user_rights
-  has_many :studies, :through => :user_rights
+  has_many :user_access_rights
+  has_many :coordinations
+  has_many :studies, :through => :coordination
+
   attr_accessor :password #doesnt do anything for now
     
   # Rough validation method
