@@ -11,10 +11,6 @@ class Subject < ActiveRecord::Base #.extend WebServices
 
   $plugins = [EdwServices]
   
-  # Also aliased in spec/factories.rb
-  alias_attribute :last_synced, :last_reconciled
-  alias_attribute :sync_status, :reconcile_status
-  
   def synced?
     !self.last_synced.nil?
   end
@@ -22,8 +18,11 @@ class Subject < ActiveRecord::Base #.extend WebServices
     synced? ? self.last_synced < 12.hours.ago : true 
   end
   def sync!(attrs)
-    self.update_attributes(attrs)
+    self.attributes = attrs
+    self.pre_sync_data = self.changes.map{|key, array_value| "#{key} changed from #{array_value[0].to_s} to #{array_value[1].to_s}"}.join(",0")
+    self.save
   end
+  
   # def reconcile(values)
   #   values[:last_reconciled]=Time.now
   #   Subject.update(self.id,values)  

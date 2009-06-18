@@ -21,8 +21,8 @@ Factory.define :subject do |p|
   p.mrn                       {Factory.next :mrn}
   p.mrn_type                  {"Cerner"}
   p.source                    {"EDW"}
-  p.last_reconciled           {3.minutes.ago}
-  p.reconcile_status          {nil}
+  p.last_synced               {3.minutes.ago}
+  p.pre_sync_data             {nil}
   p.first_name                {"Pi"}
   p.last_name                 {"Patel"}
   p.lost_to_follow_up         {false}
@@ -39,16 +39,12 @@ Factory.define :subject do |p|
   p.work_phone_extension      {"801"}
 end
 
-Factory.alias("last_synced", "last_reconciled")
-Factory.alias("sync_status", "reconcile_status")
-
-
 Factory.define :fake_subject, :parent => :subject do |p|
   # p.mrn
   p.mrn_type                  {["Epic", "Cerner"].rand}
   p.source                    {(Array.new(10, "EDW") + ["Local"]).rand}
-  p.last_reconciled           {Populator.value_in_range(2.days.ago..2.minutes.ago)}
-  # p.reconcile_status
+  p.last_synced               {Populator.value_in_range(2.days.ago..2.minutes.ago)}
+  # p.pre_sync_data             {nil}
   p.first_name                {Faker::Name.first_name}
   p.last_name                 {Faker::Name.last_name}
   p.lost_to_follow_up         {LOST_RATE.rand}

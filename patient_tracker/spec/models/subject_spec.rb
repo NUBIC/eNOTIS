@@ -33,6 +33,16 @@ describe Subject do
       @subject.sync!({:address_line1 => "314 Circle Dr."})
       @subject.address_line1.should == "314 Circle Dr."
     end
+    
+    it "should save the old data" do
+      @subject = Factory(:subject, :last_synced => nil, :address_line1 => "31 Circle Drive", :pre_sync_data => nil)
+      @subject.sync!({:address_line1 => "314 Circle Dr."})
+      @subject.address_line1.should == "314 Circle Dr."
+      @subject.pre_sync_data.should_not be_nil
+      @subject.pre_sync_data.should include("31 Circle Drive")
+    end
+
+    
   end
   
   

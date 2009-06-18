@@ -4,8 +4,10 @@ class CreateSubjects < ActiveRecord::Migration
       t.string :mrn 
       t.string :mrn_type
       t.string :source
-      t.datetime :last_reconciled
-      t.string :reconcile_status
+      # t.datetime :last_reconciled
+      # t.string :reconcile_status
+      t.datetime :last_synced
+      t.text :pre_sync_data
       t.string :last_name
       t.string :first_name
       t.boolean :lost_to_follow_up
