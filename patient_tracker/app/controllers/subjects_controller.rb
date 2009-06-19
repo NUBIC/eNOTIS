@@ -25,26 +25,21 @@ class SubjectsController < ApplicationController
   
   def create
     @study_upload = StudyUpload.create(:study_id => params[:study], :upload => params[:file])
-    
-    sanity_check_results = self.class.csv_sanity_check(@study_upload.upload.path)
-    
-    if sanity_check_results == true
+    temp_file = Tempfile.new("results")
+    if self.class.csv_sanity_check(@study_upload.upload, temp_file)
       self.class.queue_import(params[:file])
       redirect_to params[:study].blank? ? studies_path : study_path(:id => params[:study])
     else
-      results_file_name = params[:file].path.gsub(/\.csv$/,".import_results.csv")
-      
-      headers['Content-Disposition'] = "attachment; filename='#{results_file_name.split('/').last}'"
+      @study_upload.result = temp_file
+      temp_file.close!
+      results_file_name = @study_upload.upload_file_name.gsub(/(\.csv)?$/, '-result.csv')
+      headers['Content-Disposition'] = "attachment; filename='#{results_file_name}'"
       if request.env['HTTP_USER_AGENT'] =~ /msie/i
         headers.merge!({'Pragma' => 'public', 'Content-type' => 'text/plain; charset=utf-8', 'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0', 'Expires' => '0'})
       else
-        headers['Content-Type'] ||= 'text/csv; charset=utf-8'        
+        headers['Content-type'] = 'text/csv; charset=utf-8'        
       end
-      
-      # Copy the file and insert errors at beginning of line
-      # Inspiration from http://cheat.errtheblog.com/s/ruby_one_liners/
-      FileUtils.copy(params[:file].path, results_file_name)
-      render :text => File.open(results_file_name, 'r+').read.gsub!(/^/){"#{sanity_check_results.shift.to_s.gsub(/(.*\,.*)/, '"\1"')},"}
+      render :text => @study_upload.result.to_io.read
     end
   end
 
@@ -52,13 +47,17 @@ class SubjectsController < ApplicationController
     
   end
   
-  def self.csv_sanity_check(file_path)
+  def self.csv_sanity_check(csv, temp_file = Tempfile.new("results")) # csv can be a string, file, or Paperclip::Attachment
     # We may possibly want to sanity check dates with Chronic http://chronic.rubyforge.org/
+    csv = csv.to_io if csv.class == Paperclip::Attachment
     errors = []
-    FasterCSV.foreach(file_path, :headers => :first_row, :return_headers => false, :header_converters => :symbol) do |r|      
-      errors << (r[:mrn].blank? ? (r[:last_name].blank? or r[:first_name].blank? or r[:dob].blank?) ? "A first_name and last_name and dob, or an mrn is required. " : "" : "") + \
-        ((r[:subject_event_type].blank? or r[:subject_event_date].blank?) ? "A subject event type and date is required." : "")
+    FasterCSV.open(temp_file.path, "r+") do |temp_stream|
+      FasterCSV.parse(csv, :headers => :first_row, :return_headers => true, :header_converters => :symbol) do |r|      
+        errors << (r[:mrn].blank? ? (r[:last_name].blank? or r[:first_name].blank? or r[:dob].blank?) ? "A first_name and last_name and dob, or an mrn is required. " : "" : "") + \
+          ((r[:subject_event_type].blank? or r[:subject_event_date].blank?) ? "A subject event type and date is required." : "")
+        temp_stream << (errors.size == 1 ? ["import_errors"] : [errors.last]) + r.fields
+      end
     end
-    errors.uniq == [""] ? true : ["import_errors"] + errors
+    errors.uniq == [""]
   end
 end
