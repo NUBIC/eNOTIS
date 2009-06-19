@@ -32,6 +32,7 @@ Rails::Initializer.run do |config|
   # config.gem "mechanize", :version => '0.9.2' # also installs nokogiri
   # # config.gem "mechanize-ntlm", :version => '0.9.1'   # download from http://www.mindflowsolutions.net/2009/5/21/ruby-ntlm-mechanize and run sudo gem install mechanize-ntlm-0.9.1
   # config.gem "fastercsv", :version => '1.5.0'
+  # config.gem "paperclip", :version => '2.1.2'
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
