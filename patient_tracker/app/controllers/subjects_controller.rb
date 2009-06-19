@@ -24,7 +24,9 @@ class SubjectsController < ApplicationController
   end
   
   def create
-    sanity_check_results = self.class.csv_sanity_check(params[:file])
+    @study_upload = StudyUpload.create(:study_id => params[:study], :upload => params[:file])
+    
+    sanity_check_results = self.class.csv_sanity_check(@study_upload.upload.path)
     
     if sanity_check_results == true
       self.class.queue_import(params[:file])
@@ -50,11 +52,10 @@ class SubjectsController < ApplicationController
     
   end
   
-  def self.csv_sanity_check(file)
+  def self.csv_sanity_check(file_path)
     # We may possibly want to sanity check dates with Chronic http://chronic.rubyforge.org/
-
     errors = []
-    FasterCSV.foreach(file.path, :headers => :first_row, :return_headers => false, :header_converters => :symbol) do |r|      
+    FasterCSV.foreach(file_path, :headers => :first_row, :return_headers => false, :header_converters => :symbol) do |r|      
       errors << (r[:mrn].blank? ? (r[:last_name].blank? or r[:first_name].blank? or r[:dob].blank?) ? "A first_name and last_name and dob, or an mrn is required. " : "" : "") + \
         ((r[:subject_event_type].blank? or r[:subject_event_date].blank?) ? "A subject event type and date is required." : "")
     end

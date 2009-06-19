@@ -23,35 +23,51 @@ describe SubjectsController do
       post :create, {:file => @good_csv_file}
       response.should redirect_to(studies_path)
     end
+    it "should create a new StudyUpload with the file attached" do
+      controller.class.stub!(:csv_sanity_check).and_return(true)
+      controller.class.stub!(:queue_import)
+      StudyUpload.should_receive(:create).with({:upload => @good_csv_file, :study_id => "3"}).and_return(Factory(:study_upload, :upload_file_name => "/foo"))
+      post :create, {:file => @good_csv_file, :study => 3}
+    end
+    
     it "should sanity check csv file for mrn or (first_name, last_name, dob), and (subject_event_type, subject_event_date)" do
-      controller.class.csv_sanity_check(@good_csv_file).should be_true
-      controller.class.csv_sanity_check(@bad_csv_file).class.should == Array
+      controller.class.csv_sanity_check(@good_csv_file.path).should be_true
+      controller.class.csv_sanity_check(@bad_csv_file.path).class.should == Array
     end
     it "should sanity check csv file for mrn or (first_name, last_name, dob), and (subject_event_type, subject_event_date) with columns in random order" do
-      controller.class.csv_sanity_check(@good_random_cols_file).should be_true
-      controller.class.csv_sanity_check(@bad_random_cols_csv_file).class.should == Array
+      controller.class.csv_sanity_check(@good_random_cols_file.path).should be_true
+      controller.class.csv_sanity_check(@bad_random_cols_csv_file.path).class.should == Array
     end
     it "should sanity check csv file (success) and queue up the file and redirect to study" do
-      controller.class.should_receive(:csv_sanity_check).with(@good_csv_file).and_return(true)
+      # controller.class.should_receive(:csv_sanity_check).with(@good_csv_file).and_return(true)
+      controller.class.stub!(:csv_sanity_check).and_return(true)
+      
       controller.class.should_receive(:queue_import).and_return(true)
       post :create, {:file => @good_csv_file, :study => 3}
       response.should redirect_to(study_path(:id => 3))
     end
     it "should sanity check csv file (success) and queue up the file and redirect to studies path" do
-      controller.class.should_receive(:csv_sanity_check).with(@good_csv_file).and_return(true)
+      # controller.class.should_receive(:csv_sanity_check).with(@good_csv_file).and_return(true)
+      controller.class.stub!(:csv_sanity_check).and_return(true)
+      
       controller.class.should_receive(:queue_import).and_return(true)
       post :create, {:file => @good_csv_file}
       response.should redirect_to(studies_path)
     end
     it "should sanity check csv file (failure) and send me back a csv file" do
-      controller.class.should_receive(:csv_sanity_check).with(@bad_csv_file).and_return([['import_errors', 'mrn'], ["", "foo"]])
+      # controller.class.should_receive(:csv_sanity_check).with(@bad_csv_file).and_return([['import_errors', 'mrn'], ["", "foo"]])
+      controller.class.stub!(:csv_sanity_check).and_return([['import_errors', 'mrn'], ["", "foo"]])
+      
       post :create, {:file => @bad_csv_file, :study => 3}
       response.headers['Content-Type'].should match(/text\/csv/)
       response.headers['Content-Disposition'].should match(/attachment; filename='.*\.csv'/)
     end
     it "should sanity check csv file (failure) and send me back a csv file for IE" do
       # http://www.calicowebdev.com/blog/show/21
-      controller.class.should_receive(:csv_sanity_check).with(@bad_csv_file).and_return([['import_errors', 'mrn'], ["", "foo"]])
+      # controller.class.should_receive(:csv_sanity_check).with(@bad_csv_file).and_return([['import_errors', 'mrn'], ["", "foo"]])
+      controller.class.stub!(:csv_sanity_check).and_return([['import_errors', 'mrn'], ["", "foo"]])
+
+
       request.env['HTTP_USER_AGENT'] = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)"
       post :create, {:file => @bad_csv_file, :study => 3}
       response.headers['Content-Disposition'].should match(/attachment; filename='.*\.csv'/)
@@ -61,6 +77,7 @@ describe SubjectsController do
       response.headers['Expires'].should == '0'
     end
     it "should sanity check csv file (failure) and send me back a csv file with a 'import errors' as first header, and a valid column of input errors" do
+
       post :create, {:file => @bad_csv_file}
       response.body.should match(/^import_errors.*\n.*\n.*\nA subject event type and date is required..*\nA subject event type and date is required..*\n.*\n"A first_name and last_name and dob, or an mrn is required. .*\n"A first_name and last_name and dob, or an mrn is required. .*\n"A first_name and last_name and dob, or an mrn is required. .*\nA subject event type and date is required..*\nA subject event type and date is required..*\n"A first_name and last_name and dob, or an mrn is required. A subject event type and date is required./)
       

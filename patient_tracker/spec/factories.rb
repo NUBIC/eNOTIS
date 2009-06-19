@@ -128,3 +128,15 @@ Factory.define :user_study do |u|
   u.reconciliation_date     {2.hours.ago}
   u.reconciliation_status   {"Reconciled"}
 end
+
+Factory.define :study_upload do |s|
+  s.association             :user
+  s.association             :study
+  s.upload_file_name        {"/foo"}
+  s.upload_content_type     {"text/csv"}
+  s.upload_file_size        {1023}
+  s.result_file_name        {"/bar"}
+  s.result_content_type     {"text/csv"}
+  s.result_file_size        {1023}
+  
+end
