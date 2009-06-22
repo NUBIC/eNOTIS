@@ -1,9 +1,8 @@
 # User model for application context
 
 class User < ActiveRecord::Base
-  has_many :user_access_rights
   has_many :coordinations
-  has_many :studies, :through => :coordination
+  has_many :studies, :through => :coordinations
 
   attr_accessor :password #doesnt do anything for now
     

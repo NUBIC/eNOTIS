@@ -8,7 +8,8 @@ require 'lib/webservices/webservices'
 class Study < ActiveRecord::Base
 	has_many :involvements
   has_many :study_rights
-  has_many :coordinators, :class_name => :coordination # with this, you can access the name of the coordinator by study.coordinators[x].name
+  has_many :coordinations
+  # has_many :coordinators, :class_name => :coordination # with this, you can access the name of the coordinator by study.coordinators[x].name
   has_many :subjects, :through => :involvements
 
 	include WebServices

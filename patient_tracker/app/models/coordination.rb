@@ -16,7 +16,6 @@
 
 
 class Coordination < ActiveRecord::Base
-  belongs_to :users
-  belongs_to :studies
-
+  belongs_to :user
+  belongs_to :study
 end

@@ -16,6 +16,21 @@ end
 require 'cucumber/rails/rspec'
 require 'webrat/core/matchers'
 
+# for stubbing
+require "spec/mocks"
+
+Before do
+  $rspec_mocks ||= Spec::Mocks::Space.new
+end
+
+After do
+  begin
+    $rspec_mocks.verify_all
+  ensure
+    $rspec_mocks.reset_all
+  end
+end
+
 # # for mocking EDWAdapter
 # require 'spec/adapters/mock_frameworks/rspec'
 # include Spec::Adapters::MockFramework
