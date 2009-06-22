@@ -1,3 +1,5 @@
+#menu
+  Dashboard
 
 #events_and_options
   #recent_events
@@ -28,5 +30,5 @@
   .heading 
     You have access to the following Studies:
   %ul 
-    -@accessable_studies.each do |p|
-      %li=render(:partial => "study", :object => p.study)  
+    - @accessable_studies.each do |p|
+      %li=render(:partial => "study", :object => p)  

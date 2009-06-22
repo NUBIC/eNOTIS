@@ -21,7 +21,7 @@ Rails::Initializer.run do |config|
   
   config.gem "haml-edge", :version => '2.1.24', :lib => false # required by chriseppstein-compass
   config.gem "chriseppstein-compass", :version => '0.6.15', :lib => false, :source => "http://gems.github.com"
-  config.gem "haml", :version => '2.0.9', :source => "http://gems.rubyforge.org/"
+  # config.gem "haml", :version => '2.0.9', :source => "http://gems.rubyforge.org/"
   # config.gem "httpclient", :version => '2.1.5'
   config.gem "sqlite3-ruby", :version => '1.2.4', :lib => "sqlite3"
   config.gem "soap4r", :version => '1.5.8', :lib => false # :lib => false fixes no such file to load
