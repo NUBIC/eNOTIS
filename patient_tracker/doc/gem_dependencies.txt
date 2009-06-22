@@ -30,15 +30,10 @@ treetop \
 webrat \
 ZenTest
 
+# mechanize and mechanize-ntlm is no longer needed, replaced by lib/net/ntlm_http.rb
 
 # To add the lib exceptions to haml run: (this file gets re-created after haml inits)
 git co vendor/plugins/haml/init.rb
-
-# Mechanize-ntlm isn't available from a gem repository, so the following won't work
-# config.gem "mechanize-ntlm", :version => '0.9.1'
-# download from http://www.mindflowsolutions.net/2009/5/21/ruby-ntlm-mechanize
-
-sudo gem install mechanize-ntlm-0.9.1
 
 # Nokogiri depends on libxml2, and complains loudly every time it uses the default 2.6 that comes with OSX
 # Follow http://jamesclarke.info/notes/libxml2/ and download http://xmlsoft.org/sources/libxml2-2.7.3.tar.gz
