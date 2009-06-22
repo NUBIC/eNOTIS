@@ -1,8 +1,9 @@
 # User model for application context
 
 class User < ActiveRecord::Base
-  has_many :coordinations
-  has_many :studies, :through => :coordinations
+  has_many :coordinators
+  delegate :as_coordinator, :to => :coordinators #so we can use the syntax user.as_coordinator.studies
+  has_many :studies, :through => :coordinators
 
   attr_accessor :password #doesnt do anything for now
     

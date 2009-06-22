@@ -29,8 +29,8 @@ class EirbServices
     convert_for_notis(result)
   end
 
-  def self.find_by_irb_number(conditions)
-    result = default_search("eNOTIS Study Basics",{"ID" => conditions[:irb_number]})
+  def self.find_by_irb_number(irb_number)
+    result = default_search("eNOTIS Study Basics",{"ID" => irb_number})
     convert_for_notis(result)
   end 
 

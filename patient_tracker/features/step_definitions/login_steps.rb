@@ -3,7 +3,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "pat
 Given /^a user "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|
   @user = Factory(:user, {:netid => netid})
   @user.stub!(:authenticate).and_return(true) #{|p| p == password }
-  @user.coordinations << Factory(:coordination)  
+  @user.coordinators << Factory(:coordinator)  
 end
 
 When /^I am logged in as "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|

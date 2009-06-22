@@ -121,7 +121,7 @@ Factory.define :subject_event do |p|
   p.notes         {"With flying colors"}
 end
 
-Factory.define :coordination do |u|
+Factory.define :coordinator do |u|
   u.association             :user
   u.association             :study
   # u.role                    {"Coordinator"}
