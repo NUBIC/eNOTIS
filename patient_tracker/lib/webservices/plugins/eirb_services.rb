@@ -25,36 +25,36 @@ class EirbServices
 
   # ======== eIRB webservice wrapper methods ========
   def self.find_status(study_id)
-    result = default_search("eNOTIS Study Status",{"ID" => study_id})
-    convert_for_notis(result)
+    default_search("eNOTIS Study Status",{"ID" => study_id})
   end
 
   def self.find_by_irb_number(irb_number)
-    result = default_search("eNOTIS Study Basics",{"ID" => irb_number})
-    convert_for_notis(result)
+    default_search("eNOTIS Study Basics",{"ID" => irb_number})
   end 
 
   def self.find_study_research_type(study_id)
-    result = default_search("eNOTIS Study Research Type",{"ID" => study_id})
-    convert_for_notis(result)
+    default_search("eNOTIS Study Research Type",{"ID" => study_id})
   end
 
   def self.find_by_netid(user_netid=nil)
-    result = default_search("eNOTIS Person Details",{"NetID" => user_netid})
-    convert_for_notis(result)
+    default_search("eNOTIS Person Details",{"NetID" => user_netid})
   end
   
   def self.find_study_access(study_id=nil)
-    result = default_search("eNOTIS Study Access", (study_id.nil? ? nil : {"ID" => study_id}))
-    #convert_for_notis(result)
+    default_search("eNOTIS Study Access", (study_id.nil? ? nil : {"ID" => study_id}))
+  end
+
+  def self.find_all_users
+    default_search("eNOTIS Person List")
   end
 
   # ======== Search helper methods =========
-  def self.default_search(search_name, parameters)
+  def self.default_search(search_name, parameters=nil)
     search_settings = SEARCH_DEFAULTS.merge({:savedSearchName => search_name,
                                             :parameters => parameters})
     connect unless connected?
-    eirb_adapter.perform_search(search_settings) if connected?
+    result = eirb_adapter.perform_search(search_settings) if connected?
+    convert_for_notis(result)    
   end
 
   # ======== Attribute converstion Helper Methods =========

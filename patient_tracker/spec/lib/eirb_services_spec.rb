@@ -76,10 +76,10 @@ describe EirbServices do
       end
 
       it "finds the details for all the users in eIRB" do
-        p = @params.merge({:savedSearchName => "eNOTIS Person List"})
+        p = @params.merge({:savedSearchName => "eNOTIS Person List",:parameters => nil})
         @search.should_receive(:perform_search).with(p)
         @service.stub!(:eirb_adapter).and_return(@search)
-        @service.eirb_find_all_users
+        @service.find_all_users
       end
 
     end
