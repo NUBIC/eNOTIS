@@ -1,4 +1,7 @@
-require 'mechanize-ntlm'
+# require 'mechanize-ntlm'
+require 'net/ntlm_http'
+require 'net/http'
+require 'net/https'
 require 'libxml'
 
 # Acts as a middle layer between the EirbServices module and the Eirb Webservice.
@@ -10,7 +13,9 @@ class EdwAdapter
   attr_reader :config
 
   def initialize(config = ServiceConfig.new)
-    @agent = WWW::Mechanize.new
+    @agent = Net::HTTP.new('edwbi.nmff.org', 443)
+    @agent.use_ssl = true
+    @agent.verify_mode = OpenSSL::SSL::VERIFY_NONE
     @config = config
   end
 
@@ -18,11 +23,16 @@ class EdwAdapter
   # Accepts a param hash of values and converts hash parameters to query string (thanks, Rails!)
   def perform_search(params = {})
     begin
-      # actually NTLM auth, but NTLM Mechanize overwrites the method for ease
-      # see http://www.mindflowsolutions.net/2009/5/21/ruby-ntlm-mechanize
-      agent.basic_auth(config.username, config.password)
-
-      xml_response = agent.get(config.url + "&" + params.to_query).content
+      # # actually NTLM auth, but NTLM Mechanize overwrites the method for ease
+      # # see http://www.mindflowsolutions.net/2009/5/21/ruby-ntlm-mechanize
+      # agent.basic_auth(config.username, config.password)
+      # 
+      # xml_response = agent.get(config.url + "&" + params.to_query).content
+      
+      req = Net::HTTP::Get.new(config.url + "&" + params.to_query, {'connection' => 'keep-alive'})
+      req.ntlm_auth(config.username, config.password, true)
+      # http.set_debug_output $stderr
+      xml_response = @agent.request(req).body
       xml_doc = LibXML::XML::Document.string(xml_response)
       return self.class.format_search_results(xml_doc || "")
     rescue StandardError => bang

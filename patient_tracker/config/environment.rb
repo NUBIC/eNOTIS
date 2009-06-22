@@ -19,13 +19,13 @@ Rails::Initializer.run do |config|
   # all environments gems
   # For lib/gem loading errors, see http://www.webficient.com/2008/07/11/ruby-on-rails-gem-dependencies-and-plugin-errors
   
-  # config.gem "haml-edge", :version => '2.1.24', :lib => false # required by chriseppstein-compass
-  # config.gem "chriseppstein-compass", :version => '0.6.15', :lib => false, :source => "http://gems.github.com"
-  # config.gem "haml", :version => '2.0.9', :source => "http://gems.rubyforge.org/"
-  # # config.gem "httpclient", :version => '2.1.5'
-  # config.gem "sqlite3-ruby", :version => '1.2.4', :lib => "sqlite3"
-  # config.gem "soap4r", :version => '1.5.8', :lib => false # :lib => false fixes no such file to load
-  # config.gem "libxml-ruby", :version => '1.1.3', :lib => false # :lib => false fixes no such file to load
+  config.gem "haml-edge", :version => '2.1.24', :lib => false # required by chriseppstein-compass
+  config.gem "chriseppstein-compass", :version => '0.6.15', :lib => false, :source => "http://gems.github.com"
+  config.gem "haml", :version => '2.0.9', :source => "http://gems.rubyforge.org/"
+  # config.gem "httpclient", :version => '2.1.5'
+  config.gem "sqlite3-ruby", :version => '1.2.4', :lib => "sqlite3"
+  config.gem "soap4r", :version => '1.5.8', :lib => false # :lib => false fixes no such file to load
+  config.gem "libxml-ruby", :version => '1.1.3', :lib => false # :lib => false fixes no such file to load
   config.gem "thoughtbot-factory_girl", :version => '1.2.1', :lib => "factory_girl", :source => "http://gems.github.com"
   config.gem "populator", :version => '0.2.5'
   config.gem "faker", :version => '0.3.1'

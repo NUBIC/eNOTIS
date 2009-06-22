@@ -28,6 +28,7 @@ class Study < ActiveRecord::Base
   end
   def sync!(attrs)
     self.update_attributes(attrs.merge({:synced_at => DateTime.now}))
+    return self
   end
 
   # def authorized_user?(user)
