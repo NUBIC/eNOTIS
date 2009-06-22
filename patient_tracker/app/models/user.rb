@@ -2,8 +2,9 @@
 
 class User < ActiveRecord::Base
   has_many :user_access_rights
-  has_many :coordinations
-  has_many :studies, :through => :coordination
+  has_many :coordinators
+  delegate :as_coordinator, :to => :coordinators #so we can use the syntax user.as_coordinator.studies
+  has_many :studies, :through => :coordinatiors
 
   attr_accessor :password #doesnt do anything for now
     

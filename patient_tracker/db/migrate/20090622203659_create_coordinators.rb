@@ -1,6 +1,6 @@
-class CreateCoordinations < ActiveRecord::Migration
+class CreateCoordinators < ActiveRecord::Migration
   def self.up
-    create_table :coordinations do |t|
+    create_table :coordinators do |t|
       t.integer :study_id
       t.integer :user_id
       t.timestamps
@@ -8,6 +8,6 @@ class CreateCoordinations < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :coordinations
+    drop_table :coordinators
   end
 end
