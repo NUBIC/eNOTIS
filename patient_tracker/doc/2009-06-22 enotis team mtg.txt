@@ -1,0 +1,47 @@
+2009-06-22 Brian, David, Mark, Reggie
+
+
+Overview of last week
+
+Records in different systems
+- Add a patient - system will always try to sync with medical record (EDW)
+- Add a subject to closed study - system won't have history, so we'll accept any involvements. going forward, we'll flag any incorrect involvements. not count/report?
+
+Features
+
+Login
+
+An authorized user should be able to login
+An authorized user with typos should get a helpful message
+An unauthorized user should get a helpful message
+A logged in user can logout
+
+Manage subjects
+
+A coordinator can add a subject that can be located in the medical record
+              can add a subject that can not be located in the medical record
+              can view the synced/not synced with medical record status
+              can add an event for a new subject
+              can add an event for an existing subject
+              can remove an event for an existing subject
+              can remove a subject by deleting all involvement events
+              can view the event history on a subject
+              can view data on a user they entered (user data) that has been synced with medical record (EDW)
+              can upload a subject list from a file to the study
+              can search for a subject on their studies (with mrn, name)
+              can search but cannot find a subject *not* on their studies 
+
+Manage studies
+
+A random user can search for studies (with study id or keyword in title/short title)
+              can view overview details on a study, including IRB status
+              cannot see study menu
+              can view contact information for other users (click on name, get a popup)
+              
+A coordinator can view all details on their studies (all tabs on study menu)
+              can view all personnel that have access on a study
+              can view all subjects they have access to on a study
+              can view all accrual information on a study
+              can view links to documents they have access to on a study
+              can view all imports made to a study they have access to
+              
