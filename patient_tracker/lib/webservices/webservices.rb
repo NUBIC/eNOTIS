@@ -21,7 +21,7 @@ module WebServices
              when :local then return local_only(args.first,options2)
              when :foreign then return service_only(args.first,options2)
              when :global then return global_search(args.first,options2)
-             else return raise "Unrecongnized value: #{options[:span]} for option :span"
+             else return raise("Unrecongnized value: #{options[:span]} for option :span")
            end
         end
 
@@ -47,20 +47,20 @@ module WebServices
           service_result = nil
           local_result = old_find(*args)
           if args.first == :first
-            service_result = service_search(*args) unless !local_result.nil? and local_result.current?
+            service_result = service_search(*args) unless !local_result.nil? and !local_result.stale?
           else
             service_result = service_search(*args) 
           end 
           case args.first
             when :first then return process_single(service_result,local_result)
-            else        return   raise "Incompatible option #{args.first} with global search"
+            else        return   raise("Incompatible option #{args.first} with global search")
           end
         end
 
         def process_single(service_result,local_result)
           if service_result and service_result.first
             service_result.first[:synced_at]=Time.now
-	    return local_result.reconcile(service_result.first) unless local_result.nil?
+	    return local_result.sync!(service_result.first) unless local_result.nil?
             return self.new(service_result.first)
           else 
             return local_result 
