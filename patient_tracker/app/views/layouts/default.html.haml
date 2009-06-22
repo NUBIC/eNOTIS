@@ -3,7 +3,9 @@
 %html
   %head
     %title eNotis
-    =stylesheet_link_tag "reset.css", "default.css"
+    =stylesheet_link_tag "reset", "default", "facebox"
+    =javascript_include_tag "jQuery" , "jquery-ui" ,"jrails","application","facebox"  
+    
   %body
     - if flash[:notice] 
       #flash
