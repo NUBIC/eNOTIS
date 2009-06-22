@@ -7,6 +7,7 @@ columnize \
 cucumber \
 diff-lcs \
 faker \
+fastercsv \
 haml \
 haml-edge \
 httpclient \
@@ -15,6 +16,7 @@ linecache \
 mechanize \
 mechanize-ntlm \
 nokogiri \
+paperclip \
 polyglot \
 populator \
 rcov \
