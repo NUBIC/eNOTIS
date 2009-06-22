@@ -27,11 +27,11 @@ Rails::Initializer.run do |config|
   # config.gem "soap4r", :version => '1.5.8', :lib => false # :lib => false fixes no such file to load
   # config.gem "libxml-ruby", :version => '1.1.3', :lib => false # :lib => false fixes no such file to load
   config.gem "thoughtbot-factory_girl", :version => '1.2.1', :lib => "factory_girl", :source => "http://gems.github.com"
-  # config.gem "populator", :version => '0.2.5'
-  # config.gem "faker", :version => '0.3.1'
-  # config.gem "mechanize", :version => '0.9.2' # also installs nokogiri
-  # # config.gem "mechanize-ntlm", :version => '0.9.1'   # download from http://www.mindflowsolutions.net/2009/5/21/ruby-ntlm-mechanize and run sudo gem install mechanize-ntlm-0.9.1
-  # config.gem "fastercsv", :version => '1.5.0'
+  config.gem "populator", :version => '0.2.5'
+  config.gem "faker", :version => '0.3.1'
+  config.gem "mechanize", :version => '0.9.2' # also installs nokogiri
+  config.gem "mechanize-ntlm", :version => '0.9.1'   # download from http://www.mindflowsolutions.net/2009/5/21/ruby-ntlm-mechanize and run sudo gem install mechanize-ntlm-0.9.1
+  config.gem "fastercsv", :version => '1.5.0'
   config.gem "paperclip", :version => '2.1.2'
   
   # Only load the plugins named here, in the order given (default is alphabetical).
