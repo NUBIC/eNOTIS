@@ -34,6 +34,7 @@ class EdwAdapter
       xml_response = @agent.request(req).body
       
       ## TODO Handle errors better here
+      ## Hush Warning: xmlns: URI ENOTIS_x0020_-_x0020_TEST is not absolute at :1.
       LibXML::XML::Error.set_handler do |error|
         puts error.to_s if [LibXML::XML::Error::ERROR, LibXML::XML::Error::FATAL].include? error.level
       end
