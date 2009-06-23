@@ -25,7 +25,9 @@ module AuthMod
   end
 
   def current_user=(value)
-    session[:current_user] = value.id
+    unless value.nil?
+      session[:current_user] = value.id
+    end
     @current_user = value
   end
 

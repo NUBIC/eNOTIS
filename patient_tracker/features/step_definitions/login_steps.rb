@@ -1,12 +1,13 @@
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 
 Given /^a user "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|
-  @user = Factory(:user, {:netid => netid})
-  @user.stub!(:authenticate).and_return(true) #{|p| p == password }
-  @user.coordinators << Factory(:coordinator)  
+  @user = Factory.create(:user, {:netid => netid, :password => password})
+  @user.coordinators << Factory(:coordinator)
+  User.stub!(:find_by_netid).and_return(@user)
+  @user.stub!(:authenticate).and_return{|p| p == password}
 end
 
-When /^I am logged in as "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|
+When /^I log in as "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|
   unless netid.blank?
     visit authentication_index_path
     fill_in "netid", :with => netid
@@ -14,3 +15,4 @@ When /^I am logged in as "([^\"]*)" with password "([^\"]*)"$/ do |netid, passwo
     click_button "login"
   end
 end
+

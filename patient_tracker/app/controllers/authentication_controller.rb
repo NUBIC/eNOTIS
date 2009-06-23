@@ -13,7 +13,7 @@ class AuthenticationController < ApplicationController
       flash[:notice] = "You are logged in as #{params[:netid]}" #TODO-don't do this, scrub first
       redirect_to default_path
     else
-      flash[:notice] = "Unable to validate user"
+      flash[:notice] = "Unable to validate your netid or password. Visit http://www.it.northwestern.edu/netid/password.html for password help."
       redirect_to authentication_index_path
     end
   end
