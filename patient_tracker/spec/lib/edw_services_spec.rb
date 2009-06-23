@@ -29,24 +29,23 @@ describe EdwServices do
       it "can find the details of a subject by mrn" do
         p = {:mrd_pt_id => '9021090210'}
         @adapter.should_receive(:perform_search).with(p)
-        EdwServices.find_by_mrd_pt_id('9021090210')
+        EdwServices.find_by_mrn(:mrn => '9021090210')
 
       end
     
       it "can find a list of subjects by name or dob" do
-        p = {:name => 'July Fourth', :dob => '7/4/50'}
+        p = {:first_nm => 'July', :last_nm => 'Fourth', :dob => '7/4/50'}
         @adapter.should_receive(:perform_search).with(p)
-        EdwServices.find_by_name_and_dob("July Fourth", '7/4/50')
-
+        EdwServices.find_by_name_and_dob(:first_name => 'July', :last_name => 'Fourth', :dob => '7/4/50')
       end
     end 
   
     it "always connects" do
       EdwServices.should_receive(:connect)
-      EdwServices.find_by_mrd_pt_id("314")
+      EdwServices.find_by_mrn(:mrn => "314")
 
       EdwServices.should_receive(:connect)
-      EdwServices.find_by_name_and_dob("July Fourth", '7/4/50')
+      EdwServices.find_by_name_and_dob(:first_name => 'July', :last_name => 'Fourth', :dob => '7/4/50')
   
     end
   

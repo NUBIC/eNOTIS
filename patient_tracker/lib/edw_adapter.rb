@@ -1,4 +1,3 @@
-# require 'mechanize-ntlm'
 require 'net/ntlm_http'
 require 'net/http'
 require 'net/https'
