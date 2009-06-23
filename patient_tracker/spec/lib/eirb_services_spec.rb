@@ -1,6 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/../soap_mock_helper')
-require 'webservices/plugins/eirb_services'
 
 describe EirbServices do
   

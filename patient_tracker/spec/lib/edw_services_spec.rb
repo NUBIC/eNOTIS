@@ -1,10 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
-require 'lib/webservices/plugins/edw_services'
 
 describe EdwServices do
   it "should assign the class attribute edw_adapter" do
-    File.stub!(:open).and_return("")
-    
     @config = Object.new
     @config.stub!(:url).and_return("http://blah.com?action")
     @config.stub!(:username).and_return("foo")
@@ -20,7 +17,7 @@ describe EdwServices do
     before(:each) do
       @adapter = mock(EirbAdapter) 
       @adapter.stub!(:perform_search)
-    
+
       EdwServices.stub!(:connect)
       EdwServices.stub!(:edw_adapter).and_return(@adapter)
     end
@@ -30,7 +27,6 @@ describe EdwServices do
         p = {:mrd_pt_id => '9021090210'}
         @adapter.should_receive(:perform_search).with(p)
         EdwServices.find_by_mrn(:mrn => '9021090210')
-
       end
     
       it "can find a list of subjects by name or dob" do
@@ -46,7 +42,6 @@ describe EdwServices do
 
       EdwServices.should_receive(:connect)
       EdwServices.find_by_name_and_dob(:first_name => 'July', :last_name => 'Fourth', :dob => '7/4/50')
-  
     end
   
     it "gives a meaningful error when it can't connect" do
