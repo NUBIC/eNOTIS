@@ -7,6 +7,11 @@ Given /^a user "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|
   @user.stub!(:authenticate).and_return{|p| p == password}
 end
 
+Given /^is not authorized on any studies$/ do
+  @user.coordinators = []
+end
+
+
 When /^I log in as "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|
   unless netid.blank?
     visit authentication_index_path
