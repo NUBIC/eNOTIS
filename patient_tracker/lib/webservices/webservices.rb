@@ -98,6 +98,7 @@ module WebServices
                 return plugin.send(meth,conditions)
               end
             end
+         raise "no method found"
          return nil     
         end
 
@@ -107,11 +108,11 @@ module WebServices
               return conditions
 	    elsif conditions.instance_of?(String)
               conditions.split("and").each do |condition|
-	        result[condition.split("=")[0].to_sym] = condition.split("=")[1].gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
+	        result[condition.strip.split("=")[0].to_sym] = condition.strip.split("=")[1].gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
 	      end
             elsif conditions.instance_of?(Array)
               conditions.first.split("and").each do |condition|
-	        result[condition.split("=")[0].to_sym] = condition.split("=")[1].gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
+	        result[condition.strip.split("=")[0].to_sym] = condition.strip.split("=")[1].gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
 	      end
             end
             return result

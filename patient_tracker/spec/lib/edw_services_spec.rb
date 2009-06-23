@@ -24,15 +24,14 @@ describe EdwServices do
   
     describe "finding data about subjects" do
       it "can find the details of a subject by mrn" do
-        p = {:mrd_pt_id => '9021090210'}
-        @adapter.should_receive(:perform_search).with(p)
+        @adapter.should_receive(:perform_search).with("ENOTIS+-+TEST",{:mrd_pt_id => '9021090210'})
         EdwServices.find_by_mrn(:mrn => '9021090210')
       end
     
       it "can find a list of subjects by name or dob" do
-        p = {:first_nm => 'July', :last_nm => 'Fourth', :dob => '7/4/50'}
-        @adapter.should_receive(:perform_search).with(p)
-        EdwServices.find_by_name_and_dob(:first_name => 'July', :last_name => 'Fourth', :dob => '7/4/50')
+        p = "e-NOTIS+Test+2",{:first_nm => 'July', :last_nm => 'Fourth', :birth_dts => '7/4/50'}
+        @adapter.should_receive(:perform_search).with("e-NOTIS+Test+2",{:first_nm => 'July', :last_nm => 'Fourth', :birth_dts => '7/4/50'})
+        EdwServices.find_by_name_and_dob(:first_name => 'July', :last_name => 'Fourth', :birth_date => '7/4/50')
       end
     end 
   
