@@ -27,8 +27,8 @@
         =link_to("edit user settings")
 
 #study_list
-  .heading 
-    You have access to the following Studies:
+  .heading
+    = @accessable_studies.empty? ? "You are not authorized on any studies. Please contact the eIRB team for more information" : "You have access to the following Studies:"
   %ul 
     - @accessable_studies.each do |p|
       %li=render(:partial => "study", :object => p)  

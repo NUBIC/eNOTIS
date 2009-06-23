@@ -12,7 +12,7 @@ module NavigationHelpers
       '/'
 
     when /the login page/
-      login_authentication_path
+      authentication_index_path
 
     
     # Add more mappings here.
