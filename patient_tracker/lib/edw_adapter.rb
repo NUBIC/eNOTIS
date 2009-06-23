@@ -32,6 +32,12 @@ class EdwAdapter
       req.ntlm_auth(config.username, config.password, true)
       # http.set_debug_output $stderr
       xml_response = @agent.request(req).body
+      
+      ## TODO Handle errors better here
+      LibXML::XML::Error.set_handler do |error|
+        puts error.to_s if [LibXML::XML::Error::ERROR, LibXML::XML::Error::FATAL].include? error.level
+      end
+            
       xml_doc = LibXML::XML::Document.string(xml_response)
       return self.class.format_search_results(xml_doc || "")
     rescue StandardError => bang
