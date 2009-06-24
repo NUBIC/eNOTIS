@@ -2,13 +2,12 @@ require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "pat
 
 Given /^a user "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|
   @user = Factory.create(:user, {:netid => netid, :password => password})
-  @user.coordinators << Factory(:coordinator)
-  User.stub!(:find_by_netid).and_return(@user)
-  @user.stub!(:authenticate).and_return{|p| p == password}
+  @user.studies << Factory(:study)
+  User.stub!(:authenticate).and_return{|n,p| p == password ? @user : nil }
 end
 
 Given /^is not authorized on any studies$/ do
-  @user.coordinators = []
+  @user.studies = []
 end
 
 

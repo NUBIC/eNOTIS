@@ -2,34 +2,23 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe AuthenticationController do
 
-  #Delete this example and add some real ones
-  it "should use AuthenticationController" do
-    controller.should be_an_instance_of(AuthenticationController)
-  end
-
   describe "the login process" do
     before(:each) do
-      @account = User.new
-      @account.id = 123
-      @account.netid = 'abc123'
-      User.stub!(:find_and_validate).and_return(@account)
+      @account = Factory(:user)
+      User.stub!(:authenticate).and_return(@account)
     end
       
     it "accepts credentials and authenticates them" do
-      controller.should_receive(:authenticate_user).with("abc123","blah").and_return(@account)
-      post 'login', :netid => 'abc123',:password => 'blah'
+      controller.should_receive(:logout_keeping_session!)
+      User.should_receive(:authenticate).with("abc123","blah").and_return(@account)
+      post 'login', :netid => 'abc123', :password => 'blah'
       response.should be_redirect
     end
 
     it "sets the current user in the session after a successful login" do
-      post 'login', :netid => 'abc123'
-      controller.session[:current_user].should == @account.id
-      response.should be_redirect # to default page
-    end
-
-    it "sets the current user when user objet is assigned" do
-      controller.current_user = @account
-      session[:current_user].should == @account.id
+      post 'login', :netid => 'abc123', :password => 'blah'
+      controller.session[:user_id].should == @account.id
+      response.should redirect_to(default_path)
     end
   end
 end

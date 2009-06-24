@@ -4,24 +4,38 @@ class AuthenticationController < ApplicationController
   layout "layouts/default"
 
   def index
-    @netids =[]# find_all_coordinator_netids(20)
-    @users = User.find(:all)
+    # @netids =[] # find_all_coordinator_netids(20)
+    # @users = User.find(:all)
   end
   
   def login
-    if authenticate_user(params[:netid],params[:password])
-      flash[:notice] = "You are logged in as #{params[:netid]}" #TODO-don't do this, scrub first
-      redirect_to default_path
+    logout_keeping_session!
+    user = User.authenticate(params[:netid], params[:password])
+
+    if user
+      # Protects against session fixation attacks, causes request forgery protection if user resubmits an earlier form using back button. Uncomment if you understand the tradeoffs.
+      # reset_session
+      self.current_user = user
+      redirect_back_or_default(default_path)
+      flash[:notice] = "Logged in successfully as #{current_user.netid}"
     else
-      flash[:notice] = "Unable to validate your netid or password. Visit http://www.it.northwestern.edu/netid/password.html for password help."
-      redirect_to authentication_index_path
+      note_failed_signin
+      @netid = params[:netid]
+      render :action => 'index'
     end
   end
   
   def logout
-    logout_user   
-    flash[:notice] = "You are now logged out"
-    redirect_to authentication_index_path
+    logout_killing_session!
+    flash[:notice] = "You have been logged out."
+    redirect_back_or_default(authentication_index_path) 
+  end
+
+protected
+  # Track failed login attempts
+  def note_failed_signin
+    flash[:notice] = "Couldn't log you in as '#{params[:netid]}' Visit http://www.it.northwestern.edu/netid/password.html for password help."
+    logger.warn "Failed login for '#{params[:netid]}' from #{request.remote_ip} at #{Time.now.utc}"
   end
   
 end

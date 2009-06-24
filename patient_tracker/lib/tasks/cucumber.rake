@@ -1,11 +1,13 @@
 $LOAD_PATH.unshift(RAILS_ROOT + '/vendor/plugins/cucumber/lib') if File.directory?(RAILS_ROOT + '/vendor/plugins/cucumber/lib')
 
 begin
-  require 'cucumber/rake/task'
+  if defined? Cucumber    
+    require 'cucumber/rake/task' 
 
-  Cucumber::Rake::Task.new(:features) do |t|
-    t.fork = true
-    t.cucumber_opts = ['--format', (ENV['CUCUMBER_FORMAT'] || 'pretty')]
+    Cucumber::Rake::Task.new(:features) do |t|
+      t.fork = true
+      t.cucumber_opts = ['--format', (ENV['CUCUMBER_FORMAT'] || 'pretty')]
+    end
   end
   task :features => 'db:test:prepare'
 rescue LoadError
