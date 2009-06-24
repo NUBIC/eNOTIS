@@ -10,4 +10,7 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
 
   APP_VERSION = "0.0.1a"
+  
+  include AuthMod
+  
 end

@@ -1,7 +1,6 @@
 class StudiesController < ApplicationController
-include AuthMod
-before_filter :user_must_be_logged_in
-layout "layouts/loggedin"
+  before_filter :user_must_be_logged_in
+  layout "layouts/loggedin"
 
   def index
 	  #@studies = Study.find_by_coordinator(params[:net_id])

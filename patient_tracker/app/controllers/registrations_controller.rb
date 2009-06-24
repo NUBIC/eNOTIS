@@ -1,7 +1,5 @@
 class RegistrationsController < ApplicationController
   layout "layouts/loggedin"
-
-  include AuthMod
   include FaceboxRender
   before_filter :user_must_be_logged_in
 

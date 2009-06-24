@@ -9,7 +9,7 @@ class Study < ActiveRecord::Base
 	has_many :involvements
   has_many :coordinators
   has_many :subjects, :through => :involvements
-
+  has_paper_trail
 	include WebServices
 
   validates_presence_of :synced_at

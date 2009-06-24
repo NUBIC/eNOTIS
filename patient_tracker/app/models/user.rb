@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_many :coordinators
   delegate :as_coordinator, :to => :coordinators #so we can use the syntax user.as_coordinator.studies
   has_many :studies, :through => :coordinators
-
+  has_paper_trail
   attr_accessor :password # useful for testing
 
   # prevents a user from submitting a crafted form that bypasses activation
