@@ -1,4 +1,3 @@
-# require 'mechanize-ntlm'
 require 'net/ntlm_http'
 require 'net/http'
 require 'net/https'
@@ -21,18 +20,25 @@ class EdwAdapter
 
   # Calls the generated Mechanize agent to perform the search on the remote resource
   # Accepts a param hash of values and converts hash parameters to query string (thanks, Rails!)
-  def perform_search(params = {})
+  def perform_search(report,params = {})
     begin
       # # actually NTLM auth, but NTLM Mechanize overwrites the method for ease
       # # see http://www.mindflowsolutions.net/2009/5/21/ruby-ntlm-mechanize
       # agent.basic_auth(config.username, config.password)
       # 
       # xml_response = agent.get(config.url + "&" + params.to_query).content
-      
-      req = Net::HTTP::Get.new(config.url + "&" + params.to_query, {'connection' => 'keep-alive'})
+      report_url = config.url.gsub("[report_name]",report)
+      req = Net::HTTP::Get.new(report_url + "&" + params.to_query, {'connection' => 'keep-alive'})
       req.ntlm_auth(config.username, config.password, true)
       # http.set_debug_output $stderr
       xml_response = @agent.request(req).body
+      
+      ## TODO Handle errors better here
+      ## Hush Warning: xmlns: URI ENOTIS_x0020_-_x0020_TEST is not absolute at :1.
+      LibXML::XML::Error.set_handler do |error|
+        puts error.to_s if [LibXML::XML::Error::ERROR, LibXML::XML::Error::FATAL].include? error.level
+      end
+            
       xml_doc = LibXML::XML::Document.string(xml_response)
       return self.class.format_search_results(xml_doc || "")
     rescue StandardError => bang

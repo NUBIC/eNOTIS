@@ -121,12 +121,10 @@ Factory.define :subject_event do |p|
   p.notes         {"With flying colors"}
 end
 
-Factory.define :user_study do |u|
+Factory.define :coordinator do |u|
   u.association             :user
   u.association             :study
-  u.role                    {"Coordinator"}
-  u.reconciliation_date     {2.hours.ago}
-  u.reconciliation_status   {"Reconciled"}
+  # u.role                    {"Coordinator"}
 end
 
 Factory.define :study_upload do |s|

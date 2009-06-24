@@ -1,11 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-#class TestModController < ActionController::Base
-#  include(AuthMod)
-#end
-
 describe AuthMod do
-attr_accessor :controller
+  attr_accessor :controller
   before(:each) do
     @controller = Class.new(ActionController::Base){ include AuthMod }.new
     @controller.session = {}
@@ -15,7 +11,7 @@ attr_accessor :controller
     @account.password = 'foo'
     User.stub!(:find).and_return(@account)
     User.stub!(:find_by_netid).and_return(@account)
- end
+  end
 
   it "authenticates the user creditials" do
 

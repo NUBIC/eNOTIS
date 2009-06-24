@@ -9,7 +9,7 @@
 
 class Involvement < ActiveRecord::Base
 	belongs_to :subject
-	belongs_to :protocol
+	belongs_to :study
   has_many :involvement_events
   
 end

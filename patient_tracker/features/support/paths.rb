@@ -10,23 +10,9 @@ module NavigationHelpers
     
     when /the homepage/
       '/'
-    when /the new subject_study_listing page/
-      new_subject_study_listing_path
 
-    when /the new subject_registration page/
-      new_subject_registration_path
-
-    when /the new frooble page/
-      new_frooble_path
-
-    when /the new frooble page/
-      new_frooble_path
-
-    when /the new frooble page/
-      new_frooble_path
-
-    when /the new frooble page/
-      new_frooble_path
+    when /the login page/
+      authentication_index_path
 
     
     # Add more mappings here.

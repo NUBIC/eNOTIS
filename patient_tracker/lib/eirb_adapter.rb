@@ -1,4 +1,3 @@
-gem 'soap4r', '>=1.5.8'
 require 'soap/wsdlDriver'
 require 'service_logger'
 
@@ -26,7 +25,7 @@ class EirbAdapter
    # Configuration and driver building required before calling this method
    def login
       unless driver.nil?
-       result= driver.login({:storeName => config.storename,
+       result = driver.login({:storeName => config.storename,
                      :userName => config.username,
                      :password => config.password})
        @session = result.loginResult

@@ -20,7 +20,9 @@ describe EirbAdapter do
 
     before(:each) do
       @driver = mock(SOAP::WSDLDriver)
-      @driver.stub!(:login).and_return(Object.new)
+      @login = Object.new
+      @login.stub!(:loginResult).and_return(Object.new)
+      @driver.stub!(:login).and_return(@login)
       @adapter.stub!(:driver).and_return(@driver)
     end  
       

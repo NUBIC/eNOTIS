@@ -1,10 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
-require 'lib/webservices/plugins/edw_services'
 
 describe EdwServices do
   it "should assign the class attribute edw_adapter" do
-    File.stub!(:open).and_return("")
-    
     @config = Object.new
     @config.stub!(:url).and_return("http://blah.com?action")
     @config.stub!(:username).and_return("foo")
@@ -20,34 +17,30 @@ describe EdwServices do
     before(:each) do
       @adapter = mock(EirbAdapter) 
       @adapter.stub!(:perform_search)
-    
+
       EdwServices.stub!(:connect)
       EdwServices.stub!(:edw_adapter).and_return(@adapter)
     end
   
     describe "finding data about subjects" do
       it "can find the details of a subject by mrn" do
-        p = {:mrd_pt_id => '9021090210'}
-        @adapter.should_receive(:perform_search).with(p)
-        EdwServices.find_by_mrd_pt_id('9021090210')
-
+        @adapter.should_receive(:perform_search).with("ENOTIS+-+TEST",{:mrd_pt_id => '9021090210'})
+        EdwServices.find_by_mrn(:mrn => '9021090210')
       end
     
       it "can find a list of subjects by name or dob" do
-        p = {:name => 'July Fourth', :dob => '7/4/50'}
-        @adapter.should_receive(:perform_search).with(p)
-        EdwServices.find_by_name_and_dob("July Fourth", '7/4/50')
-
+        p = "e-NOTIS+Test+2",{:first_nm => 'July', :last_nm => 'Fourth', :birth_dts => '7/4/50'}
+        @adapter.should_receive(:perform_search).with("e-NOTIS+Test+2",{:first_nm => 'July', :last_nm => 'Fourth', :birth_dts => '7/4/50'})
+        EdwServices.find_by_name_and_dob(:first_name => 'July', :last_name => 'Fourth', :birth_date => '7/4/50')
       end
     end 
   
     it "always connects" do
       EdwServices.should_receive(:connect)
-      EdwServices.find_by_mrd_pt_id("314")
+      EdwServices.find_by_mrn(:mrn => "314")
 
       EdwServices.should_receive(:connect)
-      EdwServices.find_by_name_and_dob("July Fourth", '7/4/50')
-  
+      EdwServices.find_by_name_and_dob(:first_name => 'July', :last_name => 'Fourth', :dob => '7/4/50')
     end
   
     it "gives a meaningful error when it can't connect" do
