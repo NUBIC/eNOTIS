@@ -3,29 +3,30 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe AuthMod do
   attr_accessor :controller
   before(:each) do
-    @controller = Class.new(ActionController::Base){ include AuthMod }.new
+    @controller = Class.new(ActionController::Base).new
+    @controller.extend(AuthMod)
     @controller.session = {}
-    @account = User.new
-    @account.id = 123
-    @account.netid = 'abc123'
-    @account.password = 'foo'
-    User.stub!(:find).and_return(@account)
-    User.stub!(:find_by_netid).and_return(@account)
+    @account = Factory(:user, {:netid => 'pi314', :password => 'circular'})
   end
 
   it "authenticates the user creditials" do
-
-    User.should_receive(:find_and_validate).with('abc123','foo').and_return(@account)
-    controller.authenticate_user('abc123','foo')
-    controller.current_user.should == @account
+    @controller.send(:current_user=, @account)
+    @controller.send(:current_user).should == @account
   end
 
-  it "can check to see if the user is logged in" do
+  it "should not log in user with no coordinators" do
     #with no session var set
-    controller.logged_in?.should be_false
-    controller.authenticate_user('abc123', 'foo')
-    controller.logged_in?.should be_true
-    controller.current_user.should == @account
+    @controller.send(:logged_in?).should be_false
+    @controller.send(:current_user=, @account)
+    @controller.send(:authorized?).should be_false
+  end
+
+  it "should log in a user with coordinators" do
+    #with no session var set
+    @account.studies << Factory(:study)
+    @controller.send(:logged_in?).should be_false
+    @controller.send(:current_user=, @account)
+    @controller.send(:authorized?).should be_true
   end
 
 end
