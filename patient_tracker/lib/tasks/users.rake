@@ -19,4 +19,12 @@ namespace :users do
 
   end
 
+  desc "Loads in the users who are study coordinators"
+  task :load_study_coordinators do
+    # get the access list
+    access = EirbServices.find_study_access
+    puts access.first.inspect
+    
+  end
+
 end
