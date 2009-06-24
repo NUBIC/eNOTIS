@@ -54,7 +54,8 @@ class EirbServices
                                             :parameters => parameters})
     connect unless connected?
     result = eirb_adapter.perform_search(search_settings) if connected?
-    convert_for_notis(result)    
+   # convert_for_notis(result)   
+    result  
   end
 
   # ======== Attribute converstion Helper Methods =========

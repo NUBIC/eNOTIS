@@ -1,5 +1,6 @@
 gem 'soap4r', '>=1.5.8'
 require 'soap/wsdlDriver'
+require 'service_logger'
 
 # Acts as a middle layer between the EirbServices module and the Eirb Webservice.
 # Passes off queries to the eirb and returns queries
@@ -13,6 +14,9 @@ class EirbAdapter
    def initialize(config = ServiceConfig.new)
      # creating the soap driver
      factory = SOAP::WSDLDriverFactory.new(config.url)
+     WSLOGGER.debug("\r\n====================================== INIT ======================================")
+     WSLOGGER.debug("Init of soap factory #{factory.inspect}")     
+     WSLOGGER.debug("used config #{config.inspect}")
      @driver = factory.create_rpc_driver
      @session = nil
      @config = config
@@ -26,6 +30,7 @@ class EirbAdapter
                      :userName => config.username,
                      :password => config.password})
        @session = result.loginResult
+       WSLOGGER.debug("Login result #{@session.inspect}")
        return authenticated?
       else
         raise DataServiceError
@@ -37,7 +42,6 @@ class EirbAdapter
      !@session.nil?
    end
 
-   # TODO add webservice logger 
    #
    # Calls the generated soap driver to perform the search on the remote resource
    # Accepts a param hash of values and converts hash parameters to formatted 
@@ -47,8 +51,11 @@ class EirbAdapter
        login
      end 
      params.merge!({:svcSessionToken => @session,
-                   :parameters => self.class.format_search_parameters(params[:parameters])}) 
+                   :parameters => self.class.format_search_parameters(params[:parameters])})
+     WSLOGGER.debug("=========================================== SEARCH ======================================")
+     WSLOGGER.debug("Performing search with params:\r\n #{params.inspect}")
      search_results = driver.performSearch(params) #method that actually calls the soap service
+     WSLOGGER.debug("Search results:\r\n #{search_results.inspect}")
      self.class.format_search_results(search_results)
    end
 
@@ -82,6 +89,7 @@ class EirbAdapter
           mapped << t_hash unless t_hash.empty?
         end
       end
+      WSLOGGER.debug("Reformatted results to #{mapped.inspect}")
       mapped
    end
 
