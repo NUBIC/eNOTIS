@@ -1,0 +1,31 @@
+Time: approximately 3 min.
+
+Clinical Subject Registration made eASY (Northwestern Oncology Trial Information System)
+
+Hi, and welcome to eNOTIS, a secure, web-based system for Northwestern clinical researchers to track and report accrual information. My name is [], and I'll be walking you through eNOTIS.
+
+# Basic Concepts
+
+eNOTIS is a system that helps you keep track *studies*, *subjects*, and the *events* that happen to them. You can see the eIRB status of a study, and have access to consent forms or other documents from eIRB. You can add subjects to studies, and keep track of them from consent to ?completion?.
+
+Now what do we mean by *subject* and *study*? A human subject is any person ?that you've accrued on a research study?. A study is any research at Northwestern that is tracked by the IRB. This includes ?clinical trials, clinical research without phases, as well as observational and quality of life research.?
+
+Events are anything that happens to your study or subject, such as approval or review of studies, consent or randomization of subjects.
+
+Studies, Subjects and Events.
+
+# Logging in
+
+To get started with eNOTIS, you'll need a Northwestern NetID, and you should be authorized on at least one study in eIRB.
+
+A Northwestern NetID is your electronic identity, and you can get one through through NUIT (Northwestern University Information Technology) at www.it.northwestern.edu/netid
+
+The Northwestern University IRB provides oversight on research, for the protection and benefit of human subjects. eIRB is the electronic system they use to manage research proposals. Since eNOTIS contains private data on human subjects, you'll need to have training and approval by the IRB. This process may take some time, and you may need to submit a revision for the study.
+
+Let's visit enotis.northwestern.edu and enter my netid and password. Click login, and you should... oops, looks like I made a mistake. If you get stuck here, visit this link to check your password, and reset it if you need to.
+
+Hmm, I'm not on a study in eIRB. I know I was just added a few minutes ago, but eNOTIS syncs with eIRB every few hours, so I may have to come back to this. Time for lunch!
+
+I'm back now, and I'll enter my netid and password, and here we go. I'm in. This is my dashboard, where I can see the studies I'm approved on in eIRB, what events have happened recently.
+
+Studies, Subjects, and Events. That's what eNOTIS is all about.
