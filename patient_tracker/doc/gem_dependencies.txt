@@ -1,5 +1,6 @@
-# To clear your gems, use this command, removing any the lines for any gems you don't have (it'll choke)
+sudo gem sources -a http://download.bioinformatics.northwestern.edu/gems/
 
+# To clear your gems, use this command, removing any the lines for any gems you don't have (it'll choke)
 sudo gem uninstall --all --ignore-dependencies --executables \
 builder \
 chriseppstein-compass \
@@ -30,7 +31,16 @@ term-ansicolor \
 thoughtbot-factory_girl \
 treetop \
 webrat \
-ZenTest
+ZenTest \
+highline \
+session \
+wddx \
+composite_primary_keys \
+ruby-net-ldap \
+rubytree \
+bcdatabase \
+hoe \
+bcsec
 
 # mechanize and mechanize-ntlm is no longer needed, replaced by lib/net/ntlm_http.rb
 
