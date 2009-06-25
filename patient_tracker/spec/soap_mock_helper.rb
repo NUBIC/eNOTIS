@@ -23,7 +23,7 @@ module SoapMockHelper
       #    >
       #>
 
-      # This is what is returned for a single row result:
+      # This is what is returned for a single row result... note the comment on multiple row responses:
       ##<SOAP::Mapping::Object:0xc1c758 {http://clickcommerce.com/Extranet/WebServices}
       #  performSearchResult=
       #    #<SOAP::Mapping::Object:0xc1c6d6 {}
@@ -51,7 +51,33 @@ module SoapMockHelper
       #        >
       #    >
       #>
-            
+    #
+    # This is what is returned for a single row with a value list result
+      # #<SOAP::Mapping::Object:0x2a2b1b8 {http://clickcommerce.com/Extranet/WebServices}
+      #    performSearchResult=
+      #      #<SOAP::Mapping::Object:0x2a2af74 {}
+      #        searchResults=
+      #          #<SOAP::Mapping::Object:0x2a2ae48 {}
+      #            description="Returns the access list given a study, or all study access lists given null" {}  
+      #            columnHeaders=
+      #              #<SOAP::Mapping::Object:0x2a29fca {}
+      #                  columnHeader=["ID", "Contacts.User ID"]
+      #              > {}
+      #            resultSet=
+      #              #<SOAP::Mapping::Object:0x2a271d0 {}
+      #                row=  
+      #                  #<SOAP::Mapping::Object:0x2a26dc0 {}
+      #                    value="STU00002629" {}
+      #                    valueList=
+      #                      #<SOAP::Mapping::Object:0x2a2464c {}
+      #                        value=["kaz266", "slr919"]
+      #                      >
+      #                   >
+      #               >
+      #           >
+      #       >
+      #   >
+                  
     def self.make_column_headers(payload)
       if payload.first.is_a?(Array)
         template = payload.first
@@ -143,9 +169,13 @@ describe SoapMockHelper do
 
   describe "formatting result set mock objects" do
     before(:each) do
-      @payload = [{:ID => "STU0912301239"}, {"Project State.ID" => "APPROVED"}, {"Name" => "The research study"}, {"Research Type.ID" => "INTERVENTIONAL"}]
-      @correct_headers = ["ID", "Project State.ID", "Name", "Research Type.ID"]
-      @correct_values =  ["STU0912301239","APPROVED","The research study","INTERVENTIONAL"] 
+      @payload = [{:ID => "STU0912301239"},
+        {"Project State.ID" => "APPROVED"}, 
+        {"Name" => "The research study"},
+        {"Research Type.ID" => "INTERVENTIONAL"},
+        {"Contacts.User ID" => "ntu123"}]
+      @correct_headers = ["ID", "Project State.ID", "Name", "Research Type.ID","Contacts.User ID"]
+      @correct_values =  ["STU0912301239","APPROVED","The research study","INTERVENTIONAL", "ntu123"] 
     end
     
     it "converts a payload array of hash objects into 'columnHeaders'" do

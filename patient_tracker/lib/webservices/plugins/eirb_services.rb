@@ -6,7 +6,7 @@ class EirbServices
   # basic settings for single row queries
   SEARCH_DEFAULTS = {:startRow => 1, 
                    :numRows => -1,
-                   :expandMultiValueCells => false}.freeze
+                   :expandMultiValueCells => true}.freeze
   
   DATA_REMAP = {}
 
@@ -41,21 +41,50 @@ class EirbServices
   end
   
   def self.find_study_access(study_id=nil)
-    default_search("eNOTIS Study Access", (study_id.nil? ? nil : {"ID" => study_id}))
+    chunked_search("eNOTIS Study Access", (study_id.nil? ? nil : {"ID" => study_id}))
   end
 
   def self.find_all_users
-    default_search("eNOTIS Person List")
+    chunked_search("eNOTIS Person List")
   end
 
   # ======== Search helper methods =========
   def self.default_search(search_name, parameters=nil)
     search_settings = SEARCH_DEFAULTS.merge({:savedSearchName => search_name,
                                             :parameters => parameters})
+    search(search_settings)
+  end
+ 
+  # Breaks search results into managble chunks of data
+  # because eIrb chokes if a query is to large
+  def self.chunked_search(search_name, parameters=nil,num_rows=500)
+    start_row = 1 #eirb has row 1 as the first row
+    results = []
+
+    loop do 
+      partial_results = paginated_search(search_name,start_row,num_rows,parameters)
+      break if partial_results.empty? 
+      results.concat(partial_results)
+      start_row += partial_results.size
+    end
+    results
+  end
+
+  def self.paginated_search(search_name,start_row,num_rows,parameters=nil)
+    search_settings = SEARCH_DEFAULTS.merge({
+     :savedSearchName => search_name,
+     :parameters => parameters,
+     :startRow => start_row,
+     :numRows => num_rows
+    })
+    
+    search(search_settings)
+  end
+
+  def self.search(settings)
     connect unless connected?
-    result = eirb_adapter.perform_search(search_settings) if connected?
-   # convert_for_notis(result)   
-    result  
+    result = eirb_adapter.perform_search(settings) if connected?
+    convert_for_notis(result)   
   end
 
   # ======== Attribute converstion Helper Methods =========
@@ -67,6 +96,7 @@ class EirbServices
   def self.convert_for_eirb(values)
     convert([values],NOTIS_TO_EIRB).first
   end
+
   private
   def self.convert(values,converter)
       results=[]

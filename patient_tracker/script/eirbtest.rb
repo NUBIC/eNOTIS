@@ -3,7 +3,7 @@ require 'http-access2'
 gem 'soap4r', '>=1.5.8'
 require 'soap/wsdlDriver'
 
- EIRB_SEARCH_ACCESS = "http://riseirbsvr3.itcs.northwestern.edu/ClickXWebServices/DataManagement/SearchServices.asmx"
+ EIRB_SEARCH_ACCESS = " http://riseirbsvr3.itcs.northwestern.edu/ClickXWebServices/DataManagement/SearchServices.asmx"
  EIRB_ENTITY_ACCESS = "http://riseirbsvr3.itcs.northwestern.edu/ClickXWebServices/EntityManager/EntityServices.asmx"
    
  client = HTTPAccess2::Client.new()  
@@ -41,3 +41,11 @@ answers = driver.performSearch({:svcSessionToken => result.loginResult,
                                :numRows => -1,
                                :expandMultiValueCells => false,
                                :parameters => "<parameters><parameter name='ID' value='STU00000706'/></parameters>"})
+
+answers = driver.performSearch({:svcSessionToken => result.loginResult,
+:parameters=>"<parameters><parameter name='ID' value='STU00002629'/></parameters>",
+:startRow=>1,
+:numRows=>500,
+:expandMultiValueCells=>false,
+:savedSearchName=>"eNOTIS Study Access"}
+
