@@ -46,7 +46,7 @@
       .others
         %em
           Staff:
-        - study.coordinators.each do |c|
+        - study.coordinators.each do |c|        
           = "#{c.first_name} #{c.last_name}"
     .tertiary_data
       .description
@@ -55,6 +55,13 @@
         = study.description || "Missing"
         
   - if @study.coordinators.map(&:user).include? current_user
+    .subject_details
+      %strong
+        Subjects
+      %ul
+        - study.subjects.each do |subject|
+          %li
+            = "#{subject.first_name} #{subject.last_name}"
     .file_details
       %strong
         Study Documents
