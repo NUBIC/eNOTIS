@@ -12,8 +12,12 @@ class StudiesController < ApplicationController
   end
 	
   def search
-    @study =  Study.find_by_irb_number(params[:study_id])
-    render(:action => "show")
+    if @study = Study.find_by_irb_number(params[:study_id])
+      render(:action => "show")
+    else
+      flash[:notice] = "No studies found"
+      redirect_to :back
+    end
   end
 
 end

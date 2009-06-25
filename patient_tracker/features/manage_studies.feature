@@ -2,12 +2,27 @@ Feature: Manage studies
   In order to manage studies
   As a coordinator
   I want find a study and view detailed information
+  
+  Background:
+    Given a user "pi" with password "314159"
+    And a study "The effects of Vitamin A on concentration" with id "0012345"
+  @focus
 
   Scenario: A random user can search for studies (with study id or keyword in title/short title)
-    Given
-    When
-    Then
-    
+    When I log in as "pi" with password "314159"
+    And I go to the dashboard
+    And I fill in "study_id" with "0012345"
+    And I press "Find"
+    Then I should see "The effects of Vitamin A on concentration"
+
+  Scenario: A random user can search for studies (fail) and get redirected
+    When I log in as "pi" with password "314159"
+    And I go to the dashboard
+    And I fill in "study_id" with "999"
+    And I press "Find"
+    Then I should see "No studies found"
+    And I should be on the dashbaord
+        
   Scenario: A random user can view overview details on a study, including IRB status
     Given
     When

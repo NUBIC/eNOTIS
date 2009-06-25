@@ -1,4 +1,3 @@
-@focus
 Feature: User access to system
   In order to access eNotis
   As a user

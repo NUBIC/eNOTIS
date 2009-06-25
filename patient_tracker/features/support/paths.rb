@@ -14,7 +14,9 @@ module NavigationHelpers
     when /the login page/
       authentication_index_path
 
-    
+    when /the dashboard/
+      '/registrations/'
+      
     # Add more mappings here.
     # Here is a more fancy example:
     #

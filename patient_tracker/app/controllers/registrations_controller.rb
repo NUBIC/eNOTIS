@@ -5,7 +5,7 @@ class RegistrationsController < ApplicationController
 
   # The registration landing page
   def index 
-    @accessable_studies = @current_user.studies 
+    @accessable_studies = current_user.studies 
   end
 
   def show
