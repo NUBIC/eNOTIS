@@ -17,13 +17,9 @@ module NavigationHelpers
     when /the dashboard/
       '/registrations/'
     
-    when /the study page/
-      "/studies/#{@study.id}"
-
-    when /my study page/
-      "/studies/#{@my_study.id}"
-
-      
+    when /the study page for id "([^\"]*)"/
+      "/studies/#{Study.find_by_irb_number($1).id}"
+    
     # Add more mappings here.
     # Here is a more fancy example:
     #

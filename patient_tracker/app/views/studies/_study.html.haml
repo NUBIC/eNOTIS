@@ -43,7 +43,11 @@
         %em
           Study Coord:
         Coordinator, Study
-
+      .others
+        %em
+          Staff:
+        - study.coordinators.each do |c|
+          = "#{c.first_name} #{c.last_name}"
     .tertiary_data
       .description
         %em
