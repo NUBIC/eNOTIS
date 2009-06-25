@@ -4,5 +4,5 @@
 
 class InvolvementEvent < ActiveRecord::Base
   belongs_to :involvement
-
+  has_paper_trail
 end

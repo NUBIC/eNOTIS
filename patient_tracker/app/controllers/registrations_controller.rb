@@ -1,13 +1,11 @@
 class RegistrationsController < ApplicationController
   layout "layouts/loggedin"
-
-  include AuthMod
   include FaceboxRender
   before_filter :user_must_be_logged_in
 
   # The registration landing page
   def index 
-    @accessable_studies = @current_user.studies 
+    @accessable_studies = current_user.studies 
   end
 
   def show

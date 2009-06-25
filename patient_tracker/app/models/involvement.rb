@@ -11,7 +11,7 @@ class Involvement < ActiveRecord::Base
 	belongs_to :subject
 	belongs_to :study
   has_many :involvement_events
-  
+  has_paper_trail
 end
 
 

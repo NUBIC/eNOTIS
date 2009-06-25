@@ -14,6 +14,11 @@ module NavigationHelpers
     when /the login page/
       authentication_index_path
 
+    when /the dashboard/
+      '/registrations/'
+    
+    when /the study page for id "([^\"]*)"/
+      "/studies/#{Study.find_by_irb_number($1).id}"
     
     # Add more mappings here.
     # Here is a more fancy example:

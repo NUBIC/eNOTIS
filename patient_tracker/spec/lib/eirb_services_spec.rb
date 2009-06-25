@@ -101,4 +101,16 @@ describe EirbServices do
 
     end
   end
+  describe "converter should return appropriate values" do
+    it "should return the corresponding values in the translator hash" do
+      @converter = {"attribute1"=>"attribute1_converted","attribute2"=>"attribute2_converted"}
+      EdwServices.convert([{"attribute1"=>"test1","attribute2"=>"test2"}],@converter).should == [{:attribute1_converted=>"test1",:attribute2_converted=>"test2"}]
+    end
+
+    it "should ignore any attribute that doesn't exist in the translator" do
+       @converter = {"attribute1"=>"attribute1_converted","attribute2"=>"attribute2_converted"}
+       EdwServices.convert([{"attribut"=>"test1","attribute2"=>"test2"}],@converter).should == [{:attribute2_converted=>"test2"}]
+    end
+
+  end
 end
