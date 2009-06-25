@@ -1,5 +1,6 @@
 require 'eirb_adapter'
 require 'eirb_translations'
+require 'service_logger'
 
 class EirbServices
 
@@ -29,6 +30,8 @@ class EirbServices
   end
 
   def self.find_by_irb_number(conditions)
+    WSLOGGER.debug(conditions.inspect)
+    WSLOGGER.debug(convert_for_eirb(conditions).inspect)
     default_search("eNOTIS Study Basics",convert_for_eirb(conditions))
   end 
 
