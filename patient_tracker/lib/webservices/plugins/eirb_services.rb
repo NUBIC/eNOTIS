@@ -24,20 +24,20 @@ class EirbServices
   end
 
   # ======== eIRB webservice wrapper methods ========
-  def self.find_status(study_id)
-    default_search("eNOTIS Study Status",{"ID" => study_id})
+  def self.find_status(conditions)
+    default_search("eNOTIS Study Status",convert_for_eirb(conditions))
   end
 
-  def self.find_by_irb_number(irb_number)
-    default_search("eNOTIS Study Basics",{"ID" => irb_number})
+  def self.find_by_irb_number(conditions)
+    default_search("eNOTIS Study Basics",convert_for_eirb(conditions))
   end 
 
-  def self.find_study_research_type(study_id)
-    default_search("eNOTIS Study Research Type",{"ID" => study_id})
+  def self.find_study_research_type(conditions)
+    default_search("eNOTIS Study Research Type",convert_for_eirb(conditions))
   end
 
-  def self.find_by_netid(user_netid=nil)
-    default_search("eNOTIS Person Details",{"NetID" => user_netid})
+  def self.find_by_netid(conditions)
+    default_search("eNOTIS Person Details",convert_for_eirb(conditions))
   end
   
   def self.find_study_access(study_id=nil)
@@ -104,7 +104,7 @@ class EirbServices
       values.each do |val|
         result ={} 
         val.each do |key,value|
-          result[converter[key.to_s].to_sym] = value unless !converter.has_key?key.to_s
+          result[converter[key]] = value unless !converter.has_key?key
         end 
         results << result
       end
