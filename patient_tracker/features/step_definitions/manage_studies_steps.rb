@@ -16,6 +16,16 @@ When /^I search for study "([^\"]*)"$/ do |id|
 end
 
 Given /^a user "([^\"]*)" named "([^\"]*)" "([^\"]*)"$/ do |netid, fn, ln|
-  user = Factory.create(:user, {:netid => netid, :first_name => fn, :last_name => ln})
+  Factory.create(:user, {:netid => netid, :first_name => fn, :last_name => ln})
 end
 
+Then /^"([^\"]*)" should be a link$/ do |text|
+  response.should have_tag("a", :content => text)
+end
+
+Given /^the study "([^\"]*)" has the following subjects$/ do |id, table|
+  study = Study.find_by_irb_number(id)
+  table.hashes.each do |hash|
+    study.subjects << Factory(:fake_subject, hash)
+  end
+end
