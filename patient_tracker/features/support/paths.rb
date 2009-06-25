@@ -16,6 +16,13 @@ module NavigationHelpers
 
     when /the dashboard/
       '/registrations/'
+    
+    when /the study page/
+      "/studies/#{@study.id}"
+
+    when /my study page/
+      "/studies/#{@my_study.id}"
+
       
     # Add more mappings here.
     # Here is a more fancy example:
