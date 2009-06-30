@@ -1,7 +1,10 @@
-#study_full
+- @javascripts = ["jQuery" , "jquery-ui" ,"jrails","application","facebox"]
+- @stylesheets = ["reset", "default", "facebox"]
+
+-#study_full
   %ul.menu
     %li.inactive
-      = link_to("General Info",registration_path(@study.irb_number))
+      -# = link_to("General Info",registration_path(@study.irb_number))
     %li.inactive
       %a
         Study Events
@@ -23,7 +26,7 @@
   - else
 
     .heading
-      The following subjects are currently associated with this study
+      = "The following subjects are currently associated with #{@study ? 'this study' : 'your studies'}"
     %ul 
       - @involvements.each do |i|
         %li=render(:partial => "subject", :object => i.subject)

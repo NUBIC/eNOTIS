@@ -5,8 +5,11 @@ class SubjectsController < ApplicationController
   layout "main"
 
   def index
-    @study = Study.find_by_irb_number(params[:irb_number])
-    @involvements = @study ? @study.involvements : []
+    if params[:irb_number]
+      @study = Study.find_by_irb_number(params[:irb_number])
+    else
+      @involvements = @study ? @study.involvements : current_user.coordinators.map(&:study).flatten.map(&:involvements).flatten
+    end
   end
 
   def show
