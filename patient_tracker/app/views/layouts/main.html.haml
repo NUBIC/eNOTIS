@@ -14,6 +14,10 @@
         %img{:src => '/images/enotis.png', :alt => 'eNOTIS'} 
       .tagline
         Clinical Subject Registration made eASY
+      .current_user
+        = current_user.netid
+        |
+        = link_to('Logout', logout_authentication_path)
       %ul.bridge-nav
         %li.nav= nav_link_to "Dashboard", registrations_path, RegistrationsController
         %li.nav= nav_link_to "All Studies", studies_path, StudiesController

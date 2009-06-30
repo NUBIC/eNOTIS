@@ -55,6 +55,11 @@ body {
       line-height: 1.5em;
       font-size: 1.5em;
       font-style: italic; }
+    body #enotis_header .current_user {
+      float: right;
+      margin-right: 1em;
+      line-height: 1.5em;
+      font-size: 1.5em; }
     body #enotis_header ul.bridge-nav {
       clear: left;
       background-color: #c3c3c3;
