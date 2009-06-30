@@ -15,7 +15,7 @@ module ApplicationHelper
   end
   
   def nav_link_to(text, path='#', controller=nil)
-    link_to_unless_current(text, path, :class => (@controller.class == controller) ? "current" : "")
+    link_to(text, path, :class => (@controller.class == controller) ? "current" : "")
   end
   # def message_for_item(message, item = nil)
   #   if item.is_a?(Array)

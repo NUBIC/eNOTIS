@@ -15,16 +15,19 @@
         = flash_messages(types)
     #enotis_header
       .app_name
-        eNOTIS
+        %img{:src => '/images/enotis.png', :alt => 'eNOTIS'} 
       .tagline
         Clinical Subject Registration made eASY
       %ul.bridge-nav
         %li.nav= nav_link_to "Dashboard", registrations_path, RegistrationsController
-        %li.nav= nav_link_to "All Stuides", studies_path
-        %li.nav= nav_link_to "My Subjects", subjects_path
+        %li.nav= nav_link_to "All Studies", studies_path, StudiesController
+        %li.nav= nav_link_to "My Subjects", subjects_path, SubjectsController
         %li.nav= nav_link_to "My Events"
-        %li.nav= nav_link_to "Search"
-        
+        %li.nav
+          = nav_link_to "Search", search_studies_path
+          -form_tag(search_studies_path, :method => :get) do 
+            =text_field_tag("study_id")
+            =submit_tag("Find study")
     #main
       =yield
     .clear
