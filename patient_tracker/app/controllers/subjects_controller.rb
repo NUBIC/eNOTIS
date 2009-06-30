@@ -2,11 +2,11 @@ class SubjectsController < ApplicationController
   require 'fastercsv'
   include FaceboxRender
   before_filter :user_must_be_logged_in
-  layout "layouts/loggedin"
+  layout "main"
 
   def index
     @study = Study.find_by_irb_number(params[:irb_number])
-    @involvements = @study.involvements
+    @involvements = @study ? @study.involvements : []
   end
 
   def show
@@ -26,7 +26,7 @@ class SubjectsController < ApplicationController
     @study_upload = StudyUpload.create(:study_id => params[:study], :upload => params[:file])
     temp_file = Tempfile.new("results")
     if self.class.csv_sanity_check(@study_upload.upload, temp_file)
-      self.class.queue_import(params[:file])
+      self.class.queue_import(@study_upload.id)
       redirect_to params[:study].blank? ? studies_path : study_path(:id => params[:study])
     else
       @study_upload.result = temp_file
@@ -42,7 +42,7 @@ class SubjectsController < ApplicationController
     end
   end
 
-  def self.queue_import(file)
+  def self.queue_import(id)
     
   end
   
