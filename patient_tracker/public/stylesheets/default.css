@@ -207,15 +207,18 @@ ul.events li.event {
     padding: .2em 1em .1em .8em; }
     #enotis_header ul.bridge-nav li, #enotis_header ul.bridge-nav form {
       display: inline; }
-    #enotis_header ul.bridge-nav li a, #enotis_header ul.bridge-nav li a:hover, #enotis_header ul.bridge-nav li a:visited, #enotis_header ul.bridge-nav li a:active {
-      color: #333333;
-      text-decoration: none;
-      padding: .2em; }
-    #enotis_header ul.bridge-nav li a:hover {
-      color: #520063; }
-    #enotis_header ul.bridge-nav li a.current {
-      background-color: #f0f0f0;
-      color: #520063; }
+    #enotis_header ul.bridge-nav li {
+      list-type: none;
+      display: inline; }
+      #enotis_header ul.bridge-nav li a, #enotis_header ul.bridge-nav li a:hover, #enotis_header ul.bridge-nav li a:visited, #enotis_header ul.bridge-nav li a:active {
+        color: #333333;
+        text-decoration: none;
+        padding: .2em; }
+      #enotis_header ul.bridge-nav li a:hover {
+        color: #520063; }
+      #enotis_header ul.bridge-nav li a.current {
+        background-color: #f0f0f0;
+        color: #520063; }
 
 #study_full ul.menu {
   width: 100%;
