@@ -72,7 +72,7 @@ ul#menu {
   list-style: none;
   width: 100%; }
   ul#menu li {
-    background-color: #520064;
+    background-color: #520063;
     color: #f0f0f0;
     float: left;
     height: 5em; }
@@ -102,7 +102,7 @@ ul#menu {
   padding: 0.5em 2em;
   font-size: 1.3em; }
 
-/* used on the coordinator view page */ */
+/* used on the coordinator view page */
 #events_and_options {
   width: 100%; }
   #events_and_options #recent_events {
@@ -155,7 +155,7 @@ ul#menu {
     #study_list a.study:hover .details:after {
       content: "(click for details)"; }
 
-/* event based display of info on the user home */ */
+/* event based display of info on the user home */
 ul.events li.event {
   display: inline; }
   ul.events li.event a {
@@ -185,17 +185,37 @@ ul.events li.event {
   text-transform: uppercase; }
 
 #enotis_header {
-  font-size: 3em;
-  background-color: #520064;
-  color: #ffffe0;
-  padding: 1.0em;
-  width: 100%;
-  line-height: 1em; }
+  color: #520063;
+  padding: 1.0em 0;
+  width: 100%; }
   #enotis_header .app_name {
-    font-weight: bold; }
+    font-weight: bold;
+    margin-left: 1em;
+    float: left;
+    margin-bottom: 1em; }
   #enotis_header .tagline {
-    font-size: 0.5em;
-    font-style: italic; }
+    font-size: 1.5em;
+    line-height: 1.5em;
+    font-style: italic;
+    margin-left: 1em;
+    float: left; }
+  #enotis_header ul.bridge-nav {
+    clear: left;
+    font-size: 2em;
+    background-color: #c3c3c3;
+    color: white;
+    padding: .2em 1em .1em .8em; }
+    #enotis_header ul.bridge-nav li, #enotis_header ul.bridge-nav form {
+      display: inline; }
+    #enotis_header ul.bridge-nav li a, #enotis_header ul.bridge-nav li a:hover, #enotis_header ul.bridge-nav li a:visited, #enotis_header ul.bridge-nav li a:active {
+      color: #333333;
+      text-decoration: none;
+      padding: .2em; }
+    #enotis_header ul.bridge-nav li a:hover {
+      color: #520063; }
+    #enotis_header ul.bridge-nav li a.current {
+      background-color: #f0f0f0;
+      color: #520063; }
 
 #study_full ul.menu {
   width: 100%;
@@ -226,7 +246,7 @@ ul.events li.event {
       text-align: center; }
     #study_full ul.menu li.inactive a:hover {
       background-color: #ffffe0;
-      color: #520064; }
+      color: #520063; }
 #study_full .header_details {
   -moz-border-radius: 4px 4px;
   background-color: #c3c3c3;
@@ -267,7 +287,7 @@ ul.events li.event {
   #study_full .header_details .suspended {
     background-color: #d3d3d3; }
   #study_full .header_details .terminated {
-    background-color: #ff0000; }
+    background-color: red; }
   #study_full .header_details .review {
     background-color: #d3d3d3; }
 #study_full .file_details {
@@ -313,11 +333,11 @@ ul.events li.event {
     text-decoration: none;
     text-align: center;
     width: 8em;
-    background-color: #520064;
+    background-color: #520063;
     color: #f0f0f0; }
   .add_subjects a:hover {
     background-color: #ffffe0;
-    color: #520064; }
+    color: #520063; }
 
 #subject_list {
   -moz-border-radius: 4px 4px;

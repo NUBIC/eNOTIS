@@ -3,7 +3,7 @@
 !FONT_COLOR=#333
 !FONT_INVERT_COLOR=#f0f0f0
 !BODY_COLOR=#f0f0f0
-!NU_PURPLE=#520064
+!NU_PURPLE=#520063
 !DARK_GRAY=#666666
 !LT_GRAY=#C3C3C3
 !LT_YELLOW=#FFFFE0
@@ -217,20 +217,44 @@ ul.events
   :text-transform uppercase 
 
 #enotis_header
-  :font-size 3em
-  :background-color= !NU_PURPLE
-  :color= !LT_YELLOW
-  :padding 1.0em
+  / :font-size 3em
+  / :background-color #fff
+  :color= !NU_PURPLE
+  :padding 1.0em 0
   :width 100%
-  :line-height 1em
+  / :line-height 1em
 
   .app_name
     :font-weight bold
-
+    :margin-left 1em
+    :float left
+    :margin-bottom 1em
   .tagline
-    :font-size 0.5em
+    :font-size 1.5em
+    :line-height 1.5em
     :font-style italic
-
+    :margin-left 1em
+    :float left
+  ul.bridge-nav
+    :clear left
+    :font-size 2em
+    :background-color= !LT_GRAY
+    :color white
+    :padding .2em 1em .1em .8em
+    li, form
+      :display inline
+    li
+      a, a:hover, a:visited, a:active
+        :color= !FONT_COLOR
+        :text-decoration none
+        :padding .2em
+      a:hover
+        / :background-color= !BODY_COLOR
+        :color= !NU_PURPLE
+      a.current
+        :background-color= !BODY_COLOR
+        :color= !NU_PURPLE
+    
 #study_full
 
   ul.menu
