@@ -30,7 +30,9 @@ class Study < ActiveRecord::Base
     self.update_attributes(attrs.merge({:synced_at => DateTime.now}))
     return self
   end
-
+  def has_coordinator?(user)
+    coordinators.map(&:user).include? user
+  end
   # def authorized_user?(user)
   #   self.users.include?user
   # end

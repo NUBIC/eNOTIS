@@ -5,6 +5,6 @@
     =@involvements.size 
 
   %span.add_subjects
-    -if @study.authorized_user(@current_user)
+    -if @study.has_coordinator?(@current_user)
       = facebox_link_to("Add Subject", :url => new_registration_url,:study_number => {:study_number => @study.id}, :method=>:get)
 

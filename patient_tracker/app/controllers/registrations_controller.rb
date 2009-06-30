@@ -1,5 +1,5 @@
 class RegistrationsController < ApplicationController
-  layout "layouts/loggedin"
+  layout "layouts/main"
   include FaceboxRender
   before_filter :user_must_be_logged_in
 

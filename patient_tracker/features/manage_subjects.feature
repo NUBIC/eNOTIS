@@ -3,22 +3,33 @@ Feature: Manage subjects
   As a coordinator
   I want to find add subjects to a study
   
+  Background:
+    Given I log in as "pi"
+    Given a study "Vitamin E and exertion" with id "1248F" and status "Approved"
+    
   Scenario: A coordinator can add a subject that exists
-    Given I am looking at the right study
-    And I enter the subject_mrn
+    Given a subject with mrn "90210"
+    When I go to the study page for id "1248F"
+    And I enter mrn "90210"
     And I press "Add subject"
     Then I should see a subject details screen
     And I press "Confirm"
     Then I should see the subject in the subject study list
 
   Scenario: A coordinator can add a subject that does not exist
-    Give I am looking at the right study
-    And I have the subject_mrn
-    And I press "Add subject"
-    Then I see a message indicating the subject was not found
-    And I enter the details manually
-    And I press "Submit"
-    Then I should see the subject in the subject study list with a note attached
+    # When I go to the study page for id "1248F"
+    # And I have the subject_mrn
+    # And I press "Add subject"
+    # Then I should see a message indicating the subject was not found
+
+  Scenario: A coordinator can add a subject that does not exist
+    # When I go to the study page for id "1248F"
+    # And I have the subject_mrn
+    # And I press "Add subject"
+    # And I see a message indicating the subject was not found
+    # And I enter the details manually
+    # And I press "Submit"
+    # Then I should see the subject in the subject study list with a note attached
 
   Scenario: A coordinator can add a subject that can be located in the medical record
     Given

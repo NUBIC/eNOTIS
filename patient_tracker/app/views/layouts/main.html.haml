@@ -1,0 +1,38 @@
+!!! XML
+!!!
+%html
+  %head
+    %title= "eNotis :: #{@title}"
+    =stylesheet_link_tag "reset", "default"
+    %style{:type => "text/css"}
+      :sass
+        .bridge-nav li
+          :list-type none
+          :display inline
+  %body
+    - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
+      #flash
+        = flash_messages(types)
+    #enotis_header
+      .app_name
+        eNOTIS
+      .tagline
+        Clinical Subject Registration made eASY
+      %ul.bridge-nav
+        %li.nav= nav_link_to "Dashboard", registrations_path, RegistrationsController
+        %li.nav= nav_link_to "All Stuides", studies_path
+        %li.nav= nav_link_to "My Subjects", subjects_path
+        %li.nav= nav_link_to "My Events"
+        %li.nav= nav_link_to "Search"
+        
+    #main
+      =yield
+    .clear
+      &nbsp;
+    #footer
+      = image_tag("nu_pageheader.jpg")
+      eNOTIS &mdash; Clinical Subject Registration 
+      =app_version_helper
+      Created by&nbsp; 
+      =link_to("NUBIC")
+      &nbsp;for Northwestern University
