@@ -12,7 +12,7 @@ class StudiesController < ApplicationController
   end
 	
   def search
-    if @study = (Study.find_by_irb_number(params[:query]) || Study.find(:first, :conditions => [ "title like ?", "%#{params[:query]}%"]) )
+    if params[:query] and @study = (Study.find_by_irb_number(params[:query]) || Study.find(:first, :conditions => [ "title like ?", "%#{params[:query]}%"]) )
       render(:action => "show")
     else
       flash[:notice] = "No studies found"
