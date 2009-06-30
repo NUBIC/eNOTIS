@@ -1,0 +1,12 @@
+2009-06-30
+
+Have demo ready by Monday 3pm for NUBISC (NU Biomedical Informatics Steering Committee) meeting
+
+Todo
+
+Finish login (Brian), study (Mark), and subject (David) features
+Reggie - involvement events
+
+Future
+
+David - Queue integration - ActiveMQ => RabbitMQ?
