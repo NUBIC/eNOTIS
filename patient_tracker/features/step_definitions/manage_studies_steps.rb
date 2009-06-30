@@ -11,7 +11,7 @@ Given /^I log in as "([^\"]*)"$/ do |name|
 end
 
 When /^I search for study "([^\"]*)"$/ do |id|
-  fill_in "study_id", :with => id
+  fill_in "query", :with => id
   click_button "Find"
 end
 

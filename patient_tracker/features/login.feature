@@ -24,6 +24,6 @@ Feature: User access to system
 
   Scenario: A logged in user can logout
     When I log in as "pi" with password "314159"
-    And I follow "pi"
+    And I follow "Logout"
     Then I should see "logged out"
     And I should be on the login page

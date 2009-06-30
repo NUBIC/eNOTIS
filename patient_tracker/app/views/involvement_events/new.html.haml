@@ -1,0 +1,8 @@
+#new_subject_form
+  - form_remote_tag( :url=> '#' ) do |f|
+    = label_tag 'mrn','Enter MRN'
+    = text_field_tag( :mrn)
+    = check_box_tag :no_mrn, 'No Mrn'
+    No Mrn
+    %br
+    = submit_tag( "Continue" )

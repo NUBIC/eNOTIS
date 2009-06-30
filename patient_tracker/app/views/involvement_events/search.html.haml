@@ -1,0 +1,29 @@
+- if @subject.nil? 
+  - form_remote_tag( :url=> add_subject_registrations_url ) do |f| 
+    = label_tag 'first_name' 
+    = text_field_tag :first_name
+    %br
+    = label_tag 'last_name' 
+    = text_field_tag :last_name
+    %br
+    = label_tag 'd_o_d', "Date of Birth" 
+    = text_field_tag :dob
+    %br
+    = submit_tag("Add Subject") 
+- else
+  - form_remote_tag( :url=> add_subject_registrations_url ) do |f| 
+    = label_tag 'first_name' 
+    = text_field_tag( :first_name, @subject.first_name)
+    %br
+    = label_tag 'last_name' 
+    = text_field_tag( :last_name, @subject.last_name)
+    %br
+    = label_tag 'd_o_d', "Date of Birth" 
+    = text_field_tag( :d_o_d , @subject.birth_date)
+    %br
+    - if @involvements.size > 0 
+      Subject Is Associated with the following studies:
+      %ul
+      - @involvements.each do |involvement| 
+        %li= link_to(involvement.study.name, registration_path(involvement.study.irb_number ))
+    =  submit_tag( "Confirm/Add Subject" ) 

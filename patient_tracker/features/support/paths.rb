@@ -15,7 +15,7 @@ module NavigationHelpers
       authentication_index_path
 
     when /the dashboard/
-      '/registrations/'
+      '/dashboard'
     
     when /the study page for id "([^\"]*)"/
       "/studies/#{Study.find_by_irb_number($1).id}"

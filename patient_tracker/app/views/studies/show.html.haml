@@ -1,2 +1,13 @@
-=render(:partial => "study", :object => @study)
+- @javascripts = ["jQuery" , "jquery-ui" ,"jrails","application","facebox"]
+- @stylesheets = ["reset", "default", "facebox"]
+
+#subject_list
+  %strong
+    = (@study.involvements || []).size
+    subjects currently associated with this study
+  %span.add_subjects
+    -if @study.has_coordinator?(@current_user)
+      = facebox_link_to("Add Subject", :url => new_involvement_event_path, :study_number => {:study_number => @study.id}, :method => :get)
+
+= render(:partial => @study)
 
