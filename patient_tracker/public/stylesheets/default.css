@@ -203,7 +203,7 @@ ul.events li.event {
     clear: left;
     font-size: 2em;
     background-color: #c3c3c3;
-    color: white;
+    color: #333333;
     padding: .2em 1em .1em .8em; }
     #enotis_header ul.bridge-nav li, #enotis_header ul.bridge-nav form {
       display: inline; }

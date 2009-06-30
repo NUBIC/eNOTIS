@@ -22,9 +22,8 @@
 #subject_list
   - if @involvements.nil?
     .heading
-      You are NOT authorized to see subjects on this study
+      You are not authorized to see subjects on this study
   - else
-
     .heading
       = "The following subjects are currently associated with #{@study ? 'this study' : 'your studies'}"
     %ul 
