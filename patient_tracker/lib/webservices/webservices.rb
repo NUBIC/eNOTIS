@@ -12,7 +12,7 @@ module WebServices
       class << self
         alias_method :old_find, :find
         def find(*args)
-           #return args
+           
            options = args.clone.extract_options!
            return old_find(*args) unless options[:span]
            options2 = options.clone
@@ -93,12 +93,12 @@ module WebServices
           conditions = convert_conditions_to_hash(options[:conditions])
           keys = conditions.keys
             get_plugins.each do |plugin|
-	      meth = plugin.public_methods.detect{|method_name| keys.map{|x| method_name.include?(x.to_s)}.uniq == [true]}
+	      meth = plugin.public_methods.detect{|method_name| keys.map{|x| method_name.include?(x.to_s.strip)}.uniq == [true]}
               if meth
                 return plugin.send(meth,conditions)
               end
             end
-         raise "no method found"
+         raise "No Mehod Found"
          return nil     
         end
 
@@ -108,11 +108,11 @@ module WebServices
               return conditions
 	    elsif conditions.instance_of?(String)
               conditions.split("and").each do |condition|
-	        result[condition.strip.split("=")[0].to_sym] = condition.strip.split("=")[1].gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
+	        result[condition.strip.split("=")[0].strip.to_sym] = condition.strip.split("=")[1].gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
 	      end
             elsif conditions.instance_of?(Array)
               conditions.first.split("and").each do |condition|
-	        result[condition.strip.split("=")[0].to_sym] = condition.strip.split("=")[1].gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
+	        result[condition.strip.split("=")[0].strip.to_sym] = condition.strip.split("=")[1].gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
 	      end
             end
             return result

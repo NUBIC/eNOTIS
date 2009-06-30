@@ -27,7 +27,7 @@ describe EirbServices do
                       :parameters => {"ID" => "STU000123"}})
         @search.should_receive(:perform_search).with(p)
         @service.stub!(:eirb_adapter).and_return(@search)
-        @service.find_status("STU000123")
+        @service.find_status({:irb_number=>"STU000123"})
       end
 
       it "can find the details of a study by id" do
@@ -35,7 +35,7 @@ describe EirbServices do
                       :parameters => {"ID" => "STU000123"}})
         @search.should_receive(:perform_search).with(p)
         @service.stub!(:eirb_adapter).and_return(@search)
-        @service.find_by_irb_number("STU000123")
+        @service.find_by_irb_number({:irb_number=>"STU000123"})
       end
 
       it "can find the study type for a study" do
@@ -43,7 +43,7 @@ describe EirbServices do
                       :parameters => {"ID" => "STU000123"}})
         @search.should_receive(:perform_search).with(p)
         @service.stub!(:eirb_adapter).and_return(@search)
-        @service.find_study_research_type("STU000123")
+        @service.find_study_research_type({:irb_number=>"STU000123"})
       end  
 
       it "can find the access list for a study" do
@@ -73,7 +73,7 @@ describe EirbServices do
                       :parameters => {"NetID" => "abc123"}}
         @search.should_receive(:perform_search).with(hash_including(p))
         @service.stub!(:eirb_adapter).and_return(@search)
-        @service.find_by_netid("abc123")
+        @service.find_by_netid({:NetID=>"abc123"})
       end
 
       it "finds the details for all the users in eIRB" do
