@@ -1,7 +1,8 @@
 %h1
   Studies
 -@studies.each do |study|
-  =render(:partial => "study", :object => study)
+  -# =render(:partial => "study", :locals => {:study => study})
+  = link_to study.name, study_path(study)
   %br
 
 

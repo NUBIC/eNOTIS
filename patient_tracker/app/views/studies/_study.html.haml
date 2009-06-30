@@ -54,7 +54,7 @@
           Description:
         = study.description || "Missing"
         
-  - if @study.has_coordinator? current_user
+  - if study.has_coordinator? current_user
     .subject_details
       %strong
         Subjects

@@ -1,9 +1,11 @@
 class StudiesController < ApplicationController
   before_filter :user_must_be_logged_in
-  layout "layouts/loggedin"
+  layout "main"
 
   def index
-	  #@studies = Study.find_by_coordinator(params[:net_id])
+    @studies = Study.all || []
+    # @studies = Study.find_by_coordinator(params[:net_id])
+    # @studies = current_user ? current_user.studies : []
   end
 	
   def show
