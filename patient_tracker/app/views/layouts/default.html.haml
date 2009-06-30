@@ -3,29 +3,32 @@
 %html
   %head
     %title eNotis
-    =stylesheet_link_tag "reset", "default", "facebox"
-    =javascript_include_tag "jQuery" , "jquery-ui" ,"jrails","application","facebox"  
-    
+    =stylesheet_link_tag @stylesheets || ["reset", "default"]
+    =javascript_include_tag @javascripts || []
   %body
-    - if flash[:notice] 
+    - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
       #flash
-        %span#message
-          Message:
-          = flash[:notice]
+        = flash_messages(types)
+
     #enotis_header
-      .app_name
-        eNOTIS
+      %h1.app_name
+        %img{:src => '/images/enotis.png', :alt => 'eNOTIS'} 
       .tagline
         Clinical Subject Registration made eASY
-  
+
+    %br.clear
+
     #main
       =yield
-    .clear
-      &nbsp;
+
+    %br.clear
+
     #footer
       = image_tag("nu_pageheader.jpg")
+      %br
       eNOTIS &mdash; Clinical Subject Registration 
       =app_version_helper
       Created by&nbsp; 
       =link_to("NUBIC")
       &nbsp;for Northwestern University
+
