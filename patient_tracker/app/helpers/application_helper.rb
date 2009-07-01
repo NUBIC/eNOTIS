@@ -18,7 +18,7 @@ module ApplicationHelper
     link_to(text, path, :class => (@controller.class == controller) ? "current" : "")
   end
   def study_tab_to(text, path='#')
-    link_to(text, path)
+    link_to(text, path, {:class => path != "#" ? "current" : ""})
   end
   # def message_for_item(message, item = nil)
   #   if item.is_a?(Array)

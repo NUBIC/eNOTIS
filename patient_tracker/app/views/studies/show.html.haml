@@ -3,20 +3,26 @@
 
 #study
   .vitals
-    %h2= @study.irb_number
-    = @study.status
+    %p.irb_number= @study.irb_number
+    %p.status= @study.status
   .description
     %p= "Title: #{@study.title}"
     %p= "Phase: #{@study.phase}"
+  %br.clear
+  - if @study.has_coordinator?(current_user)
+    %ul.study_tabs
+      %li.nav= study_tab_to "Overview", study_path(@study)
+      %li.nav= study_tab_to "Study Subjects"
+      %li.nav= study_tab_to "Documents"
+      %li.nav= study_tab_to "Events"
+      %li.nav= study_tab_to "Subject Imports"
 
-- if @study.has_coordinator?(current_user)
-  %ul.study_tabs
-    %li.nav= study_tab_to "Overview", study_path(@study)
-    %li.nav= study_tab_to "Study Subjects"
-    %li.nav= study_tab_to "Documents"
-    %li.nav= study_tab_to "Events"
-    %li.nav= study_tab_to "Subject Imports"
-
+  #overview
+    #staff_list
+      %h4 Staff list
+      - @study.coordinators.each do |c|        
+        = "#{c.first_name} #{c.last_name}"
+  
   #subjects
     %h4 Subjects
     %strong
@@ -30,26 +36,22 @@
         %li
           = "#{subject.first_name} #{subject.last_name}"
           
-  #staff_list
-    %h4 Staff list
-    - @study.coordinators.each do |c|        
-      = "#{c.first_name} #{c.last_name}"
-
-  %ul#documents
+  #documents
     %h4 Documents
-    %li
-      "Download"
-      = link_to "Rapid Consent", "#"
-    -# @study.documents.each do |d|
+    %ul
       %li
         "Download"
-        = link_to d.title, d.url
-        
-  %ul#imports
+        = link_to "Rapid Consent", "#"
+      -# @study.documents.each do |d|
+        %li
+          "Download"
+          = link_to d.title, d.url      
+  #imports
     %h4 Imports
-    - @study.study_uploads.each do |u|
-      %li
-        = "by #{u.user.netid}"
+    %ul
+      - @study.study_uploads.each do |u|
+        %li
+          = "by #{u.user.netid}"
         
   -#study_full
     %ul.menu
