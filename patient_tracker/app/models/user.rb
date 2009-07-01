@@ -44,6 +44,9 @@ class User < ActiveRecord::Base
     write_attribute :email, (value ? value.downcase : nil)
   end
   
+  def admin?
+    %w(blc615 daw286 myo628).include? self.netid
+  end
   #   # Rough validation method
   #   def self.find_and_validate(netid,password)
   #     u = User.find_by_netid(netid)

@@ -34,7 +34,7 @@ class Study < ActiveRecord::Base
     return self
   end
   def has_coordinator?(user)
-    coordinators.map(&:user).include? user
+    user.admin? or coordinators.map(&:user).include? user
   end
   def documents
     []
