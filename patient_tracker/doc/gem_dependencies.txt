@@ -5,6 +5,7 @@ sudo gem uninstall --all --ignore-dependencies --executables \
 builder \
 chriseppstein-compass \
 columnize \
+chronic \
 cucumber \
 diff-lcs \
 faker \
