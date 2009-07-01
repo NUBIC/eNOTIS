@@ -44,5 +44,5 @@ NOTIS_TO_EIRB = {
   :irb_number   => "ID",
   :description  => "Description",
   :status       => "Project Status.ID",
-  :NetID        => "NetID" 
+  :netid        => "NetID" 
 }

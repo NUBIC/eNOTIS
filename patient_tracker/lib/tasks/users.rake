@@ -25,13 +25,13 @@ namespace :users do
     access = EirbServices.find_study_access
     access.each do |role|
       puts "Processing role #{role.inspect}"
-      if study = Study.find(:first, :conditions => ["irb_number =?",role[:irb_number]],:span => :global)
+      if study = Study.find(:first, :conditions => "irb_number ='#{role[:irb_number]}'",:span => :global)
         puts "Found study #{role[:irb_number]}"        
         study.save
-        if user = User.find_by_netid(role[:netid])
-          user.update_attributes(EirbServices.find_by_netid(user.netid))
-        else
-          user = User.create(EirbServices.find_by_netid(role[:netid]))
+        unless user = User.find_by_netid(role[:netid])
+          user_hash = EirbServices.find_by_netid({:netid => role[:netid]}).first
+          puts user_hash.inspect
+          user = User.create(user_hash)
         end
         if user
           study.coordinators.create(:user_id => user.id)
@@ -43,6 +43,14 @@ namespace :users do
         puts "Did NOT find study #{role[:irb_number]}"
       end
     end
+  end
+
+  desc "finds just one user"
+  task :test => :environment do
+    user_hash = EirbServices.find_by_netid({:netid => "KAY668"}).first
+    puts user_hash[:email].methods.sort
+    puts user_hash[:email].to_s
+    puts user_hash.inspect
   end
 
 end
