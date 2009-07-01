@@ -1,17 +1,21 @@
-%h2 You are not logged in
-%h3 Please choose an identity and login 
 .loginbox
   -form_tag(login_authentication_path, :method => 'post') do
-    %label{:for => 'netid'}
-      Please enter your netid:
-      %br
-    =text_field_tag('netid')
-    %label{:for => 'password'}
-      Please enter your password:
-      %br
-    =text_field_tag('password')
-    
-    =submit_tag('login')
-
+    %label{:for => 'netid'} NetID
+    = text_field_tag('netid')
+    %label{:for => 'password'} Password
+    = password_field_tag('password')
+    = submit_tag('login')
+    %p= link_to "I cannot access my account", "#"
+.enotis_description
+  eNOTIS is a subject registration system for all IRB approved clinical research at Northwestern University
+.system_status
+  .heading System status
+  Everything is ok
+.training
+  .heading Get acquainted with eNOTIS
+  .video Learn basic concepts and log in
+  .video Add a subject
+  .video Import subjects
+  .video Add subject events
 
 

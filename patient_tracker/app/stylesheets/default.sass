@@ -17,6 +17,8 @@ body
   :background-color= !BODY_COLOR
   :font-family Verdana, Arial, sans-serif
   :font-size 62.5% /*this is so we can have nice em's to pix conversion 1.0em ~= 10px, 1.1em ~= 11px, etc...*/
+  / :font-size 100%
+  / :line-height 1.125em
   :color #333
   :line-height 1.8em
 
@@ -53,12 +55,17 @@ body
 
   // layout divs
   #flash
-    :width 100%
+    :position absolute
+    :top 0
+    :left 25%
+    :width 50%
+    :margin 0 auto
     :padding 0.5em
     :background-color= !ALERT_COLOR
-    :border 0.2em solid #333
-    :border-color= !ALERT_COLOR - !BORDER_CHANGE
-    :font-size 2em
+    :-moz-border-radius 0 0 3px 3px
+    / :border 0.2em solid #333
+    / :border-color= !ALERT_COLOR - !BORDER_CHANGE
+    :font-size 1.5em
     :color= !FONT_INVERT_COLOR
 
   #enotis_header
@@ -73,19 +80,19 @@ body
     .tagline
       :float left
       :margin-left 1em
-      :line-height 1.5em
+      / :line-height 1.5em
       :font-size 1.5em
       :font-style italic
     .current_user
       :float right
       :margin-right 1em
-      :line-height 1.5em
+      / :line-height 1.5em
       :font-size 1.5em
     ul.bridge-nav
       :clear left
       :background-color= !LT_GRAY
       :color= !FONT_COLOR
-      :line-height 1.6em
+      / :line-height 1.6em
       :font-size 1.6em
       :padding 0 1em
       li, form
@@ -107,8 +114,9 @@ body
   #main
     :padding 0.5em 2em
     :font-size 1.3em
+    :min-width 85em
     .heading
-      :line-height 1em
+      / :line-height 1em
       :font-weight bold
       :font-size 1.5em
       :border-bottom 1px solid #333
@@ -116,14 +124,58 @@ body
       :padding-bottom 0.3em
     // login
     .loginbox
-      :border 2px solid #333
+      :float right
+      :width 13.3em
+      :margin-right 2em
+      :border 1px solid #333
       :border-color= !DARK_GRAY
       :background-color= !LT_YELLOW
-      :padding 0.5em 1em
+      :-moz-border-radius 4px
+      :padding 1em
       :font-size 1.5em
-      :margin 1em
-      :width 13em
       :line-height 1.8em
+      label
+        :display inline-block
+        :width 5em
+        :margin-top 1em
+      input
+        :margin-top 1em
+      input[type='text'], input[type='password'] 
+        :width 13em
+      input[type='submit']
+        :margin-left 16em
+      p
+        :margin-top 1em
+        :text-align center
+        :font-size .7em      
+    .enotis_description
+      :font-size 1.5em
+      :line-height 1.5em
+      :width 30em
+    .system_status
+      :width 20em
+      :margin-top 1.5em
+      :-moz-border-radius 4px
+      :padding 1em
+      :background-color #D9FFCC
+      .heading
+        :border-bottom 0
+    .training
+      / :clear both
+      :margin-top 1.5em
+      .heading
+        :border-bottom 0
+      .video
+        :float left
+        :width 70px
+        :height 60px
+        :margin 1em
+        :background-image url('/images/video.jpg')
+        :background-repeat no-repeat
+        :background-position center
+        :padding 25px
+        :text-align center
+        :color = !DARK_GRAY
     // dashboard
     #events_and_options
       :width 100%
@@ -141,7 +193,7 @@ body
               :padding-left 0.5em
               :display block
               :height 2em
-              :line-height 2em
+              / :line-height 2em
               :text-decoration none
               :border 1px solid
               :border-color= !LT_GRAY
@@ -213,11 +265,11 @@ body
         .study_id
           :font-weight bold
           :font-size 1.5em
-          :line-height 1em
+          / :line-height 1em
         .name
           :font-weight bold
           :font-size 1.5em
-          :line-height 1em
+          / :line-height 1em
         .description
           :font-weight italic
         .details
@@ -277,7 +329,7 @@ body
           :margin-bottom 0.5em
         .secondary_data
           :font-size 1.3em
-          :line-height 1.5em
+          / :line-height 1.5em
           :margin-left 11.5em
           :font-weight bold
           em
@@ -291,7 +343,7 @@ body
           :padding 0.5em
           :border 1px solid #333
           :width 5.35em
-          :line-height 1em
+          / :line-height 1em
         .study_id
           :text-align center
           :width 100%
