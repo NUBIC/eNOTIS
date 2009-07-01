@@ -318,32 +318,33 @@ body {
       /* line 296, ../../../app/stylesheets/default.sass */
       body #main #study ul.study_tabs li {
         list-type: none;
-        display: inline; }
-        /* line 299, ../../../app/stylesheets/default.sass */
+        display: inline;
+        border-width: 2px 2px 0 2px;
+        border-style: solid;
+        border-color: #dadada;
+        background-color: #dadada; }
+        /* line 303, ../../../app/stylesheets/default.sass */
         body #main #study ul.study_tabs li a, body #main #study ul.study_tabs li a:hover, body #main #study ul.study_tabs li a:visited, body #main #study ul.study_tabs li a:active {
           color: #333333;
           text-decoration: none;
-          padding: .2em 1em .1em 1em; }
-        /* line 303, ../../../app/stylesheets/default.sass */
+          padding: 0 1em .1em 1em; }
+        /* line 307, ../../../app/stylesheets/default.sass */
         body #main #study ul.study_tabs li a:hover {
           color: #520063; }
-        /* line 305, ../../../app/stylesheets/default.sass */
+        /* line 309, ../../../app/stylesheets/default.sass */
         body #main #study ul.study_tabs li a.current {
-          background-color: #dadada;
+          background-color: #f0f0f0;
           color: #520063; }
-    /* line 308, ../../../app/stylesheets/default.sass */
+    /* line 312, ../../../app/stylesheets/default.sass */
     body #main #study #overview, body #main #study #subjects, body #main #study #documents, body #main #study #imports {
-      border-left: 2px solid;
-      border-right: 2px solid;
-      border-color: #dadada;
       padding: .5em; }
-    /* line 313, ../../../app/stylesheets/default.sass */
+    /* line 314, ../../../app/stylesheets/default.sass */
     body #main #study .header_details {
       -moz-border-radius: 4px 4px;
       background-color: #dadada;
       padding: 1em;
       margin-bottom: 1em; }
-      /* line 318, ../../../app/stylesheets/default.sass */
+      /* line 319, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .primary_data {
         font-weight: bold;
         font-size: 2em;
@@ -352,44 +353,44 @@ body {
         border: 1px solid #333;
         background-color: #f0f0f0;
         margin-bottom: 0.5em; }
-      /* line 326, ../../../app/stylesheets/default.sass */
+      /* line 327, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .secondary_data {
         font-size: 1.3em;
         margin-left: 11.5em;
         font-weight: bold; }
-        /* line 331, ../../../app/stylesheets/default.sass */
+        /* line 332, ../../../app/stylesheets/default.sass */
         body #main #study .header_details .secondary_data em {
           font-weight: normal; }
-      /* line 333, ../../../app/stylesheets/default.sass */
+      /* line 334, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .tertiary_data {
         border-top: 1px solid #333;
         clear: both;
         padding: 0.5em;
         font-size: 1.2em; }
-      /* line 338, ../../../app/stylesheets/default.sass */
+      /* line 339, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .status_icon {
         padding: 0.5em;
         border: 1px solid #333;
         width: 5.35em; }
-      /* line 343, ../../../app/stylesheets/default.sass */
+      /* line 344, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .study_id {
         text-align: center;
         width: 100%;
         padding: 0.5em 0em; }
-      /* line 347, ../../../app/stylesheets/default.sass */
+      /* line 348, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .approved {
         background-color: #3c7c3b;
         color: #f3f3f3; }
-      /* line 350, ../../../app/stylesheets/default.sass */
+      /* line 351, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .suspended {
         background-color: #d3d3d3; }
-      /* line 352, ../../../app/stylesheets/default.sass */
+      /* line 353, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .terminated {
         background-color: red; }
-      /* line 354, ../../../app/stylesheets/default.sass */
+      /* line 355, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .review {
         background-color: #d3d3d3; }
-    /* line 356, ../../../app/stylesheets/default.sass */
+    /* line 357, ../../../app/stylesheets/default.sass */
     body #main #study .file_details {
       -moz-border-radius: 4px 4px;
       background-color: #dadada;
@@ -397,36 +398,36 @@ body {
       margin-bottom: 1em;
       float: left;
       width: 45%; }
-      /* line 363, ../../../app/stylesheets/default.sass */
+      /* line 364, ../../../app/stylesheets/default.sass */
       body #main #study .file_details .study_file {
         padding: 0.5em;
         border-top: 1px solid #f0f0f0;
         border-bottom: 1px solid #f0f0f0;
         margin-bottom: -1px; }
-        /* line 368, ../../../app/stylesheets/default.sass */
+        /* line 369, ../../../app/stylesheets/default.sass */
         body #main #study .file_details .study_file img {
           position: relative;
           top: 3px; }
-        /* line 371, ../../../app/stylesheets/default.sass */
+        /* line 372, ../../../app/stylesheets/default.sass */
         body #main #study .file_details .study_file em {
           padding-bottom: 0.4em; }
-    /* line 373, ../../../app/stylesheets/default.sass */
+    /* line 374, ../../../app/stylesheets/default.sass */
     body #main #study .status_history {
       -moz-border-radius: 4px 4px;
       background-color: #dadada;
       padding: 0.5em;
       margin-bottom: 1em;
       margin-left: 50%; }
-      /* line 379, ../../../app/stylesheets/default.sass */
+      /* line 380, ../../../app/stylesheets/default.sass */
       body #main #study .status_history li {
         padding: 0.5em; }
-    /* line 381, ../../../app/stylesheets/default.sass */
+    /* line 382, ../../../app/stylesheets/default.sass */
     body #main #study .accural_status {
       -moz-border-radius: 4px 4px;
       background-color: #dadada;
       padding: 0.5em;
       margin-bottom: 1em; }
-  /* line 387, ../../../app/stylesheets/default.sass */
+  /* line 388, ../../../app/stylesheets/default.sass */
   body #footer {
     background-color: #fff;
     padding: 1em;

@@ -296,19 +296,20 @@ body
         li
           :list-type none
           :display inline
+          :border-width 2px 2px 0 2px
+          :border-style solid
+          :border-color= !LT_GRAY
+          :background-color= !LT_GRAY
           a, a:hover, a:visited, a:active
             :color= !FONT_COLOR
             :text-decoration none
-            :padding .2em 1em .1em 1em
+            :padding 0 1em .1em 1em
           a:hover
             :color= !NU_PURPLE
           a.current
-            :background-color= !LT_GRAY
+            :background-color= !BODY_COLOR
             :color= !NU_PURPLE
       #overview, #subjects, #documents, #imports
-        :border-left 2px solid
-        :border-right 2px solid
-        :border-color = !LT_GRAY
         :padding .5em
       .header_details
         :-moz-border-radius 4px 4px
