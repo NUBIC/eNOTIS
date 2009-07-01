@@ -26,19 +26,15 @@
           -form_tag(search_studies_path, :method => :get) do 
             =text_field_tag("query")
             =submit_tag("Find study")
-
-    %br.clear
+      %br.clear
 
     - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
       #flash
         = flash_messages(types)
-    
-    %br.clear
-    
+          
     #main
       =yield
-
-    %br.clear
+      %br.clear
 
     #footer
       = image_tag("nu_pageheader.jpg")

@@ -1,23 +1,24 @@
-#events_and_options
-  #recent_events
-    .heading
-      Recent events:
-    %ul.events
-      %li.event= link_to("John Smith - AE on study STU0001924")
-      %li.event= link_to("Sally Sue - Registered on study STU0001924")
-      %li.event= link_to("Approval of study STU00020135")
-
-  #user_options
-    .heading
-      eNotis options:
-    %ul
-      %li= link_to("view your profile")
-      %li= link_to("view your audit history")
-      %li= link_to("verify your email address")
-      %li= link_to("edit user settings")
 
 #study_list
-  .heading You have access to the following Studies:
+  .heading My studies
   %ul 
     - @accessable_studies.each do |study|
       %li= render(:partial => 'study', :locals => {:study => study})
+
+#recent_events
+  .heading
+    Recent events
+  %ul
+    %li= link_to("STU0001924<br/>John Smith AE")
+    %li= link_to("STU0001924<br/>Sally Sue Registered")
+    %li= link_to("STU00020135<br/>Study approved")
+  = link_to "5 more events", "#"
+
+-#user_options
+  .heading
+    eNotis options:
+  %ul
+    %li= link_to("view your profile")
+    %li= link_to("view your audit history")
+    %li= link_to("verify your email address")
+    %li= link_to("edit user settings")

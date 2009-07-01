@@ -5,47 +5,50 @@ body {
   font-size: 62.5% /*this is so we can have nice em's to pix conversion 1.0em ~= 10px, 1.1em ~= 11px, etc...*/;
   color: #333;
   line-height: 1.8em; }
-  /* line 26, ../../../app/stylesheets/default.sass */
+  /* line 24, ../../../app/stylesheets/default.sass */
   body h1 {
     font-size: 2.5em;
     margin: 1em; }
-  /* line 29, ../../../app/stylesheets/default.sass */
+  /* line 27, ../../../app/stylesheets/default.sass */
   body h2 {
     font-size: 2em;
     margin: 1em; }
-  /* line 32, ../../../app/stylesheets/default.sass */
+  /* line 30, ../../../app/stylesheets/default.sass */
   body h3 {
     font-size: 1.8em;
     margin: 1em; }
-  /* line 35, ../../../app/stylesheets/default.sass */
+  /* line 33, ../../../app/stylesheets/default.sass */
   body strong {
     font-weight: bold; }
-  /* line 37, ../../../app/stylesheets/default.sass */
+  /* line 35, ../../../app/stylesheets/default.sass */
   body small {
     font-weight: normal;
     font-size: 0.75em; }
-  /* line 40, ../../../app/stylesheets/default.sass */
+  /* line 38, ../../../app/stylesheets/default.sass */
   body .gray {
-    color: #c3c3c3; }
-  /* line 42, ../../../app/stylesheets/default.sass */
+    color: #dadada; }
+  /* line 40, ../../../app/stylesheets/default.sass */
   body a {
     color: #333333; }
-  /* line 44, ../../../app/stylesheets/default.sass */
+  /* line 42, ../../../app/stylesheets/default.sass */
   body a:hover {
     color: #33f; }
-  /* line 46, ../../../app/stylesheets/default.sass */
+  /* line 44, ../../../app/stylesheets/default.sass */
   body a:hover:visited {
     color: #33f; }
-  /* line 48, ../../../app/stylesheets/default.sass */
+  /* line 46, ../../../app/stylesheets/default.sass */
   body a:visited {
     color: #333333; }
-  /* line 50, ../../../app/stylesheets/default.sass */
+  /* line 48, ../../../app/stylesheets/default.sass */
   body .clear {
     clear: both; }
-  /* line 52, ../../../app/stylesheets/default.sass */
+  /* line 50, ../../../app/stylesheets/default.sass */
   body div.clear {
     width: 1px; }
-  /* line 57, ../../../app/stylesheets/default.sass */
+  /* line 55, ../../../app/stylesheets/default.sass */
+  body #enotis_header, body #main, body #flash {
+    clear: both; }
+  /* line 58, ../../../app/stylesheets/default.sass */
   body #flash {
     position: absolute;
     top: 0;
@@ -57,67 +60,69 @@ body {
     -moz-border-radius: 0 0 3px 3px;
     font-size: 1.5em;
     color: #f0f0f0; }
-  /* line 71, ../../../app/stylesheets/default.sass */
+  /* line 72, ../../../app/stylesheets/default.sass */
   body #enotis_header {
     width: 100%;
+    min-width: 111.5em;
     padding: 1.0em 0;
     color: #520063; }
-    /* line 75, ../../../app/stylesheets/default.sass */
+    /* line 77, ../../../app/stylesheets/default.sass */
     body #enotis_header h1.app_name {
       float: left;
       margin: 0 0 .5em .5em;
       font-size: 2 em;
       font-weight: bold; }
-    /* line 80, ../../../app/stylesheets/default.sass */
+    /* line 82, ../../../app/stylesheets/default.sass */
     body #enotis_header .tagline {
       float: left;
       margin-left: 1em;
       font-size: 1.5em;
       font-style: italic; }
-    /* line 86, ../../../app/stylesheets/default.sass */
+    /* line 88, ../../../app/stylesheets/default.sass */
     body #enotis_header .current_user {
       float: right;
       margin-right: 1em;
       font-size: 1.5em; }
-    /* line 91, ../../../app/stylesheets/default.sass */
+    /* line 93, ../../../app/stylesheets/default.sass */
     body #enotis_header ul.bridge-nav {
       clear: left;
-      background-color: #c3c3c3;
+      background-color: #dadada;
       color: #333333;
+      line-height: 1.6em;
       font-size: 1.6em;
-      padding: 0 1em; }
-      /* line 98, ../../../app/stylesheets/default.sass */
+      padding: 0 1em 0 14em; }
+      /* line 100, ../../../app/stylesheets/default.sass */
       body #enotis_header ul.bridge-nav li, body #enotis_header ul.bridge-nav form {
         display: inline; }
-      /* line 100, ../../../app/stylesheets/default.sass */
+      /* line 102, ../../../app/stylesheets/default.sass */
       body #enotis_header ul.bridge-nav li {
         list-type: none;
         display: inline; }
-        /* line 103, ../../../app/stylesheets/default.sass */
+        /* line 105, ../../../app/stylesheets/default.sass */
         body #enotis_header ul.bridge-nav li a, body #enotis_header ul.bridge-nav li a:hover, body #enotis_header ul.bridge-nav li a:visited, body #enotis_header ul.bridge-nav li a:active {
           color: #333333;
           text-decoration: none;
-          padding: .2em; }
-        /* line 107, ../../../app/stylesheets/default.sass */
+          padding: .2em 1em; }
+        /* line 109, ../../../app/stylesheets/default.sass */
         body #enotis_header ul.bridge-nav li a:hover {
           color: #520063; }
-        /* line 110, ../../../app/stylesheets/default.sass */
+        /* line 112, ../../../app/stylesheets/default.sass */
         body #enotis_header ul.bridge-nav li a.current {
           background-color: #f0f0f0;
           color: #520063; }
-  /* line 114, ../../../app/stylesheets/default.sass */
+  /* line 116, ../../../app/stylesheets/default.sass */
   body #main {
     padding: 0.5em 2em;
     font-size: 1.3em;
-    min-width: 85em; }
-    /* line 118, ../../../app/stylesheets/default.sass */
+    min-width: 84em; }
+    /* line 120, ../../../app/stylesheets/default.sass */
     body #main .heading {
       font-weight: bold;
       font-size: 1.5em;
       border-bottom: 1px solid #333;
       border-color: #666666;
       padding-bottom: 0.3em; }
-    /* line 126, ../../../app/stylesheets/default.sass */
+    /* line 128, ../../../app/stylesheets/default.sass */
     body #main .loginbox {
       float: right;
       width: 13.3em;
@@ -129,47 +134,47 @@ body {
       padding: 1em;
       font-size: 1.5em;
       line-height: 1.8em; }
-      /* line 137, ../../../app/stylesheets/default.sass */
+      /* line 139, ../../../app/stylesheets/default.sass */
       body #main .loginbox label {
         display: inline-block;
         width: 5em;
         margin-top: 1em; }
-      /* line 141, ../../../app/stylesheets/default.sass */
+      /* line 143, ../../../app/stylesheets/default.sass */
       body #main .loginbox input {
         margin-top: 1em; }
-      /* line 143, ../../../app/stylesheets/default.sass */
+      /* line 145, ../../../app/stylesheets/default.sass */
       body #main .loginbox input[type='text'], body #main .loginbox input[type='password'] {
         width: 13em; }
-      /* line 145, ../../../app/stylesheets/default.sass */
+      /* line 147, ../../../app/stylesheets/default.sass */
       body #main .loginbox input[type='submit'] {
         margin-left: 16em; }
-      /* line 147, ../../../app/stylesheets/default.sass */
+      /* line 149, ../../../app/stylesheets/default.sass */
       body #main .loginbox p {
         margin-top: 1em;
         text-align: center;
         font-size: .7em; }
-    /* line 151, ../../../app/stylesheets/default.sass */
+    /* line 153, ../../../app/stylesheets/default.sass */
     body #main .enotis_description {
       font-size: 1.5em;
       line-height: 1.5em;
       width: 30em; }
-    /* line 155, ../../../app/stylesheets/default.sass */
+    /* line 157, ../../../app/stylesheets/default.sass */
     body #main .system_status {
       width: 20em;
       margin-top: 1.5em;
       -moz-border-radius: 4px;
       padding: 1em;
       background-color: #D9FFCC; }
-      /* line 161, ../../../app/stylesheets/default.sass */
+      /* line 163, ../../../app/stylesheets/default.sass */
       body #main .system_status .heading {
         border-bottom: 0; }
-    /* line 163, ../../../app/stylesheets/default.sass */
+    /* line 165, ../../../app/stylesheets/default.sass */
     body #main .training {
       margin-top: 1.5em; }
-      /* line 166, ../../../app/stylesheets/default.sass */
+      /* line 167, ../../../app/stylesheets/default.sass */
       body #main .training .heading {
         border-bottom: 0; }
-      /* line 168, ../../../app/stylesheets/default.sass */
+      /* line 170, ../../../app/stylesheets/default.sass */
       body #main .training .video {
         float: left;
         width: 70px;
@@ -181,68 +186,104 @@ body {
         padding: 25px;
         text-align: center;
         color: #666666; }
-    /* line 180, ../../../app/stylesheets/default.sass */
-    body #main #events_and_options {
-      width: 100%; }
-      /* line 182, ../../../app/stylesheets/default.sass */
-      body #main #events_and_options #recent_events {
-        background-color: #c3c3c3;
-        -moz-border-radius: 4px 4px;
-        width: 55%;
-        padding: 1.5em;
-        height: 10em;
-        float: left; }
-        /* line 190, ../../../app/stylesheets/default.sass */
-        body #main #events_and_options #recent_events ul.events li.event {
-          display: inline; }
-          /* line 192, ../../../app/stylesheets/default.sass */
-          body #main #events_and_options #recent_events ul.events li.event a {
-            padding-left: 0.5em;
-            display: block;
-            height: 2em;
-            text-decoration: none;
-            border: 1px solid;
-            border-color: #c3c3c3;
-            border-bottom-color: #666666; }
-          /* line 201, ../../../app/stylesheets/default.sass */
-          body #main #events_and_options #recent_events ul.events li.event a:hover {
-            background-color: #ffffe0;
-            border-left-color: #666666;
-            border-right-color: #666666; }
-          /* line 205, ../../../app/stylesheets/default.sass */
-          body #main #events_and_options #recent_events ul.events li.event a:hover:after {
-            content: '  (click for details)'; }
-      /* line 207, ../../../app/stylesheets/default.sass */
-      body #main #events_and_options #user_options {
-        background-color: #c3c3c3;
-        -moz-border-radius: 4px 4px;
-        width: 35%;
-        margin: 1em;
-        margin-left: 60%;
-        padding: 1.5em;
-        height: 10em; }
-    /* line 216, ../../../app/stylesheets/default.sass */
+    /* line 182, ../../../app/stylesheets/default.sass */
+    body #main #study_list {
+      float: left;
+      width: 70%; }
+      /* line 185, ../../../app/stylesheets/default.sass */
+      body #main #study_list .heading {
+        border: 0; }
+      /* line 187, ../../../app/stylesheets/default.sass */
+      body #main #study_list ul {
+        border: 1px solid;
+        border-color: #666666;
+        min-height: 15em; }
+        /* line 195, ../../../app/stylesheets/default.sass */
+        body #main #study_list ul li {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          margin-right: 1em; }
+        /* line 200, ../../../app/stylesheets/default.sass */
+        body #main #study_list ul a.study {
+          text-decoration: none;
+          color: #333333;
+          display: block;
+          padding: 0.3em;
+          width: 100%; }
+          /* line 208, ../../../app/stylesheets/default.sass */
+          body #main #study_list ul a.study .study_id {
+            font-weight: bold; }
+          /* line 216, ../../../app/stylesheets/default.sass */
+          body #main #study_list ul a.study .description {
+            font-weight: italic; }
+          /* line 218, ../../../app/stylesheets/default.sass */
+          body #main #study_list ul a.study .details {
+            float: right;
+            margin-right: 2em; }
+        /* line 221, ../../../app/stylesheets/default.sass */
+        body #main #study_list ul a.study:hover {
+          cursor: pointer;
+          background-color: #ffffe0; }
+          /* line 225, ../../../app/stylesheets/default.sass */
+          body #main #study_list ul a.study:hover .details:after {
+            content: "(click for details)"; }
+    /* line 227, ../../../app/stylesheets/default.sass */
+    body #main #recent_events {
+      float: left;
+      width: 25%;
+      margin-left: 5%; }
+      /* line 231, ../../../app/stylesheets/default.sass */
+      body #main #recent_events .heading {
+        border: 0; }
+      /* line 234, ../../../app/stylesheets/default.sass */
+      body #main #recent_events ul li {
+        border: 1px solid;
+        border-color: #666666;
+        margin: 1em 0; }
+        /* line 238, ../../../app/stylesheets/default.sass */
+        body #main #recent_events ul li a {
+          padding-left: 0.5em;
+          display: block;
+          text-decoration: none;
+          color: #333333; }
+        /* line 245, ../../../app/stylesheets/default.sass */
+        body #main #recent_events ul li a:hover {
+          background-color: #ffffe0; }
+        /* line 249, ../../../app/stylesheets/default.sass */
+        body #main #recent_events ul li a:hover:after {
+          content: ' (click for details)'; }
+    /* line 251, ../../../app/stylesheets/default.sass */
+    body #main #user_options {
+      background-color: #dadada;
+      -moz-border-radius: 4px 4px;
+      width: 35%;
+      margin: 1em;
+      margin-left: 60%;
+      padding: 1.5em;
+      height: 10em; }
+    /* line 259, ../../../app/stylesheets/default.sass */
     body #main #subject_list {
       -moz-border-radius: 4px 4px;
-      background-color: #c3c3c3;
+      background-color: #dadada;
       padding: 1em;
       margin-bottom: 1em; }
-      /* line 221, ../../../app/stylesheets/default.sass */
+      /* line 264, ../../../app/stylesheets/default.sass */
       body #main #subject_list ul {
         display: block;
         width: 80%; }
-        /* line 224, ../../../app/stylesheets/default.sass */
+        /* line 267, ../../../app/stylesheets/default.sass */
         body #main #subject_list ul li {
           padding: 0.5em;
           border-top: 1px solid #333;
           border-bottom: 1px solid #333;
           margin-bottom: -1px; }
-      /* line 229, ../../../app/stylesheets/default.sass */
+      /* line 272, ../../../app/stylesheets/default.sass */
       body #main #subject_list .add_subjects {
         float: right;
         margin-right: 1em;
         margin-top: -1em; }
-        /* line 233, ../../../app/stylesheets/default.sass */
+        /* line 276, ../../../app/stylesheets/default.sass */
         body #main #subject_list .add_subjects a {
           display: block;
           border: 1px solid #333;
@@ -253,75 +294,36 @@ body {
           width: 8em;
           background-color: #520063;
           color: #f0f0f0; }
-        /* line 243, ../../../app/stylesheets/default.sass */
+        /* line 286, ../../../app/stylesheets/default.sass */
         body #main #subject_list .add_subjects a:hover {
           background-color: #ffffe0;
           color: #520063; }
-    /* line 248, ../../../app/stylesheets/default.sass */
+    /* line 291, ../../../app/stylesheets/default.sass */
     body #main #new_subject_form input {
       padding: 0.5em; }
-    /* line 251, ../../../app/stylesheets/default.sass */
-    body #main #study_list {
-      background-color: #c3c3c3;
-      -moz-border-radius: 4px 4px;
-      padding: 1.5em;
-      margin: 1em 0em;
-      width: 95%; }
-      /* line 257, ../../../app/stylesheets/default.sass */
-      body #main #study_list a.study {
-        text-decoration: none;
-        color: #333333;
-        display: block;
-        padding: 0.3em;
-        width: 100%;
-        border: 1px solid #fff;
-        border-color: #c3c3c3; }
-        /* line 265, ../../../app/stylesheets/default.sass */
-        body #main #study_list a.study .study_id {
-          font-weight: bold;
-          font-size: 1.5em; }
-        /* line 269, ../../../app/stylesheets/default.sass */
-        body #main #study_list a.study .name {
-          font-weight: bold;
-          font-size: 1.5em; }
-        /* line 273, ../../../app/stylesheets/default.sass */
-        body #main #study_list a.study .description {
-          font-weight: italic; }
-        /* line 275, ../../../app/stylesheets/default.sass */
-        body #main #study_list a.study .details {
-          float: right;
-          margin-right: 2em; }
-      /* line 278, ../../../app/stylesheets/default.sass */
-      body #main #study_list a.study:hover {
-        cursor: pointer;
-        background-color: #ffffe0;
-        border: 1px solid #333; }
-        /* line 282, ../../../app/stylesheets/default.sass */
-        body #main #study_list a.study:hover .details:after {
-          content: "(click for details)"; }
-    /* line 286, ../../../app/stylesheets/default.sass */
+    /* line 295, ../../../app/stylesheets/default.sass */
     body #main #study_full ul.menu {
       width: 100%;
       height: 2.5em; }
-      /* line 289, ../../../app/stylesheets/default.sass */
+      /* line 298, ../../../app/stylesheets/default.sass */
       body #main #study_full ul.menu li {
         display: inline;
         cursor: pointer;
         float: left; }
-      /* line 294, ../../../app/stylesheets/default.sass */
+      /* line 303, ../../../app/stylesheets/default.sass */
       body #main #study_full ul.menu li.active a {
         display: block;
         -moz-border-radius: 4px 4px 0px 0px;
-        background-color: #c3c3c3;
+        background-color: #dadada;
         width: 8em;
         padding: 0.5em 0.5em 1em 0.5em;
         text-align: center;
         font-weight: bold; }
-      /* line 302, ../../../app/stylesheets/default.sass */
+      /* line 311, ../../../app/stylesheets/default.sass */
       body #main #study_full ul.menu li.inactive {
         padding-top: 0.4em;
         margin: 0em 0.2em; }
-        /* line 305, ../../../app/stylesheets/default.sass */
+        /* line 314, ../../../app/stylesheets/default.sass */
         body #main #study_full ul.menu li.inactive a {
           display: block;
           border: 1px solid #333;
@@ -331,17 +333,17 @@ body {
           width: 8em;
           padding: 0.3em 0.5em;
           text-align: center; }
-        /* line 314, ../../../app/stylesheets/default.sass */
+        /* line 323, ../../../app/stylesheets/default.sass */
         body #main #study_full ul.menu li.inactive a:hover {
           background-color: #ffffe0;
           color: #520063; }
-    /* line 317, ../../../app/stylesheets/default.sass */
+    /* line 326, ../../../app/stylesheets/default.sass */
     body #main #study_full .header_details {
       -moz-border-radius: 4px 4px;
-      background-color: #c3c3c3;
+      background-color: #dadada;
       padding: 1em;
       margin-bottom: 1em; }
-      /* line 322, ../../../app/stylesheets/default.sass */
+      /* line 331, ../../../app/stylesheets/default.sass */
       body #main #study_full .header_details .primary_data {
         font-weight: bold;
         font-size: 2em;
@@ -350,81 +352,81 @@ body {
         border: 1px solid #333;
         background-color: #f0f0f0;
         margin-bottom: 0.5em; }
-      /* line 330, ../../../app/stylesheets/default.sass */
+      /* line 339, ../../../app/stylesheets/default.sass */
       body #main #study_full .header_details .secondary_data {
         font-size: 1.3em;
         margin-left: 11.5em;
         font-weight: bold; }
-        /* line 335, ../../../app/stylesheets/default.sass */
+        /* line 344, ../../../app/stylesheets/default.sass */
         body #main #study_full .header_details .secondary_data em {
           font-weight: normal; }
-      /* line 337, ../../../app/stylesheets/default.sass */
+      /* line 346, ../../../app/stylesheets/default.sass */
       body #main #study_full .header_details .tertiary_data {
         border-top: 1px solid #333;
         clear: both;
         padding: 0.5em;
         font-size: 1.2em; }
-      /* line 342, ../../../app/stylesheets/default.sass */
+      /* line 351, ../../../app/stylesheets/default.sass */
       body #main #study_full .header_details .status_icon {
         padding: 0.5em;
         border: 1px solid #333;
         width: 5.35em; }
-      /* line 347, ../../../app/stylesheets/default.sass */
+      /* line 356, ../../../app/stylesheets/default.sass */
       body #main #study_full .header_details .study_id {
         text-align: center;
         width: 100%;
         padding: 0.5em 0em; }
-      /* line 351, ../../../app/stylesheets/default.sass */
+      /* line 360, ../../../app/stylesheets/default.sass */
       body #main #study_full .header_details .approved {
         background-color: #3c7c3b;
         color: #f3f3f3; }
-      /* line 354, ../../../app/stylesheets/default.sass */
+      /* line 363, ../../../app/stylesheets/default.sass */
       body #main #study_full .header_details .suspended {
         background-color: #d3d3d3; }
-      /* line 356, ../../../app/stylesheets/default.sass */
+      /* line 365, ../../../app/stylesheets/default.sass */
       body #main #study_full .header_details .terminated {
         background-color: red; }
-      /* line 358, ../../../app/stylesheets/default.sass */
+      /* line 367, ../../../app/stylesheets/default.sass */
       body #main #study_full .header_details .review {
         background-color: #d3d3d3; }
-    /* line 360, ../../../app/stylesheets/default.sass */
+    /* line 369, ../../../app/stylesheets/default.sass */
     body #main #study_full .file_details {
       -moz-border-radius: 4px 4px;
-      background-color: #c3c3c3;
+      background-color: #dadada;
       padding: 0.5em;
       margin-bottom: 1em;
       float: left;
       width: 45%; }
-      /* line 367, ../../../app/stylesheets/default.sass */
+      /* line 376, ../../../app/stylesheets/default.sass */
       body #main #study_full .file_details .study_file {
         padding: 0.5em;
         border-top: 1px solid #f0f0f0;
         border-bottom: 1px solid #f0f0f0;
         margin-bottom: -1px; }
-        /* line 372, ../../../app/stylesheets/default.sass */
+        /* line 381, ../../../app/stylesheets/default.sass */
         body #main #study_full .file_details .study_file img {
           position: relative;
           top: 3px; }
-        /* line 375, ../../../app/stylesheets/default.sass */
+        /* line 384, ../../../app/stylesheets/default.sass */
         body #main #study_full .file_details .study_file em {
           padding-bottom: 0.4em; }
-    /* line 377, ../../../app/stylesheets/default.sass */
+    /* line 386, ../../../app/stylesheets/default.sass */
     body #main #study_full .status_history {
       -moz-border-radius: 4px 4px;
-      background-color: #c3c3c3;
+      background-color: #dadada;
       padding: 0.5em;
       margin-bottom: 1em;
       margin-left: 50%; }
-      /* line 383, ../../../app/stylesheets/default.sass */
+      /* line 392, ../../../app/stylesheets/default.sass */
       body #main #study_full .status_history li {
         padding: 0.5em; }
-    /* line 385, ../../../app/stylesheets/default.sass */
+    /* line 394, ../../../app/stylesheets/default.sass */
     body #main #study_full .accural_status {
       -moz-border-radius: 4px 4px;
-      background-color: #c3c3c3;
+      background-color: #dadada;
       padding: 0.5em;
       margin-bottom: 1em; }
-  /* line 391, ../../../app/stylesheets/default.sass */
+  /* line 400, ../../../app/stylesheets/default.sass */
   body #footer {
     background-color: #fff;
     padding: 1em;
