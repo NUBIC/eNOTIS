@@ -41,8 +41,8 @@ class EirbServices
     default_search("eNOTIS Person Details",convert_for_eirb(conditions))
   end
   
-  def self.find_study_access(study_id=nil)
-    chunked_search("eNOTIS Study Access", (study_id.nil? ? nil : {"ID" => study_id}))
+  def self.find_study_access(conditions = nil)
+    chunked_search("eNOTIS Study Access", (conditions ? convert_for_eirb(conditions) : nil) )
   end
 
   def self.find_all_users

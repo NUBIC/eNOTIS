@@ -63,7 +63,7 @@ class EirbAdapter
      if params.is_a?(Hash)
        param_str = "" 
        params.each do |k,v|
-         param_str += "<parameter name='#{k.to_s.upcase}' value='#{v}'/>" 
+         param_str += "<parameter name='#{k.to_s}' value='#{v}'/>" 
        end 
        return "<parameters>#{param_str}</parameters>"
      else
