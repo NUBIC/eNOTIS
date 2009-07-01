@@ -1,5 +1,5 @@
 - @javascripts = ["jQuery" , "jquery-ui" ,"jrails","application","facebox"]
-- @stylesheets = ["reset", "default", "facebox"]
+- @stylesheets = ["reset", "compiled/default", "facebox"]
 
 -#study_full
   %ul.menu
@@ -28,7 +28,7 @@
       = "The following subjects are currently associated with #{@study ? 'this study' : 'your studies'}"
     %ul 
       - @involvements.each do |i|
-        %li=render(:partial => "subject", :object => i.subject)
+        %li= render(:partial => "subject", :locals => {:subject => i.subject}) unless i.subject.nil?
 
 
 
