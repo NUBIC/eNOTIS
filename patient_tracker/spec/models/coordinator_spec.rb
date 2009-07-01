@@ -17,6 +17,7 @@ describe Coordinator do
     end
 
     it "takes calls the webservice to get the import list" do
+      pending
       EirbServices.should_recieve(:find_study_access).and_return(@list)
     end
 

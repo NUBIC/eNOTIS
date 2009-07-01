@@ -76,14 +76,14 @@ describe EirbAdapter do
    
   describe "class methods" do
     it "can convert a hash to search parameter format of the eirb service" do
-      test_params = {:id => "STU100"}
+      test_params = {:ID => "STU100"}
       final_params = "<parameters><parameter name='ID' value='STU100'/></parameters>"
       EirbAdapter.format_search_parameters(test_params).should == final_params 
-      test_params = { :blah => 123}
+      test_params = { :BLAH => 123}
       final_params = "<parameters><parameter name='BLAH' value='123'/></parameters>"    
       EirbAdapter.format_search_parameters(test_params).should == final_params 
       test_params = {:foo => 3.14159265}
-      final_params = "<parameters><parameter name='FOO' value='3.14159265'/></parameters>"
+      final_params = "<parameters><parameter name='foo' value='3.14159265'/></parameters>"
       EirbAdapter.format_search_parameters(test_params).should == final_params 
     end
     
