@@ -17,41 +17,41 @@
       %li.nav= study_tab_to "Events"
       %li.nav= study_tab_to "Subject Imports"
 
-  #overview
-    #staff_list
-      %h4 Staff list
-      - @study.coordinators.each do |c|        
-        = "#{c.first_name} #{c.last_name}"
+    #overview
+      #staff_list
+        %h4 Staff list
+        - @study.coordinators.each do |c|        
+          = "#{c.first_name} #{c.last_name}"
   
-  #subjects
-    %h4 Subjects
-    %strong
-      = (@study.involvements || []).size
-      subjects currently associated with this study
-    %span.add_subjects
-      -if @study.has_coordinator?(@current_user)
-        = facebox_link_to("Add Subject", :url => new_involvement_event_path, :study_number => {:study_number => @study.id}, :method => :get)
-    %ul
-      - @study.subjects.each do |subject|
-        %li
-          = "#{subject.first_name} #{subject.last_name}"
+    #subjects
+      %h4 Subjects
+      %strong
+        = (@study.involvements || []).size
+        subjects currently associated with this study
+      %span.add_subjects
+        -if @study.has_coordinator?(@current_user)
+          = facebox_link_to("Add Subject", :url => new_involvement_event_path, :study_number => {:study_number => @study.id}, :method => :get)
+      %ul
+        - @study.subjects.each do |subject|
+          %li
+            = "#{subject.first_name} #{subject.last_name}"
           
-  #documents
-    %h4 Documents
-    %ul
-      %li
-        "Download"
-        = link_to "Rapid Consent", "#"
-      -# @study.documents.each do |d|
+    #documents
+      %h4 Documents
+      %ul
         %li
           "Download"
-          = link_to d.title, d.url      
-  #imports
-    %h4 Imports
-    %ul
-      - @study.study_uploads.each do |u|
-        %li
-          = "by #{u.user.netid}"
+          = link_to "Rapid Consent", "#"
+        -# @study.documents.each do |d|
+          %li
+            "Download"
+            = link_to d.title, d.url      
+    #imports
+      %h4 Imports
+      %ul
+        - @study.study_uploads.each do |u|
+          %li
+            = "by #{u.user.netid}"
         
   -#study_full
     %ul.menu
