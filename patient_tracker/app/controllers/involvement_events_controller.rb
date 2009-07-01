@@ -8,14 +8,30 @@ class InvolvementEventsController < ApplicationController
     end
   end
   def create
-    params[:study_id] = session[:study_id]
     @subject = Subject.find_by_mrn(params[:mrn])
-    @study = Subject.find_by_study_id(session[:study_id])
-    @study.add_subject(@subject)
-    respond_to do |format|
-      format.html
-      format.js {render_to_facebox}
-    end  
+    @study = Study.find_by_id(session[:study_id])
+    if @subject and @study and @involvement = @study.add_subject(@subject)
+      respond_to do |format|
+        format.html do
+          flash[:notice] = "Success"
+          redirect_to study_path(@study)
+        end
+        format.js do
+          render_to_facebox :html => "success"
+        end
+      end
+    else
+      respond_to do |format|
+        format.html do
+          flash[:notice] = "Fail"
+          redirect_to @study ? study_path(@study) : studies_path
+        end
+        format.js do
+          render_to_facebox :html => "#{@subject.inspect}: #{@study.inspect}: #{@involvement.inspect}"
+        end
+      end
+    end
+    
   end  
   def search
     if not params[:no_mrn]

@@ -9,6 +9,7 @@ class Study < ActiveRecord::Base
 	has_many :involvements
   has_many :coordinators
   has_many :subjects, :through => :involvements
+  has_many :study_uploads
   has_paper_trail
 	include WebServices
 
@@ -17,7 +18,9 @@ class Study < ActiveRecord::Base
   $plugins= [EirbServices]
 
   def add_subject(subject)
-     Involvement.create(:study_id => self.id, :subject_id => subject.id) unless Involvement.find_by_study_id_and_subject_id(self.id,subject.id) 
+    unless involvements.find_by_subject_id(subject.id)
+      involvements.create(:subject_id => subject.id)
+    end
   end
 
   def open?
@@ -33,10 +36,10 @@ class Study < ActiveRecord::Base
   def has_coordinator?(user)
     coordinators.map(&:user).include? user
   end
-  # def authorized_user?(user)
-  #   self.users.include?user
-  # end
-
+  def documents
+    []
+  end
+  
 end
 
 

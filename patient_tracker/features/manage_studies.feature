@@ -34,8 +34,8 @@ Feature: Manage studies
   Scenario: A random user cannot see study menu
     Given a study "Vitamin C and concentration" with id "0012345" and status "Approved"
     When I go to the study page for id "0012345"
-    Then I should not see "Status History"
-    And I should not see "Study Documents"
+    Then I should not see "Study Subjects"
+    And I should not see "Documents"
     
   Scenario: A random user can view contact information for other users (click on name, get a popup)
     Given a user "suzq" named "Sue Z" "Quou"
@@ -47,8 +47,8 @@ Feature: Manage studies
     And a study "Vitamin D and Depression" with id "45234" and status "Approved"
     And "pi" has access to study id "45234"
     When I go to the study page for id "45234"
-    Then I should see "Status History"
-    And I should see "Study Documents"
+    Then I should see "Study Subjects"
+    And I should see "Documents"
   
   Scenario: A coordinator can view all personnel that have access on a study
     Given a user "suzq" named "Sue Z" "Quou"
@@ -69,11 +69,27 @@ Feature: Manage studies
   
   Scenario: A coordinator can view all accrual information on a study
     Given "pi" has access to study id "45234"
-  
+    And the study "45234" has the following subjects
+      | first_name | last_name |
+      | Marge      | Innovera  |
+      | Picop N    | Dropov    |
+      | Dewey      | Cheetham  |
+    When I go to the study page for id "45234"
+    Then I should see "3"
+    And I should see "subjects currently associated with this study"
+
   Scenario: A coordinator can view links to documents they have access to on a study
-    Given "pi" has access to study id "45234"
-  
+    And a study "Vitamin D and Depression" with id "45234" and status "Approved"
+    And the study "45234" has a document with title "Rapid Consent"
+    And "pi" has access to study id "45234"
+    When I go to the study page for id "45234"
+    And I follow "Documents"
+    Then I should see "Download"
+    And I should see "Rapid Consent"
+
   Scenario: A coordinator can view all imports made to a study they have access to
     Given "pi" has access to study id "45234"
-  
-  
+    And the study "45234" has an upload by "pi"
+    When I go to the study page for id "45234"
+    And I follow "Subject Imports"
+    Then I should see "by pi"

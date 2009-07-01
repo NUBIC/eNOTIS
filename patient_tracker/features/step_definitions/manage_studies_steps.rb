@@ -29,3 +29,11 @@ Given /^the study "([^\"]*)" has the following subjects$/ do |id, table|
     study.subjects << Factory(:fake_subject, hash)
   end
 end
+
+Given /^the study "([^\"]*)" has a document with title "([^\"]*)"$/ do |id, title|
+  pending
+end
+
+Given /^the study "([^\"]*)" has an upload by "([^\"]*)"$/ do |id, netid|
+  Factory.create(:study_upload, :study_id => Study.find_by_irb_number(id).id, :user_id => User.find_by_netid(netid).id)
+end

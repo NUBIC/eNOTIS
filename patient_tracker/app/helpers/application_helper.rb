@@ -17,6 +17,9 @@ module ApplicationHelper
   def nav_link_to(text, path='#', controller=nil)
     link_to(text, path, :class => (@controller.class == controller) ? "current" : "")
   end
+  def study_tab_to(text, path='#')
+    link_to(text, path)
+  end
   # def message_for_item(message, item = nil)
   #   if item.is_a?(Array)
   #     message % link_to(*item)

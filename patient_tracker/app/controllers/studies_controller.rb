@@ -7,7 +7,7 @@ class StudiesController < ApplicationController
   end
 	
   def show
-    session[:study_id]= params[:id]
+    session[:study_id] = params[:id]
     @study = Study.find_by_id(params[:id])
   end
 	
