@@ -70,10 +70,10 @@ describe EirbServices do
        
       it "searches for a user details" do
         p = {:savedSearchName => "eNOTIS Person Details", 
-                      :parameters => {"NetID" => "abc123"}}
+                      :parameters => {"UserID" => "abc123"}}
         @search.should_receive(:perform_search).with(hash_including(p))
         @service.stub!(:eirb_adapter).and_return(@search)
-        @service.find_by_netid({:NetID=>"abc123"})
+        @service.find_by_netid({:netid=>"abc123"})
       end
 
       it "finds the details for all the users in eIRB" do
