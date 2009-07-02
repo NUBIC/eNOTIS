@@ -19,7 +19,7 @@ module AuthMod
 
     # Check if the user is authorized
     def authorized?(action = action_name, resource = nil)
-      logged_in? and !current_user.studies.empty?
+      logged_in? and (current_user.admin? or !current_user.studies.empty?)
     end
 
     # Filter method to enforce a login requirement.
