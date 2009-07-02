@@ -334,7 +334,7 @@ body {
           padding: 0 1em .1em 1em; }
         /* line 314, ../../../app/stylesheets/default.sass */
         body #main #study ul.study_tabs li a:hover {
-          color: #520063; }
+          background-color: #ffffe0; }
       /* line 316, ../../../app/stylesheets/default.sass */
       body #main #study ul.study_tabs li.ui-tabs-selected a, body #main #study ul.study_tabs li.ui-state-disabled a, body #main #study ul.study_tabs li.ui-state-processing a {
         background-color: #f0f0f0;
