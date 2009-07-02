@@ -34,6 +34,7 @@ Rails::Initializer.run do |config|
   config.gem "bcsec" #, :source => "http://download.bioinformatics.northwestern.edu/gems/" # also installs bcdatabase
   config.gem "airblade-paper_trail", :lib => 'paper_trail', :version => '>=1.1.1', :source => 'http://gems.github.com'
   config.gem "chronic", :version => '>=0.2.3'
+  config.gem "stomp", :version => '>=1.1'
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
