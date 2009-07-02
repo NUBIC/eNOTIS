@@ -1,5 +1,7 @@
-.heading
-  %strong
-    =@subject.first_name
-    =@subject.last_name
-
+%p
+  = "#{@subject.first_name} #{@subject.last_name}"
+%p
+  Associated Studies:
+  %ul
+  - @subject.involvements.each do |involvement|
+    %li= link_to(involvement.study.name, study_path(involvement.study))

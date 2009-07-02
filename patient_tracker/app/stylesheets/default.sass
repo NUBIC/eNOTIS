@@ -101,7 +101,7 @@ body
           :text-decoration none
           :padding .2em 1em
         a:hover
-          :color= !NU_PURPLE
+          :background-color= !LT_YELLOW
         a.current
           :background-color= !BODY_COLOR
           :color= !NU_PURPLE
@@ -173,8 +173,6 @@ body
     #study_list
       :float left
       :width 70%
-      .heading
-        :border 0
       ul
         :background-color= !V_LT_GRAY
         :padding .25em .5em
@@ -231,18 +229,25 @@ body
       :padding 1.5em
       :height 10em
     #subject_list
-      :-moz-border-radius 4px 4px
-      :background-color= !LT_GRAY
-      :padding 1em
-      :margin-bottom 1em
       ul
-        :display block
-        :width 80%
+        :background-color= !V_LT_GRAY
+        :padding .25em .5em
+        :min-height 15em
         li
-          :padding 0.5em
-          :border-top 1px solid #333
-          :border-bottom 1px solid #333
-          :margin-bottom -1px
+          :overflow hidden
+          :white-space nowrap
+          :text-overflow ellipsis
+          a
+            :display block
+            :width 100%
+            :padding .25em .5em
+            :color= !FONT_COLOR
+            :text-decoration none
+          a:hover
+            :cursor pointer
+            :background-color= !LT_YELLOW
+          a:hover:after
+            / :content ' (click for details)'
       .add_subjects
         :float right
         :margin-right 1em

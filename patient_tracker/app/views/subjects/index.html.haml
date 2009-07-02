@@ -1,24 +1,6 @@
 - @javascripts = ["jQuery" , "jquery-ui" ,"jrails","application","facebox"]
 - @stylesheets = ["reset", "compiled/default", "facebox"]
 
--#study_full
-  %ul.menu
-    %li.inactive
-      -# = link_to("General Info",registration_path(@study.irb_number))
-    %li.inactive
-      %a
-        Study Events
-    %li.active
-      %a
-        Subjects
-    %li.inactive
-      %a
-        Subject Events
-    %li.inactive
-      %a.gray
-        Budgeting
-
-
 #subject_list
   - if @involvements.nil?
     .heading
@@ -28,7 +10,8 @@
       = "The following subjects are currently associated with #{@study ? 'this study' : 'your studies'}"
     %ul 
       - @involvements.each do |i|
-        %li= render(:partial => "subject", :locals => {:subject => i.subject}) unless i.subject.nil?
+        %li
+          = facebox_link_to("#{i.subject.first_name} #{i.subject.last_name}", :url => subject_url(i.subject) , :method=>:get)
 
 
 
