@@ -1,8 +1,0 @@
-First Name: <%= @subject.first_name %> <br/>
-Last Name: <%= @subject.last_name %> <br/>
-
-Associated Studies:<br/>
-<%@involvements.each do |involvement| %>
-<%=link_to(involvement.study.name, registration_path(involvement.study.irb_number ))  %>
-
-<%end%>

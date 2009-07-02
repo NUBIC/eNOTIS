@@ -101,7 +101,7 @@ body
           :text-decoration none
           :padding .2em 1em
         a:hover
-          :color= !NU_PURPLE
+          :background-color= !LT_YELLOW
         a.current
           :background-color= !BODY_COLOR
           :color= !NU_PURPLE
@@ -173,8 +173,6 @@ body
     #study_list
       :float left
       :width 70%
-      .heading
-        :border 0
       ul
         :background-color= !V_LT_GRAY
         :padding .25em .5em
@@ -231,18 +229,25 @@ body
       :padding 1.5em
       :height 10em
     #subject_list
-      :-moz-border-radius 4px 4px
-      :background-color= !LT_GRAY
-      :padding 1em
-      :margin-bottom 1em
       ul
-        :display block
-        :width 80%
+        :background-color= !V_LT_GRAY
+        :padding .25em .5em
+        :min-height 15em
         li
-          :padding 0.5em
-          :border-top 1px solid #333
-          :border-bottom 1px solid #333
-          :margin-bottom -1px
+          :overflow hidden
+          :white-space nowrap
+          :text-overflow ellipsis
+          a
+            :display block
+            :width 100%
+            :padding .25em .5em
+            :color= !FONT_COLOR
+            :text-decoration none
+          a:hover
+            :cursor pointer
+            :background-color= !LT_YELLOW
+          a:hover:after
+            / :content ' (click for details)'
       .add_subjects
         :float right
         :margin-right 1em
@@ -284,6 +289,7 @@ body
         :padding .5em
         :background-color= !LT_GRAY
       ul.study_tabs
+        :position relative
         :clear left
         :margin-top 1em
         :border-bottom 2px solid
@@ -294,7 +300,8 @@ body
         :font-size 1.2em
         :padding 0 1em
         li
-          :list-type none
+          :position relative
+          :list-style none
           :display inline
           :border-width 2px 2px 0 2px
           :border-style solid
@@ -306,9 +313,12 @@ body
             :padding 0 1em .1em 1em
           a:hover
             :color= !NU_PURPLE
-          a.current
-            :background-color= !BODY_COLOR
-            :color= !NU_PURPLE
+        li.ui-tabs-selected a, li.ui-state-disabled a, li.ui-state-processing a
+          :background-color= !BODY_COLOR
+          :color= !NU_PURPLE       
+          :cursor text
+      .ui-tabs-hide
+        :display none !important
       #overview, #subjects, #documents, #imports
         :padding .5em
       .header_details
