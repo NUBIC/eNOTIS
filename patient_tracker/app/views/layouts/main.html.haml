@@ -21,7 +21,7 @@
         %li.nav= nav_link_to "Dashboard", dashboard_path, UsersController
         %li.nav= nav_link_to "All Studies", studies_path, StudiesController
         %li.nav= nav_link_to "My Subjects", subjects_path, SubjectsController
-        %li.nav= nav_link_to "My Events"
+        %li.nav= nav_link_to "My Events", involvement_events_path, InvolvementEventsController
         %li.nav
           = nav_link_to "Search", search_studies_path
           -form_tag(search_studies_path, :method => :get) do 
