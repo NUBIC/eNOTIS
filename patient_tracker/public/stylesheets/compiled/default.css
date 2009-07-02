@@ -308,6 +308,7 @@ body {
       background-color: #dadada; }
     /* line 291, ../../../app/stylesheets/default.sass */
     body #main #study ul.study_tabs {
+      position: relative;
       clear: left;
       margin-top: 1em;
       border-bottom: 2px solid;
@@ -317,36 +318,41 @@ body {
       line-height: 1.2em;
       font-size: 1.2em;
       padding: 0 1em; }
-      /* line 301, ../../../app/stylesheets/default.sass */
+      /* line 302, ../../../app/stylesheets/default.sass */
       body #main #study ul.study_tabs li {
-        list-type: none;
+        position: relative;
+        list-style: none;
         display: inline;
         border-width: 2px 2px 0 2px;
         border-style: solid;
         border-color: #dadada;
         background-color: #dadada; }
-        /* line 308, ../../../app/stylesheets/default.sass */
+        /* line 310, ../../../app/stylesheets/default.sass */
         body #main #study ul.study_tabs li a, body #main #study ul.study_tabs li a:hover, body #main #study ul.study_tabs li a:visited, body #main #study ul.study_tabs li a:active {
           color: #333333;
           text-decoration: none;
           padding: 0 1em .1em 1em; }
-        /* line 312, ../../../app/stylesheets/default.sass */
+        /* line 314, ../../../app/stylesheets/default.sass */
         body #main #study ul.study_tabs li a:hover {
           color: #520063; }
-        /* line 314, ../../../app/stylesheets/default.sass */
-        body #main #study ul.study_tabs li a.current {
-          background-color: #f0f0f0;
-          color: #520063; }
-    /* line 317, ../../../app/stylesheets/default.sass */
+      /* line 316, ../../../app/stylesheets/default.sass */
+      body #main #study ul.study_tabs li.ui-tabs-selected a, body #main #study ul.study_tabs li.ui-state-disabled a, body #main #study ul.study_tabs li.ui-state-processing a {
+        background-color: #f0f0f0;
+        color: #520063;
+        cursor: text; }
+    /* line 320, ../../../app/stylesheets/default.sass */
+    body #main #study .ui-tabs-hide {
+      display: none !important; }
+    /* line 322, ../../../app/stylesheets/default.sass */
     body #main #study #overview, body #main #study #subjects, body #main #study #documents, body #main #study #imports {
       padding: .5em; }
-    /* line 319, ../../../app/stylesheets/default.sass */
+    /* line 324, ../../../app/stylesheets/default.sass */
     body #main #study .header_details {
       -moz-border-radius: 4px 4px;
       background-color: #dadada;
       padding: 1em;
       margin-bottom: 1em; }
-      /* line 324, ../../../app/stylesheets/default.sass */
+      /* line 329, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .primary_data {
         font-weight: bold;
         font-size: 2em;
@@ -355,44 +361,44 @@ body {
         border: 1px solid #333;
         background-color: #f0f0f0;
         margin-bottom: 0.5em; }
-      /* line 332, ../../../app/stylesheets/default.sass */
+      /* line 337, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .secondary_data {
         font-size: 1.3em;
         margin-left: 11.5em;
         font-weight: bold; }
-        /* line 337, ../../../app/stylesheets/default.sass */
+        /* line 342, ../../../app/stylesheets/default.sass */
         body #main #study .header_details .secondary_data em {
           font-weight: normal; }
-      /* line 339, ../../../app/stylesheets/default.sass */
+      /* line 344, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .tertiary_data {
         border-top: 1px solid #333;
         clear: both;
         padding: 0.5em;
         font-size: 1.2em; }
-      /* line 344, ../../../app/stylesheets/default.sass */
+      /* line 349, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .status_icon {
         padding: 0.5em;
         border: 1px solid #333;
         width: 5.35em; }
-      /* line 349, ../../../app/stylesheets/default.sass */
+      /* line 354, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .study_id {
         text-align: center;
         width: 100%;
         padding: 0.5em 0em; }
-      /* line 353, ../../../app/stylesheets/default.sass */
+      /* line 358, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .approved {
         background-color: #3c7c3b;
         color: #f3f3f3; }
-      /* line 356, ../../../app/stylesheets/default.sass */
+      /* line 361, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .suspended {
         background-color: #d3d3d3; }
-      /* line 358, ../../../app/stylesheets/default.sass */
+      /* line 363, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .terminated {
         background-color: red; }
-      /* line 360, ../../../app/stylesheets/default.sass */
+      /* line 365, ../../../app/stylesheets/default.sass */
       body #main #study .header_details .review {
         background-color: #d3d3d3; }
-    /* line 362, ../../../app/stylesheets/default.sass */
+    /* line 367, ../../../app/stylesheets/default.sass */
     body #main #study .file_details {
       -moz-border-radius: 4px 4px;
       background-color: #dadada;
@@ -400,36 +406,36 @@ body {
       margin-bottom: 1em;
       float: left;
       width: 45%; }
-      /* line 369, ../../../app/stylesheets/default.sass */
+      /* line 374, ../../../app/stylesheets/default.sass */
       body #main #study .file_details .study_file {
         padding: 0.5em;
         border-top: 1px solid #f0f0f0;
         border-bottom: 1px solid #f0f0f0;
         margin-bottom: -1px; }
-        /* line 374, ../../../app/stylesheets/default.sass */
+        /* line 379, ../../../app/stylesheets/default.sass */
         body #main #study .file_details .study_file img {
           position: relative;
           top: 3px; }
-        /* line 377, ../../../app/stylesheets/default.sass */
+        /* line 382, ../../../app/stylesheets/default.sass */
         body #main #study .file_details .study_file em {
           padding-bottom: 0.4em; }
-    /* line 379, ../../../app/stylesheets/default.sass */
+    /* line 384, ../../../app/stylesheets/default.sass */
     body #main #study .status_history {
       -moz-border-radius: 4px 4px;
       background-color: #dadada;
       padding: 0.5em;
       margin-bottom: 1em;
       margin-left: 50%; }
-      /* line 385, ../../../app/stylesheets/default.sass */
+      /* line 390, ../../../app/stylesheets/default.sass */
       body #main #study .status_history li {
         padding: 0.5em; }
-    /* line 387, ../../../app/stylesheets/default.sass */
+    /* line 392, ../../../app/stylesheets/default.sass */
     body #main #study .accural_status {
       -moz-border-radius: 4px 4px;
       background-color: #dadada;
       padding: 0.5em;
       margin-bottom: 1em; }
-  /* line 393, ../../../app/stylesheets/default.sass */
+  /* line 398, ../../../app/stylesheets/default.sass */
   body #footer {
     background-color: #fff;
     padding: 1em;

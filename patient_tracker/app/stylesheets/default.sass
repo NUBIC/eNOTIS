@@ -289,6 +289,7 @@ body
         :padding .5em
         :background-color= !LT_GRAY
       ul.study_tabs
+        :position relative
         :clear left
         :margin-top 1em
         :border-bottom 2px solid
@@ -299,7 +300,8 @@ body
         :font-size 1.2em
         :padding 0 1em
         li
-          :list-type none
+          :position relative
+          :list-style none
           :display inline
           :border-width 2px 2px 0 2px
           :border-style solid
@@ -311,9 +313,12 @@ body
             :padding 0 1em .1em 1em
           a:hover
             :color= !NU_PURPLE
-          a.current
-            :background-color= !BODY_COLOR
-            :color= !NU_PURPLE
+        li.ui-tabs-selected a, li.ui-state-disabled a, li.ui-state-processing a
+          :background-color= !BODY_COLOR
+          :color= !NU_PURPLE       
+          :cursor text
+      .ui-tabs-hide
+        :display none !important
       #overview, #subjects, #documents, #imports
         :padding .5em
       .header_details
