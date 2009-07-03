@@ -19,7 +19,7 @@ module AuthMod
 
     # Check if the user is authorized
     def authorized?(action = action_name, resource = nil)
-      logged_in? and !current_user.studies.empty?
+      logged_in? and (current_user.admin? or !current_user.studies.empty?)
     end
 
     # Filter method to enforce a login requirement.
@@ -33,7 +33,7 @@ module AuthMod
     # Redirect as appropriate when an access request fails. The default action is to redirect to the login screen. Override this method in your controllers if you want to have special behavior in case the user is not authorized to access the requested action.  For example, a popup window might simply close itself.
     def access_denied
       store_location
-      flash[:notice] = "You are not authorized on any studies. Please contact the eIRB"
+      flash[:notice] = "You are not authorized on any studies. Please contact the eIRB" if logged_in?
       redirect_to authentication_index_path
     end
 

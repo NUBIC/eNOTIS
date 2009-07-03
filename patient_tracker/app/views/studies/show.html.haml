@@ -1,55 +1,60 @@
-- @javascripts = ["jQuery" , "jquery-ui" ,"jrails","application","facebox"]
-- @stylesheets = ["reset", "default", "facebox"]
-
+- @javascripts = ["jquery-1.3.2.min" , "jquery-ui-1.7.2.min" ,"jrails","application","facebox"]
+- @stylesheets = ["reset", "compiled/default", "facebox"]
+- content_for :head do
+  :javascript
+    $(document).ready(function(){$("#study").tabs();});
 #study
   .vitals
-    %h2= @study.irb_number
-    = @study.status
+    %p.irb_number= @study.irb_number
+    %p.status= @study.status
   .description
     %p= "Title: #{@study.title}"
     %p= "Phase: #{@study.phase}"
-
-- if @study.has_coordinator?(current_user)
-  %ul.study_tabs
-    %li.nav= study_tab_to "Overview", study_path(@study)
-    %li.nav= study_tab_to "Study Subjects"
-    %li.nav= study_tab_to "Documents"
-    %li.nav= study_tab_to "Events"
-    %li.nav= study_tab_to "Subject Imports"
-
-  #subjects
-    %h4 Subjects
-    %strong
-      = (@study.involvements || []).size
-      subjects currently associated with this study
-    %span.add_subjects
-      -if @study.has_coordinator?(@current_user)
-        = facebox_link_to("Add Subject", :url => new_involvement_event_path, :study_number => {:study_number => @study.id}, :method => :get)
-    %ul
-      - @study.subjects.each do |subject|
-        %li
-          = "#{subject.first_name} #{subject.last_name}"
+  %br.clear
+  - if @study.has_coordinator?(current_user)
+    %ul.study_tabs
+      %li.nav= study_tab_to "Overview", "#overview"
+      %li.nav= study_tab_to "Study Subjects", "#subjects"
+      %li.nav= study_tab_to "Documents", "#documents"
+      %li.nav= study_tab_to "Events", "#events"
+      %li.nav= study_tab_to "Subject Imports", "#imports"
+    #overview
+      #staff_list
+        %h4 Staff list
+        - @study.coordinators.each do |c|        
+          = "#{c.first_name} #{c.last_name}"
+  
+    #subjects
+      %h4 Subjects
+      %strong
+        = (@study.involvements || []).size
+        subjects currently associated with this study
+      %span.add_subjects
+        -if @study.has_coordinator?(@current_user)
+          = facebox_link_to("Add Subject", :url => new_involvement_event_path, :study_number => {:study_number => @study.id}, :method => :get)
+      %ul
+        - @study.subjects.each do |subject|
+          %li
+            = "#{subject.first_name} #{subject.last_name}"
           
-  #staff_list
-    %h4 Staff list
-    - @study.coordinators.each do |c|        
-      = "#{c.first_name} #{c.last_name}"
-
-  %ul#documents
-    %h4 Documents
-    %li
-      "Download"
-      = link_to "Rapid Consent", "#"
-    -# @study.documents.each do |d|
-      %li
-        "Download"
-        = link_to d.title, d.url
-        
-  %ul#imports
-    %h4 Imports
-    - @study.study_uploads.each do |u|
-      %li
-        = "by #{u.user.netid}"
+    #documents
+      %h4 Documents
+      %ul
+        %li
+          "Download"
+          = link_to "Rapid Consent", "#"
+        -# @study.documents.each do |d|
+          %li
+            "Download"
+            = link_to d.title, d.url
+    #events
+      No events
+    #imports
+      %h4 Imports
+      %ul
+        - @study.study_uploads.each do |u|
+          %li
+            = "by #{u.user.netid}"
         
   -#study_full
     %ul.menu

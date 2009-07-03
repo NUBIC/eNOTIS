@@ -7,8 +7,9 @@ class SubjectsController < ApplicationController
   def index
     if params[:irb_number]
       @study = Study.find_by_irb_number(params[:irb_number])
+      @involvements = @study.involvements || []
     else
-      @involvements = @study ? @study.involvements : current_user.coordinators.map(&:study).flatten.map(&:involvements).flatten
+      @involvements = (@study ? @study.involvements : current_user.coordinators.map(&:study).flatten.map(&:involvements).flatten) || []
     end
   end
 

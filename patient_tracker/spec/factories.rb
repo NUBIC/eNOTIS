@@ -113,6 +113,13 @@ Factory.define :involvement do |i|
   i.description   {Faker::Lorem.words(5).join(" ")}
 end
 
+Factory.define :involvement_event do |e|
+  e.association   :involvement
+  e.description  {%w(consented enrolled withdrawn screened randomized approached).rand}
+  e.event_date   {2.weeks.ago}
+end
+
+
 Factory.define :subject_event do |p|
   p.association   :subject
   p.association   :study

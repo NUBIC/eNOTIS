@@ -1,0 +1,4 @@
+2009-07-02 enotis team mtg
+
+dev/testing on our laptops
+staging => production => training

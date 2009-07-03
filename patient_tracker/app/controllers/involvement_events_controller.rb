@@ -1,6 +1,10 @@
 class InvolvementEventsController < ApplicationController
   layout "layouts/main"
   include FaceboxRender
+
+  def index
+    @events = current_user.studies.map(&:involvements).flatten.map(&:involvement_events).flatten
+  end
   def new
     respond_to do |format|
       format.html

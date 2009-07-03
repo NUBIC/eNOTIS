@@ -6,3 +6,4 @@ db/schema.rb
 tmp/*
 public/uploads/*
 public/results/*
+app/stylesheets/.sass-cache/*

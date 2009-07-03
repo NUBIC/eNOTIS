@@ -35,6 +35,7 @@ webrat \
 ZenTest \
 highline \
 session \
+stomp \
 wddx \
 composite_primary_keys \
 ruby-net-ldap \
