@@ -5,7 +5,7 @@ class StudyUpload < ActiveRecord::Base
   has_attached_file :upload
   has_attached_file :result
 
-  
+  # TODO Why are these validators turned off? -blc 
   validates_attachment_presence :upload
   validates_attachment_size :upload, :less_than => 5.megabytes
   # validates_attachment_content_type :upload, :content_type => ['text/csv', 'text/plain']
