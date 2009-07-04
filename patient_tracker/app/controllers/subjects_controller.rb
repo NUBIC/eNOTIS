@@ -9,6 +9,7 @@ class SubjectsController < ApplicationController
       @study = Study.find_by_irb_number(params[:irb_number])
       @involvements = @study.involvements || []
     else
+      # TODO Clean up... create coordinator intstance methond
       @involvements = (@study ? @study.involvements : current_user.coordinators.map(&:study).flatten.map(&:involvements).flatten) || []
     end
   end
@@ -37,6 +38,7 @@ class SubjectsController < ApplicationController
       temp_file.close!
       results_file_name = @study_upload.upload_file_name.gsub(/(\.csv)?$/, '-result.csv')
       headers['Content-Disposition'] = "attachment; filename='#{results_file_name}'"
+      # TODO ADD some explanation for this?!?
       if request.env['HTTP_USER_AGENT'] =~ /msie/i
         headers.merge!({'Pragma' => 'public', 'Content-type' => 'text/plain; charset=utf-8', 'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0', 'Expires' => '0'})
       else
@@ -55,6 +57,7 @@ class SubjectsController < ApplicationController
     csv = csv.to_io if csv.class == Paperclip::Attachment
     errors = []
     FasterCSV.open(temp_file.path, "r+") do |temp_stream|
+      # TODO This is unacceptable. Please clean it up
       FasterCSV.parse(csv, :headers => :first_row, :return_headers => true, :header_converters => :symbol) do |r|      
         errors << (r[:mrn].blank? ? (r[:last_name].blank? or r[:first_name].blank? or r[:dob].blank?) ? "A first_name and last_name and dob, or an mrn is required. " : "" : "") + \
           ((r[:subject_event_type].blank? or r[:subject_event_date].blank?) ? "A subject event type and date is required." : "")

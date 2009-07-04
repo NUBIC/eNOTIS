@@ -6,6 +6,8 @@ class Coordinator < ActiveRecord::Base
   delegate :first_name, :last_name, :netid, :to => :user
   has_paper_trail
 
+
+  # TODO Refactor this into several smaller methods -blc
   def self.import_from_eirb
     # get the access list (the coordinator list)
     logger.info "Starting the import"
