@@ -3,8 +3,7 @@ class AuthenticationController < ApplicationController
   layout "layouts/default"
 
   def index
-    # @netids =[] # find_all_coordinator_netids(20)
-    # @users = User.find(:all)
+    # TODO System staus check 
   end
   
   def login
