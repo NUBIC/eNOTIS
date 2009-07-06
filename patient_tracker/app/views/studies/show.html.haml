@@ -21,7 +21,6 @@
     %ul.study_tabs
       %li.nav= study_tab_to "Overview", "#overview"
       %li.nav= study_tab_to "Study Subjects", "#subjects"
-      %li.nav= study_tab_to "Documents", "#documents"
       %li.nav= study_tab_to "Events", "#events"
       %li.nav= study_tab_to "Subject Imports", "#imports"
     #overview
@@ -55,20 +54,6 @@
         - @study.subjects.each do |subject|
           %li
             = "#{subject.first_name} #{subject.last_name}"
-          
-    #documents
-      .heading Documents
-      %ul
-        %li
-          = link_to "Standard Consent", "#"
-        %li
-          = link_to "Intake Form", "#"
-        %li
-          = link_to "Disease Literature", "#"
-        -# @study.documents.each do |d|
-          %li
-            "Download"
-            = link_to d.title, d.url
     #events
       .heading Events
     #imports
