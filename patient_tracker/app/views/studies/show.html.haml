@@ -20,12 +20,14 @@
       %li.nav= study_tab_to "Subject Imports", "#imports"
     #overview
       .column
+        %img{:src => '/images/accrual.gif', :style => "margin: 0 1.5em 1em;"}
         
-        .heading Accrual Events History
-        %ul
-          %li= "#{@study.coordinators.first.name}: 2 withdrawn on 5/18/09"
-          %li= "#{@study.coordinators.first.name}: 1 consented on 5/10/09" 
-          %li= "#{@study.coordinators.first.name}: 15 consented on 4/2/09"
+        #study-events
+          .heading Accrual Events History
+          %ul
+            %li= "#{@study.coordinators.first.name}: 6 consented on #{1.days.ago.to_s(:short)}"
+            %li= "#{@study.coordinators.first.name}: 1 consented on #{2.days.ago.to_s(:short)}" 
+            %li= "#{@study.coordinators.first.name}: 3 consented on #{3.days.ago.to_s(:short)}"
       #staff_list.column
         .heading Staff list
         - @study.coordinators.each do |c|        
