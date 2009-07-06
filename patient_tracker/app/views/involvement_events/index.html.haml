@@ -1,8 +1,10 @@
-%ul
-- @events.each do |e|
-  %li
-    = e.involvement.study.irb_number
-    %br
-    = e.involvement.subject.name
-    = e.description
-    = "#{time_ago_in_words(e.created_at)} ago"
+#my-events
+  .heading My Events
+  %ul
+    - @events.each do |e|
+      %li
+        = e.involvement.study.irb_number
+        \-
+        = e.involvement.subject.name
+        = e.description
+        = "#{time_ago_in_words(e.created_at)} ago"

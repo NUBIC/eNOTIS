@@ -446,7 +446,29 @@ body {
       background-color: #dadada;
       padding: 0.5em;
       margin-bottom: 1em; }
-  /* line 408, ../../../app/stylesheets/default.sass */
+    /* line 409, ../../../app/stylesheets/default.sass */
+    body #main #my-events ul {
+      background-color: #e9e9e9;
+      padding: .25em .5em;
+      min-height: 15em; }
+      /* line 413, ../../../app/stylesheets/default.sass */
+      body #main #my-events ul li {
+        list-style: none;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
+        /* line 418, ../../../app/stylesheets/default.sass */
+        body #main #my-events ul li a {
+          display: block;
+          width: 100%;
+          padding: .25em .5em;
+          color: #333333;
+          text-decoration: none; }
+        /* line 424, ../../../app/stylesheets/default.sass */
+        body #main #my-events ul li a:hover {
+          cursor: pointer;
+          background-color: #ffffe0; }
+  /* line 428, ../../../app/stylesheets/default.sass */
   body #footer {
     background-color: #fff;
     padding: 1em;

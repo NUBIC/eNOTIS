@@ -404,7 +404,27 @@ body
         :background-color= !LT_GRAY
         :padding 0.5em
         :margin-bottom 1em
-
+    // my events
+    #my-events
+      ul
+        :background-color= !V_LT_GRAY
+        :padding .25em .5em
+        :min-height 15em
+        li
+          :list-style none
+          :overflow hidden
+          :white-space nowrap
+          :text-overflow ellipsis
+          a
+            :display block
+            :width 100%
+            :padding .25em .5em
+            :color= !FONT_COLOR
+            :text-decoration none
+          a:hover
+            :cursor pointer
+            :background-color= !LT_YELLOW
+          a:hover:after
   #footer
     :background-color #fff
     :padding 1em
