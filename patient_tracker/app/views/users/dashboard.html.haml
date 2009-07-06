@@ -1,13 +1,13 @@
 
 #study_list
-  .heading My studies
+  .heading My Studies
   %ul 
     - @accessable_studies.each do |study|
       %li= render(:partial => 'study', :locals => {:study => study})
 
 #recent_events
   .heading
-    Recent events
+    Recent Events
   %ul
     %li= link_to("STU0001924<br/>John Smith AE")
     %li= link_to("STU0001924<br/>Sally Sue Registered")

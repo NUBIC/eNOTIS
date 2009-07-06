@@ -19,11 +19,18 @@
       %li.nav= study_tab_to "Events", "#events"
       %li.nav= study_tab_to "Subject Imports", "#imports"
     #overview
-      #staff_list
-        %h4 Staff list
+      .column
+        
+        .heading Accrual Events History
+        %ul
+          %li= "#{@study.coordinators.first.name}: 2 withdrawn on 5/18/09"
+          %li= "#{@study.coordinators.first.name}: 1 consented on 5/10/09" 
+          %li= "#{@study.coordinators.first.name}: 15 consented on 4/2/09"
+      #staff_list.column
+        .heading Staff list
         - @study.coordinators.each do |c|        
           = "#{c.first_name} #{c.last_name}"
-  
+      %br.clear
     #subjects
       %h4 Subjects
       %strong

@@ -13,7 +13,7 @@ DEATH_RATE = Array.new(195, false) + Array.new(5, true) # 5 in 200
 # Basic Models
 
 Factory.sequence :mrn do |n|
-  "#{n+9988100}"
+  "#{n+9998100}"
 end
 
 Factory.define :subject do |p|
