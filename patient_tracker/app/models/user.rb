@@ -47,6 +47,10 @@ class User < ActiveRecord::Base
   def admin?
     %w(blc615 daw286 myo628).include? self.netid
   end
+  
+  def name
+    "#{self.first_name} #{self.last_name}"
+  end
   #   # Rough validation method
   #   def self.find_and_validate(netid,password)
   #     u = User.find_by_netid(netid)
