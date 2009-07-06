@@ -1,9 +1,4 @@
 EIRB_TO_NOTIS = {
-"Name"             => :name,
-"Study Title"      => :title,
-"ID"               => :irb_number,
-"Description"      => :description,
-"Project State.ID" => :status,
 "Contacts.User ID" => :netid,
 "Contacts.Last Name" => :last_name,
 "User ID" => :netid,
@@ -34,9 +29,23 @@ EIRB_TO_NOTIS = {
 "Contact Information.Phone: Fax.Description" => :fax_description, 
 "Contact Information.Phone: Fax.Phone Number" => :fax_number,
 "Contact Information.Phone: Fax.Phone Type.ID" => :fax_type,
-"Created Date" => :eirb_create_date
+"Created Date" => :eirb_create_date,
+#Study translations
+"Study Staff - Study Coordinator.Contact Information.E-mail: Preferred.E-Mail"=> :sc_email,
+"Study Staff - Study Coordinator.First Name"=> :sc_first_name,
+"Study Staff - Study Coordinator.Last Name"=> :sc_last_name,
+"Study Staff - Principal Investigator.First Name"=> :pi_first_name,
+"Study Staff - Principal Investigator.Last Name"=> :pi_last_name, 
+"Study Staff - Principal Investigator.User ID"=> :pi_netid, 
+"Study Staff - Principal Investigator.Contact Information.E-mail: Preferred.E-Mail"=> :pi_email,
+"Study Staff - Study Coordinator.User ID"=> :sc_netid, 
+"Description"=> :description,
+"Research Type.Name"=> :research_type,
+"ID"=> :irb_number,
+"Name"=> :name,
+"Study Title"=> :title, 
+"Project State.ID"=> :status
 }
-
 
 NOTIS_TO_EIRB = {
   :name         => "Name",

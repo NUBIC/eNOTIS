@@ -7,9 +7,15 @@
   .vitals
     %p.irb_number= @study.irb_number
     %p.status= @study.status
-  .description
-    %p= "Title: #{@study.title}"
-    %p= "Phase: #{@study.phase}"
+  .details
+    .description
+      %p= "Title: #{@study.title}"
+      %p= "Short Title: #{@study.name}"
+      %p= "Phase: #{@study.phase}"
+      %p= "Research Type: #{@study.research_type}"
+    .study_staff
+      %p= "Princpal Investigator: #{@study.pi_last_name},#{@study.pi_first_name} (#{@study.pi_email})"
+      %p= "Study Coordinator: #{@study.sc_last_name},#{@study.sc_first_name} (#{@study.sc_email})"
   %br.clear
   - if @study.has_coordinator?(current_user)
     %ul.study_tabs
@@ -35,6 +41,7 @@
             %li
               = "#{c.first_name} #{c.last_name}"
               %br
+
       %br.clear
     #subjects
       %h4 Subjects

@@ -1,8 +1,14 @@
 #study_list
-  .heading All studies
-  %ul 
+  .heading All Studies
+  %table
+    %tr
+      %th Name
+      %th Status
+      
     - @studies.each do |study|
-      %li= link_to study.name, study_path(study)
+      %tr 
+        %td= link_to study.name, study_path(study)
+        %td= study.status
 
 
 
