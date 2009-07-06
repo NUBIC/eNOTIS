@@ -72,12 +72,22 @@
     #events
       .heading Events
     #imports
-      .heading Imports
+      %h4 Imports
       %ul
         - @study.study_uploads.each do |u|
           %li
             = "by #{u.user.netid}"
-        
+            = link_to "Uploaded File", u.upload.url
+            - if !u.result.nil?
+              = link_to "Result", u.result.url
+      - form_tag('/subjects', :multipart => true) do
+        = hidden_field_tag("study_id",@study.id.to_s)
+        = label_tag('attachment','Upload New Patient File:')
+        %br
+        = file_field_tag(:file)
+        %br
+        = submit_tag( "Upload" )
+ 
   -#study_full
     %ul.menu
       %li.active

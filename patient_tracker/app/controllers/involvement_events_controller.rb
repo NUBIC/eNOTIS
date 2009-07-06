@@ -16,9 +16,12 @@ class InvolvementEventsController < ApplicationController
 
   def create
     # TODO Refactor into smaller several smaller methods
-    @subject = Subject.find_by_mrn(params[:mrn])
+    @subject = Subject.find(:first,:conditions=>["mrn='#{params[:mrn]}'"],:span=>:global)
+    @subject.save unless @subject.nil?
     @study = Study.find_by_id(session[:study_id])
-    if @subject and @study and @involvement = @study.add_subject(@subject) # TODO Make this cleaner... know the difference between 'and' and '&'??
+    @involvement = @study.add_subject(@subject) unless @subject.nil?
+    
+    if @involvement # TODO Make this cleaner... know the difference between 'and' and '&'??
       respond_to do |format|
         format.html do
           flash[:notice] = "Success"
@@ -42,8 +45,11 @@ class InvolvementEventsController < ApplicationController
   end  
 
   def search
-    if not params[:no_mrn]
-      @subject = Subject.find_by_mrn(params[:mrn])
+    if !params[:mrn].blank?
+      subject = Subject.find(:first,:conditions=>["mrn='#{params[:mrn]}'"],:span=>:global)
+      @subjects = [subject] || []
+    elsif !params[:first_name].blank? and !params[:last_name].blank? and !params[:birth_date].blank?
+      @subjects = Subject.find(:all,:conditions=> ["first_name = #{params[:first_name]} and last_name = #{params[:last_name]} and birth_date = #{params[:birth_date]}"],:span=>:foreign)
     end
     respond_to do |format|
       format.html

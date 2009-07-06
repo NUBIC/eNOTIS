@@ -1,29 +1,19 @@
-- if @subject.nil? 
-  - form_remote_tag( :url=> involvement_events_path ) do |f| 
-    = label_tag 'first_name' 
-    = text_field_tag :first_name
-    %br
-    = label_tag 'last_name' 
-    = text_field_tag :last_name
-    %br
-    = label_tag 'dob', "Date of Birth" 
-    = text_field_tag :dob
-    %br
-    = submit_tag("Add Subject") 
-- else
-  - form_remote_tag( :url=> involvement_events_path ) do |f| 
-    = label_tag 'first_name' 
-    = text_field_tag( :first_name, @subject.first_name)
-    %br
-    = label_tag 'last_name' 
-    = text_field_tag( :last_name, @subject.last_name)
-    %br
-    = label_tag 'dob', "Date of Birth" 
-    = text_field_tag( :dob , @subject.birth_date)
-    %br
-    - if @subject.involvements.size > 0 
-      Subject Is Associated with the following studies:
-      %ul
-      - @subject.involvements.each do |involvement| 
-        %li= link_to(involvement.study.name, study_path(involvement.study))
-    = submit_tag( "Confirm/Add Subject" ) 
+- if !@subjects.empty?
+  %p Found the Following Patients
+  -@subjects.each do |subject|
+    - form_remote_tag( :url=> involvement_events_path ) do |f| 
+      = label_tag 'first_name' 
+      = text_field_tag( :first_name, subject.first_name)
+      = label_tag 'last_name' 
+      = text_field_tag( :last_name, subject.last_name)
+      %br
+      = label_tag 'mrn'
+      = text_field_tag(:mrn,subject.mrn)
+      = label_tag 'birth_date', "Date of Birth" 
+      = text_field_tag( :birth_date , subject.birth_date)
+      = submit_tag( "Confirm/Add Subject" ) 
+      %p -------------------------------------
+-else
+  %p No Subject Found Matching Given Criteria
+  
+
