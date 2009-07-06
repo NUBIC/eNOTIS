@@ -30,8 +30,11 @@
             %li= "#{@study.coordinators.first.name}: 3 consented on #{3.days.ago.to_s(:short)}"
       #staff_list.column
         .heading Staff list
-        - @study.coordinators.each do |c|        
-          = "#{c.first_name} #{c.last_name}"
+        %ul
+          - @study.coordinators.each do |c|        
+            %li
+              = "#{c.first_name} #{c.last_name}"
+              %br
       %br.clear
     #subjects
       %h4 Subjects
