@@ -47,7 +47,7 @@
             = "#{subject.first_name} #{subject.last_name}"
           
     #documents
-      %h4 Documents
+      .heading Documents
       %ul
         %li
           "Download"
@@ -57,9 +57,9 @@
             "Download"
             = link_to d.title, d.url
     #events
-      No events
+      .heading Events
     #imports
-      %h4 Imports
+      .heading Imports
       %ul
         - @study.study_uploads.each do |u|
           %li
