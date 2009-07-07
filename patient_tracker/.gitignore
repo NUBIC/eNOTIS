@@ -7,3 +7,4 @@ tmp/*
 public/uploads/*
 public/results/*
 app/stylesheets/.sass-cache/*
+public/stylesheets/compiled/*
