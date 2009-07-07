@@ -52,22 +52,17 @@ namespace :users do
     puts user_hash[:email].to_s
     puts user_hash.inspect
   end
-
+  
+  # rake db:populate:admins depends on this rake task
   desc "creates the admin users"
   task :create_admins => :environment do
-    admins = {
-      :blc615 => {:fn => "Brian",:ln => "Chamberlain",:e => "b-chamberlain@northwestern.edu"}, 
-      :daw286 => {:fn => "David",:ln => "Were",:e => "d-were@northwestern.edu"},
-      :myo628 => {:fn => "Mark",:ln => "Yoon",:e => "yoon@northwestern.edu"}
-    }
-
-    admins.each do |k,u|
-      unless User.find_by_netid(k.to_s)
-        User.create(:netid => k.to_s, :first_name => u[:fn], :last_name => u[:ln], :email => u[:e])
-        puts "Created #{k}"       
-      else
-        puts "#{k} already exists"
-      end
+    admins = [{:netid => "rkc226", :first_name => "Reginal", :last_name => "Campbell",    :email => "rk-campbell@northwestern.edu"},
+              {:netid => "blc615", :first_name => "Brian",   :last_name => "Chamberlain", :email => "b-chamberlain@northwestern.edu"}, 
+              {:netid => "daw286", :first_name => "David",   :last_name => "Were",        :email => "d-were@northwestern.edu"},
+              {:netid => "myo628", :first_name => "Mark",    :last_name => "Yoon",        :email => "yoon@northwestern.edu"}]
+    admins.each do |hash|
+      User.create(hash) unless (exists = User.find_by_netid(hash[:netid]))
+      puts exists ? "#{hash[:netid]} already exists" : "Created #{hash[:netid]}"
     end
   end
 
