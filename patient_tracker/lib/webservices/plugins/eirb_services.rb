@@ -45,8 +45,16 @@ class EirbServices
     chunked_search("eNOTIS Study Access", (conditions ? convert_for_eirb(conditions) : nil) )
   end
 
+  def self.find_all_study_states
+    chunked_search("eNOTIS Study Status")
+  end
+
   def self.find_all_users
     chunked_search("eNOTIS Person List")
+  end
+
+  def self.find_all_study_basics
+    chunked_search("eNOTIS Study Basics")
   end
 
   # ======== Search helper methods =========
@@ -66,7 +74,7 @@ class EirbServices
       partial_results = paginated_search(search_name,start_row,num_rows,parameters)
       break if partial_results.empty? 
       results.concat(partial_results)
-      start_row += partial_results.size
+      start_row += num_rows
     end
     results
   end
