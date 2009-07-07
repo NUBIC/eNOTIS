@@ -49,6 +49,10 @@ Question: What about Children's? They are not on eIRB, have their own IRB. Adds 
 
 Feature: make sure to add gender
 
+Brian - need: More complete EDW report
+- notis => enotis: another edw report
+
+
 # PROMIS
 
 Patient reported outcomes management information system
@@ -78,3 +82,14 @@ all free, going into validation
 if funding runs out - 5 grand a year per study
 produce same as SF12, SF36, for free and shorter
 
+# Follow up
+
+Metrics:
+
+Duplicate MRNs
+Disappearing MRNs
+Clobbering subjects that shouldn't sync (right now send a flag)
+
+Fn/Ln/Dob/Mrn
+Race/gender
+no: address, phone
