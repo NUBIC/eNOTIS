@@ -1,15 +1,19 @@
+- @stylesheets = %w(reset compiled/default compiled/datatables)
+- @javascripts = %w(jquery-1.3.2.min jquery.dataTables.min)
+- content_for :head do
+  :javascript
+    $(document).ready(function(){$(".display").dataTable();});
+
 #study_list
   .heading All Studies
-  %table
-    %tr
-      %th Name
+  %table.display
+    %thead
+      %th Study ID
+      %th Short title
       %th Status
-      
-    - @studies.each do |study|
-      %tr 
-        %td= link_to study.name, study_path(study)
-        %td= study.status
-
-
-
-
+    %tbody  
+      - @studies.each do |study|
+        %tr
+          %td= link_to study.irb_number, study_path(study) || "(no id)"
+          %td= study.title || "(no title)"
+          %td= study.status || "(no status)"
