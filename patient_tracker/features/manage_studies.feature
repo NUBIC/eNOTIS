@@ -35,7 +35,7 @@ Feature: Manage studies
     Given a study "Vitamin C and concentration" with id "0012345" and status "Approved"
     When I go to the study page for id "0012345"
     Then I should not see "Study Subjects"
-    And I should not see "Documents"
+    And I should not see "Subject Imports"
     
   Scenario: A random user can view contact information for other users (click on name, get a popup)
     Given a user "suzq" named "Sue Z" "Quou"
@@ -48,7 +48,7 @@ Feature: Manage studies
     And "pi" has access to study id "45234"
     When I go to the study page for id "45234"
     Then I should see "Study Subjects"
-    And I should see "Documents"
+    And I should see "Subject Imports"
   
   Scenario: A coordinator can view all personnel that have access on a study
     Given a user "suzq" named "Sue Z" "Quou"
@@ -77,15 +77,6 @@ Feature: Manage studies
     When I go to the study page for id "45234"
     Then I should see "3"
     And I should see "subjects currently associated with this study"
-
-  Scenario: A coordinator can view links to documents they have access to on a study
-    And a study "Vitamin D and Depression" with id "45234" and status "Approved"
-    And the study "45234" has a document with title "Rapid Consent"
-    And "pi" has access to study id "45234"
-    When I go to the study page for id "45234"
-    And I follow "Documents"
-    Then I should see "Download"
-    And I should see "Rapid Consent"
 
   Scenario: A coordinator can view all imports made to a study they have access to
     Given "pi" has access to study id "45234"
