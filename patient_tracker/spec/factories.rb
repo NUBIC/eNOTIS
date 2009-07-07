@@ -73,14 +73,14 @@ Factory.define :study do |p|
   p.phase                 {"II"}
   p.description           {"Rem fugit culpa unde facilis earum. Quas et vitae ut cumque nihil quidem aperiam architecto. Et asperiores inventore non nisi libero architecto quibusdam.\r\n\r\nVeniam fugiat voluptas laudantium in assumenda. Blanditiis recusandae illum necessitatibus. Quia nesciunt esse officia neque doloribus vel explicabo provident. Non sit vero iusto quibusdam explicabo. Nobis in architecto quam pariatur sit autem optio."}
   p.status                {"Approved"}
-  p.pi_netid              {}
-  p.pi_first_name         {}
-  p.pi_last_name          {}
-  p.pi_email              {}
-  p.sc_netid              {}
-  p.sc_first_name         {}
-  p.sc_last_name          {}
-  p.sc_email              {}
+  p.pi_netid              {"tuh532"}
+  p.pi_first_name         {"Terry"}
+  p.pi_last_name          {"Hulu"}
+  p.pi_email              {"t-hulu@northwestern.edu"}
+  p.sc_netid              {"cab133"}
+  p.sc_first_name         {"Carter"}
+  p.sc_last_name          {"Baggs"}
+  p.sc_email              {"cbaggs@northwestern.edu"}
   p.synced_at       {3.minutes.ago}
 end
 
@@ -88,7 +88,7 @@ Factory.define :fake_study, :parent => :study do |p|
   # p.irb_number
   p.name                  {Faker::Study.title}
   p.title                 {|me| me.name}
-  p.research_type         {}
+  p.research_type         {["Bio-medical","Bio-medical","Bio-medical","Social/Behavioral",""].rand}
   p.phase                 {["I","II","III","IV","n/a",nil].rand}
   p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
   p.status                {Faker::Study.eirb_status}
