@@ -50,7 +50,7 @@ class EirbServices
   end
 
   def self.find_all_users
-    chunked_search("eNOTIS Person List")
+    chunked_search("eNOTIS Person Details")
   end
 
   def self.find_all_study_basics
