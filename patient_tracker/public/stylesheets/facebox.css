@@ -47,8 +47,18 @@
 
 }
 
+#facebox label{
+display: block;
+float: left;
+text-align: left; 
+width: 150px;
+}
+
 #facebox input{
   margin: 0.5em;
+}
+#facebox textarea{
+padding-left 100px
 }
 
 #facebox .loading {

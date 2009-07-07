@@ -1,8 +1,16 @@
 #new_subject_form
-  - form_remote_tag( :url=> search_involvement_events_path ) do |f|
+  - form_remote_tag( :url=> search_involvement_events_path ) do
     = label_tag 'mrn','Enter MRN'
     = text_field_tag(:mrn)
-    = check_box_tag :no_mrn, 'No Mrn'
-    No Mrn
     %br
-    = submit_tag("Continue")
+    %p= "---------------OR--------------"
+    = label_tag 'first_name', 'Enter First Name'
+    = text_field_tag(:first_name)
+    %br
+    = label_tag 'last_name',  'Enter Last Name'
+    = text_field_tag(:last_name)
+    %br
+    = label_tag 'birth_date', 'Enter Date of Birth'
+    = text_field_tag(:birth_date)
+    %br
+    = submit_tag("submit")

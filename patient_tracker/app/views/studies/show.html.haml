@@ -21,7 +21,6 @@
     %ul.study_tabs
       %li.nav= study_tab_to "Overview", "#overview"
       %li.nav= study_tab_to "Study Subjects", "#subjects"
-      %li.nav= study_tab_to "Documents", "#documents"
       %li.nav= study_tab_to "Events", "#events"
       %li.nav= study_tab_to "Subject Imports", "#imports"
     #overview
@@ -55,29 +54,25 @@
         - @study.subjects.each do |subject|
           %li
             = "#{subject.first_name} #{subject.last_name}"
-          
-    #documents
-      .heading Documents
-      %ul
-        %li
-          = link_to "Standard Consent", "#"
-        %li
-          = link_to "Intake Form", "#"
-        %li
-          = link_to "Disease Literature", "#"
-        -# @study.documents.each do |d|
-          %li
-            "Download"
-            = link_to d.title, d.url
     #events
       .heading Events
     #imports
-      .heading Imports
+      %h4 Imports
       %ul
         - @study.study_uploads.each do |u|
           %li
             = "by #{u.user.netid}"
-        
+            = link_to "Uploaded File", u.upload.url
+            - if !u.result.nil?
+              = link_to "Result", u.result.url
+      - form_tag('/subjects', :multipart => true) do
+        = hidden_field_tag("study_id",@study.id.to_s)
+        = label_tag('attachment','Upload New Patient File:')
+        %br
+        = file_field_tag(:file)
+        %br
+        = submit_tag( "Upload" )
+ 
   -#study_full
     %ul.menu
       %li.active
