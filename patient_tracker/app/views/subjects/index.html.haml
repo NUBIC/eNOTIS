@@ -1,5 +1,9 @@
-- @javascripts = ["jQuery" , "jquery-ui" ,"jrails","application","facebox"]
-- @stylesheets = ["reset", "compiled/default", "facebox"]
+- @javascripts = ["jQuery-1.3.2.min" , "jquery-ui-1.7.2.min" ,"jrails", "facebox", "jquery.dataTables.min"]
+- @stylesheets = ["reset", "compiled/default", "facebox", "compiled/datatables"]
+
+- content_for :head do
+  :javascript
+    $(document).ready(function(){$(".display").dataTable();});
 
 #subject_list
   - if @involvements.nil?
@@ -8,11 +12,10 @@
   - else
     .heading
       = "The following subjects are currently associated with #{@study ? 'this study' : 'your studies'}"
-    %ul 
-      - @involvements.each do |i|
-        %li
-          = facebox_link_to("#{i.subject.first_name} #{i.subject.last_name}", :url => subject_url(i.subject) , :method=>:get)
-
-
-
-
+    %table.display
+      %thead
+        %th Name
+      %tbody  
+        - @involvements.each do |i|
+          %tr
+            %td= facebox_link_to(i.subject.name, :url => subject_url(i.subject) , :method=>:get)

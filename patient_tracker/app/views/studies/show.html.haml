@@ -1,8 +1,9 @@
-- @javascripts = ["jquery-1.3.2.min" , "jquery-ui-1.7.2.min" ,"jrails","application","facebox"]
-- @stylesheets = ["reset", "compiled/default", "facebox"]
+- @javascripts = ["jQuery-1.3.2.min" , "jquery-ui-1.7.2.min" ,"jrails", "facebox", "jquery.dataTables.min"]
+- @stylesheets = ["reset", "compiled/default", "facebox", "compiled/datatables"]
+
 - content_for :head do
   :javascript
-    $(document).ready(function(){$("#study").tabs();});
+    $(document).ready(function(){$("#study").tabs(); $(".display").dataTable();});
 #study
   .vitals
     %p.irb_number= @study.irb_number
@@ -43,17 +44,17 @@
 
       %br.clear
     #subjects
-      %h4 Subjects
-      %strong
-        = (@study.involvements || []).size
-        subjects currently associated with this study
-      %span.add_subjects
-        -if @study.has_coordinator?(@current_user)
-          = facebox_link_to("Add Subject", :url => new_involvement_event_path, :study_number => {:study_number => @study.id}, :method => :get)
-      %ul
-        - @study.subjects.each do |subject|
-          %li
-            = "#{subject.first_name} #{subject.last_name}"
+      = (@study.involvements || []).size
+      subjects currently associated with this study
+      -if @study.has_coordinator?(@current_user)
+        = facebox_link_to("+ Add Subject", :url => new_involvement_event_path, :study_number => {:study_number => @study.id}, :method => :get)
+      %table.display
+        %thead
+          %th Name
+        %tbody  
+          - @study.subjects.each do |subject|
+            %tr
+              %td= subject.name || "(no name)"
     #events
       .heading Events
     #imports

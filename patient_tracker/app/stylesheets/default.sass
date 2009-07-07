@@ -177,34 +177,6 @@ body
     #study_list
       :float left
       :width 70%
-      /
-        ul
-        :background-color= !V_LT_GRAY
-        :padding .25em .5em
-        :min-height 15em
-        li
-          :overflow hidden
-          :white-space nowrap
-          :text-overflow ellipsis
-          a
-            :display block
-            :width 100%
-            :padding .25em .5em
-            :color= !FONT_COLOR
-            :text-decoration none
-            .study_id
-              :font-weight bold
-            .name
-            .description
-              / :font-weight italic
-            .details
-              / :float right
-              / :margin-right 2em
-          a:hover
-            :cursor pointer
-            :background-color= !LT_YELLOW
-          a:hover:after
-            / :content ' (click for details)'
     #recent_events
       :float left
       :width 27%
@@ -224,56 +196,14 @@ body
             :cursor pointer
             :background-color= !LT_YELLOW
           a:hover:after
-            / :content ' (click for details)'
-    #user_options
-      :background-color= !LT_GRAY
-      :-moz-border-radius 4px 4px
-      :width 35%
-      :margin 1em
-      :margin-left 60%
-      :padding 1.5em
-      :height 10em
-    #subject_list
-      ul
-        :background-color= !V_LT_GRAY
-        :padding .25em .5em
-        :min-height 15em
-        li
-          :overflow hidden
-          :white-space nowrap
-          :text-overflow ellipsis
-          a
-            :display block
-            :width 100%
-            :padding .25em .5em
-            :color= !FONT_COLOR
-            :text-decoration none
-          a:hover
-            :cursor pointer
-            :background-color= !LT_YELLOW
-          a:hover:after
-            / :content ' (click for details)'
-      .add_subjects
-        :float right
-        :margin-right 1em
-        :margin-top -1em
-        a
-          :display block
-          :border 1px solid #333
-          :padding 0.3em
-          :font-weight bold
-          :text-decoration none
-          :text-align center
-          :width 8em
-          :background-color= !NU_PURPLE
-          :color= !FONT_INVERT_COLOR
-        a:hover
-          :background-color= !LT_YELLOW
-          :color= !NU_PURPLE
     // dashboard show add subject popup
     #new_subject_form
       input
         :padding 0.5em
+
+    // my subjects
+    #subject_list
+
     // study
     #study
       .vitals
@@ -339,136 +269,87 @@ body
           li
             :background-color= !V_LT_GRAY
             :padding .25em .5em
-      .header_details
-        :-moz-border-radius 4px 4px
-        :background-color= !LT_GRAY
-        :padding 1em
-        :margin-bottom 1em
-        .primary_data
-          :font-weight bold
-          :font-size 2em
-          :width 6.4em
-          :float left
-          :border 1px solid #333
-          :background-color= !BODY_COLOR
-          :margin-bottom 0.5em
-        .secondary_data
-          :font-size 1.3em
-          / :line-height 1.5em
-          :margin-left 11.5em
-          :font-weight bold
-          em
-            :font-weight normal
-        .tertiary_data
-          :border-top 1px solid #333
-          :clear both
-          :padding 0.5em
-          :font-size 1.2em
-        .status_icon
-          :padding 0.5em
-          :border 1px solid #333
-          :width 5.35em
-          / :line-height 1em
-        .study_id
-          :text-align center
-          :width 100%
-          :padding 0.5em 0em
-        .approved
-          :background-color= !APPROVED_COLOR
-          :color= !APPROVED_FONT_COLOR
-        .suspended
-          :background-color= !SUSPENDED_COLOR
-        .terminated
-          :background-color= !TERMINATED_COLOR
-        .review
-          :background-color= !REVIEW_COLOR
-      .file_details
-        :-moz-border-radius 4px 4px
-        :background-color= !LT_GRAY
-        :padding 0.5em
-        :margin-bottom 1em
-        :float left
-        :width 45%
-        .study_file
-          :padding 0.5em
-          :border-top 1px solid #f0f0f0
-          :border-bottom 1px solid #f0f0f0
-          :margin-bottom -1px
-          img
-            :position relative
-            :top 3px
-          em
-            :padding-bottom 0.4em
-      .status_history
-        :-moz-border-radius 4px 4px
-        :background-color= !LT_GRAY
-        :padding 0.5em
-        :margin-bottom 1em
-        :margin-left 50%
-        li
-          :padding 0.5em
-      .accural_status
-        :-moz-border-radius 4px 4px
-        :background-color= !LT_GRAY
-        :padding 0.5em
-        :margin-bottom 1em
+
     // my events
-    #my-events
-      ul
-        :background-color= !V_LT_GRAY
-        :padding .25em .5em
-        :min-height 15em
-        li
-          :list-style none
-          :overflow hidden
-          :white-space nowrap
-          :text-overflow ellipsis
-          a
-            :display block
-            :width 100%
-            :padding .25em .5em
-            :color= !FONT_COLOR
-            :text-decoration none
-          a:hover
-            :cursor pointer
-            :background-color= !LT_YELLOW
-          a:hover:after
+    #my_events
+    
   #footer
     :background-color #fff
     :padding 1em
     :border-top 1px solid #333
     :text-transform uppercase
 
-// hover menu - no longer used
-  ul#menu
-    :margin 0
-    :padding 0
-    :list-style none
-    :width 100%
-    li
-      :background-color= !NU_PURPLE
-      :color= !FONT_INVERT_COLOR
-      :float left
-      :height 5em
-      div
-        :padding 1em
-        :font-size 1.2em
-        input[type='text']
-          :background-color= !BODY_COLOR
-          :font-size 1.2em
-          :border 2px inset #333
-          :border-color= !LT_GRAY
-    #app_name
-      :font-size 2em
-      :padding 0.6em
-      :width 8em
+/
+  .header_details
+    :-moz-border-radius 4px 4px
+    :background-color= !LT_GRAY
+    :padding 1em
+    :margin-bottom 1em
+    .primary_data
       :font-weight bold
-    #study_search
-      :width 35em
-    #subject_search
-      :width 35em
-    #current_user
-      :width 7em
-      a
-        :color= !FONT_INVERT_COLOR
-
+      :font-size 2em
+      :width 6.4em
+      :float left
+      :border 1px solid #333
+      :background-color= !BODY_COLOR
+      :margin-bottom 0.5em
+    .secondary_data
+      :font-size 1.3em
+      / :line-height 1.5em
+      :margin-left 11.5em
+      :font-weight bold
+      em
+        :font-weight normal
+    .tertiary_data
+      :border-top 1px solid #333
+      :clear both
+      :padding 0.5em
+      :font-size 1.2em
+    .status_icon
+      :padding 0.5em
+      :border 1px solid #333
+      :width 5.35em
+      / :line-height 1em
+    .study_id
+      :text-align center
+      :width 100%
+      :padding 0.5em 0em
+    .approved
+      :background-color= !APPROVED_COLOR
+      :color= !APPROVED_FONT_COLOR
+    .suspended
+      :background-color= !SUSPENDED_COLOR
+    .terminated
+      :background-color= !TERMINATED_COLOR
+    .review
+      :background-color= !REVIEW_COLOR
+  .file_details
+    :-moz-border-radius 4px 4px
+    :background-color= !LT_GRAY
+    :padding 0.5em
+    :margin-bottom 1em
+    :float left
+    :width 45%
+    .study_file
+      :padding 0.5em
+      :border-top 1px solid #f0f0f0
+      :border-bottom 1px solid #f0f0f0
+      :margin-bottom -1px
+      img
+        :position relative
+        :top 3px
+      em
+        :padding-bottom 0.4em
+  .status_history
+    :-moz-border-radius 4px 4px
+    :background-color= !LT_GRAY
+    :padding 0.5em
+    :margin-bottom 1em
+    :margin-left 50%
+    li
+      :padding 0.5em
+  .accural_status
+    :-moz-border-radius 4px 4px
+    :background-color= !LT_GRAY
+    :padding 0.5em
+    :margin-bottom 1em
