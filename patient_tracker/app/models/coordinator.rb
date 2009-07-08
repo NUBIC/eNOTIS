@@ -17,7 +17,9 @@ class Coordinator < ActiveRecord::Base
       if study = Study.find(:first, :conditions => "irb_number ='#{role[:irb_number]}'",:span => :global)
         logger.info "Found study #{role[:irb_number]}"        
         study.save
-        unless role[:netid].empty? || role[:netid].nil
+        unless role[:netid].nil? or role[:netid].empty?
+          #fixing the case
+          role[:netid].downcase!
           user = User.find_by_netid(role[:netid])
          if user.nil?
            user_hash = EirbServices.find_by_netid({:netid => role[:netid]}).first
@@ -25,8 +27,10 @@ class Coordinator < ActiveRecord::Base
            user = User.create(user_hash)
          end
          if user
-           study.coordinators.create(:user_id => user.id)
-           logger.info "Created coordinator #{user.netid}"
+           unless study.coordinators.find(:first,:conditions => ["user_id = ?",user]) 
+             study.coordinators.create(:user_id => user.id)
+             logger.info "Created coordinator #{user.netid}"
+           end
          else
            logger.warn "Problem finding or creating user #{role[:netid]}"
          end
