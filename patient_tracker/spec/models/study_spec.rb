@@ -20,6 +20,14 @@ describe Study do
     @study.description.should == "Randomized Evaluation of Sinusitis With Vitamin A440"
     @study.synced_at.should >= 1.minute.ago
   end
+  it "should tell us when we can accrue subjects" do
+    ["Approved", "Conditional Approval", "Exempt Approved", "Not Under IRB Purview", "Revision Open"].each do |status|
+      Factory(:study, :status => status).may_accrue?.should be_true
+    end
+    ["Rejected", "Revision Closed", "Suspended", "Withdrawn", "foo", nil].each do |status|
+      Factory(:study, :status => status).may_accrue?.should be_false
+    end
+  end
   
   describe "with subjects" do
     it "should add a new subject, regardless of status(open) or subject syncing" do

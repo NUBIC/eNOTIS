@@ -99,7 +99,11 @@ Factory.define :fake_study, :parent => :study do |p|
   p.sc_first_name         {Faker::Name.first_name}
   p.sc_last_name          {Faker::Name.last_name}
   p.sc_email              {Faker::Internet.email}
+<<<<<<< HEAD:patient_tracker/spec/factories.rb
   p.sc_netid              {|me| "#{me.pi_first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{me.pi_last_name.gsub(/[^a-zA-Z]/,'')[0,2]}#{(100..999).to_a.rand}".downcase}
+=======
+  p.sc_netid              {|me| "#{me.sc_first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{me.sc_last_name.gsub(/[^a-zA-Z]/,'')[0,2]}#{(100..999).to_a.rand}".downcase}
+>>>>>>> 89f6dc4cee5eed8edde0fef6520f585c706c2ad7:patient_tracker/spec/factories.rb
   p.synced_at       {Populator.value_in_range(2.days.ago..2.minutes.ago)}
 end
 

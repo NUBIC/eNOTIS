@@ -1,9 +1,11 @@
 class SubjectsController < ApplicationController
   require 'fastercsv'
+  require 'activemessaging/processor'
+  include ActiveMessaging::MessageSender
   include FaceboxRender
   before_filter :user_must_be_logged_in
   layout "main"
-
+  publishes_to :patient_upload
   def index
     if params[:irb_number]
       @study = Study.find_by_irb_number(params[:irb_number])
@@ -28,11 +30,13 @@ class SubjectsController < ApplicationController
   end
   
   def create
-    @study_upload = StudyUpload.create(:study_id => params[:study], :upload => params[:file])
+    @study_upload = StudyUpload.create(:user_id=>current_user.id,:study_id => params[:study_id], :upload => params[:file])
     temp_file = Tempfile.new("results")
+    @study_upload.save
     if self.class.csv_sanity_check(@study_upload.upload, temp_file)
-      self.class.queue_import(@study_upload.id)
-      redirect_to params[:study].blank? ? studies_path : study_path(:id => params[:study])
+      #self.class.queue_import(@study_upload.id.to_s)
+      publish :patient_upload, @study_upload.id.to_s
+      redirect_to params[:study_id].blank? ? studies_path : study_path(:id => params[:study_id])
     else
       @study_upload.result = temp_file
       temp_file.close!
@@ -47,10 +51,6 @@ class SubjectsController < ApplicationController
       render :text => @study_upload.result.to_io.read
     end
   end
-
-  def self.queue_import(id)
-    
-  end
   
   def self.csv_sanity_check(csv, temp_file = Tempfile.new("results")) # csv can be a string, file, or Paperclip::Attachment
     # We may possibly want to sanity check dates with Chronic http://chronic.rubyforge.org/
@@ -59,7 +59,7 @@ class SubjectsController < ApplicationController
     FasterCSV.open(temp_file.path, "r+") do |temp_stream|
       # TODO This is unacceptable. Please clean it up
       FasterCSV.parse(csv, :headers => :first_row, :return_headers => true, :header_converters => :symbol) do |r|      
-        errors << (r[:mrn].blank? ? (r[:last_name].blank? or r[:first_name].blank? or r[:dob].blank?) ? "A first_name and last_name and dob, or an mrn is required. " : "" : "") + \
+        errors << (r[:mrn].blank? ? (r[:last_name].blank? or r[:first_name].blank? or r[:birth_date].blank?) ? "A first_name and last_name and birth_date, or an mrn is required. " : "" : "") + \
           ((r[:subject_event_type].blank? or r[:subject_event_date].blank?) ? "A subject event type and date is required." : "")
         temp_stream << (errors.size == 1 ? ["import_errors"] : [errors.last]) + r.fields
       end
