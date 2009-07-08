@@ -3,19 +3,8 @@
 - content_for :head do
   :javascript
     $(document).ready(function(){$(".display").dataTable();});
-#study_list
-  .heading My Studies
-  %table.display
-    %thead
-      %th Study ID
-      %th Short title
-      %th Status
-    %tbody  
-      - @accessable_studies.each do |study|
-        %tr
-          %td= link_to study.irb_number, study_path(study) || "(no id)"
-          %td= study.title || "(no title)"
-          %td= study.status || "(no status)"
+#my_studies
+  = render :partial => 'partials/study_table'
 #recent_events
   .heading
     Recent Events
