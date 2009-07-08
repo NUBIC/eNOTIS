@@ -17,8 +17,9 @@ class Coordinator < ActiveRecord::Base
       if study = Study.find(:first, :conditions => "irb_number ='#{role[:irb_number]}'",:span => :global)
         logger.info "Found study #{role[:irb_number]}"        
         study.save
-        unless role[:netid].empty?
-         unless user = User.find_by_netid(role[:netid])
+        unless role[:netid].empty? || role[:netid].nil
+          user = User.find_by_netid(role[:netid])
+         if user.nil?
            user_hash = EirbServices.find_by_netid({:netid => role[:netid]}).first
            logger.info user_hash.inspect
            user = User.create(user_hash)
