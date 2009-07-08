@@ -3,7 +3,8 @@ class AuthenticationController < ApplicationController
   layout "layouts/default"
 
   def index
-    # TODO System staus check 
+    # TODO System staus check
+    @status = system_status
   end
   
   def login
@@ -19,6 +20,7 @@ class AuthenticationController < ApplicationController
     else
       note_failed_signin
       @netid = params[:netid]
+      @status = system_status
       render :action => 'index'
     end
   end

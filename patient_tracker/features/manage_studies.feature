@@ -83,4 +83,4 @@ Feature: Manage studies
     And the study "45234" has an upload by "pi"
     When I go to the study page for id "45234"
     And I follow "Subject Imports"
-    Then I should see "by pi"
+    Then I should see "pi"

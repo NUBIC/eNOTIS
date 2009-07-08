@@ -8,12 +8,9 @@
     %p= link_to "I cannot access my account", "#"
 .enotis_description
   eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University
-.system_status
+.system_status{:class => @status}
   .heading System status
-  %p Don't think twice, it's alright
-  -# %p Blowin' in the wind (down)
-  -# %p The times they are a-changin' (scheduled maintenance)
-  -# %p Like a rolling stone (restored)
+  %p= ApplicationController::SYSTEM_STATUSES[@status.to_sym]
 .training
   .heading Get acquainted with eNOTIS
   .video Learn basic concepts and log in

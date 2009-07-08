@@ -5,6 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :collection => {:dashbaord => :get}
   
   map.resources :involvement_events, :collection => {:search => :post}
+  map.resource  :search, :controller => :search
   
   map.dashboard '/dashboard', {:controller => "users", :action => "dashboard"}
   map.default '', {:controller => "users", :action => "dashboard"}

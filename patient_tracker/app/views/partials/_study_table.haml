@@ -1,0 +1,12 @@
+.heading My Studies
+%table.display
+  %thead
+    %th Study ID
+    %th Short title
+    %th Status
+  %tbody  
+    - @studies.each do |study|
+      %tr
+        %td= link_to study.irb_number, study_path(study) || "(no id)"
+        %td= study.title || "(no title)"
+        %td= study.status || "(no status)"

@@ -18,4 +18,4 @@
       %tbody  
         - @involvements.each do |i|
           %tr
-            %td= facebox_link_to(i.subject.name, :url => subject_url(i.subject) , :method=>:get)
+            %td= render :partial => "partials/subject", :object => i.subject
