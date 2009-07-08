@@ -14,7 +14,7 @@
       -#.tagline
         Clinical Subject Registration made eASY
       .current_user
-        = current_user.netid
+        = "#{current_user.name} (#{current_user.netid})"
         |
         = link_to('Logout', logout_authentication_path)
       %ul.bridge-nav
