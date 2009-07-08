@@ -5,6 +5,6 @@ class UsersController < ApplicationController
 
   # The dashboard
   def dashboard
-    @accessable_studies = current_user.studies 
+    @studies = current_user.studies 
   end
 end
