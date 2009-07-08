@@ -154,11 +154,14 @@ body
       :margin-top 1.5em
       :-moz-border-radius 4px
       :padding 1em
-      :background-color #D9FFCC
       .heading
         :background transparent
       p
         :padding .25em .5em
+      &.down, &.scheduled_maintenance
+        :background-color #FFD9CC
+      &.up, &.scheduled_restored
+        :background-color #D9FFCC
     .training
       :width 50em
       :margin-top 1.5em    

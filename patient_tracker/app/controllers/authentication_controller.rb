@@ -3,7 +3,8 @@ class AuthenticationController < ApplicationController
   layout "layouts/default"
 
   def index
-    # TODO System staus check 
+    # TODO System staus check
+    @status = system_status
   end
   
   def login
