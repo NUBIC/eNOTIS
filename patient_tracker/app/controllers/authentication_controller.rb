@@ -20,6 +20,7 @@ class AuthenticationController < ApplicationController
     else
       note_failed_signin
       @netid = params[:netid]
+      @status = system_status
       render :action => 'index'
     end
   end
