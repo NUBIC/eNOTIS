@@ -20,6 +20,9 @@ module NavigationHelpers
     when /the study page for id "([^\"]*)"/
       "/studies/#{Study.find_by_irb_number($1).id}"
     
+    when /the search page/
+      '/search'
+    
     # Add more mappings here.
     # Here is a more fancy example:
     #
