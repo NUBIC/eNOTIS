@@ -20,9 +20,12 @@ class CreateStudies < ActiveRecord::Migration
       t.datetime :synced_at
       t.timestamps
     end
+
+    add_index(:studies, :irb_number, :unique => true)
   end
 
   def self.down
+    remove_index(:studies, :irb_number)
     drop_table :studies
   end
 end

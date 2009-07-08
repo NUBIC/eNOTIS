@@ -24,9 +24,12 @@ class CreateSubjects < ActiveRecord::Migration
       t.string :work_phone_extension
        t.timestamps
     end
+
+    add_index(:subjects, :mrn, :unique => true)
   end
 
   def self.down
+    remove_index(:subjects, :mrn)
     drop_table :subjects
   end
 end

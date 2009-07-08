@@ -25,9 +25,13 @@ class CreateUsers < ActiveRecord::Migration
       
       t.timestamps
     end
+    
+    # adding netid index
+    add_index(:users, :netid, :unique => true )
   end
 
   def self.down
+    remove_index(:users, :netid)
     drop_table :users
   end
 end
