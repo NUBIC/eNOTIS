@@ -1,0 +1,55 @@
+2009-07-09
+
+# Feature: import - multiple studies
+
+Q: MRN - Hospital or NMFF, or fn/ln/dob
+Q: Event types?
+Q: eIRB - biz admins get access to a whole bunch of studies? push to eIRB
+
+# Require
+gender, race, ethnicity, dob
+required fields allow other, refused
+allow multiple fields for race/ethnicity?
+how would you count (biracial subject counted as both)? deal with in reports, with statistician
+
+# Identifying subjects
+Identifying minors - on consent before 18th birthday
+Other populations - prisoners? taken care of IRB approval
+
+# How would you like to download data?
+NIH style accrual report
+One report of subjects on a study: completed, on study, screen fail
+subject event? dead/alive
+
+# MRNs useful for
+linking subject to NMH and NMFF data - death, hospitalizations, other events
+National death index => edw => enotis
+
+# Carrots - value added
+report to IRB the accruals: gender/race breakdowns - make sure it matches
+our carrot: for periodic reviews, no paper submission required
+
+# Adding subject
+Heart failure - two dozen studies
+Best way to find out if a subject on another study - ask subject, ask other coordinators
+Identified 5 interesting subjects - mrns - see studies? accrual status? how much longer?
+List of studies, current status in each study, current coordinator/contact info *Carrot
+
+# Feature - audit log
+need audit log of who has asked for whom
+
+# Feature - flagging missing data
+
+# Features - show accrual goal (flag when it gets close)
+your project will expire in... (flag when it gets close)
+next periodic review...
+make clearer what is coming from eirb (e.g. staff list - from eirb)
+
+# When can you accrue subjects?
+In the past, when the study was open
+Periodic review status determines when you can/cannot accrue
+when suspended - allow you to enter day - flag
+when we generate report - show flags
+
+all studies
+type, phase, accrual, and accrual goal
