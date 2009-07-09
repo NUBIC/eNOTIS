@@ -4,4 +4,12 @@ Search for studies or subjects
   = text_field_tag :query, params[:query]
   = submit_tag :search
   
-1 subject found
+- if @subjects
+  = "#{pluralize(@subjects.size, "subject")} found"
+  - @subjects.each do |subject|
+    = subject.name
+- if @studies
+  = "#{pluralize(@studies.size, "study")} found"
+  - @studies.each do |study|
+    = study.name
+    = study.status

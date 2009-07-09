@@ -5,4 +5,5 @@
     $(document).ready(function(){$(".display").dataTable();});
 
 #study_list
+  .heading= "All Studies (#{@studies.size})"
   = render :partial => 'partials/study_table'

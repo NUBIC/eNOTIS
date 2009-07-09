@@ -4,6 +4,7 @@
   :javascript
     $(document).ready(function(){$(".display").dataTable();});
 #my_studies
+  .heading= "My Studies (#{@studies.size})"
   = render :partial => 'partials/study_table'
 #recent_events
   .heading
