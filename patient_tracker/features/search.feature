@@ -1,3 +1,4 @@
+@focus
 Feature: Search
   In order to find subjects or studies or events
   As a user
@@ -19,36 +20,36 @@ Feature: Search
       | Buck       | Stoppsier |
     And I log in as "joe" with password "1234"
 
-  @focus    
+      
   Scenario: Verifying my studies
     When I go to the dashboard
     Then I should see "My Studies (1)"
-  @focus    
+      
   Scenario: Verifying all studies
     When I go to the all studies page
     Then I should see "All Studies (3)"
-  @focus    
+      
   Scenario: Verifying my subjects
     When I go to my subjects
     Then I should see "My Subjects (3)"
-  @focus
+  
   Scenario: A user clicks "Search" on bridge nav
     When I follow "Search"
     Then I should see "studies or subjects"
     And I should not see "Notice: No studies found"
     And I should not see "Find study"
-  @focus
+  
   Scenario: A user searches for some subjects, studies
     When I go to the search page
     And I search for "Marge"
     Then I should see "1 subject found"
-  @focus
+  
   Scenario: A user searches for some subjects, studies
     When I go to the search page
     And I search for "ex"
     Then I should see "1 subject found"
     And I should see "1 study found"
-  @focus
+  
   Scenario: A user searches for some subjects, studies, study statuses
     When I go to the search page
     And I search for "pp"
