@@ -17,6 +17,12 @@ module NavigationHelpers
     when /the dashboard/
       '/dashboard'
     
+    when /the all studies page/
+      '/studies'
+      
+    when /my subjects/
+      '/subjects'
+      
     when /the study page for id "([^\"]*)"/
       "/studies/#{Study.find_by_irb_number($1).id}"
     
