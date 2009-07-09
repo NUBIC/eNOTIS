@@ -6,6 +6,7 @@ class CreateInvolvementEvents < ActiveRecord::Migration
       t.integer :updated_by_id
       t.string :description
       t.string :type # for single table inheritance
+      t.string :event_type
       t.date :event_date 
       t.timestamps
     end
