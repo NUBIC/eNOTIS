@@ -12,7 +12,7 @@ end
 
 When /^I search for study "([^\"]*)"$/ do |id|
   fill_in "query", :with => id
-  click_button "Find"
+  click_button "Search"
 end
 
 Given /^a user "([^\"]*)" named "([^\"]*)" "([^\"]*)"$/ do |netid, fn, ln|

@@ -35,9 +35,7 @@ Feature: Search
   
   Scenario: A user clicks "Search" on bridge nav
     When I follow "Search"
-    Then I should see "studies or subjects"
-    And I should not see "Notice: No studies found"
-    And I should not see "Find study"
+    Then I should see "Search for all studies and my subjects"
   
   Scenario: A user searches for some subjects, studies
     When I go to the search page

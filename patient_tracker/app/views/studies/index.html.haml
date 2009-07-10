@@ -5,5 +5,5 @@
     $(document).ready(function(){$(".display").dataTable({bServerSide: true, sAjaxSource: '/studies.json' });});
 
 #study_list
-  .heading= "All Studies (#{@studies.size})"
+  .heading= "All Studies (#{@studies_count})"
   = render :partial => 'partials/study_table'

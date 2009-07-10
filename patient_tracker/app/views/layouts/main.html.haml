@@ -24,10 +24,9 @@
         %li.nav= nav_link_to "My Events", involvement_events_path, InvolvementEventsController
         %li.nav
           = nav_link_to "Search", search_path, SearchController
-          - unless @controller.class == SearchController
-            -form_tag(search_studies_path, :method => :get) do 
-              =text_field_tag("query")
-              =submit_tag("Find study")
+          -form_tag(search_path, :method => :get) do 
+            =text_field_tag("query")
+            =submit_tag("Search")
       %br.clear
 
     - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?

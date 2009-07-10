@@ -4,7 +4,10 @@ class StudiesController < ApplicationController
 
   def index
     respond_to do |format|
-      format.html { @studies = [] } 
+      format.html do
+        @studies_count = Study.count
+        @studies = []
+      end
       # What this means is that DataTables is now ideal for displaying huge amounts of data. DataTables will handle all of the events on the client-side, and send a request to the server for each draw it needs to make. The data fired back from the server will then be displayed. All the features of DataTables you know and love are supported, multi-column sorting, filtering, pagination etc. Obviously it's up to you to do the processing on the server-side and with your database interaction, but DataTables tells you what it needs through the following "get" variables:
       # 
       # iDisplayStart - Display start point
@@ -40,15 +43,6 @@ class StudiesController < ApplicationController
   def show
     session[:study_id] = params[:id]
     @study = Study.find_by_id(params[:id])
-  end
-	
-  def search
-    if params[:query] and @study = (Study.find_by_irb_number(params[:query]) || Study.find(:first, :conditions => [ "title like ?", "%#{params[:query]}%"]) )
-      render(:action => "show")
-    else
-      flash[:notice] = "No studies found"
-      redirect_to :back
-    end
   end
 
 end
