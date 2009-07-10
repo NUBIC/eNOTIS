@@ -29,7 +29,8 @@ class StudiesController < ApplicationController
       format.json do
         cols = %w(irb_number title status)
         q = "%#{params[:sSearch]}%"
-        order = (1..(params[:iSortingCols].to_i)).map{|i| [cols[(params["iSortCol_#{i}".to_sym].to_i || 0)], (params["iSortDir_#{i}"] || "ASC")].join(" ")}.join(",")
+        order = (1..(params[:iSortingCols].to_i)).map{|i| [cols[(params["iSortCol_#{i-1}".to_sym].to_i || 0)], (params["iSortDir_#{i-1}"] || "ASC")].join(" ")}.join(",")
+        logger.info order
         results = Study.find( :all,
                               :offset => params[:iDisplayStart] || 0,
                               :limit => params[:iDisplayLength] || 10,
