@@ -26,20 +26,15 @@ class StudiesController < ApplicationController
       format.json do
         cols = %w(irb_number title status)
         q = "%#{params[:sSearch]}%"
-        order = (1..(params[:iSortingCols].to_i).map{|i| [cols[(params["iSortCol_#{i}".to_sym].to_i || 0)], (params["iSortDir_#{i}"] || "ASC")].join(" ")}.join(",")
+        order = (1..(params[:iSortingCols].to_i)).map{|i| [cols[(params["iSortCol_#{i}".to_sym].to_i || 0)], (params["iSortDir_#{i}"] || "ASC")].join(" ")}.join(",")
         results = Study.find( :all,
                               :offset => params[:iDisplayStart] || 0,
                               :limit => params[:iDisplayLength] || 10,
                               :order => order,
-                              :conditions => [cols.map{|x| "#{x} LIKE ?"}.join(" OR "), q,q,q]
-                            ).map{|s| cols.map{|col| s.send(col)} }
+                              :conditions => [cols.map{|x| "#{x} LIKE ?"}.join(" OR "), q,q,q]).map{|s| cols.map{|col| s.send(col)} }
         render :json => {:aaData => results, :iTotalRecords => results.size, :iTotalDisplayRecords => Study.count}
       end
     end
-
-    
-
-    
   end
 	
   def show
