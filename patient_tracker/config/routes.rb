@@ -3,16 +3,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :studies
   map.resources :subjects
   map.resources :users, :collection => {:dashbaord => :get}
-  
   map.resources :involvement_events
-  # map.resource  :search, :controller => :search
-  map.search '/search/:query', {:controller => "search", :action => "show", :query => nil}
+  map.resource  :search, :controller => :search
   map.dashboard '/dashboard', {:controller => "users", :action => "dashboard"}
   map.default '', {:controller => "users", :action => "dashboard"}
-
-  # map.resources :registrations,:collection => {:search => :post,:add_subject => :post }
-  # map.connect 'registration', {:controller => "registrations", :action => "index"}
-
-
 end
 

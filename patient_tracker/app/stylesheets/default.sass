@@ -91,7 +91,7 @@ body
       :line-height 1.6em
       :font-size 1.6em
       :padding 0 1em 0 14em
-      li, form
+      li, form, form div
         :display inline
       li
         :list-type none
@@ -281,7 +281,15 @@ body
 
     // my events
     #my_events
-    
+    // search
+    #search_form
+      :margin 1em
+    #subject_results, #study_results
+      :float left
+      :width 48%
+      :padding-right 2%
+      .dataTables_filter
+        :display none
   #footer
     :background-color #fff
     :padding 1em
