@@ -6,7 +6,7 @@ class CreateStudies < ActiveRecord::Migration
       t.string :title
       t.string :phase
       t.string :research_type
-      t.string :description
+      t.text :description
       t.string :status
       t.string :pi_netid
       t.string :pi_first_name
