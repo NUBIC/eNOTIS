@@ -27,19 +27,21 @@ class StudiesController < ApplicationController
       # iTotalDisplayRecords - Total records, before filtering
       # aaData - The data in a 2D array
       format.json do
-        cols = %w(irb_number title status)
+        query_cols = %w(irb_number title status)
+        cols = %w(irb_number title status accrual)
         q = "%#{params[:sSearch]}%"
         order = (1..(params[:iSortingCols].to_i)).map{|i| [cols[(params["iSortCol_#{i-1}".to_sym].to_i || 0)], (params["iSortDir_#{i-1}"] || "ASC")].join(" ")}.join(",")
         results = Study.find( :all,
+                              :select => "*, (SELECT COUNT(*) FROM involvements WHERE study_id = studies.id) AS accrual",
                               :offset => params[:iDisplayStart] || 0,
                               :limit => params[:iDisplayLength] || 10,
                               :order => order,
-                              :conditions => [cols.map{|x| "#{x} LIKE ?"}.join(" OR "), q,q,q]).map{|s| cols.map{|col| s.send(col)} }
+                              :conditions => [query_cols.map{|x| "#{x} LIKE ?"}.join(" OR "), q,q,q]).map{|s| cols.map{|col| s.send(col)} }
         render :json => {:aaData => results, :iTotalRecords => results.size, :iTotalDisplayRecords => Study.count}
       end
     end
   end
-	
+
   def show
     session[:study_id] = params[:id]
     @study = Study.find_by_id(params[:id])
