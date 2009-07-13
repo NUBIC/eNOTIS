@@ -56,9 +56,13 @@ class Study < ActiveRecord::Base
   has_paper_trail
 	include WebServices
 
-  validates_presence_of :synced_at
+  validates_presence_of :synced_at, :irb_number
   
   $plugins= [EirbServices]
+  
+  def to_param
+    self.irb_number
+  end
   
   def add_subject(subject)
     unless involvements.find_by_subject_id(subject.id)
