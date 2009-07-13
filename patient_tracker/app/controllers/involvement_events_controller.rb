@@ -44,4 +44,18 @@ class InvolvementEventsController < ApplicationController
     end
   end  
 
+
+  def search
+    if !params[:mrn].blank?
+      subject = Subject.find(:first,:conditions=>["mrn='#{params[:mrn]}'"],:span=>:global)
+      @subjects = [subject] || []
+    elsif !params[:first_name].blank? and !params[:last_name].blank? and !params[:birth_date].blank?
+      @subjects = Subject.find(:all,:conditions=> ["first_name = #{params[:first_name]} and last_name = #{params[:last_name]} and birth_date = #{params[:birth_date]}"],:span=>:foreign)
+    end
+    respond_to do |format|
+      format.html
+      format.js {render_to_facebox}
+    end
+  end
+
 end

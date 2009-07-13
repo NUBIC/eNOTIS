@@ -44,7 +44,7 @@ class StudiesController < ApplicationController
 
   def show
     session[:study_irb_number] = params[:id]
-    @study = Study.find_by_irb_number(params[:id])
+    @study = Study.find(:first,:conditions=>["irb_number ='#{params[:id]}'"])
   end
 
 end
