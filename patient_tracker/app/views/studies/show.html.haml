@@ -56,12 +56,27 @@
             %tr
               %td= render :partial => 'partials/subject', :object => subject
     #events
-      .heading Events
+      %h4 Events
+      %table.display
+        %thead
+          %th Name
+          %th Event
+          %th Event Description
+          %th Event Date
+        %tbody
+          - @study.involvements.each do |involvement|
+            -involvement.involvement_events.each do |event|
+              %tr
+                %td= [involvement.subject.last_name,involvement.subject.first_name].join(',')
+                %td= event.event_type
+                %td= event.description
+                %td= event.event_date 
     #imports
       %h4 Imports
       %table.display
         %thead
           %th Importer
+          %th Upload Date
           %th Original
           %th Result
           %th Summary
@@ -69,9 +84,10 @@
           - @study.study_uploads.each do |u|
             %tr
               %td= u.user.netid
+              %td= u.created_at
               %td= link_to "View", u.upload.url
               %td= link_to "View", u.result.url
-              %td= "sumary"
+              %td= u.summary || "Still Processing"
       - form_tag('/subjects', :multipart => true) do
         = hidden_field_tag("study_id",@study.id.to_s)
         = label_tag('attachment','Upload New Patient File:')

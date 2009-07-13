@@ -22,8 +22,8 @@ Feature: Manage studies
   Scenario: A random user can search for studies (fail) and get redirected
     When I go to the dashboard
     And I search for study "90210"
-    Then I should see "No studies found"
-    And I should be on the dashboard
+    Then I should see "0 studies found"
+    And I should be on the search page
 
   Scenario: A random user can view overview details on a study, including IRB status
     Given a study "Vitamin C and concentration" with id "0012345" and status "Approved"

@@ -24,10 +24,6 @@ class SubjectsController < ApplicationController
       format.js {render_to_facebox}
     end
   end
-
-  def search
-    @subjects = Subject.find_by_mrn(params[:mrn])
-  end
   
   def create
     @study_upload = StudyUpload.create(:user_id=>current_user.id,:study_id => params[:study_id], :upload => params[:file])

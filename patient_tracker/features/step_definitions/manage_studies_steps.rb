@@ -1,7 +1,7 @@
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 
 Given /^a study "([^\"]*)" with id "([^\"]*)" and status "([^\"]*)"$/ do |title, id, status|
-  Factory.create(:fake_study, :title => title, :irb_number => id, :status => status)
+  Factory.create(:fake_study, :title => title, :name => title, :irb_number => id, :status => status)
 end
 
 Given /^I log in as "([^\"]*)"$/ do |name|
@@ -12,7 +12,7 @@ end
 
 When /^I search for study "([^\"]*)"$/ do |id|
   fill_in "query", :with => id
-  click_button "Find"
+  click_button "Search"
 end
 
 Given /^a user "([^\"]*)" named "([^\"]*)" "([^\"]*)"$/ do |netid, fn, ln|

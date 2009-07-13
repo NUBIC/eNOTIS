@@ -59,7 +59,7 @@ class Study < ActiveRecord::Base
   validates_presence_of :synced_at
   
   $plugins= [EirbServices]
-
+  
   def add_subject(subject)
     unless involvements.find_by_subject_id(subject.id)
       involvements.create(:subject_id => subject.id)
@@ -85,6 +85,9 @@ class Study < ActiveRecord::Base
   def may_accrue?
     # returns false if self.status.nil?
     ["Approved", "Conditional Approval", "Exempt Approved", "Not Under IRB Purview", "Revision Open"].include? self.status
+  end
+  def accrual
+    involvements.size
   end
   
 end
