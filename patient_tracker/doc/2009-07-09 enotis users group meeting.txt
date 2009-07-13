@@ -1,5 +1,37 @@
 2009-07-09
 
+# Features
+A coordinator should be able to upload a csv file for multiple studies
+A coordinator should be able to export reports for eirb and nih
+An administrator should be able to use audit logs to find all access on a subject, study, or by a user
+A coordinator should be able to see flagged subjects that are missing mrns
+A user should be able to see what comes from the eIRB
+A coordinator should be able to see address, race/ethnicity, gender, and other studies a subject is on during import
+A coordinator should be able to check a series of people to see what studies they are on
+A user should be able to see type, phase, accrual status and goals for all studies
+A coordinator should be able to see highlighted accrual status when they get close to their goals
+A coordinator should be able to see highlighted study status when they get close to their periodic review
+A coordinator should be able to see the next periodic review or expiration date
+A coordinator should be able to see flagged subjects that were accrued when the study was suspended
+A coordinator should be able to export a report with flagged subjects - missing mrns or accrued when study was suspended
+
+# Design decisions
+Require gender, race, ethnicity, date of birth (allow refused. allow other for race/ethnicity)
+Allow multiple fields for race/ethnicity, deal with counting in reports, with statisticians
+Minors are identified by their age at the time of the consent
+Input format: mrn | fn | ln | dob | gender | ethnicity | race(s) | consented | enrolled | ...
+You may always accrue people to studies - we'll flag them if we know accrual has happened when study is down
+Study controller should use irb_number (not id) in url
+For now, disable showing other studies that a subject is on until we can figure out who they are on
+
+# Todos, Issues
+Reggie: talk to eIRB to find out format of eIRB accrual report
+Warren: what about accrual/goals on non-government funded studies? what about secret studies?
+Jennifer: even with MRNs, Jennifer cannot tell us which of the subjects are on NUGENE. only numbers
+Brenda: there is no way to identify studies (in eirb) that are secret
+
+== Raw notes below ==
+
 # Feature: import - multiple studies
 
 Q: MRN - Hospital or NMFF, or fn/ln/dob
@@ -44,6 +76,7 @@ need audit log of who has asked for whom
 your project will expire in... (flag when it gets close)
 next periodic review...
 make clearer what is coming from eirb (e.g. staff list - from eirb)
+graph
 
 # When can you accrue subjects?
 In the past, when the study was open
@@ -51,5 +84,5 @@ Periodic review status determines when you can/cannot accrue
 when suspended - allow you to enter day - flag
 when we generate report - show flags
 
-all studies
+# all studies
 type, phase, accrual, and accrual goal
