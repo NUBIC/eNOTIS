@@ -9,25 +9,25 @@ module NavigationHelpers
     case page_name
     
     when /the homepage/
-      '/'
+      default_path
 
     when /the login page/
       authentication_index_path
 
     when /the dashboard/
-      '/dashboard/'
+      dashboard_path
     
     when /the all studies page/
-      '/studies/'
+      studies_path
       
     when /my subjects/
-      '/subjects/'
+      subjects_path
       
     when /the study page for id "([^\"]*)"/
-      "/studies/#{Study.find_by_irb_number($1).id}"
+      "/studies/#{$1}"
     
     when /the search page/
-      '/search/'
+      search_path
     
     # Add more mappings here.
     # Here is a more fancy example:

@@ -18,7 +18,7 @@ class InvolvementEventsController < ApplicationController
     # TODO Refactor into smaller several smaller methods
     @subject = Subject.find(:first,:conditions=>["mrn='#{params[:mrn]}'"],:span=>:global)
     @subject.save unless @subject.nil?
-    @study = Study.find_by_id(session[:study_id])
+    @study = Study.find_by_irb_number(session[:study_irb_number])
     @involvement = @study.add_subject(@subject) unless @subject.nil?
     
     if @involvement # TODO Make this cleaner... know the difference between 'and' and '&'??
