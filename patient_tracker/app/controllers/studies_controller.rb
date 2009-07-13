@@ -36,7 +36,7 @@ class StudiesController < ApplicationController
                               :offset => params[:iDisplayStart] || 0,
                               :limit => params[:iDisplayLength] || 10,
                               :order => order,
-                              :conditions => [query_cols.map{|x| "#{x} LIKE ?"}.join(" OR "), q,q,q]).map{|s| cols.map{|col| s.send(col)} }
+                              :conditions => [query_cols.map{|x| "#{x} LIKE ?"}.join(" OR "), q,q,q]).map{|s| cols.map{|col| (col == "irb_number" ? "<a href='#{study_path(s)}'>#{s.send(col)}</a>" : s.send(col))} }
         render :json => {:aaData => results, :iTotalRecords => results.size, :iTotalDisplayRecords => Study.count}
       end
     end
