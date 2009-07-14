@@ -10,7 +10,6 @@ class CreateStudyUploads < ActiveRecord::Migration
       t.string :result_file_name
       t.string :result_content_type
       t.integer :result_file_size
-      
       t.timestamps
     end
   end

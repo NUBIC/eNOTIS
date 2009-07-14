@@ -3,14 +3,14 @@ class CreateInvolvements < ActiveRecord::Migration
     create_table :involvements do |t|
       t.integer :subject_id
       t.integer :study_id
-      # t.boolean :confirmed
-      t.string :disease_site
-      t.text :description
       t.timestamps
     end
+
+    add_index(:involvements, [:subject_id, :study_id], :unique => true)
   end
 
   def self.down
+    remove_index(:involvements,[:subject_id, :study_id])
     drop_table :involvements
   end
 end
