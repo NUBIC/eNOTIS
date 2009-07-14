@@ -1,6 +1,4 @@
-# A subject flag is a non-temporal data element that can be associated with a patient.
-# It caries with it an application level data element (flag code) and a note string 
-# for arbitary data about the flag instance
+# A subject data is a non-temporal element that can be associated with a patient.
 #
 # Example usage: 
 # A coordinator has just approached a subject about a clinical trial. The subject indicates 
@@ -12,7 +10,7 @@
 # non-compliant if needed, this flag would be visible by other coordinators in the 
 # enotis system and other authorized users.
 
-class SubjectFlag < ActiveRecord::Base
+class SubjectData < ClinicalData
   belongs_to :subject
-  has_paper_trail
+  
 end

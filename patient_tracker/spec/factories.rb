@@ -7,7 +7,6 @@ require 'lib/faker/study'
 # http://github.com/ryanb/populator/tree/master
 
 # Constants
-LOST_RATE = Array.new(99, false) + Array.new(1, true) # 1 in 100
 DEATH_RATE = Array.new(195, false) + Array.new(5, true) # 5 in 200
 
 # Basic Models
@@ -20,45 +19,39 @@ Factory.define :subject do |p|
 
   p.mrn                       {Factory.next :mrn}
   p.mrn_type                  {"Cerner"}
-  p.source                    {"EDW"}
   p.synced_at               {3.minutes.ago}
   p.pre_sync_data             {nil}
   p.first_name                {"Pi"}
+  p.middle_name               {"A"}
   p.last_name                 {"Patel"}
-  p.lost_to_follow_up         {false}
-  p.lost_to_follow_up_reason  {nil}
   p.birth_date                {Date.parse('1941-03-01')} # 3/1/41
   p.death_date                {nil}
   p.address_line1             {"314 Circle Dr."}
   p.address_line2             {"Suite 159"}
+  p.address_line3             {nil}
   p.city                      {"Garden City"}
   p.state                     {"GA"}
   p.zip                       {"31415"}
-  p.phone                     {"110 010 0100"}
-  p.work_phone                {"180 180 1801"}
-  p.work_phone_extension      {"801"}
+  p.phone_number              {"110 010 0100"}
+  p.email                     {"pi@yatelp.com"}
 end
 
 Factory.define :fake_subject, :parent => :subject do |p|
   # p.mrn
   p.mrn_type                  {["Epic", "Cerner"].rand}
-  p.source                    {(Array.new(10, "EDW") + ["Local"]).rand}
   p.synced_at               {Populator.value_in_range(2.days.ago..2.minutes.ago)}
-  # p.pre_sync_data             {nil}
   p.first_name                {Faker::Name.first_name}
+  p.middle_name               {Faker::Name.middle_name}
   p.last_name                 {Faker::Name.last_name}
-  p.lost_to_follow_up         {LOST_RATE.rand}
-  p.lost_to_follow_up_reason  {|me| me.lost_to_follow_up ? ["oops!", "doh!"].rand : nil}
   p.birth_date                {Populator.value_in_range(80.years.ago..15.years.ago)}
   p.death_date                {|me| DEATH_RATE.rand ? Populator.value_in_range((me.birth_date+10.years)..3.years.ago) : nil}
   p.address_line1             {Faker::Address.street_address}
   p.address_line2             {Faker::Address.secondary_address}
+  p.address_line3             {nil} 
   p.city                      {Faker::Address.city}
   p.state                     {Faker::Address.us_state}
   p.zip                       {Faker::Address.zip_code}
-  p.phone                     {Faker::PhoneNumber.phone_number.split(" x")[0]}
-  p.work_phone                {Faker::PhoneNumber.phone_number.split(" x")[0]}
-  p.work_phone_extension      {Faker::PhoneNumber.phone_number.split(" x")[1]}
+  p.phone_number              {Faker::PhoneNumber.phone_number.split(" x")[0]}
 end
 
 Factory.sequence :irb_number do |n|
@@ -85,9 +78,8 @@ Factory.define :study do |p|
 end
 
 Factory.define :fake_study, :parent => :study do |p|
-  # p.irb_number
-  p.name                  {Faker::Study.title}
-  p.title                 {|me| me.name}
+  p.title                 {Faker::Study.title}
+  p.name                  {|me| s = me.title.split; "#{s.first} #{s.last}";}
   p.research_type         {["Bio-medical","Bio-medical","Bio-medical","Social/Behavioral",""].rand}
   p.phase                 {["I","II","III","IV","n/a",nil].rand}
   p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
@@ -126,30 +118,24 @@ end
 Factory.define :involvement do |i|
   i.association   :subject
   i.association   :study
-  # i.confirmed     {true}
-  i.disease_site  {nil}
-  i.description   {Faker::Lorem.words(5).join(" ")}
 end
 
 Factory.define :involvement_event do |e|
   e.association   :involvement
-  e.description  {%w(consented enrolled withdrawn screened randomized approached).rand}
-  e.event_date   {2.weeks.ago}
+  e.key          {"event_type"}
+  e.value        {%w(consented enrolled withdrawn screened randomized approached).rand}
+  e.occured_on   {2.weeks.ago}
 end
 
-
-Factory.define :subject_event do |p|
-  p.association   :subject
-  p.association   :study
-  p.status        {"Screened"}
-  p.status_date   {2.weeks.ago}
-  p.notes         {"With flying colors"}
+Factory.define :involvement_data do |e|
+  e.association   :involvement
+  e.key          {%w(race gender ethnicity).rand}
+  e.value        {%w(consented enrolled withdrawn screened randomized approached).rand}
 end
 
 Factory.define :coordinator do |u|
   u.association             :user
   u.association             :study
-  # u.role                    {"Coordinator"}
 end
 
 Factory.define :study_upload do |s|

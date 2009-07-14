@@ -1,6 +1,9 @@
 class CreateClinicalData < ActiveRecord::Migration
   def self.up
     create_table :clinical_data do |t|
+      t.integer :subject_id
+      t.integer :study_id
+      t.integer :involvement_id
       t.string :type #for sti
       t.string :key
       t.string :value
