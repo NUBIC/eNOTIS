@@ -24,6 +24,31 @@ class SubjectsController < ApplicationController
       format.js {render_to_facebox}
     end
   end
+
+  def search
+    #this method is designed specifically to search for a locally stored subject in the edw
+    @local = Subject.find(params[:id])
+    @subjects = Subject.find(:all,:conditions=> ["first_name = #{@local.first_name} and last_name = #{@local.last_name} and birth_date =#{@local.birth_date}"],:span=>:foreign)
+    respond_to do |format|
+      format.html
+      format.js {render_to_facebox}
+    end
+  end
+
+  def sync
+    #this action syncs a local records to a selected medical record
+    @local = Subject.find(params[:local_id])
+    @local.sync!(Subject.find(:first,:conditions=>["mrn='#{params[:mrn]}'"], :span=>:global).attributes)
+    respond_to do |format|
+      format.html do
+        flash[:notice] = "Success"
+        redirect_to study_path(@study)
+      end
+        format.js do
+        render_to_facebox :html => "Subject Synced to Medical Record"
+      end
+    end
+  end
   
   def create
     @study_upload = StudyUpload.create(:user_id=>current_user.id,:study_id => params[:study_id], :upload => params[:file])

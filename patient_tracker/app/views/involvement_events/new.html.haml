@@ -1,4 +1,15 @@
-#new_subject_form
+-if !@subject.nil?
+  -form_remote_tag(:url => involvement_events_path) do
+    = hidden_field_tag(:subject_id,@subject.id)
+    = label_tag('event_type','Event Type')
+    = text_field_tag(:event_type)
+    = label_tag('description')
+    = text_field_tag(:description)
+    = label_tag('event_date','Event Date')
+    = text_field_tag(:event_date)
+    %br
+    = submit_tag("Create Event")
+-else
   - form_remote_tag( :url=> search_involvement_events_path ) do
     = label_tag 'mrn','Enter MRN'
     = text_field_tag(:mrn)

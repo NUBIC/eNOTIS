@@ -8,6 +8,7 @@ class InvolvementEventsController < ApplicationController
   end
 
   def new
+    @subject = Subject.find(params[:subject_id]) unless params[:subject_id].nil?
     respond_to do |format|
       format.html
       format.js {render_to_facebox}
@@ -16,12 +17,17 @@ class InvolvementEventsController < ApplicationController
 
   def create
     # TODO Refactor into smaller several smaller methods
-    @subject = Subject.find(:first,:conditions=>["mrn='#{params[:mrn]}'"],:span=>:global)
-    @subject.save unless @subject.nil?
-    @study = Study.find_by_irb_number(session[:study_irb_number])
-    @involvement = @study.add_subject(@subject) unless @subject.nil?
+      @study = Study.find(:first,:conditions=>["irb_number='#{session[:study_irb_number]}'"],:span=>:global)
+      if !params[:subject_id]
+        @subject = find_or_create_subject(params)
+        @involvement = @study.add_subject(@subject) unless @subject.nil?
+      else
+        @subject= Subject.find(params[:subject_id])
+        @involvement = Involvement.find_by_subject_id_and_study_id(@subject.id,@study.id)  
+      end
+      event = @involvement.involvement_events.create(:event_type=>params[:event_type],:event_date=>params[:event_date],:description=>params[:description])
     
-    if @involvement # TODO Make this cleaner... know the difference between 'and' and '&'??
+    if event 
       respond_to do |format|
         format.html do
           flash[:notice] = "Success"
@@ -42,7 +48,19 @@ class InvolvementEventsController < ApplicationController
         end
       end
     end
-  end  
+  end
+
+  
+ def find_or_create_subject(params)
+    if !params[:mrn].blank?
+      @subject = Subject.find(:first,:conditions=>["mrn='#{params[:mrn]}'"],:span=>:global)
+    elsif !params[:first_name].blank? and !params[:last_name].blank? and !params[:birth_date].blank?
+      @subject = Subject.create(:first_name=>params[:first_name],:last_name=>params[:last_name],:birth_date=>params[:birth_date])
+    else
+      @subject = nil
+    end
+    return @subject
+ end
 
 
   def search
@@ -50,7 +68,10 @@ class InvolvementEventsController < ApplicationController
       subject = Subject.find(:first,:conditions=>["mrn='#{params[:mrn]}'"],:span=>:global)
       @subjects = [subject] || []
     elsif !params[:first_name].blank? and !params[:last_name].blank? and !params[:birth_date].blank?
-      @subjects = Subject.find(:all,:conditions=> ["first_name = #{params[:first_name]} and last_name = #{params[:last_name]} and birth_date = #{params[:birth_date]}"],:span=>:foreign)
+      @subjects = Subject.find(:all,:conditions=> ["first_name = #{params[:first_name]} and last_name = #{params[:last_name]} and birth_date =#{params[:birth_date]}"],:span=>:foreign)
+      if @subjects.empty?
+        @subjects = [Subject.new(:first_name=>params[:first_name],:last_name=>params[:last_name],:birth_date=>params[:birth_date])]
+      end
     end
     respond_to do |format|
       format.html

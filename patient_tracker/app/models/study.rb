@@ -65,9 +65,7 @@ class Study < ActiveRecord::Base
   end
   
   def add_subject(subject)
-    unless involvements.find_by_subject_id(subject.id)
-      involvements.create(:subject_id => subject.id)
-    end
+    involvements.find_by_subject_id(subject.id) || involvements.create(:subject_id => subject.id)
   end
 
   def open?
