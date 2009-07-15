@@ -1,6 +1,8 @@
 class SearchController < ApplicationController
   before_filter :user_must_be_logged_in
   layout "main"
+  has_view_trail
+  
   def show
     unless (q = params[:query]).blank?
       params[:for] ||= ["studies", "subjects"]

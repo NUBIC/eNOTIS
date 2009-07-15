@@ -2,6 +2,7 @@ class InvolvementEventsController < ApplicationController
   layout "layouts/main"
   include FaceboxRender
   before_filter :user_must_be_logged_in
+  has_view_trail :except => :index
   
   def index
     # TODO Refactor this to a method on user -blc

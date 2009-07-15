@@ -1,7 +1,8 @@
 class StudiesController < ApplicationController
   before_filter :user_must_be_logged_in
   layout "main"
-
+  has_view_trail :except => :index
+  
   def index
     respond_to do |format|
       format.html do

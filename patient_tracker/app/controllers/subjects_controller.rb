@@ -6,6 +6,8 @@ class SubjectsController < ApplicationController
   before_filter :user_must_be_logged_in
   layout "main"
   publishes_to :patient_upload
+  has_view_trail :except => :index
+  
   def index
     if params[:irb_number]
       @study = Study.find_by_irb_number(params[:irb_number])
