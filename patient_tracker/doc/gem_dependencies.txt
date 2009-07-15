@@ -2,6 +2,8 @@ sudo gem sources -a http://download.bioinformatics.northwestern.edu/gems/
 
 # To clear your gems, use this command, removing any the lines for any gems you don't have (it'll choke)
 sudo gem uninstall --all --ignore-dependencies --executables \
+airblade-paper_trail \
+binarylogic-searchlogic \
 builder \
 chriseppstein-compass \
 columnize \
@@ -15,8 +17,6 @@ haml-edge \
 httpclient \
 libxml-ruby \
 linecache \
-mechanize \
-mechanize-ntlm \
 nokogiri \
 paperclip \
 polyglot \

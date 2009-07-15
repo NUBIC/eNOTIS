@@ -19,7 +19,7 @@ Rails::Initializer.run do |config|
   # all environments gems
   # For lib/gem loading errors, see http://www.webficient.com/2008/07/11/ruby-on-rails-gem-dependencies-and-plugin-errors
   
-  config.gem "haml-edge", :version => '>=2.1.24', :lib => false # required by chriseppstein-compass
+  config.gem "haml", :version => '>=2.2.0', :lib => false # required by chriseppstein-compass
   config.gem "chriseppstein-compass", :version => '>=0.6.15', :lib => false, :source => "http://gems.github.com"
   # config.gem "haml", :version => '>=2.0.9', :source => "http://gems.rubyforge.org/"
   # config.gem "httpclient", :version => '>=2.1.5'
@@ -36,6 +36,7 @@ Rails::Initializer.run do |config|
   config.gem "chronic", :version => '>=0.2.3'
   config.gem "stomp", :version => '>=1.1'
   config.gem "binarylogic-searchlogic", :lib => 'searchlogic'
+  # config.gem "audit_trail", :lib => "audit_trail", :version => '>=0.0.1'
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
