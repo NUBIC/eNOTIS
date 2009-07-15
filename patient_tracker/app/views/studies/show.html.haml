@@ -47,14 +47,18 @@
       = (@study.involvements || []).size
       subjects currently associated with this study
       -if @study.has_coordinator?(@current_user)
-        = facebox_link_to("+ Add Subject", :url => new_involvement_event_path, :study_number => {:study_number => @study.id}, :method => :get)
+        = facebox_link_to("+ Add Subject", :url => new_involvement_event_path, :method => :get)
       %table.display
         %thead
           %th Name
+          %th 
+          %th
         %tbody  
           - @study.subjects.each do |subject|
             %tr
               %td= render :partial => 'partials/subject', :object => subject
+              %td= subject.synced? ? "Subject Synced" : facebox_link_to("Sync", :url => search_subjects_url(:id=>subject.id) , :method => :get)
+              %td= facebox_link_to("Add Event", :url => new_involvement_event_path(:subject_id=>subject.id) , :method => :get)
     #events
       %h4 Events
       %table.display
@@ -73,13 +77,20 @@
                 %td= event.event_date 
     #imports
       %h4 Imports
+      - form_tag('/subjects', :multipart => true) do
+        = hidden_field_tag("study_id",@study.id.to_s)
+        %br
+        = file_field_tag(:file)
+        = submit_tag( "Upload" )
+        %br
+        %Hr
       %table.display
         %thead
           %th Importer
           %th Upload Date
           %th Original
           %th Result
-          %th Summary
+          %th Status
         %tbody
           - @study.study_uploads.each do |u|
             %tr
@@ -88,9 +99,3 @@
               %td= link_to "View", u.upload.url
               %td= link_to "View", u.result.url
               %td= u.summary || "Still Processing"
-      - form_tag('/subjects', :multipart => true) do
-        = hidden_field_tag("study_id",@study.id.to_s)
-        = label_tag('attachment','Upload New Patient File:')
-        %br
-        = file_field_tag(:file)
-        = submit_tag( "Upload" )

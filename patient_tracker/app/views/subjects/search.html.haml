@@ -1,0 +1,23 @@
+-if @subjects.empty?
+  %p No Data Matching Subject Was Found In The Medical Records
+
+-else
+  %p Found The Following Records Matching Your Patient
+  -@subjects.each do |subject|  
+    - form_remote_tag( :url=> sync_subjects_path ) do 
+      = hidden_field_tag(:local_id,@local.id)
+      = label_tag 'first_name' 
+      = text_field_tag( :first_name, subject.first_name)
+      = label_tag 'last_name' 
+      = text_field_tag( :last_name, subject.last_name)
+      %br
+      = label_tag 'mrn'
+      = text_field_tag(:mrn,subject.mrn)
+      = label_tag 'birth_date', "Date of Birth" 
+      = text_field_tag( :birth_date , subject.birth_date)
+      %br
+      = label_tag 'address'
+      = text_field_tag(:address,subject.address_line1)
+      = submit_tag( "Sync To This Subject" ) 
+      %hr
+

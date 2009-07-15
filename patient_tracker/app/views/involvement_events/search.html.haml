@@ -11,6 +11,12 @@
     = label_tag "birth_date", "Date of Birth" 
     = text_field_tag(:birth_date , @subjects.first.birth_date)
     %br
+    -if @subjects.first.studies.size > 0 
+      %p 
+        Current Associated Studies
+        %ul
+        -@subjects.first.studies.each do |study|
+          %li= link_to(study.irb_number, study_path(study.irb_number ))
     = label_tag("event_type","Event Type")
     = text_field_tag(:event_type)
     %br
@@ -35,4 +41,4 @@
       = label_tag 'address'
       = text_field_tag(:address,subject.address_line1)
       = submit_tag( "Select Subject" ) 
-      %p -------------------------------------
+      %hr
