@@ -6,7 +6,7 @@ A coordinator should be able to export reports for eirb and nih
 An administrator should be able to use audit logs to find all access on a subject, study, or by a user
 A coordinator should be able to see flagged subjects that are missing mrns
 A user should be able to see what comes from the eIRB
-A coordinator should be able to see address, race/ethnicity, gender, and other studies a subject is on during import
+A coordinator should be able to see address, race/ethnicity, gender, and other studies a subject is on during manual add
 A coordinator should be able to check a series of people to see what studies they are on
 A user should be able to see type, phase, accrual status and goals for all studies
 A coordinator should be able to see highlighted accrual status when they get close to their goals
