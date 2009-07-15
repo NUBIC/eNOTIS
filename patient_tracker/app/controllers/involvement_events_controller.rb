@@ -1,7 +1,8 @@
 class InvolvementEventsController < ApplicationController
   layout "layouts/main"
   include FaceboxRender
-
+  before_filter :user_must_be_logged_in
+  
   def index
     # TODO Refactor this to a method on user -blc
     @events = current_user.studies.map(&:involvements).flatten.map(&:involvement_events).flatten
