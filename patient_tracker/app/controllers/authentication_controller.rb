@@ -37,7 +37,7 @@ class AuthenticationController < ApplicationController
 protected
   # Track failed login attempts
   def note_failed_signin
-    flash[:notice] = "Couldn't log you in as '#{params[:netid]}' Visit http://www.it.northwestern.edu/netid/password.html for password help."
+    flash[:notice] = "Couldn't log you in as '#{params[:netid]}' Visit <a href='http://www.it.northwestern.edu/netid/password.html'>www.it.northwestern.edu/netid</a> for password help."
     logger.warn "Failed login for '#{params[:netid]}' from #{request.remote_ip} at #{Time.now.utc}"
   end
   
