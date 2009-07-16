@@ -9,6 +9,7 @@ class Subject < ActiveRecord::Base
 
   has_many :involvements
   has_many :studies, :through => :involvements
+
   has_paper_trail
   $plugins = [EdwServices]
   

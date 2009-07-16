@@ -3,6 +3,7 @@ class CreateSubjects < ActiveRecord::Migration
   	create_table :subjects do |t|
       t.string :mrn 
       t.string :mrn_type #nmff or nmh
+      t.string :source_system #notis, enotis, edw, or other auto-registry system
       t.string :first_name
       t.string :middle_name
       t.string :last_name
@@ -19,6 +20,8 @@ class CreateSubjects < ActiveRecord::Migration
       t.string :email
       t.datetime :synced_at
       t.text :pre_sync_data #holds data copied out of the model before we locked this record with the MR
+      t.boolean :no_contact
+      t.text :no_contact_reason
       t.timestamps
     end
 

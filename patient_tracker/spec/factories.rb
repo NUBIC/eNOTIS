@@ -1,6 +1,6 @@
 require 'populator'
 require 'faker'
-require 'lib/faker/study'
+require RAILS_ROOT + '/lib/faker/study'
 
 # http://github.com/thoughtbot/factory_girl/tree/master
 # http://faker.rubyforge.org/rdoc/
