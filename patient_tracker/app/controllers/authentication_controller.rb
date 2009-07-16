@@ -30,7 +30,10 @@ class AuthenticationController < ApplicationController
     flash[:notice] = "You have been logged out."
     redirect_back_or_default(authentication_index_path) 
   end
-
+  
+  def access_help
+    
+  end
 protected
   # Track failed login attempts
   def note_failed_signin

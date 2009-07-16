@@ -5,7 +5,7 @@
     %label{:for => 'password'} Password
     = password_field_tag('password')
     = submit_tag('login')
-    %p= link_to "I cannot access my account", "#"
+    %p= link_to "I cannot access my account", access_help_authentication_path
 .enotis_description
   eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University
 .system_status{:class => @status}

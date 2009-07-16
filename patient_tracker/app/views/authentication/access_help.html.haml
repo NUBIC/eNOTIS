@@ -1,0 +1,19 @@
+.loginbox
+  -form_tag(login_authentication_path, :method => 'post') do
+    %label{:for => 'netid'} NetID
+    = text_field_tag('netid')
+    %label{:for => 'password'} Password
+    = password_field_tag('password')
+    = submit_tag('login')
+.enotis_description
+  eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University
+
+.access_help
+  .heading Logging in
+  .training
+    .video Learn basic concepts and log in
+  %p To get started with eNOTIS, you'll need a Northwestern NetID, and you should be authorized on at least one study in eIRB.
+  %p 
+    A Northwestern NetID is your electronic identity, and you can get one through through NUIT (Northwestern University Information Technology) at 
+    %a{:href => 'http://www.it.northwestern.edu/netid'} www.it.northwestern.edu/netid
+  %p The Northwestern University IRB provides oversight on research, for the protection and benefit of human subjects. eIRB is the electronic system they use to manage research proposals. Since eNOTIS contains private data on human subjects, you'll need to have training and approval by the IRB. This process may take some time, and you may need to submit a revision for the study.
