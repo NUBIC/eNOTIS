@@ -5,9 +5,12 @@ class CreateCoordinators < ActiveRecord::Migration
       t.integer :user_id
       t.timestamps
     end
+
+    add_index(:coordinators, [:study_id, :user_id], :unique => true)
   end
 
   def self.down
+    remove_index(:coordinators, [:study_id, :user_id])
     drop_table :coordinators
   end
 end

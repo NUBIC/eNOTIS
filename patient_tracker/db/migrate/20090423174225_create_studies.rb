@@ -16,7 +16,6 @@ class CreateStudies < ActiveRecord::Migration
       t.string :sc_first_name
       t.string :sc_last_name
       t.string :sc_email
-
       t.datetime :synced_at
       t.timestamps
     end
