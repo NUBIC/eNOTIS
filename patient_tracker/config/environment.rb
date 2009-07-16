@@ -36,7 +36,7 @@ Rails::Initializer.run do |config|
   config.gem "chronic", :version => '>=0.2.3'
   config.gem "stomp", :version => '>=1.1'
   config.gem "binarylogic-searchlogic", :lib => 'searchlogic'
-  config.gem "view_trail", :lib => "view_trail", :version => '>=0.0.1'
+  config.gem "yoon-view_trail", :lib => "view_trail", :version => '>=0.2.1', :source => 'http://gems.github.com'
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
