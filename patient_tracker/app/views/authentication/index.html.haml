@@ -1,4 +1,4 @@
-.loginbox
+.loginbox{:class => @status}
   -form_tag(login_authentication_path, :method => 'post') do
     %label{:for => 'netid'} NetID
     = text_field_tag('netid')
