@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   validates_presence_of     :netid
   validates_uniqueness_of   :netid
 
+  attr_accessor :password
   attr_accessible :netid, :email, :first_name, :last_name, :password
   
   def self.authenticate(netid, password)
