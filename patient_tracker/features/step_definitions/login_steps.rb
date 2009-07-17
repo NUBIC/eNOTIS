@@ -1,7 +1,7 @@
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 
 Given /^a user "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|
-  user = Factory.create(:user, {:netid => netid, :password => password})
+  user = Factory.create(:user, {:netid => netid})#, :password => password})
   User.stub!(:authenticate).and_return{|n,p| p == password ? user : nil }
 end
 

@@ -41,7 +41,7 @@ Factory.define :fake_subject, :parent => :subject do |p|
   p.mrn_type                  {["Epic", "Cerner"].rand}
   p.synced_at               {Populator.value_in_range(2.days.ago..2.minutes.ago)}
   p.first_name                {Faker::Name.first_name}
-  p.middle_name               {Faker::Name.middle_name}
+  p.middle_name               {Faker::Name.first_name}
   p.last_name                 {Faker::Name.last_name}
   p.birth_date                {Populator.value_in_range(80.years.ago..15.years.ago)}
   p.death_date                {|me| DEATH_RATE.rand ? Populator.value_in_range((me.birth_date+10.years)..3.years.ago) : nil}
