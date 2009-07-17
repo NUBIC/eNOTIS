@@ -6,7 +6,7 @@ describe ControllerAuthentication do
     @controller = Class.new(ActionController::Base).new
     @controller.extend(ControllerAuthentication)
     @controller.session = {}
-    @account = Factory(:user, {:netid => 'pi314', :password => 'circular'})
+    @account = Factory(:user, {:netid => 'pi314'})#, :password => 'circular'})
   end
 
   it "authenticates the user creditials" do

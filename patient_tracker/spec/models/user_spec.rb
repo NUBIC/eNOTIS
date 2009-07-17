@@ -9,7 +9,7 @@ describe User do
   end
   
   it "accepts a netID and validates it" do
-    u = Factory(:user, :netid => 'ord312', :password => "airport")
+    u = Factory(:user, :netid => 'ord312')#, :password => "airport")
     User.should_receive(:find_by_netid).with('ord312').and_return(u)
     u.should_receive(:authenticated?).with('airport').and_return(true)
     User.authenticate('ord312','airport').should be_true
