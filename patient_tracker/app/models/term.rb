@@ -23,7 +23,7 @@ class Term < ActiveRecord::Base
     find(:all, :conditions => ["source=?",source])
   end
  
-  # Instance method to retur the 'user readable' value of the term obj
+  # Instance method to return the 'user readable' value of the term obj
   def to_s
     self.term.to_s
   end
