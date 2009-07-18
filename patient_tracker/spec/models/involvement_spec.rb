@@ -8,21 +8,4 @@ describe Involvement do
     Factory(:involvement).should be_valid
   end
   
-  describe "Accessing involvement data elements" do
-
-    describe "race data" do
-      it "has not reported race category" do
-        inv = Factory(:involvement)
-        inv.race.should be_nil
-      end
-      
-      it "has reported a race category" do
-        inv = Factory(:involvement)
-        inv.race = "Klingon"
-        inv.race.should == "Klingon"
-      end
-
-    end
-
-  end
-end
+ end

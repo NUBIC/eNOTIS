@@ -11,8 +11,8 @@ class Involvement < ActiveRecord::Base
   belongs_to :subject
 	belongs_to :study
   has_many :involvement_events
-  has_one :gender_type, :class_name => "Term"
-  has_one :ethnicity_type, :class_name => "Term"
+  has_one :gender_type, :class_name => "DictionaryTerm"
+  has_one :ethnicity_type, :class_name => "DictionaryTerm"
   has_many :races
 
   # Mixins
