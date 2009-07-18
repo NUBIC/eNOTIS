@@ -1,6 +1,6 @@
-# lib/tasks/terms.rake
+# lib/tasks/dictionary_terms.rake
 require 'fastercsv'
-namespace :terms do
+namespace :dictionary_terms do
 
   desc 'Import csv data into terms (the table formerly known as dictionary) table'
   task :import => :environment do
@@ -8,17 +8,17 @@ namespace :terms do
     file_path = RAILS_ROOT + "/" + ENV["file"]
     result_counts = {}
     
-    raise "usage: rake terms:import file=[filename relative to RAILS_ROOT] (optional: dry=true)"  unless ENV.include?("file") && File.exists?(file_path)
+    raise "usage: rake dictionary_terms:import file=[filename relative to RAILS_ROOT] (optional: dry=true)"  unless ENV.include?("file") && File.exists?(file_path)
 
     FasterCSV.foreach(file_path, fastercsv_opts) do |row|
       if ENV.include?("dry") && ENV["dry"] != "false"
         puts row.to_hash.inspect
-        result_counts[row[:type].downcase] ||= 0
-        result_counts[row[:type].downcase] += 1
+        result_counts[row[:category].downcase] ||= 0
+        result_counts[row[:category].downcase] += 1
       else
-        if blip && Term.create(row.to_hash)
-          result_counts[row[:type].downcase] ||= 0
-          result_counts[row[:type].downcase] += 1
+        if blip && DictionaryTerm.create(row.to_hash)
+          result_counts[row[:category].downcase] ||= 0
+          result_counts[row[:category].downcase] += 1
         end
       end
     end
