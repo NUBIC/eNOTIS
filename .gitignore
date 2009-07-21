@@ -1,2 +1,4 @@
 **/*.swp
 *.log
+.DS_Store
+patient_tracker/.DS_Store
