@@ -1,5 +1,6 @@
-- @stylesheets = %w(reset compiled/default compiled/datatables)
-- @javascripts = %w(jquery-1.3.2.min jquery.dataTables-1.5beta.min)
+- @view_javascripts = ["jquery-1.3.2.min", "jquery.dataTables-1.5beta.min)"]
+- @view_stylesheets = ["compiled/datatables"]
+  
 - content_for :head do
   :javascript
     $(document).ready(function(){$(".display").dataTable({bServerSide: true, sAjaxSource: '/studies.json' });});

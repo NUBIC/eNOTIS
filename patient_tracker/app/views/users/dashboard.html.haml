@@ -1,11 +1,15 @@
-- @stylesheets = %w(reset compiled/default compiled/datatables)
-- @javascripts = %w(jquery-1.3.2.min jquery.dataTables.min)
+- @view_javascripts = ["facebox", "jquery.dataTables.min"]
+- @view_stylesheets = ["facebox", "compiled/datatables"]
+
 - content_for :head do
   :javascript
     $(document).ready(function(){$(".display").dataTable();});
+
+    
 #my_studies
   .heading= "My Studies (#{@studies.size})"
   = render :partial => 'partials/study_table'
+
 #recent_events
   .heading
     Recent Events
