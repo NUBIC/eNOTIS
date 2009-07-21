@@ -1,6 +1,7 @@
 class InvolvementEventsController < ApplicationController
   layout "layouts/main"
   include FaceboxRender
+  include Chronic
   before_filter :user_must_be_logged_in
   has_view_trail :except => :index
   
@@ -10,7 +11,12 @@ class InvolvementEventsController < ApplicationController
   end
 
   def new
+    #get necessary subject, race and gender and ethicity information from dictionary
     @subject = Subject.find(params[:subject_id]) unless params[:subject_id].nil?
+    @events = DictionaryTerm.find_all_by_category("Event")
+    @races = DictionaryTerm.find_all_by_category("Race")
+    @genders = DictionaryTerm.find_all_by_category("Gender")
+    @ethnicities = DictionaryTerm.find_all_by_category("Ethnicity")
     respond_to do |format|
       format.html
       format.js {render_to_facebox}
@@ -18,46 +24,34 @@ class InvolvementEventsController < ApplicationController
   end
 
   def create
-    # TODO Refactor into smaller several smaller methods
+      #too much controller logic. Needs to be moved to a model
+      @errors=[]
       @study = Study.find(:first,:conditions=>["irb_number='#{session[:study_irb_number]}'"],:span=>:global)
-      if !params[:subject_id]
-        @subject = find_or_create_subject(params)
-        @involvement = @study.add_subject(@subject) unless @subject.nil?
+      if params[:subject_id].nil?
+        @errors = validate_subject_params(params)
+        if @errors.empty?
+          @subject = find_or_create_subject(params)
+          @subject.save unless @subject.nil?
+          @involvement = @study.add_subject(@subject,params) unless @subject.nil?
+          @involvement.involvement_events.create(:event_type_id=>params[:event_type],:occured_at=>params[:event_date],:note=>params[:note])
+        end
       else
         @subject= Subject.find(params[:subject_id])
-        @involvement = Involvement.find_by_subject_id_and_study_id(@subject.id,@study.id)  
+        @involvement = @study.add_subject(@subject,params)
+        @involvement.involvement_events.create(:event_type_id=>params[:event_type],:occured_at=>Chronic.parse(params[:event_date]),:note=>params[:note])
       end
-      event = @involvement.involvement_events.create(:event_type=>params[:event_type],:event_date=>params[:event_date],:description=>params[:description])
-    
-    if event 
       respond_to do |format|
-        format.html do
-          flash[:notice] = "Success"
-          redirect_to study_path(@study)
-        end
-        format.js do
-          render_to_facebox :html => "success"
-        end
+        format.html
+        format.js {render_to_facebox}
       end
-    else
-      respond_to do |format|
-        format.html do
-          flash[:notice] = "Fail" # TODO Make this message a little clearer
-          redirect_to @study ? study_path(@study) : studies_path
-        end
-        format.js do
-          render_to_facebox :html => "#{@subject.inspect}: #{@study.inspect}: #{@involvement.inspect}"
-        end
-      end
-    end
   end
 
-  
  def find_or_create_subject(params)
     if !params[:mrn].blank?
       @subject = Subject.find(:first,:conditions=>["mrn='#{params[:mrn]}'"],:span=>:global)
-    elsif !params[:first_name].blank? and !params[:last_name].blank? and !params[:birth_date].blank?
-      @subject = Subject.create(:first_name=>params[:first_name],:last_name=>params[:last_name],:birth_date=>params[:birth_date])
+    end
+    if !params[:first_name].blank? and !params[:last_name].blank? and !params[:birth_date].blank? and @subject.nil?
+      @subject = Subject.create(:first_name=>params[:first_name],:last_name=>params[:last_name],:birth_date=>Chronic.parse(params[:birth_date]))
     else
       @subject = nil
     end

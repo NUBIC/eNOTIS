@@ -6,7 +6,7 @@ class InvolvementEvent < ActiveRecord::Base
 
   # Associations
   belongs_to :involvement
-  has_one :event_type, :class_name => "Term"
+  has_one :event_type, :class_name => "DictionaryTerm"
   
   # Mixins
   has_paper_trail

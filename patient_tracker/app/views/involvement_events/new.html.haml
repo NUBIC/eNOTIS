@@ -2,15 +2,15 @@
   -form_remote_tag(:url => involvement_events_path) do
     = hidden_field_tag(:subject_id,@subject.id)
     = label_tag('event_type','Event Type')
-    = text_field_tag(:event_type)
-    = label_tag('description')
-    = text_field_tag(:description)
+    = select_tag(:event_type,options_for_select(@events.map{|event|[event.term,event.id]}))
+    = label_tag('note')
+    = text_field_tag(:note)
     = label_tag('event_date','Event Date')
     = text_field_tag(:event_date)
     %br
     = submit_tag("Create Event")
 -else
-  - form_remote_tag( :url=> search_involvement_events_path ) do
+  - form_remote_tag( :url=> involvement_events_path ) do
     = label_tag 'mrn','Enter MRN'
     = text_field_tag(:mrn)
     %br
@@ -24,4 +24,26 @@
     = label_tag 'birth_date', 'Enter Date of Birth'
     = text_field_tag(:birth_date)
     %br
+    %hr
+    %p Required Demographic Information
+    %br
+    = label_tag 'gender','Gender'
+    = select_tag(:gender,options_for_select(@genders.map{|gender|[gender.term,gender.id]}))
+    %p
+    %br
+    = label_tag 'ethnicity','Ethnicity'
+    = select_tag(:ethnicity,options_for_select(@ethnicities.map{|ethnicity|[ethnicity.term,ethnicity.id]}))
+    %p
+    %br
+    = label_tag 'race','Race'
+    = select_tag(:race,options_for_select(@races.map{|race|[race.term,race.id]}))
+    %br
+    %hr
+    %p Initial Event Information
+    = label_tag('event_type','Event Type')
+    = select_tag(:event_type,options_for_select(@events.map{|event|[event.term,event.id]}))
+    = label_tag('note')
+    = text_field_tag(:note)
+    = label_tag('event_date','Event Date')
+    = text_field_tag(:event_date)
     = submit_tag("submit")

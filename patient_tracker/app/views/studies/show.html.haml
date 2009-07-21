@@ -72,13 +72,13 @@
             -involvement.involvement_events.each do |event|
               %tr
                 %td= [involvement.subject.last_name,involvement.subject.first_name].join(',')
-                %td= event.event_type
-                %td= event.description
-                %td= event.event_date 
+                %td= event.event_type_id
+                %td= event.note
+                %td= event.occured_at
     #imports
       %h4 Imports
       - form_tag('/subjects', :multipart => true) do
-        = hidden_field_tag("study_id",@study.id.to_s)
+        = hidden_field_tag("study_id",@study.irb_number.to_s)
         %br
         = file_field_tag(:file)
         = submit_tag( "Upload" )

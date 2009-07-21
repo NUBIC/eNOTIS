@@ -64,8 +64,8 @@ class Study < ActiveRecord::Base
     self.irb_number
   end
   
-  def add_subject(subject)
-    involvements.find_by_subject_id(subject.id) || involvements.create(:subject_id => subject.id)
+  def add_subject(subject,params)
+    involvements.find_by_subject_id(subject.id) || involvements.create(:subject_id => subject.id,:ethnicity_type_id=>params[:ethnicity],:gender_type_id=>params[:gender])
   end
 
   def open?

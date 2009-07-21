@@ -31,21 +31,24 @@ describe Study do
   
   describe "with subjects" do
     it "should add a new subject, regardless of status(open) or subject syncing" do
+      params = {:ethnicity=>32,:gender=>30}
       study = Factory.create(:study, :status => "open")
-      study.add_subject(Factory(:subject, :synced_at => nil))
-      study.add_subject(Factory(:subject, :synced_at => 2.minutes.ago))
+      study.add_subject(Factory(:subject, :synced_at => nil),params)
+      study.add_subject(Factory(:subject, :synced_at => 2.minutes.ago),params)
       study.should have(2).involvements
     end
     it "should add a new subject, regardless of status(closed) or subject syncing" do
+      params = {:ethnicity=>32,:gender=>30}
       study = Factory.create(:study, :status => "closed")
-      study.add_subject(Factory(:subject, :synced_at => nil))
-      study.add_subject(Factory(:subject, :synced_at => 2.minutes.ago))
+      study.add_subject(Factory(:subject, :synced_at => nil),params)
+      study.add_subject(Factory(:subject, :synced_at => 2.minutes.ago),params)
       study.should have(2).involvements
     end
     it "should add a new subject once and only once" do
+      params = {:ethnicity=>32,:gender=>30}
       study = Factory.create(:study, :status => "closed")
       subject = Factory(:subject, :synced_at => nil)
-      5.times { study.add_subject(subject) }
+      5.times { study.add_subject(subject,params) }
       study.should have(1).involvements
     end
   end
