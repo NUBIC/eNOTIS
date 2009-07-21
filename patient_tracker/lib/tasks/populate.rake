@@ -35,7 +35,12 @@ namespace :db do
     desc 'Populate coordinators: joins users(random) and studies(random)'
     task :coordinators => :environment do
       puts "creating extra coordinators..."
-      50.times { |i| blip && Factory.create(:coordinator, :study => random(Study), :user => random(User))}
+      50.times do |i| 
+        begin
+          blip && Factory.create(:coordinator, :study => random(Study), :user => random(User))
+        rescue
+        end
+      end
       puts
     end
 
@@ -49,7 +54,12 @@ namespace :db do
     desc 'Populate involvements: joins subjects(random) and studies(random)'
     task :involvements => :environment do
       puts "creating extra involvements..."
-      200.times { |i| blip && Factory.create(:involvement_event, :involvement => Factory.create(:involvement, :study => random(Study), :subject => random(Subject)))}
+      200.times do |i|
+        begin
+          blip && Factory.create(:involvement_event, :involvement => Factory.create(:involvement, :study => random(Study), :subject => random(Subject)))
+        rescue
+        end
+      end
       puts
     end
 
