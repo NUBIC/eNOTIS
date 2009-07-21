@@ -1,7 +1,9 @@
 # require 'EdwServices.rb'
 class AuthenticationController < ApplicationController
-  layout "layouts/default"
+  layout "layouts/public"
 
+  # ===================== Public Actions ======================
+  
   def index
     # TODO System staus check
     @status = system_status
@@ -34,6 +36,7 @@ class AuthenticationController < ApplicationController
   def access_help
     
   end
+
 protected
   # Track failed login attempts
   def note_failed_signin

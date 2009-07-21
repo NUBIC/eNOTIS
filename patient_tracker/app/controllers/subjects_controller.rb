@@ -1,14 +1,23 @@
+require 'fastercsv'
+require 'activemessaging/processor'
+
 class SubjectsController < ApplicationController
-  require 'fastercsv'
-  require 'activemessaging/processor'
+  layout "layouts/main"  
+
+  # Includes
   include ActiveMessaging::MessageSender
   include FaceboxRender
   include Chronic
+
+  # Filters
   before_filter :user_must_be_logged_in
-  layout "main"
+
+  # Auditing
   publishes_to :patient_upload
   has_view_trail :except => :index
-  
+
+  # ===================== Public Actions ======================
+
   def index
     if params[:irb_number]
       @study = Study.find_by_irb_number(params[:irb_number])
@@ -75,8 +84,11 @@ class SubjectsController < ApplicationController
       render :text => @study_upload.result.to_io.read
     end
   end
+
+
+ # =================== Class Methods =========================
   
-  def csv_sanity_check(csv, temp_file = Tempfile.new("results")) # csv can be a string, file, or Paperclip::Attachment
+ def csv_sanity_check(csv, temp_file = Tempfile.new("results")) # csv can be a string, file, or Paperclip::Attachment
     # We may possibly want to sanity check dates with Chronic http://chronic.rubyforge.org/
     csv = csv.to_io if csv.class == Paperclip::Attachment
     @validity = true
@@ -89,4 +101,6 @@ class SubjectsController < ApplicationController
     end
     return @validity
   end
-end
+ 
+ end
+

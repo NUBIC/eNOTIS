@@ -1,7 +1,13 @@
 class SearchController < ApplicationController
+  layout "layouts/main"
+  
+  # Filters
   before_filter :user_must_be_logged_in
-  layout "main"
+  
+  # Auditing
   has_view_trail
+
+  # ===================== Public Actions ======================  
   
   def show
     unless (q = params[:query]).blank?
@@ -15,6 +21,7 @@ class SearchController < ApplicationController
       end
     end
   end
+  
   def create
     show
     render :action => 'show'
