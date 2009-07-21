@@ -1,10 +1,6 @@
-- @view_javascripts = ["facebox", "jquery.dataTables.min"]
-- @view_stylesheets = ["facebox", "compiled/datatables"]
-
 - content_for :head do
   :javascript
     $(document).ready(function(){$(".display").dataTable();});
-
     
 #my_studies
   .heading= "My Studies (#{@studies.size})"
