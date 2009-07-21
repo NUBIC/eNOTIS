@@ -30,7 +30,6 @@
           -form_tag(search_path, :method => :get) do 
             =text_field_tag("query")
             =submit_tag("Search")
-      %br.clear
 
     - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
       #flash
@@ -38,7 +37,6 @@
           
     #main
       =yield
-      %br.clear
 
     #footer
       = image_tag("nu_pageheader.jpg")

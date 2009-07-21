@@ -4,7 +4,7 @@
     = text_field_tag('netid')
     %label{:for => 'password'} Password
     = password_field_tag('password')
-    = submit_tag('login')
+    %p= submit_tag('login')
     %p= link_to "I cannot access my account", access_help_authentication_path
 
 .enotis_description
@@ -20,5 +20,6 @@
   .video Add a subject
   .video Import subjects
   .video Add subject events
+
 
 

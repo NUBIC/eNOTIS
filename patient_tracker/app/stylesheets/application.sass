@@ -21,6 +21,7 @@ body
     :color= !FONT_INVERT_COLOR
 
   #enotis_header
+    +clearfix
     :width 100%
     :min-width 111.5em
     :padding 1.0em 0
@@ -68,9 +69,11 @@ body
           :vertical-align top
 
   #main
+    +clearfix
     :padding 0.5em 2em
     :font-size 1.3em
     :min-width 84em
+
     .heading
       :font-weight bold
       :font-size 1.5em
@@ -81,33 +84,6 @@ body
       :width 48%
       :padding-right 2%
     // login
-    .loginbox
-      :float right
-      :width 13.3em
-      :margin-right 2em
-      :border 1px solid #333
-      :border-color= !DARK_GRAY
-      :background-color= !LT_YELLOW
-      :-moz-border-radius 4px
-      :padding 1em
-      :font-size 1.5em
-      :line-height 1.8em
-      label
-        :display inline-block
-        :width 5em
-        :margin-top 1em
-      input
-        :margin-top 1em
-      input[type='text'], input[type='password'] 
-        :width 13em
-      input[type='submit']
-        :margin-left 16em
-      p
-        :margin-top 1em
-        :text-align center
-        :font-size .7em
-      &.down, &.scheduled_maintenance
-        :display none
     .enotis_description
       +rounded_box( !LT_GRAY )
       :width 30em
@@ -130,9 +106,36 @@ body
       :width 45em
       p
         :margin 10px 0
+    .loginbox
+      :float right
+      :width 16em
+      :margin-right 2em
+      :border 1px solid #333
+      :border-color= !DARK_GRAY
+      :background-color= !LT_YELLOW
+      :-moz-border-radius 4px
+      :padding 1em
+      :font-size 1.5em
+      :line-height 1.8em
+      label
+        :display inline-block
+        :width 5em
+        :margin-top 1em
+      input
+        :margin-top 1em
+      input[type='text']
+        :width 11em
+      input[type='password']
+        :width 11em
+      p
+        :margin-top 1em
+        :text-align center
+        :font-size .7em
+      &.down, &.scheduled_maintenance
+        :display none
     .training
       :width 50em
-      :margin-top 1.5em    
+      :margin-top 1.5em
       .video
         :float left
         :width 70px
