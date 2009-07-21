@@ -1,56 +1,17 @@
-!ALERT_COLOR=#C7360B
-!BORDER_CHANGE=32
-!FONT_COLOR=#333
-!FONT_INVERT_COLOR=#f0f0f0
-!BODY_COLOR=#f0f0f0
-!NU_PURPLE=#520063
-!DARK_GRAY=#666666
-!LT_GRAY=#DADADA
-!V_LT_GRAY=#E9E9E9
-!LT_YELLOW=#FFFFE0
-!APPROVED_COLOR= #3C7C3B
-!APPROVED_FONT_COLOR=#f3f3f3
-!TERMINATED_COLOR=#f00
-!SUSPENDED_COLOR=#D3D3D3
-!REVIEW_COLOR=#D3d3d3
+@import base.sass
+@import blueprint/modules/debug.sass
+
+html
+  +attach_footer( 54px )
 
 body
+  +blueprint-grid
+  +blueprint-debug
   :background-color= !BODY_COLOR
   :font-family Verdana, Arial, sans-serif
   :font-size 62.5% /*this is so we can have nice em's to pix conversion 1.0em ~= 10px, 1.1em ~= 11px, etc...*/
   :color #333
   :line-height 1.8em
-
-  // tags
-  h1
-    :font-size 2.5em
-    :margin 1em
-  h2
-    :font-size 2em
-    :margin 1em
-  h3
-    :font-size 1.8em
-    :margin 1em
-  strong
-    :font-weight bold
-  small
-    :font-weight normal
-    :font-size 0.75em
-  .gray
-    :color= !LT_GRAY
-  a
-    :color= !FONT_COLOR
-  a:hover
-    :color #33f
-  a:hover:visited
-    :color #33f
-  a:visited
-    :color= !FONT_COLOR
-  .clear
-    :clear both
-  div.clear
-    :width 1px
-  
 
   // layout divs
   #flash
@@ -364,7 +325,6 @@ body
       em
         :padding-bottom 0.4em
   .status_history
-    :-moz-border-radius 4px 4px
     :background-color= !LT_GRAY
     :padding 0.5em
     :margin-bottom 1em

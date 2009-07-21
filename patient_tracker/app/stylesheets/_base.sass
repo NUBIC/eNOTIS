@@ -1,0 +1,87 @@
+!blueprint_grid_columns = 24
+!blueprint_grid_width = 30px
+!blueprint_grid_margin = 10px
+
+!ALERT_COLOR=#C7360B
+!BORDER_CHANGE=32
+!FONT_COLOR=#333
+!FONT_INVERT_COLOR=#f0f0f0
+!BODY_COLOR=#ffffff
+!NU_PURPLE=#520063
+!DARK_GRAY=#666666
+!LT_GRAY=#DADADA
+!V_LT_GRAY=#E9E9E9
+!LT_YELLOW=#FFFFE0
+!APPROVED_COLOR= #3C7C3B
+!APPROVED_FONT_COLOR=#f3f3f3
+!TERMINATED_COLOR=#f00
+!SUSPENDED_COLOR=#D3D3D3
+!REVIEW_COLOR=#D3d3d3
+
+
+@import compass/reset.sass
+@import compass/utilities.sass
+@import blueprint/screen.sass
+@import blueprint/modules/grid.sass
+
+
+// Standard html tag styles (which we may remove if we switch to compass mixins)
+h1
+  :font-size 2.5em
+  :margin 1em
+h2
+  :font-size 2em
+  :margin 1em
+h3
+  :font-size 1.8em
+  :margin 1em
+strong
+  :font-weight bold
+small
+  :font-weight normal
+  :font-size 0.75em
+.gray
+  :color= !LT_GRAY
+a
+  :color= !FONT_COLOR
+a:hover
+  :color #33f
+a:hover:visited
+  :color #33f
+a:visited
+  :color= !FONT_COLOR
+
+// Borders
+=rounded_box( !bgcolor )
+  :border 1px solid #333
+  :border-color= !bgcolor - !BORDER_CHANGE
+  :-moz-border-radius 4px 4px
+  :background-color= !bgcolor
+  :padding 0.5em
+  :margin 0.5em
+
+
+// Mixin for the html element, so the footer stays at the bottom of the screen.
+// Relies on the following html structure, and a fixed-height #footer element:
+//
+//  %body
+//    #root
+//      #root_footer
+//    #footer
+
+=attach_footer( !footer_height )
+  :height 100%
+  body
+    :height 100%
+  #root
+    :min-height 100%
+    :margin-bottom  = -!footer_height
+    #root_footer
+      :clear both
+      :height = !footer_height
+  #footer
+    :clear            both
+    :position         relative
+    :height         = !footer_height
+
+
