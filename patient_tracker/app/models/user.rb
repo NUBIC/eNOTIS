@@ -2,9 +2,16 @@
 # Data for this model is loaded in from the eIRB 
 
 class User < ActiveRecord::Base
-  include Authentication
-  include Authentication::ByNetid
- 
+  # include Authentication
+  # include Authentication::ByNetid
+  
+  include Bcsec
+  yml = File.open(File.join(RAILS_ROOT,"config/bcsec.yml"))
+  config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
+  Bcsec.ldap_server = config.ldap_server
+  Bcsec.ldap_user = config.ldap_user
+  Bcsec.ldap_password = config.ldap_password
+    
   # Associations
   has_many :coordinators
   delegate :as_coordinator, :to => :coordinators #so we can use the syntax user.as_coordinator.studies
@@ -23,7 +30,8 @@ class User < ActiveRecord::Base
   def self.authenticate(netid, password)
     return nil if netid.blank? || password.blank?
     u = find_by_netid(netid.downcase)
-    u && u.authenticated?(password) ? u : nil
+    return u if u && (RAILS_ENV == 'development')
+    u && NetidAuthenticator.valid_credentials?(netid, password) ? u : nil
   end
   
   def self.authorize_entry(netid)

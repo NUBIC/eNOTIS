@@ -1,0 +1,9 @@
+development:
+  ldap_server: "registry.northwestern.edu"
+  ldap_user: ""
+  ldap_password: ""
+
+test:
+  ldap_server: "registry.northwestern.edu"
+  ldap_user: ""
+  ldap_password: ""
