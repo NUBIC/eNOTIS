@@ -7,26 +7,26 @@
     =javascript_include_tag @view_javascripts || []
     =yield :head
   %body
+    #container
+      #enotis_header
+        %h1.app_name
+          eNOTIS
+        .tagline
+          Northwestern University Clinical Subject Registration
 
-    #enotis_header
-      %h1.app_name
-        eNOTIS
-      .tagline
-        Northwestern University Clinical Subject Registration
+      - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
+        #flash
+          = flash_messages(types)
+            
+      #main
+        =yield
 
-    - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
-      #flash
-        = flash_messages(types)
-          
-    #main
-      =yield
-
-    #footer
-      = image_tag("nu_pageheader.jpg")
-      %p
-        eNOTIS &mdash; Clinical Subject Registration 
-        =app_version_helper
-        Created by&nbsp; 
-        =link_to("NUBIC")
-        &nbsp;for Northwestern University
+      #footer
+        = image_tag("nu_pageheader.jpg")
+        %p
+          eNOTIS &mdash; Clinical Subject Registration 
+          =app_version_helper
+          Created by&nbsp; 
+          =link_to("NUBIC")
+          &nbsp;for Northwestern University
 

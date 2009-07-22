@@ -1,25 +1,29 @@
-.loginbox{:class => @status}
-  -form_tag(login_authentication_path, :method => 'post') do
-    %label{:for => 'netid'} NetID
-    = text_field_tag('netid')
-    %label{:for => 'password'} Password
-    = password_field_tag('password')
-    %p= submit_tag('login')
-    %p= link_to "I cannot access my account", access_help_authentication_path
+#left_primary
+  #enotis_description
+    eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University
 
-.enotis_description
-  eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University
+  #system_status{:class => @status}
+    .heading System status
+    %p= ApplicationController::SYSTEM_STATUSES[@status.to_sym]
 
-.system_status{:class => @status}
-  .heading System status
-  %p= ApplicationController::SYSTEM_STATUSES[@status.to_sym]
+  #training
+    .heading Get acquainted with eNOTIS
+    .video Learn basic concepts and log in
+    .video Add a subject
+    .video Import subjects
+    .video Add subject events
 
-.training
-  .heading Get acquainted with eNOTIS
-  .video Learn basic concepts and log in
-  .video Add a subject
-  .video Import subjects
-  .video Add subject events
+#right_sidebar
+  #loginbox{:class => @status}
+    -form_tag(login_authentication_path, :method => 'post') do
+      %label{:for => 'netid'} NetID
+      = text_field_tag('netid')
+      %label{:for => 'password'} Password
+      = password_field_tag('password')
+      = submit_tag('login')
+      %p= link_to "I cannot access my account", access_help_authentication_path
+
+
 
 
 

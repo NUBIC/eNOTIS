@@ -1,87 +1,63 @@
+
+!nu_purple=#520063
+
+!font_color = #333
+!quiet_color = !font_color + #333
+!loud_color = !font_color - #222
+ 
+!header_color = !font_color - #111
+ 
+!link_color = #009
+!link_hover_color = #000
+!link_focus_color = !link_hover_color
+!link_active_color = !link_color + #C00
+!link_visited_color = !link_color - #333
+ 
+!feedback_border_color = #DDD
+!success_color = #264409
+!success_bg_color = #E6EFC2
+!success_border_color = #C6D880
+ 
+!notice_color = #514721
+!notice_bg_color = #FFF6BF
+!notice_border_color = #FFD324
+ 
+!error_color = #8A1F11
+!error_bg_color = #FBE3E4
+!error_border_color = #FBC2C4
+ 
+!highlight_color = #FF0
+!added_color = #FFF
+!added_bg_color = #060
+!removed_color = #FFF
+!removed_bg_color = #900
+ 
+!blueprint_table_header_color = #C3D9FF
+!blueprint_table_stripe_color = #E5ECF9
+
+// Grid settings
 !blueprint_grid_columns = 24
 !blueprint_grid_width = 30px
 !blueprint_grid_margin = 10px
 
-!ALERT_COLOR=#C7360B
-!BORDER_CHANGE=32
-!FONT_COLOR=#333
-!FONT_INVERT_COLOR=#f0f0f0
-!BODY_COLOR=#ffffff
-!NU_PURPLE=#520063
-!DARK_GRAY=#666666
-!LT_GRAY=#DADADA
-!V_LT_GRAY=#E9E9E9
-!LT_YELLOW=#FFFFE0
-!APPROVED_COLOR= #3C7C3B
-!APPROVED_FONT_COLOR=#f3f3f3
-!TERMINATED_COLOR=#f00
-!SUSPENDED_COLOR=#D3D3D3
-!REVIEW_COLOR=#D3d3d3
-
-
+// Base imports
 @import compass/reset.sass
 @import compass/utilities.sass
-@import blueprint/screen.sass
-@import blueprint/modules/grid.sass
+@import blueprint.sass
 
-
-// Standard html tag styles (which we may remove if we switch to compass mixins)
-h1
-  :font-size 2.5em
-  :margin 1em
-h2
-  :font-size 2em
-  :margin 1em
-h3
-  :font-size 1.8em
-  :margin 1em
-strong
-  :font-weight bold
-small
-  :font-weight normal
-  :font-size 0.75em
-.gray
-  :color= !LT_GRAY
-a
-  :color= !FONT_COLOR
-a:hover
-  :color #33f
-a:hover:visited
-  :color #33f
-a:visited
-  :color= !FONT_COLOR
-
-// Borders
+// Custom eNOTIS border mixins
 =rounded_box( !bgcolor )
   :border 1px solid #333
-  :border-color= !bgcolor - !BORDER_CHANGE
+  :border-color= !bgcolor - #333 
   :-moz-border-radius 4px 4px
   :background-color= !bgcolor
   :padding 0.5em
-  :margin 0.5em
+
+=rounded_bottom( !bgcolor )
+  :background-color= !bgcolor
+  :-moz-border-radius 0 0 3px 3px
+  :padding 0.5em
 
 
-// Mixin for the html element, so the footer stays at the bottom of the screen.
-// Relies on the following html structure, and a fixed-height #footer element:
-//
-//  %body
-//    #root
-//      #root_footer
-//    #footer
-
-=attach_footer( !footer_height )
-  :height 100%
-  body
-    :height 100%
-  #root
-    :min-height 100%
-    :margin-bottom  = -!footer_height
-    #root_footer
-      :clear both
-      :height = !footer_height
-  #footer
-    :clear            both
-    :position         relative
-    :height         = !footer_height
 
 

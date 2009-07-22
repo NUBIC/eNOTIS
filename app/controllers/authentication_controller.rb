@@ -3,6 +3,8 @@ class AuthenticationController < ApplicationController
 
   # Public instance methods (actions)
   def index
+    # TODO System staus check
+    @title = "Clinical Registration System"
     @status = system_status
   end
   
