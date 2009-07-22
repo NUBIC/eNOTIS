@@ -20,7 +20,7 @@ class InvolvementEventsController < ApplicationController
   def new
     @subject = Subject.find(params[:subject_id]) unless params[:subject_id].nil?
     # Get @events, @races, @genders, @ethnicities instance variables from dictionary
-    ["event", "race", "gender" "ethnicity"].each{|category| self.instance_variable_set("@#{category.pluralize}".to_sym, DictionaryTerm.find_all_by_category(category.captialize))}
+    ["event", "race", "gender", "ethnicity"].each{|category| self.instance_variable_set("@#{category.pluralize}", DictionaryTerm.find_all_by_category(category.capitalize))}
     respond_to do |format|
       format.html
       format.js {render_to_facebox}
