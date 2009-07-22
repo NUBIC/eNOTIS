@@ -13,6 +13,7 @@ class Coordinator < ActiveRecord::Base
   # Validators
   validates_uniqueness_of :user_id, :scope => :study_id
   
+  # Public class methods
   # TODO Refactor this into several smaller methods -blc
   def self.import_from_eirb
     # get the access list (the coordinator list)

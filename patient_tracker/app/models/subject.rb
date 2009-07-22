@@ -7,12 +7,15 @@ require 'lib/webservices/webservices'
 class Subject < ActiveRecord::Base
   include WebServices
 
+  # Associations
   has_many :involvements
   has_many :studies, :through => :involvements
 
+  # Mixins
   has_paper_trail
   $plugins = [EdwServices]
   
+  # Public instance methods
   def synced?
     !self.synced_at.nil?
   end

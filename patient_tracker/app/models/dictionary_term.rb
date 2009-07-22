@@ -1,7 +1,9 @@
-# 'Dictionary', according to the dictionary, is	a list of codes, 
-# terms, keys, etc., and their meanings, used by a computer program or system.
-# This class is used a reference for the Clinical terminology of the system, 
-# we call it "DictionaryTerm" (with a dictionary_terms database table) to follow convention but it is essentially a dictionary.
+# 'Dictionary', according to the dictionary, is	a list of codes, terms, keys, 
+# etc., and their meanings, used by a computer program or system.
+#
+# This class is used a reference for the clinical terminology of the system, 
+# we call it "DictionaryTerm" (with a dictionary_terms database table) to 
+# follow convention but it is essentially a dictionary.
 
 class DictionaryTerm < ActiveRecord::Base
 
@@ -10,6 +12,8 @@ class DictionaryTerm < ActiveRecord::Base
   validates_uniqueness_of :term, :scope => :category 
   validates_uniqueness_of :code, :scope => :category
  
+  # Public class methods
+
   # Some helper methods than wrap finders
   def self.lookup_code(code, cat)
     find(:first, :conditions => ["code=? and category=?",code.to_s, cat.to_s])
@@ -23,6 +27,8 @@ class DictionaryTerm < ActiveRecord::Base
     find(:all, :conditions => ["source=?",source])
   end
  
+  # Public instance methods
+  
   # Instance method to return the 'user readable' value of the term obj
   def to_s
     self.term.to_s

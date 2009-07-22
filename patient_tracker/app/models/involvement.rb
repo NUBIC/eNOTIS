@@ -1,7 +1,7 @@
 # This model represents the affiliation a subject can have with a study.
 # It holds non-temporal data only. For reporting purposes we capture gender, ethnicity, and race here
 #
-# For example: Disease site would be found in the Inolvement join record between a subject and study.
+# For example: Disease site would be found in the Involvement join record between a subject and study.
 # Disease site is a specific piece of data about why the subject is on the trial but not associated with
 # a specific event. It is a long term data element that can span the whole relationship of subject and study.
 
