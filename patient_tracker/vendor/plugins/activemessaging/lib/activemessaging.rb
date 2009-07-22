@@ -49,9 +49,9 @@ module ActiveMessaging
   end
 
   def self.load_config
-    p APP_ROOT
+    # p APP_ROOT
     path = File.expand_path("#{APP_ROOT}/config/messaging.rb")
-    p path
+    # p path
     begin
       load path
     rescue MissingSourceFile
