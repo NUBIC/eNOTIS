@@ -4,11 +4,10 @@ class UsersController < ApplicationController
   # Includes
   include FaceboxRender
   
-  # Filters
+  # Authentication
   before_filter :user_must_be_logged_in
 
-  # ===================== Public Actions ======================  
-  
+  # Public instance methods (actions)
   def dashboard
     @studies = current_user.studies 
   end

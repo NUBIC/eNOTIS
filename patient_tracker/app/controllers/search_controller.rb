@@ -1,14 +1,13 @@
 class SearchController < ApplicationController
   layout "layouts/main"
   
-  # Filters
+  # Authentication
   before_filter :user_must_be_logged_in
   
   # Auditing
   has_view_trail
 
-  # ===================== Public Actions ======================  
-  
+  # Public instance methods (actions)
   def show
     unless (q = params[:query]).blank?
       params[:for] ||= ["studies", "subjects"]
@@ -22,37 +21,9 @@ class SearchController < ApplicationController
     end
   end
   
+  # Enables "post"
   def create
     show
     render :action => 'show'
   end
 end
-
-# # Involvement Events
-# def search
-#   if !params[:mrn].blank?
-#     subject = Subject.find(:first,:conditions=>["mrn='#{params[:mrn]}'"],:span=>:global)
-#     @subjects = [subject] || []
-#   elsif !params[:first_name].blank? and !params[:last_name].blank? and !params[:birth_date].blank?
-#     @subjects = Subject.find(:all,:conditions=> ["first_name = #{params[:first_name]} and last_name = #{params[:last_name]} and birth_date = #{params[:birth_date]}"],:span=>:foreign)
-#   end
-#   respond_to do |format|
-#     format.html
-#     format.js {render_to_facebox}
-#   end
-# end
-
-# # Studies
-# def search
-#   if params[:query] and @study = (Study.find_by_irb_number(params[:query]) || Study.find(:first, :conditions => [ "title like ?", "%#{params[:query]}%"]) )
-#     render(:action => "show")
-#   else
-#     flash[:notice] = "No studies found"
-#     redirect_to :back
-#   end
-# end
-
-# # Subjects
-# def search
-#   @subjects = Subject.find_by_mrn(params[:mrn])
-# end

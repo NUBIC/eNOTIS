@@ -1,22 +1,26 @@
 class InvolvementEventsController < ApplicationController
   layout "layouts/main"
+  
+  # Includes
   include FaceboxRender
   include Chronic
+  
+  # Authentication
   before_filter :user_must_be_logged_in
+  
+  # Auditing
   has_view_trail :except => :index
   
+  # Public instance methods (actions)
   def index
     # TODO Refactor this to a method on user -blc
     @events = current_user.studies.map(&:involvements).flatten.map(&:involvement_events).flatten
   end
 
   def new
-    #get necessary subject, race and gender and ethicity information from dictionary
     @subject = Subject.find(params[:subject_id]) unless params[:subject_id].nil?
-    @events = DictionaryTerm.find_all_by_category("Event")
-    @races = DictionaryTerm.find_all_by_category("Race")
-    @genders = DictionaryTerm.find_all_by_category("Gender")
-    @ethnicities = DictionaryTerm.find_all_by_category("Ethnicity")
+    # Get @events, @races, @genders, @ethnicities instance variables from dictionary
+    ["event", "race", "gender" "ethnicity"].each{|category| self.instance_variable_set("@#{category.pluralize}".to_sym, DictionaryTerm.find_all_by_category(category.captialize))}
     respond_to do |format|
       format.html
       format.js {render_to_facebox}
@@ -24,7 +28,7 @@ class InvolvementEventsController < ApplicationController
   end
 
   def create
-      #too much controller logic. Needs to be moved to a model
+      # TODO - too much controller logic. Needs to be moved to a model
       @errors=[]
       @study = Study.find(:first,:conditions=>["irb_number='#{session[:study_irb_number]}'"],:span=>:global)
       if params[:subject_id].nil?
@@ -46,7 +50,7 @@ class InvolvementEventsController < ApplicationController
       end
   end
 
- def find_or_create_subject(params)
+  def find_or_create_subject(params)
     if !params[:mrn].blank?
       @subject = Subject.find(:first,:conditions=>["mrn='#{params[:mrn]}'"],:span=>:global)
     end
@@ -56,7 +60,7 @@ class InvolvementEventsController < ApplicationController
       @subject = nil
     end
     return @subject
- end
+  end
 
 
   def search

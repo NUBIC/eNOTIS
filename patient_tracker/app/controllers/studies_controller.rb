@@ -1,39 +1,20 @@
 class StudiesController < ApplicationController
   layout "layouts/main"
   
-  # Filters
+  # Authentication
   before_filter :user_must_be_logged_in
 
   # Auditing
   has_view_trail :except => :index
-
   
-  # ===================== Public Actions ======================
-
+  # Public instance methods (actions)
   def index
     respond_to do |format|
       format.html do
         @studies_count = Study.count
         @studies = []
       end
-      # What this means is that DataTables is now ideal for displaying huge amounts of data. DataTables will handle all of the events on the client-side, and send a request to the server for each draw it needs to make. The data fired back from the server will then be displayed. All the features of DataTables you know and love are supported, multi-column sorting, filtering, pagination etc. Obviously it's up to you to do the processing on the server-side and with your database interaction, but DataTables tells you what it needs through the following "get" variables:
-      # 
-      # iDisplayStart - Display start point
-      # iDisplayLength - Number of records to display
-      # sSearch - Global search field
-      # # bEscapeRegex - Global search is regex or not (you probably don't want to enable this on the client-side!)
-      # # iColumns - Number of columns being displayed (useful for getting individual column search info)
-      # # sSearch_(int) - Individual column filter
-      # # bEscapeRegex_(int) - Individual column filter is regex or not
-      # iSortingCols - Number of columns to sort on
-      # iSortCol_(int) - Column being sorted on (you will need to decode this number for your database)
-      # iSortDir_(int) - Direction to be sorted
-      # 
-      # DataTables expects to receive a JSON object with this following properties:
-      # 
-      # iTotalRecords - Total records, after filtering (not just the records on this page, all of them)
-      # iTotalDisplayRecords - Total records, before filtering
-      # aaData - The data in a 2D array
+      # See http://datatables.net/forums/comments.php?DiscussionID=53 for json params
       format.json do
         query_cols = %w(irb_number title status)
         cols = %w(irb_number title status accrual)
@@ -51,6 +32,7 @@ class StudiesController < ApplicationController
   end
 
   def show
+    # store study irb_number in session - used for adding involvment events
     session[:study_irb_number] = params[:id]
     @study = Study.find(:first,:conditions=>["irb_number ='#{params[:id]}'"])
   end

@@ -1,11 +1,8 @@
-# require 'EdwServices.rb'
 class AuthenticationController < ApplicationController
   layout "layouts/public"
 
-  # ===================== Public Actions ======================
-  
+  # Public instance methods (actions)
   def index
-    # TODO System staus check
     @status = system_status
   end
   
@@ -34,10 +31,10 @@ class AuthenticationController < ApplicationController
   end
   
   def access_help
-    
   end
-
-protected
+  
+  # Protected instance methods
+  protected
   # Track failed login attempts
   def note_failed_signin
     flash[:notice] = "Couldn't log you in as '#{params[:netid]}' Visit <a href='http://www.it.northwestern.edu/netid/password.html'>www.it.northwestern.edu/netid</a> for password help."

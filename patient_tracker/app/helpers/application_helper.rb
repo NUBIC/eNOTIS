@@ -1,30 +1,23 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-
+  
+  # Helper to display application version
   def app_version_helper
     "v#{ApplicationController::APP_VERSION}"
   end
   
+  # Helper for displaying warning/notice/error flash messages
   def flash_messages(types)
-    types.map do |type|      
-      content_tag :div, :class => type.to_s do
-        "#{type.to_s.capitalize}: #{flash[type]}"
-        # message_for_item(flash[type], flash["#{type}_item".to_sym])
-      end
-    end.join
+    types.map{|type| content_tag(:div, :class => type.to_s){ "#{type.to_s.capitalize}: #{flash[type]}" } }.join
   end
   
+  # Helper for bridge navigation links. Used in app/layouts/main
   def nav_link_to(text, path='#', controller=nil)
     link_to(text, path, :class => (@controller.class == controller) ? "current" : "")
   end
   
+  # Helper for study tabs. Used in app/views/studies/show
   def study_tab_to(text, path='#')
     link_to(text, path, {:class => path != "#" ? "current" : ""})
   end
-  # def message_for_item(message, item = nil)
-  #   if item.is_a?(Array)
-  #     message % link_to(*item)
-  #   else
-  #     message
-  # end
 end
