@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   
   def system_status
-    %w(up up up up up up up up up up up up up down scheduled_maintenance scheduled_restored).rand
+    "up" #%w(up up up up up up up up up up up up up down scheduled_maintenance scheduled_restored).rand
   end
   def validate_subject_params(params)
     errors = []
