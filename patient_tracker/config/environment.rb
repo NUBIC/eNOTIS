@@ -37,6 +37,7 @@ Rails::Initializer.run do |config|
   config.gem "stomp", :version => '>=1.1'
   config.gem "binarylogic-searchlogic", :lib => 'searchlogic'
   config.gem "yoon-view_trail", :lib => "view_trail", :version => '>=0.3.0', :source => 'http://gems.github.com'
+  config.gem "capistrano", :version => '=2.5.5' # http://www.capify.org/index.php/Problems_With_2.5.6%2B, also installs net-ssh, net-sftp, net-scp, net-ssh-gateway
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

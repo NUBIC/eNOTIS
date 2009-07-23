@@ -5,6 +5,7 @@ sudo gem uninstall --all --ignore-dependencies --executables \
 airblade-paper_trail \
 binarylogic-searchlogic \
 builder \
+capistrano \
 chriseppstein-compass \
 columnize \
 chronic \
@@ -17,6 +18,10 @@ haml-edge \
 httpclient \
 libxml-ruby \
 linecache \
+net-ssh \
+net-sftp \
+net-scp \
+net-ssh-gateway \
 nokogiri \
 paperclip \
 polyglot \
