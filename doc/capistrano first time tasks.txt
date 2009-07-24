@@ -2,7 +2,7 @@ FIRST TIME ONLY
 
 sudo gem install -v=2.3.2 rails
 
-create ~/.gemrc <<-EOF
+create ~/.gemrc
 
 ---
 :update_sources: true
@@ -16,4 +16,23 @@ gem: --no-ri --no-rdoc
 - http://gems.github.com
 - http://download.bioinformatics.northwestern.edu/gems/
 
-EOF
+
+# for sudo gem install libxml-ruby
+
+sudo yum install ruby-devel # already installed
+
+sudo yum install zlib # already installed
+sudo yum install zlib-devel
+
+sudo yum install libxml2 # already installed
+sudo yum install libxml2-devel
+
+# works!
+
+
+# for sudo gem install sqlite3-ruby
+
+sudo yum install sqlite3-devel # didn't help
+sudo yum install rubygem-sqlite3-ruby
+
+# works!

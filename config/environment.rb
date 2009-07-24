@@ -35,6 +35,7 @@ Rails::Initializer.run do |config|
   config.gem "session"
   config.gem "wddx"
   config.gem "bcdatabase"
+  congif.gem "rubytree"
   # bcsec
   config.gem "composite_primary_keys"
   config.gem "ruby-net-ldap"
