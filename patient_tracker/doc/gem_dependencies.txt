@@ -1,53 +1,52 @@
 sudo gem sources -a http://download.bioinformatics.northwestern.edu/gems/
 
 # To clear your gems, use this command, removing any the lines for any gems you don't have (it'll choke)
-sudo gem uninstall --all --ignore-dependencies --executables \
-airblade-paper_trail \
-binarylogic-searchlogic \
-builder \
-capistrano \
-chriseppstein-compass \
-columnize \
-chronic \
-cucumber \
-diff-lcs \
-faker \
-fastercsv \
-haml \
-haml-edge \
-httpclient \
-libxml-ruby \
-linecache \
-net-ssh \
-net-sftp \
-net-scp \
-net-ssh-gateway \
-nokogiri \
-paperclip \
-polyglot \
-populator \
-rcov \
-rspec \
-rspec-rails \
-ruby-debug \
-ruby-debug-base \
-soap4r \
-sqlite3-ruby \
-term-ansicolor \
-thoughtbot-factory_girl \
-treetop \
-webrat \
-ZenTest \
-highline \
-session \
-stomp \
-wddx \
-composite_primary_keys \
-ruby-net-ldap \
-rubytree \
-bcdatabase \
-hoe \
-bcsec
+sudo gem uninstall --all --ignore-dependencies --executables airblade-paper_trail ;\
+sudo gem uninstall -aIx binarylogic-searchlogic ;\
+sudo gem uninstall -aIx builder ;\
+sudo gem uninstall -aIx capistrano ;\
+sudo gem uninstall -aIx chriseppstein-compass ;\
+sudo gem uninstall -aIx columnize ;\
+sudo gem uninstall -aIx chronic ;\
+sudo gem uninstall -aIx cucumber ;\
+sudo gem uninstall -aIx diff-lcs ;\
+sudo gem uninstall -aIx faker ;\
+sudo gem uninstall -aIx fastercsv ;\
+sudo gem uninstall -aIx haml ;\
+sudo gem uninstall -aIx haml-edge ;\
+sudo gem uninstall -aIx httpclient ;\
+sudo gem uninstall -aIx libxml-ruby ;\
+sudo gem uninstall -aIx linecache ;\
+sudo gem uninstall -aIx net-ssh ;\
+sudo gem uninstall -aIx net-sftp ;\
+sudo gem uninstall -aIx net-scp ;\
+sudo gem uninstall -aIx net-ssh-gateway ;\
+sudo gem uninstall -aIx nokogiri ;\
+sudo gem uninstall -aIx paperclip ;\
+sudo gem uninstall -aIx polyglot ;\
+sudo gem uninstall -aIx populator ;\
+sudo gem uninstall -aIx rcov ;\
+sudo gem uninstall -aIx rspec ;\
+sudo gem uninstall -aIx rspec-rails ;\
+sudo gem uninstall -aIx ruby-debug ;\
+sudo gem uninstall -aIx ruby-debug-base ;\
+sudo gem uninstall -aIx soap4r ;\
+sudo gem uninstall -aIx sqlite3-ruby ;\
+sudo gem uninstall -aIx term-ansicolor ;\
+sudo gem uninstall -aIx thoughtbot-factory_girl ;\
+sudo gem uninstall -aIx treetop ;\
+sudo gem uninstall -aIx webrat ;\
+sudo gem uninstall -aIx ZenTest ;\
+sudo gem uninstall -aIx highline ;\
+sudo gem uninstall -aIx session ;\
+sudo gem uninstall -aIx stomp ;\
+sudo gem uninstall -aIx wddx ;\
+sudo gem uninstall -aIx composite_primary_keys ;\
+sudo gem uninstall -aIx ruby-net-ldap ;\
+sudo gem uninstall -aIx rubytree ;\
+sudo gem uninstall -aIx bcdatabase ;\
+sudo gem uninstall -aIx hoe ;\
+sudo gem uninstall -aIx bcsec
 
 # mechanize and mechanize-ntlm is no longer needed, replaced by lib/net/ntlm_http.rb
 

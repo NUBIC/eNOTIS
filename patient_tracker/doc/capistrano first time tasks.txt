@@ -1,0 +1,19 @@
+FIRST TIME ONLY
+
+sudo gem install -v=2.3.2 rails
+
+create ~/.gemrc <<-EOF
+
+---
+:update_sources: true
+gem: --no-ri --no-rdoc
+:bulk_threshold: 1000
+:backtrace: false
+:verbose: true
+:benchmark: false
+:sources:
+- http://gems.rubyforge.org
+- http://gems.github.com
+- http://download.bioinformatics.northwestern.edu/gems/
+
+EOF
