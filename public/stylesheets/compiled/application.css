@@ -1,0 +1,498 @@
+/* line 6, ../../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.7/frameworks/compass/stylesheets/compass/utilities/general/_reset.sass */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline; }
+
+/* line 17, ../../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.7/frameworks/compass/stylesheets/compass/utilities/general/_reset.sass */
+*:focus {
+  outline: 0; }
+
+/* line 20, ../../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.7/frameworks/compass/stylesheets/compass/utilities/general/_reset.sass */
+body {
+  line-height: 1em;
+  color: black;
+  background: #fff; }
+
+/* line 23, ../../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.7/frameworks/compass/stylesheets/compass/utilities/general/_reset.sass */
+ol, ul {
+  list-style: none; }
+
+/* tables still need 'cellspacing="0"' in the markup */
+/* line 27, ../../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.7/frameworks/compass/stylesheets/compass/utilities/general/_reset.sass */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle; }
+
+/* line 30, ../../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.7/frameworks/compass/stylesheets/compass/utilities/general/_reset.sass */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+/* line 33, ../../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.7/frameworks/compass/stylesheets/compass/utilities/general/_reset.sass */
+q, blockquote {
+  quotes: "" ""; }
+  /* line 101, ../../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.7/frameworks/compass/stylesheets/compass/utilities/general/_reset.sass */
+  q:before, q:after, blockquote:before, blockquote:after {
+    content: ""; }
+
+/* line 36, ../../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.7/frameworks/compass/stylesheets/compass/utilities/general/_reset.sass */
+img a {
+  border: none; }
+
+/* line 29, ../../../app/stylesheets/_base.sass */
+h1 {
+  font-size: 2.5em;
+  margin: 1em; }
+
+/* line 32, ../../../app/stylesheets/_base.sass */
+h2 {
+  font-size: 2em;
+  margin: 1em; }
+
+/* line 35, ../../../app/stylesheets/_base.sass */
+h3 {
+  font-size: 1.8em;
+  margin: 1em; }
+
+/* line 38, ../../../app/stylesheets/_base.sass */
+strong {
+  font-weight: bold; }
+
+/* line 40, ../../../app/stylesheets/_base.sass */
+small {
+  font-weight: normal;
+  font-size: 0.75em; }
+
+/* line 43, ../../../app/stylesheets/_base.sass */
+.gray {
+  color: #dadada; }
+
+/* line 45, ../../../app/stylesheets/_base.sass */
+a {
+  color: #333333; }
+
+/* line 47, ../../../app/stylesheets/_base.sass */
+a:hover {
+  color: #33f; }
+
+/* line 49, ../../../app/stylesheets/_base.sass */
+a:hover:visited {
+  color: #33f; }
+
+/* line 51, ../../../app/stylesheets/_base.sass */
+a:visited {
+  color: #333333; }
+
+/* line 3, ../../../app/stylesheets/application.sass */
+body {
+  background-color: white;
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 62.5% /*this is so we can have nice em's to pix conversion 1.0em ~= 10px, 1.1em ~= 11px, etc...*/;
+  color: #333;
+  line-height: 1.8em; }
+  /* line 11, ../../../app/stylesheets/application.sass */
+  body #flash {
+    position: absolute;
+    top: 0;
+    left: 25%;
+    width: 50%;
+    margin: 0 auto;
+    padding: 0.5em;
+    background-color: #c7360b;
+    -moz-border-radius: 0 0 3px 3px;
+    font-size: 1.5em;
+    color: #f0f0f0; }
+  /* line 23, ../../../app/stylesheets/application.sass */
+  body #enotis_header {
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+    min-width: 111.5em;
+    padding: 1.0em 0;
+    color: #520063; }
+    /* line 5, ../../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.7/frameworks/compass/stylesheets/compass/utilities/general/_hacks.sass */
+    body #enotis_header {
+      display: block; }
+    /* line 29, ../../../app/stylesheets/application.sass */
+    body #enotis_header h1.app_name {
+      float: left;
+      margin: 0 0 .5em .5em;
+      font-size: 2 em;
+      font-weight: bold; }
+    /* line 34, ../../../app/stylesheets/application.sass */
+    body #enotis_header .tagline {
+      float: left;
+      margin-left: 1em;
+      font-size: 1.5em;
+      font-style: italic; }
+    /* line 39, ../../../app/stylesheets/application.sass */
+    body #enotis_header .current_user {
+      float: right;
+      margin-right: 1em;
+      font-size: 1.5em; }
+    /* line 43, ../../../app/stylesheets/application.sass */
+    body #enotis_header ul.bridge-nav {
+      clear: left;
+      background-color: #dadada;
+      color: #333333;
+      line-height: 1.6em;
+      font-size: 1.6em;
+      padding: 0 1em 0 14em; }
+      /* line 50, ../../../app/stylesheets/application.sass */
+      body #enotis_header ul.bridge-nav li, body #enotis_header ul.bridge-nav form, body #enotis_header ul.bridge-nav form div {
+        display: inline; }
+      /* line 52, ../../../app/stylesheets/application.sass */
+      body #enotis_header ul.bridge-nav li {
+        list-type: none;
+        display: inline; }
+        /* line 55, ../../../app/stylesheets/application.sass */
+        body #enotis_header ul.bridge-nav li a, body #enotis_header ul.bridge-nav li a:hover, body #enotis_header ul.bridge-nav li a:visited, body #enotis_header ul.bridge-nav li a:active {
+          color: #333333;
+          text-decoration: none;
+          padding: .2em 1em; }
+        /* line 59, ../../../app/stylesheets/application.sass */
+        body #enotis_header ul.bridge-nav li a:hover {
+          background-color: #ffffe0; }
+        /* line 61, ../../../app/stylesheets/application.sass */
+        body #enotis_header ul.bridge-nav li a.current {
+          background-color: white;
+          color: #520063; }
+        /* line 64, ../../../app/stylesheets/application.sass */
+        body #enotis_header ul.bridge-nav li input {
+          margin-top: 4px;
+          vertical-align: top; }
+        /* line 67, ../../../app/stylesheets/application.sass */
+        body #enotis_header ul.bridge-nav li input#query {
+          margin-top: 2px;
+          vertical-align: top; }
+  /* line 71, ../../../app/stylesheets/application.sass */
+  body #main {
+    overflow: hidden;
+    display: inline-block;
+    padding: 0.5em 2em;
+    font-size: 1.3em;
+    min-width: 84em; }
+    /* line 5, ../../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.7/frameworks/compass/stylesheets/compass/utilities/general/_hacks.sass */
+    body #main {
+      display: block; }
+    /* line 77, ../../../app/stylesheets/application.sass */
+    body #main .heading {
+      font-weight: bold;
+      font-size: 1.5em;
+      background-color: #E1EAF9;
+      padding: .25em .5em; }
+    /* line 82, ../../../app/stylesheets/application.sass */
+    body #main .column {
+      float: left;
+      width: 48%;
+      padding-right: 2%; }
+    /* line 87, ../../../app/stylesheets/application.sass */
+    body #main .enotis_description {
+      border: 1px solid #333;
+      border-color: #bababa;
+      -moz-border-radius: 4px 4px;
+      background-color: #dadada;
+      padding: 0.5em;
+      margin: 0.5em;
+      width: 30em;
+      font-size: 1.5em;
+      line-height: 1.5em;
+      margin-bottom: 1.5em; }
+    /* line 93, ../../../app/stylesheets/application.sass */
+    body #main .system_status {
+      width: 20em;
+      -moz-border-radius: 4px;
+      padding: 1em; }
+      /* line 97, ../../../app/stylesheets/application.sass */
+      body #main .system_status .heading {
+        background: transparent; }
+      /* line 99, ../../../app/stylesheets/application.sass */
+      body #main .system_status p {
+        padding: .25em .5em; }
+      /* line 101, ../../../app/stylesheets/application.sass */
+      body #main .system_status.down, body #main .system_status.scheduled_maintenance {
+        background-color: #FFD9CC; }
+      /* line 103, ../../../app/stylesheets/application.sass */
+      body #main .system_status.up, body #main .system_status.scheduled_restored {
+        background-color: #D9FFCC; }
+    /* line 105, ../../../app/stylesheets/application.sass */
+    body #main .access_help {
+      width: 45em; }
+      /* line 107, ../../../app/stylesheets/application.sass */
+      body #main .access_help p {
+        margin: 10px 0; }
+    /* line 109, ../../../app/stylesheets/application.sass */
+    body #main .loginbox {
+      float: right;
+      width: 16em;
+      margin-right: 2em;
+      border: 1px solid #333;
+      border-color: #666666;
+      background-color: #ffffe0;
+      -moz-border-radius: 4px;
+      padding: 1em;
+      font-size: 1.5em;
+      line-height: 1.8em; }
+      /* line 120, ../../../app/stylesheets/application.sass */
+      body #main .loginbox label {
+        display: inline-block;
+        width: 5em;
+        margin-top: 1em; }
+      /* line 124, ../../../app/stylesheets/application.sass */
+      body #main .loginbox input {
+        margin-top: 1em; }
+      /* line 126, ../../../app/stylesheets/application.sass */
+      body #main .loginbox input[type='text'] {
+        width: 11em; }
+      /* line 128, ../../../app/stylesheets/application.sass */
+      body #main .loginbox input[type='password'] {
+        width: 11em; }
+      /* line 130, ../../../app/stylesheets/application.sass */
+      body #main .loginbox p {
+        margin-top: 1em;
+        text-align: center;
+        font-size: .7em; }
+      /* line 134, ../../../app/stylesheets/application.sass */
+      body #main .loginbox.down, body #main .loginbox.scheduled_maintenance {
+        display: none; }
+    /* line 136, ../../../app/stylesheets/application.sass */
+    body #main .training {
+      width: 50em;
+      margin-top: 1.5em; }
+      /* line 139, ../../../app/stylesheets/application.sass */
+      body #main .training .video {
+        float: left;
+        width: 70px;
+        height: 60px;
+        margin: 1em;
+        background-image: url('/images/video.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        padding: 25px;
+        text-align: center;
+        color: #666666; }
+    /* line 151, ../../../app/stylesheets/application.sass */
+    body #main #my_studies {
+      float: left;
+      width: 70%; }
+    /* line 154, ../../../app/stylesheets/application.sass */
+    body #main #recent_events {
+      float: left;
+      width: 27%;
+      margin-left: 3%; }
+      /* line 159, ../../../app/stylesheets/application.sass */
+      body #main #recent_events ul li {
+        background-color: #e9e9e9;
+        padding: .25em .5em;
+        margin: 1em 0; }
+        /* line 163, ../../../app/stylesheets/application.sass */
+        body #main #recent_events ul li a {
+          display: block;
+          width: 100%;
+          padding: .25em .5em;
+          color: #333333;
+          text-decoration: none; }
+        /* line 169, ../../../app/stylesheets/application.sass */
+        body #main #recent_events ul li a:hover {
+          cursor: pointer;
+          background-color: #ffffe0; }
+    /* line 175, ../../../app/stylesheets/application.sass */
+    body #main #new_subject_form input {
+      padding: 0.5em; }
+    /* line 183, ../../../app/stylesheets/application.sass */
+    body #main #study .vitals {
+      float: left;
+      width: 20em;
+      -moz-border-radius: 5px 0 0 5px;
+      padding: .5em;
+      background-color: #D9FFCC; }
+      /* line 189, ../../../app/stylesheets/application.sass */
+      body #main #study .vitals p {
+        margin: .5em; }
+      /* line 191, ../../../app/stylesheets/application.sass */
+      body #main #study .vitals p.irb_number {
+        font-size: 2em;
+        margin: .25em; }
+    /* line 194, ../../../app/stylesheets/application.sass */
+    body #main #study .details {
+      float: left;
+      width: 60em;
+      -moz-border-radius: 0 5px 5px 0;
+      padding: .5em;
+      background-color: #dadada; }
+    /* line 200, ../../../app/stylesheets/application.sass */
+    body #main #study .description {
+      font-weight: bold;
+      padding-bottom: 0.5em; }
+    /* line 203, ../../../app/stylesheets/application.sass */
+    body #main #study .study_staff {
+      padding-top: 0.5em;
+      border-top: 1px solid #333;
+      border-color: #520063; }
+    /* line 208, ../../../app/stylesheets/application.sass */
+    body #main #study ul.study_tabs {
+      position: relative;
+      clear: left;
+      margin-top: 1em;
+      margin-bottom: 1.5em;
+      border-bottom: 2px solid;
+      border-color: #dadada;
+      background-color: white;
+      color: #333333;
+      line-height: 1.2em;
+      font-size: 1.2em;
+      padding: 0 1em; }
+      /* line 220, ../../../app/stylesheets/application.sass */
+      body #main #study ul.study_tabs li {
+        position: relative;
+        list-style: none;
+        display: inline;
+        border-width: 2px 2px 0 2px;
+        border-style: solid;
+        border-color: #dadada;
+        background-color: #dadada; }
+        /* line 228, ../../../app/stylesheets/application.sass */
+        body #main #study ul.study_tabs li a, body #main #study ul.study_tabs li a:hover, body #main #study ul.study_tabs li a:visited, body #main #study ul.study_tabs li a:active {
+          color: #333333;
+          text-decoration: none;
+          padding: 0 1em .1em 1em; }
+        /* line 232, ../../../app/stylesheets/application.sass */
+        body #main #study ul.study_tabs li a:hover {
+          background-color: #ffffe0; }
+      /* line 234, ../../../app/stylesheets/application.sass */
+      body #main #study ul.study_tabs li.ui-tabs-selected a, body #main #study ul.study_tabs li.ui-state-disabled a, body #main #study ul.study_tabs li.ui-state-processing a {
+        background-color: white;
+        color: #520063;
+        cursor: text; }
+    /* line 238, ../../../app/stylesheets/application.sass */
+    body #main #study .ui-tabs-hide {
+      display: none !important; }
+    /* line 240, ../../../app/stylesheets/application.sass */
+    body #main #study #overview, body #main #study #subjects, body #main #study #documents, body #main #study #imports {
+      padding: .5em; }
+      /* line 243, ../../../app/stylesheets/application.sass */
+      body #main #study #overview ul li, body #main #study #subjects ul li, body #main #study #documents ul li, body #main #study #imports ul li {
+        background-color: #e9e9e9;
+        padding: .25em .5em; }
+    /* line 250, ../../../app/stylesheets/application.sass */
+    body #main #search_form {
+      margin: 1em; }
+    /* line 252, ../../../app/stylesheets/application.sass */
+    body #main #subject_results, body #main #study_results {
+      float: left;
+      width: 48%;
+      padding-right: 2%; }
+      /* line 256, ../../../app/stylesheets/application.sass */
+      body #main #subject_results .dataTables_filter, body #main #study_results .dataTables_filter {
+        display: none; }
+  /* line 258, ../../../app/stylesheets/application.sass */
+  body #footer {
+    background-color: #fff;
+    padding: 1em;
+    border-top: 1px solid #333;
+    text-transform: uppercase; }
+
+/* line 265, ../../../app/stylesheets/application.sass */
+/ .header_details {
+  -moz-border-radius: 4px 4px;
+  background-color: #dadada;
+  padding: 1em;
+  margin-bottom: 1em; }
+  /* line 270, ../../../app/stylesheets/application.sass */
+  / .header_details .primary_data {
+    font-weight: bold;
+    font-size: 2em;
+    width: 6.4em;
+    float: left;
+    border: 1px solid #333;
+    background-color: white;
+    margin-bottom: 0.5em; }
+  /* line 278, ../../../app/stylesheets/application.sass */
+  / .header_details .secondary_data {
+    font-size: 1.3em;
+    margin-left: 11.5em;
+    font-weight: bold; }
+    /* line 283, ../../../app/stylesheets/application.sass */
+    / .header_details .secondary_data em {
+      font-weight: normal; }
+  /* line 285, ../../../app/stylesheets/application.sass */
+  / .header_details .tertiary_data {
+    border-top: 1px solid #333;
+    clear: both;
+    padding: 0.5em;
+    font-size: 1.2em; }
+  /* line 290, ../../../app/stylesheets/application.sass */
+  / .header_details .status_icon {
+    padding: 0.5em;
+    border: 1px solid #333;
+    width: 5.35em; }
+  /* line 295, ../../../app/stylesheets/application.sass */
+  / .header_details .study_id {
+    text-align: center;
+    width: 100%;
+    padding: 0.5em 0em; }
+  /* line 299, ../../../app/stylesheets/application.sass */
+  / .header_details .approved {
+    background-color: #3c7c3b;
+    color: #f3f3f3; }
+  /* line 302, ../../../app/stylesheets/application.sass */
+  / .header_details .suspended {
+    background-color: #d3d3d3; }
+  /* line 304, ../../../app/stylesheets/application.sass */
+  / .header_details .terminated {
+    background-color: red; }
+  /* line 306, ../../../app/stylesheets/application.sass */
+  / .header_details .review {
+    background-color: #d3d3d3; }
+/* line 308, ../../../app/stylesheets/application.sass */
+/ .file_details {
+  -moz-border-radius: 4px 4px;
+  background-color: #dadada;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  float: left;
+  width: 45%; }
+  /* line 315, ../../../app/stylesheets/application.sass */
+  / .file_details .study_file {
+    padding: 0.5em;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: -1px; }
+    /* line 320, ../../../app/stylesheets/application.sass */
+    / .file_details .study_file img {
+      position: relative;
+      top: 3px; }
+    /* line 323, ../../../app/stylesheets/application.sass */
+    / .file_details .study_file em {
+      padding-bottom: 0.4em; }
+/* line 325, ../../../app/stylesheets/application.sass */
+/ .status_history {
+  background-color: #dadada;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  margin-left: 50%; }
+  /* line 330, ../../../app/stylesheets/application.sass */
+  / .status_history li {
+    padding: 0.5em; }
+/* line 332, ../../../app/stylesheets/application.sass */
+/ .accural_status {
+  -moz-border-radius: 4px 4px;
+  background-color: #dadada;
+  padding: 0.5em;
+  margin-bottom: 1em; }
