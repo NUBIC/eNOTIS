@@ -1,0 +1,16 @@
+Reggie: list of what it does (and doesn't do, yet) - functional requirements document
+
+== Diagrams
+Brian - database
+Brian - schema description
+David - workflow / use cases
+Brian - ui wireframes (stuff)
+Brian - deployment environments
+
+Mark - features, deployment
+decisions - why we made them, how we decided
+
+
+discussion about project manager/roles
+
+
