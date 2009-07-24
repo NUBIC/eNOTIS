@@ -7,6 +7,6 @@ ActiveMessaging::Gateway.define do |s|
   #s.filter :some_filter, :only=>:orders
   #s.processor_group :group1, :order_processor
   
-  s.destination :patient_upload, '/queue/PatientUpload'
+  s.destination :patient_upload, "/queue/Enotis#{Rails.env.capitalize}PatientUpload"
   
 end
