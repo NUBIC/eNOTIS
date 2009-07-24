@@ -17,6 +17,3 @@ gem: --no-ri --no-rdoc
 - http://download.bioinformatics.northwestern.edu/gems/
 
 EOF
-
-point DocumentRoot in /etc/httpd/conf.d/enotis-staging.conf to /var/www/apps/enotis/current/patient_tracker
-

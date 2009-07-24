@@ -59,7 +59,7 @@ namespace :gems do
   desc "Install gems"
   task :install, :roles => :app do
     # always use sudo
-    run "cd #{current_path}/patient_tracker && sudo rake RAILS_ENV=#{rails_env} gems:install"
+    run "cd #{current_path}/ && sudo rake RAILS_ENV=#{rails_env} gems:install"
   end
   desc "Uninstall gems"
   task :cleanup, :roles => :app do
