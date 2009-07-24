@@ -34,6 +34,7 @@ Rails::Initializer.run do |config|
   # bcdatabase
   config.gem "session"
   config.gem "wddx"
+  config.gem "composite_primary_keys"
   config.gem "bcdatabase"
   
   config.gem "bcsec", :source => "http://download.bioinformatics.northwestern.edu/gems/" # also installs bcdatabase
