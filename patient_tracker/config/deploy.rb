@@ -50,10 +50,8 @@ namespace :deploy do
   end
 end
 
-# Inspiration
-# http://github.com/guides/deploying-with-capistrano
-# http://www.brynary.com/2008/8/3/our-git-deployment-workflow
-# http://weblog.jamisbuck.org/2007/7/23/capistrano-multistage
+# Install gems after deploy
+after "deploy", "gems:install"
 
 # Gems
 # http://henrik.nyh.se/2008/10/cap-gems-install-and-a-gem-dependency-gotcha
@@ -63,7 +61,68 @@ namespace :gems do
     # always use sudo
     run "cd #{current_path}/patient_tracker && sudo rake RAILS_ENV=#{rails_env} gems:install"
   end
+  desc "Uninstall gems"
+  task :cleanup, :roles => :app do
+    gems_to_uninstall = %w(
+      airblade-paper_trail
+      bcdatabase
+      bcsec
+      binarylogic-searchlogic
+      builder
+      capistrano
+      chriseppstein-compass
+      chronic
+      columnize
+      composite_primary_keys
+      cucumber
+      diff-lcs
+      faker
+      fastercsv
+      haml
+      haml-edge
+      highline
+      hoe
+      httpclient
+      libxml-ruby
+      linecache
+      net-scp
+      net-sftp
+      net-ssh
+      net-ssh-gateway
+      nokogiri
+      paperclip
+      polyglot
+      populator
+      rcov
+      rspec
+      rspec-rails
+      ruby-debug
+      ruby-debug-base
+      ruby-net-ldap
+      rubytree
+      session
+      soap4r
+      sqlite3-ruby
+      stomp
+      term-ansicolor
+      thoughtbot-factory_girl
+      treetop
+      wddx
+      webrat
+      yoon-view_trail
+      ZenTest
+    )
+    gems_to_uninstall.each do |gem_name|
+      run "sudo gem uninstall --all --ignore-dependencies --executables #{gem_name}"
+    end
+  end
 end
+
+# Inspiration
+# http://github.com/guides/deploying-with-capistrano
+# http://www.brynary.com/2008/8/3/our-git-deployment-workflow
+# http://weblog.jamisbuck.org/2007/7/23/capistrano-multistage
+
 
 # Dynamic database.yml generation
 # http://shanesbrain.net/2007/5/30/managing-database-yml-with-capistrano-2-0
