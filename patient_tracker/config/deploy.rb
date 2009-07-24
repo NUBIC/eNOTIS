@@ -1,18 +1,19 @@
-set :application, "enotis"
+# developer machine will log in as enotis-deployer (ssh keys) to server (either enotis-staging or enotis.nubic.northwestern.edu)
+# server will log in as build (ssh-keys) and check out code from code.nubic.northwestern.edu/git/enotis.git
 
-# Version control
-default_run_options[:pty] = true # to get the passphrase prompt from git
-set :scm, "git"
-set :repository,  "git@github.com:breakpointer/enotis.git"
-set :branch, "master"
-set :deploy_to, "/var/www/apps/enotis"
-set :deploy_via, :remote_cache
+set :application, "enotis"
 
 # User
 set :user, "enotis-deployer"
 set :use_sudo, false
-set :db_user, "enotis"
-set :db_password, ""
+
+# Version control
+default_run_options[:pty] = true # to get the passphrase prompt from git
+set :scm, "git"
+set :repository, "ssh://myo628@code.bioinformatics.northwestern.edu/git/enotis.git"
+set :branch, "master"
+set :deploy_to, "/var/www/apps/enotis"
+set :deploy_via, :remote_cache
 
 # Roles
 task :set_roles do
@@ -60,7 +61,7 @@ namespace :gems do
   desc "Install gems"
   task :install, :roles => :app do
     # always use sudo
-    run "cd #{current_path} && sudo rake RAILS_ENV=#{rails_env} gems:install"
+    run "cd #{current_path}/patient_tracker && sudo rake RAILS_ENV=#{rails_env} gems:install"
   end
 end
 
@@ -68,6 +69,9 @@ end
 # http://shanesbrain.net/2007/5/30/managing-database-yml-with-capistrano-2-0
 # require 'erb'
 # 
+# set :db_user, "enotis"
+# set :db_password, ""
+
 # before "deploy:setup", :db
 # after "deploy:update_code", "db:symlink" 
 # 
