@@ -31,6 +31,11 @@ Rails::Initializer.run do |config|
   config.gem "faker", :version => '>=0.3.1'
   config.gem "fastercsv", :version => '>=1.5.0'
   config.gem "paperclip", :version => '>=2.1.2'
+  # bcdatabase
+  config.gem "session"
+  config.gem "wddx"
+  config.gem "bcdatabase"
+  
   config.gem "bcsec", :source => "http://download.bioinformatics.northwestern.edu/gems/" # also installs bcdatabase
   config.gem "airblade-paper_trail", :lib => 'paper_trail', :version => '>=1.1.1', :source => 'http://gems.github.com'
   config.gem "chronic", :version => '>=0.2.3'
