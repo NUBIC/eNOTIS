@@ -1,5 +1,5 @@
 # lib/tasks/dictionary_terms.rake
-require 'fastercsv'
+require 'fastercsv' if defined? FasterCSV
 namespace :dictionary_terms do
 
   desc 'Import csv data into terms (the table formerly known as dictionary) table'
