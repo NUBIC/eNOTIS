@@ -1,4 +1,6 @@
 
+// Definitions and overrides
+
 !nu_purple=#520063
 
 !font_color = #333
@@ -21,6 +23,14 @@
 !notice_color = #514721
 !notice_bg_color = #FFF6BF
 !notice_border_color = #FFD324
+
+!primary_data_color = #333 
+!primary_data_bg_color = #ABCDC5
+!primary_data_border_color = #819A94
+
+!secondary_data_color = #555  
+!secondary_data_bg_color = #DAE8E4
+!secondary_data_border_color = #A2B5B0
  
 !error_color = #8A1F11
 !error_bg_color = #FBE3E4
@@ -40,10 +50,17 @@
 !blueprint_grid_width = 30px
 !blueprint_grid_margin = 10px
 
+// Font settings
+!blueprint_font_size = 16px
+
+// Because compass uses conditional assignment
+// we define our vars first and the defaults take over
+// the rest. http://wiki.github.com/chriseppstein/compass/overriding-constants
 // Base imports
 @import compass/reset.sass
 @import compass/utilities.sass
 @import blueprint.sass
+
 
 // Custom eNOTIS border mixins
 =rounded_box( !bgcolor )
@@ -57,6 +74,9 @@
   :background-color= !bgcolor
   :-moz-border-radius 0 0 3px 3px
   :padding 0.5em
+
+=primary_text
+  :font-size 1.6em
 
 
 

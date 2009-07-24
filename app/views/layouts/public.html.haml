@@ -8,10 +8,10 @@
     =yield :head
   %body
     #container
-      #enotis_header
-        %h1.app_name
+      #header
+        %span.app_name
           eNOTIS
-        .tagline
+        %em.tagline
           Northwestern University Clinical Subject Registration
 
       - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?

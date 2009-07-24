@@ -2,28 +2,55 @@
   #enotis_description
     eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University
 
+  #training
+    .heading Get acquainted with eNOTIS
+    .topic
+      .title Video Training
+      .video Learn basic concepts and log in
+      .video Add a subject
+      .video Import subjects
+      .video Add subject events
+    .topic
+      .title Written Tutorials
+      .article= link_to("Basic Overview")
+      .article= link_to("How to use eNOTIS")
+      .article= link_to("FAQ")
+    .topic
+      .title Live in-person group training 
+      .training 
+        .title The ins and outs of eNOTIS
+        .date 19-32-1234 @ 12noon
+        .location Streeterville, 750 N Lake Shore
+      .training 
+        .title So, you want to use eNOTIS
+        .date 21-32-5124 @ 3pm
+        .location Streeterville, 750 N Lake Shore
+      .training
+        .title Unleashing the inner eNOTIS guru
+        .date 31-44-1993 @ 8am
+        .location Streeterville, 750 N Lake Shore
+
+#right_sidebar
+  #loginbox
+    -form_tag(login_authentication_path, :method => 'post') do
+      %fieldset
+        %legend eNOTIS Login
+        %p
+          %label{:for => 'netid'} NetID
+          %br
+          = text_field_tag('netid')
+        %p  
+          %label{:for => 'password'} Password
+          %br
+          = password_field_tag('password')
+        %p 
+          = submit_tag('login')
+        %p
+          = link_to "I cannot access my account", access_help_authentication_path
+
   #system_status{:class => @status}
     .heading System status
     %p= ApplicationController::SYSTEM_STATUSES[@status.to_sym]
-
-  #training
-    .heading Get acquainted with eNOTIS
-    .video Learn basic concepts and log in
-    .video Add a subject
-    .video Import subjects
-    .video Add subject events
-
-#right_sidebar
-  #loginbox{:class => @status}
-    -form_tag(login_authentication_path, :method => 'post') do
-      %label{:for => 'netid'} NetID
-      = text_field_tag('netid')
-      %label{:for => 'password'} Password
-      = password_field_tag('password')
-      = submit_tag('login')
-      %p= link_to "I cannot access my account", access_help_authentication_path
-
-
 
 
 

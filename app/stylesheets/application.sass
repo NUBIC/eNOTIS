@@ -21,6 +21,15 @@ body
   // basic top, middle, bottom block layout
   #header
     +column(24,true)
+    
+    .app_name
+      :font-size 3em
+      :font-weight bold
+      :color = !nu_purple
+
+    .tagline
+      :color = !nu_purple
+    
 
   #main
     +column(24,true)
@@ -44,4 +53,4 @@ body
     +column(8,true)
 
   #loginbox
-    +rounded_box( !notice_bg_color )
+    +rounded_box( !primary_data_bg_color )
