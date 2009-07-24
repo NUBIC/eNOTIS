@@ -1,4 +1,12 @@
-**/*.swp
-*.log
 .DS_Store
-patient_tracker/.DS_Store
+*.swo
+*.swp
+*.log
+db/*.sqlite3
+db/schema.rb
+tmp/*
+public/uploads/*
+public/results/*
+app/stylesheets/.sass-cache/*
+public/stylesheets/compiled/*
+
