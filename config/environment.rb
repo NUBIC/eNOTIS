@@ -34,9 +34,10 @@ Rails::Initializer.run do |config|
   # bcdatabase
   config.gem "session"
   config.gem "wddx"
-  config.gem "composite_primary_keys"
   config.gem "bcdatabase"
-  
+  # bcsec
+  config.gem "composite_primary_keys"
+  config.gem "ruby-net-ldap"
   config.gem "bcsec", :source => "http://download.bioinformatics.northwestern.edu/gems/" # also installs bcdatabase
   config.gem "airblade-paper_trail", :lib => 'paper_trail', :version => '>=1.1.1', :source => 'http://gems.github.com'
   config.gem "chronic", :version => '>=0.2.3'
