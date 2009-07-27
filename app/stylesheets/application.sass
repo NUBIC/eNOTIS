@@ -5,22 +5,24 @@
 @import authentication.sass
  
 // Debug import to show the grid
-@import blueprint/modules/debug.sass
 
 html
   +blueprint-typography
   +blueprint-grid
-  +blueprint-debug
 
 body
+  :background-color= !nu_background
   // main container than holds everything
   #container
+    :background-color= !nu_page_background
     +container
     +showgrid 
 
   // basic top, middle, bottom block layout
   #header
     +column(24,true)
+    +squeeze
+    :margin-top= !blueprint_grid_outer_width / 2
     
     .app_name
       :font-size 3em
@@ -33,6 +35,7 @@ body
 
   #main
     +column(24,true)
+    +squeeze
 
   #footer 
     +column(24,true)
@@ -42,7 +45,7 @@ body
     :top 0
     :left 25%
     :width 50%
-    +rounded_bottom( !notice_bg_color )    
+    +rounded_bottom_box( !notice_bg_color )    
     :color= !notice_color
     :margin 0 auto
 
@@ -54,3 +57,6 @@ body
 
   #loginbox
     +rounded_box( !primary_data_bg_color )
+  //some semantic class styling
+  .heading
+    +bold
