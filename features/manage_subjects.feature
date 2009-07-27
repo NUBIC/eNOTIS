@@ -6,15 +6,14 @@ Feature: Manage subjects
   Background:
     Given I log in as "pi"
     Given a study "Vitamin E and exertion" with id "1248F" and status "Approved"
-    
+  
+  @focus
   Scenario: A coordinator can add a subject that exists
-    # Given a subject with mrn "90210"
-    # When I go to the study page for id "1248F"
-    # And I enter mrn "90210"
-    # And I press "Add subject"
-    # Then I should see a subject details screen
-    # And I press "Confirm"
-    # Then I should see the subject in the subject study list
+    Given a subject with mrn "90210"
+    When I go to the study page for id "1248F"
+    And I follow "Add Subject"
+    And I enter mrn "90210"
+    Then I should see the subject in the subject study list
 
   Scenario: A coordinator can add a subject that does not exist
     # When I go to the study page for id "1248F"
