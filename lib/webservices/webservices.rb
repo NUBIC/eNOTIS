@@ -3,10 +3,6 @@ module WebServices
  
   Dir["lib/webservices/plugins/*.rb"].each {|file| require file}
 
-  def web_attribute(attribute)
-    #needs to be inplemented 
-  end
-
   def  self.included(base)
     base.class_eval do 
       class << self
@@ -15,12 +11,10 @@ module WebServices
            
            options = args.clone.extract_options!
            return old_find(*args) unless options[:span]
-           options2 = options.clone
-           options2.delete(:span)
            case options[:span]
-             when :local then return local_only(args.first,options2)
-             when :foreign then return service_only(args.first,options2)
-             when :global then return global_search(args.first,options2)
+             when :local then return local_only(*args)
+             when :foreign then return service_only(*args)
+             when :global then return global_search(*args)
              else return raise("Unrecongnized value: #{options[:span]} for option :span")
            end
         end
@@ -28,7 +22,7 @@ module WebServices
         private
 
         def local_only(*args)
-           old_find(*args)
+           old_find(*sanitize_option(*args))
         end
 
         
@@ -45,7 +39,7 @@ module WebServices
         
         def global_search(*args)
           service_result = nil
-          local_result = old_find(*args)
+          local_result = old_find(*sanitize_option(*args))
           if args.first == :first
             service_result = service_search(*args) unless !local_result.nil? and !local_result.stale?
           else
@@ -95,7 +89,7 @@ module WebServices
             get_plugins.each do |plugin|
 	      meth = plugin.public_methods.detect{|method_name| keys.map{|x| method_name.include?(x.to_s.strip)}.uniq == [true]}
               if meth
-                return plugin.send(meth,conditions)
+                return plugin.send(meth,conditions.merge!(get_service_opts(options)))
               end
             end
          raise "No Method Found"
@@ -111,12 +105,27 @@ module WebServices
 	        result[condition.strip.split("=")[0].strip.to_sym] = condition.strip.split("=")[1].strip.gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
 	      end
             elsif conditions.instance_of?(Array)
+              puts sanitize_sql_array(conditions)
               conditions.first.split("and").each do |condition|
 	        result[condition.strip.split("=")[0].strip.to_sym] = condition.strip.split("=")[1].strip.gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
 	      end
             end
             return result
         end
+        def get_service_opts(options)
+          #This method adds additional parameters to the conditions hash that are not part of the query
+          #Right now this is only being used for net-id
+          options[:service_opts] || {}
+        end
+        def sanitize_option(*args)
+          #this method removes all webservice specific options 
+          #before passing args to the old_find
+          options = args.clone.extract_options!
+          options.delete(:span)
+          options.delete(:service_opts)
+          return args.first,options
+        end
+
       end
     end
   end
