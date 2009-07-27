@@ -6,7 +6,7 @@ namespace :db do
 
   namespace :populate do
 
-    task :default => [:environment, :clear_db, :admins, :users, :coordinators_and_studies, :coordinators, :involvements_and_subects, :involvements, :sample_netids]
+    task :default => [:environment, :clear_db, :admins, :"dictionary_terms:import", :users, :coordinators_and_studies, :coordinators, :involvements_and_subects, :involvements, :sample_netids]
     
     desc 'Clear models: User, Coordinator, Study, Involvement, Subject, InvolvementEvent'
     task :clear_db => :environment do
@@ -47,16 +47,18 @@ namespace :db do
     desc 'Populate involvements: joins subjects(fake) and studies(random)'
     task :involvements_and_subects => :environment do
       puts "creating involvements and subjects..."
-      500.times { |i| blip && Factory.create(:involvement_event, :involvement => Factory.create(:involvement, :study => random(Study), :subject => Factory.create(:fake_subject)))}
+      event_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Event']).map(&:id)
+      500.times { |i| blip && Factory.create(:involvement_event, :event_type_id => event_ids.rand, :involvement => Factory.create(:involvement, :study => random(Study), :subject => Factory.create(:fake_subject)))}
       puts
     end
 
     desc 'Populate involvements: joins subjects(random) and studies(random)'
     task :involvements => :environment do
       puts "creating extra involvements..."
+      event_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Event']).map(&:id)
       200.times do |i|
         begin
-          blip && Factory.create(:involvement_event, :involvement => Factory.create(:involvement, :study => random(Study), :subject => random(Subject)))
+          blip && Factory.create(:involvement_event, :event_type_id => event_ids.rand, :involvement => Factory.create(:involvement, :study => random(Study), :subject => random(Subject)))
         rescue
         end
       end
@@ -74,7 +76,8 @@ namespace :db do
 end
 
 # Helper methods
-def random(model)
+def random(model)#, options={})
+  #ids = model.find(:all, :select => "id", :conditions => options[:conditions])
   ids = ActiveRecord::Base.connection.select_all("SELECT id FROM #{model.to_s.tableize}")
   model.find(ids[rand(ids.length)]["id"].to_i) unless ids.blank?
 end

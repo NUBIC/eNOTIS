@@ -122,9 +122,9 @@ end
 
 Factory.define :involvement_event do |e|
   e.association   :involvement
-  e.key          {"event_type"}
-  e.value        {%w(consented enrolled withdrawn screened randomized approached).rand}
-  e.occured_on   {2.weeks.ago}
+  e.association   :event_type
+  e.note          {}
+  e.occured_at    {Populator.value_in_range(3.weeks.ago..1.day.ago)}
 end
 
 Factory.define :involvement_data do |e|
