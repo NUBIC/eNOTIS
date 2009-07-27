@@ -105,7 +105,6 @@ module WebServices
 	        result[condition.strip.split("=")[0].strip.to_sym] = condition.strip.split("=")[1].strip.gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
 	      end
             elsif conditions.instance_of?(Array)
-              puts sanitize_sql_array(conditions)
               conditions.first.split("and").each do |condition|
 	        result[condition.strip.split("=")[0].strip.to_sym] = condition.strip.split("=")[1].strip.gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
 	      end
