@@ -98,7 +98,7 @@ module WebServices
                 return plugin.send(meth,conditions)
               end
             end
-         raise "No Mehod Found"
+         raise "No Method Found"
          return nil     
         end
 
