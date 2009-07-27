@@ -4,7 +4,7 @@
   %head
     %title= "eNotis :: #{@title}"
     =stylesheet_link_tag(@view_stylesheets ||= ["compiled/application", "facebox", "compiled/datatables"])
-    =javascript_include_tag @view_javascripts ||= ["jquery-1.3.2.min", "jquery-ui-1.7.2.min" ,"jrails", "facebox", "jquery.dataTables.min"] 
+    =javascript_include_tag @view_javascripts ||= ["jquery-1.3.2.min", "jquery-ui-1.7.2.min" ,"jrails", "facebox", "jquery.dataTables.min", "jquery.main"] 
     =yield :head
   %body
 

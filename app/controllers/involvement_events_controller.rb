@@ -2,7 +2,7 @@ class InvolvementEventsController < ApplicationController
   layout "layouts/main"
   
   # Includes
-  include FaceboxRender
+  # include FaceboxRender
   include Chronic
   
   # Authentication
@@ -23,7 +23,7 @@ class InvolvementEventsController < ApplicationController
     ["event", "race", "gender", "ethnicity"].each{|category| self.instance_variable_set("@#{category.pluralize}", DictionaryTerm.find_all_by_category(category.capitalize))}
     respond_to do |format|
       format.html
-      format.js {render_to_facebox}
+      format.js {render :layout => false}
     end
   end
 
@@ -46,7 +46,7 @@ class InvolvementEventsController < ApplicationController
       end
       respond_to do |format|
         format.html
-        format.js {render_to_facebox}
+        format.js {render :layout => false}
       end
   end
 
@@ -75,7 +75,7 @@ class InvolvementEventsController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.js {render_to_facebox}
+      format.js {render :layout => false}
     end
   end
 

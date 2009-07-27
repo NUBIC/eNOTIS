@@ -6,7 +6,7 @@ class SubjectsController < ApplicationController
 
   # Includes
   include ActiveMessaging::MessageSender
-  include FaceboxRender
+  # include FaceboxRender
   include Chronic
 
   # Authentication
@@ -32,7 +32,7 @@ class SubjectsController < ApplicationController
     @involvements = @subject.involvements#Involvement.find_all_by_subject_id(@subject.id)
     respond_to do |format|
       format.html
-      format.js {render_to_facebox}
+      format.js {render :layout => false}
     end
   end
 
@@ -42,7 +42,7 @@ class SubjectsController < ApplicationController
     @subjects = Subject.find(:all,:conditions=> ["first_name = #{@local.first_name} and last_name = #{@local.last_name} and birth_date =#{@local.birth_date}"],:span=>:foreign)
     respond_to do |format|
       format.html
-      format.js {render_to_facebox}
+      format.js {render :layout => false}
     end
   end
 
@@ -56,7 +56,7 @@ class SubjectsController < ApplicationController
         redirect_to study_path(@study)
       end
         format.js do
-        render_to_facebox :html => "Subject Synced to Medical Record"
+        render :layout => false, :html => "Subject Synced to Medical Record"
       end
     end
   end

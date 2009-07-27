@@ -14,6 +14,6 @@
       - @events.each do |e|
         %tr
           %td= link_to e.involvement.study.irb_number, study_path(e.involvement.study) || "(no id)"
-          %td= facebox_link_to(e.involvement.subject.name, :url => subject_url(e.involvement.subject) , :method=>:get)
+          %td= link_to(e.involvement.subject.name, subject_url(e.involvement.subject), :rel => 'facebox')
           %td= e.description
           %td= "#{time_ago_in_words(e.created_at)} ago"

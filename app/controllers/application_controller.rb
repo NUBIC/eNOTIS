@@ -39,5 +39,4 @@ class ApplicationController < ActionController::Base
     errors << "Event AND corresponding Date are required fields" if params[:event_type].blank? or Chronic.parse(params[:event_date]).nil?
     return errors
   end 
-
 end
