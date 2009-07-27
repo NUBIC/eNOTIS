@@ -60,3 +60,145 @@ body
   //some semantic class styling
   .heading
     +bold
+   
+  //BELOW HERE is not converted to compass
+  
+  #enotis_header
+
+    .current_user
+      :float right
+      :margin-right 1em
+      :font-size 1.5em
+    ul.bridge-nav
+      :clear left
+      :background-color= !primary_data_bg_color
+      :color= !font_color
+      :line-height 1.6em
+      :font-size 1.6em
+      :padding 0 1em 0 14em
+      li, form, form div
+        :display inline
+      li
+        :list-type none
+        :display inline
+        a, a:hover, a:visited, a:active
+          :color= !font_color
+          :text-decoration none
+          :padding .2em 1em
+        a:hover
+          :background-color= !notice_bg_color
+        a.current
+          :background-color= !nu_page_background
+          :color= !nu_purple
+        input
+          :margin-top 4px
+          :vertical-align top
+        input#query
+          :margin-top 2px
+          :vertical-align top
+
+  #main
+    +clearfix
+    :padding 0.5em 2em
+    :font-size 1.3em
+    :min-width 84em
+
+    .heading
+      :font-weight bold
+      :font-size 1.5em
+      :background-color #E1EAF9
+      :padding .25em .5em
+    .column
+      :float left
+      :width 48%
+      :padding-right 2%
+    // login
+    .enotis_description
+      +rounded_box( !secondary_data_bg_color )
+      :width 30em
+      :line-height 1.5em
+      :margin-bottom 1.5em
+    .system_status
+      :width 20em
+      :-moz-border-radius 4px
+      :padding 1em
+      .heading
+        :background transparent
+      p
+        :padding .25em .5em
+      &.down, &.scheduled_maintenance
+        :background-color #FFD9CC
+      &.up, &.scheduled_restored
+        :background-color #D9FFCC
+    .access_help
+      :width 45em
+      p
+        :margin 10px 0
+    .loginbox
+      :float right
+      :width 16em
+      :margin-right 2em
+      :border 1px solid #333
+      :border-color= !primary_data_bg_color
+      :background-color= !notice_bg_color
+      :-moz-border-radius 4px
+      :padding 1em
+      :font-size 1.5em
+      :line-height 1.8em
+      label
+        :display inline-block
+        :width 5em
+        :margin-top 1em
+      input
+        :margin-top 1em
+      input[type='text']
+        :width 11em
+      input[type='password']
+        :width 11em
+      p
+        :margin-top 1em
+        :text-align center
+        :font-size .7em
+      &.down, &.scheduled_maintenance
+        :display none
+    .training
+      :width 50em
+      :margin-top 1.5em
+      .video
+        :float left
+        :width 70px
+        :height 60px
+        :margin 1em
+        :background-image url('/images/video.jpg')
+        :background-repeat no-repeat
+        :background-position center
+        :padding 25px
+        :text-align center
+        :color = !primary_data_bg_color
+    // dashboard
+    #my_studies
+      :float left
+      :width 70%
+    #recent_events
+      :float left
+      :width 27%
+      :margin-left 3%
+      ul
+        li
+          :background-color= !secondary_data_bg_color
+          :padding .25em .5em
+          :margin 1em 0
+          a
+            :display block
+            :width 100%
+            :padding .25em .5em
+            :color= !font_color
+            :text-decoration none
+          a:hover
+            :cursor pointer
+            :background-color= !notice_bg_color
+          a:hover:after
+    // dashboard show add subject popup
+    #new_subject_form
+      input
+        :padding 0.5em
