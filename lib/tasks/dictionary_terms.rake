@@ -6,30 +6,40 @@ namespace :dictionary_terms do
   task :import => :environment do
     fastercsv_opts = {:headers => :first_row, :return_headers => false, :header_converters => [:downcase, :symbol]}
     file_path = RAILS_ROOT + "/" + (ENV["file"] || "doc/terms.csv")
-    result_counts = {}
-    
+    update_counts = {}
+    create_counts = {}
     raise "usage: rake dictionary_terms:import file=[filename relative to RAILS_ROOT] (optional: dry_run=true)"  unless File.exists?(file_path)
     
     puts
-    puts "clearing dictionary terms..."
-    DictionaryTerm.delete_all
     puts "importing #{file_path}..."
     puts
         
     FasterCSV.foreach(file_path, fastercsv_opts) do |row|
       if ENV.include?("dry_run") && ENV["dry_run"] != "false"
         puts row.to_hash.inspect
-        result_counts[row[:category].downcase] ||= 0
-        result_counts[row[:category].downcase] += 1
+        if dt = DictionaryTerm.find_by_category_and_term(row[:category], row[:term])
+          update_counts[row[:category].downcase] ||= 0
+          update_counts[row[:category].downcase] += 1        
+        else
+          create_counts[row[:category].downcase] ||= 0
+          create_counts[row[:category].downcase] += 1
+        end
       else
-        if blip && DictionaryTerm.create(row.to_hash)
-          result_counts[row[:category].downcase] ||= 0
-          result_counts[row[:category].downcase] += 1
+        blip
+        if dt = DictionaryTerm.find_by_category_and_term(row[:category], row[:term])
+          dt.update_attributes(row.to_hash)
+          update_counts[row[:category].downcase] ||= 0
+          update_counts[row[:category].downcase] += 1
+        elsif DictionaryTerm.create(row.to_hash)
+          create_counts[row[:category].downcase] ||= 0
+          create_counts[row[:category].downcase] += 1
         end
       end
     end
     puts
-    puts "imported: " + result_counts.map{|k,v| "#{v} #{k.to_s.pluralize}"}.join(", ")
+    puts "updated: " + update_counts.map{|k,v| "#{v} #{k.to_s.pluralize}"}.join(", ")
+    puts "created: " + create_counts.map{|k,v| "#{v} #{k.to_s.pluralize}"}.join(", ")
+
     puts
   end
 end
