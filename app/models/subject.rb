@@ -35,4 +35,21 @@ class Subject < ActiveRecord::Base
   def name
     "#{self.first_name} #{self.last_name}"
   end
+  
+  def birth_date=(date)
+    write_attribute :birth_date, Chronic.parse(date)
+  end
+  
+  # Public class methods
+  
+  def self.find_or_create(params)
+    if !params[:mrn].blank?
+      Subject.find(:first, :conditions => ["mrn=?", params[:mrn]], :span=>:global)
+    elsif !params[:first_name].blank? or !params[:last_name].blank? or !params[:birth_date].blank?
+      Subject.create(params)
+    else
+      return nil
+    end
+  end
+    
 end

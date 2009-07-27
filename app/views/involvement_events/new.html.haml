@@ -1,8 +1,8 @@
 -if !@subject.nil?
-  -form_remote_tag(:url => involvement_events_path) do
-    = hidden_field_tag(:subject_id,@subject.id)
-    = label_tag('event_type','Event Type')
-    = select_tag(:event_type,options_for_select(@events.map{|event|[event.term,event.id]}))
+  - form_tag(involvement_events_path) do
+    = hidden_field_tag(:subject_id, @subject.id)
+    = label_tag('involvement_event[event_type]','Event Type')
+    = select_tag(:"involvement_event[event_type]",options_for_select(@events.map{|event|[event.term,event.id]}))
     = label_tag('note')
     = text_field_tag(:note)
     = label_tag('event_date','Event Date')
@@ -10,40 +10,40 @@
     %br
     = submit_tag("Create Event")
 -else
-  - form_remote_tag( :url=> involvement_events_path ) do
-    = label_tag 'mrn','Enter MRN'
-    = text_field_tag(:mrn)
+  - form_tag(involvement_events_path ) do
+    = label_tag 'subject[mrn]','Enter MRN'
+    = text_field_tag('subject[mrn]')
     %br
     %p= "OR"
-    = label_tag 'first_name', 'Enter First Name'
-    = text_field_tag(:first_name)
+    = label_tag 'subject[first_name]', 'Enter First Name'
+    = text_field_tag('subject[first_name]')
     %br
-    = label_tag 'last_name',  'Enter Last Name'
-    = text_field_tag(:last_name)
+    = label_tag 'subject[last_name]',  'Enter Last Name'
+    = text_field_tag('subject[last_name]')
     %br
-    = label_tag 'birth_date', 'Enter Date of Birth'
-    = text_field_tag(:birth_date)
+    = label_tag 'subject[birth_date]', 'Enter Date of Birth'
+    = text_field_tag('subject[birth_date]')
     %br
     %hr
     %p Required Demographic Information
     %br
-    = label_tag 'gender','Gender'
-    = select_tag(:gender,options_for_select(@genders.map{|gender|[gender.term,gender.id]}))
+    = label_tag 'involvement[gender]','Gender'
+    = select_tag('involvement[gender]',options_for_select(@genders.map{|gender|[gender.term,gender.id]}))
     %p
     %br
-    = label_tag 'ethnicity','Ethnicity'
-    = select_tag(:ethnicity,options_for_select(@ethnicities.map{|ethnicity|[ethnicity.term,ethnicity.id]}))
+    = label_tag 'involvement[ethnicity]','Ethnicity'
+    = select_tag('involvement[ethnicity]',options_for_select(@ethnicities.map{|ethnicity|[ethnicity.term,ethnicity.id]}))
     %p
     %br
-    = label_tag 'race','Race'
-    = select_tag(:race,options_for_select(@races.map{|race|[race.term,race.id]}))
+    = label_tag 'involvement[race]','Race'
+    = select_tag('involvement[race]',options_for_select(@races.map{|race|[race.term,race.id]}))
     %br
     %hr
     %p Initial Event Information
-    = label_tag('event_type','Event Type')
-    = select_tag(:event_type,options_for_select(@events.map{|event|[event.term,event.id]}))
-    = label_tag('note')
-    = text_field_tag(:note)
-    = label_tag('event_date','Event Date')
-    = text_field_tag(:event_date)
+    = label_tag('involvement_event[event_type]','Event Type')
+    = select_tag('involvement_event[event_type]',options_for_select(@events.map{|event|[event.term,event.id]}))
+    = label_tag('involvement_event[note]', 'Note')
+    = text_field_tag('involvement_event[note]')
+    = label_tag('involvement_event[event_date]','Event Date')
+    = text_field_tag('involvement_event[event_date]')
     = submit_tag("submit")
