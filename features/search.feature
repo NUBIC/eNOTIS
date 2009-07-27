@@ -1,4 +1,3 @@
-@focus
 Feature: Search
   In order to find subjects or studies or events
   As a user

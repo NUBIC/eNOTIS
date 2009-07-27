@@ -1,4 +1,3 @@
-
 Feature: Manage studies
   In order to manage studies
   As a coordinator
