@@ -9,4 +9,5 @@ ActiveMessaging::Gateway.define do |s|
   
   s.destination :patient_upload, '/queue/PatientUpload'
   puts Rails.env  
+
 end

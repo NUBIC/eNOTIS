@@ -2,80 +2,9 @@ Given /^a subject with mrn "([^\"]*)"$/ do |mrn|
  Factory(:subject, :mrn => mrn)
 end
 
-Then /^I should see the add subject form$/ do
-  response.should have_tag("form[action=?]", involvement_events_path) do
-    with_tag("input[name=?]", "subject[mrn]")
-    with_tag("input[name=?]", "subject[first_name]")
-    with_tag("input[name=?]", "subject[last_name]")
-    with_tag("input[name=?]", "subject[birth_date]")
-  end
+When /^I enter mrn "([^\"]*)"$/ do |mrn|
+  fill_in "mrn", :with => mrn
 end
-
-Given /^subject "([^\"]*)" is not synced$/ do |mrn|
-  Subject.find_by_mrn(mrn).update_attributes(:synced_at => nil)
-end
-
-Given /^subject "([^\"]*)" has event "([^\"]*)" on study "([^\"]*)"$/ do |mrn, term, irb_number|
-  unless involvement = Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number))
-    involvement = Factory(:involvement, :subject => Subject.find_by_mrn(mrn), :study => Study.find_by_irb_number(irb_number))
-  end
-  Factory(:involvement_event, :involvement => involvement, :event_type => DictionaryTerm.find_by_term(term))
-end
-
-Then /^I should see that subject "([^\"]*)" is not synced$/ do |mrn|
-  # TODO - this matcher doesn't actually scope within the withins - http://github.com/brynary/webrat/issues#issue/8 - yoon
-  within("\#subjects") do
-    within("\.subject_#{Subject.find_by_mrn(mrn).id}") do
-      response.should have_tag("a") do |a|
-        a.should contain("Sync")
-      end
-    end
-  end
-end
-
-Then /^subject "([^\"]*)" should have (\d+) events? on study "([^\"]*)"$/ do |mrn, x, irb_number|
-  Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number)).involvement_events.should have(x.to_i).involvement_events
-end
-
-Then /^subject "([^\"]*)" should not be involved with study "([^\"]*)"$/ do |mrn, irb_number|
-  Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number)).should be_blank
-end
-
-When /^I follow "([^\"]*)" for "([^\"]*)" on the "([^\"]*)" tab$/ do |link, mrn, selector|
-  within("\##{selector.downcase}") do
-    within("\.subject_#{Subject.find_by_mrn(mrn).id}") do
-      click_link(link)
-    end
-  end
-end
-
-Then /^I should see the add event form$/ do
-  response.should have_tag("form[action=?]", involvement_events_path) do
-    with_tag("select[name=?]", "involvement_events[][event_type_id]")
-    with_tag("input[name=?]", "involvement_events[][occured_at]")
-    with_tag("input[name=?]", "involvement_events[][note]")
-  end
-end
-
-Then /^I should( not)? see events for "([^\"]*)"$/ do |bool, name|
-  # TODO - this matcher doesn't actually scope within the withins - http://github.com/brynary/webrat/issues#issue/8 - yoon
-  within("\#events") do |div|
-    if bool == "not"
-      div.should_not contain(name)
-    else
-      div.should contain(name)
-    end
-
-  end
-  
-end
-
- When /^I upload a file with valid data for 3 subjects$/ do  
-   attach_file(:file, File.join(RAILS_ROOT, 'features', 'upload_files', 'valid_upload.csv'))  
-   click_button "Upload"  
- end
-
-
 
 
 # Given /^the following subject_registrations:$/ do |subject_registrations|

@@ -22,6 +22,7 @@ ssh_options[:forward_agent] = true
 default_run_options[:pty] = true # to get the passphrase prompt from git
 set :scm, "git"
 set :repository, "ssh://code.bioinformatics.northwestern.edu/git/enotis.git"
+
 set :branch, "master"
 set :deploy_to, "/var/www/apps/enotis"
 set :deploy_via, :remote_cache
@@ -72,6 +73,7 @@ namespace :gems do
     # always use sudo to rake gems
     # sudo helper string substitution per http://github.com/jamis/capistrano/commit/b45290e6ae3acce465ab5b7b8a82b7ad73a022e3
     run "cd #{current_path}/ && #{sudo} rake RAILS_ENV=#{rails_env} gems:install"
+
   end
   desc "Uninstall gems"
   task :cleanup, :roles => :app do

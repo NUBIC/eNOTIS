@@ -8,13 +8,12 @@
     %thead
       %th Study ID
       %th Subject Name
-      %th Event
-      %th Date
+      %th Event Description
+      %th Event Date/Time
     %tbody  
       - @events.each do |e|
         %tr
           %td= link_to e.involvement.study.irb_number, study_path(e.involvement.study) || "(no id)"
           %td= link_to(e.involvement.subject.name, subject_url(e.involvement.subject), :rel => 'facebox')
-          %td
-            %dfn{:title => e.description}= e.term
-          %td= e.occured_at
+          %td= e.description
+          %td= "#{time_ago_in_words(e.created_at)} ago"

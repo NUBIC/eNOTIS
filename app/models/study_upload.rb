@@ -16,6 +16,5 @@ class StudyUpload < ActiveRecord::Base
   # TODO, try turning these two validations on - yoon
   # validates_attachment_content_type :upload, :content_type => ['text/csv', 'text/plain']
   # validates_attachment_content_type :result, :content_type => ['text/csv', 'text/plain']
-  
-  
+
 end

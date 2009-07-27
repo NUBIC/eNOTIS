@@ -1,0 +1,10 @@
+development:
+  url: "https://edwbi.nmff.org/ReportServer?%2fReports%2fResearch%2feNOTIS%2f[report_name]&rs:Command=Render&rs:format=XML"
+  username: "EDWeNotis"
+  password: "!0613#Xyz!"
+
+test:
+  url: "https://edwbi.nmff.org/ReportServer?%2fReports%2fResearch%2feNOTIS%2f[report_name]&rs:Command=Render&rs:format=XML"
+  username: "EDWeNotis"
+  password: "!0613#Xyz!"
+

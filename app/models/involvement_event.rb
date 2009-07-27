@@ -78,5 +78,6 @@ class InvolvementEvent < ActiveRecord::Base
     if involvement.involvement_events == [self]
       involvement.destroy
     end
+
   end
 end

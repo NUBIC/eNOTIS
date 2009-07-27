@@ -1,0 +1,7 @@
+- if @errors.empty?
+  %p Successfully Added
+- else
+  %p Found the Following Errors
+  %ul
+  -@errors.each do |error|
+    %li= error

@@ -10,7 +10,6 @@ class Subject < ActiveRecord::Base
   # Associations
   has_many :involvements
   has_many :studies, :through => :involvements
-  has_many :involvement_events, :through => :involvements
 
   # Mixins
   has_paper_trail
@@ -41,27 +40,16 @@ class Subject < ActiveRecord::Base
     write_attribute :birth_date, Chronic.parse(date)
   end
   
-  def mrn=(mrn)
-    # add subject form passes blank string mrn's when we send on 
-    write_attribute :mrn, (mrn.blank? ? nil : mrn)
-  end
-  
   # Public class methods
   
   def self.find_or_create(params)
-    # try to find by mrn first
     if !params[:mrn].blank?
-      subject = Subject.find(:first, :conditions =>{:mrn=>params[:mrn]},:span=>:global,:service_opts=>{:netid=>"test"})
-      if !subject.nil?
-        subject.save
-        return subject
-      end 
-    end
-    # if we've made it this far, the mrn was blank or the subject wasn't found by mrn
-    if !params[:first_name].blank? or !params[:last_name].blank? or !params[:birth_date].blank?
+      Subject.find(:first, :conditions => ["mrn=?", params[:mrn]], :span=>:global)
+    elsif !params[:first_name].blank? or !params[:last_name].blank? or !params[:birth_date].blank?
       Subject.create(params)
     else
       return nil
     end
   end
+    
 end
