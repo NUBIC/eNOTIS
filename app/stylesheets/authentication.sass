@@ -1,0 +1,70 @@
+// Styles for views in the authentication controller
+
+#enotis_description 
+  +primary_text
+  +squeeze(1)
+  +squish(1)
+
+#system_status
+  +column(6)
+  +rounded_box( !secondary_data_bg_color )
+
+#loginbox
+  +blueprint-form
+  +rounded_box( !primary_data_bg_color )
+  input[type="submit"]
+    +button-button("right")
+
+#training
+  +column(16)
+  :margin-top= !blueprint_grid_outer_width
+  
+  .heading
+    +primary_text
+    +rounded_top_box( !secondary_data_bg_color )
+
+  .topic
+    .title
+      +bold
+      :font-size 1.2em
+      +squeeze(0.5)
+
+  ul.videos
+    +horizontal-list(20px)
+    +prepend(1)
+
+  li.video
+    :width 70px
+    :height 60px
+    :margin 0em 1em
+    :background-image url('/images/video.jpg')
+    :background-repeat no-repeat
+    :background-position center
+    :padding 25px
+    :text-align center
+
+  ul.articles
+    +no-bullets
+    +prepend(1)
+  
+  li.article
+   
+  ul.trainings
+    +no-bullets
+
+  li.training
+    .title
+      +normal
+    .date
+      +quiet
+    .location
+      +quiet
+
+  
+  
+
+  
+
+    
+
+

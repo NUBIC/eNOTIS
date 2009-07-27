@@ -1,0 +1,313 @@
+
+  #enotis_header
+    :width 100%
+    :min-width 111.5em
+    :padding 1.0em 0
+    :color= !NU_PURPLE
+    h1.app_name
+      :float left
+      :margin 0 0 .5em .5em
+      :font-size 2 em
+      :font-weight bold
+    .tagline
+      :float left
+      :margin-left 1em
+      :font-size 1.5em
+      :font-style italic
+    .current_user
+      :float right
+      :margin-right 1em
+      :font-size 1.5em
+    ul.bridge-nav
+      :clear left
+      :background-color= !LT_GRAY
+      :color= !FONT_COLOR
+      :line-height 1.6em
+      :font-size 1.6em
+      :padding 0 1em 0 14em
+      li, form, form div
+        :display inline
+      li
+        :list-type none
+        :display inline
+        a, a:hover, a:visited, a:active
+          :color= !FONT_COLOR
+          :text-decoration none
+          :padding .2em 1em
+        a:hover
+          :background-color= !LT_YELLOW
+        a.current
+          :background-color= !BODY_COLOR
+          :color= !NU_PURPLE
+        input
+          :margin-top 4px
+          :vertical-align top
+        input#query
+          :margin-top 2px
+          :vertical-align top
+
+  #main
+    :padding 0.5em 2em
+    :font-size 1.3em
+    :min-width 84em
+    .heading
+      :font-weight bold
+      :font-size 1.5em
+      :background-color #E1EAF9
+      :padding .25em .5em
+    .column
+      :float left
+      :width 48%
+      :padding-right 2%
+    // login
+    .loginbox
+      :float right
+      :width 13.3em
+      :margin-right 2em
+      :border 1px solid #333
+      :border-color= !DARK_GRAY
+      :background-color= !LT_YELLOW
+      :-moz-border-radius 4px
+      :padding 1em
+      :font-size 1.5em
+      :line-height 1.8em
+      label
+        :display inline-block
+        :width 5em
+        :margin-top 1em
+      input
+        :margin-top 1em
+      input[type='text'], input[type='password'] 
+        :width 13em
+      input[type='submit']
+        :margin-left 16em
+      p
+        :margin-top 1em
+        :text-align center
+        :font-size .7em
+      &.down, &.scheduled_maintenance
+        :display none
+    .enotis_description
+      +rounded_box( !LT_GRAY )
+      :width 30em
+      :font-size 1.5em
+      :line-height 1.5em
+      :margin-bottom 1.5em
+    .system_status
+      :width 20em
+      :-moz-border-radius 4px
+      :padding 1em
+      .heading
+        :background transparent
+      p
+        :padding .25em .5em
+      &.down, &.scheduled_maintenance
+        :background-color #FFD9CC
+      &.up, &.scheduled_restored
+        :background-color #D9FFCC
+    .access_help
+      :width 45em
+      p
+        :margin 10px 0
+    .training
+      :width 50em
+      :margin-top 1.5em    
+      .video
+        :float left
+        :width 70px
+        :height 60px
+        :margin 1em
+        :background-image url('/images/video.jpg')
+        :background-repeat no-repeat
+        :background-position center
+        :padding 25px
+        :text-align center
+        :color = !DARK_GRAY
+    // dashboard
+    #my_studies
+      :float left
+      :width 70%
+    #recent_events
+      :float left
+      :width 27%
+      :margin-left 3%
+      ul
+        li
+          :background-color= !V_LT_GRAY
+          :padding .25em .5em
+          :margin 1em 0
+          a
+            :display block
+            :width 100%
+            :padding .25em .5em
+            :color= !FONT_COLOR
+            :text-decoration none
+          a:hover
+            :cursor pointer
+            :background-color= !LT_YELLOW
+          a:hover:after
+    // dashboard show add subject popup
+    #new_subject_form
+      input
+        :padding 0.5em
+
+    // my subjects
+    #subject_list
+
+    // study
+    #study
+      .vitals
+        :float left
+        :width 20em
+        :-moz-border-radius 5px 0 0 5px
+        :padding .5em
+        :background-color #D9FFCC
+        p
+          :margin .5em
+        p.irb_number
+          :font-size 2em
+          :margin .25em
+      .details
+        :float left
+        :width 60em
+        :-moz-border-radius 0 5px 5px 0
+        :padding .5em
+        :background-color= !LT_GRAY
+      .description
+        :font-weight bold
+        :padding-bottom 0.5em
+      .study_staff
+        :padding-top 0.5em
+        :border-top 1px solid #333
+        :border-color= !NU_PURPLE
+        
+      ul.study_tabs
+        :position relative
+        :clear left
+        :margin-top 1em
+        :margin-bottom 1.5em
+        :border-bottom 2px solid
+        :border-color= !LT_GRAY
+        :background-color= !BODY_COLOR
+        :color= !FONT_COLOR
+        :line-height 1.2em
+        :font-size 1.2em
+        :padding 0 1em
+        li
+          :position relative
+          :list-style none
+          :display inline
+          :border-width 2px 2px 0 2px
+          :border-style solid
+          :border-color= !LT_GRAY
+          :background-color= !LT_GRAY
+          a, a:hover, a:visited, a:active
+            :color= !FONT_COLOR
+            :text-decoration none
+            :padding 0 1em .1em 1em
+          a:hover
+            :background-color= !LT_YELLOW
+        li.ui-tabs-selected a, li.ui-state-disabled a, li.ui-state-processing a
+          :background-color= !BODY_COLOR
+          :color= !NU_PURPLE       
+          :cursor text
+      .ui-tabs-hide
+        :display none !important
+      #overview, #subjects, #documents, #imports
+        :padding .5em
+        ul
+          li
+            :background-color= !V_LT_GRAY
+            :padding .25em .5em
+
+    // my events
+    #my_events
+    // search
+    #search_form
+      :margin 1em
+    #subject_results, #study_results
+      :float left
+      :width 48%
+      :padding-right 2%
+      .dataTables_filter
+        :display none
+  #footer
+    :background-color #fff
+    :padding 1em
+    :border-top 1px solid #333
+    :text-transform uppercase
+
+/
+  .header_details
+    :-moz-border-radius 4px 4px
+    :background-color= !LT_GRAY
+    :padding 1em
+    :margin-bottom 1em
+    .primary_data
+      :font-weight bold
+      :font-size 2em
+      :width 6.4em
+      :float left
+      :border 1px solid #333
+      :background-color= !BODY_COLOR
+      :margin-bottom 0.5em
+    .secondary_data
+      :font-size 1.3em
+      / :line-height 1.5em
+      :margin-left 11.5em
+      :font-weight bold
+      em
+        :font-weight normal
+    .tertiary_data
+      :border-top 1px solid #333
+      :clear both
+      :padding 0.5em
+      :font-size 1.2em
+    .status_icon
+      :padding 0.5em
+      :border 1px solid #333
+      :width 5.35em
+      / :line-height 1em
+    .study_id
+      :text-align center
+      :width 100%
+      :padding 0.5em 0em
+    .approved
+      :background-color= !APPROVED_COLOR
+      :color= !APPROVED_FONT_COLOR
+    .suspended
+      :background-color= !SUSPENDED_COLOR
+    .terminated
+      :background-color= !TERMINATED_COLOR
+    .review
+      :background-color= !REVIEW_COLOR
+  .file_details
+    :-moz-border-radius 4px 4px
+    :background-color= !LT_GRAY
+    :padding 0.5em
+    :margin-bottom 1em
+    :float left
+    :width 45%
+    .study_file
+      :padding 0.5em
+      :border-top 1px solid #f0f0f0
+      :border-bottom 1px solid #f0f0f0
+      :margin-bottom -1px
+      img
+        :position relative
+        :top 3px
+      em
+        :padding-bottom 0.4em
+  .status_history
+    :background-color= !LT_GRAY
+    :padding 0.5em
+    :margin-bottom 1em
+    :margin-left 50%
+    li
+      :padding 0.5em
+  .accural_status
+    :-moz-border-radius 4px 4px
+    :background-color= !LT_GRAY
+    :padding 0.5em
+    :margin-bottom 1em
+
