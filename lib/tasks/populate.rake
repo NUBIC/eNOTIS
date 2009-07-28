@@ -28,7 +28,7 @@ namespace :db do
     desc 'Populate coordinators: joins users(random) and studies(fake)'
     task :coordinators_and_studies => :environment do      
       puts "creating coordinators and studies..."
-      200.times { |i| blip && Factory.create(:coordinator, :study => Factory.create(:fake_study), :user => random(User))}
+      150.times { |i| blip && Factory.create(:coordinator, :study => Factory.create(:fake_study), :user => random(User))}
       puts
     end
 
@@ -47,20 +47,27 @@ namespace :db do
     desc 'Populate involvements: joins subjects(fake) and studies(random)'
     task :involvements_and_subects => :environment do
       puts "creating involvements and subjects..."
-      event_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Event']).map(&:id)
-      500.times { |i| blip && Factory.create(:involvement_event, :event_type_id => event_ids.rand, :involvement => Factory.create(:involvement, :study => random(Study), :subject => Factory.create(:fake_subject)))}
+      event_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Event']).map(&:id)
+      gender_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Gender']).map(&:id)
+      ethnicity_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Ethnicity']).map(&:id)
+      300.times do |i|
+        involvement = Factory.create( :involvement, :study => random(Study), :subject => Factory.create(:fake_subject),
+                                      :gender_type_id => gender_type_ids.rand, :ethnicity_type_id => ethnicity_type_ids.rand)
+        blip && Factory.create( :involvement_event, :event_type_id => event_type_ids.rand, :involvement => involvement )
+      end
       puts
     end
 
     desc 'Populate involvements: joins subjects(random) and studies(random)'
     task :involvements => :environment do
       puts "creating extra involvements..."
-      event_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Event']).map(&:id)
-      200.times do |i|
-        begin
-          blip && Factory.create(:involvement_event, :event_type_id => event_ids.rand, :involvement => Factory.create(:involvement, :study => random(Study), :subject => random(Subject)))
-        rescue
-        end
+      event_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Event']).map(&:id)
+      gender_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Gender']).map(&:id)
+      ethnicity_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Ethnicity']).map(&:id)
+      100.times do |i|
+        involvement = Factory.create( :involvement, :study => random(Study), :subject => random(Subject),
+                                      :gender_type_id => gender_type_ids.rand, :ethnicity_type_id => ethnicity_type_ids.rand)
+        blip && Factory.create( :involvement_event, :event_type_id => event_type_ids.rand, :involvement => involvement )
       end
       puts
     end

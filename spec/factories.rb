@@ -19,7 +19,8 @@ Factory.define :subject do |p|
 
   p.mrn                       {Factory.next :mrn}
   p.mrn_type                  {"Cerner"}
-  p.synced_at               {3.minutes.ago}
+  p.source_system             {}
+  p.synced_at                 {3.minutes.ago}
   p.pre_sync_data             {nil}
   p.first_name                {"Pi"}
   p.middle_name               {"A"}
@@ -34,17 +35,20 @@ Factory.define :subject do |p|
   p.zip                       {"31415"}
   p.phone_number              {"110 010 0100"}
   p.email                     {"pi@yatelp.com"}
+  p.no_contact                {}
+  p.no_contact_reason         {}
 end
 
 Factory.define :fake_subject, :parent => :subject do |p|
   # p.mrn
   p.mrn_type                  {["Epic", "Cerner"].rand}
-  p.synced_at               {Populator.value_in_range(2.days.ago..2.minutes.ago)}
+  # p.source_system
+  p.synced_at                 {Populator.value_in_range(2.days.ago..2.minutes.ago)}
   p.first_name                {Faker::Name.first_name}
   p.middle_name               {Faker::Name.first_name}
   p.last_name                 {Faker::Name.last_name}
-  p.birth_date                {Populator.value_in_range(80.years.ago..15.years.ago)}
-  p.death_date                {|me| DEATH_RATE.rand ? Populator.value_in_range((me.birth_date+10.years)..3.years.ago) : nil}
+  p.birth_date                {Populator.value_in_range(70.years.ago..12.years.ago)}
+  p.death_date                {|me| DEATH_RATE.rand ? Populator.value_in_range(((me.birth_date || 12.years.ago)+5.years)..2.years.ago) : nil}
   p.address_line1             {Faker::Address.street_address}
   p.address_line2             {Faker::Address.secondary_address}
   p.address_line3             {nil} 
@@ -52,6 +56,9 @@ Factory.define :fake_subject, :parent => :subject do |p|
   p.state                     {Faker::Address.us_state}
   p.zip                       {Faker::Address.zip_code}
   p.phone_number              {Faker::PhoneNumber.phone_number.split(" x")[0]}
+  p.email                     {Faker::Internet.email}
+  # p.no_contact                
+  # p.no_contact_reason         
 end
 
 Factory.sequence :irb_number do |n|
@@ -74,7 +81,7 @@ Factory.define :study do |p|
   p.sc_first_name         {"Carter"}
   p.sc_last_name          {"Baggs"}
   p.sc_email              {"cbaggs@northwestern.edu"}
-  p.synced_at       {3.minutes.ago}
+  p.synced_at             {3.minutes.ago}
 end
 
 Factory.define :fake_study, :parent => :study do |p|
@@ -92,7 +99,7 @@ Factory.define :fake_study, :parent => :study do |p|
   p.sc_last_name          {Faker::Name.last_name}
   p.sc_email              {Faker::Internet.email}
   p.sc_netid              {|me| "#{me.sc_first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{me.sc_last_name.gsub(/[^a-zA-Z]/,'')[0,2]}#{(100..999).to_a.rand}".downcase}
-  p.synced_at       {Populator.value_in_range(2.days.ago..2.minutes.ago)}
+  p.synced_at             {Populator.value_in_range(2.days.ago..2.minutes.ago)}
 end
 
 Factory.sequence :email do |n|
@@ -114,10 +121,11 @@ Factory.define :fake_user, :parent => :user do |u|
 end
 
 # Join/accessory models
-
 Factory.define :involvement do |i|
   i.association   :subject
   i.association   :study
+  i.association   :ethnicity_type
+  i.association   :gender_type
 end
 
 Factory.define :involvement_event do |e|
@@ -125,12 +133,6 @@ Factory.define :involvement_event do |e|
   e.association   :event_type
   e.note          {}
   e.occured_at    {Populator.value_in_range(3.weeks.ago..1.day.ago)}
-end
-
-Factory.define :involvement_data do |e|
-  e.association   :involvement
-  e.key          {%w(race gender ethnicity).rand}
-  e.value        {%w(consented enrolled withdrawn screened randomized approached).rand}
 end
 
 Factory.define :coordinator do |u|

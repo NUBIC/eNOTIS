@@ -19,7 +19,7 @@ class Involvement < ActiveRecord::Base
   has_paper_trail
 
   # Validations
-  validates_presence_of :gender_type, :ethnicity_type
+  validates_presence_of :gender_type_id, :ethnicity_type_id
   
   # Public class methods
   def self.update_or_create(params)
