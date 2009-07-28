@@ -29,7 +29,7 @@ class InvolvementEventsController < ApplicationController
 
   def create
     if (event = InvolvementEvent.add_via_ui(params)) && event.class == InvolvementEvent
-      redirect_to studies_path(session[:study_irb_number])
+      redirect_to study_path(params[:study][:irb_number])
       flash[:notice] = "Created"
     else
       respond_with_error(event[:error])

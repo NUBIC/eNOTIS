@@ -7,16 +7,27 @@ Feature: Manage subjects
     Given I log in as "pi"
     Given a study "Vitamin E and exertion" with id "1248F" and status "Approved"
     Given "pi" has access to study id "1248F"
+    Given events, genders, and ethnicities are populated
   
+  @focus
+  Scenario: A coordinator can see the add subject form
+    When I go to the study page for id "1248F"
+    And I follow "Add Subject"
+    Then I should see the add subject form
+
   @focus
   Scenario: A coordinator can add a subject that exists
     Given a subject with mrn "90210"
     When I go to the study page for id "1248F"
-    Then I should see "Add Subject"
     And I follow "Add Subject"
-    And I enter mrn "90210"
+    And I fill in "MRN" with "90210"
+    And I select "Male" from "Gender"
+    And I select "Not Hispanic or Latino" from "Ethnicity"
+    And I select "Consented" from "Event Type"
+    And I fill in "Event Date" with "2009-07-01"
     And I press "Submit"
-    Then I should see "success"
+    Then I should be on the study page for id "1248F"
+    And I should see "Created"
   
   ## TODO - yoon - if we're unable to connect to irb/edw, we shouldn't have to wait for a long time for the connection to time out
 

@@ -39,11 +39,11 @@ class InvolvementEvent < ActiveRecord::Base
     subject = Subject.find_or_create(params[:subject])
     return {:error => "either MRN or First Name, Last Name and Date of Birth are required"} if subject.nil?
     # Involvement
-    return {:error => "Gender AND Ethnicity are required fields"} if params[:involvement][:gender].blank? or params[:involvement][:ethnicity].blank?
+    return {:error => "Gender AND Ethnicity are required fields"} if params[:involvement][:gender_type_id].blank? or params[:involvement][:ethnicity_type_id].blank?
     involvement = Involvement.update_or_create(params[:involvement].merge({:subject_id => subject.id, :study_id => study.id}))
     # InvolvementEvent
-    return {:error => "Event AND corresponding Date are required fields"} if params[:involvement_event][:event_type].blank? or Chronic.parse(params[:involvement_event][:event_date]).nil?
-    involvement.events.create(params[:involvement_event])
+    return {:error => "Event AND corresponding Date are required fields"} if params[:involvement_event][:event_type_id].blank? or Chronic.parse(params[:involvement_event][:occured_at]).nil?
+    involvement.involvement_events.create(params[:involvement_event])
     
     # params (old)
     # { "ethnicity"=>"29", 

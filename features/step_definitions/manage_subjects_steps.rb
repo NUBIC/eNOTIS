@@ -1,11 +1,24 @@
+Given /^events, genders, and ethnicities are populated$/ do
+  Factory(:dictionary_term, :term => "Male", :category => "Gender")
+  Factory(:dictionary_term, :term => "Female", :category => "Gender")
+  Factory(:dictionary_term, :term => "Screened", :category => "Event")
+  Factory(:dictionary_term, :term => "Consented", :category => "Event")
+  Factory(:dictionary_term, :term => "Randomized", :category => "Event")
+  Factory(:dictionary_term, :term => "Withdrawn", :category => "Event")
+  Factory(:dictionary_term, :term => "Hispanic or Latino", :category => "Ethnicity")
+  Factory(:dictionary_term, :term => "Not Hispanic or Latino", :category => "Ethnicity")
+end
+
+
 Given /^a subject with mrn "([^\"]*)"$/ do |mrn|
  Factory(:subject, :mrn => mrn)
 end
 
-When /^I enter mrn "([^\"]*)"$/ do |mrn|
-  fill_in "subject_mrn", :with => mrn
+Then /^I should see the add subject form$/ do
+  response.should have_tag("form[action=?]", involvement_events_path) do
+    with_tag("input[name=?]", "subject[mrn]")
+  end
 end
-
 
 # Given /^the following subject_registrations:$/ do |subject_registrations|
 #   SubjectRegistration.create!(subject_registrations.hashes)
