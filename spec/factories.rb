@@ -16,7 +16,6 @@ Factory.sequence :mrn do |n|
 end
 
 Factory.define :subject do |p|
-
   p.mrn                       {Factory.next :mrn}
   p.mrn_type                  {"Cerner"}
   p.source_system             {}
@@ -43,6 +42,7 @@ Factory.define :fake_subject, :parent => :subject do |p|
   # p.mrn
   p.mrn_type                  {["Epic", "Cerner"].rand}
   # p.source_system
+  # p.pre_sync_data
   p.synced_at                 {Populator.value_in_range(2.days.ago..2.minutes.ago)}
   p.first_name                {Faker::Name.first_name}
   p.middle_name               {Faker::Name.first_name}
@@ -150,5 +150,12 @@ Factory.define :study_upload do |s|
   # s.result_file_name        {"bar.csv"}
   # s.result_content_type     {"text/csv"}
   # s.result_file_size        {1023}
-  
+end
+
+Factory.define :dictionary_term do |d|
+  d.term            {}
+  d.category        {}
+  d.code            {|me| [me.category.downcase, me.term.downcase].join("-").gsub(/[^a-z]/, "-")}
+  d.source          {Faker::Lorem.words(2).join(" ")}
+  d.description     {Faker::Lorem.paragraphs(1).to_s}
 end
