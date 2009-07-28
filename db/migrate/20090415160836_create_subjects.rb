@@ -7,7 +7,7 @@ class CreateSubjects < ActiveRecord::Migration
       t.string :first_name
       t.string :middle_name
       t.string :last_name
-      t.string :postfix #Jr., III, etc...
+      t.string :suffix #Jr., III, etc...
       t.date   :birth_date
       t.date   :death_date 
       t.string :address_line1
