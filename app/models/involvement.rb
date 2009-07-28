@@ -18,6 +18,17 @@ class Involvement < ActiveRecord::Base
   # Mixins
   has_paper_trail
 
+  # Validations
+  validates_presence_of :gender_type, :ethnicity_type
+  
+  # Public class methods
+  def self.update_or_create(params)
+    if (ie = InvolvementEvent.find_by_study_id_and_subject_id(params[:study_id], params[:subject_id]))
+      ie.update_attribute(params)
+    else
+      InvolvementEvent.create(params)
+    end
+  end
 end
 
 

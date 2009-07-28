@@ -3,7 +3,7 @@ Given /^a subject with mrn "([^\"]*)"$/ do |mrn|
 end
 
 When /^I enter mrn "([^\"]*)"$/ do |mrn|
-  fill_in "mrn", :with => mrn
+  fill_in "subject_mrn", :with => mrn
 end
 
 

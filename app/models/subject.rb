@@ -51,5 +51,4 @@ class Subject < ActiveRecord::Base
       return nil
     end
   end
-    
 end

@@ -31,10 +31,18 @@ class InvolvementEvent < ActiveRecord::Base
     #       "gender"=>"25", 
     #       "race"=>"33"}, 
     #   "controller"=>"involvement_events"}
-    study = Study.find_by_irb_number(params[:study]) # Study.find(:first,:conditions=>["irb_number='#{session[:study_irb_number]}'"],:span=>:global)
-    
+
+    # Study
+    study = Study.find_by_irb_number(params[:study][:irb_number]) # Study.find(:first,:conditions=>["irb_number='#{session[:study_irb_number]}'"],:span=>:global)
+    return {:error => "a study is required, please visit the appropriate study and try again"} if study.nil?
+    # Subject
     subject = Subject.find_or_create(params[:subject])
-    involvement = Involvement.update_or_create(params[:involvement].merge({:subject => subject, :study => study}))
+    return {:error => "either MRN or First Name, Last Name and Date of Birth are required"} if subject.nil?
+    # Involvement
+    return {:error => "Gender AND Ethnicity are required fields"} if params[:involvement][:gender].blank? or params[:involvement][:ethnicity].blank?
+    involvement = Involvement.update_or_create(params[:involvement].merge({:subject_id => subject.id, :study_id => study.id}))
+    # InvolvementEvent
+    return {:error => "Event AND corresponding Date are required fields"} if params[:involvement_event][:event_type].blank? or Chronic.parse(params[:involvement_event][:event_date]).nil?
     involvement.events.create(params[:involvement_event])
     
     # params (old)
@@ -52,19 +60,5 @@ class InvolvementEvent < ActiveRecord::Base
     #   "race"=>"33", 
     #   "event_date"=>"",
     #   "study"=>"STU009999028" }
-    
-    # def validate_subject_params(params)
-    #   errors = []
-    #   if params[:mrn].blank?
-    #     if params[:first_name].blank? and params[:last_name].blank? and Chronic.parse(params[:birth_date]).nil?
-    #       errors << "We require an MRN OR first name, last name and Date of Birth"
-    #     end
-    #   end
-    #   errors << "Race is a required field" unless !params[:race].blank?
-    #   errors << "Gender AND Ethnicity are required fields" if params[:gender].blank? or params[:ethnicity].blank?
-    #   errors << "Event AND corresponding Date are required fields" if params[:event_type].blank? or Chronic.parse(params[:event_date]).nil?
-    #   return errors
-    # end 
-    # 
   end
 end

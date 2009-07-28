@@ -15,8 +15,10 @@ Feature: Manage subjects
     Then I should see "Add Subject"
     And I follow "Add Subject"
     And I enter mrn "90210"
-    And I press "submit"
+    And I press "Submit"
     Then I should see "success"
+  
+  ## TODO - yoon - if we're unable to connect to irb/edw, we shouldn't have to wait for a long time for the connection to time out
 
   Scenario: A coordinator can add a subject that does not exist
     # When I go to the study page for id "1248F"

@@ -44,7 +44,7 @@
       = (@study.involvements || []).size
       subjects currently associated with this study
       -if @study.has_coordinator?(@current_user)
-        = link_to("Add Subject", new_involvement_event_path, :rel => 'facebox')
+        = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox')
       %table.display
         %thead
           %th Name

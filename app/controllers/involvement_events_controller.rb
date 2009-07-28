@@ -28,22 +28,22 @@ class InvolvementEventsController < ApplicationController
   end
 
   def create
-    if InvolvementEvent.add_via_ui(params.merge({:study => {:irb_number => session[:study_irb_number]}}))
+    if (event = InvolvementEvent.add_via_ui(params)) && event.class == InvolvementEvent
       redirect_to studies_path(session[:study_irb_number])
       flash[:notice] = "Created"
     else
-      respond_with_error
+      respond_with_error(event[:error])
     end
-  rescue
-    respond_with_error
+  # rescue
+  #   respond_with_error
   end
   
   protected
   
-  def respond_with_error
+  def respond_with_error(e="")
     respond_to do |format|
-      format.html{ render(:layout => false, :text => "Error")}
-      # format.js{ render(:update){|page| page << "jQuery.facebox('Error')" }}
+      format.html{ render(:layout => false, :text => "Error: #{e}")}
+      format.js{ render(:update){|page| page << "jQuery.facebox('Error: #{e}')" }}
     end
   end
   

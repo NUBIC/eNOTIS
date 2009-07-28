@@ -1,16 +1,6 @@
--if !@subject.nil?
-  - form_tag(involvement_events_path) do
-    = hidden_field_tag(:subject_id, @subject.id)
-    = label_tag('involvement_event[event_type]','Event Type')
-    = select_tag(:"involvement_event[event_type]",options_for_select(@events.map{|event|[event.term,event.id]}))
-    = label_tag('note')
-    = text_field_tag(:note)
-    = label_tag('event_date','Event Date')
-    = text_field_tag(:event_date)
-    %br
-    = submit_tag("Create Event")
--else
-  - form_tag(involvement_events_path ) do
+- form_tag(involvement_events_path) do
+  = hidden_field_tag 'study[irb_number]', params[:study]
+  - if @subject.nil?
     = label_tag 'subject[mrn]','Enter MRN'
     = text_field_tag('subject[mrn]')
     %br
@@ -40,10 +30,14 @@
     %br
     %hr
     %p Initial Event Information
-    = label_tag('involvement_event[event_type]','Event Type')
-    = select_tag('involvement_event[event_type]',options_for_select(@events.map{|event|[event.term,event.id]}))
-    = label_tag('involvement_event[note]', 'Note')
-    = text_field_tag('involvement_event[note]')
-    = label_tag('involvement_event[event_date]','Event Date')
-    = text_field_tag('involvement_event[event_date]')
-    = submit_tag("submit")
+
+  - else
+    = hidden_field_tag(:subject_id, @subject.id)
+    %br
+  = label_tag('involvement_event[event_type]','Event Type')
+  = select_tag('involvement_event[event_type]',options_for_select(@events.map{|event|[event.term,event.id]}))
+  = label_tag('involvement_event[note]', 'Note')
+  = text_field_tag('involvement_event[note]')
+  = label_tag('involvement_event[event_date]','Event Date')
+  = text_field_tag('involvement_event[event_date]')
+  = submit_tag("Submit")
