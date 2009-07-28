@@ -7,6 +7,8 @@ Given /^events, genders, and ethnicities are populated$/ do
   Factory(:dictionary_term, :term => "Withdrawn", :category => "Event")
   Factory(:dictionary_term, :term => "Hispanic or Latino", :category => "Ethnicity")
   Factory(:dictionary_term, :term => "Not Hispanic or Latino", :category => "Ethnicity")
+  Factory(:dictionary_term, :term => "Asian", :category => "Race")
+  Factory(:dictionary_term, :term => "White", :category => "Race")
 end
 
 

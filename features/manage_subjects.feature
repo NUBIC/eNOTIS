@@ -23,6 +23,7 @@ Feature: Manage subjects
     And I fill in "MRN" with "90210"
     And I select "Male" from "Gender"
     And I select "Not Hispanic or Latino" from "Ethnicity"
+    And I check "Asian"
     And I select "Consented" from "Event Type"
     And I fill in "Event Date" with "2009-07-01"
     And I press "Submit"

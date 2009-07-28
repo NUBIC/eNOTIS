@@ -21,6 +21,14 @@ class Involvement < ActiveRecord::Base
   # Validations
   validates_presence_of :gender_type_id, :ethnicity_type_id
   
+  # Public instance methods
+  
+  # Races are additive - this method finds the new race_type_ids and creates an associated race for each one
+  def race_type_ids=(race_type_ids)
+    new_races = race_type_ids - self.races.map(&:race_type_id)
+    new_races.each{|race_type_id| self.races.build(:race_type_id => race_type_id)}
+  end
+  
   # Public class methods
   def self.update_or_create(params)
     if (ie = Involvement.find(:first, :conditions => {:study_id => [:study_id], :subject_id => params[:subject_id]}))
@@ -30,9 +38,3 @@ class Involvement < ActiveRecord::Base
     end
   end
 end
-
-
-
-
-
-

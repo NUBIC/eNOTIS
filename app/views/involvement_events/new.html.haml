@@ -23,10 +23,12 @@
     %br
     = label_tag 'involvement[ethnicity_type_id]','Ethnicity'
     = select_tag('involvement[ethnicity_type_id]',options_for_select(@ethnicities.map{|ethnicity|[ethnicity.term,ethnicity.id]}))
-    %p
     %br
-    = label_tag 'involvement[races]','Race'
-    = select_tag('involvement[races]',options_for_select(@races.map{|race|[race.term,race.id]}))
+    %p Race
+    - @races.each do |race|
+      = label_tag "involvement[race_type_ids][][#{race.id}]", race.term
+      = check_box_tag "involvement[race_type_ids][][#{race.id}]", race.id
+      %br.clear
     %br
     %hr
     %p Initial Event Information

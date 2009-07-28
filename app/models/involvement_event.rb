@@ -32,16 +32,17 @@ class InvolvementEvent < ActiveRecord::Base
     #       "race"=>"33"}, 
     #   "controller"=>"involvement_events"}
 
-    # Study
+    # Study - find the study using the hidden field
     study = Study.find_by_irb_number(params[:study][:irb_number]) # Study.find(:first,:conditions=>["irb_number='#{session[:study_irb_number]}'"],:span=>:global)
     return {:error => "a study is required, please visit the appropriate study and try again"} if study.nil?
-    # Subject
+    # Subject - find or create a subject
     subject = Subject.find_or_create(params[:subject])
     return {:error => "either MRN or First Name, Last Name and Date of Birth are required"} if subject.nil?
-    # Involvement
+    # Involvement - create an involvement, raise an error if it already exists
     return {:error => "Gender AND Ethnicity are required fields"} if params[:involvement][:gender_type_id].blank? or params[:involvement][:ethnicity_type_id].blank?
-    involvement = Involvement.update_or_create(params[:involvement].merge({:subject_id => subject.id, :study_id => study.id}))
-    # InvolvementEvent
+    return {:error => "this subject is already associated with this study"} if Involvement.find_by_study_id_and_subject_id(study.id, subject.id)
+    involvement = Involvement.create(params[:involvement].merge({:subject_id => subject.id, :study_id => study.id}))
+    # InvolvementEvent - create the event
     return {:error => "Event AND corresponding Date are required fields"} if params[:involvement_event][:event_type_id].blank? or Chronic.parse(params[:involvement_event][:occured_at]).nil?
     involvement.involvement_events.create(params[:involvement_event])
     
