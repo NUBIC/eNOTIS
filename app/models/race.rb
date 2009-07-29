@@ -5,9 +5,9 @@ class Race < ActiveRecord::Base
 
   # Associations
   belongs_to :involvement
-  has_one :race_type, :class_name => "DictionaryTerm" 
+  belongs_to :race_type, :class_name => "DictionaryTerm", :foreign_key => :race_type_id
 
   # Mixins
   has_paper_trail
-
+  
 end

@@ -6,11 +6,13 @@ class InvolvementEvent < ActiveRecord::Base
 
   # Associations
   belongs_to :involvement
-  has_one :event_type, :class_name => "DictionaryTerm"
+  belongs_to :event_type, :class_name => "DictionaryTerm", :foreign_key => :event_type_id
   
   # Mixins
   has_paper_trail
-
+  
+  # Public instance methods
+  
   # Public class methods
   
   # for study_uploads
