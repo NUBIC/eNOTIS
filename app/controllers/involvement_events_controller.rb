@@ -30,10 +30,10 @@ class InvolvementEventsController < ApplicationController
   def create
     if InvolvementEvent.add(params)
       flash[:notice] = "Created"
-      redirect_to study_path(params[:study][:irb_number])
+      redirect_to study_path(params[:study][:irb_number], :anchor => "subjects")
     else
       flash[:error] = "Error"
-      redirect_to study_path(params[:study][:irb_number])
+      redirect_to study_path(params[:study][:irb_number], :anchor => "subjects")
     end
   end
 

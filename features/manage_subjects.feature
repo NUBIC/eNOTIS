@@ -8,14 +8,13 @@ Feature: Manage subjects
     Given a study "Vitamin E and exertion" with id "1248F" and status "Approved"
     Given "pi" has access to study id "1248F"
     Given events, genders, and ethnicities are populated
-  
-  @focus
+
   Scenario: A coordinator can see the add subject form
     When I go to the study page for id "1248F"
     And I follow "Add Subject"
     Then I should see the add subject form
 
-  @focus
+
   Scenario: A coordinator can add a subject that exists
     Given a subject with mrn "90210"
     When I go to the study page for id "1248F"
@@ -31,14 +30,40 @@ Feature: Manage subjects
     And I should see "Created"
   
   ## TODO - yoon - if we're unable to connect to irb/edw, we shouldn't have to wait for a long time for the connection to time out
-
-  Scenario: A coordinator can add a subject that does not exist
+  @focus
+  Scenario: A coordinator cannot add a subject (by MRN) that does not exist
+    Given a subject with mrn "90210"
+    When I go to the study page for id "1248F"
+    And I follow "Add Subject"
+    And I fill in "MRN" with "123XYZ"
+    And I select "Male" from "Gender"
+    And I select "Not Hispanic or Latino" from "Ethnicity"
+    And I check "Asian"
+    And I select "Consented" from "Event Type"
+    And I fill in "Event Date" with "2009-07-01"
+    And I press "Submit"
+    Then I should be on the study page for id "1248F"
+    And I should see "Error"
     # When I go to the study page for id "1248F"
     # And I have the subject_mrn
     # And I press "Add subject"
     # Then I should see a message indicating the subject was not found
-
-  Scenario: A coordinator can add a subject that does not exist
+  
+  @focus
+  Scenario: A coordinator can add a subject (by fn/ln/dob) that does not exist
+    When I go to the study page for id "1248F"
+    And I follow "Add Subject"
+    And I fill in "First Name" with "Jack"
+    And I fill in "Last Name" with "Daripur"
+    And I fill in "Birth Date" with "8/7/65"
+    And I select "Male" from "Gender"
+    And I select "Not Hispanic or Latino" from "Ethnicity"
+    And I check "Asian"
+    And I select "Consented" from "Event Type"
+    And I fill in "Event Date" with "2009-07-01"
+    And I press "Submit"
+    Then I should be on the study page for id "1248F"
+    And I should see "Created"
     # When I go to the study page for id "1248F"
     # And I have the subject_mrn
     # And I press "Add subject"
@@ -78,9 +103,7 @@ Feature: Manage subjects
     Then
 
   Scenario: A coordinator can remove a subject by deleting all involvement events
-    Given
-    When
-    Then
+    Pending
 
   Scenario: A coordinator can view the event history on a subject
     Given

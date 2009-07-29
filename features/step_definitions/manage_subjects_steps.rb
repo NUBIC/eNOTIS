@@ -19,6 +19,9 @@ end
 Then /^I should see the add subject form$/ do
   response.should have_tag("form[action=?]", involvement_events_path) do
     with_tag("input[name=?]", "subject[mrn]")
+    with_tag("input[name=?]", "subject[first_name]")
+    with_tag("input[name=?]", "subject[last_name]")
+    with_tag("input[name=?]", "subject[birth_date]")
   end
 end
 
