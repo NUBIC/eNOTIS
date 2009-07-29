@@ -1,6 +1,12 @@
 - content_for :head do
   :javascript
-    $(document).ready(function(){$("#study").tabs(); $(".display").dataTable();});
+    $(document).ready(function(){
+    $("#study").tabs(); $(".display").dataTable(); // instantiate jQueryUITabs
+    var anchor = $(document).attr('location').hash; // the anchor in the URL
+    var index = $('#study div.ui-tabs-panel').index($(anchor)); // in tab index of the anchor in the URL
+    $('#study').tabs('select', index); // select the tab
+    $('#study').bind('tabsshow', function(event, ui){document.location = $(document).attr('location').pathname + "#" + ui.panel.id;}); // change the url anchor when we click on a tab
+    });
 #study
   .vitals
     %p.irb_number= @study.irb_number
