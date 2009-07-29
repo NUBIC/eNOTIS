@@ -2,6 +2,7 @@
   :javascript
     $(document).ready(function(){
     $("#study").tabs(); $(".display").dataTable(); // instantiate jQueryUITabs
+    // http://articles.rootsmith.ca/mod_python/how-to-make-jquery-ui-tabs-linkable-or-bookmarkable#comment-10188
     var anchor = $(document).attr('location').hash; // the anchor in the URL
     var index = $('#study div.ui-tabs-panel').index($(anchor)); // in tab index of the anchor in the URL
     $('#study').tabs('select', index); // select the tab
