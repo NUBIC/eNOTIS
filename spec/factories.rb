@@ -9,6 +9,20 @@ require RAILS_ROOT + '/lib/faker/study'
 # Constants
 DEATH_RATE = Array.new(195, false) + Array.new(5, true) # 5 in 200
 
+# DictionaryTerm methods
+def race_ids
+  @dtr ||= DictionaryTerm.find_all_by_category("Race").map(&:id)
+end
+def gender_ids
+  @dtg ||= DictionaryTerm.find_all_by_category("Gender").map(&:id)
+end
+def ethnicity_ids
+  @dte ||= DictionaryTerm.find_all_by_category("Ethnicity").map(&:id)
+end
+def event_ids
+  @dte ||= DictionaryTerm.find_all_by_category("Event").map(&:id)
+end
+
 # Basic Models
 
 Factory.sequence :mrn do |n|
@@ -124,14 +138,15 @@ end
 Factory.define :involvement do |i|
   i.association   :subject
   i.association   :study
-  i.ethnicity_type_id {1}
-  i.gender_type_id    {2}
+  i.ethnicity_type_id {ethnicity_ids.rand}
+  i.gender_type_id    {gender_ids.rand}
   # i.association   :ethnicity_type, :factory => :dictionary_term
   # i.association   :gender_type, :factory => :dictionary_term
 end
 
 Factory.define :involvement_event do |e|
   e.association   :involvement
+  e.event_type_id {event_ids.rand}
   # e.association   :event_type, :factory => :dictionary_term
   e.note          {}
   e.occured_at    {Populator.value_in_range(3.weeks.ago..1.day.ago)}
@@ -144,6 +159,7 @@ end
 
 Factory.define :race do |r|
   r.association   :involvement
+  r.race_type_id  {race_ids.rand}
   # r.association   :race_type, :factory => :dictionary_term
 end
 

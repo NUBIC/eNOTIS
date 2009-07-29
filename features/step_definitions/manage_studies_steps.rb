@@ -26,7 +26,7 @@ end
 Given /^the study "([^\"]*)" has the following subjects$/ do |id, table|
   study = Study.find_by_irb_number(id)
   table.hashes.each do |hash|
-    study.subjects << Factory(:fake_subject, hash)
+    Factory(:involvement, :study => study, :subject => Factory(:fake_subject, hash))
   end
 end
 

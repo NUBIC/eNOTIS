@@ -7,7 +7,6 @@ Feature: Manage subjects
     Given I log in as "pi"
     Given a study "Vitamin E and exertion" with id "1248F" and status "Approved"
     Given "pi" has access to study id "1248F"
-    Given events, genders, and ethnicities are populated
 
   Scenario: A coordinator can see the add subject form
     When I go to the study page for id "1248F"
@@ -44,10 +43,6 @@ Feature: Manage subjects
     And I press "Submit"
     Then I should be on the study page for id "1248F"
     And I should see "Error"
-    # When I go to the study page for id "1248F"
-    # And I have the subject_mrn
-    # And I press "Add subject"
-    # Then I should see a message indicating the subject was not found
   
   @focus
   Scenario: A coordinator can add a subject (by fn/ln/dob) that does not exist
@@ -64,13 +59,6 @@ Feature: Manage subjects
     And I press "Submit"
     Then I should be on the study page for id "1248F"
     And I should see "Created"
-    # When I go to the study page for id "1248F"
-    # And I have the subject_mrn
-    # And I press "Add subject"
-    # And I see a message indicating the subject was not found
-    # And I enter the details manually
-    # And I press "Submit"
-    # Then I should see the subject in the subject study list with a note attached
 
   Scenario: A coordinator can add a subject that can be located in the medical record
     Given

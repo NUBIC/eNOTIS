@@ -26,6 +26,9 @@ require 'webrat/core/matchers'
 # for stubbing
 require "spec/mocks"
 
+# import dictionary terms
+system("rake dictionary_terms:import")
+
 Before do
   $rspec_mocks ||= Spec::Mocks::Space.new
 end
