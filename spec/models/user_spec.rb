@@ -11,7 +11,7 @@ describe User do
   it "accepts a netID and validates it" do
     u = Factory(:user, :netid => 'ord312')#, :password => "airport")
     User.should_receive(:find_by_netid).with('ord312').and_return(u)
-    u.should_receive(:authenticated?).with('airport').and_return(true)
+    Bcsec::NetidAuthenticator.should_receive(:valid_credentials?).with('ord312', 'airport').and_return(true)
     User.authenticate('ord312','airport').should be_true
   end
 end

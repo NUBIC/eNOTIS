@@ -124,26 +124,33 @@ end
 Factory.define :involvement do |i|
   i.association   :subject
   i.association   :study
-  i.association   :ethnicity_type
-  i.association   :gender_type
+  i.ethnicity_type_id {1}
+  i.gender_type_id    {2}
+  # i.association   :ethnicity_type, :factory => :dictionary_term
+  # i.association   :gender_type, :factory => :dictionary_term
 end
 
 Factory.define :involvement_event do |e|
   e.association   :involvement
-  e.association   :event_type
+  # e.association   :event_type, :factory => :dictionary_term
   e.note          {}
   e.occured_at    {Populator.value_in_range(3.weeks.ago..1.day.ago)}
 end
 
 Factory.define :coordinator do |u|
-  u.association             :user
-  u.association             :study
+  u.association   :user
+  u.association   :study
+end
+
+Factory.define :race do |r|
+  r.association   :involvement
+  # r.association   :race_type, :factory => :dictionary_term
 end
 
 Factory.define :study_upload do |s|
-  s.association             :user
-  s.association             :study
-  s.upload                  {File.open(File.dirname(__FILE__) + '/uploads/good.csv')}
+  s.association   :user
+  s.association   :study
+  s.upload        {File.open(File.dirname(__FILE__) + '/uploads/good.csv')}
   # s.upload_file_name        {"foo.csv"}
   # s.upload_content_type     {"text/csv"}
   # s.upload_file_size        {1023}
@@ -152,10 +159,10 @@ Factory.define :study_upload do |s|
   # s.result_file_size        {1023}
 end
 
-Factory.define :dictionary_term do |d|
-  d.term            {}
-  d.category        {}
-  d.code            {|me| [me.category.downcase, me.term.downcase].join("-").gsub(/[^a-z]/, "-")}
-  d.source          {Faker::Lorem.words(2).join(" ")}
-  d.description     {Faker::Lorem.paragraphs(1).to_s}
-end
+# Factory.define :dictionary_term do |d|
+#   d.category        {%w(Ethnicity Gender Event Race).rand}
+#   d.term            {|me| me.category == "Gender" ? %w(Male Female).rand : Faker::Lorem.words(1).to_s }
+#   d.code            {|me| [me.category.downcase, me.term.downcase].join("-").gsub(/[^a-z]/, "-")}
+#   d.source          {Faker::Lorem.words(2).join(" ")}
+#   d.description     {Faker::Lorem.paragraphs(1).to_s}
+# end
