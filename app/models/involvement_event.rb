@@ -11,55 +11,32 @@ class InvolvementEvent < ActiveRecord::Base
   # Mixins
   has_paper_trail
 
-  # Class methods
+  # Public class methods
   
-  def self.add_via_ui(params)
-    # params (new)
-    # { "involvement_event"=>
-    #     { "note"=>"", 
-    #       "event_type"=>"7", 
-    #       "event_date"=>""}, 
-    #   "action"=>"create", 
-    #   "authenticity_token"=>"XYZ", 
-    #   "subject"=>
-    #     { "birth_date"=>"", 
-    #       "last_name"=>"", 
-    #       "mrn"=>"", 
-    #       "first_name"=>""}, 
-    #   "involvement"=>
-    #     { "ethnicity"=>"29", 
-    #       "gender"=>"25", 
-    #       "race"=>"33"}, 
-    #   "controller"=>"involvement_events"}
-
-    # Study - find the study using the hidden field
-    study = Study.find_by_irb_number(params[:study][:irb_number]) # Study.find(:first,:conditions=>["irb_number='#{session[:study_irb_number]}'"],:span=>:global)
-    return {:error => "a study is required, please visit the appropriate study and try again"} if study.nil?
-    # Subject - find or create a subject
-    subject = Subject.find_or_create(params[:subject])
-    return {:error => "either MRN or First Name, Last Name and Date of Birth are required"} if subject.nil?
-    # Involvement - create an involvement, raise an error if it already exists
-    return {:error => "Gender AND Ethnicity are required fields"} if params[:involvement][:gender_type_id].blank? or params[:involvement][:ethnicity_type_id].blank?
-    return {:error => "this subject is already associated with this study"} if Involvement.find_by_study_id_and_subject_id(study.id, subject.id)
-    involvement = Involvement.create(params[:involvement].merge({:subject_id => subject.id, :study_id => study.id}))
-    # InvolvementEvent - create the event
-    return {:error => "Event AND corresponding Date are required fields"} if params[:involvement_event][:event_type_id].blank? or Chronic.parse(params[:involvement_event][:occured_at]).nil?
-    involvement.involvement_events.create(params[:involvement_event])
-    
-    # params (old)
-    # { "ethnicity"=>"29", 
-    #   "action"=>"create", 
-    #   "authenticity_token"=>"Sg/9X9yAlbvUbid+fj3F7Ruc1r/KO0/XOM+81neIkH4=", 
-    #   "birth_date"=>"", 
-    #   "gender"=>"25", 
-    #   "last_name"=>"", 
-    #   "note"=>"", 
-    #   "controller"=>"involvement_events", 
-    #   "mrn"=>"", 
-    #   "event_type"=>"7", 
-    #   "first_name"=>"", 
-    #   "race"=>"33", 
-    #   "event_date"=>"",
-    #   "study"=>"STU009999028" }
+  # for study_uploads
+  def self.sanity_check(params)
+    errors = []
+    errors << "either MRN or First Name, Last Name and Date of Birth are required" if params[:mrn].blank? and (params[:first_name].blank? or params[:last_name].blank? or Chronic.parse(params[:birth_date]).nil?)
+    [ [params[:irb_number], "Study is required, please visit the appropriate study and try again"],
+      [params[:race], "Race is required"],
+      [params[:gender], "Gender is required"],
+      [params[:ethnicity], "Ethnicity is required"],
+      [params[:event_type], "Event Type is required"],
+      [params[:event_date], "Event Date is required"]].each {|val, msg| errors << msg if val.blank?}
+    return errors
+  end
+  
+  def self.add(params)
+    Study.transaction do # read http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
+      # Study - find the study using the hidden field
+      study = Study.find_by_irb_number(params[:study][:irb_number]) # Study.find(:first,:conditions=>["irb_number='#{session[:study_irb_number]}'"],:span=>:global)
+      # Subject - find or create a subject
+      subject = Subject.find_or_create(params[:subject])
+      raise ActiveRecord::Rollback if study.nil? or subject.nil?
+      # Involvement - create an involvement
+      involvement = Involvement.create(params[:involvement].merge({:subject_id => subject.id, :study_id => study.id}))
+      # InvolvementEvent - create the event
+      involvement.involvement_events.create(params[:involvement_event])
+    end
   end
 end

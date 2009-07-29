@@ -28,23 +28,13 @@ class InvolvementEventsController < ApplicationController
   end
 
   def create
-    if (event = InvolvementEvent.add_via_ui(params)) && event.class == InvolvementEvent
-      redirect_to study_path(params[:study][:irb_number])
+    if InvolvementEvent.add(params)
       flash[:notice] = "Created"
+      redirect_to study_path(params[:study][:irb_number])
     else
-      respond_with_error(event[:error])
-    end
-  # rescue
-  #   respond_with_error
-  end
-  
-  protected
-  
-  def respond_with_error(e="")
-    respond_to do |format|
-      format.html{ render(:layout => false, :text => "Error: #{e}")}
-      format.js{ render(:update){|page| page << "jQuery.facebox('Error: #{e}')" }}
+      flash[:error] = "Error"
+      redirect_to study_path(params[:study][:irb_number])
     end
   end
-  
+
 end

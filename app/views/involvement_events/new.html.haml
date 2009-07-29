@@ -1,45 +1,46 @@
 - form_tag(involvement_events_path) do
   = hidden_field_tag 'study[irb_number]', params[:study]
   - if @subject.nil?
-    = label_tag 'subject[mrn]','MRN'
-    = text_field_tag('subject[mrn]')
-    %br
-    %p= "OR"
-    = label_tag 'subject[first_name]', 'First Name'
-    = text_field_tag('subject[first_name]')
-    %br
-    = label_tag 'subject[last_name]',  'Last Name'
-    = text_field_tag('subject[last_name]')
-    %br
-    = label_tag 'subject[birth_date]', 'Date of Birth'
-    = text_field_tag('subject[birth_date]')
-    %br
+    %p
+      = label_tag 'subject[mrn]','MRN'
+      = text_field_tag('subject[mrn]')
+    %p
+      OR
+      %br
+      = label_tag 'subject[first_name]', 'First Name'
+      = text_field_tag('subject[first_name]')
+    %p  
+      = label_tag 'subject[last_name]',  'Last Name'
+      = text_field_tag('subject[last_name]')
+    %p
+      = label_tag 'subject[birth_date]', 'Date of Birth'
+      = text_field_tag('subject[birth_date]')
+    %p
     %hr
     %p Required Demographic Information
-    %br
-    = label_tag 'involvement[gender_type_id]','Gender'
-    = select_tag('involvement[gender_type_id]',options_for_select(@genders.map{|gender|[gender.term,gender.id]}))
     %p
-    %br
-    = label_tag 'involvement[ethnicity_type_id]','Ethnicity'
-    = select_tag('involvement[ethnicity_type_id]',options_for_select(@ethnicities.map{|ethnicity|[ethnicity.term,ethnicity.id]}))
-    %br
+      = label_tag 'involvement[gender_type_id]','Gender'
+      = select_tag('involvement[gender_type_id]',options_for_select(@genders.map{|gender|[gender.term,gender.id]}))
+    %p
+      = label_tag 'involvement[ethnicity_type_id]','Ethnicity'
+      = select_tag('involvement[ethnicity_type_id]',options_for_select(@ethnicities.map{|ethnicity|[ethnicity.term,ethnicity.id]}))
     %p Race
     - @races.each do |race|
-      = label_tag "involvement[race_type_ids][][#{race.id}]", race.term
-      = check_box_tag "involvement[race_type_ids][][#{race.id}]", race.id
-      %br.clear
-    %br
+      %p
+        = label_tag "involvement[race_type_ids][][#{race.id}]", race.term
+        = check_box_tag "involvement[race_type_ids][][#{race.id}]", race.id
     %hr
     %p Initial Event Information
 
   - else
     = hidden_field_tag(:subject_id, @subject.id)
-    %br
-  = label_tag('involvement_event[event_type_id]','Event Type')
-  = select_tag('involvement_event[event_type_id]',options_for_select(@events.map{|event|[event.term,event.id]}))
-  = label_tag('involvement_event[note]', 'Note')
-  = text_field_tag('involvement_event[note]')
-  = label_tag('involvement_event[occured_at]','Event Date')
-  = text_field_tag('involvement_event[occured_at]')
-  = submit_tag("Submit")
+  %p
+    = label_tag('involvement_event[event_type_id]','Event Type')
+    = select_tag('involvement_event[event_type_id]',options_for_select(@events.map{|event|[event.term,event.id]}))
+  %p
+    = label_tag('involvement_event[note]', 'Note')
+    = text_field_tag('involvement_event[note]')
+  %p
+    = label_tag('involvement_event[occured_at]','Event Date')
+    = text_field_tag('involvement_event[occured_at]')
+  %p= submit_tag("Submit")
