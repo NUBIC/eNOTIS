@@ -9,8 +9,8 @@ class InvolvementEvent < ActiveRecord::Base
   belongs_to :event_type, :class_name => "DictionaryTerm", :foreign_key => :event_type_id
   
   # Named scopes
-  named_scope :with_event_types, lambda {|event_type_ids| { :conditions => ['event_type_id in?', event_type_ids ]}}
-  named_scope :on_study, lambda {|study_id| { :include => :involvement, :conditions => ['involvements.study_id=?', study_id] } } do
+  named_scope :with_event_types, lambda {|event_type_ids| { :conditions => ['event_type_id in (?)', event_type_ids ]}}
+  named_scope :on_study, lambda {|study_id| { :include => :involvement, :conditions => ['involvements.study_id=?', study_id], :order => 'involvement_events.occured_at DESC' } } do
     def to_graph
       results = {}
       (self.blank? ? [] : self).each do |e|

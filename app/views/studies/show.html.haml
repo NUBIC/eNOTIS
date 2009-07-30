@@ -9,8 +9,8 @@
     var index = $('#study div.ui-tabs-panel').index($(anchor)); // in tab index of the anchor in the URL
     $('#study').tabs('select', index); // select the tab
     $('#study').bind('tabsshow', function(event, ui){document.location = $(document).attr('location').pathname + "#" + ui.panel.id;}); // change the url anchor when we click on a tab
-    = "var e = #{InvolvementEvent.on_study(@study).to_graph.inspect};"
-    $.plot($("#accrual"), [e], { xaxis: { mode: "time" } });
+    = "var e = #{@study_events.with_event_types([DictionaryTerm.find_by_term("Consented")]).to_graph.inspect};"
+    $.plot($("#accrual"), [e], { grid: {borderWidth: 0}, xaxis: { mode: "time" } });
     });
 #study
   .vitals
@@ -36,11 +36,13 @@
       .column
         #accrual
         #study-events
-          .heading Accrual Events History
+          .heading Recent Events
           %ul
-            %li= "#{@study.coordinators.first.name}: 6 consented on #{1.days.ago.to_s(:short)}"
-            %li= "#{@study.coordinators.first.name}: 1 consented on #{2.days.ago.to_s(:short)}" 
-            %li= "#{@study.coordinators.first.name}: 3 consented on #{3.days.ago.to_s(:short)}"
+            - @study_events.all(:limit => 5).each do |ie|
+              %li
+                -# ">" before = removes extra spacing around this tag
+                %dtr{:title => ie.description}>= ie.term
+                = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occured_at)} ago"
       #staff_list.column
         .heading Staff list
         %ul
@@ -75,14 +77,13 @@
           %th Note
           %th Date
         %tbody
-          - @study.involvements.each do |involvement|
-            -involvement.involvement_events.each do |event|
-              %tr
-                %td= [involvement.subject.last_name,involvement.subject.first_name].join(',')
-                %td
-                  %dfn{:title => event.description}= event.term
-                %td= event.note
-                %td= event.occured_at
+          - @study_events.each do |event|
+            %tr
+              %td= event.involvement.subject.name
+              %td
+                %dfn{:title => event.description}= event.term
+              %td= event.note
+              %td= event.occured_at
     #imports
       %h4 Imports
       - form_tag('/subjects', :multipart => true) do
