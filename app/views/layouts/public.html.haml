@@ -3,7 +3,7 @@
 %html
   %head
     %title= "eNotis :: #{@title}"
-    =stylesheet_link_tag @view_stylesheets ||= ["compiled/application"]
+    =stylesheet_link_tag @view_stylesheets ||= ["compiled/application","compiled/public"]
     =javascript_include_tag @view_javascripts || []
     =yield :head
   %body

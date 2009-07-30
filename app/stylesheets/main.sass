@@ -1,0 +1,86 @@
+// This file contains the sass styles for the main.html.haml layout
+
+// Importing all our base mixins, colors, and plugins 
+@import base.sass
+
+body
+  // basic top, middle, bottom block layout
+  #header
+    +column(36,true)
+    +prepend(1)
+    
+    .app_name
+      :font-size 3em
+      :font-weight bold
+      :color = !nu_purple
+
+    .tagline
+      :color = !nu_purple
+
+  #current_user_badge
+    +column(12,true)
+    +push(1)
+    +bold
+    
+
+  #bridge-nav
+    +column(52,true)
+    :background-color= !secondary_data_bg_color
+    :background-image url('/images/bridge-nav-bkgnd.gif')
+    :background-repeat repeat-x
+    ul
+      +horizontal-list(!blueprint_grid_margin)
+      +span(44)
+      +prepend(2)
+      form, form div
+      :display inline
+      li
+        :height= !blueprint_grid_outer_width * 2
+        a, a:hover, a:visited, a:active
+          :color= !secondary_data_color
+          :text-decoration none
+          :font-size= !blueprint_grid_width
+          :padding= !blueprint_grid_width
+          :line-height= !blueprint_grid_outer_width * 2
+        a:hover
+          :background-color= !notice_bg_color
+        a.current
+          :background-color= !nu_page_background
+          :color= !nu_purple
+          :border-left= 1px solid !primary_data_border_color
+          :border-right= 1px solid !primary_data_border_color
+        input
+          :margin-top= !blueprint_grid_margin * 2
+          :vertical-align top
+          :padding 0.2em
+        input#query
+          :margin-top= (!blueprint_grid_margin * 2) - 3px
+          :vertical-align top
+          :margin-left -0.1em
+      li.search
+        a, a:hover, a:visited, a:active
+          :padding-right 0.2em 
+      
+    
+  #main
+    +column(52,true)
+
+  #my_studies
+    +column(38)
+    +prepend(1)
+    +squish
+
+  #recent_events
+    +column(10,true)
+    +prepend(1)
+    +squish
+    
+  #footer 
+    +column(52,true)
+
+  .heading
+    +rounded_top_box( !primary_data_bg_color )
+    +bold
+    +primary_data_text
+    :padding-left 0.8em
+

@@ -3,44 +3,46 @@
 %html
   %head
     %title= "eNotis :: #{@title}"
-    =stylesheet_link_tag(@view_stylesheets ||= ["compiled/application", "facebox", "compiled/datatables"])
+    =stylesheet_link_tag(@view_stylesheets ||= ["compiled/application", "compiled/main","facebox", "compiled/datatables"])
     =javascript_include_tag @view_javascripts ||= ["jquery-1.3.2.min", "jquery-ui-1.7.2.min" ,"jrails", "facebox", "jquery.dataTables.min", "jquery.main"] 
     =yield :head
   %body
+    #container
+      #header
+        %span.app_name
+          eNOTIS
+        %em.tagline
+          Northwestern University Clinical Subject Registration
 
-    #enotis_header
-      %h1.app_name
-        eNOTIS
-      .tagline
-        Northwestern University Clinical Subject Registration
-      .current_user
+      #current_user_badge
         = "#{current_user.name} (#{current_user.netid})"
         |
         = link_to('Logout', logout_authentication_path)
+      
+      #bridge-nav
+        %ul
+          %li= nav_link_to "Dashboard", dashboard_path, UsersController
+          %li= nav_link_to "All Studies", studies_path, StudiesController
+          %li= nav_link_to "My Subjects", subjects_path, SubjectsController
+          %li= nav_link_to "My Events", involvement_events_path, InvolvementEventsController
+          %li.search
+            -form_tag(search_path, :method => :get) do 
+              = nav_link_to "Search", search_path, SearchController
+              =text_field_tag("query")
+              =submit_tag("Search")
 
-      %ul.bridge-nav
-        %li.nav= nav_link_to "Dashboard", dashboard_path, UsersController
-        %li.nav= nav_link_to "All Studies", studies_path, StudiesController
-        %li.nav= nav_link_to "My Subjects", subjects_path, SubjectsController
-        %li.nav= nav_link_to "My Events", involvement_events_path, InvolvementEventsController
-        %li.nav
-          = nav_link_to "Search", search_path, SearchController
-          -form_tag(search_path, :method => :get) do 
-            =text_field_tag("query")
-            =submit_tag("Search")
+      - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
+        #flash
+          = flash_messages(types)
+            
+      #main
+        =yield
 
-    - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
-      #flash
-        = flash_messages(types)
-          
-    #main
-      =yield
-
-    #footer
-      = image_tag("nu_pageheader.jpg")
-      %p
-        eNOTIS &mdash; Clinical Subject Registration 
-        =app_version_helper
-        Created by&nbsp; 
-        =link_to("NUBIC")
-        &nbsp;for Northwestern University
+      #footer
+        = image_tag("nu_pageheader.jpg")
+        %p
+          eNOTIS &mdash; Clinical Subject Registration 
+          =app_version_helper
+          Created by&nbsp; 
+          =link_to("NUBIC")
+          &nbsp;for Northwestern University

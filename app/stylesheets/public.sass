@@ -1,5 +1,37 @@
 // Styles for views in the authentication controller
 
+// Importing all our base mixins, colors, and plugins 
+@import base.sass
+// basic top, middle, bottom block layout
+body
+  #header
+    +column(24,true)
+    +squeeze
+    :margin-top= !blueprint_grid_outer_width / 2
+    
+    .app_name
+      :font-size 3em
+      :font-weight bold
+      :color = !nu_purple
+
+    .tagline
+      :color = !nu_purple
+    
+
+  #main
+    +column(24,true)
+    +squeeze
+
+    #left_primary
+      +column(16)
+
+    #right_sidebar
+      +column(8,true)
+
+  #footer 
+    +column(26,true)
+
+
 #enotis_description 
   +primary_text
   +squeeze(1)

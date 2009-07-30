@@ -1,3 +1,5 @@
+// This file contains all color definitions
+// blueprint includes, custom mixins etc..
 
 // Definitions and overrides
 
@@ -48,12 +50,12 @@
 !blueprint_table_stripe_color = #E5ECF9
 
 // Grid settings
-!blueprint_grid_columns = 26
-!blueprint_grid_width = 30px
-!blueprint_grid_margin = 10px
+!blueprint_grid_columns = 52
+!blueprint_grid_width = 15px
+!blueprint_grid_margin = 5px
 
 // Font settings
-!blueprint_font_size = 16px
+!blueprint_font_size = 14px
 
 // Because compass uses conditional assignment
 // we define our vars first and the defaults take over
@@ -83,8 +85,8 @@
   :-moz-border-radius 3px 3px 0 0
   :padding 0.2em
 
-=primary_text
-  :font-size 1.6em
+=primary_data_text
+  :font-size 1.2em
  
 =bold
   :font-weight bold
@@ -94,14 +96,18 @@
 
 // adds x number of grids in padding
 // "squeezes" in the "walls" around the text
+// only works on columnized elements
 =squeeze( !grids = 1)
   +prepend( !grids )
   +append( !grids )
 
 // takes the grid width and applies it to the top and bottom padding on the element
 =squish( !grids = 1 )
-  :margin-top= !grids/2 * !blueprint_grid_outer_width
-  :margin-bottom= !grids/2 * !blueprint_grid_outer_width
+  :margin-top= !grids * !blueprint_grid_outer_width
+  :margin-bottom= !grids * !blueprint_grid_outer_width
+
+
+
  
 
 
