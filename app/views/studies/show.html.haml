@@ -1,5 +1,7 @@
+- @view_stylesheets = ["compiled/application", "facebox", "compiled/datatables", "compiled/accrual_graph"]
+- @view_javascripts = ["jquery-1.3.2.min", "jquery-ui-1.7.2.min" ,"jrails", "facebox", "jquery.dataTables.min", "jquery.main", "jquery.flot.pack", "excanvas.pack"] # flot and excanvas are used for the accrual graph
 - content_for :head do
-  :javascript
+  %script{:type => 'text/javascript'}
     $(document).ready(function(){
     $("#study").tabs(); $(".display").dataTable(); // instantiate jQueryUITabs
     // http://articles.rootsmith.ca/mod_python/how-to-make-jquery-ui-tabs-linkable-or-bookmarkable#comment-10188
@@ -7,6 +9,8 @@
     var index = $('#study div.ui-tabs-panel').index($(anchor)); // in tab index of the anchor in the URL
     $('#study').tabs('select', index); // select the tab
     $('#study').bind('tabsshow', function(event, ui){document.location = $(document).attr('location').pathname + "#" + ui.panel.id;}); // change the url anchor when we click on a tab
+    = "var e = #{InvolvementEvent.on_study(@study).to_graph.inspect};"
+    $.plot($("#accrual"), [e], { xaxis: { mode: "time" } });
     });
 #study
   .vitals
@@ -30,8 +34,7 @@
       %li.nav= study_tab_to "Subject Imports", "#imports"
     #overview
       .column
-        %img{:src => '/images/accrual.gif', :style => "margin: 0 1.5em 1em;"}
-        
+        #accrual
         #study-events
           .heading Accrual Events History
           %ul
