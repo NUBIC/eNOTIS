@@ -13,8 +13,7 @@ class InvolvementEventsController < ApplicationController
   
   # Public instance methods (actions)
   def index
-    # TODO Refactor this to a method on user -blc
-    @events = current_user.studies.map(&:involvements).flatten.map(&:involvement_events).flatten
+    @events = current_user.involvement_events
   end
 
   def new

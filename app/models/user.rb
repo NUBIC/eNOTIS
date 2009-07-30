@@ -47,6 +47,11 @@ class User < ActiveRecord::Base
     write_attribute :email, (value ? value.downcase : nil)
   end
   
+  def involvement_events
+    # all involvement events on studies that this user has access to. refactored from invovlement_events_controller - yoon
+    studies.map(&:involvements).flatten.map(&:involvement_events).flatten
+  end
+  
   # TODO set up a more robust role authorization system -yoon
   def admin?
     %w(blc615 daw286 myo628).include? self.netid
