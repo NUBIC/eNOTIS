@@ -50,10 +50,6 @@ class Study < ActiveRecord::Base
     user.admin? or coordinators.map(&:user).include? user
   end
   
-  def documents
-    [] # Not implemented for now. TODO, remove this -yoon
-  end
-  
   def may_accrue?
     # For possible eIRB statuses, see doc/terms.csv
     ["Approved", "Conditional Approval", "Exempt Approved", "Not Under IRB Purview", "Revision Open"].include? self.status
