@@ -62,7 +62,7 @@
             %tr
               %td= render :partial => 'partials/subject', :object => subject
               %td= subject.synced? ? "Subject Synced" : link_to("Sync", search_subjects_url(:id=>subject.id), :rel => 'facebox')
-              %td= link_to("Add Event", new_involvement_event_path(:subject_id=>subject.id), :rel => 'facebox', :id => "add_event_#{subject.id}")
+              %td= link_to("Add Event", new_involvement_event_path(:subject => subject, :study => @study), :rel => 'facebox', :id => "add_event_#{subject.id}")
     #events
       %h4 Events
       %table.display

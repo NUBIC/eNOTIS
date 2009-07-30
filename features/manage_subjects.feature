@@ -70,12 +70,24 @@ Feature: Manage subjects
     Then I should see that subject "90210" is not synced
     
   @focus
-  Scenario: A coordinator can add an event for an existing subject
+  Scenario: A coordinator can see the add evebt form
     Given a subject with mrn "90210"
     And subject "90210" is consented on study "1248F"
     When I go to the study page for id "1248F"
     And I follow "Add Event" for "90210"
     Then I should see the add event form
+
+  @focus
+  Scenario: A coordinator can add an event for an existing subject
+    Given a subject with mrn "90210"
+    And subject "90210" is consented on study "1248F"
+    When I go to the study page for id "1248F"
+    And I follow "Add Event" for "90210"
+    And I select "Contact - Phone" from "Event Type"
+    And I fill in "Event Date" with "2009-07-01"
+    And I press "Submit"
+    Then I should be on the study page for id "1248F"
+    And I should see "Added"
 
   Scenario: A coordinator can remove an event for an existing subject
     Given

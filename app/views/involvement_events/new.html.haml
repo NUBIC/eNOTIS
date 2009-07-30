@@ -33,7 +33,7 @@
     %p Initial Event Information
 
   - else
-    = hidden_field_tag(:subject_id, @subject.id)
+    = hidden_field_tag("subject[id]", @subject.id)
   %p
     = label_tag('involvement_event[event_type_id]','Event Type')
     = select_tag('involvement_event[event_type_id]',options_for_select(@events.map{|event|[event.term,event.id]}))

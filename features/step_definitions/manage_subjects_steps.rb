@@ -29,6 +29,19 @@ Then /^I should see that subject "([^\"]*)" is not synced$/ do |mrn|
   end
 end
 
+When /^I follow "Add Event" for "([^\"]*)"$/ do |mrn|
+  click_link("add_event_#{Subject.find_by_mrn(mrn).id}")
+end
+
+Then /^I should see the add event form$/ do
+  response.should have_tag("form[action=?]", involvement_events_path) do
+    with_tag("select[name=?]", "involvement_event[event_type_id]")
+    with_tag("input[name=?]", "involvement_event[occured_at]")
+    with_tag("input[name=?]", "involvement_event[note]")
+  end
+end
+
+
 
 # Given /^the following subject_registrations:$/ do |subject_registrations|
 #   SubjectRegistration.create!(subject_registrations.hashes)

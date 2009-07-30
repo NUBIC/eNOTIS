@@ -39,10 +39,15 @@ class InvolvementEvent < ActiveRecord::Base
       # Study - find the study using the hidden field
       study = Study.find_by_irb_number(params[:study][:irb_number]) # Study.find(:first,:conditions=>["irb_number='#{session[:study_irb_number]}'"],:span=>:global)
       # Subject - find or create a subject
-      subject = Subject.find_or_create(params[:subject])
-      raise ActiveRecord::Rollback if study.nil? or subject.nil?
-      # Involvement - create an involvement
-      involvement = Involvement.create(params[:involvement].merge({:subject_id => subject.id, :study_id => study.id}))
+      if params[:subject].has_key?(:id) && (subject = Subject.find(params[:subject][:id]))
+        involvement = Involvement.find_by_study_id_and_subject_id(study.id, subject.id)
+      else
+        subject = Subject.find_or_create(params[:subject])
+        raise ActiveRecord::Rollback if study.nil? or subject.nil?
+        # Involvement - create an involvement
+        involvement = Involvement.create(params[:involvement].merge({:subject_id => subject.id, :study_id => study.id}))
+      end
+      raise ActiveRecord::Rollback if involvement.nil?
       # InvolvementEvent - create the event
       involvement.involvement_events.create(params[:involvement_event])
     end

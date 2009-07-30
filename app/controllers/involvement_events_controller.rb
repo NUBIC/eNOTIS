@@ -18,7 +18,7 @@ class InvolvementEventsController < ApplicationController
   end
 
   def new
-    @subject = Subject.find(params[:subject_id]) unless params[:subject_id].nil?
+    @subject = Subject.find(params[:subject]) unless params[:subject].nil?
     # Get @events, @races, @genders, @ethnicities instance variables from dictionary
     ["event", "race", "gender", "ethnicity"].each{|category| self.instance_variable_set("@#{category.pluralize}", DictionaryTerm.find_all_by_category(category.capitalize))}
     respond_to do |format|
@@ -29,7 +29,7 @@ class InvolvementEventsController < ApplicationController
 
   def create
     if InvolvementEvent.add(params)
-      flash[:notice] = "Created"
+      flash[:notice] = params[:subject].has_key?(:id) ? "Added" : "Created"
       redirect_to study_path(params[:study][:irb_number], :anchor => "subjects")
     else
       flash[:error] = "Error"
