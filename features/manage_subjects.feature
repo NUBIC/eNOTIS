@@ -13,7 +13,6 @@ Feature: Manage subjects
     And I follow "Add Subject"
     Then I should see the add subject form
 
-
   Scenario: A coordinator can add a subject that exists
     Given a subject with mrn "90210"
     When I go to the study page for id "1248F"
@@ -29,7 +28,7 @@ Feature: Manage subjects
     And I should see "Created"
   
   ## TODO - yoon - if we're unable to connect to irb/edw, we shouldn't have to wait for a long time for the connection to time out
-  @focus
+  
   Scenario: A coordinator cannot add a subject (by MRN) that does not exist
     Given a subject with mrn "90210"
     When I go to the study page for id "1248F"
@@ -44,7 +43,6 @@ Feature: Manage subjects
     Then I should be on the study page for id "1248F"
     And I should see "Error"
   
-  @focus
   Scenario: A coordinator can add a subject (by fn/ln/dob) that does not exist
     When I go to the study page for id "1248F"
     And I follow "Add Subject"
@@ -70,10 +68,14 @@ Feature: Manage subjects
     When
     Then
 
+  @focus
   Scenario: A coordinator can view the synced/not synced with medical record status
-    Given
-    When
-    Then
+    Given a subject with mrn "90210"
+    And subject "90210" is not synced
+    And subject "90210" is consented on study "1248F"
+    When I go to the study page for id "1248F"
+    Then I should see that subject "90210" is not synced
+    
 
   Scenario: A coordinator can add an event for a new subject
     Given

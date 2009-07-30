@@ -1,17 +1,3 @@
-Given /^events, genders, and ethnicities are populated$/ do
-  Factory(:dictionary_term, :term => "Male", :category => "Gender")
-  Factory(:dictionary_term, :term => "Female", :category => "Gender")
-  Factory(:dictionary_term, :term => "Screened", :category => "Event")
-  Factory(:dictionary_term, :term => "Consented", :category => "Event")
-  Factory(:dictionary_term, :term => "Randomized", :category => "Event")
-  Factory(:dictionary_term, :term => "Withdrawn", :category => "Event")
-  Factory(:dictionary_term, :term => "Hispanic or Latino", :category => "Ethnicity")
-  Factory(:dictionary_term, :term => "Not Hispanic or Latino", :category => "Ethnicity")
-  Factory(:dictionary_term, :term => "Asian", :category => "Race")
-  Factory(:dictionary_term, :term => "White", :category => "Race")
-end
-
-
 Given /^a subject with mrn "([^\"]*)"$/ do |mrn|
  Factory(:subject, :mrn => mrn)
 end
@@ -24,6 +10,25 @@ Then /^I should see the add subject form$/ do
     with_tag("input[name=?]", "subject[birth_date]")
   end
 end
+
+Given /^subject "([^\"]*)" is not synced$/ do |mrn|
+  Subject.find_by_mrn(mrn).update_attributes(:synced_at => nil)
+end
+
+Given /^subject "([^\"]*)" is consented on study "([^\"]*)"$/ do |mrn, irb_number|
+  Factory(:involvement, :subject => Subject.find_by_mrn(mrn), :study => Study.find_by_irb_number(irb_number))
+  Factory(:involvement_event, :event_type => DictionaryTerm.find_by_term("Consented"))
+end
+
+Then /^I should see that subject "([^\"]*)" is not synced$/ do |mrn|
+  response.should have_tag("tr") do |tr|
+    tr.should contain(Subject.find_by_mrn(mrn).name)
+    with_tag("a") do |a|
+      a.should contain("Sync")
+    end
+  end
+end
+
 
 # Given /^the following subject_registrations:$/ do |subject_registrations|
 #   SubjectRegistration.create!(subject_registrations.hashes)
