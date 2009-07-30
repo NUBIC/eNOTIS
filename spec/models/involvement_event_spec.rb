@@ -9,4 +9,21 @@ describe InvolvementEvent do
   it "should create a new instance given valid attributes" do
     InvolvementEvent.create!(@valid_attributes)
   end
+  
+  it "should return all involvement events on a given study" do
+    @study = Factory(:fake_study)
+    @not_my_study = Factory(:fake_study)
+    
+    3.times{Factory(:involvement_event, :involvement => Factory(:involvement, :study => @study))}
+    3.times{Factory(:involvement_event, :involvement => Factory(:involvement, :study => @not_my_study))}
+    InvolvementEvent.on_study(@study).should have(3).involvement_events
+  end
+  it "should return all involvement events on a given study as x/y values" do
+    @study = Factory(:fake_study)
+    @not_my_study = Factory(:fake_study)
+    
+    3.times{Factory(:involvement_event, :involvement => Factory(:involvement, :study => @study))}
+    3.times{Factory(:involvement_event, :involvement => Factory(:involvement, :study => @not_my_study))}
+    InvolvementEvent.on_study(@study).to_graph.last[1].should == 3
+  end
 end
