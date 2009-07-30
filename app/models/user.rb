@@ -48,8 +48,13 @@ class User < ActiveRecord::Base
   end
   
   def involvement_events
-    # all involvement events on studies that this user has access to. refactored from invovlement_events_controller - yoon
-    studies.map(&:involvements).flatten.map(&:involvement_events).flatten
+    # all involvement events on studies that this user has access to. refactored from involvement_events_controller - yoon
+    involvements.map(&:involvement_events).flatten
+  end
+  
+  def involvements
+    # all subjects on studies that this user has access to. refactored from subjects_controller
+    studies.map(&:involvements).flatten
   end
   
   # TODO set up a more robust role authorization system -yoon

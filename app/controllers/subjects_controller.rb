@@ -18,13 +18,7 @@ class SubjectsController < ApplicationController
 
   # Public instance methods (actions)
   def index
-    if params[:irb_number]
-      @study = Study.find_by_irb_number(params[:irb_number])
-      @involvements = @study.involvements || []
-    else
-      # TODO Clean up... create coordinator intstance methond
-      @involvements = (@study ? @study.involvements : current_user.coordinators.map(&:study).flatten.map(&:involvements).flatten) || []
-    end
+    @involvements = current_user.involvements
   end
 
   def show
