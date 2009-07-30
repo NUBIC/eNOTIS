@@ -62,21 +62,22 @@
             %tr
               %td= render :partial => 'partials/subject', :object => subject
               %td= subject.synced? ? "Subject Synced" : link_to("Sync", search_subjects_url(:id=>subject.id), :rel => 'facebox')
-              %td= link_to("Add Event", new_involvement_event_path(:subject_id=>subject.id), :rel => 'facebox')
+              %td= link_to("Add Event", new_involvement_event_path(:subject_id=>subject.id), :rel => 'facebox', :id => "add_event_#{subject.id}")
     #events
       %h4 Events
       %table.display
         %thead
           %th Name
           %th Event
-          %th Event Description
-          %th Event Date
+          %th Note
+          %th Date
         %tbody
           - @study.involvements.each do |involvement|
             -involvement.involvement_events.each do |event|
               %tr
                 %td= [involvement.subject.last_name,involvement.subject.first_name].join(',')
-                %td= event.event_type_id
+                %td
+                  %dfn{:title => event.description}= event.term
                 %td= event.note
                 %td= event.occured_at
     #imports

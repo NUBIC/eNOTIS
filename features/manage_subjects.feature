@@ -13,6 +13,9 @@ Feature: Manage subjects
     And I follow "Add Subject"
     Then I should see the add subject form
 
+
+  # Scenario: A coordinator can add an event for a new subject
+  # Scenario: A coordinator can add a subject that can be located in the medical record
   Scenario: A coordinator can add a subject that exists
     Given a subject with mrn "90210"
     When I go to the study page for id "1248F"
@@ -43,6 +46,7 @@ Feature: Manage subjects
     Then I should be on the study page for id "1248F"
     And I should see "Error"
   
+  # Scenario: A coordinator can add a subject that can not be located in the medical record
   Scenario: A coordinator can add a subject (by fn/ln/dob) that does not exist
     When I go to the study page for id "1248F"
     And I follow "Add Subject"
@@ -58,17 +62,6 @@ Feature: Manage subjects
     Then I should be on the study page for id "1248F"
     And I should see "Created"
 
-  Scenario: A coordinator can add a subject that can be located in the medical record
-    Given
-    When
-    Then
-
-  Scenario: A coordinator can add a subject that can not be located in the medical record
-    Given
-    When
-    Then
-
-  @focus
   Scenario: A coordinator can view the synced/not synced with medical record status
     Given a subject with mrn "90210"
     And subject "90210" is not synced
@@ -76,16 +69,13 @@ Feature: Manage subjects
     When I go to the study page for id "1248F"
     Then I should see that subject "90210" is not synced
     
-
-  Scenario: A coordinator can add an event for a new subject
-    Given
-    When
-    Then
-
+  @focus
   Scenario: A coordinator can add an event for an existing subject
-    Given
-    When
-    Then
+    Given a subject with mrn "90210"
+    And subject "90210" is consented on study "1248F"
+    When I go to the study page for id "1248F"
+    And I follow "Add Event" for "90210"
+    Then I should see the add event form
 
   Scenario: A coordinator can remove an event for an existing subject
     Given

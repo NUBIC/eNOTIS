@@ -12,6 +12,12 @@ class InvolvementEvent < ActiveRecord::Base
   has_paper_trail
   
   # Public instance methods
+  def term
+    event_type.term
+  end
+  def description
+    event_type.description
+  end
   
   # Public class methods
   
