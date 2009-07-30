@@ -21,14 +21,14 @@ namespace :db do
     desc 'Populate users(fake)'
     task :users => :environment do  
       puts "creating users..."
-      30.times { |i| blip && Factory.create(:fake_user)}
+      20.times { |i| blip && Factory.create(:fake_user)}
       puts
     end
 
     desc 'Populate coordinators: joins users(random) and studies(fake)'
     task :coordinators_and_studies => :environment do      
       puts "creating coordinators and studies..."
-      150.times { |i| blip && Factory.create(:coordinator, :study => Factory.create(:fake_study), :user => random(User))}
+      80.times { |i| blip && Factory.create(:coordinator, :study => Factory.create(:fake_study), :user => random(User))}
       puts
     end
 
@@ -48,6 +48,7 @@ namespace :db do
     task :involvements_and_subects => :environment do
       puts "creating involvements and subjects..."
       event_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Event']).map(&:id)
+      event_type_ids += Array.new(20, DictionaryTerm.find_by_term("Consented").id) # weight this more heavily towards consent event types
       gender_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Gender']).map(&:id)
       ethnicity_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Ethnicity']).map(&:id)
       300.times do |i|
@@ -62,9 +63,10 @@ namespace :db do
     task :involvements => :environment do
       puts "creating extra involvements..."
       event_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Event']).map(&:id)
+      event_type_ids += Array.new(20, DictionaryTerm.find_by_term("Consented").id) # weight this more heavily towards consent event types
       gender_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Gender']).map(&:id)
       ethnicity_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Ethnicity']).map(&:id)
-      100.times do |i|
+      200.times do |i|
         involvement = Factory.create( :involvement, :study => random(Study), :subject => random(Subject),
                                       :gender_type_id => gender_type_ids.rand, :ethnicity_type_id => ethnicity_type_ids.rand)
         blip && Factory.create( :involvement_event, :event_type_id => event_type_ids.rand, :involvement => involvement )
