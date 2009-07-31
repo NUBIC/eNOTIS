@@ -8,7 +8,7 @@ Hi, and welcome to eNOTIS, a secure, web-based system for Northwestern clinical 
 
 Just as a reminder, eNOTIS mainly deals with studies, subjects, and events. I consented a subject on one of my studies today, so we're going to add that subject with a "consented" event.
 
-Once I log in with your netid and password, I'm at the dashboard, where I can see a list of my studies and recent events. I consented a subject on the [] study, so let's click on it. The study overview shows what has happened recently on my study, and who has access. I'm in adding a subject, so I'll click on the "Study Subjects" tab, and click "add subject".
+Once I log in with my netid and password, I'm at the dashboard, where I can see a list of my studies and recent events. I consented a subject on the [] study, so let's click on it. The study overview shows what has happened recently on my study, and who has access. I'm in adding a subject, so I'll click on the "Study Subjects" tab, and click "add subject".
 
 Now anything that happens to a subject on a study, including signing a consent, approaching, phone calls - those are all events. Today I consented a subject and I have her MRN. The first time I associate a study and subject, I need to specify gender, ethnicity and race. And the event that happened today was a consent.
 
