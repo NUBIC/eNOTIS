@@ -15,9 +15,11 @@ Given /^subject "([^\"]*)" is not synced$/ do |mrn|
   Subject.find_by_mrn(mrn).update_attributes(:synced_at => nil)
 end
 
-Given /^subject "([^\"]*)" is consented on study "([^\"]*)"$/ do |mrn, irb_number|
-  Factory(:involvement, :subject => Subject.find_by_mrn(mrn), :study => Study.find_by_irb_number(irb_number))
-  Factory(:involvement_event, :event_type => DictionaryTerm.find_by_term("Consented"))
+Given /^subject "([^\"]*)" has event "([^\"]*)" on study "([^\"]*)"$/ do |mrn, term, irb_number|
+  unless involvement = Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number))
+    involvement = Factory(:involvement, :subject => Subject.find_by_mrn(mrn), :study => Study.find_by_irb_number(irb_number))
+  end
+  Factory(:involvement_event, :involvement => involvement, :event_type => DictionaryTerm.find_by_term(term))
 end
 
 Then /^I should see that subject "([^\"]*)" is not synced$/ do |mrn|
@@ -29,8 +31,16 @@ Then /^I should see that subject "([^\"]*)" is not synced$/ do |mrn|
   end
 end
 
-When /^I follow "Add Event" for "([^\"]*)"$/ do |mrn|
-  click_link("add_event_#{Subject.find_by_mrn(mrn).id}")
+Then /^subject "([^\"]*)" should have (\d+) events? on study "([^\"]*)"$/ do |mrn, x, irb_number|
+  Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number)).involvement_events.should have(x.to_i).involvement_events
+end
+
+When /^I follow "([^\"]*)" for "([^\"]*)" on the "([^\"]*)" tab$/ do |link, mrn, selector|
+  within("\##{selector.downcase}") do
+    within("\.subject_#{Subject.find_by_mrn(mrn).id}") do
+      click_link(link)
+    end
+  end
 end
 
 Then /^I should see the add event form$/ do

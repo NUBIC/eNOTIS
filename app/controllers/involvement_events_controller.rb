@@ -35,5 +35,13 @@ class InvolvementEventsController < ApplicationController
       redirect_to study_path(params[:study][:irb_number], :anchor => "subjects")
     end
   end
+  
+  def show
+    @involvement_event = InvolvementEvent.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.js {render :layout => false}
+    end
+  end
 
 end

@@ -13,7 +13,6 @@ Feature: Manage subjects
     And I follow "Add Subject"
     Then I should see the add subject form
 
-
   # Scenario: A coordinator can add an event for a new subject
   # Scenario: A coordinator can add a subject that can be located in the medical record
   Scenario: A coordinator can add a subject that exists
@@ -65,22 +64,21 @@ Feature: Manage subjects
   Scenario: A coordinator can view the synced/not synced with medical record status
     Given a subject with mrn "90210"
     And subject "90210" is not synced
-    And subject "90210" is consented on study "1248F"
+    And subject "90210" has event "Consented" on study "1248F"
     When I go to the study page for id "1248F"
     Then I should see that subject "90210" is not synced
-    
+  
   @focus
-  Scenario: A coordinator can see the add evebt form
+  Scenario: A coordinator can see the add event form
     Given a subject with mrn "90210"
-    And subject "90210" is consented on study "1248F"
+    And subject "90210" has event "Consented" on study "1248F"
     When I go to the study page for id "1248F"
-    And I follow "Add Event" for "90210"
+    And I follow "Add Event" for "90210" on the "Subjects" tab
     Then I should see the add event form
 
-  @focus
   Scenario: A coordinator can add an event for an existing subject
     Given a subject with mrn "90210"
-    And subject "90210" is consented on study "1248F"
+    And subject "90210" has event "Consented" on study "1248F"
     When I go to the study page for id "1248F"
     And I follow "Add Event" for "90210"
     And I select "Contact - Phone" from "Event Type"
@@ -88,19 +86,43 @@ Feature: Manage subjects
     And I press "Submit"
     Then I should be on the study page for id "1248F"
     And I should see "Added"
+    And I should see "Contact - Phone"
+    And subject "90210" should have 2 events on study "1248F"
 
+  @focus
   Scenario: A coordinator can remove an event for an existing subject
-    Given
-    When
-    Then
-
+    Given a subject with mrn "90210"
+    And subject "90210" has event "Consented" on study "1248F"
+    And subject "90210" has event "Randomization" on study "1248F"
+    When I go to the study page for id "1248F"
+    Then I should see "Consented"
+    And I should see "Randomization"
+    When I follow "Consented" for "90210" on the "Events" tab
+    And I follow "Remove this event"
+    Then subject "90210" should have 1 event on study "1248F"
+  
   Scenario: A coordinator can remove a subject by deleting all involvement events
-    Pending
+    Given a subject with mrn "90210"
+    And subject "90210" has event "Consented" on study "1248F"
+    And subject "90210" has event "Randomization" on study "1248F"
+    When I go to the study page for id "1248F"
+    And I follow "Randomization" for "90210"
+    And I follow "Remove this event"
+    And I follow "Consented" for "90210"
+    And I follow "Remove this event"
+    Then subject "90210" should not be involved with study "1248F"
 
-  Scenario: A coordinator can view the event history on a subject
-    Given
-    When
-    Then
+  Scenario: A coordinator can view the event history on a subject, only on studies they have access to
+    Given a study "Vitamin F and fatigue" with id "F8910" and status "Approved"
+    And a study "Vitamin M and materialism" with id "58008" and status "Approved"
+    And "pi" has access to study id "1248F"
+    And a subject with mrn "90210" named "Bo" "Tannik"
+    And subject "90210" has event "Consented" on study "1248F"
+    And subject "90210" has event "Randomization" on study "F8910"
+    And subject "90210" has event "Consented" on study "58008"
+    When I go to the study page for id "1248F"
+    And I follow "Bo Tannik"
+    Then I should see 2 events
 
   Scenario: A coordinator can view data on a user they entered (user data) that has been synced with medical record (EDW)
     Given
