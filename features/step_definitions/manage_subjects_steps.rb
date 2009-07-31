@@ -35,6 +35,10 @@ Then /^subject "([^\"]*)" should have (\d+) events? on study "([^\"]*)"$/ do |mr
   Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number)).involvement_events.should have(x.to_i).involvement_events
 end
 
+Then /^subject "([^\"]*)" should not be involved with study "([^\"]*)"$/ do |mrn, irb_number|
+  Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number)).should be_blank
+end
+
 When /^I follow "([^\"]*)" for "([^\"]*)" on the "([^\"]*)" tab$/ do |link, mrn, selector|
   within("\##{selector.downcase}") do
     within("\.subject_#{Subject.find_by_mrn(mrn).id}") do

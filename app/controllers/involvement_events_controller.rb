@@ -43,5 +43,12 @@ class InvolvementEventsController < ApplicationController
       format.js {render :layout => false}
     end
   end
+  
+  def destroy
+    @involvement_event = InvolvementEvent.find(params[:id])
+    destination = study_path(@involvement_event.involvement.study, :anchor => "events")
+    @involvement_event.destroy
+    redirect_to destination
+  end
 
 end

@@ -25,6 +25,9 @@ class InvolvementEvent < ActiveRecord::Base
   # Mixins
   has_paper_trail
   
+  # Callbacks
+  before_destroy :destroy_childless_parent
+  
   # Public instance methods
   def term
     event_type.term
@@ -64,6 +67,15 @@ class InvolvementEvent < ActiveRecord::Base
       raise ActiveRecord::Rollback if involvement.nil?
       # InvolvementEvent - create the event
       involvement.involvement_events.create(params[:involvement_event])
+    end
+  end
+  
+  private
+  
+  # Private instance methods
+  def destroy_childless_parent
+    if involvement.involvement_events == [self]
+      involvement.destroy
     end
   end
 end
