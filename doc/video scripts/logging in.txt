@@ -2,7 +2,7 @@ Time: approximately 3 min.
 
 Clinical Subject Registration made eASY (Northwestern Oncology Trial Information System)
 
-Hi, and welcome to eNOTIS, a secure, web-based system for Northwestern clinical researchers to track and report accrual information. My name is [], and I'll be walking you through eNOTIS.
+Hi, and welcome to eNOTIS, a secure, web-based system for Northwestern's clinical researchers to track and report accrual information. My name is [], and I'll be walking you through eNOTIS.
 
 # Basic Concepts
 
