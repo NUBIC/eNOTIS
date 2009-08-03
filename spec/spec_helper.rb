@@ -5,6 +5,9 @@ require File.dirname(__FILE__) + "/../config/environment" unless defined?(RAILS_
 require 'spec/autorun'
 require 'spec/rails'
 
+# import dictionary terms
+system("rake dictionary_terms:import")
+
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
   # lines, delete config/database.yml and disable :active_record

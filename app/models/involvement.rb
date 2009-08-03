@@ -14,6 +14,9 @@ class Involvement < ActiveRecord::Base
   belongs_to :gender_type, :class_name => "DictionaryTerm", :foreign_key => :gender_type_id
   belongs_to :ethnicity_type, :class_name => "DictionaryTerm", :foreign_key => :ethnicity_type_id
   has_many :races
+  
+  # Named scope
+  named_scope :with_coordinator, lambda {|user_id| { :include => {:study => :coordinators}, :conditions => ['coordinators.user_id = ?', user_id ]}}
 
   # Mixins
   has_paper_trail

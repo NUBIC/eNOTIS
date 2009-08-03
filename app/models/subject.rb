@@ -10,6 +10,7 @@ class Subject < ActiveRecord::Base
   # Associations
   has_many :involvements
   has_many :studies, :through => :involvements
+  has_many :involvement_events, :through => :involvements
 
   # Mixins
   has_paper_trail
