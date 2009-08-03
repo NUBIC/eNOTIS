@@ -33,6 +33,7 @@ describe DictionaryTerm do
 
   describe "common usage interface" do
     before(:each) do
+      # We are now pre-populating the DictionaryTerms in spec_helper.rb in order to support other specs that use factories.
       @x = DictionaryTerm.count
       @t = DictionaryTerm.create(@valid_attributes)
       DictionaryTerm.find(:all).size.should == (@x+1)
