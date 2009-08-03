@@ -8,7 +8,8 @@ EDW_TO_NOTIS = {
 'state_nm' => 'state',
 'zip_code'   => 'zip',
 'home_phone_txt' => 'phone_number',
-'birth_dts'=>'birth_date'
+'birth_dts'=>'birth_date',
+'mrd_pt_id'=>'mrn'
 
 }
 
@@ -17,5 +18,5 @@ NOTIS_TO_EDW = {
  'last_name' => 'last_nm',
  'mrn' => 'mrd_pt_id',
  'birth_date'=>'birth_dts',
- 'netid' => 'netid'
+ 'netid' => 'net_id'
 }

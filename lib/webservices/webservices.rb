@@ -1,5 +1,5 @@
 module WebServices
-# Need to implement some solid hierarchy of plugins
+# TODO Need to implement some solid hierarchy of plugins
  
   Dir["lib/webservices/plugins/*.rb"].each {|file| require file}
 
@@ -22,6 +22,8 @@ module WebServices
         private
 
         def local_only(*args)
+           #This only calls the local db
+           #technically, should never be used
            old_find(*sanitize_option(*args))
         end
 
@@ -38,6 +40,9 @@ module WebServices
 
         
         def global_search(*args)
+          #This method searches both the local db and webservice
+          #only hitting the latter if the former is either non existant
+          # or outdated
           service_result = nil
           local_result = old_find(*sanitize_option(*args))
           if args.first == :first
@@ -82,21 +87,25 @@ module WebServices
 
 
         def service_search(*args)
-          local_args = args.clone
-          options = local_args.extract_options!
+          #This method searches all plugins, for a method name that
+          #contains all the conditions provided e.g condition last_name
+          #and last_name would match method find_by_fist_name_last_name
+          options = args.clone.extract_options!
           conditions = convert_conditions_to_hash(options[:conditions])
           keys = conditions.keys
-            get_plugins.each do |plugin|
-	      meth = plugin.public_methods.detect{|method_name| keys.map{|x| method_name.include?(x.to_s.strip)}.uniq == [true]}
-              if meth
-                return plugin.send(meth,conditions.merge!(get_service_opts(options)))
-              end
+          get_plugins.each do |plugin|
+	    meth = plugin.public_methods.detect{|method_name| keys.map{|x| method_name.include?(x.to_s.strip)}.uniq == [true]}
+            if meth
+              return plugin.send(meth,conditions.merge!(get_service_opts(options)))
             end
-         raise "No Method Found"
-         return nil     
+          end
+          raise "No Method Found"
         end
 
         def convert_conditions_to_hash(conditions)
+            #TODO this method needs to be cleaned
+            #This method is used to convert the conditions
+            #provided into a hash that is passed to webservies
             result={}
             if conditions.instance_of?(Hash)
               return conditions
@@ -111,15 +120,17 @@ module WebServices
             end
             return result
         end
+
         def get_service_opts(options)
           #This method adds additional parameters to the conditions hash that are not part of the query
           #Right now this is only being used for net-id
           options[:service_opts] || {}
         end
+
         def sanitize_option(*args)
           #this method removes all webservice specific options 
           #before passing args to the old_find
-          options = args.clone.extract_options!
+          options = args.clone.extract_options!.clone
           options.delete(:span)
           options.delete(:service_opts)
           return args.first,options
