@@ -106,18 +106,19 @@ Feature: Manage subjects
     And I follow "Consented" for "90210" on the "Events" tab
     And I follow "Remove this event"
     Then subject "90210" should not be involved with study "1248E"
-
+  @focus
   Scenario: A coordinator can view the event history on a subject, but only that for events on studies they have access to
-    # Given a study "Vitamin F and fatigue" with id "F8910" and status "Approved"
-    # And a study "Vitamin M and materialism" with id "58008" and status "Approved"
-    # And "pi" has access to study id "1248E"
-    # And a subject with mrn "90210" named "Bo" "Tannik"
-    # And subject "90210" has event "Consented" on study "1248E"
-    # And subject "90210" has event "Randomization" on study "F8910"
-    # And subject "90210" has event "Consented" on study "58008"
-    # When I go to the study page for id "1248E"
-    # And I follow "Bo Tannik"
-    # Then I should see 2 events
+    Given the study "1248E" has the following subjects
+      | first_name | last_name | mrn   |
+      | Bo         | Tannik    | 90210 |
+    And a study "Vitamin M and materialism" with id "1248M" and status "Approved"
+    And subject "90210" has event "Consented" on study "1248E"
+    And subject "90210" has event "Randomization" on study "1248E"
+    And subject "90210" has event "Consented" on study "1248M"
+    When I go to the study page for id "1248E"
+    And I follow "Bo Tannik"
+    Then I should see events for "Vitamin E and exertion"
+    And I should not see "Vitamin M and materialism"
 
   Scenario: A coordinator can view data on a user they entered (user data) that has been synced with medical record (EDW)
     Given

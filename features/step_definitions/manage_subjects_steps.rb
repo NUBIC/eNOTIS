@@ -23,6 +23,7 @@ Given /^subject "([^\"]*)" has event "([^\"]*)" on study "([^\"]*)"$/ do |mrn, t
 end
 
 Then /^I should see that subject "([^\"]*)" is not synced$/ do |mrn|
+  # TODO - this matcher doesn't actually scope within the withins - http://github.com/brynary/webrat/issues#issue/8 - yoon
   within("\#subjects") do
     within("\.subject_#{Subject.find_by_mrn(mrn).id}") do
       response.should have_tag("a") do |a|
@@ -56,7 +57,18 @@ Then /^I should see the add event form$/ do
   end
 end
 
+Then /^I should( not)? see events for "([^\"]*)"$/ do |bool, name|
+  # TODO - this matcher doesn't actually scope within the withins - http://github.com/brynary/webrat/issues#issue/8 - yoon
+  within("\#events") do |div|
+    if bool == "not"
+      div.should_not contain(name)
+    else
+      div.should contain(name)
+    end
 
+  end
+  
+end
 
 # Given /^the following subject_registrations:$/ do |subject_registrations|
 #   SubjectRegistration.create!(subject_registrations.hashes)

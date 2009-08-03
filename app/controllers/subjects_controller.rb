@@ -23,7 +23,10 @@ class SubjectsController < ApplicationController
 
   def show
     @subject = Subject.find(params[:id])
-    @involvements = @subject.involvements#Involvement.find_all_by_subject_id(@subject.id)
+    # restrict showing involvements and involvement events to those that the current user manages
+    # TODO - manage this better - yoon
+    @involvements = @subject.involvements.with_coordinator(current_user.id)#Involvement.find_all_by_subject_id(@subject.id)
+    @involvement_events = @involvements.map(&:involvement_events).flatten
     respond_to do |format|
       format.html
       format.js {render :layout => false}
