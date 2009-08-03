@@ -129,13 +129,20 @@ Feature: Manage subjects
     Given
     When
     Then
-
+  @focus
   Scenario: A coordinator can search for a subject on their studies (with mrn, name)
-    Given
-    When
-    Then
-
-  Scenario: A coordinator can search but cannot find a subject *not* on their studies 
-    Given
-    When
-    Then
+  # Scenario: A coordinator can search but cannot find a subject *not* on their studies 
+    Given a study "Vitamin F and fatigue" with id "1248F" and status "Approved"
+    And the study "1248E" has the following subjects
+      | first_name | last_name |
+      | Marge      | Innovera  |
+      | Picop N    | Droppov   |
+      | Rex        | Karrs     |
+    And the study "1248F" has the following subjects
+      | first_name | last_name |
+      | Buck       | Stoppsier |
+    When I go to the search page
+    And I search for "pp"
+    Then I should see "1 subject found"
+    And I should see "Picop N Droppov"
+    And I should not see "Buck Stoppsier"
