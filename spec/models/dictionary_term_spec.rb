@@ -33,8 +33,9 @@ describe DictionaryTerm do
 
   describe "common usage interface" do
     before(:each) do
+      @x = DictionaryTerm.count
       @t = DictionaryTerm.create(@valid_attributes)
-      DictionaryTerm.find(:all).size.should == 1
+      DictionaryTerm.find(:all).size.should == (@x+1)
     end
       
     it "returns the 'user friendly' value when turned into a string" do
