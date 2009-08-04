@@ -120,16 +120,14 @@ Feature: Manage subjects
     Then I should see events for "Vitamin E and exertion"
     And I should not see "Vitamin M and materialism"
 
-  Scenario: A coordinator can view data on a user they entered (user data) that has been synced with medical record (EDW)
-    Given
-    When
-    Then
+  # Won't do per chat with David/Brian on 8/4 (is kinda irrelevant - there's not data that we show anymore)- yoon
+  # Scenario: A coordinator can view data on a user they entered (user data) that has been synced with medical record (EDW)
 
   Scenario: A coordinator can upload a subject list from a file to the study
     Given
     When
     Then
-  @focus
+
   Scenario: A coordinator can search for a subject on their studies (with mrn, name)
   # Scenario: A coordinator can search but cannot find a subject *not* on their studies 
     Given a study "Vitamin F and fatigue" with id "1248F" and status "Approved"
