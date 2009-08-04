@@ -1,16 +1,27 @@
-# developer machine will log in as enotis-deployer (ssh keys) to server (either enotis-staging or enotis.nubic.northwestern.edu)
-# server will log in as build (ssh-keys) and check out code from code.nubic.northwestern.edu/git/enotis.git
+# developer machine will log in with netid to server (either enotis-staging or enotis.nubic.northwestern.edu)
+# developer machine will also log in with netid to code.nubic.northwestern.edu to do a git ls-remote to resolve branch/tag to commit hash
+# server will log in with the same netid and check out from code.nubic.northwestern.edu/git/enotis.git
+
+# add the following lines to your ~/.ssh/config, replacing xyz123 with your netid
+# Host enotis-staging*
+# Hostname enotis-staging.nubic.northwestern.edu
+# User xyz123
+# 
+# Host code*
+# Hostname code.bioinformatics.northwestern.edu
+# User xyz123
 
 set :application, "enotis"
 
 # User
-set :user, "enotis-deployer"
+# set :user, "enotis-deployer"
 set :use_sudo, false
+ssh_options[:forward_agent] = true
 
 # Version control
 default_run_options[:pty] = true # to get the passphrase prompt from git
 set :scm, "git"
-set :repository, "ssh://myo628@code.bioinformatics.northwestern.edu/git/enotis.git"
+set :repository, "ssh://code.bioinformatics.northwestern.edu/git/enotis.git"
 set :branch, "master"
 set :deploy_to, "/var/www/apps/enotis"
 set :deploy_via, :remote_cache
