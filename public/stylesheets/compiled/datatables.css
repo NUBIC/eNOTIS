@@ -113,9 +113,10 @@ a img {
 .dataTables_info {
   width: 60%;
   float: left;
-  margin-top: 0.25em; }
+  margin-top: 0.25em;
+  padding-left: 0.6em; }
 
-/* line 54, ../../../app/stylesheets/datatables.sass */
+/* line 55, ../../../app/stylesheets/datatables.sass */
 .dataTables_paginate {
   width: 44px;
   *: width 50px;
@@ -123,36 +124,36 @@ a img {
   text-align: right;
   margin-top: 0.25em; }
 
-/* line 62, ../../../app/stylesheets/datatables.sass */
+/* line 63, ../../../app/stylesheets/datatables.sass */
 .paginate_disabled_previous, .paginate_enabled_previous, .paginate_disabled_next, .paginate_enabled_next {
   height: 19px;
   width: 19px;
   margin-left: 3px;
   float: left; }
 
-/* line 68, ../../../app/stylesheets/datatables.sass */
+/* line 69, ../../../app/stylesheets/datatables.sass */
 .paginate_disabled_previous {
   background-image: url('/images/jquery-datatables/back_disabled.jpg'); }
 
-/* line 71, ../../../app/stylesheets/datatables.sass */
+/* line 72, ../../../app/stylesheets/datatables.sass */
 .paginate_enabled_previous {
   background-image: url('/images/jquery-datatables/back_enabled.jpg'); }
 
-/* line 74, ../../../app/stylesheets/datatables.sass */
+/* line 75, ../../../app/stylesheets/datatables.sass */
 .paginate_disabled_next {
   background-image: url('/images/jquery-datatables/forward_disabled.jpg'); }
 
-/* line 77, ../../../app/stylesheets/datatables.sass */
+/* line 78, ../../../app/stylesheets/datatables.sass */
 .paginate_enabled_next {
   background-image: url('/images/jquery-datatables/forward_enabled.jpg'); }
 
-/* line 81, ../../../app/stylesheets/datatables.sass */
+/* line 82, ../../../app/stylesheets/datatables.sass */
 table.display {
   margin: 0 auto;
   width: 100% !important;
   clear: both; }
 
-/* line 86, ../../../app/stylesheets/datatables.sass */
+/* line 87, ../../../app/stylesheets/datatables.sass */
 table.display thead th {
   padding: 3px 10px;
   border-bottom: 1px solid black;
@@ -160,65 +161,65 @@ table.display thead th {
   cursor: pointer;
   *: cursor hand; }
 
-/* line 93, ../../../app/stylesheets/datatables.sass */
+/* line 94, ../../../app/stylesheets/datatables.sass */
 table.display tfoot th {
   padding: 3px 10px;
   border-top: 1px solid black;
   font-weight: bold; }
 
-/* line 98, ../../../app/stylesheets/datatables.sass */
+/* line 99, ../../../app/stylesheets/datatables.sass */
 table.display tr.heading2 td {
   border-bottom: 1px solid #aaa; }
 
-/* line 101, ../../../app/stylesheets/datatables.sass */
+/* line 102, ../../../app/stylesheets/datatables.sass */
 table.display td {
   padding: 3px 10px; }
 
-/* line 104, ../../../app/stylesheets/datatables.sass */
+/* line 105, ../../../app/stylesheets/datatables.sass */
 table.display td.center {
   text-align: center; }
 
-/* line 108, ../../../app/stylesheets/datatables.sass */
+/* line 109, ../../../app/stylesheets/datatables.sass */
 .sorting_asc {
   background: url('/images/jquery-datatables/sort_asc.jpg') no-repeat center right;
   background-color: white;
   border: 1px solid #bdbdbd; }
 
-/* line 113, ../../../app/stylesheets/datatables.sass */
+/* line 114, ../../../app/stylesheets/datatables.sass */
 .sorting_desc {
   background: url('/images/jquery-datatables/sort_desc.jpg') no-repeat center right;
   background-color: white;
   border: 1px solid #bdbdbd; }
 
-/* line 118, ../../../app/stylesheets/datatables.sass */
+/* line 119, ../../../app/stylesheets/datatables.sass */
 .sorting {
   background: url('/images/jquery-datatables/sort_both.jpg') no-repeat center right;
   background-color: #dae8e4;
   border: 1px solid #bdbdbd; }
 
-/* line 124, ../../../app/stylesheets/datatables.sass */
+/* line 125, ../../../app/stylesheets/datatables.sass */
 tr.odd {
   background-color: white; }
 
-/* line 127, ../../../app/stylesheets/datatables.sass */
+/* line 128, ../../../app/stylesheets/datatables.sass */
 tr.even {
   background-color: lime; }
 
-/* line 131, ../../../app/stylesheets/datatables.sass */
+/* line 132, ../../../app/stylesheets/datatables.sass */
 .top, .bottom {
   padding: 15px;
   background-color: #F00;
   border: 1px solid #CCCCCC; }
 
-/* line 136, ../../../app/stylesheets/datatables.sass */
+/* line 137, ../../../app/stylesheets/datatables.sass */
 .top .dataTables_info {
   float: none; }
 
-/* line 138, ../../../app/stylesheets/datatables.sass */
+/* line 139, ../../../app/stylesheets/datatables.sass */
 .clear {
   clear: both; }
 
-/* line 142, ../../../app/stylesheets/datatables.sass */
+/* line 143, ../../../app/stylesheets/datatables.sass */
 tr.odd td.sorting_1 {
   background-color: #ffffdf; }
 
@@ -226,6 +227,6 @@ tr.odd td.sorting_1 {
 
 
 
-/* line 150, ../../../app/stylesheets/datatables.sass */
+/* line 151, ../../../app/stylesheets/datatables.sass */
 tr.even td.sorting_1 {
   background-color: #fff6bf; }
