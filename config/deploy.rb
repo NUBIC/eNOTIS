@@ -69,8 +69,9 @@ after "deploy", "gems:install"
 namespace :gems do
   desc "Install gems"
   task :install, :roles => :app do
-    # always use sudo
-    run "cd #{current_path}/ && sudo rake RAILS_ENV=#{rails_env} gems:install"
+    # always use sudo to rake gems
+    # sudo helper string substitution per http://github.com/jamis/capistrano/commit/b45290e6ae3acce465ab5b7b8a82b7ad73a022e3
+    run "cd #{current_path}/ && #{sudo} rake RAILS_ENV=#{rails_env} gems:install"
   end
   desc "Uninstall gems"
   task :cleanup, :roles => :app do
