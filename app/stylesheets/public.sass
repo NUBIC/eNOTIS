@@ -5,7 +5,7 @@
 // basic top, middle, bottom block layout
 body
   #header
-    +column(24,true)
+    +column(48,true)
     +squeeze
     :margin-top= !blueprint_grid_outer_width / 2
     
@@ -19,26 +19,26 @@ body
     
 
   #main
-    +column(24,true)
+    +column(48,true)
     +squeeze
 
     #left_primary
-      +column(16)
+      +column(32)
 
     #right_sidebar
-      +column(8,true)
+      +column(16,true)
 
   #footer 
-    +column(26,true)
+    +column(50,true)
 
 
-#enotis_description 
-  +primary_text
+#enotis_description
+  :font-size 1.3em
   +squeeze(1)
   +squish(1)
 
 #system_status
-  +column(6)
+  +column(12)
   +rounded_box( !secondary_data_bg_color )
 
 #loginbox
@@ -48,11 +48,10 @@ body
     +button-button("right")
 
 #training
-  +column(16)
+  +column(32)
   :margin-top= !blueprint_grid_outer_width
   
   .heading
-    +primary_text
     +rounded_top_box( !secondary_data_bg_color )
 
   .topic
@@ -95,7 +94,6 @@ body
   
   
 
-  
 
     
 

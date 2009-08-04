@@ -1,61 +1,26 @@
-/ 
-/ // General page setup
-/ #dt_example 
-/  :font 80%/1.45em "Lucida Grande", Verdana, Arial, Helvetica, sans-serif
-/  :margin 0
-/  :padding 0
-/  :color #333
-/  :background-color #fff
-/ #dt_example #container 
-/  :width 800px
-/  :margin 30px auto
-/  :padding 0
-/ #dt_example #footer 
-/  :margin 50px auto 0 auto
-/  :padding 0
-/ #dt_example #demo 
-/  :margin 30px auto 0 auto
-/ #dt_example .big 
-/  :font-size 1.3em
-/  :font-weight bold
-/  :line-height 1.6em
-/  :color #4E6CA3
-/ #dt_example .spacer 
-/  :height 20px
-/  :clear both
-/ #dt_example .clear 
-/  :clear both
-/ #dt_example pre 
-/  :padding 15px
-/  :background-color #F5F5F5
-/  :border 1px solid #CCCCCC
-/ #dt_example h1 
-/  :margin-top 2em
-/  :font-size 1.3em
-/  :font-weight normal
-/  :line-height 1.6em
-/  :color #4E6CA3
-/  :border-bottom 1px solid #B0BED9
-/  :clear both
-/ #dt_example h2 
-/  :font-size 1.2em
-/  :font-weight normal
-/  :line-height 1.6em
-/  :color #4E6CA3
-/  :clear both
-/ #dt_example a 
-/  :color #0063DC
-/  :text-decoration none
-/ #dt_example a:hover 
-/  :text-decoration underline
-/ #dt_example ul 
-/  :color #B0BED9
+@import base.sass
+
+
+// Some table specfic colors
+!even_sorting_bg_color = !notice_bg_color
+!odd_sorting_bg_color = !notice_bg_color + 32
+!odd_bg_color = #fff
+!even_bg_color = #0f0
+!sorted_bg_color = #fff
+!sorting_bg_color = !secondary_data_bg_color
+!sort_border_color = #bdbdbd
+
 // DataTables features
-.dataTables_wrapper 
+.dataTables_wrapper
   :position relative
   :min-height 302px
   :_height 302px
   :clear both
+  :border= 1px solid !primary_data_bg_color
+  :border-top 0px
+  :padding-top 0.5em
+  :background-color= !secondary_data_bg_color
+
 .dataTables_processing 
   :position absolute
   :top 0px
@@ -67,35 +32,48 @@
   :color #999
   :font-size 11px
   :padding 2px 0
+
 .dataTables_length 
   :width 40%
   :float right
   :text-align right
+  :padding-right 0.5em
+
 .dataTables_filter 
   :width 50%
   :float left
   :text-align left
   :padding-left .75em
+  :padding-bottom 0.5em
+
 .dataTables_info 
   :width 60%
   :float left
+  :margin-top 0.25em
+
 .dataTables_paginate 
   :width 44px
   :* width 50px
   :float right
   :text-align right
+  :margin-top 0.25em
+
 // Pagination nested
 .paginate_disabled_previous, .paginate_enabled_previous, .paginate_disabled_next, .paginate_enabled_next 
   :height 19px
   :width 19px
   :margin-left 3px
   :float left
+
 .paginate_disabled_previous 
   :background-image url('/images/jquery-datatables/back_disabled.jpg')
+
 .paginate_enabled_previous 
   :background-image url('/images/jquery-datatables/back_enabled.jpg')
+
 .paginate_disabled_next 
   :background-image url('/images/jquery-datatables/forward_disabled.jpg')
+
 .paginate_enabled_next 
   :background-image url('/images/jquery-datatables/forward_enabled.jpg')
 
@@ -104,43 +82,57 @@ table.display
   :margin 0 auto
   :width 100% !important
   :clear both
+
 table.display thead th 
   :padding 3px 10px
   :border-bottom 1px solid black
   :font-weight bold
   :cursor pointer
   :* cursor hand
+
 table.display tfoot th 
   :padding 3px 10px
   :border-top 1px solid black
   :font-weight bold
+
 table.display tr.heading2 td 
   :border-bottom 1px solid #aaa
+
 table.display td 
   :padding 3px 10px
+
 table.display td.center 
   :text-align center
 
 // DataTables sorting
-.sorting_asc 
+.sorting_asc
   :background url('/images/jquery-datatables/sort_asc.jpg') no-repeat center right
-.sorting_desc 
+  :background-color= !sorted_bg_color
+  :border= 1px solid !sort_border_color
+
+.sorting_desc
   :background url('/images/jquery-datatables/sort_desc.jpg') no-repeat center right
+  :background-color= !sorted_bg_color  
+  :border= 1px solid !sort_border_color
+
 .sorting 
   :background url('/images/jquery-datatables/sort_both.jpg') no-repeat center right
-
+  :background-color= !sorting_bg_color
+  :border= 1px solid !sort_border_color
+  
 // DataTables row classes
-
 tr.odd 
-  :background-color #ECFFE5
+  :background-color= !odd_bg_color
+
 tr.even 
-  :background-color white
+  :background-color= !even_bg_color
 
 // Misc
 .top, .bottom 
   :padding 15px
-  :background-color #F5F5F5
+  :background-color #F00
   :border 1px solid #CCCCCC
+
 .top .dataTables_info 
   :float none
 .clear 
@@ -148,13 +140,16 @@ tr.even
 
 // Sorting classes for columns
 tr.odd td.sorting_1 
-  :background-color #D9FFCC
+  :background-color= !odd_sorting_bg_color
+
 / tr.odd td.sorting_2
 /   :background-color #DADCFF
 / tr.odd td.sorting_3 
 /   :background-color #E0E2FF
+
 tr.even td.sorting_1 
-  :background-color #F9FFE5
+  :background-color= !even_sorting_bg_color
+
 / tr.even td.sorting_2
 /   :background-color #F2F3FF
 / tr.even td.sorting_3 
