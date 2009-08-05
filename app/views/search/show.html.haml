@@ -18,6 +18,8 @@
     #study_results
       .heading= "#{pluralize(@studies.size, "study")} found"
       = render :partial => 'partials/study_table'
+  %br
+  %br
   - if @subjects
     #subject_results
       .heading= "#{pluralize(@subjects.size, "subject")} found"
