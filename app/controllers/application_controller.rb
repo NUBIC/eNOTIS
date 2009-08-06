@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
   # Authentication used for all but one (Authentication) controller, enables before_filter :user_must_be_logged_in
   include ControllerAuthentication
   
+  # Exception Notifier
+  include ExceptionNotifiable
+  ExceptionNotifier.exception_recipients = %w(eNOTISsupport@northwestern.edu)
+    
   # Application version
   APP_VERSION = "0.0.1a"
   
