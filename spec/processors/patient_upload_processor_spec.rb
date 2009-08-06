@@ -14,12 +14,12 @@ describe PatientUploadProcessor do
     @study_upload = StudyUpload.create({:study_id=>@study.id})
     end
     it "should process a correct mrn and return values" do 
-      #good_mrn = File.open(@dir + 'good_mrn.csv')
-      #@study_upload.upload = good_mrn
-      #good_mrn.close
-      #@study_upload.save
-      #@processor.on_message(@study_upload.id.to_s)
-      #Involvements.find_by_study_id(@study.id).size.should == 0
+      good_mrn = File.open(@dir + 'good_mrn.csv')
+      @study_upload.upload = good_mrn
+      good_mrn.close
+      @study_upload.save
+      @processor.on_message(@study_upload.id.to_s)
+      Involvements.find_by_study_id(@study.id).size.should == 0
     end
 
     it "should fail to process an entry with an incorrect mrn" do

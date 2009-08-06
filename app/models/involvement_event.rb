@@ -42,8 +42,7 @@ class InvolvementEvent < ActiveRecord::Base
   def self.sanity_check(params)
     errors = []
     errors << "either MRN or First Name, Last Name and Date of Birth are required" if params[:mrn].blank? and (params[:first_name].blank? or params[:last_name].blank? or Chronic.parse(params[:birth_date]).nil?)
-    [ [params[:irb_number], "Study is required, please visit the appropriate study and try again"],
-      [params[:race], "Race is required"],
+    [ [params[:race], "Race is required"],
       [params[:gender], "Gender is required"],
       [params[:ethnicity], "Ethnicity is required"],
       [params[:event_type], "Event Type is required"],
@@ -62,11 +61,13 @@ class InvolvementEvent < ActiveRecord::Base
         subject = Subject.find_or_create(params[:subject])
         raise ActiveRecord::Rollback if study.nil? or subject.nil?
         # Involvement - create an involvement
-        involvement = Involvement.create(params[:involvement].merge({:subject_id => subject.id, :study_id => study.id}))
+        involvement = Involvement.update_or_create(params[:involvement].merge({:subject_id => subject.id, :study_id => study.id}))
       end
       raise ActiveRecord::Rollback if involvement.nil?
       # InvolvementEvent - create the event
-      involvement.involvement_events.create(params[:involvement_event])
+      params[:involvement_events].each do |event|
+        involvement.involvement_events.create(event)
+      end
     end
   end
   

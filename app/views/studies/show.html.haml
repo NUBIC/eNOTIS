@@ -74,7 +74,7 @@
           %th Note
           %th Date
         %tbody
-          - @study_events.each do |event|
+          - @study_events.all.each do |event|
             %tr{:class => "subject_#{event.involvement.subject.id}"}
               %td= event.involvement.subject.name
               %td

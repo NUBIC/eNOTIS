@@ -51,9 +51,9 @@ end
 
 Then /^I should see the add event form$/ do
   response.should have_tag("form[action=?]", involvement_events_path) do
-    with_tag("select[name=?]", "involvement_event[event_type_id]")
-    with_tag("input[name=?]", "involvement_event[occured_at]")
-    with_tag("input[name=?]", "involvement_event[note]")
+    with_tag("select[name=?]", "involvement_events[][event_type_id]")
+    with_tag("input[name=?]", "involvement_events[][occured_at]")
+    with_tag("input[name=?]", "involvement_events[][note]")
   end
 end
 
@@ -69,6 +69,14 @@ Then /^I should( not)? see events for "([^\"]*)"$/ do |bool, name|
   end
   
 end
+
+ When /^I upload a file with valid data for 3 subjects$/ do  
+   attach_file(:file, File.join(RAILS_ROOT, 'features', 'upload_files', 'valid_upload.csv'))  
+   click_button "Upload"  
+ end
+
+
+
 
 # Given /^the following subject_registrations:$/ do |subject_registrations|
 #   SubjectRegistration.create!(subject_registrations.hashes)

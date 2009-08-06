@@ -35,12 +35,12 @@
   - else
     = hidden_field_tag("subject[id]", @subject.id)
   %p
-    = label_tag('involvement_event[event_type_id]','Event Type')
-    = select_tag('involvement_event[event_type_id]',options_for_select(@events.map{|event|[event.term,event.id]}))
+    = label_tag('involvement_events[][event_type_id]','Event Type')
+    = select_tag('involvement_events[][event_type_id]',options_for_select(@events.map{|event|[event.term,event.id]}))
   %p
-    = label_tag('involvement_event[note]', 'Note')
-    = text_field_tag('involvement_event[note]')
+    = label_tag('involvement_events[][note]', 'Note')
+    = text_field_tag('involvement_events[][note]')
   %p
-    = label_tag('involvement_event[occured_at]','Event Date')
-    = text_field_tag('involvement_event[occured_at]')
+    = label_tag('involvement_events[][occured_at]','Event Date')
+    = text_field_tag('involvement_events[][occured_at]')
   %p= submit_tag("Submit")

@@ -124,9 +124,11 @@ Feature: Manage subjects
   # Scenario: A coordinator can view data on a user they entered (user data) that has been synced with medical record (EDW)
 
   Scenario: A coordinator can upload a subject list from a file to the study
-    Given
-    When
-    Then
+    When I go to the study page for id "1248E"
+    And I upload a file with valid data for 3 subjects
+    Then I should see "pi"
+    And I should see "Unavailable"
+    And I should see "Still Processing"
 
   Scenario: A coordinator can search for a subject on their studies (with mrn, name)
   # Scenario: A coordinator can search but cannot find a subject *not* on their studies 

@@ -51,8 +51,11 @@ class Subject < ActiveRecord::Base
   def self.find_or_create(params)
     # try to find by mrn first
     if !params[:mrn].blank?
-      subject = Subject.find(:first, :conditions => ["mrn=?", params[:mrn]], :span=>:global)
-      return subject unless subject.blank?
+      subject = Subject.find(:first, :conditions =>{:mrn=>params[:mrn]},:span=>:global,:service_opts=>{:netid=>"test"})
+      if !subject.nil?
+        subject.save
+        return subject
+      end 
     end
     # if we've made it this far, the mrn was blank or the subject wasn't found by mrn
     if !params[:first_name].blank? or !params[:last_name].blank? or !params[:birth_date].blank?

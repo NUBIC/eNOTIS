@@ -66,7 +66,7 @@ class SubjectsController < ApplicationController
     if csv_sanity_check(@study_upload.upload, temp_file)
       @study_upload.save
       publish :patient_upload, @study_upload.id.to_s
-      redirect_to params[:study_id].blank? ? studies_path : study_path(:id => params[:study_id])
+      redirect_to params[:study_id].blank? ? studies_path : study_path(params[:study_id],:anchor=>"imports")
     else
       @study_upload.result = temp_file
       temp_file.close!
@@ -89,7 +89,8 @@ class SubjectsController < ApplicationController
     @validity = true
     FasterCSV.open(temp_file.path, "r+") do |temp_stream|
       FasterCSV.parse(csv, :headers => :first_row, :return_headers => false, :header_converters => :symbol) do |r|
-        errors = validate_subject_params(r)
+        r[:irb_number] = params[:study_id]
+        errors = InvolvementEvent.sanity_check(r)
         temp_stream << r.fields + [errors.join(". ")] unless errors.empty?
         @validity = false if !errors.empty?
       end
