@@ -16,7 +16,12 @@ class ApplicationController < ActionController::Base
   # Exception Notifier
   include ExceptionNotifiable
   ExceptionNotifier.exception_recipients = %w(eNOTISsupport@northwestern.edu)
-    
+  ExceptionNotifier.sender_address = %("eNOTIS"<eNOTISsupport@northwestern.edu>)
+
+  # Uncomment below to get exeception_notifier working in development, see comment at http://agilewebdevelopment.com/plugins/exception_notifier
+  # alias :rescue_action_locally :rescue_action_in_public
+  # local_addresses.clear
+
   # Application version
   APP_VERSION = "0.0.1a"
   
