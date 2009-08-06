@@ -11,10 +11,10 @@
     $.plot($("#accrual"), [e], { grid: {borderWidth: 0}, xaxis: { mode: "time" } });
     });
 #study
-  .vitals
+  #vitals
     %p.irb_number= @study.irb_number
     %p.status= @study.status
-  .details
+  #details
     .description
       %p= "Title: #{@study.title}"
       %p= "Short Title: #{@study.name}"
