@@ -32,6 +32,7 @@ class EdwAdapter
 
       WSLOGGER.debug("Using Report :\r\n #{report}")
       WSLOGGER.debug("Performing search using params :\r\n #{params.to_query}")
+      WSLOGGER.debug("Using query :\r\n #{report_url + "&" + params.to_query}")
       req = Net::HTTP::Get.new(report_url + "&" + params.to_query, {'connection' => 'keep-alive'})
       req.ntlm_auth(config.username, config.password, true)
       # http.set_debug_output $stderr
