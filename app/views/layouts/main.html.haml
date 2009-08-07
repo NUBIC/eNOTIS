@@ -10,9 +10,9 @@
     #container
       #header
         %span.app_name
-          eNOTIS
-        %em.tagline
-          Northwestern University Clinical Subject Registration
+          =image_tag("enotis_logo2.jpg",:alt => "eNOTIS Logo")          
+          %em.tagline
+            Northwestern University Clinical Subject Registration
 
       #current_user_badge
         = "#{current_user.name} (#{current_user.netid})"

@@ -10,9 +10,9 @@
     #container
       #header
         %span.app_name
-          eNOTIS
-        %em.tagline
-          Northwestern University Clinical Subject Registration
+          =image_tag("enotis_logo2.jpg",:alt => "eNOTIS Logo")
+          %em.tagline
+            Northwestern University Clinical Subject Registration
 
       - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
         #flash
