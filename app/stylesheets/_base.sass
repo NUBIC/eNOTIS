@@ -10,6 +10,7 @@
 !font_color = #333
 !quiet_color = !font_color + #333
 !loud_color = !font_color - #222
+!extra_quiet_color = !font_color + #666
  
 !header_color = !font_color - #111
  
@@ -85,6 +86,17 @@
   :-moz-border-radius 3px 3px 0 0
   :padding 0.2em
 
+=rounded_left_box( !bgcolor )
+  :background-color= !bgcolor
+  :-moz-border-radius 3px 0 0 3px
+  :padding 0.2em
+
+=rounded_right_box( !bgcolor )
+  :background-color= !bgcolor
+  :-moz-border-radius 0 3px 3px 0
+  :padding 0.2em
+
+
 =primary_data_text
   :font-size 1.2em
  
@@ -93,6 +105,10 @@
 
 =normal
   :font-weight normal
+
+=super
+  :font-size 1.5em
+  +bold
 
 // adds x number of grids in padding
 // "squeezes" in the "walls" around the text

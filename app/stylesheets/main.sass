@@ -64,7 +64,7 @@ body
         a, a:hover, a:visited, a:active
           :padding-right 0.2em 
       
-    
+  // The main wrapper div for the layout  
   #main
     +column(52,true)
   
@@ -99,15 +99,82 @@ body
     +squish
 
     #vitals
-      +column(10)
-      +append(1)
-      +rounded_box( !primary_data_bg_color )
+      +column(7)
+      +rounded_left_box( !primary_data_bg_color )
+      
+      .irb_number
+        :text-align center      
+        :display block
+        :padding= !blueprint_grid_width      
+        :font-size 1.4em
+        +quiet
 
+      .status
+        :text-align center      
+        :display block
+        :font-size 1.4em
+        :line-height 1em
+        +quiet
+        :background-color= !notice_bg_color
+        :-moz-border-radius 0 0 0 3px
+        :padding-top= !blueprint_grid_width      
+        :padding-bottom= !blueprint_grid_width  
+ 
     #details
-      +column(38,true)
-      +prepend(1)
+      +column(40,true)
+      +rounded_right_box( !secondary_data_bg_color )
+      :padding= !blueprint_grid_margin
+      :padding-left= !blueprint_grid_width
+      
+      .title
+        +super
+
+      .phase, .research_type, .pi, .sc
+        :padding-right 1.5em
+
+      .label
+        +quiet
+        :padding-left 0.2em
+      
+      hr
+        :background-color #ddd
+        :color #ddd
+        
 
     ul.study_tabs
+      :position relative
+      :clear left
+      :margin-top 1em
+      :margin-bottom 1.5em
+      :border-bottom 2px solid
+      :border-color= !secondary_data_border_color
+      :background-color= !nu_page_background
+      :color= !font_color
+      :line-height 1.2em
+      :font-size 1.2em
+      :padding 0 1em
+      li
+        :position relative
+        :list-style none
+        :display inline
+        :border-width 2px 2px 0 2px
+        :-moz-border-radius 2px 2px 0 2px
+        :border-style solid
+        :border-color= !secondary_data_border_color
+        :background-color= !secondary_data_bg_color
+        a, a:hover, a:visited, a:active
+          :color= !font_color
+          :text-decoration none
+          :padding 0 1em .1em 1em
+        a:hover
+          :background-color= !notice_bg_color
+      li.ui-tabs-selected a, li.ui-state-disabled a, li.ui-state-processing a
+        :background-color= !nu_page_background
+        :color= !nu_purple       
+        :cursor text
+    .ui-tabs-hide
+      :display none !important
+
       
 
   

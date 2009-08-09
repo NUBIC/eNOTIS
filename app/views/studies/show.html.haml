@@ -12,17 +12,31 @@
     });
 #study
   #vitals
-    %p.irb_number= @study.irb_number
-    %p.status= @study.status
+    %span.irb_number= @study.irb_number
+    %span.status= @study.status
   #details
     .description
-      %p= "Title: #{@study.title}"
-      %p= "Short Title: #{@study.name}"
-      %p= "Phase: #{@study.phase}"
-      %p= "Research Type: #{@study.research_type}"
+      %span.title
+        %span.label= "Title:"
+        = @study.title
+      %br
+      %span.label= "Short Title:"
+      %span.short_title= @study.name
+      %hr
+      %span.phase
+        %span.label= "Phase:"
+        = @study.phase || "Not Specififed"
+      %span.research_type
+        %span.label= "Research Type:"
+        = @study.research_type
     .study_staff
-      %p= "Princpal Investigator: #{@study.pi_last_name},#{@study.pi_first_name} (#{@study.pi_email})"
-      %p= "Study Coordinator: #{@study.sc_last_name},#{@study.sc_first_name} (#{@study.sc_email})"
+      %span.pi
+        %span.label= "Princpal Investigator:"
+        = "#{@study.pi_last_name},#{@study.pi_first_name} (#{@study.pi_email})"
+      %br
+      %span.sc
+        %span.label= "Study Coordinator:" 
+        = "#{@study.sc_last_name},#{@study.sc_first_name} (#{@study.sc_email})"
   %br.clear
   - if @study.has_coordinator?(current_user)
     %ul.study_tabs
