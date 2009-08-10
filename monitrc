@@ -1,0 +1,50 @@
+## should have permissions 700 and same owner as apache runner daemon on server
+
+#
+# Monit control file
+#
+
+set daemon 120 # Poll at 2-minute intervals
+set logfile syslog facility log_daemon
+set alert yoon@northwestern.edu
+set httpd port 2812 and use address localhost
+    allow localhost   # Allow localhost to connect
+    allow admin:Monit # Allow Basic Auth
+set mailserver ns.northwestern.edu
+
+check system localhost
+   if loadavg (1min) > 4 then alert
+   if loadavg (5min) > 2 then alert
+   if memory usage > 75% then alert
+   if cpu usage (user) > 70% then alert
+   if cpu usage (system) > 30% then alert
+   if cpu usage (wait) > 20% then alert
+
+check process apache 
+   with pidfile "/var/run/httpd.pid"
+   start program = "/usr/sbin/apachectl start" with timeout 60 seconds
+   stop program = "/usr/sbin/apachectl stop"
+   if 2 restarts within 3 cycles then timeout
+   if totalmem > 100 Mb then alert
+   if children > 255 for 5 cycles then stop
+   if cpu usage > 95% for 3 cycles then restart
+   if failed port 80 protocol http then restart
+   group server
+   
+   
+   
+#   depends on httpd.conf, httpd.bin
+
+# check file httpd.conf 
+#     with path /usr/local/apache/conf/httpd.conf
+#     # Reload apache if the httpd.conf file was changed
+#     if changed checksum 
+#        then exec "/usr/local/apache/bin/apachectl graceful"
+# 
+# check file httpd.bin 
+#     with path /usr/local/apache/bin/httpd
+#     # Run /watch/dog in the case that the binary was changed
+#     # and alert in the case that the checksum value recovered
+#     # later
+#     if failed checksum then exec "/watch/dog"
+#        else if recovered then alert
