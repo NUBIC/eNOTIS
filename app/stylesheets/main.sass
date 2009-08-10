@@ -94,7 +94,7 @@ body
 
 
   #study
-    +column(50,true)
+    +column(51,true)
     +prepend(1)
     +squish
 
@@ -107,14 +107,12 @@ body
         :display block
         :padding= !blueprint_grid_width      
         :font-size 1.4em
-        +quiet
 
       .status
         :text-align center      
         :display block
         :font-size 1.4em
         :line-height 1em
-        +quiet
         :background-color= !notice_bg_color
         :-moz-border-radius 0 0 0 3px
         :padding-top= !blueprint_grid_width      
@@ -122,6 +120,7 @@ body
  
     #details
       +column(41,true)
+      :border= 1px solid !primary_data_bg_color 
       +rounded_right_box( !secondary_data_bg_color )
       :padding= !blueprint_grid_margin
       :padding-left= !blueprint_grid_width
@@ -140,12 +139,11 @@ body
         :background-color #ddd
         :color #ddd
         
-
+    //TODO investigate the use of blueprint 'column' grid use for these jquery ui tabs
     ul.study_tabs
       :position relative
       :clear left
-      :margin-top 1em
-      :margin-bottom 1.5em
+      :margin 1em 1em 1.5em 0
       :border-bottom 2px solid
       :border-color= !secondary_data_border_color
       :background-color= !nu_page_background
@@ -174,6 +172,14 @@ body
         :cursor text
     .ui-tabs-hide
       :display none !important
+
+    #overview, #subjects, #documents, #imports
+      :padding 0 0.5em
+      ul
+        li
+          :background-color #f00
+          :padding .25em .5em
+
 
       
 
