@@ -123,7 +123,8 @@ body
       :border= 1px solid !primary_data_bg_color 
       +rounded_right_box( !secondary_data_bg_color )
       :padding= !blueprint_grid_margin
-      :padding-left= !blueprint_grid_width
+      :padding-left= !blueprint_grid_margin * 2
+      :padding-right= !blueprint_grid_margin * 2
       
       .title
         +super
