@@ -44,10 +44,10 @@
       %li.nav= study_tab_to "Study Subjects", "#subjects"
       %li.nav= study_tab_to "Events", "#events"
       %li.nav= study_tab_to "Subject Imports", "#imports"
-    #overview
-      
-      #accrual
 
+
+    #overview
+      #accrual
       #staff_list
         .heading Staff list
         %ul
@@ -55,7 +55,6 @@
             %li
               = "#{c.first_name} #{c.last_name}"
               %br
-
       #study-events
         .heading Recent Events
         %ul
@@ -64,24 +63,25 @@
             -# ">" before = removes extra spacing around this tag
             %dtr{:title => ie.description}>= ie.term
             = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occured_at)} ago"
+
       #subjects
-      - if @study.subjects.empty?
-        = render :partial => "subjects/no_subjects"
-        = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox')
-      - else
-        = "#{pluralize(@study.subjects.size, "subject")} associated with this study"
-        = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox')
-        %table.display
-          %thead
-            %th Name
-            %th 
-            %th
-          %tbody  
-            - @study.subjects.each do |subject|
-              %tr{:class => "subject_#{subject.id}"}
-                %td= render :partial => 'partials/subject', :object => subject
-                %td= subject.synced? ? "Subject Synced" : link_to("Sync", search_subjects_url(:id=>subject.id), :rel => 'facebox')
-                %td= link_to("Add Event", new_involvement_event_path(:subject => subject, :study => @study), :rel => 'facebox')
+        - if @study.subjects.empty?
+          = render :partial => "subjects/no_subjects"
+          = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox')
+        - else
+          = "#{pluralize(@study.subjects.size, "subject")} associated with this study"
+          = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox')
+          %table.display
+            %thead
+              %th Name
+              %th 
+              %th
+            %tbody  
+              - @study.subjects.each do |subject|
+                %tr{:class => "subject_#{subject.id}"}
+                  %td= render :partial => 'partials/subject', :object => subject
+                  %td= subject.synced? ? "Subject Synced" : link_to("Sync", search_subjects_url(:id=>subject.id), :rel => 'facebox')
+                  %td= link_to("Add Event", new_involvement_event_path(:subject => subject, :study => @study), :rel => 'facebox')
     #events
       %h4 Events
       - if @study_events.empty?
