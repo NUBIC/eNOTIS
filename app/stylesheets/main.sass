@@ -184,13 +184,19 @@ body
 
     // Elements on the #overview tab
     #overview
-      +column(50,true)
-      
-      #accural
-        +column(25)
+      +container
+       
+      #accrual
+        +column(30)
+        +rounded_box( !secondary_data_bg_color )
       
       #staff_list
-        +column(25,true)
+        +column(17,true)
+        +prepend(1)
+      
+      #study-events
+        +column(49,true)
+        +squish
 
       
   // On the MySubjects page
