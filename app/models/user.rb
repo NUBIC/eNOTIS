@@ -55,7 +55,12 @@ class User < ActiveRecord::Base
   
   def involvements
     # all subjects on studies that this user has access to. refactored from subjects_controller
-    studies.map(&:involvements).flatten
+    Involvement.with_coordinator(self)
+    # studies.map(&:involvements).flatten
+  end
+  
+  def subjects
+    Subject.on_studies(studies)
   end
   
   # TODO set up a more robust role authorization system -yoon

@@ -18,7 +18,7 @@ class SubjectsController < ApplicationController
 
   # Public instance methods (actions)
   def index
-    @involvements = current_user.involvements
+    @subjects = current_user.subjects
   end
 
   def show

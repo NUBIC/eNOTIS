@@ -3,16 +3,15 @@
     $(document).ready(function(){$(".display").dataTable();});
 
 #subject_list
-  - if @involvements.nil?
-    .heading
-      You are not authorized to see subjects on this study
+  - if @subjects.empty?
+    = render :partial => "subjects/no_subjects"
   - else
     .heading
-      = "My Subjects (#{@involvements.size})"
+      = "My Subjects (#{@subjects.size})"
     %table.display
       %thead
         %th Name
       %tbody  
-        - @involvements.each do |i|
+        - @subjects.each do |subject|
           %tr
-            %td= render :partial => "partials/subject", :object => i.subject
+            %td= render :partial => "partials/subject", :object => subject

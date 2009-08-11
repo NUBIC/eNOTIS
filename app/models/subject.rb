@@ -12,6 +12,9 @@ class Subject < ActiveRecord::Base
   has_many :studies, :through => :involvements
   has_many :involvement_events, :through => :involvements
 
+  # Named scopes
+  named_scope :on_studies, lambda {|study_ids| { :include => :involvements, :conditions => ['involvements.study_id in (?)', study_ids], :order => 'subjects.last_name, subjects.first_name ASC' } }
+
   # Mixins
   has_paper_trail
   $plugins = [EdwServices]
