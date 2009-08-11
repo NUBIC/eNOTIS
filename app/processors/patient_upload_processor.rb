@@ -52,7 +52,7 @@ class PatientUploadProcessor < ApplicationProcessor
 
   def validate_gender(params)
     genders = DictionaryTerm.find(:all,:conditions=>["category= ?and term like ?","Gender",params[:gender]+'%'])
-    (genders.size == 1)? [] :  "Unkown Gender  value: #{params[:gender]}"
+    (genders.size == 1)? [] :  "Unkown Gender value: #{params[:gender]}"
   
   end
 
