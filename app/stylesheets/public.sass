@@ -18,17 +18,15 @@ body
       :color = !nu_purple
       :font-size 0.4em
 
-       
-
   #main
     +column(48,true)
     +squeeze
 
     #left_primary
-      +column(32)
+      +column(34)
 
     #right_sidebar
-      +column(16,true)
+      +column(14,true)
 
   #footer 
     +column(50,true)
@@ -42,10 +40,12 @@ body
 #system_status
   +column(12)
   +rounded_box( !secondary_data_bg_color )
-
+  :padding= !blueprint_grid_width
+  
 #loginbox
   +blueprint-form
   +rounded_box( !primary_data_bg_color )
+  :padding= !blueprint_grid_width
   input[type="submit"]
     +button-button("right")
 
@@ -92,11 +92,4 @@ body
       +quiet
     .location
       +quiet
-
-  
-  
-
-
-    
-
 

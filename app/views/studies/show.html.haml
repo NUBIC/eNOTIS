@@ -45,17 +45,10 @@
       %li.nav= study_tab_to "Events", "#events"
       %li.nav= study_tab_to "Subject Imports", "#imports"
     #overview
-      .column
-        #accrual
-        #study-events
-          .heading Recent Events
-          %ul
-            - @study_events.all(:limit => 5).each do |ie|
-              %li
-                -# ">" before = removes extra spacing around this tag
-                %dtr{:title => ie.description}>= ie.term
-                = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occured_at)} ago"
-      #staff_list.column
+      
+      #accrual
+
+      #staff_list
         .heading Staff list
         %ul
           - @study.coordinators.each do |c|        
@@ -63,8 +56,15 @@
               = "#{c.first_name} #{c.last_name}"
               %br
 
-      %br.clear
-    #subjects
+      #study-events
+        .heading Recent Events
+        %ul
+        - @study_events.all(:limit => 5).each do |ie|
+          %li
+            -# ">" before = removes extra spacing around this tag
+            %dtr{:title => ie.description}>= ie.term
+            = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occured_at)} ago"
+      #subjects
       - if @study.subjects.empty?
         = render :partial => "subjects/no_subjects"
         = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox')
