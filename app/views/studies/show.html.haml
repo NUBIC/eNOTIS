@@ -84,20 +84,23 @@
 
     #events
       %h4 Events
-      %table.display
-        %thead
-          %th Name
-          %th Event
-          %th Note
-          %th Date
-        %tbody
-          - @study_events.all.each do |event|
-            %tr{:class => "subject_#{event.involvement.subject.id}"}
-              %td= event.involvement.subject.name
-              %td
-                %a{:title => event.description, :href => involvement_event_path(event)}= event.term
-              %td= event.note
-              %td= event.occured_at
+      - if @study_events.empty?
+        = render :partial => "involvement_events/no_events"
+      - else
+        %table.display
+          %thead
+            %th Name
+            %th Event
+            %th Note
+            %th Date
+          %tbody
+            - @study_events.all.each do |event|
+              %tr{:class => "subject_#{event.involvement.subject.id}"}
+                %td= event.involvement.subject.name
+                %td
+                  %a{:title => event.description, :href => involvement_event_path(event)}= event.term
+                %td= event.note
+                %td= event.occured_at
     #imports
       %h4 Imports
       - form_tag('/subjects', :multipart => true) do

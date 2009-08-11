@@ -11,8 +11,7 @@ class UsersController < ApplicationController
   def dashboard
     # raise "testing exception notifier - yoon" # http://weblog.jamisbuck.org/2007/3/7/raising-the-right-exception
     @studies = current_user.studies
-    @top_involvement_events = current_user.involvement_events[0,5]
-    @more_events = @current_user.involvement_events.size - 5
+    @involvement_events = current_user.involvement_events
   end
 
 end
