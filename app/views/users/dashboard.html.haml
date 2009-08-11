@@ -10,11 +10,10 @@
   .heading
     Recent Events
   %ul
-    %li= link_to("STU0001924<br/>John Smith AE")
-    %li= link_to("STU0001924<br/>Sally Sue Registered")
-    %li= link_to("STU00020135<br/>Study approved")
-  .footing
-    = link_to "5 more events", "#"
+    - @top_involvement_events.each do |event|
+      %li= link_to "#{event.involvement.study.irb_number}: #{event.involvement.subject.name}<br/>#{event.term} #{time_ago_in_words(event.occured_at)} ago", study_path(event.involvement.study)
+  - if @more_events > 0
+    = link_to "#{pluralize(@more_events, "more event")}", involvement_events_path
 
 -#user_options
   .heading

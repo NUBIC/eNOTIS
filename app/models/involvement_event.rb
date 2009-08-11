@@ -21,6 +21,7 @@ class InvolvementEvent < ActiveRecord::Base
       results.sort.map{|date, value| [date, total+=value]}
     end
   end
+  named_scope :on_studies, lambda {|study_ids| { :include => :involvement, :conditions => ['involvements.study_id in (?)', study_ids], :order => 'involvement_events.occured_at DESC' } }
   
   # Mixins
   has_paper_trail

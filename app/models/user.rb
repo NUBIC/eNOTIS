@@ -49,7 +49,8 @@ class User < ActiveRecord::Base
   
   def involvement_events
     # all involvement events on studies that this user has access to. refactored from involvement_events_controller - yoon
-    involvements.map(&:involvement_events).flatten
+    # involvements.map(&:involvement_events).flatten
+    InvolvementEvent.on_studies(studies)
   end
   
   def involvements
