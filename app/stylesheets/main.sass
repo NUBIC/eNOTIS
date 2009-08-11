@@ -68,165 +68,6 @@ body
   #main
     +column(52,true)
   
-  // On the dashboard page
-
-  #my_studies
-    +column(38)
-    +prepend(1)
-    +squish
-
-  #recent_events
-    +column(10,true)
-    +prepend(1)
-    +squish
-
-  #user_options
-    +column(10,true)
-    +prepend(1)
-    +squish
-
-  // On the studies pages
-
-  #study_list
-    +column(50,true)
-    +prepend(1)
-    +squish
-
-
-  #study
-    +column(51,true)
-    +prepend(1)
-    +squish
-
-    #vitals
-      +column(7)
-      +rounded_left_box( !primary_data_bg_color )
-      
-      .irb_number
-        :text-align center      
-        :display block
-        :padding= !blueprint_grid_width      
-        :font-size 1.4em
-
-      .status
-        :text-align center      
-        :display block
-        :font-size 1.4em
-        :line-height 1em
-        :background-color= !notice_bg_color
-        :-moz-border-radius 0 0 0 3px
-        :padding-top= !blueprint_grid_width      
-        :padding-bottom= !blueprint_grid_width  
- 
-    #details
-      +column(41,true)
-      :border= 1px solid !primary_data_bg_color 
-      +rounded_right_box( !secondary_data_bg_color )
-      :padding= !blueprint_grid_margin
-      :padding-left= !blueprint_grid_margin * 2
-      :padding-right= !blueprint_grid_margin * 2
-      
-      .title
-        +super
-
-      .phase, .research_type, .pi, .sc
-        :padding-right 1.5em
-
-      .label
-        +quiet
-        :padding-left 0.2em
-      
-      hr
-        :background-color #ddd
-        :color #ddd
-        
-    //TODO investigate the use of blueprint 'column' grid use for these jquery ui tabs
-    ul.study_tabs
-      :position relative
-      :clear left
-      :margin 1em 1em 1.5em 0
-      :border-bottom 2px solid
-      :border-color= !secondary_data_border_color
-      :background-color= !nu_page_background
-      :color= !font_color
-      :line-height 1.2em
-      :font-size 1.2em
-      :padding 0 1em
-      li
-        :position relative
-        :list-style none
-        :display inline
-        :border-width 2px 2px 0 2px
-        :-moz-border-radius 2px 2px 0 2px
-        :border-style solid
-        :border-color= !secondary_data_border_color
-        :background-color= !secondary_data_bg_color
-        a, a:hover, a:visited, a:active
-          :color= !font_color
-          :text-decoration none
-          :padding 0 1em .1em 1em
-        a:hover
-          :background-color= !notice_bg_color
-      li.ui-tabs-selected a, li.ui-state-disabled a, li.ui-state-processing a
-        :background-color= !nu_page_background
-        :color= !nu_purple       
-        :cursor text
-        :border-bottom= 2px solid !nu_page_background
-    .ui-tabs-hide
-      :display none !important
-
-    #overview, #subjects, #documents, #imports
-      :padding 0 0.5em
-      ul
-        +no-bullets 
-        li
-          :padding .25em .5em
-
-    // Elements on the #overview tab
-    #overview
-      +container
-       
-      #accrual
-        +column(30)
-        +rounded_box( !secondary_data_bg_color )
-      
-      #staff_list
-        +column(17,true)
-        +prepend(1)
-      
-      #study-events
-        +column(49,true)
-        +squish
-
-      
-  // On the MySubjects page
-  
-  #subject_list
-    +column(50,true)
-    +prepend(1)
-    +squish
-
-  // On the Events page
-
-  #my_events
-    +column(50,true)
-    +prepend(1)
-    +squish
-
-  // On the search page
-  #search_form
-    +column(50,true)
-    +prepend(1)
-    +squish
-
-  #results
-    +column(50,true)
-    +prepend(1)
-    +squish
-
- 
-    
-
   // Some generic id's and classes used on
   // most pages
 
@@ -245,5 +86,11 @@ body
   .footing
     :text-align right
 
+
+@import dashboard.sass
+@import my_events.sass
+@import my_subjects.sass
+@import search.sass
+@import studies.sass
 
 
