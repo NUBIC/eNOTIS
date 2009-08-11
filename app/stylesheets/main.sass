@@ -171,21 +171,28 @@ body
         :background-color= !nu_page_background
         :color= !nu_purple       
         :cursor text
+        :border-bottom= 2px solid !nu_page_background
     .ui-tabs-hide
       :display none !important
 
     #overview, #subjects, #documents, #imports
       :padding 0 0.5em
       ul
+        +no-bullets 
         li
-          :background-color #f00
           :padding .25em .5em
 
+    // Elements on the #overview tab
+    #overview
+      +column(50,true)
+      
+      #accural
+        +column(25)
+      
+      #staff_list
+        +column(25,true)
 
       
-
-  
-
   // On the MySubjects page
   
   #subject_list
@@ -231,4 +238,6 @@ body
 
   .footing
     :text-align right
+
+
 
