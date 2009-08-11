@@ -10,12 +10,18 @@ class Subject < ActiveRecord::Base
   # Associations
   has_many :involvements
   has_many :studies, :through => :involvements
+  has_many :involvement_events, :through => :involvements
 
   # Mixins
   has_paper_trail
   $plugins = [EdwServices]
   
   # Public instance methods
+  def mrn=(mrn)
+    # add subject form passes blank string mrn's when we send on 
+    write_attribute :mrn, (mrn.blank? ? nil : mrn)
+  end
+  
   def synced?
     !self.synced_at.nil?
   end
@@ -43,9 +49,16 @@ class Subject < ActiveRecord::Base
   # Public class methods
   
   def self.find_or_create(params)
+    # try to find by mrn first
     if !params[:mrn].blank?
-      Subject.find(:first, :conditions => ["mrn=?", params[:mrn]], :span=>:global)
-    elsif !params[:first_name].blank? or !params[:last_name].blank? or !params[:birth_date].blank?
+      subject = Subject.find(:first, :conditions =>{:mrn=>params[:mrn]},:span=>:global,:service_opts=>{:netid=>"test"})
+        if !subject.nil?
+          subject.save
+          return subject
+        end 
+      end
+      # if we've made it this far, the mrn was blank or the subject wasn't found by mrn
+      if !params[:first_name].blank? or !params[:last_name].blank? or !params[:birth_date].blank?
       Subject.create(params)
     else
       return nil

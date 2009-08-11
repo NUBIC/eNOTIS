@@ -34,9 +34,6 @@ class StudiesController < ApplicationController
   def show
     @study = Study.find_by_irb_number(params[:id])
     @study_events = InvolvementEvent.on_study(@study)
-#    # store study irb_number in session - used for adding involvment events
-#    session[:study_irb_number] = params[:id]
-#    @study = Study.find(:first,:conditions=>["irb_number ='#{params[:id]}'"])
   end
 
 end

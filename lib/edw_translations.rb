@@ -1,10 +1,15 @@
 EDW_TO_NOTIS = {
 'first_nm'=> 'first_name',
 'last_nm' => 'last_name',
-'mrd_pt_id' => 'mrn',
-'address_1' => 'address_line1',
+'textbox2' => 'mrn',
+'textbox5' =>'mrn_type',
+'addr_ln_1_txt' => 'address_line1',
+'city_nm' => 'city',
+'state_nm' => 'state',
 'zip_code'   => 'zip',
-'birth_dts'=>'birth_date'
+'home_phone_txt' => 'phone_number',
+'birth_dts'=>'birth_date',
+'mrd_pt_id'=>'mrn'
 
 }
 
@@ -12,6 +17,6 @@ NOTIS_TO_EDW = {
  'first_name' => 'first_nm',
  'last_name' => 'last_nm',
  'mrn' => 'mrd_pt_id',
- 'zip' => 'zip_code',
- 'birth_date'=>'birth_dts'
+ 'birth_date'=>'birth_dts',
+ 'netid' => 'net_id'
 }

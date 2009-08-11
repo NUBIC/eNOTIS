@@ -1,7 +1,14 @@
 %p
   = @subject.name
-%p
+-#studies
   Associated Studies:
   %ul
-  - @subject.involvements.each do |involvement|
+  - @involvements.each do |involvement|
     %li= link_to(involvement.study.name, study_path(involvement.study))
+#events
+  Events:
+  %ul
+    - @involvement_events.each do |ie|
+      = ie.term
+      on
+      = link_to(ie.involvement.study.name, study_path(ie.involvement.study, :anchor => "events"))
