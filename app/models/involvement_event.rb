@@ -14,8 +14,8 @@ class InvolvementEvent < ActiveRecord::Base
     def to_graph
       results = {}
       (self.blank? ? [] : self).each do |e|
-        results[e.occured_at.to_i*1000] ||= 0
-        results[e.occured_at.to_i*1000] += 1
+        results[e.occured_at.to_time.to_i*1000] ||= 0
+        results[e.occured_at.to_time.to_i*1000] += 1
       end
       total = 0
       results.sort.map{|date, value| [date, total+=value]}
