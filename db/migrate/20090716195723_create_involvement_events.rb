@@ -2,7 +2,7 @@ class CreateInvolvementEvents < ActiveRecord::Migration
   def self.up
     create_table :involvement_events do |t|
       t.integer :involvement_id
-      t.datetime :occured_at
+      t.date :occured_at
       t.integer :event_type_id
       t.text :note 
       t.timestamps

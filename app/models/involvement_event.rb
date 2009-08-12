@@ -67,11 +67,15 @@ class InvolvementEvent < ActiveRecord::Base
       raise ActiveRecord::Rollback if involvement.nil?
       # InvolvementEvent - create the event
       params[:involvement_events].each do |event|
-        involvement.involvement_events.create(event)
+        InvolvementEvent.find_or_create(event.merge({:involvement_id=>involvement.id}))
       end
     end
   end
-  
+ 
+  def self.find_or_create(params)
+    i = InvolvementEvent.find(:first,:conditions => {:involvement_id => params[:involvement_id],:occured_at=>params[:occured_at],:event_type_id=>params[:event_type_id]}) || InvolvementEvent.create(params)
+  end
+ 
   private
   
   # Private instance methods
@@ -79,6 +83,5 @@ class InvolvementEvent < ActiveRecord::Base
     if involvement.involvement_events == [self]
       involvement.destroy
     end
-
   end
 end

@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
-
+require 'chronic'
 #require File.dirname(__FILE__) + '/../../app/processors/application'
 
 describe PatientUploadProcessor do
@@ -82,6 +82,15 @@ describe PatientUploadProcessor do
       @study_upload.save
       @processor.on_message(@study_upload.id.to_s)
       Involvement.find_by_study_id(@study.id).involvement_events.size.should == 2
+    end
+
+    it "should not create duplicate involvement events" do 
+      good_mrn = File.open(@dir + 'duplicate_events_upload.csv')
+      @study_upload.upload = good_mrn
+      good_mrn.close
+      @study_upload.save
+      @processor.on_message(@study_upload.id.to_s)
+      Involvement.find_by_study_id(@study.id).involvement_events.size.should == 1
     end
     
    
