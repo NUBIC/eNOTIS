@@ -11,9 +11,8 @@ module ApplicationHelper
     types.map{|type| content_tag(:div, :class => type.to_s){ "#{type.to_s.capitalize}: #{flash[type]}" } }.join
   end
   
-  # Helper for bridge navigation links. Used in app/layouts/main
-  def nav_link_to(text, path='#', controller=nil)
-    link_to(text, path, :class => (@controller.class == controller) ? "current" : "")
+  def nav_class(controller=nil)
+    @controller.class == controller ? "current" : ""
   end
   
   # Helper for study tabs. Used in app/views/studies/show
