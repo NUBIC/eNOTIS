@@ -71,11 +71,13 @@ describe Subject do
     end
     it "should create a subject, with bad mrn, good fn/ln/dob in params" do
       Subject.should_receive(:find).and_return(nil)
+      Subject.should_receive(:find_all_by_first_name_and_last_name_and_birth_date).and_return([])
       Subject.should_receive(:create).and_return(@created_subject)
       Subject.find_or_create({:mrn => "90210", :first_name => "Pikop N", :last_name => "Dropov", :birth_date => "1934-02-12"}).should == @created_subject
     end
     it "should return nil, with bad mrn, bad fn/ln/dob in params" do
       Subject.should_receive(:find).and_return(nil)
+      Subject.should_receive(:find_all_by_first_name_and_last_name_and_birth_date).and_return([])
       Subject.should_receive(:create).and_return(nil)
       Subject.find_or_create({:mrn => "90210", :first_name => "Pikop N", :last_name => "Dropov", :birth_date => "1934-02-12"}).should == nil
     end

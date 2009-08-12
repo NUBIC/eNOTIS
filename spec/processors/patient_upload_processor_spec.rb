@@ -92,6 +92,20 @@ describe PatientUploadProcessor do
       @processor.on_message(@study_upload.id.to_s)
       Involvement.find_by_study_id(@study.id).involvement_events.size.should == 1
     end
+
+    it "Should not create duplicate patients (same name and dob)  on the same study" do
+      file = File.open(@dir + 'valid_upload.csv')
+      @study_upload.upload = file
+      file.close
+      @study_upload.save
+      @study_upload2 = StudyUpload.create({:study_id=>@study.id})
+      file = File.open(@dir + 'valid_upload.csv')
+      @study_upload2.upload = file
+      file.close
+      @study_upload2.save
+      @processor.on_message(@study_upload2.id.to_s)
+      @study.involvements.size.should == 1
+    end
     
    
 
