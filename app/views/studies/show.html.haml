@@ -8,7 +8,7 @@
     $(".display").dataTable();
     // show the accrual graph
     = "var e = #{@study_events.with_event_types([DictionaryTerm.find_by_term("Consented")]).to_graph.inspect};"
-    $.plot($("#accrual"), [e], { grid: {borderWidth: 0}, xaxis: { mode: "time" } });
+    $.plot($("#accrual-graph"), [e], { grid: {borderWidth: 0}, xaxis: { mode: "time" } });
     });
 #study
   #vitals
@@ -48,6 +48,8 @@
 
     #overview
       #accrual
+        .heading Accrual Graph
+        #accrual-graph
       #staff_list
         .heading Staff list
         %ul
