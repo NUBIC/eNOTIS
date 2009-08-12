@@ -28,6 +28,9 @@ module NavigationHelpers
     
     when /the search page/
       search_path
+      
+    when /the hub page/
+      hub_path
     
     # Add more mappings here.
     # Here is a more fancy example:
