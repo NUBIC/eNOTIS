@@ -32,11 +32,13 @@
     .study_staff
       %span.pi
         %span.label= "Princpal Investigator:"
-        = "#{@study.pi_last_name},#{@study.pi_first_name} (#{@study.pi_email})"
+        = "#{@study.pi_first_name} #{@study.pi_last_name}"
+        = link_to @study.pi_email, "mailto:#{@study.pi_email}"
       %br
       %span.sc
         %span.label= "Study Coordinator:" 
-        = "#{@study.sc_last_name},#{@study.sc_first_name} (#{@study.sc_email})"
+        = "#{@study.sc_first_name} #{@study.sc_last_name}"
+        = link_to @study.sc_email, "mailto:#{@study.sc_email}"
   %br.clear
   - if @study.has_coordinator?(current_user)
     %ul.study_tabs
@@ -66,24 +68,24 @@
             %dtr{:title => ie.description}>= ie.term
             = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occured_at)} ago"
 
-      #subjects
-        - if @study.subjects.empty?
-          = render :partial => "subjects/no_subjects"
-          = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox')
-        - else
-          = "#{pluralize(@study.subjects.size, "subject")} associated with this study"
-          = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox')
-          %table.display
-            %thead
-              %th Name
-              %th 
-              %th
-            %tbody  
-              - @study.subjects.each do |subject|
-                %tr{:class => "subject_#{subject.id}"}
-                  %td= render :partial => 'partials/subject', :object => subject
-                  %td= subject.synced? ? "Subject Synced" : link_to("Sync", search_subjects_url(:id=>subject.id), :rel => 'facebox')
-                  %td= link_to("Add Event", new_involvement_event_path(:subject => subject, :study => @study), :rel => 'facebox')
+    #subjects
+      - if @study.subjects.empty?
+        = render :partial => "subjects/no_subjects"
+        = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox')
+      - else
+        = "#{pluralize(@study.subjects.size, "subject")} associated with this study"
+        = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox')
+        %table.display
+          %thead
+            %th Name
+            %th 
+            %th
+          %tbody  
+            - @study.subjects.each do |subject|
+              %tr{:class => "subject_#{subject.id}"}
+                %td= render :partial => 'partials/subject', :object => subject
+                %td= subject.synced? ? "Subject Synced" : link_to("Sync", search_subjects_url(:id=>subject.id), :rel => 'facebox')
+                %td= link_to("Add Event", new_involvement_event_path(:subject => subject, :study => @study), :rel => 'facebox')
     #events
       %h4 Events
       - if @study_events.empty?

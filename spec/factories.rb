@@ -105,7 +105,7 @@ Factory.define :fake_study, :parent => :study do |p|
   p.phase                 {["I","II","III","IV","n/a",nil].rand}
   p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
   p.status                {Faker::Study.eirb_status}
-  p.pi_first_name         {Faker::Internet.email}
+  p.pi_first_name         {Faker::Name.first_name}
   p.pi_last_name          {Faker::Name.last_name}
   p.pi_email              {Faker::Internet.email}
   p.pi_netid              {|me| "#{me.pi_first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{me.pi_last_name.gsub(/[^a-zA-Z]/,'')[0,2]}#{(100..999).to_a.rand}".downcase}
@@ -175,10 +175,10 @@ Factory.define :study_upload do |s|
   # s.result_file_size        {1023}
 end
 
-# Factory.define :dictionary_term do |d|
-#   d.category        {%w(Ethnicity Gender Event Race).rand}
-#   d.term            {|me| me.category == "Gender" ? %w(Male Female).rand : Faker::Lorem.words(1).to_s }
-#   d.code            {|me| [me.category.downcase, me.term.downcase].join("-").gsub(/[^a-z]/, "-")}
-#   d.source          {Faker::Lorem.words(2).join(" ")}
-#   d.description     {Faker::Lorem.paragraphs(1).to_s}
-# end
+Factory.define :dictionary_term do |d|
+  d.category        {%w(Ethnicity Gender Event Race).rand}
+  d.term            {|me| me.category == "Gender" ? %w(Male Female).rand : Faker::Lorem.words(1).to_s }
+  d.code            {|me| [me.category.downcase, me.term.downcase].join("-").gsub(/[^a-z]/, "-")}
+  d.source          {Faker::Lorem.words(2).join(" ")}
+  d.description     {Faker::Lorem.paragraphs(1).to_s}
+end

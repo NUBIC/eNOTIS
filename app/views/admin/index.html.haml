@@ -1,0 +1,36 @@
+- content_for :head do
+  %script{:type => 'text/javascript'}
+    $(document).ready(function(){
+    // show the Data Tables
+    $(".display").dataTable();
+    });
+#users
+  = pluralize @users.count, "user"
+  %table.display
+    %thead
+      %tr
+        %th Name
+        %th Netid
+        %th Studies
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.name
+          %td= user.netid
+          %td= user.studies.map{|study| link_to(study.irb_number, study_path(study), :title => study.title)}.join(", ")
+#dictionary_terms
+  = pluralize @dictionary_terms.count, "dictionary term"
+  %table.display
+    %thead
+      %tr
+        %th Category
+        %th Term
+        %th Code
+    %tbody
+      - @dictionary_terms.each do |term|
+        %tr
+          %td= term.category
+          %td 
+            %dfn{:title => term.description}= term.term
+          %td= term.code
+   
