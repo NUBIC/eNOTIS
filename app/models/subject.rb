@@ -48,6 +48,13 @@ class Subject < ActiveRecord::Base
   def birth_date=(date)
     write_attribute :birth_date, Chronic.parse(date)
   end
+
+  def merge!(subject)
+   #This method is used to merge an existing subject and involvements
+   #to a this subject
+   self.involvements << subject.involvements 
+   subject.delete 
+  end
   
   # Public class methods
   

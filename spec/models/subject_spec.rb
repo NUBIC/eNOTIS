@@ -48,6 +48,15 @@ describe Subject do
       @subject.address_line1.should == "314 Circle Dr."
       @subject.pre_sync_data.should be_nil
     end
+    it "should move all involvements when" do
+      @subject = Factory(:subject)
+      @subject2 = Factory(:subject,:synced_at=>nil)
+      2.times{Factory(:involvement,:subject => @subject2)}
+      @subject2.should have(2).involvement
+      @subject.merge!(@subject2)
+      @subject.should have(2).involvements
+      
+    end
 
     
   end
