@@ -175,10 +175,10 @@ Factory.define :study_upload do |s|
   # s.result_file_size        {1023}
 end
 
-# Factory.define :dictionary_term do |d|
-#   d.category        {%w(Ethnicity Gender Event Race).rand}
-#   d.term            {|me| me.category == "Gender" ? %w(Male Female).rand : Faker::Lorem.words(1).to_s }
-#   d.code            {|me| [me.category.downcase, me.term.downcase].join("-").gsub(/[^a-z]/, "-")}
-#   d.source          {Faker::Lorem.words(2).join(" ")}
-#   d.description     {Faker::Lorem.paragraphs(1).to_s}
-# end
+Factory.define :dictionary_term do |d|
+  d.category        {%w(Ethnicity Gender Event Race).rand}
+  d.term            {|me| me.category == "Gender" ? %w(Male Female).rand : Faker::Lorem.words(1).to_s }
+  d.code            {|me| [me.category.downcase, me.term.downcase].join("-").gsub(/[^a-z]/, "-")}
+  d.source          {Faker::Lorem.words(2).join(" ")}
+  d.description     {Faker::Lorem.paragraphs(1).to_s}
+end
