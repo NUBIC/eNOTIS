@@ -14,8 +14,8 @@ class InvolvementEvent < ActiveRecord::Base
     def to_graph
       results = {}
       (self.blank? ? [] : self).each do |e|
-        results[e.occured_at.to_i*1000] ||= 0
-        results[e.occured_at.to_i*1000] += 1
+        results[e.occured_at.to_time.to_i*1000] ||= 0
+        results[e.occured_at.to_time.to_i*1000] += 1
       end
       total = 0
       results.sort.map{|date, value| [date, total+=value]}
@@ -59,7 +59,7 @@ class InvolvementEvent < ActiveRecord::Base
       if params[:subject].has_key?(:id) && (subject = Subject.find(params[:subject][:id]))
         involvement = Involvement.find_by_study_id_and_subject_id(study.id, subject.id)
       else
-        subject = Subject.find_or_create(params[:subject])
+        subject = Subject.find_or_create(params[:subject],study)
         raise ActiveRecord::Rollback if study.nil? or subject.nil?
         # Involvement - create an involvement
         involvement = Involvement.update_or_create(params[:involvement].merge({:subject_id => subject.id, :study_id => study.id}))
@@ -67,11 +67,15 @@ class InvolvementEvent < ActiveRecord::Base
       raise ActiveRecord::Rollback if involvement.nil?
       # InvolvementEvent - create the event
       params[:involvement_events].each do |event|
-        involvement.involvement_events.create(event)
+        InvolvementEvent.find_or_create(event.merge({:involvement_id=>involvement.id}))
       end
     end
   end
-  
+ 
+  def self.find_or_create(params)
+    InvolvementEvent.find(:first,:conditions => {:involvement_id => params[:involvement_id],:occured_at=>params[:occured_at],:event_type_id=>params[:event_type_id]}) || InvolvementEvent.create(params)
+  end
+ 
   private
   
   # Private instance methods
@@ -79,6 +83,5 @@ class InvolvementEvent < ActiveRecord::Base
     if involvement.involvement_events == [self]
       involvement.destroy
     end
-
   end
 end

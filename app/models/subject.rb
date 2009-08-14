@@ -48,20 +48,32 @@ class Subject < ActiveRecord::Base
   def birth_date=(date)
     write_attribute :birth_date, Chronic.parse(date)
   end
+
+  def merge!(subject)
+   #This method is used to merge an existing subject and involvements
+   #to a this subject
+   self.involvements << subject.involvements 
+   subject.delete 
+  end
   
   # Public class methods
   
-  def self.find_or_create(params)
+  def self.find_or_create(params,study=nil,user="EDWeNOTIS")
     # try to find by mrn first
     if !params[:mrn].blank?
-      subject = Subject.find(:first, :conditions =>{:mrn=>params[:mrn]},:span=>:global,:service_opts=>{:netid=>"test"})
-        if !subject.nil?
-          subject.save
-          return subject
-        end 
-      end
+      subject = Subject.find(:first, :conditions =>{:mrn=>params[:mrn]},:span=>:global,:service_opts=>{:netid=>user})
+      if !subject.nil?
+        subject.save
+        return subject
+      end 
+    end
       # if we've made it this far, the mrn was blank or the subject wasn't found by mrn
-      if !params[:first_name].blank? or !params[:last_name].blank? or !params[:birth_date].blank?
+    if !params[:first_name].blank? or !params[:last_name].blank? or !params[:birth_date].blank?
+      #Check if there is a subject with same identifiers on the given study
+      Subject.find_all_by_first_name_and_last_name_and_birth_date(params[:first_name],params[:last_name],params[:birth_date]).each do |subject|
+        return subject if subject.studies.include?study
+      end
+       #if we've reached here it means that there's no subject with these credentials on the study
       Subject.create(params)
     else
       return nil

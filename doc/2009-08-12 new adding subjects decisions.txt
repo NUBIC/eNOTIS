@@ -1,0 +1,12 @@
+2009-08-12 Brian, David, Mark
+
+Issue: when you upload the same file with fn/ln/dob (no mrns) twice, as our app currently stands, it will create duplicates.
+
+Solution for uploads:
+
+* subject: when you create by fn/ln/dob, find or create scoped by study
+* involvement: race is additive
+* involvement: gender and ethnicity are not overwritten
+* involvement events: are unique by type/date, are not overwritten. changed events are added as new events
+
+These decisions follow a general guideline: uploads are for adding, the UI is for adding/deleting/editing

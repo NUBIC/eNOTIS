@@ -25,7 +25,7 @@ class SubjectsController < ApplicationController
     @subject = Subject.find(params[:id])
     # restrict showing involvements and involvement events to those that the current user manages
     # TODO - manage this better - yoon
-    @involvements = @subject.involvements.with_coordinator(current_user.id)#Involvement.find_all_by_subject_id(@subject.id)
+    @involvements = @subject.involvements.with_coordinator(current_user.id)
     @involvement_events = @involvements.map(&:involvement_events).flatten
     respond_to do |format|
       format.html
@@ -43,10 +43,10 @@ class SubjectsController < ApplicationController
     end
   end
 
-  def sync
+  def merge
     # this action syncs a local records to a selected medical record
     @local = Subject.find(params[:local_id])
-    @local.sync!(Subject.find(:first,:conditions=>["mrn='#{params[:mrn]}'"], :span=>:global).attributes)
+    Subject.find(:first,:conditions=>{:mrn=>params[:mrn]}, :span=>:global).merge!(@local)
     respond_to do |format|
       format.html do
         flash[:notice] = "Success"

@@ -36,7 +36,7 @@ body
       +span(44)
       +prepend(2)
       form, form div
-      :display inline
+        :display inline
       li
         :height= !blueprint_grid_outer_width * 2
         a, a:hover, a:visited, a:active
@@ -45,13 +45,14 @@ body
           :font-size= !blueprint_grid_width
           :padding= !blueprint_grid_width
           :line-height= !blueprint_grid_outer_width * 2
-        a:hover
-          :background-color= !notice_bg_color
-        a.current
-          :background-color= !nu_page_background
-          :color= !nu_purple
-          :border-left= 1px solid !primary_data_border_color
-          :border-right= 1px solid !primary_data_border_color
+      li:hover
+        :background-color= !notice_bg_color
+      li.current
+        :background-color= !nu_page_background
+        :color= !nu_purple
+        :border-left= 1px solid !primary_data_border_color
+        :border-right= 1px solid !primary_data_border_color
+      li.search
         input
           :margin-top= !blueprint_grid_margin * 2
           :vertical-align top
@@ -60,9 +61,8 @@ body
           :margin-top= (!blueprint_grid_margin * 2) - 3px
           :vertical-align top
           :margin-left -0.1em
-      li.search
         a, a:hover, a:visited, a:active
-          :padding-right 0.2em 
+          :padding-right 0.2em
       
   // The main wrapper div for the layout  
   #main
@@ -92,5 +92,6 @@ body
 @import my_subjects.sass
 @import search.sass
 @import studies.sass
-
+@import facebox.sass
+@import datatables.sass
 
