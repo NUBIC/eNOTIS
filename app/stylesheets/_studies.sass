@@ -96,7 +96,15 @@
       +no-bullets 
       li
         :padding .25em .5em
-
+  
+  #subjects
+    .dataTables_wrapper
+      +column(15)
+    #subject-detail
+      +rounded_box(!secondary_data_bg_color)
+      +column(34, true)
+      +prepend(1)
+  
   // Elements on the #overview tab
   #overview
     +column(50,true)

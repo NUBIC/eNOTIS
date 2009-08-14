@@ -23,6 +23,9 @@ class SubjectsController < ApplicationController
 
   def show
     @subject = Subject.find(params[:id])
+    if params[:study]
+      @involvement = Involvement.find_by_subject_id_and_study_id(@subject.id, Study.find_by_irb_number(params[:study]).id)
+    end
     # restrict showing involvements and involvement events to those that the current user manages
     # TODO - manage this better - yoon
     @involvements = @subject.involvements.with_coordinator(current_user.id)

@@ -1,5 +1,9 @@
+%h4= @subject.name
 %p
-  = @subject.name
+  = "mrn: #{@subject.mrn}"
+  = "dob: #{@subject.birth_date}"
+  - if @involvement
+    = "gender: #{@involvement.gender}"
 -#studies
   Associated Studies:
   %ul

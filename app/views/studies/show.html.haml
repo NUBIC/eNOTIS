@@ -78,16 +78,13 @@
         %table.display
           %thead
             %th Name
-            %th 
-            %th
           %tbody  
             - @study.subjects.each do |subject|
               %tr{:class => "subject_#{subject.id}"}
-                %td= render :partial => 'partials/subject', :object => subject
-                %td= subject.synced? ? "Subject Synced" : link_to("Sync", search_subjects_url(:id=>subject.id), :rel => 'facebox')
-                %td= link_to("Add Event", new_involvement_event_path(:subject => subject, :study => @study), :rel => 'facebox')
+                %td= link_to(subject.name || "(no name)", subject_path(subject), :rel => 'detail')
+        #subject-detail
+                
     #events
-      %h4 Events
       - if @study_events.empty?
         = render :partial => "involvement_events/no_events"
       - else
@@ -106,14 +103,11 @@
                 %td= event.note
                 %td= event.occured_at
     #imports
-      %h4 Imports
       - form_tag('/subjects', :multipart => true) do
         = hidden_field_tag("study_id",@study.irb_number.to_s)
-        %br
         = file_field_tag(:file)
         = submit_tag( "Upload" )
         %br
-        %Hr
       %table.display
         %thead
           %th Importer

@@ -14,8 +14,25 @@ $(document).ready(function(){
 			// loadLocation($(e.target).attr("href"));
 			switchTab(e.target.hash);
 		}
+		
 	});
 	
+	$("#subjects a[rel=detail]").click(function(event){
+		event.stopPropagation();
+		event.preventDefault();
+		console.log($(event.target).attr('href'));
+		$.ajax({
+			type: "GET",
+			url: $(event.target).attr('href'),
+			dataType: "html",
+			success: loadSubjectDetail
+		})
+	});
+	
+	
+	function loadSubjectDetail(data){
+		$('#subjects #subject-detail').html(data);		
+	}
 	function switchTab(anchor){
 		// http://articles.rootsmith.ca/mod_python/how-to-make-jquery-ui-tabs-linkable-or-bookmarkable#comment-10188
 		var index = $('#study div.ui-tabs-panel').index($(anchor)); // in tab index of the anchor in the URL
