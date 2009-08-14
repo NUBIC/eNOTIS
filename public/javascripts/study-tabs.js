@@ -18,20 +18,20 @@ $(document).ready(function(){
 	});
 	
 	$("#subjects a[rel=detail]").click(function(event){
-		event.stopPropagation();
+		// event.stopPropagation();
 		event.preventDefault();
-		console.log($(event.target).attr('href'));
+		// console.log($(event.target).attr('href'));
 		$.ajax({
 			type: "GET",
 			url: $(event.target).attr('href'),
 			dataType: "html",
 			success: loadSubjectDetail
-		})
+		});
 	});
 	
 	
 	function loadSubjectDetail(data){
-		$('#subjects #subject-detail').html(data);		
+		$('#subjects #subject-detail').html(data);
 	}
 	function switchTab(anchor){
 		// http://articles.rootsmith.ca/mod_python/how-to-make-jquery-ui-tabs-linkable-or-bookmarkable#comment-10188

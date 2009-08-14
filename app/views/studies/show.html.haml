@@ -81,7 +81,7 @@
           %tbody  
             - @study.subjects.each do |subject|
               %tr{:class => "subject_#{subject.id}"}
-                %td= link_to(subject.name || "(no name)", subject_path(subject), :rel => 'detail')
+                %td= link_to(subject.name || "(no name)", subject_path(subject, :study => @study), :rel => 'detail')
         #subject-detail
                 
     #events

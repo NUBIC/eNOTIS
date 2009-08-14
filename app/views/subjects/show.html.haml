@@ -9,7 +9,7 @@
   %ul
   - @involvements.each do |involvement|
     %li= link_to(involvement.study.name, study_path(involvement.study))
-#events
+#subject-events
   Events:
   %ul
     - @involvement_events.each do |ie|
