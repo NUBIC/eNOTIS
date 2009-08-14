@@ -34,6 +34,7 @@ class StudiesController < ApplicationController
   def show
     @study = Study.find_by_irb_number(params[:id])
     @study_events = InvolvementEvent.on_study(@study)
+    @accruals = @study_events.with_event_types([DictionaryTerm.find_by_term("Consented")])
   end
 
 end

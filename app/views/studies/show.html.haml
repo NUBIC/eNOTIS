@@ -7,7 +7,7 @@
     // show the Data Tables
     $(".display").dataTable();
     // show the accrual graph
-    = "var e = #{@study_events.with_event_types([DictionaryTerm.find_by_term("Consented")]).to_graph.inspect};"
+    = "var e = #{@accruals.to_graph.inspect};"
     $.plot($("#accrual-graph"), [e], { grid: {borderWidth: 0}, xaxis: { mode: "time" } });
     });
 #study
@@ -50,8 +50,11 @@
 
     #overview
       #accrual
-        .heading Accrual Graph
-        #accrual-graph
+        - if @accruals.empty?
+          = image_tag "/images/accrual-graph.gif"
+        - else
+          .heading Accrual Graph
+          #accrual-graph
       #staff_list
         .heading Staff list
         %ul
@@ -62,11 +65,11 @@
       #study-events
         .heading Recent Events
         %ul
-        - @study_events.all(:limit => 5).each do |ie|
-          %li
-            -# ">" before = removes extra spacing around this tag
-            %dtr{:title => ie.description}>= ie.term
-            = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occured_at)} ago"
+          - @study_events.all(:limit => 5).each do |ie|
+            %li
+              -# ">" before = removes extra spacing around this tag
+              %dtr{:title => ie.description}>= ie.term
+              = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occured_at)} ago"
 
     #subjects
       - if @study.subjects.empty?
