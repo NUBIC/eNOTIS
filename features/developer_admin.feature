@@ -32,7 +32,7 @@ Feature: Developer admin access
     And I should see "Noah Fence"
     And I should see "Joe King"
   
-  Scenario: An admin should be able to see users and netids
+  Scenario: An admin should be able to see dictionary terms
     Given an admin "pbr312"
     And the following dictionary terms
       | category | term | code |  
