@@ -20,7 +20,7 @@ describe PatientUploadProcessor do
       good_mrn.close
       @study_upload.save
       @processor.on_message(@study_upload.id.to_s)
-      Involvement.find_by_study_id(@study.id).should_not be nil
+      Involvement.find_by_study_id(@study.id).should_not be_nil
     end
 
     it "should ignore a bad mrn if first name, last, name and dob are present" do
@@ -29,7 +29,7 @@ describe PatientUploadProcessor do
       good_mrn.close
       @study_upload.save
       @processor.on_message(@study_upload.id.to_s)
-      Involvement.find_by_study_id(@study.id).should_not be nil
+      Involvement.find_by_study_id(@study.id).should_not be_nil
     end
 
     it "should show all fields not entered" do 
