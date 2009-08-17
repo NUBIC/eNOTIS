@@ -1,17 +1,19 @@
 %h4= @subject.name
+%p= @subject.synced? ? "synced" : link_to("not synced", sync_subjects_path)
 %p= "mrn: #{@subject.mrn}"
 %p= "dob: #{@subject.birth_date}"
-  - if @involvement
-    %p= "gender: #{@involvement.gender}"
+- if @involvement
+  %p= "gender: #{@involvement.gender}"
+
 -#studies
   Associated Studies:
   %ul
   - @involvements.each do |involvement|
-    %li= link_to(involvement.study.name, study_path(involvement.study))
+    %li= link_to(involvement.study.name, study_path(@involvement.study))
 #subject-events
+  - if @involvement
+    = link_to "Add event", new_involvement_event_path(:subject => @subject, :study => @involvement.study), :rel => 'facebox'
   Events:
   %ul
     - @involvement_events.each do |ie|
-      = ie.term
-      on
-      = link_to(ie.involvement.study.name, study_path(ie.involvement.study, :anchor => "events"))
+      = link_to("#{ie.term} on #{ie.involvement.study.name}", study_path(ie.involvement.study, :anchor => "events"))

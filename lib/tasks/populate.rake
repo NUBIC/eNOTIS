@@ -1,6 +1,9 @@
 # lib/tasks/populate.rake
 namespace :db do
 
+  desc 'Remigrates, sets up test db, and populates'
+  task :bootstrap => [:environment, :"migrate:reset", :"test:prepare", :"populate:default"]
+  
   desc 'Populates database with fake data'
   task :populate => :"populate:default"
 

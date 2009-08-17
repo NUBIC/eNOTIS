@@ -22,17 +22,6 @@ Given /^subject "([^\"]*)" has event "([^\"]*)" on study "([^\"]*)"$/ do |mrn, t
   Factory(:involvement_event, :involvement => involvement, :event_type => DictionaryTerm.find_by_term(term))
 end
 
-Then /^I should see that subject "([^\"]*)" is not synced$/ do |mrn|
-  # TODO - this matcher doesn't actually scope within the withins - http://github.com/brynary/webrat/issues#issue/8 - yoon
-  within("\#subjects") do
-    within("\.subject_#{Subject.find_by_mrn(mrn).id}") do
-      response.should have_tag("a") do |a|
-        a.should contain("Sync")
-      end
-    end
-  end
-end
-
 Then /^subject "([^\"]*)" should have (\d+) events? on study "([^\"]*)"$/ do |mrn, x, irb_number|
   Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number)).involvement_events.should have(x.to_i).involvement_events
 end
@@ -59,7 +48,7 @@ end
 
 Then /^I should( not)? see events for "([^\"]*)"$/ do |bool, name|
   # TODO - this matcher doesn't actually scope within the withins - http://github.com/brynary/webrat/issues#issue/8 - yoon
-  within("\#events") do |div|
+  within("\#subject-events") do |div|
     if bool == "not"
       div.should_not contain(name)
     else

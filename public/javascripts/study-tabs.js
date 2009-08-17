@@ -32,6 +32,7 @@ $(document).ready(function(){
 	
 	function loadSubjectDetail(data){
 		$('#subjects #subject-detail').html(data);
+		$('#subjects #subject-detail a[rel*=facebox]').facebox();
 	}
 	function switchTab(anchor){
 		// http://articles.rootsmith.ca/mod_python/how-to-make-jquery-ui-tabs-linkable-or-bookmarkable#comment-10188

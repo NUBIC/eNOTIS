@@ -22,7 +22,7 @@ Feature: Search
       
   Scenario: Verifying my studies
     When I go to the dashboard
-    Then I should see "My Studies (1)"
+    Then I should see "My Studies (1"
       
   Scenario: Verifying all studies
     When I go to the all studies page
