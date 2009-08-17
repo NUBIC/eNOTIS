@@ -7,7 +7,7 @@
     // show the Data Tables
     $(".display").dataTable();
     // show the accrual graph
-    = "var e = #{@study_events.with_event_types([DictionaryTerm.find_by_term("Consented")]).to_graph.inspect};"
+    = "var e = #{@accruals.to_graph.inspect};"
     $.plot($("#accrual-graph"), [e], { grid: {borderWidth: 0}, xaxis: { mode: "time" } });
     });
 #study
@@ -50,8 +50,11 @@
 
     #overview
       #accrual
-        .heading Accrual Graph
-        #accrual-graph
+        - if @accruals.empty?
+          = image_tag "/images/accrual-graph.gif"
+        - else
+          .heading Accrual Graph
+          #accrual-graph
       #staff_list
         .heading Staff list
         %ul
@@ -62,11 +65,11 @@
       #study-events
         .heading Recent Events
         %ul
-        - @study_events.all(:limit => 5).each do |ie|
-          %li
-            -# ">" before = removes extra spacing around this tag
-            %dtr{:title => ie.description}>= ie.term
-            = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occured_at)} ago"
+          - @study_events.all(:limit => 5).each do |ie|
+            %li
+              -# ">" before = removes extra spacing around this tag
+              %dtr{:title => ie.description}>= ie.term
+              = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occured_at)} ago"
 
     #subjects
       - if @study.subjects.empty?
@@ -78,16 +81,13 @@
         %table.display
           %thead
             %th Name
-            %th 
-            %th
           %tbody  
             - @study.subjects.each do |subject|
               %tr{:class => "subject_#{subject.id}"}
-                %td= render :partial => 'partials/subject', :object => subject
-                %td= subject.synced? ? "Subject Synced" : link_to("Sync", search_subjects_url(:id=>subject.id), :rel => 'facebox')
-                %td= link_to("Add Event", new_involvement_event_path(:subject => subject, :study => @study), :rel => 'facebox')
+                %td= link_to(subject.name || "(no name)", subject_path(subject, :study => @study), :rel => 'detail')
+        #subject-detail
+                
     #events
-      %h4 Events
       - if @study_events.empty?
         = render :partial => "involvement_events/no_events"
       - else
@@ -106,14 +106,11 @@
                 %td= event.note
                 %td= event.occured_at
     #imports
-      %h4 Imports
       - form_tag('/subjects', :multipart => true) do
         = hidden_field_tag("study_id",@study.irb_number.to_s)
-        %br
         = file_field_tag(:file)
         = submit_tag( "Upload" )
         %br
-        %Hr
       %table.display
         %thead
           %th Importer

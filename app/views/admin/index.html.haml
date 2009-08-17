@@ -3,6 +3,7 @@
     $(document).ready(function(){
     // show the Data Tables
     $(".display").dataTable();
+    $("img.hub").fadeIn(10000);
     });
 #users
   = pluralize @users.count, "user"
@@ -33,4 +34,6 @@
           %td 
             %dfn{:title => term.description}= term.term
           %td= term.code
+
+%img{:class => 'hub', :src => '/images/hub.jpg', :style => "display:none;"}
    

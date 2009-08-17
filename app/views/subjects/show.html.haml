@@ -1,11 +1,14 @@
-%p
-  = @subject.name
+%h4= @subject.name
+%p= "mrn: #{@subject.mrn}"
+%p= "dob: #{@subject.birth_date}"
+  - if @involvement
+    %p= "gender: #{@involvement.gender}"
 -#studies
   Associated Studies:
   %ul
   - @involvements.each do |involvement|
     %li= link_to(involvement.study.name, study_path(involvement.study))
-#events
+#subject-events
   Events:
   %ul
     - @involvement_events.each do |ie|
