@@ -44,14 +44,24 @@ describe DictionaryTerm do
       "#{@t}".should == "Klingon"
     end
 
-    it "finds a term given code and category" do
-      t = DictionaryTerm.lookup_code(:klon,:race)
-      t.should == @t
+    describe "finds a term given code and category" do
+      # added for oracle...
+      [["klon","RACE"],["KloN","race"],["KLON","rAcE"],[:klon,:race],[:KlOn,:RaCe]].each do |c|
+        it "is case insensitive for code:'#{c[0]}' term:'#{c[1]}'" do
+          t = DictionaryTerm.lookup_code(c[0],c[1])
+          t.should == @t
+        end
+      end
     end
 
-    it "finds a term given the term and category" do
-      t = DictionaryTerm.lookup_term("Klingon",:race)
-      t.should == @t
+    describe "finds a term given the term and category" do
+      # added for oracle...
+      [["KlinGON","RACE"],["KLINGON","race"],["klingon","rAcE"],[:klingon,:race],[:KlingON,:RaCe]].each do |c|
+        it "is case insensitive for code:'#{c[0]}' term:'#{c[1]}'" do
+          t = DictionaryTerm.lookup_term(c[0],c[1])
+          t.should == @t
+        end
+      end
     end
 
     it "finds all the terms for a particular source" do
@@ -59,6 +69,10 @@ describe DictionaryTerm do
       DictionaryTerm.create({:term => "bar",:code => "bar",:category => "all", :source => "United Federation Race Categories"})
       s = DictionaryTerm.source_terms("United Federation Race Categories")
       s.size.should == 2
+      #case insensitive...
+      s = DictionaryTerm.source_terms("UNITED Federation RACE Categories")
+      s.size.should == 2
+
     end
 
   end
