@@ -91,7 +91,7 @@
       #subject-detail
         .heading
           = "#{pluralize(@study.subjects.size, "subject")} associated with this study"
-          = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox')
+          = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox', :class => 'add')
         .detail
           
                 

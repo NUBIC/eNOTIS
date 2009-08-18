@@ -21,13 +21,13 @@
       :text-align center      
       :display block
       :padding= !blueprint_grid_width      
-      :font-size 1.4em
+      :font-size 17px
 
     .status
       :text-align center      
       :display block
-      :font-size 1.4em
-      :line-height 1em
+      :font-size 14px
+      :line-height 15px
       :background-color= !notice_bg_color
       :-moz-border-radius 0 0 0 3px
       :padding-top= !blueprint_grid_width      
@@ -97,9 +97,14 @@
       li
         :padding .25em .5em
   
+  // for ie
+  * html #subjects tbody
+    :height expression( this.scrollHeight > 332 ? "333px" : "auto" )
+
   #subjects
     tbody
-      :height 300px
+      // for all standards compliant browsers
+      :max-height 300px
       :overflow auto
       
     .dataTables_wrapper  
@@ -109,6 +114,11 @@
     #subject-detail
       +column(34, true)
       +prepend(1)
+      a.add
+        +button-button("right")
+        :margin 0
+        :padding 0 5px
+        :background-color white
   
   // Elements on the #overview tab
   #overview
