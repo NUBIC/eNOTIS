@@ -10,7 +10,8 @@
       = "My Subjects (#{@subjects.size})"
     %table.display
       %thead
-        %th Name
+        %tr
+          %th Name
       %tbody  
         - @subjects.each do |subject|
           %tr

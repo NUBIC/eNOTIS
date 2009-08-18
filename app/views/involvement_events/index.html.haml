@@ -1,6 +1,6 @@
 - content_for :head do
   :javascript
-    $(document).ready(function(){$(".display").dataTable();});
+    $(document).ready(function(){$('.display').dataTable({"sPaginationType": "full_numbers"});});
 
 #my_events
   .heading My Events
@@ -9,10 +9,11 @@
   - else
     %table.display
       %thead
-        %th Study ID
-        %th Subject Name
-        %th Event
-        %th Date
+        %tr
+          %th Study ID
+          %th Subject Name
+          %th Event
+          %th Date
       %tbody  
         - @events.each do |e|
           %tr
