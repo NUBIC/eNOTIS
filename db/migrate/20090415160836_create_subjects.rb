@@ -25,11 +25,11 @@ class CreateSubjects < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index(:subjects, :mrn, :unique => true)
+    add_index(:subjects, :mrn, :unique => true, :name => 'subjects_mrn_idx')
   end
 
   def self.down
-    remove_index(:subjects, :mrn)
+    remove_index(:subjects, :name => 'subjects_mrn_idx')
     drop_table :subjects
   end
 end

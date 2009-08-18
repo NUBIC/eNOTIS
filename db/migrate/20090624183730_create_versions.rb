@@ -8,11 +8,11 @@ class CreateVersions < ActiveRecord::Migration
       t.text     :object
       t.datetime :created_at
     end
-    add_index :versions, [:item_type, :item_id]
+    add_index(:versions, [:item_type, :item_id], :name => 'versions_attr_idx')
   end
 
   def self.down
-    remove_index :versions, [:item_type, :item_id]
+    remove_index(:versions, :name => 'versions_attr_idx')
     drop_table :versions
   end
 end

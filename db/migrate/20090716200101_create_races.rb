@@ -5,13 +5,11 @@ class CreateRaces < ActiveRecord::Migration
       t.integer :race_type_id
       t.timestamps
     end
-    add_index(:races, :involvement_id)
-    add_index(:races, :race_type_id)
+    add_index(:races, [:involvement_id, :race_type_id], :name => 'races_attr_idx', :unique => true) # Should be duplicating the same race per involvement
   end
 
   def self.down
-    remove_index(:races, :involvement_id)
-    remove_index(:races, :race_type_id)
+    remove_index(:races, :name => 'races_attr_idx')
     drop_table :races
   end
 end

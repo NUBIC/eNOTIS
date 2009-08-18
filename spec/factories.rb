@@ -149,7 +149,7 @@ Factory.define :involvement_event do |e|
   e.event_type_id {event_ids.rand}
   # e.association   :event_type, :factory => :dictionary_term
   e.note          {}
-  e.occured_at    {Populator.value_in_range(3.weeks.ago..1.day.ago)}
+  e.occurred_at    {Populator.value_in_range(3.weeks.ago..1.day.ago)}
 end
 
 Factory.define :coordinator do |u|

@@ -19,11 +19,11 @@ class CreateUsers < ActiveRecord::Migration
     end
     
     # adding netid index
-    add_index(:users, :netid, :unique => true )
+    add_index(:users, :netid, :unique => true, :name => 'users_netid_idx' )
   end
 
   def self.down
-    remove_index(:users, :netid)
+    remove_index(:users, :name => 'users_netid_idx')
     drop_table :users
   end
 end

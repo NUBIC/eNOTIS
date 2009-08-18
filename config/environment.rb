@@ -21,25 +21,10 @@ Rails::Initializer.run do |config|
   
   config.gem "haml", :version => '>=2.2.0', :lib => false # required by chriseppstein-compass
   config.gem "chriseppstein-compass", :version => '>=0.6.15', :lib => false, :source => "http://gems.github.com"
-  # config.gem "haml", :version => '>=2.0.9', :source => "http://gems.rubyforge.org/"
-  # config.gem "httpclient", :version => '>=2.1.5'
-  config.gem "sqlite3-ruby", :version => '>=1.2.4', :lib => "sqlite3"
   config.gem "soap4r", :version => '>=1.5.8', :lib => false # :lib => false fixes no such file to load
   config.gem "libxml-ruby", :version => '>=1.1.3', :lib => false # :lib => false fixes no such file to load
-  config.gem "thoughtbot-factory_girl", :version => '>=1.2.1', :lib => "factory_girl", :source => "http://gems.github.com"
-  config.gem "populator", :version => '>=0.2.5'
-  config.gem "faker", :version => '>=0.3.1'
   config.gem "fastercsv", :version => '>=1.5.0'
   config.gem "paperclip", :version => '>=2.1.2'
-  # bcdatabase
-  config.gem "session"
-  config.gem "wddx"
-  config.gem "highline", :version => '>=1.4.0'
-  config.gem "rubytree", :lib => false
-  config.gem "bcdatabase", :source => "http://download.bioinformatics.northwestern.edu/gems/" # also installs bcdatabase
-  # bcsec
-  config.gem "composite_primary_keys"
-  config.gem "ruby-net-ldap", :lib => false
   config.gem "bcsec", :source => "http://download.bioinformatics.northwestern.edu/gems/" # also installs bcdatabase
   config.gem "airblade-paper_trail", :lib => 'paper_trail', :version => '>=1.1.1', :source => 'http://gems.github.com'
   config.gem "chronic", :version => '>=0.2.3'
@@ -48,7 +33,9 @@ Rails::Initializer.run do |config|
   config.gem "yoon-view_trail", :lib => 'view_trail', :version => '>=0.3.1', :source => 'http://gems.github.com'
   config.gem "capistrano", :version => '=2.5.5' # http://www.capify.org/index.php/Problems_With_2.5.6%2B, also installs net-ssh, net-sftp, net-scp, net-ssh-gateway
   config.gem "activemessaging"
-
+  #oracle
+  config.gem "ruby-oci8", :lib => "oci8", :version => '>=2.0.2'
+  config.gem "activerecord-oracle_enhanced-adapter", :lib => "active_record", :version => '>=1.2.1'
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
