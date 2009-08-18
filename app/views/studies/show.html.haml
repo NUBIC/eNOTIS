@@ -5,7 +5,7 @@
   %script{:type => 'text/javascript'}
     $(document).ready(function(){
     // show the Data Tables
-    $(".display").dataTable();
+    $(".display").dataTable({"iDisplayLength": -1});
     // show the accrual graph
     = "var e = #{@accruals.to_graph.inspect};"
     $.plot($("#accrual-graph"), [e], { grid: {borderWidth: 0}, xaxis: { mode: "time" } });
@@ -43,7 +43,7 @@
   - if @study.has_coordinator?(current_user)
     %ul.study_tabs
       %li.nav= study_tab_to "Overview", "#overview"
-      %li.nav= study_tab_to "Study Subjects", "#subjects"
+      %li.nav= study_tab_to "Subjects", "#subjects"
       %li.nav= study_tab_to "Events", "#events"
       %li.nav= study_tab_to "Subject Imports", "#imports"
 
@@ -72,20 +72,26 @@
               = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occured_at)} ago"
 
     #subjects
-      - if @study.subjects.empty?
-        = render :partial => "subjects/no_subjects"
-        = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox')
-      - else
-        = "#{pluralize(@study.subjects.size, "subject")} associated with this study"
-        = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox')
-        %table.display
-          %thead
-            %th Name
-          %tbody  
-            - @study.subjects.each do |subject|
-              %tr{:class => "subject_#{subject.id}"}
-                %td= link_to(subject.name || "(no name)", subject_path(subject, :study => @study), :rel => 'detail')
-        #subject-detail
+      #subject-list
+        - if @study.subjects.empty?
+          = render :partial => "subjects/no_subjects"
+        - else
+          %table.display
+            %thead
+              %tr
+                %th Name
+                %th Synced
+            %tbody  
+              - @study.subjects.each do |subject|
+                %tr{:class => "subject_#{subject.id}"}
+                  %td= link_to(subject.name || "(no name)", subject_path(subject, :study => @study), :rel => 'detail')
+                  %td= subject.synced? ? "synced" : "not synced"
+      #subject-detail
+        .heading
+          = "#{pluralize(@study.subjects.size, "subject")} associated with this study"
+          = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox')
+        .detail
+          
                 
     #events
       - if @study_events.empty?

@@ -31,7 +31,7 @@ $(document).ready(function(){
 	
 	
 	function loadSubjectDetail(data){
-		$('#subjects #subject-detail').html(data);
+		$('#subjects #subject-detail .detail').html(data);
 		$('#subjects #subject-detail a[rel*=facebox]').facebox();
 	}
 	function switchTab(anchor){

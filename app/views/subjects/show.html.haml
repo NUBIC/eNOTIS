@@ -1,9 +1,9 @@
 %h4= @subject.name
-%p= @subject.synced? ? "synced" : link_to("not synced", sync_subjects_path)
-%p= "mrn: #{@subject.mrn}"
-%p= "dob: #{@subject.birth_date}"
+%p.sync= @subject.synced? ? "synced icon" : link_to("sync icon", sync_subjects_path)
+%p.mrn= "mrn: #{@subject.mrn}"
+%p.dob= "dob: #{@subject.birth_date}"
 - if @involvement
-  %p= "gender: #{@involvement.gender}"
+  %p.gender= "gender: #{@involvement.gender}"
 
 -#studies
   Associated Studies:

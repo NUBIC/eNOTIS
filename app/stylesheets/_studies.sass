@@ -98,10 +98,15 @@
         :padding .25em .5em
   
   #subjects
-    .dataTables_wrapper
+    tbody
+      :height 300px
+      :overflow auto
+      
+    .dataTables_wrapper  
       +column(15)
+      .dataTables_length, .dataTables_info, .dataTables_paginate
+        :display none
     #subject-detail
-      +rounded_box(!secondary_data_bg_color)
       +column(34, true)
       +prepend(1)
   
