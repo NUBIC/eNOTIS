@@ -5,7 +5,9 @@
   %script{:type => 'text/javascript'}
     $(document).ready(function(){
     // show the Data Tables
-    $(".display").dataTable({"iDisplayLength": -1});
+    $("#subjects .display").dataTable({"aoColumns": [{ "sType": "html" }, null], "iDisplayLength": -1 });
+    $("#events .display").dataTable({"aoColumns": [null, { "sType": "html" }, null, null]});
+    $("#imports .display").dataTable();
     // show the accrual graph
     = "var e = #{@accruals.to_graph.inspect};"
     $.plot($("#accrual-graph"), [e], { grid: {borderWidth: 0}, xaxis: { mode: "time" } });
@@ -99,10 +101,11 @@
       - else
         %table.display
           %thead
-            %th Name
-            %th Event
-            %th Note
-            %th Date
+            %tr
+              %th Name
+              %th Event
+              %th Note
+              %th Date
           %tbody
             - @study_events.all.each do |event|
               %tr{:class => "subject_#{event.involvement.subject.id}"}
@@ -119,11 +122,12 @@
         %br
       %table.display
         %thead
-          %th Importer
-          %th Upload Date
-          %th Original
-          %th Result
-          %th Status
+          %tr
+            %th Importer
+            %th Upload Date
+            %th Original
+            %th Result
+            %th Status
         %tbody
           - @study.study_uploads.each do |u|
             %tr

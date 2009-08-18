@@ -1,6 +1,6 @@
 - content_for :head do
   :javascript
-    $(document).ready(function(){$('.display').dataTable({"sPaginationType": "full_numbers"});});
+    $(document).ready(function(){$('.display').dataTable({"aoColumns": [{ "sType": "html" }, { "sType": "html" }, null, null], "sPaginationType": "full_numbers"});});
 
 #my_events
   .heading My Events
