@@ -1,6 +1,5 @@
 @import base.sass
 
-
 // Some table specfic colors
 !even_sorting_bg_color = !notice_bg_color
 !odd_sorting_bg_color = !notice_bg_color + 32
@@ -11,7 +10,7 @@
 !sort_border_color = #bdbdbd
 
 // DataTables features
-.dataTables_wrapper
+.dataTables_wrapper 
   :position relative
   :min-height 302px
   :_height 302px
@@ -54,7 +53,7 @@
 
 .dataTables_paginate 
   :width 44px
-  :* width 50px
+  * width: 50px
   :float right
   :text-align right
   :margin-top 0.25em
@@ -89,7 +88,7 @@ table.display thead th
   :border-bottom 1px solid black
   :font-weight bold
   :cursor pointer
-  :* cursor hand
+  * cursor: hand
 
 table.display tfoot th 
   :padding 3px 10px
@@ -138,7 +137,26 @@ tr.even
   :float none
 .clear 
   :clear both
-
+.dataTables_empty 
+  :text-align center
+.paging_full_numbers 
+  :width 400px
+  :height 22px
+  :line-height 22px
+.paging_full_numbers span.paginate_button, .paging_full_numbers span.paginate_active 
+  :border 1px solid #aaa
+  :-webkit-border-radius 5px
+  :-moz-border-radius 5px
+  :padding 2px 5px
+  :margin 0 3px
+  :cursor pointer
+  * cursor: hand
+.paging_full_numbers span.paginate_button 
+  :background-color #ddd
+.paging_full_numbers span.paginate_button:hover 
+  :background-color #ccc
+.paging_full_numbers span.paginate_active 
+  :background-color #99B3FF  
 // Sorting classes for columns
 tr.odd td.sorting_1 
   :background-color= !odd_sorting_bg_color
