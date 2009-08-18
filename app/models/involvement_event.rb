@@ -10,18 +10,18 @@ class InvolvementEvent < ActiveRecord::Base
   
   # Named scopes
   named_scope :with_event_types, lambda {|event_type_ids| { :conditions => ['event_type_id in (?)', event_type_ids ]}}
-  named_scope :on_study, lambda {|study_id| { :include => :involvement, :conditions => ['involvements.study_id=?', study_id], :order => 'involvement_events.occured_at DESC' } } do
+  named_scope :on_study, lambda {|study_id| { :include => :involvement, :conditions => ['involvements.study_id=?', study_id], :order => 'involvement_events.occurred_at DESC' } } do
     def to_graph
       results = {}
       (self.blank? ? [] : self).each do |e|
-        results[e.occured_at.to_time.to_i*1000] ||= 0
-        results[e.occured_at.to_time.to_i*1000] += 1
+        results[e.occurred_at.to_time.to_i*1000] ||= 0
+        results[e.occurred_at.to_time.to_i*1000] += 1
       end
       total = 0
       results.sort.map{|date, value| [date, total+=value]}
     end
   end
-  named_scope :on_studies, lambda {|study_ids| { :include => :involvement, :conditions => ['involvements.study_id in (?)', study_ids], :order => 'involvement_events.occured_at DESC' } }
+  named_scope :on_studies, lambda {|study_ids| { :include => :involvement, :conditions => ['involvements.study_id in (?)', study_ids], :order => 'involvement_events.occurred_at DESC' } }
   
   # Mixins
   has_paper_trail
@@ -73,7 +73,7 @@ class InvolvementEvent < ActiveRecord::Base
   end
  
   def self.find_or_create(params)
-    InvolvementEvent.find(:first,:conditions => {:involvement_id => params[:involvement_id],:occured_at=>params[:occured_at],:event_type_id=>params[:event_type_id]}) || InvolvementEvent.create(params)
+    InvolvementEvent.find(:first,:conditions => {:involvement_id => params[:involvement_id],:occurred_at=>params[:occured_at],:event_type_id=>params[:event_type_id]}) || InvolvementEvent.create(params)
   end
  
   private
