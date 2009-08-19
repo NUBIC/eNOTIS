@@ -15,13 +15,14 @@ class PatientUploadProcessor < ApplicationProcessor
     @summary =  {:total=>0,:success=>0}
       FasterCSV.foreach(file_path,:headers => :first_row,:write_headers=>false,:return_headers => false,:header_converters=>:symbol) do |r|
         @summary[:total] +=1
-        logger.debug "processing row"
+        logger.debug "processing row -- #{r.inspect}"
         errors = validate_row_data(r)
         if !errors.empty?
           logger.debug "found error: " +errors.join(". ")
           temp_stream << r.fields +  ["Failed"] +[errors.join(". ")] 
           next
-        end
+        end 
+        logger.debug "params formatted: #{format_params(r,@study.irb_number).inspect}"
         result = InvolvementEvent.add(format_params(r,@study.irb_number))
         if result
           @summary[:success] +=1
@@ -35,8 +36,6 @@ class PatientUploadProcessor < ApplicationProcessor
     @study_upload.save
   end
 
-  private
-
   def validate_row_data(row)
      errors = InvolvementEvent.sanity_check(row)
      #if any parameters are missing, quite now
@@ -48,26 +47,24 @@ class PatientUploadProcessor < ApplicationProcessor
      errors << validate_events(row)
      return errors.flatten
   end
-
-
-  def validate_gender(params)
-    genders = DictionaryTerm.find(:all,:conditions=>["category= ?and term like ?","Gender",params[:gender]+'%'])
-    (genders.size == 1)? [] :  "Unkown Gender value: #{params[:gender]}"
   
+  # Validators return empty error array if valid
+  def validate_gender(params)
+    gender = DictionaryTerm.lookup_term(params[:gender],:gender)
+    gender ? [] : "Unknown Gender Value: #{params[:gender]}"
   end
 
   def validate_ethnicity(params)
-    ethnicities = DictionaryTerm.find(:all,:conditions=>["category= ?and term like ?","Ethnicity",params[:ethnicity]+'%'])
-    (ethnicities.size == 1)? [] :  "Unkown ethnicity value: #{params[:ethnicity]}"
+    ethnicity = DictionaryTerm.lookup_term(params[:ethnicity],:ethnicity)
+    ethnicity ? [] : "Unknown Ethnicity Value: #{params[:ethnicity]}"
   end
-
 
   def validate_races(params)
     errors = []
     race_keys = params.headers.select{|key| key.to_s =~/Race/i }
     race_keys.each do |key|
-      races = DictionaryTerm.find(:all,:conditions=>["category= ?and term like ?","Race",params[key]+'%'])
-      errors <<  "Unkown Race Value: #{params[key]}" unless races.size == 1
+      race = DictionaryTerm.lookup_term(params[key],:race)
+      errors << "Unknown Race Value: #{params[key]}" unless race 
     end
     return errors
   end
@@ -76,8 +73,8 @@ class PatientUploadProcessor < ApplicationProcessor
     errors = []
     event_keys = params.headers.select{|key| key.to_s =~/event_type/i}
     event_keys.each do |key|
-      events = DictionaryTerm.find(:all,:conditions=>["category= ?and term like ?","Event",params[key]+'%'])
-      errors <<  "Unkown Event Type: #{params[key]}" unless events.size == 1
+      event = DictionaryTerm.lookup_term(params[key],:event)
+      errors <<  "Unknown Event Type: #{params[key]}" unless event
     end
     return errors
   end
@@ -96,10 +93,12 @@ class PatientUploadProcessor < ApplicationProcessor
   end
   
   def get_ethnicity(params)
-    DictionaryTerm.find(:first,:conditions=>["category= ?and term like ?","Ethnicity",params[:ethnicity]+'%']).id
+    eth = DictionaryTerm.lookup_term(params[:ethnicity],:ethnicity)
+    eth.id if eth
   end
   def get_gender(params)
-    DictionaryTerm.find(:first,:conditions=>["category= ?and term like ?","Gender",params[:gender]+'%']).id
+    gen = DictionaryTerm.lookup_term(params[:gender],:gender)
+    gen.id if gen
   end
 
 
@@ -107,8 +106,8 @@ class PatientUploadProcessor < ApplicationProcessor
     events =[]
     params.headers.select{|key| key.to_s =~/event_type/i}.each do |key|
       event={}
-      event[:event_type_id]  = DictionaryTerm.find(:first,:conditions=>["category= ?and term like ?","Event",params[key]+'%']).id
-      event[:occured_at] = Chronic.parse(params[key.to_s.gsub("type","date").to_sym])
+      event[:event_type_id] = (DictionaryTerm.lookup_term(params[key],:event)).id
+      event[:occurred_on] = Chronic.parse(params[key.to_s.gsub("type","date").to_sym])
       events << event
     end
     return events
@@ -124,7 +123,7 @@ class PatientUploadProcessor < ApplicationProcessor
   def get_races(params)
     races = []
     params.headers.select{|key| key.to_s =~/Race/i}.each do |key|
-      races << DictionaryTerm.find(:first,:conditions=>["category= ?and term like ?","Race",params[key]+'%']).id
+      races << (DictionaryTerm.lookup_term(params[key],:race)).id
     end
     return races
   end

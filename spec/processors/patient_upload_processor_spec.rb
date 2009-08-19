@@ -15,28 +15,29 @@ describe PatientUploadProcessor do
     end
 
     it "should process a correctly formed csv file" do 
-      good_mrn = File.open(@dir + 'valid_upload.csv')
-      @study_upload.upload = good_mrn
-      good_mrn.close
-      @study_upload.save
-      @processor.on_message(@study_upload.id.to_s)
+
+      File.open(@dir + 'valid_upload.csv') do |f|
+        @study_upload.upload = f
+        @study_upload.save
+      end
+      @processor.on_message(@study_upload.id)
       Involvement.find_by_study_id(@study.id).should_not be_nil
     end
 
     it "should ignore a bad mrn if first name, last, name and dob are present" do
-      good_mrn = File.open(@dir + 'bad_mrn_valid_name_upload.csv')
-      @study_upload.upload = good_mrn
-      good_mrn.close
-      @study_upload.save
-      @processor.on_message(@study_upload.id.to_s)
+      File.open(@dir + 'bad_mrn_valid_name_upload.csv') do |f|
+        @study_upload.upload = f
+        @study_upload.save
+      end
+      @processor.on_message(@study_upload.id)
       Involvement.find_by_study_id(@study.id).should_not be_nil
     end
 
     it "should show all fields not entered" do 
-      file  = File.open(@dir + 'missing_values_upload.csv')
-      @study_upload.upload = file
-      @study_upload.save
-      file.close
+      File.open(@dir + 'missing_values_upload.csv') do |f|
+        @study_upload.upload = f
+        @study_upload.save
+      end
       upload_id = @study_upload.id
       @processor.on_message(upload_id)
       @study_upload = StudyUpload.find(upload_id)
@@ -51,63 +52,65 @@ describe PatientUploadProcessor do
     end
 
     it "should report all improperly entered races, ethnicities and involvement types" do
-      file  = File.open(@dir + 'invalid_race_etc_upload.csv')
-      @study_upload.upload = file
-      @study_upload.save
-      file.close
+      File.open(@dir + 'invalid_race_etc_upload.csv') do |f|
+       @study_upload.upload = f
+       @study_upload.save
+      end
       upload_id = @study_upload.id
       @processor.on_message(upload_id)
       @study_upload = StudyUpload.find(upload_id)
       result = File.new(@study_upload.result.path,"r")
       content = result.readlines() 
-      content.to_s.should =~ /Unkown ethnicity value/i
-      content.to_s.should =~ /Unkown Race Value/i 
-      content.to_s.should =~ /Unkown Event Type/i
-      content.to_s.should =~ /Unkown Gender value/i 
+      content.to_s.should =~ /Unknown Ethnicity Value/i
+      content.to_s.should =~ /Unknown Race Value/i 
+      content.to_s.should =~ /Unknown Event Type/i
+      content.to_s.should =~ /Unknown Gender Value/i 
     end
 
     it "should input multiple races if entered" do 
-      good_mrn = File.open(@dir + 'valid_upload.csv')
-      @study_upload.upload = good_mrn
-      good_mrn.close
+      File.open(@dir + 'valid_upload.csv') do |f|
+        @study_upload.upload = f
+      end
       @study_upload.save
-      @processor.on_message(@study_upload.id.to_s)
+      @processor.on_message(@study_upload.id)
       Involvement.find_by_study_id(@study.id).races.size.should == 2
     end
 
     it "should input multiple involvements if entered" do
-      good_mrn = File.open(@dir + 'valid_upload.csv')
-      @study_upload.upload = good_mrn
-      good_mrn.close
+      File.open(@dir + 'valid_upload.csv') do |f|
+        @study_upload.upload = f
+      end
       @study_upload.save
-      @processor.on_message(@study_upload.id.to_s)
+      @processor.on_message(@study_upload.id)
       Involvement.find_by_study_id(@study.id).involvement_events.size.should == 2
     end
 
     it "should not create duplicate involvement events" do 
-      good_mrn = File.open(@dir + 'duplicate_events_upload.csv')
-      @study_upload.upload = good_mrn
-      good_mrn.close
-      @study_upload.save
-      @processor.on_message(@study_upload.id.to_s)
+      File.open(@dir + 'duplicate_events_upload.csv') do |f|
+        @study_upload.upload = f
+        @study_upload.save
+      end
+      @processor.on_message(@study_upload.id) 
+      puts Involvement.find(:all).inspect
       Involvement.find_by_study_id(@study.id).involvement_events.size.should == 1
     end
 
     it "Should not create duplicate patients (same name and dob)  on the same study" do
-      file = File.open(@dir + 'valid_upload.csv')
-      @study_upload.upload = file
-      file.close
+      File.open(@dir + 'valid_upload.csv') do |f|
+        @study_upload.upload = f
+      end
       @study_upload.save
       @study_upload2 = StudyUpload.create({:study_id=>@study.id})
-      file = File.open(@dir + 'valid_upload.csv')
-      @study_upload2.upload = file
-      file.close
+      
+      File.open(@dir + 'valid_upload.csv') do |f|
+        @study_upload2.upload = f
+      end
       @study_upload2.save
       @processor.on_message(@study_upload2.id.to_s)
       @study.involvements.size.should == 1
     end
-    
    
+  
 
   end
 end

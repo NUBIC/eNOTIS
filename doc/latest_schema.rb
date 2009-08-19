@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(:version => 20090717213941) do
 
   table "involvement_events" do |t|
     t.integer  "involvement_id"
-    t.datetime "occured_at"
+    t.datetime "occurred_on"
     t.integer  "event_type_id"
     t.text     "note"
     t.datetime "created_at"

@@ -1,2 +1,2 @@
 mrn,first_name,last_name,birth_date,event_type,event_date,race,race2,ethnicity,gender,event_type1,event_date1
-,test10,last10,12/31/1924,consent,3/6/09,asian,black,hispanic,male,consent,3/6/09
+,test10,last10,12/31/1924,consented,3/6/09,asian,Black/African American,hispanic or latino,male,consented,3/6/09

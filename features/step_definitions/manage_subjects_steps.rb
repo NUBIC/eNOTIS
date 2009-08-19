@@ -41,7 +41,7 @@ end
 Then /^I should see the add event form$/ do
   response.should have_tag("form[action=?]", involvement_events_path) do
     with_tag("select[name=?]", "involvement_events[][event_type_id]")
-    with_tag("input[name=?]", "involvement_events[][occured_at]")
+    with_tag("input[name=?]", "involvement_events[][occurred_on]")
     with_tag("input[name=?]", "involvement_events[][note]")
   end
 end

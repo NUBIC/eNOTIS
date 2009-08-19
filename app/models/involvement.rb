@@ -43,7 +43,7 @@ class Involvement < ActiveRecord::Base
 
   # Public class methods
   def self.update_or_create(params)
-    if (ie = Involvement.find(:first, :conditions => {:study_id => [:study_id], :subject_id => params[:subject_id]}))
+    if (ie = Involvement.find(:first, :conditions => {:study_id => params[:study_id], :subject_id => params[:subject_id]}))
       ie.update_attribute(params)
     else
       Involvement.create(params)
