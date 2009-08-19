@@ -16,15 +16,15 @@ class DictionaryTerm < ActiveRecord::Base
 
   # Some helper methods than wrap finders
   def self.lookup_code(code, cat)
-    find(:first, :conditions => ["lower(code)=lower(?) and lower(category)=lower(?)",code.to_s, cat.to_s])
+    find(:first, :conditions => ["code=? and category=?",code.to_s, cat.to_s])
   end
 
   def self.lookup_term(term, cat)
-    find(:first, :conditions => ["lower(term)=lower(?) and lower(category)=lower(?)",term.to_s, cat.to_s])
+    find(:first, :conditions => ["term=? and category=?",term.to_s, cat.to_s])
   end
 
   def self.source_terms(source)
-    find(:all, :conditions => ["lower(source)=lower(?)",source])
+    find(:all, :conditions => ["source=?",source])
   end
  
   # Public instance methods

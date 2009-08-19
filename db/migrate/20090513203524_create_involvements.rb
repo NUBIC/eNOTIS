@@ -8,7 +8,6 @@ class CreateInvolvements < ActiveRecord::Migration
       t.timestamps
     end
     
-    # For oracle... indexes, sequences, tablenames, and columnames must be less than 30 characters... had to rename this one from the default generated one
     add_index(:involvements, [:subject_id, :study_id, :ethnicity_type_id, :gender_type_id], :name => 'involvements_attr_idx', :unique => true)
   end
 

@@ -8,7 +8,6 @@ class CreateInvolvementEvents < ActiveRecord::Migration
       t.timestamps
     end
 
-    # For oracle... indexes, sequences, tablenames, and columnames must be less than 30 characters... had to rename this one from the default generated one
     add_index(:involvement_events, [:involvement_id,:event_type_id,:occurred_on], :name => 'inv_events_attr_idx', :unique => true) # Should cover most queries
     add_index(:involvement_events, :occurred_on, :unique => false, :name => 'inv_events_occurred_idx') # For date based queries
     add_index(:involvement_events, :event_type_id, :unique => false, :name => 'inv_events_type_idx') # For event_type querien
