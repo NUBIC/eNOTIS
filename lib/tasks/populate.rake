@@ -11,11 +11,11 @@ namespace :db do
 
     task :default => [:environment, :clear_db, :admins, :"dictionary_terms:import", :users, :coordinators_and_studies, :coordinators, :involvements_and_subects, :involvements, :sample_netids]
     
-    desc 'Clear models: User, Coordinator, Study, Involvement, Subject, InvolvementEvent'
+    desc 'Clear models: User, Coordinator, Study, Involvement, Subject, InvolvementEvent,DictionaryTerm'
     task :clear_db => :environment do
       puts
       puts "clearing db..."
-      [User, Coordinator, Study, Involvement, Subject, InvolvementEvent].each(&:delete_all)
+      [User, Coordinator, Study, Involvement, Subject, InvolvementEvent,DictionaryTerm].each(&:delete_all)
     end
 
     desc 'Populate admins(Reggie, Brian, David, Mark)'
@@ -50,10 +50,10 @@ namespace :db do
     desc 'Populate involvements: joins subjects(fake) and studies(random)'
     task :involvements_and_subects => :environment do
       puts "creating involvements and subjects..."
-      event_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Event']).map(&:id)
-      event_type_ids += Array.new(20, DictionaryTerm.find_by_term("Consented").id) # weight this more heavily towards consent event types
-      gender_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Gender']).map(&:id)
-      ethnicity_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Ethnicity']).map(&:id)
+      event_type_ids = DictionaryTerm.lookup_category_terms('Event').map(&:id)
+      event_type_ids += Array.new(20, DictionaryTerm.lookup_term("Consented","Event").id) # weight this more heavily towards consent event types
+      gender_type_ids = DictionaryTerm.lookup_category_terms('Gender').map(&:id)
+      ethnicity_type_ids = DictionaryTerm.lookup_category_terms('Ethnicity').map(&:id)
       300.times do |i|
         involvement = Factory.create( :involvement, :study => random(Study), :subject => Factory.create(:fake_subject),
                                       :gender_type_id => gender_type_ids.rand, :ethnicity_type_id => ethnicity_type_ids.rand)
@@ -65,10 +65,10 @@ namespace :db do
     desc 'Populate involvements: joins subjects(random) and studies(random)'
     task :involvements => :environment do
       puts "creating extra involvements..."
-      event_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Event']).map(&:id)
-      event_type_ids += Array.new(20, DictionaryTerm.find_by_term("Consented").id) # weight this more heavily towards consent event types
-      gender_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Gender']).map(&:id)
-      ethnicity_type_ids = DictionaryTerm.find(:all, :select => "id", :conditions => ['category=?', 'Ethnicity']).map(&:id)
+      event_type_ids = DictionaryTerm.lookup_category_terms('Event').map(&:id)
+      event_type_ids += Array.new(20, DictionaryTerm.lookup_term("Consented","Event").id) # weight this more heavily towards consent event types
+      gender_type_ids = DictionaryTerm.lookup_category_terms('Gender').map(&:id)
+      ethnicity_type_ids = DictionaryTerm.lookup_category_terms('Ethnicity').map(&:id)
       200.times do |i|
         involvement = Factory.create( :involvement, :study => random(Study), :subject => random(Subject),
                                       :gender_type_id => gender_type_ids.rand, :ethnicity_type_id => ethnicity_type_ids.rand)
