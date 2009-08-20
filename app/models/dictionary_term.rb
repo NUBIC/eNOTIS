@@ -11,20 +11,27 @@ class DictionaryTerm < ActiveRecord::Base
   validates_presence_of :term, :code
   validates_uniqueness_of :term, :scope => :category 
   validates_uniqueness_of :code, :scope => :category
+
+  # Filters
+  before_save :downcase_attributes
  
   # Public class methods
+  #
+  def self.lookup_category_terms(cat)
+    find(:all, :conditions => ["lower(category)=?",cat.to_s.downcase])
+  end
 
   # Some helper methods than wrap finders
   def self.lookup_code(code, cat)
-    find(:first, :conditions => ["code=? and category=?",code.to_s, cat.to_s])
+    find(:first, :conditions => ["lower(code)=? and lower(category)=?",code.to_s.downcase, cat.to_s.downcase])
   end
 
   def self.lookup_term(term, cat)
-    find(:first, :conditions => ["term=? and category=?",term.to_s, cat.to_s])
+    find(:first, :conditions => ["lower(term)=? and lower(category)=?",term.to_s.downcase, cat.to_s.downcase])
   end
 
   def self.source_terms(source)
-    find(:all, :conditions => ["source=?",source])
+    find(:all, :conditions => ["lower(source)=?",source.to_s.downcase])
   end
  
   # Public instance methods
@@ -32,6 +39,13 @@ class DictionaryTerm < ActiveRecord::Base
   # Instance method to return the 'user readable' value of the term obj
   def to_s
     self.term.to_s
+  end
+
+  private
+  def downcase_attributes
+    self.term.downcase! if self.term
+    self.code.downcase! if self.code
+    self.category.downcase! if self.category
   end
 
 end

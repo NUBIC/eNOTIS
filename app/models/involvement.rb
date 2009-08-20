@@ -34,9 +34,11 @@ class Involvement < ActiveRecord::Base
   def ethnicity
     self.ethnicity_type ? self.ethnicity_type.term : nil
   end
+
   def gender
     self.gender_type ? self.gender_type.term : nil
   end
+
   def race_list
     self.races.map{|race| race.race_type.term }
   end

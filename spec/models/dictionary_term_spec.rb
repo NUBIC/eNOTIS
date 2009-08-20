@@ -40,8 +40,8 @@ describe DictionaryTerm do
     end
       
     it "returns the 'user friendly' value when turned into a string" do
-      @t.to_s.should == "Klingon" 
-      "#{@t}".should == "Klingon"
+      @t.to_s.should == "klingon" 
+      "#{@t}".should == "klingon"
     end
 
     describe "finds a term given code and category" do
@@ -68,11 +68,7 @@ describe DictionaryTerm do
       DictionaryTerm.create({:term => "foo",:code => "foo",:category => "all", :source => "The internets"})
       DictionaryTerm.create({:term => "bar",:code => "bar",:category => "all", :source => "United Federation Race Categories"})
       s = DictionaryTerm.source_terms("United Federation Race Categories")
-      s.size.should == 2
-      #case insensitive...
-      s = DictionaryTerm.source_terms("UNITED Federation RACE Categories")
-      s.size.should == 2
-
+      s.size.should == 2 
     end
 
   end

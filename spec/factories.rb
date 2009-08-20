@@ -11,16 +11,16 @@ DEATH_RATE = Array.new(195, false) + Array.new(5, true) # 5 in 200
 
 # DictionaryTerm methods
 def race_ids
-  @dtr ||= DictionaryTerm.find_all_by_category("Race").map(&:id)
+  @dtr ||= DictionaryTerm.lookup_category_terms("Race").map(&:id)
 end
 def gender_ids
-  @dtg ||= DictionaryTerm.find_all_by_category("Gender").map(&:id)
+  @dtg ||= DictionaryTerm.lookup_category_terms("Gender").map(&:id)
 end
 def ethnicity_ids
-  @dte ||= DictionaryTerm.find_all_by_category("Ethnicity").map(&:id)
+  @dte ||= DictionaryTerm.lookup_category_terms("Ethnicity").map(&:id)
 end
 def event_ids
-  @dte ||= DictionaryTerm.find_all_by_category("Event").map(&:id)
+  @dte ||= DictionaryTerm.lookup_category_terms("Event").map(&:id)
 end
 
 # Basic Models
@@ -176,7 +176,7 @@ Factory.define :study_upload do |s|
 end
 
 Factory.define :dictionary_term do |d|
-  d.category        {%w(Ethnicity Gender Event Race).rand}
+  d.category        {%w(ethnicity Gender Event Race).rand}
   d.term            {|me| me.category == "Gender" ? %w(Male Female).rand : Faker::Lorem.words(1).to_s }
   d.code            {|me| [me.category.downcase, me.term.downcase].join("-").gsub(/[^a-z]/, "-")}
   d.source          {Faker::Lorem.words(2).join(" ")}

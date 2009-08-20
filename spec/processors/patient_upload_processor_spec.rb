@@ -91,7 +91,6 @@ describe PatientUploadProcessor do
         @study_upload.save
       end
       @processor.on_message(@study_upload.id) 
-      puts Involvement.find(:all).inspect
       Involvement.find_by_study_id(@study.id).involvement_events.size.should == 1
     end
 
