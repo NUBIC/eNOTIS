@@ -20,14 +20,14 @@
     %p Required Demographic Information
     %p
       = label_tag 'involvement[gender_type_id]','Gender'
-      = select_tag('involvement[gender_type_id]',options_for_select(@genders.map{|gender|[gender.term,gender.id]}))
+      = select_tag('involvement[gender_type_id]',options_for_select(@genders.map{|gender|[gender.term.capitalize!,gender.id]}))
     %p
       = label_tag 'involvement[ethnicity_type_id]','Ethnicity'
-      = select_tag('involvement[ethnicity_type_id]',options_for_select(@ethnicities.map{|ethnicity|[ethnicity.term,ethnicity.id]}))
+      = select_tag('involvement[ethnicity_type_id]',options_for_select(@ethnicities.map{|ethnicity|[ethnicity.term.capitalize!,ethnicity.id]}))
     %p Race
     - @races.each do |race|
       %p
-        = label_tag "involvement[race_type_ids][][#{race.id}]", race.term
+        = label_tag "involvement[race_type_ids][][#{race.id}]", race.term.capitalize!
         = check_box_tag "involvement[race_type_ids][][#{race.id}]", race.id
     %hr
     %p Initial Event Information
@@ -36,7 +36,7 @@
     = hidden_field_tag("subject[id]", @subject.id)
   %p
     = label_tag('involvement_events[][event_type_id]','Event Type')
-    = select_tag('involvement_events[][event_type_id]',options_for_select(@events.map{|event|[event.term,event.id]}))
+    = select_tag('involvement_events[][event_type_id]',options_for_select(@events.map{|event|[event.term.capitalize!,event.id]}))
   %p
     = label_tag('involvement_events[][note]', 'Note')
     = text_field_tag('involvement_events[][note]')

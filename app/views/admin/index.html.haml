@@ -6,7 +6,7 @@
     $("img.hub").fadeIn(10000);
     });
 #users
-  = pluralize @users.count, "user"
+  = pluralize @users.size, "user"
   %table.display
     %thead
       %tr
@@ -20,7 +20,7 @@
           %td= user.netid
           %td= user.studies.map{|study| link_to(study.irb_number, study_path(study), :title => study.title)}.join(", ")
 #dictionary_terms
-  = pluralize @dictionary_terms.count, "dictionary term"
+  = pluralize @dictionary_terms.size, "dictionary term"
   %table.display
     %thead
       %tr
