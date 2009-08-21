@@ -1,5 +1,5 @@
 %h4= @subject.name
-%p.sync= @subject.synced? ? "synced icon" : link_to("sync icon", sync_subjects_path)
+%p.sync= @subject.synced? ? image_tag("sync_icon_32.gif") : link_to(image_tag("mrn_sync_icon_32.gif"), sync_subjects_path)
 %p.mrn= "mrn: #{@subject.mrn}"
 %p.dob= "dob: #{@subject.birth_date}"
 - if @involvement

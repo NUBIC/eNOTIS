@@ -4,6 +4,11 @@
 @import base.sass
 
 body
+  :background-image url('/images/bridge-nav-bkgnd.gif')
+  :background-repeat repeat-x
+  :background-position 0 65px
+
+  //:background url('/images/idx2.gif')
   // basic top, middle, bottom block layout
   #header
     +column(36,true)
@@ -14,7 +19,8 @@ body
       :font-weight bold
       :color = !nu_purple
       img
-        :padding-top= !blueprint_grid_width
+        :padding-top 8px
+  
 
     .tagline
       :color = !nu_purple

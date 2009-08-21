@@ -4,6 +4,13 @@
 @import base.sass
 // basic top, middle, bottom block layout
 body
+  :background-color= !secondary_data_bg_color
+ 
+
+  #container
+    :border= 1px solid !secondary_data_border_color
+    :border-top= 0px
+
   #header
     +column(48,true)
     +squeeze
@@ -13,27 +20,31 @@ body
       :font-size 3em
       :font-weight bold
       :color = !nu_purple
+      img
+        :padding-top 25px
 
     .tagline
       :color = !nu_purple
       :font-size 0.4em
-
+  
   #main
-    +column(48,true)
+    +column(50,true)
     +squeeze
 
     #left_primary
-      +column(34)
+      +column(35)
 
     #right_sidebar
-      +column(14,true)
+      +prepend(1)
+      +column(13,true)
 
   #footer 
     +column(50,true)
 
 
 #enotis_description
-  :font-size 1.3em
+  :font-size 1.4em
+  :font-weight bold
   +squeeze(1)
   +squish(1)
 

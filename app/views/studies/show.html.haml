@@ -5,9 +5,9 @@
   %script{:type => 'text/javascript'}
     $(document).ready(function(){
     // show the Data Tables
-    $("#subjects .display").dataTable({"aoColumns": [{ "sType": "html" }, null], "iDisplayLength": -1 });
-    $("#events .display").dataTable({"aoColumns": [null, { "sType": "html" }, null, null]});
-    $("#imports .display").dataTable();
+    $("#subjects .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null], "iDisplayLength": -1 });
+    $("#events .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [null, { "sType": "html" }, null, null]});
+    $("#imports .display").dataTable({"sPaginationType": "full_numbers"});
     // show the accrual graph
     = "var e = #{@accruals.to_graph.inspect};"
     $.plot($("#accrual-graph"), [e], { grid: {borderWidth: 0}, xaxis: { mode: "time" } });
@@ -87,7 +87,7 @@
               - @study.subjects.each do |subject|
                 %tr{:class => "subject_#{subject.id}"}
                   %td= link_to(subject.name || "(no name)", subject_path(subject, :study => @study), :rel => 'detail')
-                  %td= subject.synced? ? "synced" : "not synced"
+                  %td= subject.synced? ? image_tag("sync_icon_16.gif") : "&nbsp;"
       #subject-detail
         .heading
           = "#{pluralize(@study.subjects.size, "subject")} associated with this study"

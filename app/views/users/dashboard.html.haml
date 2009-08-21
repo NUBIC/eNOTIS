@@ -1,6 +1,6 @@
 - content_for :head do
   :javascript
-    $(document).ready(function(){$(".display").dataTable({"aoColumns": [{ "sType": "html" }, null, null, null]});});
+    $(document).ready(function(){$(".display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null, null, null]});});
     
 #my_studies
   .heading= "My Studies (#{@studies.size} in total)"
