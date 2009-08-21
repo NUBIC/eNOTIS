@@ -6,6 +6,7 @@ module WebServices
   def  self.included(base)
     base.class_eval do 
       class << self
+        SERVICE_PLUGINS = [EdwServices,EirbServices]
         alias_method :old_find, :find
         def find(*args)
            
@@ -76,16 +77,6 @@ module WebServices
           end
           return result
         end
-
-        def get_plugins
-          $plugins
-        end     
-        
-        def set_plugins(plugins)
-          $plugins = plugins
-        end
-
-
         def service_search(*args)
           #This method searches all plugins, for a method name that
           #contains all the conditions provided e.g condition last_name
@@ -93,13 +84,13 @@ module WebServices
           options = args.clone.extract_options!
           conditions = convert_conditions_to_hash(options[:conditions])
           keys = conditions.keys
-          get_plugins.each do |plugin|
+          SERVICE_PLUGINS.each do |plugin|
 	    meth = plugin.public_methods.detect{|method_name| keys.map{|x| method_name.include?(x.to_s.strip)}.uniq == [true]}
             if meth
               return plugin.send(meth,conditions.merge!(get_service_opts(options)))
             end
           end
-          raise "No Method Found"
+          raise "No Method Found matching"
 
         end
 

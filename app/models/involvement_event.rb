@@ -30,7 +30,7 @@ class InvolvementEvent < ActiveRecord::Base
   
   # Public instance methods
   def term
-    event_type.term
+    event_type.term.capitalize
   end
   def description
     event_type.description
