@@ -19,7 +19,7 @@ Given /^subject "([^\"]*)" has event "([^\"]*)" on study "([^\"]*)"$/ do |mrn, t
   unless involvement = Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number))
     involvement = Factory(:involvement, :subject => Subject.find_by_mrn(mrn), :study => Study.find_by_irb_number(irb_number))
   end
-  Factory(:involvement_event, :involvement => involvement, :event_type => DictionaryTerm.find_by_term(term))
+  Factory(:involvement_event, :involvement => involvement, :event_type => DictionaryTerm.lookup_term(term,"Event"))
 end
 
 Then /^subject "([^\"]*)" should have (\d+) events? on study "([^\"]*)"$/ do |mrn, x, irb_number|
