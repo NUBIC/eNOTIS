@@ -38,8 +38,8 @@ class SubjectsController < ApplicationController
 
   def search
     #this method is designed specifically to search for a locally stored subject in the edw
-    @local = Subject.find(params[:id])
-    @subjects = Subject.find(:all,:conditions=> ["first_name = #{@local.first_name} and last_name = #{@local.last_name} and birth_date =#{@local.birth_date}"],:span=>:foreign)
+    @local = Subject.find(params[:subject])
+    @subjects = Subject.find(:all,:conditions=>{:first_name =>@local.first_name,:last_name =>@local.last_name,:birth_date => @local.birth_date},:span=>:foreign,:service_opts=>{:netid=>current_user.netid})
     respond_to do |format|
       format.html
       format.js {render :layout => false}
@@ -49,16 +49,10 @@ class SubjectsController < ApplicationController
   def merge
     # this action syncs a local records to a selected medical record
     @local = Subject.find(params[:local_id])
-    Subject.find(:first,:conditions=>{:mrn=>params[:mrn]}, :span=>:global).merge!(@local)
-    respond_to do |format|
-      format.html do
-        flash[:notice] = "Success"
-        redirect_to study_path(@study)
-      end
-        format.js do
-        render :layout => false, :html => "Subject Synced to Medical Record"
-      end
-    end
+    @study = @local.studies.first
+    Subject.find(:first,:conditions=>{:mrn=>params[:mrn]}, :span=>:global,:service_opts=>{:netid=>current_user.netid}).merge!(@local)
+    flash[:notice] = "Subject Synced"
+    redirect_to study_path(@study.irb_number,:anchor=>"subjects")
   end
   
   def create

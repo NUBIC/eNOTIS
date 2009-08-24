@@ -4,14 +4,14 @@
 -else
   %p Found The Following Records Matching Your Patient
   -@subjects.each do |subject|  
-    - form_remote_tag( :url=> sync_subjects_path ) do 
+    - form_tag( merge_subjects_path ) do 
       = hidden_field_tag(:local_id,@local.id)
       = label_tag 'first_name' 
       = text_field_tag( :first_name, subject.first_name)
       = label_tag 'last_name' 
       = text_field_tag( :last_name, subject.last_name)
       %br
-      = label_tag 'mrn'
+      = label_tag 'mrn',"MRN"
       = text_field_tag(:mrn,subject.mrn)
       = label_tag 'birth_date', "Date of Birth" 
       = text_field_tag( :birth_date , subject.birth_date)

@@ -5,6 +5,7 @@ require 'lib/webservices/webservices'
 # The model stores the fields and information about the source system for the data.
 
 class Subject < ActiveRecord::Base
+  @@plugins = [EdwServices]
   include WebServices
 
   # Associations
@@ -17,7 +18,6 @@ class Subject < ActiveRecord::Base
 
   # Mixins
   has_paper_trail
-  $plugins = [EdwServices]
   
   # Public instance methods
   def mrn=(mrn)
@@ -52,8 +52,9 @@ class Subject < ActiveRecord::Base
   def merge!(subject)
    #This method is used to merge an existing subject and involvements
    #to a this subject
-   self.involvements << subject.involvements 
-   subject.delete 
+   self.save
+   self.involvements << subject.involvements
+   #subject.delete 
   end
   
   # Public class methods
