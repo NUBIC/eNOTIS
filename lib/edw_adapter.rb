@@ -20,7 +20,7 @@ class EdwAdapter
 
   # Calls the generated Mechanize agent to perform the search on the remote resource
   # Accepts a param hash of values and converts hash parameters to query string (thanks, Rails!)
-  def perform_search(report,params = {})
+  def perform_search(params = {})
     begin
       # # actually NTLM auth, but NTLM Mechanize overwrites the method for ease
       # # see http://www.mindflowsolutions.net/2009/5/21/ruby-ntlm-mechanize
@@ -28,9 +28,8 @@ class EdwAdapter
       # 
       # xml_response = agent.get(config.url + "&" + params.to_query).content
       WSLOGGER.debug("=========================================== SEARCH ======================================")
-      report_url = config.url.gsub("[report_name]",report)
+      report_url = config.url
 
-      WSLOGGER.debug("Using Report :\r\n #{report}")
       WSLOGGER.debug("Performing search using params :\r\n #{params.to_query}")
       WSLOGGER.debug("Using query :\r\n #{report_url + "&" + params.to_query}")
       req = Net::HTTP::Get.new(report_url + "&" + params.to_query, {'connection' => 'keep-alive'})

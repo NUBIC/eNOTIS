@@ -9,14 +9,14 @@ EDW_TO_NOTIS = {
 'zip_code'   => 'zip',
 'home_phone_txt' => 'phone_number',
 'birth_dts'=>'birth_date',
-'mrd_pt_id'=>'mrn'
+'mrn'=>'mrn'
 
 }
 
 NOTIS_TO_EDW = {
  'first_name' => 'first_nm',
  'last_name' => 'last_nm',
- 'mrn' => 'mrd_pt_id',
+ 'mrn' => 'mrn',
  'birth_date'=>'birth_dts',
  'netid' => 'net_id'
 }
