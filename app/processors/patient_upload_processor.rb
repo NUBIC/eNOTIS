@@ -41,30 +41,19 @@ class PatientUploadProcessor < ApplicationProcessor
      #if any parameters are missing, quite now
      return errors unless errors.empty?
      #check validity of parameters parameters for race, events 
-     errors << validate_gender(row)
-     errors << validate_ethnicity(row)
-     errors << validate_races(row)
+     errors << validate_dictionary_terms(row)
      errors << validate_events(row)
      return errors.flatten
   end
   
   # Validators return empty error array if valid
-  def validate_gender(params)
-    gender = DictionaryTerm.lookup_term(params[:gender],:gender)
-    gender ? [] : "Unknown Gender Value: #{params[:gender]}"
-  end
-
-  def validate_ethnicity(params)
-    ethnicity = DictionaryTerm.lookup_term(params[:ethnicity],:ethnicity)
-    ethnicity ? [] : "Unknown Ethnicity Value: #{params[:ethnicity]}"
-  end
-
-  def validate_races(params)
-    errors = []
-    race_keys = params.headers.select{|key| key.to_s =~/Race/i }
-    race_keys.each do |key|
-      race = DictionaryTerm.lookup_term(params[key],:race)
-      errors << "Unknown Race Value: #{params[key]}" unless race 
+  def validate_dictionary_terms(params)
+    errors=[]
+    [:gender,:ethnicity,:race].each do |category|
+      params.headers.select{|key| key.to_s=~/#{category.to_s}/i}.each do |key|
+        term = DictionaryTerm.lookup_term(params[key],category)
+        errors <<  "Unknown #{category.to_s.capitalize} Value: #{params[category]}" if term.nil?
+      end
     end
     return errors
   end
@@ -74,7 +63,7 @@ class PatientUploadProcessor < ApplicationProcessor
     event_keys = params.headers.select{|key| key.to_s =~/event_type/i}
     event_keys.each do |key|
       event = DictionaryTerm.lookup_term(params[key],:event)
-      errors <<  "Unknown Event Type: #{params[key]}" unless event
+      errors <<  "Unknown Event Value: #{params[key]}" unless event
     end
     return errors
   end

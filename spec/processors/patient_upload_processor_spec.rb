@@ -63,7 +63,7 @@ describe PatientUploadProcessor do
       content = result.readlines() 
       content.to_s.should =~ /Unknown Ethnicity Value/i
       content.to_s.should =~ /Unknown Race Value/i 
-      content.to_s.should =~ /Unknown Event Type/i
+      content.to_s.should =~ /Unknown Event Value/i
       content.to_s.should =~ /Unknown Gender Value/i 
     end
 
