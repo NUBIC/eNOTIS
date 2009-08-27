@@ -7,11 +7,15 @@ describe EdwAdapter do
     @config.stub!(:url).and_return("http://blah.com?action")
     @config.stub!(:username).and_return("foo")
     @config.stub!(:password).and_return("bar")
+    @config.stub!(:read_timeout).and_return("2")
+    @config.stub!(:open_timeout).and_return("2")
 
     @agent = Object.new
     Net::HTTP.stub!(:new).and_return(@agent)
     @agent.stub!(:use_ssl=)
     @agent.stub!(:verify_mode=)
+    @agent.stub!(:read_timeout=)
+    @agent.stub!(:open_timeout=)
 
     @resp = Object.new()
     @resp.stub!(:body).and_return("<?xml version=\"1.0\" encoding=\"utf-8\"?><Detail><mrd_pt_id>9988101</mrd_pt_id></Detail>")
