@@ -106,7 +106,7 @@ class PatientUploadProcessor < ApplicationProcessor
     subject[:mrn] = params[:mrn]
     subject[:first_name] = params[:first_name]
     subject[:last_name] = params[:last_name]
-    subject[:birth_date] = params[:last_name]
+    subject[:birth_date] = params[:birth_date]
     return subject
   end
   def get_races(params)
