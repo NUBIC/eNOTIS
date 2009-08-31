@@ -2,11 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe WebServices do
   before(:each) do
-     @subject = Subject.new
-     @subject.mrn = "1234"
-     @subject.last_name = "local"
-     @subject.first_name = "local"
-     @subject.save
+     @subject = Factory(:subject, :mrn=>"1234",:last_name=>"local",:first_name=>"local",:synced_at => nil)
   end
   it " should return Subject from local db if it exists" do
     @subject_2 = Subject.find(:first,:conditions=>["mrn='1234'"],:span=>:local)
