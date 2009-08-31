@@ -58,7 +58,9 @@
           .heading Accrual Graph
           #accrual-graph
       #staff_list
-        .heading Staff list
+        .heading 
+          Staff list&nbsp;
+          %span.quiet (as listed in eIRB)
         %ul
           - @study.coordinators.each do |c|        
             %li
