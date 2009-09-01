@@ -16,13 +16,13 @@ class EdwAdapter
     @agent = Net::HTTP.new('edwbi.nmff.org', 443)
     @agent.use_ssl = true
     @agent.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    @agent.read_timeout = config.read_timeout.to_i
-    @agent.open_timeout = config.open_timeout.to_i
+    @agent.read_timeout = config.service_timeout.to_i
+    @agent.open_timeout = config.service_timeout.to_i
   end
 
   # Calls the generated Mechanize agent to perform the search on the remote resource
   # Accepts a param hash of values and converts hash parameters to query string (thanks, Rails!)
-  def perform_search(params = {})
+  def perform_search(params = {},debug=false)
     begin
       # # actually NTLM auth, but NTLM Mechanize overwrites the method for ease
       # # see http://www.mindflowsolutions.net/2009/5/21/ruby-ntlm-mechanize
@@ -49,7 +49,7 @@ class EdwAdapter
       xml_doc = LibXML::XML::Document.string(xml_response)
       return self.class.format_search_results(xml_doc || "")
     rescue TimeoutError,StandardError => bang
-      puts "Error pulling data: " + bang
+      raise DataServiceError.new(bang)
     end
   end
   
