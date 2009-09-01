@@ -41,8 +41,8 @@ Feature: Developer admin access
       | Foo      | Bak  | fk   |
     When I log in as "pbr312" with password "beer"
     And I go to the hub page
-    Then I should see "Foo"
-    And I should see "Bar"
-    And I should see "Baz"
-    And I should see "Bak"
+    Then I should see "foo" # dictionary terms have been downcased
+    And I should see "bar" # dictionary terms have been downcased
+    And I should see "baz" # dictionary terms have been downcased
+    And I should see "bak" # dictionary terms have been downcased
     

@@ -67,7 +67,7 @@ Feature: Manage subjects
     And subject "90210b" has event "Consented" on study "1248E"
     When I go to the study page for id "1248E"
     And I follow "Holly Wood"
-    Then I should see "not synced"
+    Then I should see "sync"
   
   Scenario: A coordinator can see the add event form
     Given the study "1248E" has the following subjects

@@ -33,8 +33,7 @@ Feature: Manage studies
   Scenario: A random user cannot see study menu
     Given a study "Vitamin C and concentration" with id "0012345" and status "Approved"
     When I go to the study page for id "0012345"
-    Then I should not see "Subjects"
-    And I should not see "Subject Imports"
+    Then I should not see "Subject Imports"
     
   Scenario: A random user can view contact information for other users (click on name, get a popup)
     Given a user "suzq" named "Sue Z" "Quou"
@@ -46,8 +45,7 @@ Feature: Manage studies
     And a study "Vitamin D and Depression" with id "45234" and status "Approved"
     And "pi" has access to study id "45234"
     When I go to the study page for id "45234"
-    Then I should see "Subjects"
-    And I should see "Subject Imports"
+    Then I should see "Subject Imports"
   
   Scenario: A coordinator can view all personnel that have access on a study
     Given a user "suzq" named "Sue Z" "Quou"
