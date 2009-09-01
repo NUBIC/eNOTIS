@@ -5,9 +5,9 @@
   %script{:type => 'text/javascript'}
     $(document).ready(function(){
     // show the Data Tables
-    $("#subjects .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null], "iDisplayLength": -1 });
-    $("#events .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [null, { "sType": "html" }, null, null]});
-    $("#imports .display").dataTable({"sPaginationType": "full_numbers"});
+    $("#subjects .display").dataTable({"oLanguage":{"sSearch":"Filter"},"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null], "iDisplayLength": -1 });
+    $("#events .display").dataTable({"oLanguage":{"sSearch":"Filter"},"sPaginationType": "full_numbers","aoColumns": [null, { "sType": "html" }, null, null]});
+    $("#imports .display").dataTable({"oLanguage":{"sSearch":"Filter"},"sPaginationType": "full_numbers"});
     // show the accrual graph
     = "var e = #{@accruals.to_graph.inspect};"
     $.plot($("#accrual-graph"), [e], { grid: {borderWidth: 0}, xaxis: { mode: "time" } });
@@ -77,6 +77,9 @@
 
     #subjects
       #subject-list
+        .heading
+          Accural List
+          %span.quiet= " (#{pluralize(@study.subjects.size, "subject")} accrued)"
         - if @study.subjects.empty?
           = render :partial => "subjects/no_subjects"
         - else
@@ -91,9 +94,7 @@
                   %td= link_to(subject.name || "(no name)", subject_path(subject, :study => @study), :rel => 'detail')
                   %td= subject.synced? ? image_tag("sync_icon_16.gif") : "&nbsp;"
       #subject-detail
-        .heading
-          = "#{pluralize(@study.subjects.size, "subject")} associated with this study"
-          = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox', :class => 'add')
+        = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox', :class => 'add')
         .detail
           
                 
@@ -117,11 +118,21 @@
                 %td= event.note
                 %td= event.occurred_on
     #imports
-      - form_tag('/subjects', :multipart => true) do
-        = hidden_field_tag("study_id",@study.irb_number.to_s)
-        = file_field_tag(:file)
-        = submit_tag( "Upload" )
-        %br
+      #file_import
+        #file_form
+          .heading
+            Upload study subjects
+          - form_tag('/subjects', :multipart => true) do
+            = hidden_field_tag("study_id",@study.irb_number.to_s)
+            = file_field_tag(:file)
+            = submit_tag( "Upload" )
+            %br
+        #file_format_help
+          Subject import files must follow a specific format for 
+          eNOTIS to recognize them. Please download the
+          %p{:span => "padding:1em"} The example file
+          as an example.
+      %hr
       %table.display
         %thead
           %tr
