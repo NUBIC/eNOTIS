@@ -4,12 +4,9 @@
 @import base.sass
 // basic top, middle, bottom block layout
 body
-  :background-color= !secondary_data_bg_color
-  :border= 1px solid !secondary_data_border_color
-  :border-top= 0px
+  :background-color= !nu_page_background
 
   #container
-    :border= 1px solid !secondary_data_border_color
     :border-top= 0px
 
   #header
@@ -29,7 +26,7 @@ body
       :font-size 0.4em
   
   #main
-    +column(50,true)
+    +column(48,true)
     +squeeze
 
     #left_primary
@@ -37,7 +34,7 @@ body
 
     #right_sidebar
       +prepend(1)
-      +column(13,true)
+      +column(12,true)
 
   #footer 
     +column(50,true)
@@ -46,13 +43,12 @@ body
 #enotis_description
   :font-size 1.4em
   :font-weight bold
-  +squeeze(1)
   +squish(1)
 
 #system_status
-  +column(12)
   +rounded_box( !secondary_data_bg_color )
   :padding= !blueprint_grid_width
+  +squish(1)
   
 #loginbox
   +blueprint-form
@@ -66,7 +62,9 @@ body
   :margin-top= !blueprint_grid_outer_width
   
   .heading
+    :font-size 1.5em
     +rounded_top_box( !secondary_data_bg_color )
+    :padding-left 0.5em
 
   .topic
     .title

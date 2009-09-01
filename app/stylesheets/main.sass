@@ -12,14 +12,13 @@ body
   // basic top, middle, bottom block layout
   #header
     +column(36,true)
-    +prepend(1)
     
     .app_name
       :font-size 3em
       :font-weight bold
       :color = !nu_purple
       img
-        :padding-top 8px
+        :padding-top= !blueprint_grid_width/2
   
 
     .tagline
@@ -79,8 +78,6 @@ body
 
   #footer 
     +column(52,true)
-    :border-top= 1px solid !extra_quiet_color
-    :text-transform uppercase
 
 
   .heading
