@@ -9,6 +9,10 @@ development:
     # Stomp Adapter Properties #
     ############################
     adapter: stomp
+    host: localhost
+    port: 61613
+    reliable: true
+    reconnectDelay: 5
 
     # properties below are all defaults for this adapter
     # login: ""
@@ -63,6 +67,15 @@ development:
     # poll_interval: 1
     # reliable: true    
 
+staging:
+    adapter: stomp
+    reliable: true
+    host: proxy.bioinformatics.northwestern.edu
+    port: 61613
+    reliable: true
+    reconnectDelay: 5
+    
+
 test:
     adapter: stomp
     reliable: false
@@ -70,6 +83,10 @@ test:
 production:
     adapter: stomp
     reliable: true
+    host: proxy.bioinformatics.northwestern.edu
+    port: 61613
+    reliable: true
+    reconnectDelay: 5
     # properties below are all defaults for this adapter
     # login: ""
     # passcode: ""
