@@ -65,9 +65,17 @@ end
 # Install gems after deploy
 after "deploy", "gems:install"
 
+# Install the postgres gem after setup - it is needed for the rails initializer to run
+after "deploy:setup", "gems:install_postgres"
+
 # Gems
 # http://henrik.nyh.se/2008/10/cap-gems-install-and-a-gem-dependency-gotcha
 namespace :gems do
+  desc "Install postgres gem - needed for the rails initializer to run - which happens before gem dependencies"
+  task :install_postgres, :roles => :app do
+    sudo "gem install postgres-pr"
+  end
+    
   desc "Install gems"
   task :install, :roles => :app do
     # always use sudo to rake gems
