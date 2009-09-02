@@ -34,7 +34,8 @@ class User < ActiveRecord::Base
   end
   
   def self.setup_bcsec
-    yml = File.open(File.join(RAILS_ROOT,"config/bcsec.yml"))
+    # We are using ERB here because we've moved the configs to use bcdatabase, which has erb template code in it
+    yml = ERB.new(File.read(File.join(RAILS_ROOT,"config/bcsec.yml"))).result
     config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
     ["ldap_server", "ldap_user", "ldap_password"].each{|option| Bcsec.send("#{option}=", config.send(option))}
   end

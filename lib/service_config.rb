@@ -16,7 +16,7 @@ class ServiceConfig
   
   def initialize(env_name, options)
     @env = env_name
-    @env_options = options[env_name.to_sym] ||  options[env_name.to_s]
+    @env_options = (options[env_name.to_sym] ||  options[env_name.to_s]) or raise "could not load options for #{env_name}"
   end
 
   def all

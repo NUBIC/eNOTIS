@@ -1,9 +1,8 @@
-development:
-  ldap_server: "registry.northwestern.edu"
-  ldap_user: ""
-  ldap_password: ""
-
-test:
-  ldap_server: "registry.northwestern.edu"
-  ldap_user: ""
-  ldap_password: ""
+<%
+  require 'bcdatabase'
+  bcdb = Bcdatabase.load
+%>
+<%= bcdb.development  :bcsec, :enotis %>
+<%= bcdb.test         :bcsec, :enotis %>
+<%= bcdb.staging      :bcsec, :enotis %>
+<%= bcdb.production   :bcsec, :enotis %>

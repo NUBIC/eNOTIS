@@ -6,7 +6,8 @@ class EdwServices
   
   # initializing the EDW connection
   def self.connect
-    yml = File.open(File.join(RAILS_ROOT,"config/edw_services.yml"))
+    # We are using ERB here because we've moved the configs to use bcdatabase, which has erb template code in it
+    yml = ERB.new(File.read(File.join(RAILS_ROOT,"config/edw_services.yml"))).result
     config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
     self.edw_adapter = EdwAdapter.new(config)
   end
