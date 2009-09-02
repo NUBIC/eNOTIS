@@ -68,6 +68,14 @@ after "deploy", "gems:install"
 # Install the postgres gem after setup - it is needed for the rails initializer to run
 after "deploy:setup", "gems:install_postgres"
 
+# Administration tasks
+namespace :admin do
+  desc "Creates admins via rake db:populate:admins"
+  task :create_admins do
+    run "rake RAILS_ENV=#{rails_env} db:populate:admins"  
+  end
+end
+
 # Bcdatabase
 namespace :bcdatabase do
   desc "Copies files from local:/etc/nubic/db to remote:/etc/nubic/db"

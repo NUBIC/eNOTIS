@@ -56,8 +56,7 @@ namespace :users do
   # rake db:populate:admins depends on this rake task
   desc "creates the admin users"
   task :create_admins => :environment do
-    admins = [{:netid => "rkc226", :first_name => "Reginal", :last_name => "Campbell",    :email => "rk-campbell@northwestern.edu"},
-              {:netid => "blc615", :first_name => "Brian",   :last_name => "Chamberlain", :email => "b-chamberlain@northwestern.edu"}, 
+    admins = [{:netid => "blc615", :first_name => "Brian",   :last_name => "Chamberlain", :email => "b-chamberlain@northwestern.edu"}, 
               {:netid => "daw286", :first_name => "David",   :last_name => "Were",        :email => "d-were@northwestern.edu"},
               {:netid => "myo628", :first_name => "Mark",    :last_name => "Yoon",        :email => "yoon@northwestern.edu"}]
     admins.each do |hash|
