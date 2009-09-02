@@ -75,21 +75,11 @@ class PatientUploadProcessor < ApplicationProcessor
    result[:subject] = get_subject(params)
    result[:involvement] = {}
    result[:involvement][:race_type_ids] = get_races(params)
-   result[:involvement][:ethnicity_type_id] = get_ethnicity(params)
-   result[:involvement][:gender_type_id]=get_gender(params)
+   result[:involvement][:ethnicity_type_id] = get_term_id(params,:ethnicity)
+   result[:involvement][:gender_type_id]=get_term_id(params,:gender)
    result[:involvement_events] = get_events(params)
    return result
   end
-  
-  def get_ethnicity(params)
-    eth = DictionaryTerm.lookup_term(params[:ethnicity],:ethnicity)
-    eth.id if eth
-  end
-  def get_gender(params)
-    gen = DictionaryTerm.lookup_term(params[:gender],:gender)
-    gen.id if gen
-  end
-
 
   def get_events(params)
     events =[]
@@ -112,9 +102,14 @@ class PatientUploadProcessor < ApplicationProcessor
   def get_races(params)
     races = []
     params.headers.select{|key| key.to_s =~/Race/i}.each do |key|
-      races << (DictionaryTerm.lookup_term(params[key],:race)).id
+      races << (DictionaryTerm.lookup_term(params[key.to_s],:race))
     end
     return races
+  end
+
+  def get_term_id(params,cat)
+    val = DictionaryTerm.lookup_term(params[cat.to_sym],cat.to_sym)
+    val.id if val
   end
 
 end

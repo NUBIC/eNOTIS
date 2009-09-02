@@ -7,8 +7,7 @@ describe EdwAdapter do
     @config.stub!(:url).and_return("http://blah.com?action")
     @config.stub!(:username).and_return("foo")
     @config.stub!(:password).and_return("bar")
-    @config.stub!(:read_timeout).and_return("2")
-    @config.stub!(:open_timeout).and_return("2")
+    @config.stub!(:service_timeout).and_return("2")
 
     @agent = Object.new
     Net::HTTP.stub!(:new).and_return(@agent)
