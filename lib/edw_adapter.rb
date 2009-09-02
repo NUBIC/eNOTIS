@@ -49,7 +49,7 @@ class EdwAdapter
       xml_doc = LibXML::XML::Document.string(xml_response)
       return self.class.format_search_results(xml_doc || "")
     rescue TimeoutError,StandardError => bang
-      raise DataServiceError.new(bang)
+      raise DataServiceError.new(bang.message)
     end
   end
   

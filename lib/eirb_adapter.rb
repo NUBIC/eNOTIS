@@ -12,13 +12,20 @@ class EirbAdapter
    
    def initialize(config = ServiceConfig.new)
      # creating the soap driver
-     factory = SOAP::WSDLDriverFactory.new(config.url)
-     WSLOGGER.debug("\r\n====================================== INIT ======================================")
-     WSLOGGER.debug("Init of soap factory #{factory.inspect}")     
-     WSLOGGER.debug("used config #{config.inspect}")
-     @driver = factory.create_rpc_driver
-     @session = nil
-     @config = config
+     begin
+       factory = SOAP::WSDLDriverFactory.new(config.url)
+       WSLOGGER.debug("\r\n====================================== INIT ======================================")
+       WSLOGGER.debug("Init of soap factory #{factory.inspect}")     
+       WSLOGGER.debug("used config #{config.inspect}")
+       @driver = factory.create_rpc_driver
+       @session = nil
+       @config = config
+       @driver.options['protocol.http.receive_timeout']=@config.timeout.to_i
+       @driver.options['protocol.http.connect_timeout']=@config.timeout.to_i
+       @driver.options['protocol.http.send_timeout']=@config.timeout.to_i
+     rescue => error
+       DataServiceError.new(error.message)
+     end
    end
 
    # Logs in to the eIRB webservice with the configuration settings
@@ -32,7 +39,7 @@ class EirbAdapter
        WSLOGGER.debug("Login result #{@session.inspect}")
        return authenticated?
       else
-        raise DataServiceError
+        raise DataServiceError("Login Failed")
       end
    end
  
@@ -46,6 +53,7 @@ class EirbAdapter
    # Accepts a param hash of values and converts hash parameters to formatted 
    # webservice parameters if needed
    def perform_search(params = {})
+     begin
      unless authenticated?
        login
      end 
@@ -55,7 +63,10 @@ class EirbAdapter
      WSLOGGER.debug("Performing search with params:\r\n #{params.inspect}")
      search_results = driver.performSearch(params) #method that actually calls the soap service
      WSLOGGER.debug("Search results:\r\n #{search_results.inspect}")
-     self.class.format_search_results(search_results)
+     return self.class.format_search_results(search_results)
+     rescue => bang
+        raise DataServiceError.new(bang.message)
+     end
    end
 
    # method for formatting hashes to eIRB params 
