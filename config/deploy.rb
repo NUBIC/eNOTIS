@@ -76,7 +76,7 @@ namespace :admin do
   end
   
   namespace :poller do
-    [:start, :stop].each do |t|
+    [:start, :stop, :restart].each do |t|
       desc "#{t.to_s.capitalize}s poller"
       task t, :roles => :app do
         run "script/poller -e #{rails_env} #{t.to_s}"
