@@ -2,6 +2,8 @@
 <% @request.env.keys.sort.each do |key| -%>
 <% if @request.env[key].is_a? Hash -%>
 * <%= "%-*s: %s" % [max.length, key, filter_sensitive_post_data_from_env(key, filter_sensitive_post_data_parameters(@request.env[key]))] %>
+<% elsif key =~ /rack\.request\.form_vars/i %>
+* <%= "%-*s: %s" % [max.length, key, filter_sensitive_post_data_from_env(key, filter_sensitive_post_data_parameters(CGI.parse(@request.env[key]))).to_query] %>
 <% else -%>
 * <%= "%-*s: %s" % [max.length, key, filter_sensitive_post_data_from_env(key, @request.env[key].to_s.strip)] %>
 <% end -%>
