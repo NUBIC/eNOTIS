@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
     u = find_by_netid(netid.downcase)
     logger.debug("RAILS_ENV=#{RAILS_ENV}")
     return u if u && (RAILS_ENV == 'development')
+    # TODO refactor this out - yoon
+    self.setup_bcsec
     return u if u && NetidAuthenticator.valid_credentials?(netid, password)
     nil
   end
