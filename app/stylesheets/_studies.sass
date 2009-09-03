@@ -17,11 +17,11 @@
       
     .label
       +quiet
-      :padding-left 0.2em
+      :padding-left 0.3em
       
     #vitals
       +column(8)
-      +border
+      +border( !secondary_data_border_color )
     
       .irb_number_block
         :display block
@@ -31,30 +31,26 @@
           :padding= !blueprint_grid_width
           :padding-top= !blueprint_grid_margin
           :display block
-          :font-size 17px
+          :font-size 18px
 
       .status_block
         :display block
         :font-size 14px
         :line-height 15px
         
-        .label
-          :font-size 0.9em
-
         .status
           :text-align center
           :display block
           :padding= !blueprint_grid_width
-          :padding-top= !blueprint_grid_margin
 
 
     #details
       +column(39,true)
-      :padding-top= !blueprint_grid_width
+      :padding-top= !blueprint_grid_width/2
       +squeeze
       .title
         +super
-        :line-height 1.1em
+        :line-height 1.2em
 
       .phase, .research_type, .pi, .sc
         :padding-right 1.5em

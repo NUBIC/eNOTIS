@@ -20,7 +20,7 @@ Rails::Initializer.run do |config|
   # For lib/gem loading errors, see http://www.webficient.com/2008/07/11/ruby-on-rails-gem-dependencies-and-plugin-errors
   
   config.gem "haml", :version => '>=2.2.0', :lib => false # required by chriseppstein-compass
-  config.gem "chriseppstein-compass", :version => '>=0.6.15', :lib => false, :source => "http://gems.github.com"
+  config.gem "chriseppstein-compass", :version => '>=0.8.13', :lib => false, :source => "http://gems.github.com"
   config.gem "soap4r", :version => '>=1.5.8', :lib => false # :lib => false fixes no such file to load
   config.gem "libxml-ruby", :version => '>=1.1.3', :lib => false # :lib => false fixes no such file to load
   config.gem "fastercsv", :version => '>=1.5.0'

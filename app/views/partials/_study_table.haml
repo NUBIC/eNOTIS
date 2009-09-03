@@ -2,13 +2,13 @@
   %thead
     %tr
       %th Study ID
-      %th Short title
+      %th Name
       %th Status
       %th Accrual
   %tbody  
     - @studies.each do |study|
       %tr
         %td= link_to study.irb_number, study_path(study.irb_number) || "(no id)"
-        %td= study.title || "(no title)"
+        %td= study.name || "(no title)"
         %td= study.status || "(no status)"
         %td= study.accrual || 0

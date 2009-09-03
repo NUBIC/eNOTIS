@@ -16,8 +16,8 @@ class StudiesController < ApplicationController
       end
       # See http://datatables.net/forums/comments.php?DiscussionID=53 for json params
       format.json do
-        query_cols = %w(irb_number title status)
-        cols = %w(irb_number title status accrual)
+        query_cols = %w(irb_number name status)
+        cols = %w(irb_number name status accrual)
         q = "%#{params[:sSearch]}%"
         order = (1..(params[:iSortingCols].to_i)).map{|i| [cols[(params["iSortCol_#{i-1}".to_sym].to_i || 0)], (params["iSortDir_#{i-1}"] || "ASC")].join(" ")}.join(",")
         results = Study.find( :all,
