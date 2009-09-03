@@ -11,48 +11,59 @@
   +column(50,true)
   +squish
 
-  #vitals
-    +column(8)
-    +rounded_left_box( !primary_data_bg_color )
-    
-    .irb_number
-      :text-align center      
-      :display block
-      :padding= !blueprint_grid_width      
-      :font-size 17px
-
-    .status
-      :text-align center      
-      :display block
-      :font-size 14px
-      :line-height 15px
-      :background-color= !notice_bg_color
-      :-moz-border-radius 0 0 0 3px
-      :padding-top= !blueprint_grid_width      
-      :padding-bottom= !blueprint_grid_width  
-
-  #details
-    +column(40,true)
-    :border= 1px solid !primary_data_bg_color 
-    +rounded_right_box( !secondary_data_bg_color )
-    :padding= !blueprint_grid_margin
-    :padding-left= !blueprint_grid_margin * 2
-    :padding-right= !blueprint_grid_margin * 2
-    
-    .title
-      +super
-
-    .phase, .research_type, .pi, .sc
-      :padding-right 1.5em
-
+  #info
+    +column(49,true)
+    +rounded_box( !secondary_data_bg_color )
+      
     .label
       +quiet
       :padding-left 0.2em
-    
-    hr
-      :background-color #ddd
-      :color #ddd
       
+    #vitals
+      +column(8)
+      +border
+    
+      .irb_number_block
+        :display block
+        
+        .irb_number
+          :text-align center      
+          :padding= !blueprint_grid_width
+          :padding-top= !blueprint_grid_margin
+          :display block
+          :font-size 17px
+
+      .status_block
+        :display block
+        :font-size 14px
+        :line-height 15px
+        
+        .label
+          :font-size 0.9em
+
+        .status
+          :text-align center
+          :display block
+          :padding= !blueprint_grid_width
+          :padding-top= !blueprint_grid_margin
+
+
+    #details
+      +column(39,true)
+      :padding-top= !blueprint_grid_width
+      +squeeze
+      .title
+        +super
+        :line-height 1.1em
+
+      .phase, .research_type, .pi, .sc
+        :padding-right 1.5em
+
+
+      hr
+        :background-color #ddd
+        :color #ddd
+        
   //TODO investigate the use of blueprint 'column' grid use for these jquery ui tabs
   ul.study_tabs
     :position relative

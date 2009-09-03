@@ -1,3 +1,4 @@
+puts "WD: #{Dir.pwd}"
 require 'lib/webservices/webservices'
 
 # Represents a Clinical Study/Trial. Holds just the basic information we need

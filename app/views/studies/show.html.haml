@@ -13,34 +13,39 @@
     $.plot($("#accrual-graph"), [e], { grid: {borderWidth: 0}, xaxis: { mode: "time" } });
     });
 #study
-  #vitals
-    %span.irb_number= @study.irb_number
-    %span.status= @study.status
-  #details
-    .description
-      %span.title
-        %span.label= "Title:"
-        = @study.title
-      %br
-      %span.label= "Short Title:"
-      %span.short_title= @study.name
-      %hr
-      %span.phase
-        %span.label= "Phase:"
-        = @study.phase || "Not Specififed"
-      %span.research_type
-        %span.label= "Research Type:"
-        = @study.research_type
-    .study_staff
-      %span.pi
-        %span.label= "Princpal Investigator:"
-        = "#{@study.pi_first_name} #{@study.pi_last_name}"
-        = link_to @study.pi_email, "mailto:#{@study.pi_email}"
-      %br
-      %span.sc
-        %span.label= "Study Coordinator:" 
-        = "#{@study.sc_first_name} #{@study.sc_last_name}"
-        = link_to @study.sc_email, "mailto:#{@study.sc_email}"
+  #info
+    #vitals
+      %span.irb_number_block
+        %span.label IRB#:
+        %span.irb_number= @study.irb_number
+      %span.status_block
+        %span.label Status:
+        %br
+        %span.status= @study.status
+    #details
+      .description
+        %span.title
+          = @study.title
+        %br
+        %span.label= "Short Title:"
+        %span.short_title= @study.name
+        %hr
+        %span.phase
+          %span.label= "Phase:"
+          = @study.phase || "Not Specififed"
+        %span.research_type
+          %span.label= "Research Type:"
+          = @study.research_type
+      .study_staff
+        %span.pi
+          %span.label= "Princpal Investigator:"
+          = "#{@study.pi_first_name} #{@study.pi_last_name}"
+          = link_to @study.pi_email, "mailto:#{@study.pi_email}"
+        %br
+        %span.sc
+          %span.label= "Study Coordinator:" 
+          = "#{@study.sc_first_name} #{@study.sc_last_name}"
+          = link_to @study.sc_email, "mailto:#{@study.sc_email}"
   %br.clear
   - if @study.has_coordinator?(current_user)
     %ul.study_tabs
@@ -74,6 +79,8 @@
               -# ">" before = removes extra spacing around this tag
               %dtr{:title => ie.description}>= ie.term
               = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occurred_on)} ago"
+          %li
+            =link_to("View all events", "#events",:style => "float:right;")
 
     #subjects
       #subject-list
