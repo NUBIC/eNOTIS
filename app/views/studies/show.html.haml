@@ -5,42 +5,47 @@
   %script{:type => 'text/javascript'}
     $(document).ready(function(){
     // show the Data Tables
-    $("#subjects .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null], "iDisplayLength": -1 });
-    $("#events .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [null, { "sType": "html" }, null, null]});
-    $("#imports .display").dataTable({"sPaginationType": "full_numbers"});
+    $("#subjects .display").dataTable({"oLanguage":{"sSearch":"Filter"},"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null], "iDisplayLength": -1 });
+    $("#events .display").dataTable({"oLanguage":{"sSearch":"Filter"},"sPaginationType": "full_numbers","aoColumns": [null, { "sType": "html" }, null, null]});
+    $("#imports .display").dataTable({"oLanguage":{"sSearch":"Filter"},"sPaginationType": "full_numbers"});
     // show the accrual graph
     = "var e = #{@accruals.to_graph.inspect};"
     $.plot($("#accrual-graph"), [e], { grid: {borderWidth: 0}, xaxis: { mode: "time" } });
     });
 #study
-  #vitals
-    %span.irb_number= @study.irb_number
-    %span.status= @study.status
-  #details
-    .description
-      %span.title
-        %span.label= "Title:"
-        = @study.title
-      %br
-      %span.label= "Short Title:"
-      %span.short_title= @study.name
-      %hr
-      %span.phase
-        %span.label= "Phase:"
-        = @study.phase || "Not Specififed"
-      %span.research_type
-        %span.label= "Research Type:"
-        = @study.research_type
-    .study_staff
-      %span.pi
-        %span.label= "Princpal Investigator:"
-        = "#{@study.pi_first_name} #{@study.pi_last_name}"
-        = link_to @study.pi_email, "mailto:#{@study.pi_email}"
-      %br
-      %span.sc
-        %span.label= "Study Coordinator:" 
-        = "#{@study.sc_first_name} #{@study.sc_last_name}"
-        = link_to @study.sc_email, "mailto:#{@study.sc_email}"
+  #info
+    #vitals
+      %span.irb_number_block
+        %span.label IRB#:
+        %span.irb_number= @study.irb_number
+      %span.status_block
+        %span.label Status:
+        %br
+        %span.status= @study.status
+    #details
+      .description
+        %span.title
+          = @study.title
+        %br
+        %span.label= "Name:"
+        %span.short_title= @study.name
+        %hr
+        %span.phase
+          %span.label= "Phase:"
+          = @study.phase || "Not Specififed"
+        %span.research_type
+          %span.label= "Research Type:"
+          = @study.research_type
+      .study_staff
+        %span.pi
+          %span.label= "Princpal Investigator:"
+          = "#{@study.pi_first_name} #{@study.pi_last_name}"
+          = link_to @study.pi_email, "mailto:#{@study.pi_email}"
+        %br
+        %span.sc
+          %span.label= "Study Coordinator:" 
+          = "#{@study.sc_first_name} #{@study.sc_last_name}"
+          = link_to @study.sc_email, "mailto:#{@study.sc_email}"
   %br.clear
   - if @study.has_coordinator?(current_user)
     %ul.study_tabs
@@ -74,9 +79,14 @@
               -# ">" before = removes extra spacing around this tag
               %dtr{:title => ie.description}>= ie.term
               = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occurred_on)} ago"
+          %li
+            =link_to("View all events", "#events",:style => "float:right;")
 
     #subjects
       #subject-list
+        .heading
+          Accural List
+          %span.quiet= " (#{pluralize(@study.subjects.size, "subject")} accrued)"
         - if @study.subjects.empty?
           = render :partial => "subjects/no_subjects"
         - else
@@ -91,9 +101,7 @@
                   %td= link_to(subject.name || "(no name)", subject_path(subject, :study => @study), :rel => 'detail')
                   %td= subject.synced? ? image_tag("sync_icon_16.gif") : "&nbsp;"
       #subject-detail
-        .heading
-          = "#{pluralize(@study.subjects.size, "subject")} associated with this study"
-          = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox', :class => 'add')
+        = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox', :class => 'add')
         .detail
           
                 
@@ -117,11 +125,21 @@
                 %td= event.note
                 %td= event.occurred_on
     #imports
-      - form_tag('/subjects', :multipart => true) do
-        = hidden_field_tag("study_id",@study.irb_number.to_s)
-        = file_field_tag(:file)
-        = submit_tag( "Upload" )
-        %br
+      #file_import
+        #file_form
+          .heading
+            Upload study subjects
+          - form_tag('/subjects', :multipart => true) do
+            = hidden_field_tag("study_id",@study.irb_number.to_s)
+            = file_field_tag(:file)
+            = submit_tag( "Upload" )
+            %br
+        #file_format_help
+          Subject import files must follow a specific format for 
+          eNOTIS to recognize them. Please download the
+          %p{:span => "padding:1em"} The example file
+          as an example.
+      %hr
       %table.display
         %thead
           %tr

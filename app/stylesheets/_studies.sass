@@ -4,57 +4,62 @@
 //On the studies page
 #study_list
   +column(50,true)
-  +prepend(1)
   +squish
 
 
 #study
-  +column(51,true)
-  +prepend(1)
+  +column(50,true)
   +squish
 
-  #vitals
-    +column(7)
-    +rounded_left_box( !primary_data_bg_color )
-    
-    .irb_number
-      :text-align center      
-      :display block
-      :padding= !blueprint_grid_width      
-      :font-size 17px
-
-    .status
-      :text-align center      
-      :display block
-      :font-size 14px
-      :line-height 15px
-      :background-color= !notice_bg_color
-      :-moz-border-radius 0 0 0 3px
-      :padding-top= !blueprint_grid_width      
-      :padding-bottom= !blueprint_grid_width  
-
-  #details
-    +column(41,true)
-    :border= 1px solid !primary_data_bg_color 
-    +rounded_right_box( !secondary_data_bg_color )
-    :padding= !blueprint_grid_margin
-    :padding-left= !blueprint_grid_margin * 2
-    :padding-right= !blueprint_grid_margin * 2
-    
-    .title
-      +super
-
-    .phase, .research_type, .pi, .sc
-      :padding-right 1.5em
-
+  #info
+    +column(49,true)
+    +rounded_box( !secondary_data_bg_color )
+      
     .label
       +quiet
-      :padding-left 0.2em
-    
-    hr
-      :background-color #ddd
-      :color #ddd
+      :padding-left 0.3em
       
+    #vitals
+      +column(8)
+      +border( !secondary_data_border_color )
+    
+      .irb_number_block
+        :display block
+        
+        .irb_number
+          :text-align center      
+          :padding= !blueprint_grid_width
+          :padding-top= !blueprint_grid_margin
+          :display block
+          :font-size 18px
+
+      .status_block
+        :display block
+        :font-size 14px
+        :line-height 15px
+        
+        .status
+          :text-align center
+          :display block
+          :padding= !blueprint_grid_width
+
+
+    #details
+      +column(39,true)
+      :padding-top= !blueprint_grid_width/2
+      +squeeze
+      .title
+        +super
+        :line-height 1.2em
+
+      .phase, .research_type, .pi, .sc
+        :padding-right 1.5em
+
+
+      hr
+        :background-color #ddd
+        :color #ddd
+        
   //TODO investigate the use of blueprint 'column' grid use for these jquery ui tabs
   ul.study_tabs
     :position relative
@@ -101,6 +106,23 @@
   * html #subjects tbody
     :height expression( this.scrollHeight > 332 ? "333px" : "auto" )
 
+    // Elements on the #overview tab
+  #overview
+    +column(50,true)
+     
+    #accrual
+      +column(30)
+      +rounded_box( !secondary_data_bg_color ) 
+    
+    #staff_list
+      +column(18,true)
+      +prepend(1)
+    
+    #study-events
+      +column(18,true)
+      +prepend(1)
+      +squish
+
   #subjects
     tbody
       // for all standards compliant browsers
@@ -112,30 +134,36 @@
       .dataTables_length, .dataTables_info, .dataTables_paginate
         :display none
     #subject-detail
-      +column(34, true)
+      +column(33, true)
       +prepend(1)
       a.add
         +button-button("right")
         :margin 0
         :padding 0 5px
         :background-color white
-  
-  // Elements on the #overview tab
-  #overview
-    +column(50,true)
-     
-    #accrual
-      +column(30)
-      +rounded_box( !secondary_data_bg_color ) 
-    
-    #staff_list
-      +column(17)
-      +prepend(1)
-    
-    #study-events
-      +column(17,true)
-      +prepend(1)
-      +squish
+
+  #events
+    +column(49,true)
+
+  #imports
+    +column(49,true)
+    hr
+      +colspacer
+
+    #file_import
+      +column(48,true)
+      +rounded_box( !primary_data_bg_color )
+      :padding= !blueprint_grid_width/2
+      #file_form
+        +column(20)
+        input[type='file']
+          :border-color= !primary_data_border_color
+          +button-button
+        input[type='submit']
+          +button-button
+      #file_format_help
+        +column(20)
+      
 
     
 
