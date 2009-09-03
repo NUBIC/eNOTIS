@@ -10,4 +10,3 @@ public/uploads/*
 public/results/*
 app/stylesheets/.sass-cache/*
 public/stylesheets/compiled/*
-config/*_services.yml

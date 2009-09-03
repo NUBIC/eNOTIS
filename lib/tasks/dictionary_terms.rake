@@ -17,7 +17,7 @@ namespace :dictionary_terms do
     FasterCSV.foreach(file_path, fastercsv_opts) do |row|
       if ENV.include?("dry_run") && ENV["dry_run"] != "false"
         puts row.to_hash.inspect
-        if dt = DictionaryTerm.find_by_category_and_term(row[:category], row[:term])
+        if dt = DictionaryTerm.find_by_category_and_term(row[:category].downcase, row[:term].downcase)
           update_counts[row[:category].downcase] ||= 0
           update_counts[row[:category].downcase] += 1        
         else
@@ -26,7 +26,7 @@ namespace :dictionary_terms do
         end
       else
         blip
-        if dt = DictionaryTerm.find_by_category_and_term(row[:category], row[:term])
+        if dt = DictionaryTerm.find_by_category_and_term(row[:category].downcase, row[:term].downcase)
           dt.update_attributes(row.to_hash)
           update_counts[row[:category].downcase] ||= 0
           update_counts[row[:category].downcase] += 1

@@ -67,7 +67,7 @@ Feature: Manage subjects
     And subject "90210b" has event "Consented" on study "1248E"
     When I go to the study page for id "1248E"
     And I follow "Holly Wood"
-    Then I should see "sync"
+    Then I should see an image with alt "sync"
   
   Scenario: A coordinator can see the add event form
     Given the study "1248E" has the following subjects
@@ -94,7 +94,7 @@ Feature: Manage subjects
     And I should see "Added"
     And I should see "Contact - phone"
     And subject "90210d" should have 2 events on study "1248E"
-  
+
   Scenario: A coordinator can remove an event for an existing subject
     Given a subject with mrn "90210e"
     And subject "90210e" has event "Consented" on study "1248E"
@@ -102,7 +102,7 @@ Feature: Manage subjects
     When I go to the study page for id "1248E"
     Then I should see "Consented"
     And I should see "Randomization"
-    When I follow "Consented" for "90210e" on the "Events" tab
+    When I follow "Consented"
     And I follow "Remove this event"
     Then subject "90210e" should have 1 event on study "1248E"
   

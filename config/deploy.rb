@@ -65,9 +65,45 @@ end
 # Install gems after deploy
 after "deploy", "gems:install"
 
+# Install the postgres gem after setup - it is needed for the rails initializer to run
+after "deploy:setup", "gems:install_postgres"
+
+# Administration tasks
+namespace :admin do
+  desc "Creates admins via rake db:populate:admins"
+  task :create_admins, :roles => :app do
+    run "rake RAILS_ENV=#{rails_env} db:populate:admins"  
+  end
+  
+  namespace :poller do
+    [:start, :stop, :restart].each do |t|
+      desc "#{t.to_s.capitalize}s poller"
+      task t, :roles => :app do
+        run "script/poller -e #{rails_env} #{t.to_s}"
+      end
+    end
+  end
+end
+
+# Bcdatabase
+namespace :bcdatabase do
+  desc "Copies files from local:/etc/nubic/db to remote:/etc/nubic/db"
+  task :copy do
+    run "mkdir -p #{shared_path}/nubic/db"
+    upload "/etc/nubic/db", "#{shared_path}/nubic/db", :via => :scp, :recursive => true
+    sudo "mv #{shared_path}/nubic/db/* /etc/nubic/db"
+    run "rm -r #{shared_path}/nubic"
+  end
+end
+
 # Gems
 # http://henrik.nyh.se/2008/10/cap-gems-install-and-a-gem-dependency-gotcha
 namespace :gems do
+  desc "Install postgres gem - needed for the rails initializer to run - which happens before gem dependencies"
+  task :install_postgres, :roles => :app do
+    sudo "gem install postgres-pr"
+  end
+    
   desc "Install gems"
   task :install, :roles => :app do
     # always use sudo to rake gems

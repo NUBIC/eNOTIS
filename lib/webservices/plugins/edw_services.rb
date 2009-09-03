@@ -6,14 +6,23 @@ class EdwServices
   
   # initializing the EDW connection
   def self.connect
-    yml = File.open(File.join(RAILS_ROOT,"config/edw_services.yml"))
+    # We are using ERB here because we've moved the configs to use bcdatabase, which has erb template code in it
+    yml = ERB.new(File.read(File.join(RAILS_ROOT,"config/edw_services.yml"))).result
     config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
     self.edw_adapter = EdwAdapter.new(config)
   end
 
-
-  def self.test
-  
+  def self.service_test()
+    #get test mrnA
+    yml = File.open(File.join(RAILS_ROOT,"config/edw_services.yml"))
+    config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
+    begin
+      result = find_by_mrn({:mrn=>config.test_mrn})
+      status = result[:mrn] == config.test_mrn
+      return status, status ? "All good" : "Invalid data returned"
+    rescue => error
+      return false,error.message
+    end
   end
 
 

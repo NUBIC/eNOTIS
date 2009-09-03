@@ -16,7 +16,7 @@ module WebServices
              when :local then return local_only(*args)
              when :foreign then return service_only(*args)
              when :global then return global_search(*args)
-             else return raise("Unrecongnized value: #{options[:span]} for option :span")
+             else raise DataServiceError.new("Unrecongnized value: #{options[:span]} for option :span")
            end
         end
 
@@ -53,7 +53,7 @@ module WebServices
           end 
           case args.first
             when :first then return process_single(service_result,local_result)
-            else        return   raise("Incompatible option #{args.first} with global search")
+            else        raise DataServiceError.new("Incompatible option #{args.first} with global search")
           end
         end
 
@@ -71,7 +71,7 @@ module WebServices
           # this method simply returns the list of new objects 
           # created using the search results, no reconciliation is done
           result=[]
-          return result unless !service_result.nil?
+          return result if service_result.nil?
 	  service_result.each do |val| 
             result << self.new(val)
           end
@@ -84,13 +84,18 @@ module WebServices
           options = args.clone.extract_options!
           conditions = convert_conditions_to_hash(options[:conditions])
           keys = conditions.keys
-          SERVICE_PLUGINS.each do |plugin|
-	    meth = plugin.public_methods.detect{|method_name| keys.map{|x| method_name.include?(x.to_s.strip)}.uniq == [true]}
-            if meth
-              return plugin.send(meth,conditions.merge!(get_service_opts(options)))
+          begin
+            SERVICE_PLUGINS.each do |plugin|
+	      meth = plugin.public_methods.detect{|method_name| keys.map{|x| method_name.include?(x.to_s.strip)}.uniq == [true]}
+              if meth
+                return plugin.send(meth,conditions.merge!(get_service_opts(options)))
+              end
             end
+          rescue DataServiceError
+              #supress data service errors
+              return nil
           end
-          raise "No Method Found matching"
+          raise DataServiceError.new("No Method Found matching")
 
         end
 

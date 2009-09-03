@@ -15,7 +15,8 @@ class EirbServices
 
   # initializing the eIrb connection
   def self.connect
-    yml = File.open(File.join(RAILS_ROOT,"config/eirb_services.yml"))
+    # We are using ERB here because we've moved the configs to use bcdatabase, which has erb template code in it
+    yml = ERB.new(File.read(File.join(RAILS_ROOT,"config/eirb_services.yml"))).result
     config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
     self.eirb_adapter = EirbAdapter.new(config)
   end
@@ -94,6 +95,19 @@ class EirbServices
     connect unless connected?
     result = eirb_adapter.perform_search(settings) if connected?
     convert_for_notis(result)   
+  end
+
+  # This method attempts to pull data from the service
+  def self.service_test()
+    yml = File.open(File.join(RAILS_ROOT,"config/eirb_services.yml"))
+    config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
+    begin
+      result = find_by_irb_number({:irb_number=>config.test_irb_number})
+      status = result[:mrn] == config.test_irb_number
+      return status, status ?  "All good":"invalid data retrieved"
+    rescue => error
+      return false,error.message
+    end
   end
 
   # ======== Attribute converstion Helper Methods =========

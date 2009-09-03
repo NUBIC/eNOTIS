@@ -1,0 +1,8 @@
+<%
+  require 'bcdatabase'
+  bcdb = Bcdatabase.load
+%>
+<%= bcdb.development  :edw, :enotis_test %>
+<%= bcdb.test         :edw, :enotis_test %>
+<%= bcdb.staging      :edw, :enotis_all_patients %>
+<%= bcdb.production   :edw, :enotis_all_patients %>

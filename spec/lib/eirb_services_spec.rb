@@ -4,8 +4,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../soap_mock_helper')
 describe EirbServices do
   
    it "should assign the class attribute eirb_adapter" do
-    File.stub!(:open).and_return("")
-    
+    File.stub!(:read).and_return("")
     ServiceConfig.stub!(:new).and_return(nil)
     EirbAdapter.stub!(:new).and_return("foo")
     EirbServices.connect

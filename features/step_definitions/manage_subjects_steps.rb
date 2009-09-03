@@ -65,7 +65,9 @@ end
  end
 
 
-
+Then /^I should see an image with alt "([^\"]*)"$/ do |alt_text|
+ response.should have_xpath("//img[@alt='#{alt_text}']")
+end
 
 # Given /^the following subject_registrations:$/ do |subject_registrations|
 #   SubjectRegistration.create!(subject_registrations.hashes)
