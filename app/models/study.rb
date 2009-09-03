@@ -1,4 +1,4 @@
-require 'lib/webservices/webservices'
+require 'webservices/webservices'
 
 # Represents a Clinical Study/Trial. Holds just the basic information we need
 # for assigning subjects. The model holds the study number, some basic information

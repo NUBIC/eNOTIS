@@ -1,7 +1,6 @@
+Dir[File.dirname(__FILE__) + "/plugins/*.rb"].each {|file| require file}
 module WebServices
 # TODO Need to implement some solid hierarchy of plugins
- 
-  Dir["lib/webservices/plugins/*.rb"].each {|file| require file}
 
   def  self.included(base)
     base.class_eval do 
