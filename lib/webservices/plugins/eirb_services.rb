@@ -99,11 +99,11 @@ class EirbServices
 
   # This method attempts to pull data from the service
   def self.service_test()
-    yml = File.open(File.join(RAILS_ROOT,"config/eirb_services.yml"))
+    yml = ERB.new(File.read(File.join(RAILS_ROOT,"config/eirb_services.yml"))).result
     config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
     begin
       result = find_by_irb_number({:irb_number=>config.test_irb_number})
-      status = result[:mrn] == config.test_irb_number
+      status = (result.first ? (result.first[:mrn] == config.test_irb_number) : false)
       return status, status ?  "All good":"invalid data retrieved"
     rescue => error
       return false,error.message
