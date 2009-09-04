@@ -103,7 +103,7 @@ class EirbServices
     config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
     begin
       result = find_by_irb_number({:irb_number=>config.test_irb_number})
-      status = (result.first ? (result.first[:mrn] == config.test_irb_number) : false)
+      status = (result.first ? (result.first[:irb_number] == config.test_irb_number) : false)
       return status, status ?  "All good":"invalid data retrieved"
     rescue => error
       return false,error.message
