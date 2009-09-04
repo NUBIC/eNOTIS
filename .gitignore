@@ -4,9 +4,14 @@
 *.log
 db/*.sqlite3
 db/*.sqlite3-journal
-db/schema.rb
 tmp/*
 public/uploads/*
 public/results/*
 app/stylesheets/.sass-cache/*
 public/stylesheets/compiled/*
+
+# db/schema.rb
+# if schema.rb isn't included in source control, it is generated on the fly on the server without group write permissions, preventing other developers from running migrations on the same deployment
+# see also:
+#   http://www.pathf.com/blogs/2008/07/resolved-should-schemarb-be-included-in-your-source-control/
+#   http://railscasts.com/episodes/96-git-on-rails comment #22
