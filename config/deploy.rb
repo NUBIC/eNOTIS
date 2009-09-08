@@ -72,16 +72,21 @@ after "deploy:setup", "gems:install_postgres"
 namespace :admin do
   desc "Creates admins via rake db:populate:admins"
   task :create_admins, :roles => :app do
-    run "rake RAILS_ENV=#{rails_env} db:populate:admins"  
+    run "cd #{current_path} && rake RAILS_ENV=#{rails_env} db:populate:admins"  
   end
   
   namespace :poller do
     [:start, :stop, :restart].each do |t|
       desc "#{t.to_s.capitalize}s poller"
       task t, :roles => :app do
-        run "script/poller -e #{rails_env} #{t.to_s}"
+        run "cd #{current_path} && RAILS_ENV=#{rails_env} script/poller #{t.to_s}"
       end
     end
+  end
+  
+  desc "Imports coordinators from eirb"
+  task :import_from_eirb, :roles => :app do
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} script/runner Coordinator.import_from_eirb"
   end
 end
 
