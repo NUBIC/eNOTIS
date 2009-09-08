@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090717213941) do
+ActiveRecord::Schema.define(:version => 20090902092032) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -79,10 +79,18 @@ ActiveRecord::Schema.define(:version => 20090717213941) do
 
   add_index "races", ["involvement_id", "race_type_id"], :name => "races_attr_idx", :unique => true
 
+  create_table "resource_statuses", :force => true do |t|
+    t.string   "name",       :null => false
+    t.boolean  "status"
+    t.string   "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "studies", :force => true do |t|
     t.string   "irb_number"
     t.string   "name"
-    t.string   "title"
+    t.text     "title"
     t.string   "phase"
     t.string   "research_type"
     t.text     "description"

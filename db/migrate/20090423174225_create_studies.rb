@@ -3,7 +3,7 @@ class CreateStudies < ActiveRecord::Migration
     create_table :studies do |t|
       t.string :irb_number
       t.string :name
-      t.string :title
+      t.text :title
       t.string :phase
       t.string :research_type
       t.text :description
