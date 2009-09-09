@@ -81,7 +81,8 @@ module WebServices
           #contains all the conditions provided e.g condition last_name
           #and last_name would match method find_by_fist_name_last_name
           options = args.clone.extract_options!
-          conditions = convert_conditions_to_hash(options[:conditions])
+          conditions = options[:conditions]
+          raise DataServiceError.new("Webservices Only Supports Hash Conditions at this time") unless conditions.instance_of?(Hash)
           keys = conditions.keys
           begin
             SERVICE_PLUGINS.each do |plugin|
@@ -96,25 +97,6 @@ module WebServices
           end
           raise DataServiceError.new("No Method Found matching")
 
-        end
-
-        def convert_conditions_to_hash(conditions)
-            #TODO this method needs to be cleaned
-            #This method is used to convert the conditions
-            #provided into a hash that is passed to webservies
-            result={}
-            if conditions.instance_of?(Hash)
-              return conditions
-	    elsif conditions.instance_of?(String)
-              conditions.split("and").each do |condition|
-	        result[condition.strip.split("=")[0].strip.to_sym] = condition.strip.split("=")[1].strip.gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
-	      end
-            elsif conditions.instance_of?(Array)
-              conditions.first.split("and").each do |condition|
-	        result[condition.strip.split("=")[0].strip.to_sym] = condition.strip.split("=")[1].strip.gsub( /\A'/m, "" ).gsub( /'\Z/m, "" )
-	      end
-            end
-            return result
         end
 
         def get_service_opts(options)
