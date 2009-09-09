@@ -16,7 +16,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :netid
 
   # Attributes
-  attr_accessible :netid, :email, :first_name, :last_name
+  attr_accessible :netid, :email, :first_name, :last_name, :middle_name, :title, :address_line1, :address_line2, :address_line3, :city, :state, :zip, :country, :phone_number
+  # attributes from eirb, not on this list or in db: fax_number, eirb_create_date
   
   # Public class methods
   def self.authenticate(netid, password)

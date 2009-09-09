@@ -1,11 +1,11 @@
-require 'lib/webservices/webservices'
-
+require 'webservices/webservices'
+require 'ruport'
 # Represents a subject that has (possibly) been part of a clinical research study.
 # We store enough data to sync the local db record with the subject data in the EDW.
 # The model stores the fields and information about the source system for the data.
 
 class Subject < ActiveRecord::Base
-  @@plugins = [EdwServices]
+  acts_as_reportable
   include WebServices
 
   # Associations

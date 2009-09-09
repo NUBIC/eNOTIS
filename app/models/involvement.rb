@@ -4,8 +4,12 @@
 # For example: Disease site would be found in the Involvement join record between a subject and study.
 # Disease site is a specific piece of data about why the subject is on the trial but not associated with
 # a specific event. It is a long term data element that can span the whole relationship of subject and study.
-
+#require 'ruport'
+require 'ruport'
 class Involvement < ActiveRecord::Base
+
+  
+  acts_as_reportable
 	
   # Associations
   belongs_to :subject
@@ -17,6 +21,9 @@ class Involvement < ActiveRecord::Base
   
   # Named scope
   named_scope :with_coordinator, lambda {|user_id| { :include => {:study => :coordinators}, :conditions => ['coordinators.user_id = ?', user_id ]}}
+   
+
+  
   
   # Mixins
   has_paper_trail
@@ -46,7 +53,7 @@ class Involvement < ActiveRecord::Base
   # Public class methods
   def self.update_or_create(params)
     if (ie = Involvement.find(:first, :conditions => {:study_id => params[:study_id], :subject_id => params[:subject_id]}))
-      ie.update_attribute(params)
+      ie.update_attributes(params)
     else
       Involvement.create(params)
     end
