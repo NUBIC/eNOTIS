@@ -8,6 +8,8 @@ class SubjectsController < ApplicationController
   include ActiveMessaging::MessageSender
   # include FaceboxRender
   include Chronic
+  #Reporting
+
 
   # Authentication
   before_filter :user_must_be_logged_in
@@ -78,6 +80,13 @@ class SubjectsController < ApplicationController
       end
       render :text => @study_upload.result.to_io.read
     end
+  end
+
+  def export
+    result = Report.export_subjects(params[:study])
+    send_data(result,
+      :type => 'text/csv; charset=utf-8; header=present',
+      :filename => "subjects.csv")
   end
 
   def csv_sanity_check(csv, temp_file = Tempfile.new("results")) # csv can be a string, file, or Paperclip::Attachment
