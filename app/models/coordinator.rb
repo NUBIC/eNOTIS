@@ -21,7 +21,7 @@ class Coordinator < ActiveRecord::Base
     access = EirbServices.find_study_access
     access.each do |role|
       logger.info "Processing role #{role.inspect}"
-      if study = Study.find(:first, :conditions => "irb_number ='#{role[:irb_number]}'",:span => :global)
+      if study = Study.find_by_irb_number(role[:irb_number])
         logger.info "Found study #{role[:irb_number]}"        
         study.save
         unless role[:netid].nil? or role[:netid].empty?

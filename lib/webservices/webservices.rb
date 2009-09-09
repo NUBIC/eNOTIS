@@ -46,7 +46,7 @@ module WebServices
           service_result = nil
           local_result = old_find(*sanitize_option(*args))
           if args.first == :first
-            service_result = service_search(*args) unless !local_result.nil? and !local_result.stale?
+            service_result = service_search(*args) if local_result.nil? or local_result.stale?
           else
             service_result = service_search(*args) 
           end 

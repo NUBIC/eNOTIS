@@ -59,6 +59,11 @@ class Study < ActiveRecord::Base
   def accrual
     involvements.size
   end
+
+  def self.find_by_irb_number(irb_number)
+    find(:first,:conditions=>{:irb_number=>irb_number},:span=>:global)
+  end
+
   
 end
 
