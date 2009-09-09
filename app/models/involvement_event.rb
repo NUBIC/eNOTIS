@@ -1,8 +1,10 @@
 # This model holds the events that are associated with a subject on
 # a study. These would be events that have clinical significance like
 # when the subject was consented, screened, withdrawn, etc...
+#require 'ruport'
 
 class InvolvementEvent < ActiveRecord::Base
+  #acts_as_reportable
   # Associations
   belongs_to :involvement
   belongs_to :event_type, :class_name => "DictionaryTerm", :foreign_key => :event_type_id
