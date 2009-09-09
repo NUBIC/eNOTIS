@@ -7,7 +7,7 @@ loop do
    status,message = service.service_test
    ResourceStatus.find_by_name(service.to_s.downcase).update_attributes({:status=>status,:message=>message})
  end
-   sleep(20)
+   sleep(1800)
 end
 
 
