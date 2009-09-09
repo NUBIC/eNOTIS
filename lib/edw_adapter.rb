@@ -3,9 +3,9 @@ require 'net/http'
 require 'net/https'
 require 'libxml'
 require 'service_logger'
-# Acts as a middle layer between the EirbServices module and the Eirb Webservice.
-# Passes off queries to the eirb and returns queries
 
+# Acts as a middle layer between the EdwServices module and the Edw Webservice.
+# Passes off queries to the edw and returns queries
 class EdwAdapter
 
   attr_reader :agent
@@ -20,39 +20,32 @@ class EdwAdapter
     @agent.open_timeout = config.service_timeout.to_i
   end
 
-  # Calls the generated Mechanize agent to perform the search on the remote resource
   # Accepts a param hash of values and converts hash parameters to query string (thanks, Rails!)
   def perform_search(params = {},debug=false)
     begin
-      # # actually NTLM auth, but NTLM Mechanize overwrites the method for ease
-      # # see http://www.mindflowsolutions.net/2009/5/21/ruby-ntlm-mechanize
-      # agent.basic_auth(config.username, config.password)
-      # 
-      # xml_response = agent.get(config.url + "&" + params.to_query).content
-      WSLOGGER.debug("=========================================== SEARCH ======================================")
       report_url = config.url
-
-      WSLOGGER.debug("Performing search using params :\r\n #{params.to_query}")
-      WSLOGGER.debug("Using query :\r\n #{report_url + "&" + params.to_query}")
+      # TODO: figure out a better logger, with levels. - yoon
+      WSLOGGER.info("#{Time.now} [EdwAdapter] report: #{report_url}")
+      WSLOGGER.info("#{Time.now} [EdwAdapter] params: #{params}")
       req = Net::HTTP::Get.new(report_url + "&" + params.to_query, {'connection' => 'keep-alive'})
       req.ntlm_auth(config.username, config.password, true)
       # http.set_debug_output $stderr
-      xml_response = @agent.request(req).body 
-      WSLOGGER.debug("Search Results :\r\n #{xml_response.inspect}")
+      xml_response = @agent.request(req).body
+      # WSLOGGER.debug("#{Time.now} [EdwAdapter] results: #{xml_response.inspect}")
 
       ## TODO Handle errors better here - yoon
       ## Hush Warning: xmlns: URI ENOTIS_x0020_-_x0020_TEST is not absolute at :1.
       LibXML::XML::Error.set_handler do |error|
         puts error.to_s if [LibXML::XML::Error::ERROR, LibXML::XML::Error::FATAL].include? error.level
       end
-            
+
       xml_doc = LibXML::XML::Document.string(xml_response)
       return self.class.format_search_results(xml_doc || "")
     rescue TimeoutError,StandardError => bang
       raise DataServiceError.new(bang.message)
     end
   end
-  
+
   def self.format_search_results(doc)
     # http://www.vitorrodrigues.com/blog/2007/06/13/ruby-libxml-annoyances/
     nodes = doc.find('//*[local-name()="Detail"]')
