@@ -77,6 +77,7 @@ class PatientUploadProcessor < ApplicationProcessor
    result[:involvement][:race_type_ids] = get_races(params)
    result[:involvement][:ethnicity_type_id] = get_term_id(params,:ethnicity)
    result[:involvement][:gender_type_id]=get_term_id(params,:gender)
+   result[:involvement][:case_number]=params[:case_number]
    result[:involvement_events] = get_events(params)
    return result
   end

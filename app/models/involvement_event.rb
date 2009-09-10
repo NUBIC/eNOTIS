@@ -43,7 +43,7 @@ class InvolvementEvent < ActiveRecord::Base
   # for study_uploads
   def self.sanity_check(params)
     errors = []
-    errors << "either MRN or First Name, Last Name and Date of Birth are required" if params[:mrn].blank? and (params[:first_name].blank? or params[:last_name].blank? or Chronic.parse(params[:birth_date]).nil?)
+    errors << "either an MRN or First Name, Last Name and Date of Birth or Case Number are required" if params[:mrn].blank? and (params[:first_name].blank? or params[:last_name].blank? or Chronic.parse(params[:birth_date]).nil?) and params[:case_number].blank?
     [ [params[:race], "Race is required"],
       [params[:gender], "Gender is required"],
       [params[:ethnicity], "Ethnicity is required"],
@@ -55,7 +55,7 @@ class InvolvementEvent < ActiveRecord::Base
   def self.add(params)
     Study.transaction do # read http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
       # Study - find the study using the hidden field
-      study = Study.find_by_irb_number(params[:study][:irb_number]) # Study.find(:first,:conditions=>["irb_number='#{session[:study_irb_number]}'"],:span=>:global)
+      study = Study.find_by_irb_number(params[:study][:irb_number]) 
       # Subject - find or create a subject
       if params[:subject].has_key?(:id) && (subject = Subject.find(params[:subject][:id]))
         involvement = Involvement.find_by_study_id_and_subject_id(study.id, subject.id)

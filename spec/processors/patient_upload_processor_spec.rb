@@ -24,6 +24,16 @@ describe PatientUploadProcessor do
       Involvement.find_by_study_id(@study.id).should_not be_nil
     end
 
+    it "should ignore lack of mrn/name if case_number is present" do
+      File.open(@dir + 'case_number_upload.csv') do |f|
+        @study_upload.upload = f
+        @study_upload.save
+      end
+      @processor.on_message(@study_upload.id)
+      Involvement.find_by_study_id(@study.id).should_not be_nil
+      Involvement.find_by_study_id(@study.id).case_number.should == "case1234"
+    end
+
     it "should ignore a bad mrn if first name, last, name and dob are present" do
       File.open(@dir + 'bad_mrn_valid_name_upload.csv') do |f|
         @study_upload.upload = f
@@ -43,7 +53,7 @@ describe PatientUploadProcessor do
       @study_upload = StudyUpload.find(upload_id)
       result = File.new(@study_upload.result.path,"r")
       content = result.readlines() 
-      content.to_s.should =~ /either MRN or First Name, Last Name and Date of Birth are required/i 
+      content.to_s.should =~ /either an MRN or First Name, Last Name and Date of Birth or Case Number are required/i 
       content.to_s.should =~ /Race is required/i 
       content.to_s.should =~ /Gender is required/i 
       content.to_s.should =~ /Ethnicity is required/i 

@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20090902092032) do
     t.integer  "study_id"
     t.integer  "ethnicity_type_id"
     t.integer  "gender_type_id"
+    t.string   "case_number"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
