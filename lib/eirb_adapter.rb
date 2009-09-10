@@ -53,8 +53,8 @@ class EirbAdapter
       login unless authenticated?
       params.merge!({:svcSessionToken => @session, :parameters => self.class.format_search_parameters(params[:parameters])})
       WSLOGGER.info("#{Time.now} [EirbAdapter] search:  #{params.inspect}")
-      search_results = driver.performSearch(params).performSearchResult.searchResults # method that actually calls the soap service
-      WSLOGGER.info("#{Time.now} [EirbAdapter] results: #{search_results.resultSet.respond_to?(:row) ? search_results.resultSet.row.size : search_results.inspect}")
+      search_results = driver.performSearch(params) # method that actually calls the soap service
+      WSLOGGER.info("#{Time.now} [EirbAdapter] results: #{(search_results.performSearchResult.searchResults.respond_to?(:row) and search_results.performSearchResult.searchResults.row.is_a?(Array)) ? search_results.performSearchResult.searchResults.row.size : search_results.inspect}")
       # WSLOGGER.debug("#{Time.now} [EirbAdapter] results: #{search_results.inspect}")
       return self.class.format_search_results(search_results)
     rescue => bang
@@ -78,8 +78,8 @@ class EirbAdapter
   # Takes the nasty results and converts them to keyed values
   def self.format_search_results(results)
     mapped = [] 
-    c_h = results.columnHeaders.columnHeader
-    r_set = results.resultSet
+    c_h = results.performSearchResult.searchResults.columnHeaders.columnHeader
+    r_set = results.performSearchResult.searchResults.resultSet
     if r_set.respond_to?(:row) 
       result_rows = r_set.row
       if result_rows.is_a?(Array) #holding multiple values
