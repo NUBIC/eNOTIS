@@ -34,6 +34,7 @@ Rails::Initializer.run do |config|
   config.gem "capistrano", :version => '=2.5.5' # http://www.capify.org/index.php/Problems_With_2.5.6%2B, also installs net-ssh, net-sftp, net-scp, net-ssh-gateway
   config.gem "activemessaging"
   config.gem "ruport",:lib=>false
+  config.gem "acts_as_reportable"
 
   
   # Only load the plugins named here, in the order given (default is alphabetical).
