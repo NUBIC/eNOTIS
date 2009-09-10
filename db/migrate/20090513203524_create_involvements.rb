@@ -5,6 +5,7 @@ class CreateInvolvements < ActiveRecord::Migration
       t.integer :study_id
       t.integer :ethnicity_type_id
       t.integer :gender_type_id
+      t.string  :case_number
       t.timestamps
     end
     

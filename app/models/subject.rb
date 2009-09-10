@@ -77,7 +77,7 @@ class Subject < ActiveRecord::Base
        #if we've reached here it means that there's no subject with these credentials on the study
       Subject.create(params)
     else
-      return nil
+      return Subject.create()
     end
   end
     
