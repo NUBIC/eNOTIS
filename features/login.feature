@@ -14,7 +14,7 @@ Feature: User access to system
   Scenario: A user with typos should get a helpful message
     When I log in as "pi" with password "theinternets"
     Then I should see "Couldn't log you in as 'pi'"
-    And I should see "www.it.northwestern.edu/netid"
+    And I should see "password.northwestern.edu"
   
   Scenario: An unauthorized user should get a helpful message
     Given "pi" is not authorized on any studies

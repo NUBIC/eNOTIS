@@ -2,8 +2,6 @@ Notes from eNOTIS design review meeting
 Warren, Peter, Rhett, Dong, Brian, David, Mark
 
 add your session has ended... expiry screen
-change password help to password.northwestern.edu
-add acts_as_reportable gem
 fix text size rendering issues
 update "synced" to "EMR link" and "EMR linked"
 sort study accrual list by last name
@@ -11,14 +9,18 @@ check that study accrual list scrolls
 are races comma delimited? in reports?
 add upload sample file
 show changes to race (and who changed it) in UI
-add logos on the front page, text on rest
-change system status "alright" => "all right"
 system status should show upcoming maintenance, uptime
 make buttons more consistent
-remove "notice: " from "notice: you have been logged out"
 add users to enotis listserve upon login
 create enotis listserve
 paginate searches on server
 flag events that happen when study closed, also give explicit messages to users
-show training/staging/development bar on the top
 check contact list vs. access list with real groups of people
+
+DONE
+change system status "alright" => "all right"
+change password help to password.northwestern.edu
+add acts_as_reportable gem
+add logos on the front page, text on rest
+remove "notice: " from "notice: you have been logged out"
+show training/staging/development bar on the top

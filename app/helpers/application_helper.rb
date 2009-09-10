@@ -8,7 +8,7 @@ module ApplicationHelper
   
   # Helper for displaying warning/notice/error flash messages
   def flash_messages(types)
-    types.map{|type| content_tag(:div, :class => type.to_s){ "#{type.to_s.capitalize}: #{flash[type]}" } }.join
+    types.map{|type| content_tag(:div, :class => type.to_s){ "#{flash[type]}" } }.join
   end
   
   def nav_class(controller=nil)

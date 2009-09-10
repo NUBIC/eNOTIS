@@ -8,7 +8,13 @@ body
 
   #container
     :border-top= 0px
-
+  
+  #environment
+    +column(48, true)
+    +squeeze
+    :background-color= !notice_bg_color
+    :font-size 2em
+    :text-align center
   #header
     +column(48,true)
     +squeeze
@@ -28,78 +34,76 @@ body
   #main
     +column(48,true)
     +squeeze
-
     #left_primary
       +column(35)
-
     #right_sidebar
       +prepend(1)
       +column(12,true)
-
+    #enotis_description
+      :font-size 1.4em
+      :font-weight bold
+      +squish(1)
+    #system_status
+      +rounded_box( !secondary_data_bg_color )
+      :padding= !blueprint_grid_width
+      +squish(1)
+    #loginbox
+      +blueprint-form
+      +rounded_box( !primary_data_bg_color )
+      :padding= !blueprint_grid_width
+      input[type="submit"]
+        +button-button("right")
+    #training
+      +column(32)
+      :margin-top= !blueprint_grid_outer_width
+      .heading
+        :font-size 1.5em
+        +rounded_top_box( !secondary_data_bg_color )
+        :padding-left 0.5em
+      .title
+        +bold
+        :font-size 1.2em
+        +squeeze(0.5)
+      #videos
+        :margin-top 1em
+        +column(32, true)
+        ul
+          +horizontal-list(20px)
+          +prepend(1)
+          li
+            :width 70px
+            :height 60px
+            :margin 0em 1em
+            :background-image url('/images/video.jpg')
+            :background-repeat no-repeat
+            :background-position center
+            :padding 25px
+            :text-align center
+      #tutorials
+        :margin-top 1em
+        +column(10)
+        ul
+          +no-bullets
+      #trainings
+        :margin-top 1em
+        +column(21, true)
+        ul
+          +no-bullets
+          li
+            .title
+              +normal
+            .date
+              +quiet
+            .location
+              +quiet
   #footer 
     +column(50,true)
-
-
-#enotis_description
-  :font-size 1.4em
-  :font-weight bold
-  +squish(1)
-
-#system_status
-  +rounded_box( !secondary_data_bg_color )
-  :padding= !blueprint_grid_width
-  +squish(1)
-  
-#loginbox
-  +blueprint-form
-  +rounded_box( !primary_data_bg_color )
-  :padding= !blueprint_grid_width
-  input[type="submit"]
-    +button-button("right")
-
-#training
-  +column(32)
-  :margin-top= !blueprint_grid_outer_width
-  
-  .heading
-    :font-size 1.5em
-    +rounded_top_box( !secondary_data_bg_color )
-    :padding-left 0.5em
-
-  .topic
-    .title
-      +bold
-      :font-size 1.2em
-      +squeeze(0.5)
-
-  ul.videos
-    +horizontal-list(20px)
-    +prepend(1)
-
-  li.video
-    :width 70px
-    :height 60px
-    :margin 0em 1em
-    :background-image url('/images/video.jpg')
-    :background-repeat no-repeat
-    :background-position center
-    :padding 25px
-    :text-align center
-
-  ul.articles
-    +no-bullets
-    +prepend(1)
-  
-  li.article
-   
-  ul.trainings
-    +no-bullets
-
-  li.training
-    .title
-      +normal
-    .date
-      +quiet
-    .location
-      +quiet
-
+    .nulogo
+      +column(9)
+    .nucatslogo
+      +column(14)
+    .nubiclogo
+      +column(25, true)
+    p
+      :margin-top 10px
+      +column(50)

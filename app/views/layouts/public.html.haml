@@ -4,10 +4,12 @@
   %head
     %title= "eNotis :: #{@title}"
     =stylesheet_link_tag @view_stylesheets ||= ["compiled/application","compiled/public"]
-    =javascript_include_tag @view_javascripts || ["jquery-1.3.2.min"]
+    =javascript_include_tag @view_javascripts || ["jquery-1.3.2.min", "jquery.public"]
     =yield :head
   %body
     #container
+      - unless RAILS_ENV == "production"
+        #environment{:class => RAILS_ENV}= "eNOTIS is running in #{RAILS_ENV.upcase}"
       #header
         %span.app_name
           =image_tag("enotis_logo1_md.gif",:alt => "eNOTIS Logo")
@@ -22,17 +24,12 @@
         =yield
 
       #footer
-        = image_tag("nu_pageheader.jpg")
+        .nulogo= image_tag("nu_logo.gif")
+        .nucatslogo= image_tag("nucats_logo.gif")
+        .nubiclogo= image_tag("nubic_logo.gif")
         %p
-          &nbsp;
-          eNOTIS &mdash; Clinical Subject Registration 
-          =app_version_helper
-          Created by&nbsp; 
-          =link_to("NUBIC")
-          &nbsp;for Northwestern University
-          &nbsp;&mdash;
-          =RAILS_ENV.upcase
-
+          = "eNOTIS &mdash; Clinical Subject Registration #{app_version_helper}"
+          = "Created by #{link_to("NUBIC", "http://www.nucats.northwestern.edu/centers/nubic")} for Northwestern University &mdash; #{RAILS_ENV.upcase}"
 
 
 
