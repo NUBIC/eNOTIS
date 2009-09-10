@@ -86,7 +86,7 @@ namespace :admin do
   
   desc "Imports coordinators from eirb"
   task :import_from_eirb, :roles => :app do
-    run "cd #{current_path} && RAILS_ENV=#{rails_env} script/runner Coordinator.import_from_eirb"
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} script/runner \"PaperTrail.whodunnit='system'; Coordinator.import_from_eirb\""
   end
 end
 
