@@ -7,7 +7,6 @@ update "synced" to "EMR link" and "EMR linked"
 sort study accrual list by last name
 check that study accrual list scrolls
 are races comma delimited? in reports?
-add upload sample file
 show changes to race (and who changed it) in UI
 system status should show upcoming maintenance, uptime
 make buttons more consistent
@@ -24,3 +23,4 @@ add acts_as_reportable gem
 add logos on the front page, text on rest
 remove "notice: " from "notice: you have been logged out"
 show training/staging/development bar on the top
+add upload sample file

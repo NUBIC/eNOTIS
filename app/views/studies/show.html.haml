@@ -136,10 +136,7 @@
             = submit_tag( "Upload" )
             %br
         #file_format_help
-          Subject import files must follow a specific format for 
-          eNOTIS to recognize them. Please download the
-          %p{:span => "padding:1em"} The example file
-          as an example.
+          %p= "Subject import files must contain a few important columns for eNOTIS to use them. This #{link_to 'example file', '/documents/sample.csv'} will help you get started."
       %hr
       %table.display
         %thead
