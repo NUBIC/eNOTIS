@@ -14,7 +14,7 @@
 	<key>BackgroundGraphic</key>
 	<dict>
 		<key>Bounds</key>
-		<string>{{0, 0}, {576, 733}}</string>
+		<string>{{0, 0}, {1152, 733}}</string>
 		<key>Class</key>
 		<string>SolidGraphic</string>
 		<key>FontInfo</key>
@@ -1132,6 +1132,8 @@ Configuration}</string>
 			</dict>
 			<key>ID</key>
 			<integer>1342</integer>
+			<key>Rotation</key>
+			<real>18.38374137878418</real>
 			<key>Shape</key>
 			<string>AdjustableStar</string>
 			<key>ShapeData</key>
@@ -1149,6 +1151,11 @@ Configuration}</string>
 						<key>r</key>
 						<string>0.998194</string>
 					</dict>
+				</dict>
+				<key>shadow</key>
+				<dict>
+					<key>Beneath</key>
+					<string>YES</string>
 				</dict>
 			</dict>
 			<key>Text</key>
@@ -2647,6 +2654,8 @@ Configuration}</string>
 			</dict>
 			<key>ID</key>
 			<integer>1343</integer>
+			<key>Rotation</key>
+			<real>18</real>
 			<key>Shape</key>
 			<string>AdjustableStar</string>
 			<key>ShapeData</key>
@@ -2664,6 +2673,13 @@ Configuration}</string>
 						<key>r</key>
 						<string>0.998194</string>
 					</dict>
+				</dict>
+				<key>shadow</key>
+				<dict>
+					<key>Beneath</key>
+					<string>YES</string>
+					<key>Fuzziness</key>
+					<real>5.7921171188354492</real>
 				</dict>
 			</dict>
 			<key>Text</key>
@@ -2983,7 +2999,7 @@ Configuration}</string>
 	<key>GuidesVisible</key>
 	<string>YES</string>
 	<key>HPages</key>
-	<integer>1</integer>
+	<integer>2</integer>
 	<key>HorizontalGuides</key>
 	<array>
 		<real>65</real>
@@ -3041,7 +3057,7 @@ Configuration}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2009-09-09 16:27:18 -0500</string>
+	<string>2009-09-10 10:15:08 -0500</string>
 	<key>Modifier</key>
 	<string>Brian Chamberlain</string>
 	<key>NotesVisible</key>
@@ -3112,7 +3128,7 @@ Configuration}</string>
 			</dict>
 		</array>
 		<key>Frame</key>
-		<string>{{623, 220}, {1331, 1330}}</string>
+		<string>{{-26, 4}, {1331, 742}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
@@ -3126,7 +3142,7 @@ Configuration}</string>
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{-111, -25}, {797.333, 784}}</string>
+		<string>{{0, 0}, {788, 382}}</string>
 		<key>Zoom</key>
 		<real>1.5</real>
 		<key>ZoomValues</key>
