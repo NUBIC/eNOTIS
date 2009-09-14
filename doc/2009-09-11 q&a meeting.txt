@@ -1,0 +1,21 @@
+2009-09-11
+
+peggy, audra, kelly, warren, brian, david, mark
+
+* eirb study status needs to be mapped - get help from peggy, audra, debbie
+* matching Children's MRN, primary is MRN, subjects with multiple numbers - will be resolved when children's is put in edw - not for another year
+* webcamp data entry is straightforward, reporting is very difficult
+* involvement event => activity (event has connotations of adverse event)
+* categorization, interventiona/q.o.l. industry/drug/phase/multi-site - if categorized wrong in eirb, hard to fix
+* bigger issue - if things are wrong in eirb or edw, we should facilitate pushing the changes back to the source system
+* see what studies you are authorized on, check off by date (kelly) - checking the eirb
+* sort order on data dictionary terms (brian)
+* report data error system (brian)
+* validations - dates in reasonable ranges
+* gender - need other
+* need to identify edw reporter person
+* do we have department through eirb? pi/sponsor acct #?
+* we may need tagging in the future
+* show accrual goal, expiration date, next review, approval date - get from eirb or manually enter
+* report on studies that don't accrue
+* eirb list - "site users" - pull a few studies and check with kelly. there are also pi/submission preparer/contact lists
