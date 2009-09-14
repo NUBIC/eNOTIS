@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
     return nil if netid.blank? || password.blank?
     u = find_by_netid(netid.downcase)
     logger.debug("RAILS_ENV=#{RAILS_ENV}")
-    return u if u && (RAILS_ENV == 'development')
+    return u if u && ('development training'.include? RAILS_ENV) # bypass netid authentication in development and training
     # TODO refactor this out - yoon
     self.setup_bcsec
     return u if u && NetidAuthenticator.valid_credentials?(netid, password)
