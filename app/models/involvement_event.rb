@@ -80,6 +80,10 @@ class InvolvementEvent < ActiveRecord::Base
       :occurred_on=>params[:occurred_on],
       :event_type_id=>params[:event_type_id]}) || InvolvementEvent.create(params)
   end
+  
+  def self.accruals_to_date
+    InvolvementEvent.count(:involvement_id, :distinct => true, :conditions => ["event_type_id =? ", DictionaryTerm.lookup_term("Consented","Event").id])
+  end
  
   private
   
