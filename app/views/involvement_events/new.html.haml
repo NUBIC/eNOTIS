@@ -32,8 +32,8 @@
     %p Race
     - @races.each do |race|
       %p
-        = label_tag "involvement[race_type_ids][][#{race.id}]", race.term.capitalize!
-        = check_box_tag "involvement[race_type_ids][][#{race.id}]", race.id
+        = label_tag "involvement[race_type_ids][]", race.term.capitalize!
+        = check_box_tag "involvement[race_type_ids][]", race.id
     %hr
     %p Initial Event Information
 
