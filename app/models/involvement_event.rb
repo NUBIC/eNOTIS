@@ -38,6 +38,10 @@ class InvolvementEvent < ActiveRecord::Base
     event_type.description
   end
   
+  def occurred_on=(date)
+    write_attribute :occurred_on, Chronic.parse(date)
+  end
+
   # Public class methods
   
   # for study_uploads
@@ -77,7 +81,7 @@ class InvolvementEvent < ActiveRecord::Base
     logger.debug "find_or_create all inv_evnt: #{InvolvementEvent.find(:all).inspect}"
     InvolvementEvent.find(:first,:conditions => {
       :involvement_id => params[:involvement_id],
-      :occurred_on=>params[:occurred_on],
+      :occurred_on=>Chronic.parse(params[:occurred_on]),
       :event_type_id=>params[:event_type_id]}) || InvolvementEvent.create(params)
   end
   

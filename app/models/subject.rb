@@ -71,7 +71,7 @@ class Subject < ActiveRecord::Base
       # if we've made it this far, the mrn was blank or the subject wasn't found by mrn
     if !params[:first_name].blank? or !params[:last_name].blank? or !params[:birth_date].blank?
       #Check if there is a subject with same identifiers on the given study
-      Subject.find_all_by_first_name_and_last_name_and_birth_date(params[:first_name],params[:last_name],params[:birth_date]).each do |subject|
+      Subject.find_all_by_first_name_and_last_name_and_birth_date(params[:first_name],params[:last_name],Chronic.parse(params[:birth_date])).each do |subject|
         return subject if subject.studies.include?study
       end
        #if we've reached here it means that there's no subject with these credentials on the study

@@ -50,11 +50,11 @@ describe InvolvementEvent do
     10.times do |i|
       involvement = Factory.create( :involvement, :study => Factory.create(:fake_study), :subject => Factory.create(:fake_subject),
                                     :gender_type_id => gender_type_ids.rand, :ethnicity_type_id => ethnicity_type_ids.rand)
-      Factory.create( :involvement_event, :event_type_id => event_type_id, :involvement => involvement )
+      Factory.create( :involvement_event, :event_type_id => event_type_id,:occurred_on=>i.days.ago,:involvement => involvement )
     end
     involvement_ids = Involvement.all.map(&:id)
     5.times do |i|
-      Factory.create( :involvement_event, :event_type_id => event_type_id, :involvement => Involvement.find(involvement_ids.rand) )
+      Factory.create( :involvement_event, :event_type_id => event_type_id,:occurred_on=> i.days.ago, :involvement => Involvement.find(involvement_ids.rand) )
     end
     InvolvementEvent.accruals_to_date.should == 10
   end
