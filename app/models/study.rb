@@ -20,7 +20,6 @@ class Study < ActiveRecord::Base
   # Validators
   validates_presence_of :synced_at, :irb_number
   
-  $plugins= [EirbServices]
   
   # Public instance methods
   
