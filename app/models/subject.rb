@@ -7,7 +7,7 @@ require 'ruport'
 class Subject < ActiveRecord::Base
   acts_as_reportable
   include WebServices
-
+  self.plugins = [EdwServices]
   # Associations
   has_many :involvements
   has_many :studies, :through => :involvements

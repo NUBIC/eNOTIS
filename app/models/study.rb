@@ -8,14 +8,15 @@ require 'webservices/webservices'
 class Study < ActiveRecord::Base
   
   # Associations
-	has_many :involvements
+  has_many :involvements
   has_many :coordinators
   has_many :subjects, :through => :involvements
   has_many :study_uploads
 
   # Mixins
   has_paper_trail
-	include WebServices
+  include WebServices
+  self.plugins=[EirbServices]
   
   # Validators
   validates_presence_of :synced_at, :irb_number
