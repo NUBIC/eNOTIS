@@ -35,7 +35,7 @@ class EirbAdapter
       WSLOGGER.info("#{Time.now} [EirbAdapter] SOAP factory login: #{config.storename}, result: #{@session.inspect}")
       return authenticated?
     else
-      raise DataServiceError("Login Failed")
+      raise DataServiceError.new("Login Failed")
     end
   end
 

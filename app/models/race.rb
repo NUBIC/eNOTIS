@@ -7,6 +7,9 @@ class Race < ActiveRecord::Base
   belongs_to :involvement
   belongs_to :race_type, :class_name => "DictionaryTerm", :foreign_key => :race_type_id
 
+  #validators
+  validates_presence_of :race_type_id
+
   # Mixins
   has_paper_trail
   

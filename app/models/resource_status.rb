@@ -3,7 +3,9 @@
 #keeps information on status and error message(if any)
 class ResourceStatus < ActiveRecord::Base
    after_update :notifier
-
+   def self.find_or_create(params)
+     find(:first,:conditions=>params) || create(params)
+   end
 
    protected
    def notifier

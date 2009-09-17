@@ -5,7 +5,7 @@ Dir[File.dirname(__FILE__) + "/webservices/plugins/*.rb"].each {|file| require f
 loop do
  [EdwServices,EirbServices].each do |service|
    status,message = service.service_test
-   ResourceStatus.find_by_name(service.to_s.downcase).update_attributes({:status=>status,:message=>message})
+   ResourceStatus.find_or_create({:name=>service.to_s.downcase}).update_attributes({:status=>status,:message=>message})
  end
    sleep(1800)
 end

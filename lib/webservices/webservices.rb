@@ -1,11 +1,10 @@
 Dir[File.dirname(__FILE__) + "/plugins/*.rb"].each {|file| require file}
 module WebServices
-# TODO Need to implement some solid hierarchy of plugins
 
   def  self.included(base)
     base.class_eval do 
       class << self
-        SERVICE_PLUGINS = [EdwServices,EirbServices]
+        cattr_accessor :plugins
         alias_method :old_find, :find
         def find(*args)
            
@@ -85,7 +84,7 @@ module WebServices
           raise DataServiceError.new("Webservices Only Supports Hash Conditions at this time") unless conditions.instance_of?(Hash)
           keys = conditions.keys
           begin
-            SERVICE_PLUGINS.each do |plugin|
+            self.plugins.each do |plugin|
 	      meth = plugin.public_methods.detect{|method_name| keys.map{|x| method_name.include?(x.to_s.strip)}.uniq == [true]}
               if meth
                 return plugin.send(meth,conditions.merge!(get_service_opts(options)))
@@ -95,7 +94,7 @@ module WebServices
               #supress data service errors
               return nil
           end
-          raise DataServiceError.new("No Method Found matching")
+          raise DataServiceError.new("No Method Found")
 
         end
 

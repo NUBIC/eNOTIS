@@ -47,7 +47,7 @@ class Involvement < ActiveRecord::Base
   end
 
   def race_list
-    self.races.map{|race| race.race_type.term }
+    self.races.map{|race| race.race_type.term}.join(";")
   end
 
   # Public class methods

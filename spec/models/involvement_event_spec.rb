@@ -41,4 +41,22 @@ describe InvolvementEvent do
     event.destroy
     Involvement.find_by_id(involvement_id).should_not == nil
   end
+  
+  it "should let me know how many accruals (unique by involvement) were completed to date" do
+    InvolvementEvent.accruals_to_date.should == 0
+    event_type_id = DictionaryTerm.lookup_term("Consented","Event").id
+    gender_type_ids = DictionaryTerm.lookup_category_terms('Gender').map(&:id)
+    ethnicity_type_ids = DictionaryTerm.lookup_category_terms('Ethnicity').map(&:id)
+    10.times do |i|
+      involvement = Factory.create( :involvement, :study => Factory.create(:fake_study), :subject => Factory.create(:fake_subject),
+                                    :gender_type_id => gender_type_ids.rand, :ethnicity_type_id => ethnicity_type_ids.rand)
+      Factory.create( :involvement_event, :event_type_id => event_type_id,:occurred_on=>i.days.ago,:involvement => involvement )
+    end
+    involvement_ids = Involvement.all.map(&:id)
+    5.times do |i|
+      Factory.create( :involvement_event, :event_type_id => event_type_id,:occurred_on=> i.days.ago, :involvement => Involvement.find(involvement_ids.rand) )
+    end
+    InvolvementEvent.accruals_to_date.should == 10
+  end
+  
 end

@@ -87,7 +87,7 @@ class PatientUploadProcessor < ApplicationProcessor
     params.headers.select{|key| key.to_s =~/event_type/i}.each do |key|
       event={}
       event[:event_type_id] = (DictionaryTerm.lookup_term(params[key],:event)).id
-      event[:occurred_on] = Chronic.parse(params[key.to_s.gsub("type","date").to_sym])
+      event[:occurred_on] = params[key.to_s.gsub("type","date").to_sym]
       events << event
     end
     return events
@@ -103,7 +103,7 @@ class PatientUploadProcessor < ApplicationProcessor
   def get_races(params)
     races = []
     params.headers.select{|key| key.to_s =~/Race/i}.each do |key|
-      races << (DictionaryTerm.lookup_term(params[key.to_s],:race))
+      races << (DictionaryTerm.lookup_term(params[key.to_sym],:race)).id
     end
     return races
   end

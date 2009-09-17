@@ -1,6 +1,7 @@
 Notes from eNOTIS design review meeting
 Warren, Peter, Rhett, Dong, Brian, David, Mark
 
+ENTERED INTO REDMINE
 add your session has ended... expiry screen
 fix text size rendering issues
 update "synced" to "EMR link" and "EMR linked"
