@@ -9,7 +9,7 @@ class Notifier < ActionMailer::Base
  def service_status_notification(service)
    recipients support_email
    from support_email
-   subject "eNOTIS_#{service.name.upcase}: service update"
+   subject "[eNOTIS]#{service.name.upcase}: Status - #{service.status ? "up" : "down"}"
    body :service => service
  end
   
