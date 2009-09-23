@@ -24,7 +24,7 @@ EOS
         "user" => @yml["test"]["user"].value, 
         "pass" => @yml["test"]["pass"].value,
         "store" => @yml["test"]["store"].value,
-        "number" => @yml["test"]["number"].value.to_i}
+        "number" => @yml["test"]["number"].value.to_i} # yaml stores all values as strings
     end
 
     it "accesses keyed values like methods" do
@@ -32,7 +32,7 @@ EOS
       @config.user.should == @yml["test"]["user"].value
       @config.pass.should == @yml["test"]["pass"].value
       @config.store.should == @yml["test"]["store"].value
-      @config.number.should == @yml["test"]["number"].value
+      @config.number.should == @yml["test"]["number"].value.to_i # yaml stores all values as strings
     end
 
     it "still throws 'method_missing' for attrs not in the yaml" do
@@ -49,7 +49,7 @@ EOS
 
     it "can access keyed values" do
       @config.url.should == @h[:blah][:url]
-      @config.num.should == @h[:blah]["num"]
+      @config.num.should == @h[:blah]["num"].to_i
     end
   end
 end
