@@ -17,3 +17,13 @@ ActiveSupport.use_standard_json_time_format = true
 # Don't escape HTML entities in JSON, leave that for the #json_escape helper.
 # if you're including raw json in an HTML page.
 ActiveSupport.escape_html_entities_in_json = false
+
+# Redefineing a missing method on the postgres-pr adapter
+# From: http://github.com/mneumann/postgres-pr/issues#issue/1
+class PGconn
+
+  def PGconn.quote_ident(name)
+    %("#{name}")
+  end
+end
+
