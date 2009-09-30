@@ -120,6 +120,7 @@ namespace :gems do
   task :cleanup, :roles => :app do
     gems_to_uninstall = %w(
       airblade-paper_trail
+      acts_as_reportable
       bcdatabase
       bcsec
       binarylogic-searchlogic
@@ -155,6 +156,7 @@ namespace :gems do
       ruby-debug-base
       ruby-net-ldap
       rubytree
+      ruport
       session
       soap4r
       sqlite3-ruby
