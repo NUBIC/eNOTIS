@@ -43,7 +43,7 @@ describe InvolvementEvent do
   end
   
   it "should let me know how many accruals (unique by involvement) were completed to date" do
-    InvolvementEvent.accruals_to_date.should == 0
+    InvolvementEvent.count_accruals.should == 0
     event_type_id = DictionaryTerm.lookup_term("Consented","Event").id
     gender_type_ids = DictionaryTerm.lookup_category_terms('Gender').map(&:id)
     ethnicity_type_ids = DictionaryTerm.lookup_category_terms('Ethnicity').map(&:id)
@@ -56,7 +56,7 @@ describe InvolvementEvent do
     5.times do |i|
       Factory.create( :involvement_event, :event_type_id => event_type_id,:occurred_on=> i.days.ago, :involvement => Involvement.find(involvement_ids.rand) )
     end
-    InvolvementEvent.accruals_to_date.should == 10
+    InvolvementEvent.count_accruals.should == 10
   end
   
 end

@@ -21,10 +21,7 @@ class Involvement < ActiveRecord::Base
   
   # Named scope
   named_scope :with_coordinator, lambda {|user_id| { :include => {:study => :coordinators}, :conditions => ['coordinators.user_id = ?', user_id ]}}
-   
 
-  
-  
   # Mixins
   has_paper_trail
   # Validations
@@ -58,6 +55,7 @@ class Involvement < ActiveRecord::Base
       Involvement.create(params)
     end
   end
+  
 end
 
 
