@@ -63,4 +63,5 @@ Rails::Initializer.run do |config|
    :domain => "northwestern.edu"
   }
 
+  
 end

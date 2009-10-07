@@ -2,6 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  auto_session_timeout 20.minutes
   
   # Helpers
   # helper :all # include all helpers, all the time
@@ -35,5 +36,6 @@ class ApplicationController < ActionController::Base
   def system_status
     "up" #%w(up up up up up up up up up up up up up down scheduled_maintenance scheduled_restored).rand
   end
+
   
 end

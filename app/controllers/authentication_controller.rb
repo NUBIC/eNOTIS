@@ -1,6 +1,7 @@
 class AuthenticationController < ApplicationController
   layout "layouts/public"
 
+  auto_session_timeout_actions
   # Public instance methods (actions)
   def index
     # TODO System staus check
@@ -34,6 +35,11 @@ class AuthenticationController < ApplicationController
   
   def access_help
   end
+
+  def active
+    render_session_status
+  end
+  
   
   # Protected instance methods
   protected
