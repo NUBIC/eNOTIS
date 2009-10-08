@@ -59,6 +59,19 @@ Feature: Manage subjects
     Then I should be on the study page for id "1248E"
     And I should see "Created"
 
+  Scenario: A coordinator can add a subject with only a casenumber
+    When I go to the study page for id "1248E"
+    And I follow "Add Subject"
+    And I fill in "Case Number" with "Case2"
+    And I select "Male" from "Gender"
+    And I select "Not Hispanic Or Latino" from "Ethnicity"
+    And I check "Asian"
+    And I select "Consented" from "Event Type"
+    And I fill in "Event Date" with "2009-07-01"
+    And I press "Submit"
+    Then I should be on the study page for id "1248E"
+    And I should see "Created"
+
   Scenario: A coordinator can view the synced/not synced with medical record status
     Given the study "1248E" has the following subjects
       | first_name | last_name | mrn   |

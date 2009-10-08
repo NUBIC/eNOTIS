@@ -64,7 +64,7 @@ class InvolvementEvent < ActiveRecord::Base
       if params[:subject].has_key?(:id) && (subject = Subject.find(params[:subject][:id]))
         involvement = Involvement.find_by_study_id_and_subject_id(study.id, subject.id)
       else
-        subject = Subject.find_or_create(params[:subject],study)
+        subject = Subject.find_or_create(params)
         raise ActiveRecord::Rollback if study.nil? or subject.nil?
         # Involvement - create an involvement
         involvement = Involvement.update_or_create(params[:involvement].merge({:subject_id => subject.id, :study_id => study.id}))

@@ -71,7 +71,7 @@ class PatientUploadProcessor < ApplicationProcessor
 
   def format_params(params,irb_number)
    result = {}
-   result[:study] = {:irb_number=>irb_number}
+   result[:study] = @study.attributes.symbolize_keys
    result[:subject] = get_subject(params)
    result[:involvement] = {}
    result[:involvement][:race_type_ids] = get_races(params)
@@ -79,6 +79,7 @@ class PatientUploadProcessor < ApplicationProcessor
    result[:involvement][:gender_type_id]=get_term_id(params,:gender)
    result[:involvement][:case_number]=params[:case_number]
    result[:involvement_events] = get_events(params)
+   result[:user] = @study_upload.user.attributes.symbolize_keys
    return result
   end
 

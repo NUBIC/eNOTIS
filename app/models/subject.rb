@@ -59,25 +59,28 @@ class Subject < ActiveRecord::Base
   
   # Public class methods
   
-  def self.find_or_create(params,study=nil,user="EDWeNOTIS")
+  def self.find_or_create(params)
+    @sub_params = params[:subject]
+    @user = params[:user]
+    study = Study.find_by_irb_number(params[:study][:irb_number])
     # try to find by mrn first
-    if !params[:mrn].blank?
-      subject = Subject.find(:first, :conditions =>{:mrn=>params[:mrn]},:span=>:global,:service_opts=>{:netid=>user})
+    if !@sub_params[:mrn].blank?
+      subject = Subject.find(:first, :conditions =>{:mrn=>@sub_params[:mrn]},:span=>:global,:service_opts=>{:netid=>@user[:netid]})
       if !subject.nil?
         subject.save
         return subject
       end 
     end
       # if we've made it this far, the mrn was blank or the subject wasn't found by mrn
-    if !params[:first_name].blank? or !params[:last_name].blank? or !params[:birth_date].blank?
+    if !@sub_params[:first_name].blank? or !@sub_params[:last_name].blank? or !@sub_params[:birth_date].blank?
       #Check if there is a subject with same identifiers on the given study
-      Subject.find_all_by_first_name_and_last_name_and_birth_date(params[:first_name],params[:last_name],Chronic.parse(params[:birth_date])).each do |subject|
+      Subject.find_all_by_first_name_and_last_name_and_birth_date(@sub_params[:first_name],@sub_params[:last_name],Chronic.parse(@sub_params[:birth_date])).each do |subject|
         return subject if subject.studies.include?study
       end
        #if we've reached here it means that there's no subject with these credentials on the study
-      Subject.create(params)
+      Subject.create(@sub_params)
     else
-      return Subject.create()
+      params[:involvement][:case_number].blank? ? nil : Subject.create()
     end
   end
     

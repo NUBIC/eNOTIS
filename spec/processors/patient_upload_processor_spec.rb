@@ -10,8 +10,10 @@ describe PatientUploadProcessor do
   describe "bulk upload" do 
     before(:each) do 
     @dir = File.dirname(__FILE__) + '/../uploads/'
-    @study = Study.create({:title=>"some study",:irb_number=>"111115",:synced_at=>Time.now})
-    @study_upload = StudyUpload.create({:study_id=>@study.id})
+    @study = Factory(:fake_study)
+    @user = Factory(:user,:netid=>'spec_test')
+    @study_upload = Factory(:study_upload,:study=>@study,:user=>@user)
+    Study.stub!(:find_by_irb_number).and_return(@study)
     end
 
     it "should process a correctly formed csv file" do 
@@ -109,7 +111,7 @@ describe PatientUploadProcessor do
         @study_upload.upload = f
       end
       @study_upload.save
-      @study_upload2 = StudyUpload.create({:study_id=>@study.id})
+      @study_upload2 = Factory(:study_upload,:study=>@study,:user=>@user) 
       
       File.open(@dir + 'valid_upload.csv') do |f|
         @study_upload2.upload = f

@@ -27,6 +27,7 @@ class InvolvementEventsController < ApplicationController
   end
 
   def create
+    params[:user] = current_user.attributes.symbolize_keys
     if InvolvementEvent.add(params)
       flash[:notice] = params[:subject].has_key?(:id) ? "Added" : "Created"
       redirect_to study_path(params[:study][:irb_number], :anchor => "subjects")
