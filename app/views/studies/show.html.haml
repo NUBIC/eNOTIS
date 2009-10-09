@@ -101,7 +101,7 @@
                   %td= link_to(involvement.subject.name.blank? ? involvement.case_number :  involvement.subject.name, subject_path(involvement.subject, :study => @study), :rel => 'detail')
                   %td= involvement.subject.synced? ? image_tag("sync_icon_16.gif") : "&nbsp;"
       #subject-detail
-        = link_to("Download Subjects", export_subjects_path(:study => @study),:class => 'add')
+        = link_to("Download Subjects", new_report_path(:study => @study),:rel => 'facebox', :class => 'add')
         = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox', :class => 'add')
         .detail
           

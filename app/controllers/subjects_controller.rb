@@ -82,13 +82,6 @@ class SubjectsController < ApplicationController
     end
   end
 
-  def export
-    result = Report.export_subjects(params[:study])
-    send_data(result,
-      :type => 'text/csv; charset=utf-8; header=present',
-      :filename => "subjects.csv")
-  end
-
   def csv_sanity_check(csv, temp_file = Tempfile.new("results")) # csv can be a string, file, or Paperclip::Attachment
     # We may possibly want to sanity check dates with Chronic http://chronic.rubyforge.org/
     csv = csv.to_io if csv.class == Paperclip::Attachment

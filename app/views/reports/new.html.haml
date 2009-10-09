@@ -1,0 +1,35 @@
+-form_tag(reports_path) do
+  = hidden_field_tag 'study[irb_number]', params[:study]
+  %p="Exporting Data For Study # #{params[:study]}"
+  %hr
+ 
+  %p Select Attribuets
+  %p 
+    - ['mrn','first_name','last_name','birth_date'].each do |val|
+      %p
+      = label_tag "subject[]",val.titleize
+      = check_box_tag "subject[]",val
+    %p
+      = label_tag "involvement[attributes][]","Case Number"
+      = check_box_tag "involvement[attributes][]",'case_number'
+
+    - ['ethnicity','gender','race_list'].each do |meth|
+      %p
+        = label_tag "involvement[methods][]",meth.titleize
+        = check_box_tag "involvement[methods][]",meth
+
+    %p
+      = label_tag "event[methods][]","Event Type"
+      = check_box_tag "event[methods][]",'event_type'
+    %p
+      = label_tag "event[attributes][]"," Event Date"
+      = check_box_tag  "event[attributes][]",'occurred_on'
+
+    %p
+      = label_tag "format","File Format"
+      = select_tag('format',options_for_select([["PDF","pdf"],["CSV","csv"]]))
+
+    
+  %p=submit_tag("Export Data")
+
+    
