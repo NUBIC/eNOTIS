@@ -8,5 +8,6 @@ ActiveMessaging::Gateway.define do |s|
   #s.processor_group :group1, :order_processor
   
   s.destination :patient_upload, "/queue/eNOTIS_#{Rails.env.capitalize}_PatientUpload"
-
+  s.destination :external_event, "/queue/eNOTIS_#{Rails.env.capitalize}_ExternalEvents"
+  s.destination :external_event_error, "/queue/eNOTIS_#{Rails.env.capitalize}_ExternalEventsError"
 end

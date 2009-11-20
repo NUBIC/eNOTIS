@@ -70,7 +70,7 @@ class InvolvementEvent < ActiveRecord::Base
         # Involvement - create an involvement
         involvement = Involvement.update_or_create(params[:involvement].merge({:subject_id => subject.id, :study_id => study.id}))
       end
-      raise ActiveRecord::Rollback if involvement.nil?
+      raise ActiveRecord::Rollback if involvement.nil? or involvement.id.nil?
       # InvolvementEvent - create the event
       params[:involvement_events].each do |event|
         InvolvementEvent.find_or_create(event.merge({:involvement_id=>involvement.id}))
