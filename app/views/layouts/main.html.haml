@@ -3,23 +3,21 @@
 %html
   %head
     %title= "eNotis :: #{@title}"
-    =stylesheet_link_tag(@view_stylesheets ||= ["compiled/application", "compiled/main"])
-    =javascript_include_tag @view_javascripts ||= ["jquery-1.3.2.min", "jquery-ui-1.7.2.min" ,"jrails", "facebox", "jquery.dataTables.min", "jquery.main","jquery.periodicalupdater"] 
-    =yield :head
+    = stylesheet_link_tag(@view_stylesheets ||= ["compiled/application", "compiled/main"])
+    = javascript_include_tag(@view_javascripts ||= ["jquery.tools.min.js", "jquery-ui-1.7.2.min" ,"jrails", "jquery.dataTables.min", "jquery.main", "jquery.periodicalupdater"]) 
+    = yield :head
   %body
-    =auto_session_timeout_js  if logged_in?
+    = auto_session_timeout_js if logged_in?
     #container
       #header
         %span.app_name
-          =image_tag("logo_idea1.gif",:alt => "eNOTIS Logo")          
+          = image_tag("logo_idea1.gif", :alt => "eNOTIS Logo")
           %em.tagline
             Northwestern University Clinical Subject Registration
-
       #current_user_badge
         = "#{current_user.name} (#{current_user.netid})"
         |
         = link_to('Logout', logout_authentication_path)
-      
       #bridge-nav
         %ul
           %li{:class => nav_class(UsersController)}
@@ -36,18 +34,12 @@
               =text_field_tag("query")
               =submit_tag("Search")
       - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
-        #flash
-          = flash_messages(types)
-            
+        #flash= flash_messages(types)
       #main
-        =yield
-
+        = yield
       #footer
-        %p
-          eNOTIS &mdash; Clinical Subject Registration 
-          =app_version_helper
-          Created by&nbsp; 
-          =link_to("NUBIC")
-          &nbsp;for Northwestern University
-          &nbsp;&mdash;
-          =RAILS_ENV.upcase
+        %p= "eNOTIS #{app_version_helper} &mdash; created by #{link_to("NUBIC", "http://www.nucats.northwestern.edu/centers/nubic")} for Northwestern University"
+      #overlay.overlay
+        .contentWrap
+      #session-expire.overlay
+        %b your session is about to expire

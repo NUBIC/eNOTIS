@@ -1,5 +1,4 @@
 // Styles for views in the authentication controller
-
 // Importing all our base mixins, colors, and plugins 
 @import base.sass
 // basic top, middle, bottom block layout
@@ -7,10 +6,8 @@ body
   :background-color= !nu_page_background
   :background-image url('/images/body-fade-bg.png')
   :background-repeat repeat-x
-
   #container
     :border-top= 0px
-  
   #environment
     :position absolute
     :left 50%
@@ -38,7 +35,6 @@ body
       :margin-top 35px
       :float right
       :text-align right
-
   #main
     +column(48,true)
     +squeeze
@@ -69,7 +65,6 @@ body
           :border-bottom 7px solid #006699
           :color #333333
     // root element for the scrollable. when scrolling occurs this element stays still. 
-
     div.panes
       // required settings
       :position relative 
@@ -77,89 +72,18 @@ body
       :width 955px
       :height 300px
       :padding-top 20px
-      
-      
-      // root element for scrollable items. Must be absolutely positioned
-      // and it should have a extremely large width to accomodate scrollable items. 
-      // it's enough that you set width and height for the root element and 
-      // not for this element. 
+      // root element for scrollable items. Must be absolutely positioned and it should have a extremely large width to accomodate scrollable items. it's enough that you set width and height for the root element and not for this element. 
       div.items
         // this cannot be too large
         :width 20000em
         :position absolute
-        
-        // a single item. must be floated in horizontal scrolling.     
-        // typically, this element is the one that *you* will style 
-        // the most. 
+        // a single item. must be floated in horizontal scrolling. typically, this element is the one that *you* will style the most. 
         div
           :float left
-          :width  955px
+          :width 955px
         div.current
           :border 1px inset #ccc 
           :background-color #cdcdcd 
-    
-    #left_primary
-      +column(35)
-    #right_sidebar
-      +prepend(1)
-      +column(12,true)
-    #enotis_description
-      :font-size 1.4em
-      :font-weight bold
-      +squish(1)
-    #system_status
-      +rounded_box( !secondary_data_bg_color )
-      :padding= !blueprint_grid_width
-      +squish(1)
-    #loginbox
-      +blueprint-form
-      +rounded_box( !primary_data_bg_color )
-      :padding= !blueprint_grid_width
-      input[type="submit"]
-        +button-button("right")
-    #training
-      +column(32)
-      :margin-top= !blueprint_grid_outer_width
-      .heading
-        :font-size 1.5em
-        +rounded_top_box( !secondary_data_bg_color )
-        :padding-left 0.5em
-      .title
-        +bold
-        :font-size 1.2em
-        +squeeze(0.5)
-      #videos
-        :margin-top 1em
-        +column(32, true)
-        ul
-          +horizontal-list(20px)
-          +prepend(1)
-          li
-            :width 70px
-            :height 60px
-            :margin 0em 1em
-            :background-image url('/images/video.jpg')
-            :background-repeat no-repeat
-            :background-position center
-            :padding 25px
-            :text-align center
-      #tutorials
-        :margin-top 1em
-        +column(10)
-        ul
-          +no-bullets
-      #trainings
-        :margin-top 1em
-        +column(21, true)
-        ul
-          +no-bullets
-          li
-            .title
-              +normal
-            .date
-              +quiet
-            .location
-              +quiet
   #footer
     :margin-top 20px
     :padding-top 10px

@@ -1,6 +1,5 @@
 - content_for :head do
   %script{:type => 'text/javascript'}
-    //$(document).ready(function(){$("#netid").focus();});
     $(document).ready(function(){
     $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
     $("#netid").focus();
@@ -35,11 +34,7 @@
         %li find collaborators with related research (lattice grid)
         %li integrate your patient registry and follow-up surveys
         %li (later: crf's?)
--#left_primary
-  #enotis_description
-    eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University
-  
-  #training
+  -#training
     .heading Get acquainted with eNOTIS
     #videos
       .title Video Training
@@ -69,23 +64,7 @@
           %span.title= link_to("Unleashing the inner eNOTIS guru")
           %span.date 31-44-1993 @ 8am
           %span.location Streeterville, 750 N Lake Shore
-
--#right_sidebar
-  #loginbox
-    -form_tag(login_authentication_path, :method => 'post') do
-      %p
-        %label{:for => 'netid'} NetID
-        %br
-        = text_field_tag('netid')
-      %p  
-        %label{:for => 'password'} Password
-        %br
-        = password_field_tag('password')
-      %p 
-        = submit_tag('login')
-      %p
-        = link_to "I cannot access my account", access_help_authentication_path
-  #system_status{:class => @status}
+  -#system_status{:class => @status}
     .heading System status
     %p= ApplicationController::SYSTEM_STATUSES[@status.to_sym]
 

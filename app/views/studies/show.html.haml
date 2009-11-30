@@ -1,5 +1,5 @@
 - @view_stylesheets = ["compiled/application", "compiled/main", "compiled/accrual_graph"]
-- @view_javascripts = ["jquery-1.3.2.min", "jquery-ui-1.7.2.min" ,"jrails", "facebox", "jquery.dataTables.min", "jquery.main", "jquery.flot.pack", "excanvas.pack", "study-tabs"] # flot and excanvas are used for the accrual graph, study-tabs for the tabs
+- @view_javascripts = ["jquery.tools.min.js", "jquery-ui-1.7.2.min" ,"jrails", "jquery.dataTables.min", "jquery.main", "jquery.periodicalupdater", "jquery.flot.pack", "excanvas.pack", "study-tabs"] # flot and excanvas are used for the accrual graph, study-tabs for the tabs
 
 - content_for :head do
   %script{:type => 'text/javascript'}
@@ -101,8 +101,8 @@
                   %td= link_to(involvement.subject.name.blank? ? involvement.case_number :  involvement.subject.name, subject_path(involvement.subject, :study => @study), :rel => 'detail')
                   %td= involvement.subject.synced? ? image_tag("sync_icon_16.gif") : "&nbsp;"
       #subject-detail
-        = link_to("Download Subjects", new_report_path(:study => @study),:rel => 'facebox', :class => 'add')
-        = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => 'facebox', :class => 'add')
+        = link_to("Download Subjects", new_report_path(:study => @study),:rel => '#overlay', :class => 'add')
+        = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => '#overlay', :class => 'add')
         .detail
           
                 

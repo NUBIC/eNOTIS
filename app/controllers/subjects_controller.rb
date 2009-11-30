@@ -6,7 +6,6 @@ class SubjectsController < ApplicationController
 
   # Includes
   include ActiveMessaging::MessageSender
-  # include FaceboxRender
   include Chronic
   #Reporting
 

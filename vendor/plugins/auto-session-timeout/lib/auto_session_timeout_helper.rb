@@ -1,6 +1,6 @@
 module AutoSessionTimeoutHelper
   def auto_session_timeout_js(options={})
-    frequency = options[:frequency] || 10
+    frequency = options[:frequency] || 60
     frequency *=1000
     code = <<JS
 
@@ -20,7 +20,7 @@ module AutoSessionTimeoutHelper
                   if (data == 'expired')
                     window.location.href = '/timeout';
                   if (data == 'warning')
-                   jQuery.facebox('<b>Your Session Is About To Expire</b>');
+                    $("#session-expire").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }, closeOnClick: false, api: true }).load();
                 });
                })
 

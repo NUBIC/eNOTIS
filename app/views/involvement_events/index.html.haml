@@ -18,7 +18,7 @@
         - @events.each do |e|
           %tr
             %td= link_to e.involvement.study.irb_number, study_path(e.involvement.study) || "(no id)"
-            %td= link_to(e.involvement.subject.name, subject_url(e.involvement.subject), :rel => 'facebox')
+            %td= link_to(e.involvement.subject.name, subject_url(e.involvement.subject), :rel => '#overlay')
             %td
               %dfn{:title => e.description}= e.term.capitalize
             %td= e.occurred_on

@@ -10,7 +10,7 @@ $(document).ready(function(){
 		// this event catches clicks on links to this document itself, closes the facebox, and switches the tab
 		// clicks on links to other documents don't bubble up to the document element
 		if($(e.target).is('a')){
-			$.facebox.close();
+      // $.facebox.close();
 			// loadLocation($(e.target).attr("href"));
 			switchTab(e.target.hash);
 		}
@@ -27,12 +27,12 @@ $(document).ready(function(){
 			dataType: "html",
 			success: loadSubjectDetail
 		});
-	});
-	
+	});	
 	
 	function loadSubjectDetail(data){
 		$('#subjects #subject-detail .detail').html(data);
-		$('#subjects #subject-detail a[rel*=facebox]').facebox();
+    // $('#subjects #subject-detail a[rel*=facebox]').facebox();
+    $("#subject-events a[rel=#overlay]").overlay({ onBeforeLoad: function() { var wrap = this.getContent().find(".contentWrap"); wrap.load(this.getTrigger().attr("href")); } });
 	}
 	function switchTab(anchor){
 		// http://articles.rootsmith.ca/mod_python/how-to-make-jquery-ui-tabs-linkable-or-bookmarkable#comment-10188

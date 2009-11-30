@@ -1,5 +1,4 @@
 // This file contains the sass styles for the main.html.haml layout
-
 // Importing all our base mixins, colors, and plugins 
 @import base.sass 
 // Importing our custom modules for parts of the app
@@ -8,16 +7,15 @@
 @import my_subjects.sass
 @import search.sass
 @import studies.sass
-@import facebox.sass
 @import datatables.sass
 
 body
   :background-image url('/images/bridge-nav-bkgnd.gif')
   :background-repeat repeat-x
   :background-position 0 65px
-
   // :background url('/images/idx2.gif')
   // basic top, middle, bottom block layout
+  
   #header
     +column(35,true)
     
@@ -97,6 +95,34 @@ body
   .footing
     :text-align right
 
-
-
+  // the overlayed element 
+  .overlay
+    // must be initially hidden 
+    :display none 
+    // place overlay on top of other elements 
+    :z-index 10000 
+    // styling 
+    :background-color #fff
+    //#333 
+    //:width 675px
+    :padding 10px
+    :border 1px solid #666 
+    // CSS3 styling for latest browsers 
+    :-moz-box-shadow 0 0 90px 5px #000 
+    :-webkit-box-shadow  0 0 90px #000     
+  
+  // close button positioned on upper right corner
+  .overlay .close
+    :background-image url(/images/jquery-tools/apple-close.png) 
+    :position absolute 
+    :right -12px 
+    :top -12px 
+    :cursor pointer 
+    :height 28px 
+    :width 28px
+  
+  #overlay
+    :min-height 200px 
+  #session-expire
+    :padding 50px
 

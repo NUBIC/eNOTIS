@@ -6,16 +6,12 @@
     = stylesheet_link_tag @view_stylesheets ||= ["compiled/application","compiled/public"]
     = javascript_include_tag @view_javascripts || ["jquery.tools.min.js"]
     = yield :head
-    
   %body
     #container
       - unless RAILS_ENV == "production"
         #environment{:class => RAILS_ENV}= "eNOTIS is running in #{RAILS_ENV.upcase}"
       #header
-        %span.app_name
-          =image_tag("enotis-outline-logo.png",:alt => "eNOTIS")
-          -# %em.tagline
-          -#  Northwestern University Clinical Subject Registration
+        %span.app_name= image_tag("enotis-outline-logo.png",:alt => "eNOTIS")
         #loginbox
           -form_tag(login_authentication_path, :method => 'post') do
             %label{:for => 'netid'} NetID
@@ -26,21 +22,15 @@
             %br
             = link_to "I cannot access my account", access_help_authentication_path
             = submit_tag('login')
-              
-        
       - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
-        #flash
-          = flash_messages(types)
-            
+        #flash= flash_messages(types)
       #main
         =yield
-
       #footer
         .nulogo= image_tag("nu_logo.gif")
         .nucatslogo= image_tag("nucats_logo.gif")
         .nubiclogo= image_tag("nubic_logo.gif")
-        %p
-          = "eNOTIS #{app_version_helper} &mdash; created by #{link_to("NUBIC", "http://www.nucats.northwestern.edu/centers/nubic")} for Northwestern University"
+        %p= "eNOTIS #{app_version_helper} &mdash; created by #{link_to("NUBIC", "http://www.nucats.northwestern.edu/centers/nubic")} for Northwestern University"
 
 
 

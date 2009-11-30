@@ -2,7 +2,6 @@ class InvolvementEventsController < ApplicationController
   layout "layouts/main"
   
   # Includes
-  # include FaceboxRender
   include Chronic
   
   # Authentication
