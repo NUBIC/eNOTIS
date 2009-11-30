@@ -5,35 +5,99 @@
 // basic top, middle, bottom block layout
 body
   :background-color= !nu_page_background
+  :background-image url('/images/body-fade-bg.png')
+  :background-repeat repeat-x
 
   #container
     :border-top= 0px
   
   #environment
-    +column(48, true)
-    +squeeze
+    :position absolute
+    :left 50%
+    :width 600px
+    :margin-left -300px
     :background-color= !notice_bg_color
-    :font-size 2em
+    :font-size 1.5em
     :text-align center
   #header
     +column(48,true)
     +squeeze
-    :margin-top= !blueprint_grid_outer_width / 2
-    
+    :height 110px
     .app_name
       :font-size 3em
       :font-weight bold
       :color = !nu_purple
       img
-        :padding-top 25px
-
+        :margin-top 30px
+    .site_links
+      :float right
     .tagline
       :color = !nu_purple
       :font-size 0.4em
-  
+    #loginbox
+      :margin-top 35px
+      :float right
+      :text-align right
+
   #main
     +column(48,true)
     +squeeze
+    :background #e9e9e9 url('/images/pane-texture-bg.png') repeat-x
+    +rounded_bottom_box( #e9e9e9 )
+    ul.tabs
+      :background-color #d6d6d6
+      :margin 0
+      :display block
+      :height 35px
+      :width 955px
+      li
+        :background transparent
+        :list-style none
+        :display block
+        :float left
+        :width 278px
+        :padding 0 40px 0 0
+        a
+          :color #999999
+          :font-size 18px
+          :height 30px
+          :line-height 35px
+          :text-decoration none
+        a:hover
+          :color #555555
+        a.current
+          :border-bottom 7px solid #006699
+          :color #333333
+    // root element for the scrollable. when scrolling occurs this element stays still. 
+
+    div.panes
+      // required settings
+      :position relative 
+      :overflow hidden 
+      :width 955px
+      :height 300px
+      :padding-top 20px
+      
+      
+      // root element for scrollable items. Must be absolutely positioned
+      // and it should have a extremely large width to accomodate scrollable items. 
+      // it's enough that you set width and height for the root element and 
+      // not for this element. 
+      div.items
+        // this cannot be too large
+        :width 20000em
+        :position absolute
+        
+        // a single item. must be floated in horizontal scrolling.     
+        // typically, this element is the one that *you* will style 
+        // the most. 
+        div
+          :float left
+          :width  955px
+        div.current
+          :border 1px inset #ccc 
+          :background-color #cdcdcd 
+    
     #left_primary
       +column(35)
     #right_sidebar
@@ -96,8 +160,12 @@ body
               +quiet
             .location
               +quiet
-  #footer 
-    +column(50,true)
+  #footer
+    :margin-top 20px
+    :padding-top 10px
+    +rounded_box( #fff )
+    +column(48,true)
+    +squeeze
     .nulogo
       +column(9)
     .nucatslogo

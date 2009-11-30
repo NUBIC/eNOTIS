@@ -1,7 +1,41 @@
 - content_for :head do
   %script{:type => 'text/javascript'}
-    $(document).ready(function(){$("#netid").focus();});
-#left_primary
+    //$(document).ready(function(){$("#netid").focus();});
+    $(document).ready(function(){
+    $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
+    $("#netid").focus();
+    var flashWidth = $("#flash").css('width');
+    $("#flash").animate({width: flashWidth}, 3000).slideUp(1000);
+    });
+
+%ul.tabs
+  %li= link_to "Measure", "#measure"
+  %li= link_to "See", "#see"
+  %li= link_to "Improve", "#improve"
+.panes
+  .items
+    #measure
+      %h2 Measure
+      %ul
+        %li eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University
+        %li keep your accrual logs safe in enotis, not a binder or a backup
+        %li print or export your enrollment to clinicaltrials.gov, eirb
+        %li (later: budgets/adverse events/pt calendar)
+    #see
+      %h2 See
+      %ul
+        %li a one-page comprehensive overview of all of your research for regular meetings
+        %li visualize accrual in the context of the department and the university as a whole
+        %li identify leaders and demonstrate the case for extra support
+        %li see trends what days are the best for recruitment on studies
+    #improve
+      %h2 Improve
+      %ul
+        %li identify studies, days, that need extra resources or energy
+        %li find collaborators with related research (lattice grid)
+        %li integrate your patient registry and follow-up surveys
+        %li (later: crf's?)
+-#left_primary
   #enotis_description
     eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University
   
@@ -36,7 +70,7 @@
           %span.date 31-44-1993 @ 8am
           %span.location Streeterville, 750 N Lake Shore
 
-#right_sidebar
+-#right_sidebar
   #loginbox
     -form_tag(login_authentication_path, :method => 'post') do
       %p
