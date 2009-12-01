@@ -10,10 +10,7 @@
     = auto_session_timeout_js(:frequency => 60) if logged_in?
     #container
       #header
-        %span.app_name
-          = image_tag("logo_idea1.gif", :alt => "eNOTIS Logo")
-          %em.tagline
-            Northwestern University Clinical Subject Registration
+        %span.app_name= image_tag("enotis-outline-logo.png",:alt => "eNOTIS")
       #current_user_badge
         = "#{current_user.name} (#{current_user.netid})"
         |

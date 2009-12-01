@@ -10,21 +10,21 @@
 @import datatables.sass
 
 body
-  :background-image url('/images/bridge-nav-bkgnd.gif')
+  :background-color= !nu_page_background
+  :background-image url('/images/body-fade-bg.png')
   :background-repeat repeat-x
-  :background-position 0 65px
-  // :background url('/images/idx2.gif')
-  // basic top, middle, bottom block layout
-  
+
   #header
-    +column(35,true)
-    
+    +column(34,true)
+    +squeeze
+    :height 110px
+  
     .app_name
       :font-size 3em
       :font-weight bold
       :color = !nu_purple
       img
-        :padding-top= !blueprint_grid_width/2
+        :margin-top 30px
   
 
     .tagline
@@ -39,16 +39,18 @@ body
   // Styles for the top level page navigation
   #bridge-nav
     +column(52,true)
-    :background-color= !secondary_data_bg_color
-    :background-image url('/images/bridge-nav-bkgnd.gif')
-    :background-repeat repeat-x
+    :background-color #d6d6d6
     ul
+      :margin 0
+      :display block
+      :height 35px  
       +horizontal-list(!blueprint_grid_margin)
       +span(44)
       +prepend(2)
       form, form div
         :display inline
       li
+        :background transparent
         :height= !blueprint_grid_outer_width * 2
         a, a:hover, a:visited, a:active
           :color= !secondary_data_color
@@ -78,13 +80,20 @@ body
   // The main wrapper div for the layout  
   #main
     +column(52,true)
-  
+    +rounded_bottom_box( #e9e9e9 )
+    :background #e9e9e9 url('/images/pane-texture-bg.png') repeat-x
+    :background-position 0 -35px
   // Some generic id's and classes used on
   // most pages
 
-  #footer 
-    +column(52,true)
-
+  #footer
+    :margin-top 20px
+    :padding-top 10px
+    +rounded_box( #fff )
+    +column(48,true)
+    +squeeze
+    p
+      :margin-top 10px
 
   .heading
     +rounded_top_box( !primary_data_bg_color )
