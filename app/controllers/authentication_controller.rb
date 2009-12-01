@@ -34,6 +34,10 @@ class AuthenticationController < ApplicationController
   end
   
   def access_help
+    respond_to do |format|
+      format.html
+      format.js {render :layout => false}
+    end
   end
 
   def active

@@ -1,6 +1,10 @@
 - content_for :head do
   %script{:type => 'text/javascript'}
     $(document).ready(function(){
+    $("a[rel=#overlay]").overlay({ 
+    onBeforeLoad: function() { var wrap = this.getContent().find(".contentWrap"); wrap.load(this.getTrigger().attr("href"), "format=js"); },
+    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+    });
     $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
     $("#netid").focus();
     var flashWidth = $("#flash").css('width');
@@ -64,6 +68,7 @@
           %span.title= link_to("Unleashing the inner eNOTIS guru")
           %span.date 31-44-1993 @ 8am
           %span.location Streeterville, 750 N Lake Shore
+  
   -#system_status{:class => @status}
     .heading System status
     %p= ApplicationController::SYSTEM_STATUSES[@status.to_sym]

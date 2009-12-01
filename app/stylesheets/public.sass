@@ -64,6 +64,8 @@ body
         a.current
           :border-bottom 7px solid #006699
           :color #333333
+    div.access_help
+      :padding-top 20px
     // root element for the scrollable. when scrolling occurs this element stays still. 
     div.panes
       // required settings
@@ -99,3 +101,30 @@ body
     p
       :margin-top 10px
       +column(50)
+  .overlay
+    // must be initially hidden 
+    :display none 
+    // place overlay on top of other elements 
+    :z-index 10000 
+    // styling 
+    :background-color #fff
+    //#333 
+    :width 675px
+    :padding 10px
+    :border 1px solid #666 
+    // CSS3 styling for latest browsers 
+    :-moz-box-shadow 0 0 90px 5px #000 
+    :-webkit-box-shadow  0 0 90px #000     
+
+  // close button positioned on upper right corner
+  .overlay .close
+    :background-image url(/images/jquery-tools/apple-close.png) 
+    :position absolute 
+    :right -12px 
+    :top -12px 
+    :cursor pointer 
+    :height 28px 
+    :width 28px
+
+  #overlay
+    :min-height 200px

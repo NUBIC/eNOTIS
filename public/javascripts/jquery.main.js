@@ -2,7 +2,7 @@ $(document).ready(function() {
     // if the function argument is given to overlay, 
     // it is assumed to be the onBeforeLoad event listener 
     $("a[rel=#overlay]").overlay({ 
-      onBeforeLoad: function() { var wrap = this.getContent().find(".contentWrap"); wrap.load(this.getTrigger().attr("href")); },
+      onBeforeLoad: function() { var wrap = this.getContent().find(".contentWrap"); wrap.load(this.getTrigger().attr("href"), "format=js"); },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     }); 
 	

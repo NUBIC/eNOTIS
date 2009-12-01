@@ -1,12 +1,4 @@
-.loginbox
-  -form_tag(login_authentication_path, :method => 'post') do
-    %label{:for => 'netid'} NetID
-    = text_field_tag('netid')
-    %label{:for => 'password'} Password
-    = password_field_tag('password')
-    = submit_tag('login')
-.enotis_description
-  eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University
+%ul.tabs
 
 .access_help
   .heading Logging in
