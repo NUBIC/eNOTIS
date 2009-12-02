@@ -69,9 +69,10 @@ body
     // root element for the scrollable. when scrolling occurs this element stays still. 
     div.panes
       // required settings
-      :position relative 
+      :position relative
       :overflow hidden 
-      :width 955px
+      // :width 955px
+      +column(48,true)
       :height 300px
       :padding-top 20px
       // root element for scrollable items. Must be absolutely positioned and it should have a extremely large width to accomodate scrollable items. it's enough that you set width and height for the root element and not for this element. 
@@ -80,12 +81,14 @@ body
         :width 20000em
         :position absolute
         // a single item. must be floated in horizontal scrolling. typically, this element is the one that *you* will style the most. 
-        div
+        div.item
           :float left
-          :width 955px
+          // :width 955px
+          div.pane-column
+            +column(16)
         div.current
           :border 1px inset #ccc 
-          :background-color #cdcdcd 
+          :background-color #cdcdcd
   #footer
     :margin-top 20px
     :padding-top 10px

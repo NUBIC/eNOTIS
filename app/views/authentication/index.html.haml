@@ -17,27 +17,53 @@
   %li= link_to "Improve", "#improve"
 .panes
   .items
-    #measure
+    #measure.item
       %h2 Measure
-      %ul
-        %li eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University
-        %li keep your accrual logs safe in enotis, not a binder or a backup
-        %li print or export your enrollment to clinicaltrials.gov, eirb
-        %li (later: budgets/adverse events/pt calendar)
-    #see
+      .pane-column
+        %ul
+          %li eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University
+          %li keep your accrual logs safe in enotis, not a binder or a backup
+          %li print or export your enrollment to clinicaltrials.gov, eirb
+          %li (later: budgets/adverse events/pt calendar)
+      .pane-column
+        %h3
+          894 active studies
+          %br
+          542 active users
+        VIDEO - getting started with eNOTIS
+        %br
+        = image_tag "/images/video.jpg"
+      .pane-column
+        CHART
+    #see.item
       %h2 See
-      %ul
-        %li a one-page comprehensive overview of all of your research for regular meetings
-        %li visualize accrual in the context of the department and the university as a whole
-        %li identify leaders and demonstrate the case for extra support
-        %li see trends what days are the best for recruitment on studies
-    #improve
+      .pane-column
+        %ul
+          %li a one-page comprehensive overview of all of your research for regular meetings
+          %li visualize accrual in the context of the department and the university as a whole
+          %li identify leaders and demonstrate the case for extra support
+          %li see trends what days are the best for recruitment on studies
+      .pane-column
+        CHART
+      .pane-column
+        CHART
+    #improve.item
       %h2 Improve
-      %ul
-        %li identify studies, days, that need extra resources or energy
-        %li find collaborators with related research (lattice grid)
-        %li integrate your patient registry and follow-up surveys
-        %li (later: crf's?)
+      .pane-column      
+        %ul
+          %li identify studies, days, that need extra resources or energy
+          %li find collaborators with related research (lattice grid)
+          %li integrate your patient registry and follow-up surveys
+          %li (later: crf's?)
+      .pane-column
+        VIDEO
+        %br
+        = image_tag "/images/video.jpg"
+      .pane-column
+        VIDEO
+        %br
+        = image_tag "/images/video.jpg"
+      
   -#training
     .heading Get acquainted with eNOTIS
     #videos
