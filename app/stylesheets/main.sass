@@ -1,6 +1,7 @@
 // This file contains the sass styles for the main.html.haml layout
 // Importing all our base mixins, colors, and plugins 
-@import base.sass 
+@import base.sass
+@import application.sass
 // Importing our custom modules for parts of the app
 @import dashboard.sass
 @import my_events.sass
@@ -9,143 +10,120 @@
 @import studies.sass
 @import datatables.sass
 
-body
-  :background-color= !nu_page_background
-  :background-image url('/images/body-fade-bg.png')
-  :background-repeat repeat-x
-
-  #header
-    +column(34,true)
-    +squeeze
-    :height 110px
+#current_user_badge
+  :float right
+  +bold
   
-    .app_name
-      :font-size 3em
-      :font-weight bold
-      :color = !nu_purple
-      img
-        :margin-top 30px
-  
-
-    .tagline
-      :color = !nu_purple
-      :font-size 0.3em
-
-  #current_user_badge
-    +column(14,true)
-    +push(1)
-    +bold
+// Styles for the top level page navigation
+#bridge-nav
+  +column(52,true)
+  :background-color #d6d6d6
+  ul
+    :margin 0
+    :display block
+    :height 35px  
+    +horizontal-list(!blueprint_grid_margin)
+    +span(44)
+    +prepend(2)
+    form, form div
+      :display inline
+    li
+      :background transparent
+      :height= !blueprint_grid_outer_width * 2
+      a, a:hover, a:visited, a:active
+        :color= !secondary_data_color
+        :text-decoration none
+        :font-size= !blueprint_grid_width
+        :padding= !blueprint_grid_width
+        :line-height= !blueprint_grid_outer_width * 2
+    li:hover
+      :background-color= !notice_bg_color
+    li.current
+      :background-color= !nu_page_background
+      :color= !nu_purple
+      :border-left= 1px solid !primary_data_border_color
+      :border-right= 1px solid !primary_data_border_color
+    li.search
+      input
+        :margin-top= !blueprint_grid_margin * 2
+        :vertical-align top
+        :padding 0.2em
+      input#query
+        :margin-top= (!blueprint_grid_margin * 2) - 3px
+        :vertical-align top
+        :margin-left -0.1em
+      a, a:hover, a:visited, a:active
+        :padding-right 0.2em
     
-  // Styles for the top level page navigation
-  #bridge-nav
-    +column(52,true)
-    :background-color #d6d6d6
-    ul
-      :margin 0
-      :display block
-      :height 35px  
-      +horizontal-list(!blueprint_grid_margin)
-      +span(44)
-      +prepend(2)
-      form, form div
-        :display inline
-      li
-        :background transparent
-        :height= !blueprint_grid_outer_width * 2
-        a, a:hover, a:visited, a:active
-          :color= !secondary_data_color
-          :text-decoration none
-          :font-size= !blueprint_grid_width
-          :padding= !blueprint_grid_width
-          :line-height= !blueprint_grid_outer_width * 2
-      li:hover
-        :background-color= !notice_bg_color
-      li.current
-        :background-color= !nu_page_background
-        :color= !nu_purple
-        :border-left= 1px solid !primary_data_border_color
-        :border-right= 1px solid !primary_data_border_color
-      li.search
-        input
-          :margin-top= !blueprint_grid_margin * 2
-          :vertical-align top
-          :padding 0.2em
-        input#query
-          :margin-top= (!blueprint_grid_margin * 2) - 3px
-          :vertical-align top
-          :margin-left -0.1em
-        a, a:hover, a:visited, a:active
-          :padding-right 0.2em
-      
-  // The main wrapper div for the layout  
-  #main
-    +column(52,true)
-    +rounded_bottom_box( #e9e9e9 )
-    :background #e9e9e9 url('/images/pane-texture-bg.png') repeat-x
-    :background-position 0 -35px
-  // Some generic id's and classes used on
-  // most pages
-  #livesearch-results
-    +column(50, true)
-    :display none
-    :background #fff
-    // :padding 5px 10px
-    :max-height 300px
-    :overflow auto
-    // :position absolute
-    // :z-index 99
-    // :border 1px solid #A9A9A9
-    // :border-width 0 1px 1px 1px
-    :-webkit-box-shadow 5px 5px 5px rgba(0, 0, 0, 0.3)
-    :-moz-box-shadow 5px 5px 5px rgba(0, 0, 0, 0.3)
-    :box-shadow 5px 5px 5px rgba(0, 0, 0, 0.3)
-    
-  #footer
-    :margin-top 20px
-    :padding-top 10px
-    +rounded_box( #fff )
-    +column(48,true)
-    +squeeze
-    p
-      :margin-top 10px
-
-  .heading
-    +rounded_top_box( !primary_data_bg_color )
-    +bold
-    +primary_data_text
-    :padding-left 0.8em
-
-  .footing
-    :text-align right
-
-  // the overlayed element 
-  .overlay
-    // must be initially hidden 
-    :display none 
-    // place overlay on top of other elements 
-    :z-index 10000 
-    // styling 
-    :background-color #fff
-    //#333 
-    //:width 675px
-    :padding 10px
-    :border 1px solid #666 
-    // CSS3 styling for latest browsers 
-    :-moz-box-shadow 0 0 90px 5px #000 
-    :-webkit-box-shadow  0 0 90px #000     
+// The main wrapper div for the layout  
+#main
+  +column(52,true)
+  +rounded_bottom_box( #e9e9e9 )
+  :background #e9e9e9 url('/images/pane-texture-bg.png') repeat-x
+  :background-position 0 -35px
+// Some generic id's and classes used on
+// most pages
+#livesearch-results
+  +column(50, true)
+  :display none
+  :background #fff
+  // :padding 5px 10px
+  :max-height 300px
+  :overflow auto
+  // :position absolute
+  // :z-index 99
+  // :border 1px solid #A9A9A9
+  // :border-width 0 1px 1px 1px
+  :-webkit-box-shadow 5px 5px 5px rgba(0, 0, 0, 0.3)
+  :-moz-box-shadow 5px 5px 5px rgba(0, 0, 0, 0.3)
+  :box-shadow 5px 5px 5px rgba(0, 0, 0, 0.3)
   
-  // close button positioned on upper right corner
-  .overlay .close
-    :background-image url(/images/jquery-tools/apple-close.png) 
-    :position absolute 
-    :right -12px 
-    :top -12px 
-    :cursor pointer 
-    :height 28px 
-    :width 28px
-  
-  #overlay
-    :min-height 200px 
-  #session-expire
-    :padding 50px
+#footer
+  :margin-top 20px
+  :padding-top 10px
+  +rounded_box( #fff )
+  +column(48,true)
+  +squeeze
+  p
+    :margin-top 10px
+
+.heading
+  +rounded_top_box( !primary_data_bg_color )
+  +bold
+  +primary_data_text
+  :padding-left 0.8em
+
+.footing
+  :text-align right
+
+// the overlayed element 
+.overlay
+  // must be initially hidden 
+  :display none 
+  // place overlay on top of other elements 
+  :z-index 10000 
+  // styling 
+  :background-color #fff
+  //#333 
+  //:width 675px
+  :padding 10px
+  :border 1px solid #666 
+  // CSS3 styling for latest browsers 
+  :-moz-box-shadow 0 0 90px 5px #000 
+  :-webkit-box-shadow  0 0 90px #000     
+
+// close button positioned on upper right corner
+.overlay .close
+  :background-image url(/images/jquery-tools/apple-close.png) 
+  :position absolute 
+  :right -12px 
+  :top -12px 
+  :cursor pointer 
+  :height 28px 
+  :width 28px
+
+#overlay
+  :min-height 200px 
+#session-expire
+  :padding 50px
 

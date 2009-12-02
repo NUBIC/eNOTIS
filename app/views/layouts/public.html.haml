@@ -3,7 +3,7 @@
 %html
   %head
     %title= "eNotis :: #{@title}"
-    = stylesheet_link_tag @view_stylesheets ||= ["compiled/application","compiled/public"]
+    = stylesheet_link_tag @view_stylesheets ||= ["compiled/public"]
     = javascript_include_tag @view_javascripts || ["jquery.tools.min.js"]
     = yield :head
   %body
@@ -12,7 +12,7 @@
         #environment{:class => RAILS_ENV}= "eNOTIS is running in #{RAILS_ENV.upcase}"
       #header
         %span.app_name= image_tag("enotis-swoop-logo.png",:alt => "eNOTIS")
-        #loginbox
+        #login
           -form_tag(login_authentication_path, :method => 'post') do
             %label{:for => 'netid'} NetID
             = text_field_tag('netid')

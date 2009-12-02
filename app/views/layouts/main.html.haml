@@ -3,18 +3,18 @@
 %html
   %head
     %title= "eNotis :: #{@title}"
-    = stylesheet_link_tag(@view_stylesheets ||= ["compiled/application", "compiled/main"])
+    = stylesheet_link_tag(@view_stylesheets ||= ["compiled/main"])
     = javascript_include_tag(@view_javascripts ||= ["jquery.tools.min.js", "jquery-ui-1.7.2.min" ,"jrails", "jquery.dataTables.min", "jquery.main", "jquery.periodicalupdater", "jquery.liveSearch"]) 
     = yield :head
   %body
     = auto_session_timeout_js(:frequency => 60) if logged_in?
     #container
       #header
-        %span.app_name= image_tag("enotis-outline-logo.png",:alt => "eNOTIS")
-      #current_user_badge
-        = "#{current_user.name} (#{current_user.netid})"
-        |
-        = link_to('Logout', logout_authentication_path)
+        %span.app_name= image_tag("enotis-swoop-logo.png",:alt => "eNOTIS")
+        #current_user_badge
+          = "#{current_user.name} (#{current_user.netid})"
+          |
+          = link_to('Logout', logout_authentication_path)
       #bridge-nav
         %ul
           %li{:class => nav_class(UsersController)}

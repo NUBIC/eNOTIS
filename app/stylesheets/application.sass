@@ -1,34 +1,40 @@
 // This file should contain the basic styles for the application
-
-// Importing all our base mixins, colors, and plugins 
-@import base.sass
-
- 
 // Debug import to show the grid
-
 html
   +blueprint-typography
   +blueprint-grid
 
 body
-  // main container than holds everything
-  #container
-    // :background-color= !nu_page_background
-    +container
+  :background-color= !nu_page_background
+  :background-image url('/images/body-fade-bg.png')
+  :background-repeat repeat-x
 
-    // +showgrid 
+// main container than holds everything
+#container
+  +container
+  // +showgrid 
  
-  #flash
-    :position absolute
-    :top 0
-    :left 30%
-    :width 40%
-    :text-align center
-    :border= 1px solid !notice_border_color
-    +rounded_bottom_box( !notice_bg_color )    
-    :color= !notice_color
-    +bold
-    :margin 0 auto
+#header
+  +column(50,true)
+  :height 75px
+  .app_name
+    :font-size 3em
+    :font-weight bold
+    :color = !nu_purple
+    img
+      :margin-top 10px
+#flash
+  :position absolute
+  :top 0
+  :left 50%
+  :width 350px
+  :margin 0 auto
+  :margin-left -175px
+  :text-align center
+  :border= 1px solid !notice_border_color
+  +rounded_bottom_box( !notice_bg_color )    
+  :color= !notice_color
+  +bold
 
   .heading
     +bold
