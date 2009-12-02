@@ -13,12 +13,13 @@ body
 // main container than holds everything
 #container
   +container
-  // +showgrid 
+  //+showgrid 
  
 #header
   +column(50,true)
   :height 75px
-  .app_name
+  #app_name
+    +column(15)
     :font-size 3em
     :font-weight bold
     :color = !nu_purple
@@ -39,6 +40,16 @@ body
 
 .heading
   +bold
+
+#footer
+  :margin-top 20px
+  :padding-top 10px
+  +rounded_box( #fff )
+  +column(48,true)
+  +squeeze
+  p
+    :margin-top 10px
+    +column(50)
 
 #overlay
   :min-height 200px

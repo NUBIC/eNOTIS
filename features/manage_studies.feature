@@ -72,7 +72,7 @@ Feature: Manage studies
       | Picop N    | Dropov    |
       | Dewey      | Cheetham  |
     When I go to the study page for id "45234"
-    Then I should see "3 subjects associated with this study"
+    Then I should see "3 subjects "
 
   Scenario: A coordinator can view all imports made to a study they have access to
     Given "pi" has access to study id "45234"

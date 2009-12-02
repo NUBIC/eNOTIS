@@ -31,11 +31,7 @@ Feature: Search
   Scenario: Verifying my subjects
     When I go to my subjects
     Then I should see "My Subjects (3)"
-  
-  Scenario: A user clicks "Search" on bridge nav
-    When I follow "Search"
-    Then I should see "Search for all studies and my subjects"
-  
+
   Scenario: A user searches for some subjects, studies
     When I go to the search page
     And I search for "Marge"
@@ -55,3 +51,13 @@ Feature: Search
     And I should see "2 studies found"
     And I should see "Vitamin E"
     And I should see "Vitamin F"
+  
+  Scenario: A user searches for studies lowercase
+  # Searchlogic does ILIKE for Postgres, but not for other db engines
+    # When I go to the search page
+    # And I search for "vitamin"
+    # Then I should see "0 subjects found"
+    # And I should see "2 studies found"
+    # And I should see "Vitamin E"
+    # And I should see "Vitamin F"
+  

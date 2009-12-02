@@ -8,6 +8,18 @@
 @import studies.sass
 @import datatables.sass
 
+#search_box
+  +column(20)
+  :margin-top 43px
+  :text-align center
+  input
+    :margin-top 3px
+    :vertical-align top
+    :padding 0.2em
+  #query
+    :margin-top 0
+  a, a:hover, a:visited, a:active
+    :padding-right 0.2em
 #current_user_badge
   :margin-top 10px
   :float right
@@ -42,17 +54,7 @@
       :color= !nu_purple
       :border-left= 1px solid !primary_data_border_color
       :border-right= 1px solid !primary_data_border_color
-    li.search
-      input
-        :margin-top= !blueprint_grid_margin * 2
-        :vertical-align top
-        :padding 0.2em
-      input#query
-        :margin-top= (!blueprint_grid_margin * 2) - 3px
-        :vertical-align top
-        :margin-left -0.1em
-      a, a:hover, a:visited, a:active
-        :padding-right 0.2em
+
     
 // The main wrapper div for the layout  
 #main
@@ -63,28 +65,21 @@
 // Some generic id's and classes used on
 // most pages
 #livesearch-results
-  +column(50, true)
+  +column(48, true)
+  +squeeze
   :display none
   :background #fff
   // :padding 5px 10px
   :max-height 300px
   :overflow auto
-  // :position absolute
-  // :z-index 99
-  // :border 1px solid #A9A9A9
-  // :border-width 0 1px 1px 1px
+  :position absolute
+  :z-index 99
+  :top 75px
+  :border 1px solid #d6d6d6
+  :border-width 0 1px 1px 1px
   :-webkit-box-shadow 5px 5px 5px rgba(0, 0, 0, 0.3)
   :-moz-box-shadow 5px 5px 5px rgba(0, 0, 0, 0.3)
   :box-shadow 5px 5px 5px rgba(0, 0, 0, 0.3)
-  
-#footer
-  :margin-top 20px
-  :padding-top 10px
-  +rounded_box( #fff )
-  +column(48,true)
-  +squeeze
-  p
-    :margin-top 10px
 
 .heading
   +rounded_top_box( !primary_data_bg_color )

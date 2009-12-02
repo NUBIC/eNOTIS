@@ -10,7 +10,11 @@
     = auto_session_timeout_js(:frequency => 60) if logged_in?
     #container
       #header
-        %span.app_name= image_tag("enotis-swoop-logo.png",:alt => "eNOTIS")
+        #app_name= image_tag("enotis-swoop-logo.png",:alt => "eNOTIS")
+        #search_box
+          - form_tag(search_path, :method => :get) do 
+            = text_field_tag("query")
+            = submit_tag("Search")
         #current_user_badge
           = "#{current_user.name} (#{current_user.netid})"
           |
@@ -25,11 +29,7 @@
             = link_to "My Subjects", subjects_path
           %li{:class => nav_class(InvolvementEventsController)}
             = link_to "My Events", involvement_events_path
-          %li{:class => "search #{nav_class(SearchController)}"}
-            = link_to "Search", search_path
-            - form_tag(search_path, :method => :get) do 
-              = text_field_tag("query")
-              = submit_tag("Search")
+
       - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
         #flash= flash_messages(types)
       #main
