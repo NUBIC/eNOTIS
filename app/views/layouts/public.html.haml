@@ -4,7 +4,7 @@
   %head
     %title= "eNotis :: #{@title}"
     = stylesheet_link_tag @view_stylesheets ||= ["compiled/public"]
-    = javascript_include_tag @view_javascripts || ["jquery.tools.min.js"]
+    = javascript_include_tag @view_javascripts ||= ["jquery.tools.min.js"]
     = yield :head
   %body
     #container
