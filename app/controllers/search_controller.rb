@@ -19,6 +19,10 @@ class SearchController < ApplicationController
         @subjects = subjects_scope.first_name_like_any(q.split) + subjects_scope.last_name_like_any(q.split)
       end
     end
+    respond_to do |format|
+      format.html
+      format.js {render :layout => false}
+    end
   end
   
   # Enables "post"

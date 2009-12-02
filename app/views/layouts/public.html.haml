@@ -11,7 +11,7 @@
       - unless RAILS_ENV == "production"
         #environment{:class => RAILS_ENV}= "eNOTIS is running in #{RAILS_ENV.upcase}"
       #header
-        %span.app_name= image_tag("enotis-outline-logo.png",:alt => "eNOTIS")
+        %span.app_name= image_tag("enotis-swoop-logo.png",:alt => "eNOTIS")
         #loginbox
           -form_tag(login_authentication_path, :method => 'post') do
             %label{:for => 'netid'} NetID

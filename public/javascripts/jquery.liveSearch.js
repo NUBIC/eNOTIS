@@ -99,18 +99,18 @@ jQuery.fn.liveSearch = function (conf) {
 						jQuery.get(config.url + q, function (data) {
 							input.removeClass(config.loadingClass);
 
-							if (data.length && q.length) {
-								var tmpOffset	= input.offset();
-								var inputDim	= {
-									left:		tmpOffset.left, 
-									top:		tmpOffset.top, 
-									width:		input.outerWidth(), 
-									height:		input.outerHeight()
-								};
-
-								inputDim.topNHeight	= inputDim.top + inputDim.height;
-								inputDim.widthNShift	= inputDim.width - resultsShift;
-
+							if (data.length && q.length > 2) {
+								// var tmpOffset	= input.offset();
+								// var inputDim	= {
+								// 	left:		tmpOffset.left, 
+								// 	top:		tmpOffset.top, 
+								// 	width:		input.outerWidth(), 
+								// 	height:		input.outerHeight()
+								// };
+                // 
+								// inputDim.topNHeight	= inputDim.top + inputDim.height;
+								// inputDim.widthNShift	= inputDim.width - resultsShift;
+                //
 								// liveSearch.css({
 								// 	position:	'absolute', 
 								// 	left:		inputDim.left + 'px', 

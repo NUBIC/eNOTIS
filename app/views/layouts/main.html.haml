@@ -4,7 +4,7 @@
   %head
     %title= "eNotis :: #{@title}"
     = stylesheet_link_tag(@view_stylesheets ||= ["compiled/application", "compiled/main"])
-    = javascript_include_tag(@view_javascripts ||= ["jquery.tools.min.js", "jquery-ui-1.7.2.min" ,"jrails", "jquery.dataTables.min", "jquery.main", "jquery.periodicalupdater"]) 
+    = javascript_include_tag(@view_javascripts ||= ["jquery.tools.min.js", "jquery-ui-1.7.2.min" ,"jrails", "jquery.dataTables.min", "jquery.main", "jquery.periodicalupdater", "jquery.liveSearch"]) 
     = yield :head
   %body
     = auto_session_timeout_js(:frequency => 60) if logged_in?
@@ -28,11 +28,12 @@
           %li{:class => "search #{nav_class(SearchController)}"}
             = link_to "Search", search_path
             - form_tag(search_path, :method => :get) do 
-              =text_field_tag("query")
-              =submit_tag("Search")
+              = text_field_tag("query")
+              = submit_tag("Search")
       - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
         #flash= flash_messages(types)
       #main
+        #livesearch-results
         = yield
       #footer
         %p= "eNOTIS #{app_version_helper} &mdash; created by #{link_to("NUBIC", "http://www.nucats.northwestern.edu/centers/nubic")} for Northwestern University"
