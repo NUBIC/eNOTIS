@@ -6,3 +6,18 @@
 <%= bcdb.test         :edw, :enotis_test %>
 <%= bcdb.staging      :edw, :enotis_all_patients %>
 <%= bcdb.production   :edw, :enotis_all_patients %>
+
+# change the user/password values and add the following to
+# /etc/nubic/db/edw.yml
+
+# default:
+#   username: "edw_username"
+#   password: "secret"
+#   service_timeout: 2
+# 
+# enotis_test:
+#   url: "https://edwbi.nmff.org/ReportServer?%2fReports%2fResearch%2feNOTIS%2fENOTIS+Test+3&rs%3aCommand=Render&rs:format=XML"
+#   test_mrn: "9988104"
+# 
+# enotis_all_patients:
+#   url: "https://edwbi.nmff.org/ReportServer?%2fReports%2fResearch%2feNOTIS%2feNOTIS+All+Patients&rs:Command=Render&rs:format=XML"
