@@ -12,7 +12,7 @@ class InvolvementEventsController < ApplicationController
   
   # Public instance methods (actions)
   def index
-    @events = current_user.involvement_events
+    # @events = current_user.involvement_events
   end
 
   def new

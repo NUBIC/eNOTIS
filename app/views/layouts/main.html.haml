@@ -27,9 +27,7 @@
             = link_to "All Studies", studies_path
           %li{:class => nav_class(SubjectsController)}
             = link_to "My Subjects", subjects_path
-          %li{:class => nav_class(InvolvementEventsController)}
-            = link_to "My Events", involvement_events_path
-
+            
       - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
         #flash= flash_messages(types)
       #main
