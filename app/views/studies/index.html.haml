@@ -1,6 +1,8 @@
 - content_for :head do
   :javascript
-    $(document).ready(function(){$(".display").dataTable({"sPaginationType": "full_numbers",bServerSide: true, sAjaxSource: '/studies.json' });});
+    $(document).ready(function(){
+    $(".display").dataTable({"sPaginationType": "full_numbers",bServerSide: true, sAjaxSource: '/studies.json' });
+    });
 
 #study_list
   .heading= "All Studies (#{@studies_count})"

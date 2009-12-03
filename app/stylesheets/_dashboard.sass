@@ -8,8 +8,25 @@
   +prepend(1)
   +squish
 
-#user_options
-  +column(10,true)
-  +prepend(1)
-  +squish
 
+
+// tooltip styling
+.tooltip
+  // must be initially hidden 
+  :display none
+  :z-index 999
+  //:background url(http://static.flowplayer.org/tools/img/tooltip/black_arrow_big.png) 
+  :background-color #fff
+  :border 1px solid #666
+  //:height 163px 
+  // offsets for datatables
+  :margin -120px 0 0 -160px
+  :padding 10px
+  //:padding 40px 30px 10px 30px 
+  //:width 310px 
+  :font-size 11px 
+  :color #000
+  span.title
+    :font-size 150%
+  .details span
+    :display block
