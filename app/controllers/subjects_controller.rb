@@ -18,9 +18,9 @@ class SubjectsController < ApplicationController
   has_view_trail :except => :index
 
   # Public instance methods (actions)
-  def index
-    @subjects = current_user.subjects
-  end
+  # def index
+  #   @subjects = current_user.subjects
+  # end
 
   def show
     @subject = Subject.find(params[:id])

@@ -1,5 +1,5 @@
 Feature: Search
-  In order to find subjects or studies or events
+  In order to find subjects or studies
   As a user
   I want to search by various terms
   
@@ -27,10 +27,6 @@ Feature: Search
   Scenario: Verifying all studies
     When I go to the all studies page
     Then I should see "All Studies (3)"
-      
-  Scenario: Verifying my subjects
-    When I go to my subjects
-    Then I should see "My Subjects (3)"
 
   Scenario: A user searches for some subjects, studies
     When I go to the search page

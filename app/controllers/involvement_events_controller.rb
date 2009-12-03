@@ -11,9 +11,9 @@ class InvolvementEventsController < ApplicationController
   has_view_trail :except => :index
   
   # Public instance methods (actions)
-  def index
-    # @events = current_user.involvement_events
-  end
+  # def index
+  #   @events = current_user.involvement_events
+  # end
 
   def new
     @subject = Subject.find(params[:subject]) unless params[:subject].nil?
