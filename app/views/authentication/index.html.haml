@@ -60,41 +60,21 @@
         %br
         = image_tag "/images/video.jpg"
       .pane-column
-        VIDEO
-        %br
-        = image_tag "/images/video.jpg"
-      
-  -#training
-    .heading Get acquainted with eNOTIS
-    #videos
-      .title Video Training
-      %ul
-        %li Learn basic<br/>concepts<br/>and log in
-        %li Add a<br/>subject
-        %li Import<br/>subjects
-        %li Add subject<br/>events
-    #tutorials
-      .title Written Tutorials
-      %ul
-        %li= link_to("Basic Overview")
-        %li= link_to("How to use eNOTIS")
-        %li= link_to("FAQ")
-    #trainings
-      .title Live in-person group training 
-      %ul
-        %li
-          %span.title= link_to("The ins and outs of eNOTIS")
-          %span.date 19-32-1234 @ 12noon
-          %span.location Streeterville, 750 N Lake Shore
-        %li
-          %span.title= link_to("So, you want to use eNOTIS")
-          %span.date 21-32-5124 @ 3pm
-          %span.location Streeterville, 750 N Lake Shore
-        %li
-          %span.title= link_to("Unleashing the inner eNOTIS guru")
-          %span.date 31-44-1993 @ 8am
-          %span.location Streeterville, 750 N Lake Shore
-  
+        Training
+        %ul
+          %li= link_to("Basic Overview")
+          %li= link_to("How to use eNOTIS")
+          %li= link_to("FAQ")
+        %ul
+          %li
+            %span.title= link_to("The ins and outs of eNOTIS")
+            %span.date 19-32-1234 @ 12noon
+            %span.location Streeterville, 750 N Lake Shore
+          %li
+            %span.title= link_to("So, you want to use eNOTIS")
+            %span.date 21-32-5124 @ 3pm
+            %span.location Streeterville, 750 N Lake Shore
+
   -#system_status{:class => @status}
     .heading System status
     %p= ApplicationController::SYSTEM_STATUSES[@status.to_sym]

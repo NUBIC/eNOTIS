@@ -1,52 +1,55 @@
-- form_tag(involvement_events_path) do
+- form_tag(involvement_events_path, :id => "new_involvement_event") do
   = hidden_field_tag 'study[irb_number]', params[:study]
-  - if @subject.nil?
-    %p
-      = label_tag 'subject[mrn]','MRN'
-      = text_field_tag('subject[mrn]')
-    %p
-      OR
-      %br
-      = label_tag 'subject[first_name]', 'First Name'
-      = text_field_tag('subject[first_name]')
-    %p  
-      = label_tag 'subject[last_name]',  'Last Name'
-      = text_field_tag('subject[last_name]')
-    %p
-      = label_tag 'subject[birth_date]', 'Birth Date'
-      = text_field_tag('subject[birth_date]')
-    %p
-      AND/OR
-      %br
-
-      = label_tag 'involvement[case_number]','Case Number'
-      = text_field_tag('involvement[case_number]')
-    %hr
-    %p Required Demographic Information
-    %p
-      = label_tag 'involvement[gender_type_id]','Gender'
-      = select_tag('involvement[gender_type_id]',options_for_select(@genders.map{|gender|[gender.term.capitalize!,gender.id]}))
-    %p
-      = label_tag 'involvement[ethnicity_type_id]','Ethnicity'
-      = select_tag('involvement[ethnicity_type_id]',options_for_select(@ethnicities.map{|ethnicity|[ethnicity.term.titleize,ethnicity.id]}))
-    %p Race
-    - @races.each do |race|
-      %p
-        = label_tag "involvement[race_type_ids][]", race.term.capitalize!
-        = check_box_tag "involvement[race_type_ids][]", race.id
-    %hr
-    %p Initial Event Information
-
-  - else
+  - unless @subject.nil?
     = hidden_field_tag("subject[id]", @subject.id)
-  %p
-    = label_tag('involvement_events[][event_type_id]','Event Type')
-    = select_tag('involvement_events[][event_type_id]',options_for_select(@events.map{|event|[event.term.capitalize,event.id]}))
-  %p
-    = label_tag('involvement_events[][note]', 'Note')
-    = text_field_tag('involvement_events[][note]')
-  %p
-    = label_tag('involvement_events[][occurred_on]','Event Date')
-    = text_field_tag('involvement_events[][occurred_on]')
-  %p= submit_tag("Submit")
+  - else
+    .subject
+      %p
+        = label_tag 'subject[mrn]','MRN'
+        = text_field_tag('subject[mrn]')
+      %p
+        OR
+        %br
+        = label_tag 'subject[first_name]', 'First Name'
+        = text_field_tag('subject[first_name]')
+      %p  
+        = label_tag 'subject[last_name]',  'Last Name'
+        = text_field_tag('subject[last_name]')
+      %p
+        = label_tag 'subject[birth_date]', 'Birth Date'
+        = text_field_tag('subject[birth_date]')
+      %p
+        AND/OR
+        %br
+
+        = label_tag 'involvement[case_number]','Case Number'
+        = text_field_tag('involvement[case_number]')
+    .demographics
+      %p Required Demographic Information
+      %p
+        = label_tag 'involvement[gender_type_id]','Gender'
+        = select_tag('involvement[gender_type_id]',options_for_select(@genders.map{|gender|[gender.term.capitalize!,gender.id]}))
+      %p
+        = label_tag 'involvement[ethnicity_type_id]','Ethnicity'
+        = select_tag('involvement[ethnicity_type_id]',options_for_select(@ethnicities.map{|ethnicity|[ethnicity.term.titleize,ethnicity.id]}))
+      %p
+        Race
+        %br
+        - @races.each do |race|
+          = label_tag "involvement[race_type_ids][]", race.term.capitalize!
+          = check_box_tag "involvement[race_type_ids][]", race.id
+          %br
+
+  .event
+    %p= @subject.nil? ? "Initial event information" : "event information" 
+    %p
+      = label_tag('involvement_events[][event_type_id]','Event Type')
+      = select_tag('involvement_events[][event_type_id]',options_for_select(@events.map{|event|[event.term.capitalize,event.id]}))
+    %p
+      = label_tag('involvement_events[][note]', 'Note')
+      = text_field_tag('involvement_events[][note]')
+    %p
+      = label_tag('involvement_events[][occurred_on]','Event Date')
+      = text_field_tag('involvement_events[][occurred_on]')
+    %p= submit_tag("Submit")
 

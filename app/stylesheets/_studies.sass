@@ -1,169 +1,56 @@
 //On the studies page
 #study_list
-  +column(50,true)
   +squish
-
 
 #study
-  +column(50,true)
   +squish
-  #accrual-graph
-    :margin 0.75em
-    :width 500px
-    :height 200px
-  #info
-    +column(49,true)
-    +rounded_box( !secondary_data_bg_color )
-      
-    .label
-      +quiet
-      :padding-left 0.3em
-      
-    #vitals
-      +column(8)
-      +border( !secondary_data_border_color )
+  .title
+    :font-size 20px
     
-      .irb_number_block
+  // tooltip styling
+  .tooltip
+    +column(48, true)
+    // must be initially hidden 
+    :display none
+    :z-index 999
+    //:background url(http://static.flowplayer.org/tools/img/tooltip/black_arrow_big.png) 
+    :background-color #fff
+    :border 1px solid #666
+    //:height 163px 
+    :padding 10px
+    //:padding 40px 30px 10px 30px 
+    //:width 310px 
+    :font-size 11px 
+    :color #000
+    span.title
+      :font-size 18px
+    .details
+      +column(16)
+      span
         :display block
-        
-        .irb_number
-          :text-align center      
-          :padding= !blueprint_grid_width
-          :padding-top= !blueprint_grid_margin
-          :display block
-          :font-size 18px
+    .staff
+      +column(16)
+    .export
+      +column(16, true)
 
-      .status_block
-        :display block
-        :font-size 14px
-        :line-height 15px
-        
-        .status
-          :text-align center
-          :display block
-          :padding= !blueprint_grid_width
-
-
-    #details
-      +column(39,true)
-      :padding-top= !blueprint_grid_width/2
-      +squeeze
-      .title
-        +super
-        :line-height 1.2em
-
-      .phase, .research_type, .pi, .sc
-        :padding-right 1.5em
-
-
-      hr
-        :background-color #ddd
-        :color #ddd
-        
-  //TODO investigate the use of blueprint 'column' grid use for these jquery ui tabs
-  ul.study_tabs
-    :position relative
-    :clear left
-    :margin 1em 1em 1.5em 0
-    :border-bottom 2px solid
-    :border-color= !secondary_data_border_color
-    :background-color= !nu_page_background
-    :color= !font_color
-    :line-height 1.2em
-    :font-size 1.2em
-    :padding 0 1em
-    li
-      :position relative
-      :list-style none
-      :display inline
-      :border-width 2px 2px 0 2px
-      :-moz-border-radius 2px 2px 0 2px
-      :border-style solid
-      :border-color= !secondary_data_border_color
-      :background-color= !secondary_data_bg_color
-      a, a:hover, a:visited, a:active
-        :color= !font_color
-        :text-decoration none
-        :padding 0 1em .1em 1em
-      a:hover
-        :background-color= !notice_bg_color
-    li.ui-tabs-selected a, li.ui-state-disabled a, li.ui-state-processing a
-      :background-color= !nu_page_background
-      :color= !nu_purple       
-      :cursor text
-      :border-bottom= 2px solid !nu_page_background
-  .ui-tabs-hide
-    :display none !important
-
-  #overview, #subjects, #documents, #imports
-    :padding 0 0.5em
-    ul
-      +no-bullets 
-      li
-        :padding .25em .5em
-  
   // for ie
-  * html #subjects tbody
-    :height expression( this.scrollHeight > 332 ? "333px" : "auto" )
+  // * html #subjects tbody
+  //   :height expression( this.scrollHeight > 332 ? "333px" : "auto" )
 
-    // Elements on the #overview tab
-  #overview
-    +column(50,true)
-     
-    #accrual
-      +column(30)
-      +rounded_box( !secondary_data_bg_color ) 
-    
-    #staff_list
-      +column(18,true)
-      +prepend(1)
-    
-    #study-events
-      +column(18,true)
-      +prepend(1)
-      +squish
-
-  #subjects
-    tbody
-      // for all standards compliant browsers
-      :max-height 300px
-      :overflow auto
-      
-    .dataTables_wrapper  
-      +column(15)
-      .dataTables_length, .dataTables_info, .dataTables_paginate
-        :display none
-    #subject-detail
-      +column(33, true)
-      +prepend(1)
-      a.add
-        +button-button("right")
-        :margin 0
-        :padding 0 5px
-        :background-color white
-
-  #events
-    +column(49,true)
-
-  #imports
-    +column(49,true)
-    hr
-      +colspacer
-
-    #file_import
-      +column(48,true)
-      +rounded_box( !primary_data_bg_color )
-      :padding= !blueprint_grid_width/2
-      #file_form
-        +column(20)
-        input[type='file']
-          :border-color= !primary_data_border_color
-          +button-button
-        input[type='submit']
-          +button-button
-      #file_format_help
-        +column(20)
-      
+  #import
+    :display none
+    .upload
+      +column(24)
+    .uploads
+      +column(24, true)
+#new_involvement_event
+  +column(48)
+  .subject
+    +column(16)
+  .demographics
+    +column(16)
+  .event
+    +column(16, true)
 
     
 

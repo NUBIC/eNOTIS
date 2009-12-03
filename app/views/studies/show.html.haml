@@ -1,155 +1,95 @@
-- @view_javascripts = ["jquery.tools.min.js", "jquery-ui-1.7.2.min" ,"jrails", "jquery.dataTables.min", "jquery.main", "jquery.periodicalupdater", "jquery.liveSearch", "jquery.flot.pack", "excanvas.pack", "study-tabs"] # flot and excanvas are used for the accrual graph, study-tabs for the tabs
+- @view_javascripts = ["jquery.tools.min.js", "jquery-ui-1.7.2.min" ,"jrails", "jquery.dataTables.min", "jquery.main", "jquery.periodicalupdater", "jquery.liveSearch"] # flot and excanvas are used for the accrual graph, study-tabs for the tabs
 
 - content_for :head do
   %script{:type => 'text/javascript'}
     $(document).ready(function(){
-    // show the Data Tables
     $("#subjects .display").dataTable({"oLanguage":{"sSearch":"Filter"},"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null], "iDisplayLength": -1 });
     $("#events .display").dataTable({"oLanguage":{"sSearch":"Filter"},"sPaginationType": "full_numbers","aoColumns": [null, { "sType": "html" }, null, null]});
     $("#imports .display").dataTable({"oLanguage":{"sSearch":"Filter"},"sPaginationType": "full_numbers"});
-    // show the accrual graph
-    = "var e = #{@accruals.to_graph.inspect};"
-    $.plot($("#accrual-graph"), [e], { grid: {borderWidth: 0}, xaxis: { mode: "time" } });
+    // $("a#title").tooltip({position: 'bottom left', offset: [0, 955]});
+    $("a[rel=#import]").overlay({expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }});
+    $('#overlay').css({'width': '955px'});
     });
 #study
-  #info
-    #vitals
-      %span.irb_number_block
-        %span.label IRB#:
-        %span.irb_number= @study.irb_number
-      %span.status_block
-        %span.label Status:
-        %br
-        %span.status= @study.status
-    #details
-      .description
-        %span.title
-          = @study.title
-        %br
-        %span.label= "Name:"
-        %span.short_title= @study.name
-        %hr
-        %span.phase
-          %span.label= "Phase:"
-          = @study.phase || "Not Specififed"
-        %span.research_type
-          %span.label= "Research Type:"
-          = @study.research_type
-      .study_staff
+  .title
+    = @study.may_accrue? ? "O" : "X"
+    = link_to @study.irb_number || "(no id)", "#", :title => "#{@study.status}: #{@study.title}", :id => 'title'
+    .tooltip
+      .title
+        %span.status= "#{@study.status}:"
+        %span.title= @study.title
+      .details
+        %span.phase= "Phase #{@study.phase}" unless @study.phase.blank?
+        %span.research_type= "Research Type: #{@study.research_type}" unless @study.phase.blank?
+        %span.department= "Department: ..."
         %span.pi
-          %span.label= "Princpal Investigator:"
-          = "#{@study.pi_first_name} #{@study.pi_last_name}"
+          = "PI: #{@study.pi_first_name} #{@study.pi_last_name}"
           = link_to @study.pi_email, "mailto:#{@study.pi_email}"
-        %br
         %span.sc
-          %span.label= "Study Coordinator:" 
-          = "#{@study.sc_first_name} #{@study.sc_last_name}"
+          = "Coord: #{@study.sc_first_name} #{@study.sc_last_name}" 
           = link_to @study.sc_email, "mailto:#{@study.sc_email}"
-  %br.clear
-  - if @study.has_coordinator?(current_user)
-    %ul.study_tabs
-      %li.nav= study_tab_to "Overview", "#overview"
-      %li.nav= study_tab_to "Subjects", "#subjects"
-      %li.nav= study_tab_to "Events", "#events"
-      %li.nav= study_tab_to "Subject Imports", "#imports"
-
-
-    #overview
-      #accrual
-        - if @accruals.empty?
-          = image_tag "/images/accrual-graph.gif"
-        - else
-          .heading Accrual Graph
-          #accrual-graph
-      #staff_list
-        .heading 
-          Staff list&nbsp;
-          %span.quiet (as listed in eIRB)
+      .staff
+        Staff list&nbsp;
+        %span.quiet (as listed in eIRB)
         %ul
           - @study.coordinators.each do |c|        
-            %li
-              = "#{c.first_name} #{c.last_name}"
-              %br
-      #study-events
-        .heading Recent Events
+            %li= "#{c.first_name} #{c.last_name}"
+
+        Recent events
         %ul
           - @study_events.all(:limit => 5).each do |ie|
             %li
               -# ">" before = removes extra spacing around this tag
               %dtr{:title => ie.description}>= ie.term
-              = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occurred_on)} ago"
-          %li
-            =link_to("View all events", "#events",:style => "float:right;")
-
-    #subjects
-      #subject-list
-        .heading
-          Accural List
-          %span.quiet= " (#{pluralize(@study.subjects.size, "subject")} accrued)"
-        - if @study.subjects.empty?
-          = render :partial => "subjects/no_subjects"
-        - else
-          %table.display
-            %thead
-              %tr
-                %th Name
-                %th Synced
-            %tbody  
-              - @study.involvements.each do |involvement|
-                %tr{:class => "subject_#{involvement.subject.id}"}
-                  %td= link_to(involvement.subject.name.blank? ? involvement.case_number :  involvement.subject.name, subject_path(involvement.subject, :study => @study), :rel => 'detail')
-                  %td= involvement.subject.synced? ? image_tag("sync_icon_16.gif") : "&nbsp;"
-      #subject-detail
+              = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occurred_on || Date.today)} ago"
+      .export
         = link_to("Download Subjects", new_report_path(:study => @study),:rel => '#overlay', :class => 'add')
-        = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => '#overlay', :class => 'add')
-        .detail
-          
-                
-    #events
-      - if @study_events.empty?
-        = render :partial => "involvement_events/no_events"
-      - else
-        %table.display
-          %thead
-            %tr
-              %th Name
-              %th Event
-              %th Note
-              %th Date
-          %tbody
-            - @study_events.all.each do |event|
-              %tr{:class => "subject_#{event.involvement.subject.id}"}
-                %td= event.involvement.subject.name
-                %td
-                  %a{:title => event.description, :href => involvement_event_path(event)}= event.term
-                %td= event.note
-                %td= event.occurred_on
-    #imports
-      #file_import
-        #file_form
-          .heading
-            Upload study subjects
-          - form_tag('/subjects', :multipart => true) do
-            = hidden_field_tag("study_id",@study.irb_number.to_s)
-            = file_field_tag(:file)
-            = submit_tag( "Upload" )
-            %br
-        #file_format_help
-          %p= "Subject import files must contain a few important columns for eNOTIS to use them. This #{link_to 'example file', '/documents/sample.csv'} will help you get started."
-      %hr
+  %br.clear
+  
+  #accrual
+    - if @study.subjects.empty?
+      = render :partial => "subjects/no_subjects"
+    - else
       %table.display
         %thead
           %tr
-            %th Importer
-            %th Upload Date
-            %th Original
-            %th Result
-            %th Status
+            %th= "Subjects (#{@study.subjects.size})"
+            - @events.each do |e|
+              %th= e.term.capitalize
         %tbody
-          - @study.study_uploads.each do |u|
+          - @study.involvements.each do |involvement|
+            %tr{:class => "subject_#{involvement.subject.id}"}
+              %td= link_to(involvement.subject.name.blank? ? involvement.case_number :  involvement.subject.name, subject_path(involvement.subject, :study => @study), :rel => 'detail')
+              - @events.each do |event|
+                - x = @study_events.all.detect{|e| e.involvement == involvement && e.event_type == event}
+                %td= x ? x.occurred_on : ""
+          
+    = link_to("+ Add Subject", new_involvement_event_path(:study => @study), :rel => '#overlay', :class => 'add')
+    = link_to("[[ ]] Import", "#", :rel => "#import")
+  #import.overlay
+    .upload
+      Import subjects
+      - form_tag('/subjects', :multipart => true) do
+        = hidden_field_tag("study_id",@study.irb_number.to_s)
+        = file_field_tag(:file)
+        = submit_tag( "Upload" )
+      %br
+      %p= "Uploads need a few essential columns (see the #{link_to 'example file', '/documents/sample.csv'}) for eNOTIS to read them."
+    - unless @study.study_uploads.blank?
+      .uploads
+        %table.display
+          %thead
             %tr
-              %td= u.user.netid
-              %td= u.created_at
-              %td= link_to "View", u.upload.url
-              %td= (u.result_file_name.nil?) ? "Unavailable" : link_to( "View", u.result.url)
-              %td= u.summary || "Still Processing"
+              %th Importer
+              %th Upload Date
+              %th Original
+              %th Result
+              %th Status
+          %tbody
+            - @study.study_uploads.each do |u|
+              %tr
+                %td= u.user.netid
+                %td= u.created_at
+                %td= link_to "View", u.upload.url
+                %td= (u.result_file_name.nil?) ? "Unavailable" : link_to( "View", u.result.url)
+                %td= u.summary || "Still Processing"

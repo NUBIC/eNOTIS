@@ -9,8 +9,8 @@
       %tr
         %td
           = study.may_accrue? ? "O" : "X"
-          = link_to study.irb_number, (study_path(study.irb_number) || "(no id)"), :title => "#{study.status}: #{study.title}", :class => 'study'
-          .tooltip
+          = link_to study.irb_number || "(no id)", study_path(study.irb_number), :title => "#{study.status}: #{study.title}", :class => 'study'
+          .tooltip.study
             .title
               %span.status= "#{study.status}:"
               %span.title= study.title
