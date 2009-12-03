@@ -53,7 +53,7 @@ class Study < ActiveRecord::Base
 
   def may_accrue?
     # For possible eIRB statuses, see doc/terms.csv
-    ["Approved", "Conditional Approval", "Exempt Approved", "Not Under IRB Purview", "Revision Open"].include? self.status
+    ["Approved", "Exempt Approved", "Not Under IRB Purview", "Revision Closed", "Revision Open"].include? self.status
   end
   
   def accrual
