@@ -123,7 +123,7 @@ Feature: Manage subjects
     Given a subject with mrn "90210f"
     And subject "90210f" has event "Consented" on study "1248E"
     When I go to the study page for id "1248E"
-    And I follow "Consented" for "90210f" on the "Events" tab
+    And I follow "Consented"
     And I follow "Remove this event"
     Then subject "90210f" should not be involved with study "1248E"
   

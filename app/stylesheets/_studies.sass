@@ -4,6 +4,8 @@
 
 #study
   +squish
+  :overflow auto
+
   .title
     :font-size 20px
     
@@ -22,6 +24,10 @@
     //:width 310px 
     :font-size 11px 
     :color #000
+    // CSS3 styling for latest browsers 
+    :-moz-box-shadow 0 0 90px 5px #000 
+    :-webkit-box-shadow  0 0 90px #000
+    
     span.title
       :font-size 18px
     .details
@@ -32,6 +38,7 @@
       +column(16)
     .export
       +column(16, true)
+    
 
   // for ie
   // * html #subjects tbody
@@ -44,6 +51,8 @@
     .uploads
       +column(24, true)
 #new_involvement_event
+  p.center
+    :text-align center
   +column(48)
   .subject
     +column(16)

@@ -4,28 +4,28 @@
     = hidden_field_tag("subject[id]", @subject.id)
   - else
     .subject
+      %p Subject (required)
       %p
         = label_tag 'subject[mrn]','MRN'
         = text_field_tag('subject[mrn]')
+      %p.center OR
       %p
-        OR
         %br
         = label_tag 'subject[first_name]', 'First Name'
         = text_field_tag('subject[first_name]')
-      %p  
+        %br
         = label_tag 'subject[last_name]',  'Last Name'
         = text_field_tag('subject[last_name]')
-      %p
+        %br
         = label_tag 'subject[birth_date]', 'Birth Date'
         = text_field_tag('subject[birth_date]')
+      %p.center AND/OR
       %p
-        AND/OR
         %br
-
         = label_tag 'involvement[case_number]','Case Number'
         = text_field_tag('involvement[case_number]')
     .demographics
-      %p Required Demographic Information
+      %p Demographics (required)
       %p
         = label_tag 'involvement[gender_type_id]','Gender'
         = select_tag('involvement[gender_type_id]',options_for_select(@genders.map{|gender|[gender.term.capitalize!,gender.id]}))
@@ -36,8 +36,8 @@
         Race
         %br
         - @races.each do |race|
-          = label_tag "involvement[race_type_ids][]", race.term.capitalize!
           = check_box_tag "involvement[race_type_ids][]", race.id
+          = label_tag "involvement[race_type_ids][]", race.term.capitalize!
           %br
 
   .event
@@ -50,6 +50,5 @@
       = text_field_tag('involvement_events[][note]')
     %p
       = label_tag('involvement_events[][occurred_on]','Event Date')
-      = text_field_tag('involvement_events[][occurred_on]')
+      = text_field_tag('involvement_events[][occurred_on]', Date.today.to_s)
     %p= submit_tag("Submit")
-

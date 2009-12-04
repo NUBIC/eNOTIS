@@ -45,7 +45,7 @@ Feature: Manage studies
     And a study "Vitamin D and Depression" with id "45234" and status "Approved"
     And "pi" has access to study id "45234"
     When I go to the study page for id "45234"
-    Then I should see "Subject Imports"
+    Then I should see "Import subjects"
   
   Scenario: A coordinator can view all personnel that have access on a study
     Given a user "suzq" named "Sue Z" "Quou"
@@ -72,11 +72,11 @@ Feature: Manage studies
       | Picop N    | Dropov    |
       | Dewey      | Cheetham  |
     When I go to the study page for id "45234"
-    Then I should see "3 subjects "
+    Then I should see "Subjects (3)"
 
   Scenario: A coordinator can view all imports made to a study they have access to
     Given "pi" has access to study id "45234"
     And the study "45234" has an upload by "pi"
     When I go to the study page for id "45234"
-    And I follow "Subject Imports"
+    And I follow "[[ ]] Import"
     Then I should see "pi"

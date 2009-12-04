@@ -1,50 +1,43 @@
-- @view_javascripts = ["jquery.tools.min.js", "jquery-ui-1.7.2.min" ,"jrails", "jquery.dataTables.min", "jquery.main", "jquery.periodicalupdater", "jquery.liveSearch"] # flot and excanvas are used for the accrual graph, study-tabs for the tabs
-
 - content_for :head do
   %script{:type => 'text/javascript'}
     $(document).ready(function(){
-    $("#subjects .display").dataTable({"oLanguage":{"sSearch":"Filter"},"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null], "iDisplayLength": -1 });
-    $("#events .display").dataTable({"oLanguage":{"sSearch":"Filter"},"sPaginationType": "full_numbers","aoColumns": [null, { "sType": "html" }, null, null]});
-    $("#imports .display").dataTable({"oLanguage":{"sSearch":"Filter"},"sPaginationType": "full_numbers"});
-    // $("a#title").tooltip({position: 'bottom left', offset: [0, 955]});
     $("a[rel=#import]").overlay({expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }});
     $('#overlay').css({'width': '955px'});
+    $("#study-title").tooltip({position: 'bottom left', offset: [0, 955], predelay: 800});  
     });
 #study
-  .title
-    = @study.may_accrue? ? "O" : "X"
-    = link_to @study.irb_number || "(no id)", "#", :title => "#{@study.status}: #{@study.title}", :id => 'title'
-    .tooltip
-      .title
-        %span.status= "#{@study.status}:"
-        %span.title= @study.title
-      .details
-        %span.phase= "Phase #{@study.phase}" unless @study.phase.blank?
-        %span.research_type= "Research Type: #{@study.research_type}" unless @study.phase.blank?
-        %span.department= "Department: ..."
-        %span.pi
-          = "PI: #{@study.pi_first_name} #{@study.pi_last_name}"
-          = link_to @study.pi_email, "mailto:#{@study.pi_email}"
-        %span.sc
-          = "Coord: #{@study.sc_first_name} #{@study.sc_last_name}" 
-          = link_to @study.sc_email, "mailto:#{@study.sc_email}"
-      .staff
-        Staff list&nbsp;
-        %span.quiet (as listed in eIRB)
-        %ul
-          - @study.coordinators.each do |c|        
-            %li= "#{c.first_name} #{c.last_name}"
+  = @study.may_accrue? ? "O" : "X"
+  = link_to @study.irb_number || "(no id)", "#", :title => "#{@study.status}: #{@study.title}", :class => 'title', :id => 'study-title'
+  .tooltip
+    .title
+      %span.status= "#{@study.status}:"
+      %span.title= @study.title
+    .details
+      %span.phase= "Phase #{@study.phase}" unless @study.phase.blank?
+      %span.research_type= "Research Type: #{@study.research_type}" unless @study.phase.blank?
+      %span.department= "Department: ..."
+      %span.pi
+        = "PI: #{@study.pi_first_name} #{@study.pi_last_name}"
+        = link_to @study.pi_email, "mailto:#{@study.pi_email}"
+      %span.sc
+        = "Coord: #{@study.sc_first_name} #{@study.sc_last_name}" 
+        = link_to @study.sc_email, "mailto:#{@study.sc_email}"
+    .staff
+      Staff list&nbsp;
+      %span.quiet (as listed in eIRB)
+      %ul
+        - @study.coordinators.each do |c|        
+          %li= "#{c.first_name} #{c.last_name}"
 
-        Recent events
-        %ul
-          - @study_events.all(:limit => 5).each do |ie|
-            %li
-              -# ">" before = removes extra spacing around this tag
-              %dtr{:title => ie.description}>= ie.term
-              = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occurred_on || Date.today)} ago"
-      .export
-        = link_to("Download Subjects", new_report_path(:study => @study),:rel => '#overlay', :class => 'add')
-  %br.clear
+      Recent events
+      %ul
+        - @study_events.all(:limit => 5).each do |ie|
+          %li
+            -# ">" before = removes extra spacing around this tag
+            %dtr{:title => ie.description}>= ie.term
+            = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occurred_on || Date.today)} ago"
+    .export
+      = link_to("Download Subjects", new_report_path(:study => @study),:rel => '#overlay', :class => 'add')
   
   #accrual
     - if @study.subjects.empty?
@@ -54,15 +47,17 @@
         %thead
           %tr
             %th= "Subjects (#{@study.subjects.size})"
-            - @events.each do |e|
-              %th= e.term.capitalize
+            - %w(prescreened screened consented enrolled randomized withdrawn completed).each do |e|
+              %th
+                = e.capitalize
+                = link_to("( i )", "#", :id => "event_columns") if e == "completed"
         %tbody
           - @study.involvements.each do |involvement|
             %tr{:class => "subject_#{involvement.subject.id}"}
               %td= link_to(involvement.subject.name.blank? ? involvement.case_number :  involvement.subject.name, subject_path(involvement.subject, :study => @study), :rel => 'detail')
-              - @events.each do |event|
-                - x = @study_events.all.detect{|e| e.involvement == involvement && e.event_type == event}
-                %td= x ? x.occurred_on : ""
+              - %w(prescreened screened consented enrolled randomized withdrawn completed).each do |event|
+                - x = @study_events.all.detect{|e| e.involvement == involvement && e.event_type.term == event}
+                %td= x ? link_to( x.occurred_on, involvement_event_path(x), :title => event.capitalize) : ""
           
     = link_to("+ Add Subject", new_involvement_event_path(:study => @study), :rel => '#overlay', :class => 'add')
     = link_to("[[ ]] Import", "#", :rel => "#import")

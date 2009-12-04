@@ -30,14 +30,6 @@ Then /^subject "([^\"]*)" should not be involved with study "([^\"]*)"$/ do |mrn
   Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number)).should be_blank
 end
 
-When /^I follow "([^\"]*)" for "([^\"]*)" on the "([^\"]*)" tab$/ do |link, mrn, selector|
-  within("\##{selector.downcase}") do
-    within("\.subject_#{Subject.find_by_mrn(mrn).id}") do
-      click_link(link)
-    end
-  end
-end
-
 Then /^I should see the add event form$/ do
   response.should have_tag("form[action=?]", involvement_events_path) do
     with_tag("select[name=?]", "involvement_events[][event_type_id]")
