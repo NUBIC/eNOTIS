@@ -44,7 +44,7 @@
     %p= @subject.nil? ? "Initial event information" : "event information" 
     %p
       = label_tag('involvement_events[][event_type_id]','Event Type')
-      = select_tag('involvement_events[][event_type_id]',options_for_select(@events.map{|event|[event.term.capitalize,event.id]}))
+      = select_tag('involvement_events[][event_type_id]',options_for_select(@events.map{|event| [event.term.capitalize, event.id]}, params[:event_type_id].to_i))
     %p
       = label_tag('involvement_events[][note]', 'Note')
       = text_field_tag('involvement_events[][note]')

@@ -46,7 +46,7 @@ class InvolvementEventsController < ApplicationController
   
   def destroy
     @involvement_event = InvolvementEvent.find(params[:id])
-    destination = study_path(@involvement_event.involvement.study, :anchor => "events")
+    destination = study_path(@involvement_event.involvement.study)
     @involvement_event.destroy
     redirect_to destination
   end

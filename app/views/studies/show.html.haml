@@ -1,14 +1,16 @@
 - content_for :head do
   %script{:type => 'text/javascript'}
     $(document).ready(function(){
+    $("a[rel=#overlay]").overlay({expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }});
     $("a[rel=#import]").overlay({expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }});
     $('#overlay').css({'width': '955px'});
-    $("#study-title").tooltip({position: 'bottom left', offset: [0, 955], predelay: 800});  
+    $("#study-title").tooltip({position: 'bottom left', offset: [0, 955], predelay: 800});
+    $("#accrual td a.involvement").tooltip({position: 'center right', predelay: 800});  
     });
 #study
   = @study.may_accrue? ? "O" : "X"
   = link_to @study.irb_number || "(no id)", "#", :title => "#{@study.status}: #{@study.title}", :class => 'title', :id => 'study-title'
-  .tooltip
+  #study-detail.tooltip
     .title
       %span.status= "#{@study.status}:"
       %span.title= @study.title
@@ -43,21 +45,28 @@
     - if @study.subjects.empty?
       = render :partial => "subjects/no_subjects"
     - else
-      %table.display
+      %table
         %thead
           %tr
             %th= "Subjects (#{@study.subjects.size})"
-            - %w(prescreened screened consented enrolled randomized withdrawn completed).each do |e|
+            - @events.each do |event|
               %th
-                = e.capitalize
-                = link_to("( i )", "#", :id => "event_columns") if e == "completed"
+                %dtr{:title => event.description}= event.term
+                = link_to("( i )", "#", :id => "event_columns") if event.term == "completed"
         %tbody
           - @study.involvements.each do |involvement|
             %tr{:class => "subject_#{involvement.subject.id}"}
               %td= link_to(involvement.subject.name.blank? ? involvement.case_number :  involvement.subject.name, subject_path(involvement.subject, :study => @study), :rel => 'detail')
-              - %w(prescreened screened consented enrolled randomized withdrawn completed).each do |event|
-                - x = @study_events.all.detect{|e| e.involvement == involvement && e.event_type.term == event}
-                %td= x ? link_to( x.occurred_on, involvement_event_path(x), :title => event.capitalize) : ""
+              - @events.each do |event|
+                - if x = @study_events.all.detect{|e| e.involvement == involvement && e.event_type == event}
+                  %td
+                    = link_to( x.occurred_on, "#", :title => event.term.capitalize, :class => 'involvement')
+                    .tooltip
+                      = x.term
+                      = link_to "Remove this event", involvement_event_path(x), :method => :delete
+                - else
+                  %td= link_to "+", new_involvement_event_path(:subject => involvement.subject, :study => @study, :event_type_id => event.id), :rel => '#overlay'
+                
           
     = link_to("+ Add Subject", new_involvement_event_path(:study => @study), :rel => '#overlay', :class => 'add')
     = link_to("[[ ]] Import", "#", :rel => "#import")
