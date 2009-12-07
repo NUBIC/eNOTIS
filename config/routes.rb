@@ -3,12 +3,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :studies
   map.resources :reports
   map.resources :subjects, :collection => {:search=>:get,:merge=>:post}
-  map.resources :users, :collection => {:dashbaord => :get,:session_tracker=>:get}
+  map.resources :users
   map.resources :involvement_events, :collection => [:search]
   map.resource  :search, :controller => :search
   map.hub       '/hub', {:controller => "admin", :action => "index"}
-  map.active '/active', :controller => 'authentication', :action => 'active'
-  map.timeout '/timeout', :controller => 'authentication', :action => 'logout'
+  map.active    '/active', {:controller => 'authentication', :action => 'active'}
+  map.timeout   '/timeout', {:controller => 'authentication', :action => 'logout'}
   map.default   '', {:controller => "studies", :action => "index"}
 end
 
