@@ -15,8 +15,8 @@ module ApplicationHelper
     @controller.class == controller ? "current" : ""
   end
   
-  # Helper for study tabs. Used in app/views/studies/show
-  def study_tab_to(text, path='#')
-    link_to(text, path, {:class => path != "#" ? "current" : ""})
+  def status_icon(study)
+    # study.may_accrue? ? "O" : "X"
+    study.may_accrue? ? image_tag('/images/status-on.png') : image_tag('/images/status-off.png')
   end
 end

@@ -26,7 +26,7 @@ class StudiesController < ApplicationController
                               :limit => params[:iDisplayLength] || 10,
                               :order => order,
                               :conditions => [query_cols.map{|x| "#{x} LIKE ?"}.join(" OR "), q,q])
-        results = studies.map{|s| cols.map{|col| (col == "irb_number" ? "#{s.may_accrue? ? "O" : "X"} <a href='#{study_path(s)}' title='#{s.title}'>#{s.send(col)}</a>" : s.send(col))} }
+        results = studies.map{|s| cols.map{|col| (col == "irb_number" ? (s.may_accrue? ? "<img src='images/status-on.png'/>" : "<img src='/images/status-off.png'/>") + "<a href='#{study_path(s)}' title='#{s.title}'>#{s.irb_number}</a>" : s.send(col))} }
         render :json => {:aaData => results, :iTotalRecords => results.size, :iTotalDisplayRecords => Study.count}
       end
     end

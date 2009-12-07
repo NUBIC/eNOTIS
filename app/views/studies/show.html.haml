@@ -8,7 +8,7 @@
     $("#accrual td a.involvement").tooltip({position: 'center right', predelay: 800});  
     });
 #study
-  = @study.may_accrue? ? "O" : "X"
+  = status_icon @study
   = link_to @study.irb_number || "(no id)", "#", :title => "#{@study.status}: #{@study.title}", :class => 'title', :id => 'study-title'
   #study-detail.tooltip
     .title
