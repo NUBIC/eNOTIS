@@ -118,10 +118,10 @@ jQuery.fn.liveSearch = function (conf) {
 								// 	width:		inputDim.widthNShift + 'px'
 								// });
 
-								liveSearch.html(data).slideDown(config.duration);
+								liveSearch.html(data).filter(":hidden").slideDown(config.duration);
 							}
 							else {
-								liveSearch.slideUp(config.duration, function () {
+								liveSearch.filter(":visible").slideUp(config.duration, function () {
 									config.onSlideUp();
 								});
 							}
