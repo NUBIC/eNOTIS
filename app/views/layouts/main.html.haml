@@ -19,13 +19,6 @@
           = "#{current_user.name} (#{current_user.netid})"
           |
           = link_to('Logout', logout_authentication_path)
-      #bridge-nav
-        %ul
-          %li{:class => nav_class(UsersController)}
-            = link_to "Dashboard", dashboard_path
-          %li{:class => nav_class(StudiesController)}
-            = link_to "All Studies", studies_path
-            
       - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
         #flash= flash_messages(types)
       #main

@@ -9,7 +9,8 @@ Feature: User access to system
 
   Scenario: An authorized user should be able to login
     When I log in as "pi" with password "314159"
-    Then I should see "Dashboard"
+    Then I should see "(pi)"
+    And I should see "Logout"
 
   Scenario: A user with typos should get a helpful message
     When I log in as "pi" with password "theinternets"

@@ -8,18 +8,18 @@ Feature: Manage studies
       
   Scenario: A random user can search for studies (with study id)
     Given a study "Vitamin C and concentration" with id "0012345" and status "Approved"
-    When I go to the dashboard
+    When I go to the homepage
     And I search for study "0012345"
     Then I should see "Vitamin C and concentration"
 
   Scenario: A random user can search for studies (with keyword in title/short title)
     Given a study "Vitamin C and concentration" with id "0012345" and status "Approved"
-    When I go to the dashboard
+    When I go to the homepage
     And I search for study "Vitamin C"
     Then I should see "Vitamin C and concentration"
     
   Scenario: A random user can search for studies (fail) and get redirected
-    When I go to the dashboard
+    When I go to the homepage
     And I search for study "90210"
     Then I should see "0 studies found"
     And I should be on the search page

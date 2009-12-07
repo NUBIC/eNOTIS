@@ -19,9 +19,8 @@ Feature: Search
       | Buck       | Stoppsier |
     And I log in as "joe" with password "1234"
 
-      
   Scenario: Verifying my studies
-    When I go to the dashboard
+    When I go to the homepage
     Then I should see "My Studies (1"
       
   Scenario: Verifying all studies

@@ -1,11 +1,12 @@
 // This file contains the sass styles for the main.html.haml layout
 @import application.sass
 // Importing our custom modules for parts of the app
-@import dashboard.sass
 @import search.sass
 @import studies.sass
 @import datatables.sass
 
+body
+  :background-image url('/images/main-fade-bg.png')
 #search_box
   +column(20)
   :margin-top 43px
@@ -22,37 +23,6 @@
   :margin-top 10px
   :float right
   +bold
-  
-// Styles for the top level page navigation
-#bridge-nav
-  +column(50,true)
-  :background-color #d6d6d6
-  ul
-    :margin 0
-    :display block
-    :height 35px  
-    +horizontal-list(!blueprint_grid_margin)
-    +span(44)
-    +prepend(2)
-    form, form div
-      :display inline
-    li
-      :background transparent
-      :height= !blueprint_grid_outer_width * 2
-      a, a:hover, a:visited, a:active
-        :color= !secondary_data_color
-        :text-decoration none
-        :font-size= !blueprint_grid_width
-        :padding= !blueprint_grid_width
-        :line-height= !blueprint_grid_outer_width * 2
-    li:hover
-      :background-color= !notice_bg_color
-    li.current
-      :background-color= !nu_page_background
-      :color= !nu_purple
-      :border-left= 1px solid !primary_data_border_color
-      :border-right= 1px solid !primary_data_border_color
-
     
 // The main wrapper div for the layout  
 #main
@@ -64,7 +34,7 @@
 // Some generic id's and classes used on
 // most pages
 #livesearch-results
-  +column(48, true)
+  +column(46, true)
   +squeeze
   :display none
   :background #fff

@@ -1,9 +1,38 @@
 - content_for :head do
   :javascript
     $(document).ready(function(){
-    $(".display").dataTable({"sPaginationType": "full_numbers",bServerSide: true, sAjaxSource: '/studies.json' });
+    $("#study_list .display").dataTable({"sPaginationType": "full_numbers",bServerSide: true, sAjaxSource: '/studies.json' });
+    $("#my_studies .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null, null]});
+    $("a.study").tooltip({position: 'center right', predelay: 800});
     });
+
+#my_studies
+  .heading= "My Studies (#{@my_studies.size} in total)"
+  = render :partial => 'partials/study_table', :locals => {:studies => @my_studies}
 
 #study_list
   .heading= "All Studies (#{@studies_count})"
-  = render :partial => 'partials/study_table'
+  = render :partial => 'partials/study_table', :locals => {:studies => @studies}
+
+
+-# #recent_events
+  .heading
+    Recent Events
+  - if @involvement_events.size > 0
+    %ul
+      - @involvement_events[0,5].each do |event|
+        %li= link_to "#{event.involvement.study.irb_number}: #{event.involvement.subject.name}<br/>#{event.term} #{time_ago_in_words(event.occurred_on)} ago", study_path(event.involvement.study)
+    - if (more = @involvement_events.size - 5) > 0
+      = link_to "#{pluralize(more, "more event")}", involvement_events_path
+  - else
+    = render :partial => "involvement_events/no_events"
+
+-#user_options
+  .heading
+    eNotis options:
+  %ul
+    %li= link_to("view your profile")
+    %li= link_to("view your audit history")
+    %li= link_to("verify your email address")
+    %li= link_to("edit user settings")
+

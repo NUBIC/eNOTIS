@@ -7,9 +7,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :involvement_events, :collection => [:search]
   map.resource  :search, :controller => :search
   map.hub       '/hub', {:controller => "admin", :action => "index"}
-  map.dashboard '/dashboard', {:controller => "users", :action => "dashboard"}
   map.active '/active', :controller => 'authentication', :action => 'active'
   map.timeout '/timeout', :controller => 'authentication', :action => 'logout'
-  map.default   '', {:controller => "users", :action => "dashboard"}
+  map.default   '', {:controller => "studies", :action => "index"}
 end
 

@@ -8,7 +8,7 @@ Feature: Developer admin access
     And "gns144" has access to study id "144"
     When I log in as "gns144" with password "stjames"
     And I go to the hub page
-    Then I should be on the dashboard
+    Then I should be on the homepage
     
   Scenario: An admin should be able to visit the hub
     Given an admin "pbr312"

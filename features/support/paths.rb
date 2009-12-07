@@ -13,10 +13,7 @@ module NavigationHelpers
 
     when /the login page/
       authentication_index_path
-
-    when /the dashboard/
-      dashboard_path
-    
+  
     when /the all studies page/
       studies_path
       

@@ -12,6 +12,6 @@ class AdminController < ApplicationController
   protected
   
   def user_must_be_admin
-    redirect_to dashboard_path unless current_user.admin?
+    redirect_to default_path unless current_user.admin?
   end
 end

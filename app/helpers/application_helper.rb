@@ -11,10 +11,6 @@ module ApplicationHelper
     types.map{|type| content_tag(:div, :class => type.to_s){ "#{flash[type]}" } }.join
   end
   
-  def nav_class(controller=nil)
-    @controller.class == controller ? "current" : ""
-  end
-  
   def status_icon(study)
     # study.may_accrue? ? "O" : "X"
     study.may_accrue? ? image_tag('/images/status-on.png') : image_tag('/images/status-off.png')
