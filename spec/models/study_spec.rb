@@ -21,10 +21,10 @@ describe Study do
     @study.synced_at.should >= 1.minute.ago
   end
   it "should tell us when we can accrue subjects" do
-    ["Approved", "Conditional Approval", "Exempt Approved", "Not Under IRB Purview", "Revision Open"].each do |status|
+    ["Approved", "Exempt Approved", "Not Under IRB Purview", "Revision Closed", "Revision Open"].each do |status|
       Factory(:study, :status => status).may_accrue?.should be_true
     end
-    ["Rejected", "Revision Closed", "Suspended", "Withdrawn", "foo", nil].each do |status|
+    ["Rejected", "Suspended", "Withdrawn", "foo", nil].each do |status|
       Factory(:study, :status => status).may_accrue?.should be_false
     end
   end
