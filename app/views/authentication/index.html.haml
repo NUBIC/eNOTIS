@@ -20,60 +20,58 @@
     #measure.item
       %h2 Measure
       .pane-column
-        %ul
-          %li eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University
-          %li keep your accrual logs safe in enotis, not a binder or a backup
-          %li print or export your enrollment to clinicaltrials.gov, eirb
-          %li (later: budgets/adverse events/pt calendar)
-      .pane-column
+        %h4 eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University.
         %h3
           894 active studies
           %br
           542 active users
-        VIDEO - getting started with eNOTIS
-        %br
-        = image_tag "/images/video.jpg"
+        = image_tag '/images/NU_Logo_black.jpg'
+        
+        -#%li print or export your enrollment to clinicaltrials.gov, eirb
+        -#%li (later: budgets/adverse events/pt calendar)
       .pane-column
-        CHART
+        %h4 Keep your enrollment logs secure in eNOTIS, not a binder or laptop.
+        = image_tag '/images/accrual-goal.png'
+        
+      .pane-column
+        %h4 Print or export your enrollment to clinicaltrials.gov, eIRB
+        %h2
+          %span{:style => "border:1px solid #626262; padding: 5px 6px 20px 6px"} .xls 
+          %span{:style => "border:1px solid #626262; padding: 5px 3px 20px 3px"} .csv
+        %h3 VIDEO
+        
     #see.item
       %h2 See
       .pane-column
-        %ul
-          %li a one-page comprehensive overview of all of your research for regular meetings
-          %li visualize accrual in the context of the department and the university as a whole
-          %li identify leaders and demonstrate the case for extra support
-          %li see trends what days are the best for recruitment on studies
+        %h4 A one-page comprehensive overview of all of your research for regular meetings.
+        -#%li see trends what days are the best for recruitment on studies
       .pane-column
-        CHART
+        %h4 Visualize accrual in the context of the department and the university as a whole
+        %h3 CHART
       .pane-column
-        CHART
+        %h4 Identify leaders and demonstrate the case for extra support
+        %h3 VIDEO
     #improve.item
       %h2 Improve
-      .pane-column      
-        %ul
-          %li identify studies, days, that need extra resources or energy
-          %li find collaborators with related research (lattice grid)
-          %li integrate your patient registry and follow-up surveys
-          %li (later: crf's?)
       .pane-column
-        VIDEO
-        %br
-        = image_tag "/images/video.jpg"
+        %h4 Identify studies, days, that need extra resources or energy.
+        -#%li see trends what days are the best for recruitment on studies
       .pane-column
-        Training
-        %ul
-          %li= link_to("Basic Overview")
-          %li= link_to("How to use eNOTIS")
-          %li= link_to("FAQ")
-        %ul
-          %li
-            %span.title= link_to("The ins and outs of eNOTIS")
-            %span.date 19-32-1234 @ 12noon
-            %span.location Streeterville, 750 N Lake Shore
-          %li
-            %span.title= link_to("So, you want to use eNOTIS")
-            %span.date 21-32-5124 @ 3pm
-            %span.location Streeterville, 750 N Lake Shore
+        %h4 Find collaborators with related research
+        %h3 (lattice grid, keywords)
+      .pane-column
+        -#%h4 Integrate your patient registry and follow-up surveys
+        -#%h3 VIDEO
+        -#%li (later: crf's?)
+        %h4 Learn more
+        %p= link_to "Frequenty asked questions"
+        %p
+          = image_tag "/images/video.jpg"
+          = image_tag "/images/video.jpg"
+          %br
+          = link_to("How to use eNOTIS")
+          = link_to("Basic Overview")
+        
 
   -#system_status{:class => @status}
     .heading System status
