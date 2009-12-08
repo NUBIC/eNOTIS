@@ -21,6 +21,8 @@ test: &TEST
 cucumber:
   <<: *TEST
 
+<%= bcdb.hudson :pdev, :enotis_hudson %>
+
 <%= bcdb.staging :pstage, :enotis %>
 
 <%= bcdb.production :pprod, :enotis %>
