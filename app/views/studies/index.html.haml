@@ -1,7 +1,7 @@
 - content_for :head do
   :javascript
     $(document).ready(function(){
-    $("#study_list .display").dataTable({"sPaginationType": "full_numbers",bServerSide: true, sAjaxSource: '/studies.json' });
+    // $("#study_list .display").dataTable({"sPaginationType": "full_numbers",bServerSide: true, sAjaxSource: '/studies.json' });
     $("#my_studies .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null, null]});
     $("a.study").tooltip({position: 'center right', predelay: 800});
     });
@@ -10,7 +10,7 @@
   .heading= "My Studies (#{@my_studies.size} in total)"
   = render :partial => 'partials/study_table', :locals => {:studies => @my_studies}
 
-#study_list
+-# #study_list
   .heading= "All Studies (#{@studies_count})"
   = render :partial => 'partials/study_table', :locals => {:studies => @studies}
 

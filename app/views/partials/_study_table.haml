@@ -12,7 +12,10 @@
           = link_to study.irb_number || "(no id)", study_path(study.irb_number), :title => "#{study.status}: #{study.title}", :class => 'study'
           .tooltip.study
             .title
-              %span.status= "#{study.status}:"
+              %span.status
+                = status_icon study
+                = "#{study.status}:"
+              %br
               %span.title= study.title
             .details
               %span.phase= "Phase #{study.phase}" unless study.phase.blank?

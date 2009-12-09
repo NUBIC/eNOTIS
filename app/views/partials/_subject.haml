@@ -1,2 +1,25 @@
-= link_to(subject.name || "(no name)", subject_url(subject), :rel => '#overlay')
--#= subject.name || "(no name)"
+-# = link_to(subject.name || "(no name)", subject_url(subject), :rel => '#overlay')
+-# = subject.name || "(no name)"
+
+%h4
+  = subject.name 
+  = subject.synced? ? image_tag("icons/refresh_gray_19.png",:alt => "synced") : link_to(image_tag("icons/refresh_19.png",:alt=>"sync"), search_subjects_url(:subject=>subject), :rel => '#overlay')
+
+%p
+  = "mrn: #{subject.mrn}"
+  = "dob: #{subject.birth_date}"
+  - if involvement
+    = "gender: #{involvement.gender}"
+
+#studies
+  Associated Studies:
+  %ul
+  - subject.involvements.each do |involvement|
+    %li= link_to(involvement.study.irb_number, study_path(involvement.study))
+
+#subject-events
+  Events:
+  = link_to "Add event", new_involvement_event_path(:subject => subject, :study => @study), :rel => '#overlay'
+  %ul
+    - subject.involvement_events.each do |ie|
+      %li= link_to("#{ie.term} on #{ie.involvement.study.name}", study_path(ie.involvement.study, :anchor => "events"))
