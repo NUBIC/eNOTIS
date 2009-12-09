@@ -106,7 +106,7 @@ end
 namespace :gems do
   desc "Install postgres gem - needed for the rails initializer to run - which happens before gem dependencies"
   task :install_postgres, :roles => :app do
-    sudo "gem install postgres-pr"
+    sudo "gem install pg"
   end
     
   desc "Install gems"
