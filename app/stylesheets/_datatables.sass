@@ -13,9 +13,9 @@
   :min-height 302px
   :_height 302px
   :clear both
-  :border= 1px solid !primary_data_bg_color
+  // :border= 1px solid !primary_data_bg_color
   :padding-top 0.5em
-  :background-color= !secondary_data_bg_color
+  // :background-color= !secondary_data_bg_color
 
 .dataTables_processing 
   :position absolute
@@ -29,24 +29,27 @@
   :font-size 11px
   :padding 2px 0
 
-.dataTables_length 
-  :width 40%
-  :float right
-  :text-align right
-  :padding-right 0.5em
+.dataTables_length
+  :display none
+  // :width 40%
+  // :float right
+  // :text-align right
+  // :padding-right 0.5em
 
 .dataTables_filter 
-  :width 50%
-  :float left
-  :text-align left
-  :padding-left .75em
-  :padding-bottom 0.5em
+  :display none
+  // :width 50%
+  // :float left
+  // :text-align left
+  // :padding-left .75em
+  // :padding-bottom 0.5em
 
 .dataTables_info 
-  :width 60%
-  :float left
-  :margin-top 0.25em
-  :padding-left 0.6em
+  :display none
+  // :width 60%
+  // :float left
+  // :margin-top 0.25em
+  // :padding-left 0.6em
 
 .dataTables_paginate 
   :width 44px
@@ -62,13 +65,15 @@
   :margin-left 3px
   :float left
 
-.paginate_disabled_previous 
+.paginate_disabled_previous
+  :display none
   :background-image url('/images/jquery-datatables/back_disabled.jpg')
 
 .paginate_enabled_previous 
   :background-image url('/images/jquery-datatables/back_enabled.jpg')
 
 .paginate_disabled_next 
+  :display none
   :background-image url('/images/jquery-datatables/forward_disabled.jpg')
 
 .paginate_enabled_next 
@@ -103,19 +108,19 @@ table.display td.center
 
 // DataTables sorting
 .sorting_asc
-  :background url('/images/jquery-datatables/sort_asc.jpg') no-repeat center right
-  :background-color= !sorted_bg_color
-  :border= 1px solid !sort_border_color
+  :background #C3D9FF url('/images/jquery-datatables/sort_asc_blue.jpg') no-repeat center right
+  // :background-color= !sorted_bg_color
+  // :border= 1px solid !sort_border_color
 
 .sorting_desc
-  :background url('/images/jquery-datatables/sort_desc.jpg') no-repeat center right
-  :background-color= !sorted_bg_color  
-  :border= 1px solid !sort_border_color
+  :background #C3D9FF url('/images/jquery-datatables/sort_desc_blue.jpg') no-repeat center right
+  // :background-color= !sorted_bg_color  
+  // :border= 1px solid !sort_border_color
 
 .sorting 
-  :background url('/images/jquery-datatables/sort_both.jpg') no-repeat center right
-  :background-color= !sorting_bg_color
-  :border= 1px solid !sort_border_color
+  :background #C3D9FF url('/images/jquery-datatables/sort_both_blue.jpg') no-repeat center right
+  // :background-color= !sorting_bg_color
+  // :border= 1px solid !sort_border_color
   
 // DataTables row classes
 tr.odd 
@@ -141,7 +146,7 @@ tr.even
   :height 22px
   :line-height 22px
 .paging_full_numbers span.paginate_button, .paging_full_numbers span.paginate_active 
-  :border 1px solid #aaa
+  // :border 1px solid #aaa
   :-webkit-border-radius 5px
   :-moz-border-radius 5px
   :padding 2px 5px

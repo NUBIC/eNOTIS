@@ -5,15 +5,20 @@
     $("a[rel=#import]").overlay({expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }});
     $('#overlay').css({'width': '955px'});
     $("#study-title").tooltip({position: 'bottom left', offset: [0, 955], predelay: 800});
-    $("#accrual td a.involvement").tooltip({position: 'center right', predelay: 800});  
+    $("#accrual td a.involvement").tooltip({position: 'center right', predelay: 800});
+    $("#accrual td a.subject").tooltip({position: 'center right', predelay: 800});
+    $("#accrual .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },]});
     });
 #study
   = status_icon @study
-  = link_to @study.irb_number || "(no id)", "#", :title => "#{@study.status}: #{@study.title}", :class => 'title', :id => 'study-title'
+  = link_to @study.irb_number || "(no id)", "#", :title => "#{@study.status}: #{@study.title}", :class => 'study_title', :id => 'study-title'
   #study-detail.tooltip
     .title
-      %span.status= "#{@study.status}:"
-      %span.title= @study.title
+      %span.status
+        = status_icon @study
+        = "#{@study.status}"
+      %br
+      %span.study_title= @study.title
     .details
       %span.phase= "Phase #{@study.phase}" unless @study.phase.blank?
       %span.research_type= "Research Type: #{@study.research_type}" unless @study.phase.blank?
@@ -45,7 +50,7 @@
     - if @study.subjects.empty?
       = render :partial => "subjects/no_subjects"
     - else
-      %table
+      %table.display
         %thead
           %tr
             %th= "Subjects (#{@study.subjects.size})"
@@ -56,7 +61,10 @@
         %tbody
           - @study.involvements.each do |involvement|
             %tr{:class => "subject_#{involvement.subject.id}"}
-              %td= link_to(involvement.subject.name.blank? ? involvement.case_number :  involvement.subject.name, subject_path(involvement.subject, :study => @study), :rel => 'detail')
+              %td
+                = link_to(involvement.subject.name.blank? ? involvement.case_number :  involvement.subject.name, subject_path(involvement.subject, :study => @study), :class => 'subject')
+                .tooltip
+                  = render :partial => 'partials/subject', :locals => {:subject => involvement.subject, :involvement => involvement}
               - @events.each do |event|
                 - if x = @study_events.all.detect{|e| e.involvement == involvement && e.event_type == event}
                   %td
