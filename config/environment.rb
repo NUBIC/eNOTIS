@@ -31,7 +31,7 @@ Rails::Initializer.run do |config|
   config.gem "stomp", :version => '>=1.1'
   config.gem "binarylogic-searchlogic", :lib => 'searchlogic'
   config.gem "yoon-view_trail", :lib => 'view_trail', :version => '>=0.3.1', :source => 'http://gems.github.com'
-  config.gem "capistrano", :version => '=2.5.5' # http://www.capify.org/index.php/Problems_With_2.5.6%2B, also installs net-ssh, net-sftp, net-scp, net-ssh-gateway
+  config.gem "capistrano", :version => '>=2.5.8' # http://www.capify.org/index.php/Problems_With_2.5.6%2B, also installs net-ssh, net-sftp, net-scp, net-ssh-gateway
   config.gem "activemessaging"
   config.gem "ruport", :lib => false
   config.gem "acts_as_reportable", :lib => false
