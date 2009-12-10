@@ -69,7 +69,7 @@ class SubjectsController < ApplicationController
       @study_upload.result = temp_file
       temp_file.close!
       results_file_name = @study_upload.upload_file_name.gsub(/(\.csv)?$/, '-result.csv')
-      headers['Content-Disposition'] = "attachment; filename='#{results_file_name}'"
+      headers['Content-Disposition'] = "attachment; filename=#{results_file_name}"
 
       # Internet explorer requires special headers in order for a csv file to be downloaded instead of displayed
       if request.env['HTTP_USER_AGENT'] =~ /msie/i
