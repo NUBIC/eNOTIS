@@ -14,8 +14,8 @@
 #studies
   Associated Studies:
   %ul
-  - subject.involvements.each do |involvement|
-    %li= link_to(involvement.study.irb_number, study_path(involvement.study))
+    - subject.involvements.each do |involvement|
+      %li= link_to(involvement.study.irb_number, study_path(involvement.study))
 
 #subject-events
   Events:
