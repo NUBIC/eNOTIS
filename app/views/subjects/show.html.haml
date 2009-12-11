@@ -16,4 +16,4 @@
   Events:
   %ul
     - @involvement_events.each do |ie|
-      = link_to("#{ie.term} on #{ie.involvement.study.name}", study_path(ie.involvement.study, :anchor => "events"))
+      = link_to_unless_current("#{ie.term} on #{ie.involvement.study.name}", study_path(ie.involvement.study))

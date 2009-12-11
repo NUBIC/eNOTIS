@@ -38,6 +38,19 @@ body
   :color= !notice_color
   +bold
 
+// tooltip styling
+.tooltip
+  // must be initially hidden 
+  :display none
+  :z-index 999
+  :background-color #fff
+  :border 1px solid #666
+  :padding 10px
+  // :font-size 11px 
+  :color #000
+  :-moz-box-shadow 0 0 90px 5px #000 
+  :-webkit-box-shadow  0 0 90px #000
+
 .heading
   +bold
 

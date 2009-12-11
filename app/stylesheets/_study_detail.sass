@@ -1,26 +1,17 @@
 #study
   +squish
-    
-  // tooltip styling
+  
+  a.study
+    :padding-right 16px
+    :background transparent url('/images/icons/comment.png') no-repeat bottom right
+    :text-decoration none
+    :font-size 20px
+
+  // study detail tooltip styling
   #study-detail
     +column(48, true)
-    // must be initially hidden 
     :display none
-    :z-index 999
-    //:background url(http://static.flowplayer.org/tools/img/tooltip/black_arrow_big.png) 
-    :background-color #fff
-    :border 1px solid #666
-    //:height 163px 
-    :padding 10px
-    //:padding 40px 30px 10px 30px 
-    //:width 310px 
-    :font-size 11px 
-    :color #000
-    // CSS3 styling for latest browsers 
-    :-moz-box-shadow 0 0 90px 5px #000 
-    :-webkit-box-shadow  0 0 90px #000
-    
-    span.title
+    span.study_title
       :font-size 18px
     .details
       +column(16)
@@ -30,30 +21,30 @@
       +column(16)
     .export
       +column(16, true)
+      a.export-subjects
+        :padding-left 18px
+        :background transparent url('/images/icons/table_save.png') no-repeat bottom left
   
-  #accrual .tooltip
-    // must be initially hidden 
-    :display none
-    :z-index 999
-    //:background url(http://static.flowplayer.org/tools/img/tooltip/black_arrow_big.png) 
-    :background-color #fff
-    :border 1px solid #666
-    //:height 163px 
-    // offsets for datatables
-    :margin -120px 0 0 -100px
-    :padding 10px
-    //:padding 40px 30px 10px 30px 
-    //:width 310px 
-    :font-size 11px 
-    :color #000
-    // CSS3 styling for latest browsers 
-    :-moz-box-shadow 0 0 90px 5px #000 
-    :-webkit-box-shadow  0 0 90px #000    
-
-  // for ie
-  // * html #subjects tbody
-  //   :height expression( this.scrollHeight > 332 ? "333px" : "auto" )
-
+  #accrual
+    a.subject, a.involvement
+      :padding-right 16px
+      :background transparent url('/images/icons/comment.png') no-repeat bottom right
+      :text-decoration none
+    a.add
+      :padding-left 18px
+      :background transparent url('/images/icons/add.png') no-repeat bottom left    
+    a.import
+      :padding-left 18px
+      :background transparent url('/images/icons/table_add.png') no-repeat bottom left
+    // tooltip styling
+    .tooltip
+      // offsets for datatables
+      :margin -139px 0 0 -304px
+      :font-size 11px
+    .subject.tooltip
+      :width 300px
+    .involvement.tooltip
+      :width 100px
   #import
     :display none
     .upload

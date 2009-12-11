@@ -6,15 +6,15 @@
     $("a[rel=#import]").overlay({expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }});
     $('#overlay').css({'width': '955px'});
     // tooltip
-    $("#study-title").tooltip({position: 'bottom left', offset: [0, 955], predelay: 800});
-    $("#accrual td a.involvement").tooltip({position: 'center right', predelay: 800});
-    $("#accrual td a.subject").tooltip({position: 'bottom right', predelay: 800});
+    $("#study a.study").tooltip({position: 'bottom left', offset: [0, 955], predelay: 800});
+    $("#accrual a.involvement").tooltip({position: 'bottom right', predelay: 800});
+    $("#accrual a.subject").tooltip({position: 'bottom right', predelay: 800});
     // dataTable
     $("#accrual .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },]});
     });
 #study
   = status_icon @study
-  = link_to @study.irb_number || "(no id)", "#", :title => "#{@study.status}: #{@study.title}", :class => 'study_title', :id => 'study-title'
+  = link_to @study.irb_number || "(no id)", "#", :title => "#{@study.status}: #{@study.title}", :class => 'study'
   #study-detail.tooltip
     .title
       %span.status
@@ -47,7 +47,7 @@
             %dtr{:title => ie.description}>= ie.term
             = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occurred_on || Date.today)} ago"
     .export
-      = link_to("Download Subjects", new_report_path(:study => @study),:rel => '#overlay', :class => 'add')
+      = link_to("Export subjects", new_report_path(:study => @study), :rel => '#overlay', :class => 'export-subjects') unless @study.subjects.empty?
   
   #accrual
     - if @study.subjects.empty?
@@ -65,22 +65,24 @@
           - @study.involvements.each do |involvement|
             %tr{:class => "subject_#{involvement.subject.id}"}
               %td
-                = link_to(involvement.subject.name.blank? ? involvement.case_number :  involvement.subject.name, subject_path(involvement.subject, :study => @study), :class => 'subject')
-                .tooltip
+                = link_to(involvement.subject.name.blank? ? involvement.case_number : involvement.subject.name, "#", :class => 'subject')
+                .tooltip.subject
                   = render :partial => 'partials/subject', :locals => {:subject => involvement.subject, :involvement => involvement}
               - @events.each do |event|
                 - if x = @study_events.all.detect{|e| e.involvement == involvement && e.event_type == event}
                   %td
                     = link_to( x.occurred_on, "#", :title => event.term.capitalize, :class => 'involvement')
-                    .tooltip
-                      = x.term
-                      = link_to "Remove this event", involvement_event_path(x), :method => :delete
+                    .tooltip.involvement
+                      %p
+                        = x.term
+                        = x.note
+                      %p= link_to "Remove this event", involvement_event_path(x), :method => :delete
                 - else
                   %td= link_to "+", new_involvement_event_path(:subject => involvement.subject, :study => @study, :event_type_id => event.id), :rel => '#overlay'
                 
           
-    = link_to("+ Add Subject", new_involvement_event_path(:study => @study), :rel => '#overlay', :class => 'add')
-    = link_to("[[ ]] Import", "#", :rel => "#import")
+    = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => '#overlay', :class => 'add')
+    = link_to("Import", "#", :rel => "#import", :class => 'import')
   #import.overlay
     .upload
       Import subjects

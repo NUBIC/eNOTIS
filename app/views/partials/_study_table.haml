@@ -10,7 +10,7 @@
         %td
           = status_icon study
           = link_to study.irb_number || "(no id)", study_path(study.irb_number), :title => "#{study.status}: #{study.title}", :class => 'study'
-          .tooltip.study
+          .tooltip
             .title
               %span.status
                 = status_icon study
