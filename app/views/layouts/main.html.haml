@@ -2,9 +2,9 @@
 !!!
 %html
   %head
-    %title= "eNotis :: #{@title}"
+    %title= "eNOTIS :: #{@title}"
     = stylesheet_link_tag(@view_stylesheets ||= ["compiled/main"])
-    = javascript_include_tag(@view_javascripts ||= ["jquery.tools.min.js", "jquery-ui-1.7.2.min" ,"jrails", "jquery.dataTables.min", "jquery.main", "jquery.periodicalupdater", "jquery.liveSearch"]) 
+    = javascript_include_tag(@view_javascripts ||= ["jquery.tools.min.js", "jquery.dataTables.min", "jquery.main", "jquery.periodicalupdater", "jquery.liveSearch"]) 
     = yield :head
   %body
     = auto_session_timeout_js(:frequency => 60) if logged_in?

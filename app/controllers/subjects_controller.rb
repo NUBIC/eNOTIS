@@ -18,10 +18,6 @@ class SubjectsController < ApplicationController
   has_view_trail :except => :index
 
   # Public instance methods (actions)
-  # def index
-  #   @subjects = current_user.subjects
-  # end
-
   def show
     @subject = Subject.find(params[:id])
     if params[:study]
@@ -31,16 +27,6 @@ class SubjectsController < ApplicationController
     # TODO - manage this better - yoon
     @involvements = @subject.involvements.with_coordinator(current_user.id)
     @involvement_events = @involvements.map(&:involvement_events).flatten
-    respond_to do |format|
-      format.html
-      format.js {render :layout => false}
-    end
-  end
-
-  def search
-    #this method is designed specifically to search for a locally stored subject in the edw
-    @local = Subject.find(params[:subject])
-    @subjects = Subject.find(:all,:conditions=>{:first_name =>@local.first_name,:last_name =>@local.last_name,:birth_date => @local.birth_date},:span=>:foreign,:service_opts=>{:netid=>current_user.netid})
     respond_to do |format|
       format.html
       format.js {render :layout => false}

@@ -1,12 +1,12 @@
 class AuthenticationController < ApplicationController
   layout "layouts/public"
-
   auto_session_timeout_actions
+  
   # Public instance methods (actions)
   def index
     # TODO System staus check
-    @title = "Clinical Registration System"
-    @status = system_status
+    @title = "measure, see, and improve your research"
+    # @status = system_status
   end
   
   def login
@@ -22,7 +22,7 @@ class AuthenticationController < ApplicationController
     else
       note_failed_signin
       @netid = params[:netid]
-      @status = system_status
+      # @status = system_status
       render :action => 'index'
     end
   end
@@ -43,8 +43,7 @@ class AuthenticationController < ApplicationController
   def active
     render_session_status
   end
-  
-  
+
   # Protected instance methods
   protected
   # Track failed login attempts

@@ -9,6 +9,7 @@ class StudiesController < ApplicationController
   
   # Public instance methods (actions)
   def index
+    @title = "Studies"
     # raise "testing exception notifier - yoon" # http://weblog.jamisbuck.org/2007/3/7/raising-the-right-exception
     respond_to do |format|
       format.html do
@@ -35,8 +36,8 @@ class StudiesController < ApplicationController
   end
 
   def show
-    
     @study = Study.find_by_irb_number(params[:id])
+    @title = @study.irb_number
     @study_events = InvolvementEvent.on_study(@study)
     @accruals = @study_events.with_event_types([DictionaryTerm.lookup_term("Consented",:event)])
     @events = %w(prescreened screened consented enrolled randomization withdrawn completed).map{|term| DictionaryTerm.lookup_term(term, :event)}

@@ -1,10 +1,8 @@
 class ReportsController < ApplicationController
   layout "layouts/main"  
 
-
   before_filter :user_must_be_logged_in
   has_view_trail :except => :index
-
 
   def index
     @study = Study.find_by_irb_number(params[:study])
@@ -19,7 +17,6 @@ class ReportsController < ApplicationController
   end
 
   def show
-
   end
 
   def create

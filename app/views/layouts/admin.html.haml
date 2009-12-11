@@ -2,38 +2,29 @@
 !!!
 %html
   %head
-    %title= "eNotis :: #{@title}"
-    =stylesheet_link_tag(@view_stylesheets ||= ["compiled/application", "compiled/main", "compiled/admin"])
-    =javascript_include_tag @view_javascripts ||= ["jquery.tools.min.js", "jquery.dataTables.min"] 
-    =yield :head
+    %title= "eNOTIS :: #{@title}"
+    = stylesheet_link_tag @view_stylesheets ||= "compiled/admin"
+    = javascript_include_tag @view_javascripts ||= ["jquery.tools.min.js", "jquery.dataTables.min", "jquery.periodicalupdater"]
+    = yield :head
   %body
+    = auto_session_timeout_js(:frequency => 60) if logged_in?
     #container
       #header
-        %span.app_name
-          =image_tag("logo_idea1.gif",:alt => "eNOTIS Logo")          
-          %em.tagline
-            Northwestern University Clinical Subject Registration
-
-      #current_user_badge
-        = "#{current_user.name} (#{current_user.netid})"
-        |
-        = link_to('Logout', logout_authentication_path)
-      
+        #app_name= image_tag("enotis-swoop-logo.png",:alt => "eNOTIS")
+        #search_box
+          = link_to "&laquo; back to enotis", default_path
+        #current_user_badge
+          = "#{current_user.name} (#{current_user.netid})"
+          |
+          = link_to('Logout', logout_authentication_path)
       - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
-        #flash
-          = flash_messages(types)
-      
-      #bridge-nav
-        %a{:href => default_path} &laquo; back to enotis
-            
+        #flash= flash_messages(types)
       #main
-        =yield
-
+        #livesearch-results
+        = yield
       #footer
-        = image_tag("nu_pageheader.jpg")
-        %p
-          eNOTIS &mdash; Clinical Subject Registration 
-          =app_version_helper
-          Created by&nbsp; 
-          =link_to("NUBIC")
-          &nbsp;for Northwestern University
+        %p= "eNOTIS #{app_version_helper} &mdash; created by #{link_to("NUBIC", "http://www.nucats.northwestern.edu/centers/nubic")} for Northwestern University"
+      #overlay.overlay
+        .contentWrap
+      #session-expire.overlay
+        %b your session is about to expire
