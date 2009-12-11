@@ -1,9 +1,25 @@
+
+
 // On the search page
 #search_form
   +column(40,true)
   +prepend(1)
   +squish
-
+ 
+#livesearch-results
+  +column(46, true)
+  +squeeze
+  :display none
+  :background #fff
+  // :padding 5px 10px
+  :max-height 300px
+  :overflow auto
+  :position absolute
+  :z-index 99
+  :top 75px
+  :border 1px solid #d6d6d6
+  :border-width 0 1px 1px 1px
+  
 #results
   +column(46,true)
   +squish
@@ -12,5 +28,3 @@
   #subject_results
     +prepend(1)
     +column(22.5, true)
-  
- 

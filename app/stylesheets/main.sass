@@ -2,7 +2,8 @@
 @import application.sass
 // Importing our custom modules for parts of the app
 @import search.sass
-@import studies.sass
+@import study_list.sass
+@import study_detail.sass
 @import datatables.sass
 
 body
@@ -31,21 +32,6 @@ body
   :background #fff url('/images/pane-texture-bg.png') repeat-x
   +rounded_bottom_box( #fff )
   :background-position 0 -35px
-// Some generic id's and classes used on
-// most pages
-#livesearch-results
-  +column(46, true)
-  +squeeze
-  :display none
-  :background #fff
-  // :padding 5px 10px
-  :max-height 300px
-  :overflow auto
-  :position absolute
-  :z-index 99
-  :top 75px
-  :border 1px solid #d6d6d6
-  :border-width 0 1px 1px 1px
 
 .heading
   // +rounded_top_box( !primary_data_bg_color )

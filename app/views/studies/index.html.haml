@@ -1,9 +1,12 @@
 - content_for :head do
   :javascript
     $(document).ready(function(){
+    // tooltip
+    $("a.study").tooltip({position: 'center right', predelay: 800});
+    // dataTable
     // $("#study_list .display").dataTable({"sPaginationType": "full_numbers",bServerSide: true, sAjaxSource: '/studies.json' });
     $("#my_studies .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null, null]});
-    $("a.study").tooltip({position: 'center right', predelay: 800});
+    
     });
 
 #my_studies

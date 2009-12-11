@@ -1,12 +1,15 @@
 - content_for :head do
   %script{:type => 'text/javascript'}
     $(document).ready(function(){
+    // overlay
     $("a[rel=#overlay]").overlay({expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }});
     $("a[rel=#import]").overlay({expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }});
     $('#overlay').css({'width': '955px'});
+    // tooltip
     $("#study-title").tooltip({position: 'bottom left', offset: [0, 955], predelay: 800});
     $("#accrual td a.involvement").tooltip({position: 'center right', predelay: 800});
     $("#accrual td a.subject").tooltip({position: 'bottom right', predelay: 800});
+    // dataTable
     $("#accrual .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },]});
     });
 #study
