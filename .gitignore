@@ -8,7 +8,7 @@ tmp/*
 public/uploads/*
 public/results/*
 app/stylesheets/.sass-cache/*
-public/stylesheets/compiled/*
+public/stylesheets/compiled/*.css
 
 # db/schema.rb
 # if schema.rb isn't included in source control, it is generated on the fly on the server without group write permissions, preventing other developers from running migrations on the same deployment
