@@ -20,10 +20,5 @@ config.action_mailer.raise_delivery_errors = false
 config.gem "ruby-debug-base", :version => '>=0.10.3' # also installs dependencies: linecache
 config.gem "ruby-debug", :version => '>=0.10.3' # also installs dependencies: columnize
 
-config.gem "thoughtbot-factory_girl", :version => '>=1.2.1', :lib => "factory_girl", :source => "http://gems.github.com"
-config.gem "populator", :version => '>=0.2.5'
-config.gem "faker", :version => '>=0.3.1'
-  
-
 require 'ruby-debug' if defined? Debugger # don't choke if we haven't the gem, e.g. the first time we run rake gems:install
 

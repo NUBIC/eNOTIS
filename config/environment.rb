@@ -36,6 +36,10 @@ Rails::Initializer.run do |config|
   config.gem "activemessaging"
   config.gem "ruport", :lib => false
   config.gem "acts_as_reportable", :lib => false
+
+  config.gem "thoughtbot-factory_girl", :version => '>=1.2.1', :lib => "factory_girl", :source => "http://gems.github.com"
+  config.gem "populator", :version => '>=0.2.5'
+  config.gem "faker", :version => '>=0.3.1'
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
