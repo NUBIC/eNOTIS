@@ -12,9 +12,9 @@
     = "gender: #{involvement.gender}"
 
 #studies
-  Associated Studies:
+  Other studies:
   %ul
-    - subject.involvements.each do |involvement|
+    - (subject.involvements - [involvement]).each do |involvement|
       %li= link_to(involvement.study.irb_number, study_path(involvement.study))
 
 #subject-events
