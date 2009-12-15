@@ -5,9 +5,9 @@
     %title= "eNOTIS :: #{@title}"
     = stylesheet_link_tag(@view_stylesheets ||= ["compiled/main"])
     = javascript_include_tag(@view_javascripts ||= ["jquery.tools.min.js", "jquery.dataTables.min", "jquery.main", "jquery.periodicalupdater", "jquery.liveSearch"]) 
+    = auto_session_timeout_js(:frequency => 60) if logged_in?
     = yield :head
   %body
-    = auto_session_timeout_js(:frequency => 60) if logged_in?
     #container
       #header
         #app_name= link_to_unless_current image_tag("enotis-swoop-logo.png",:alt => "eNOTIS"), default_path

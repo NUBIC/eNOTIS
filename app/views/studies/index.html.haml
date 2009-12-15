@@ -1,14 +1,3 @@
-- content_for :head do
-  :javascript
-    $(document).ready(function(){
-    // tooltip
-    $("#my_studies a.study").tooltip({position: 'bottom right', predelay: 800});
-    // dataTable
-    // $("#study_list .display").dataTable({"sPaginationType": "full_numbers",bServerSide: true, sAjaxSource: '/studies.json' });
-    $("#my_studies .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null, null]});
-    
-    });
-
 #my_studies
   .heading= "My Studies (#{@my_studies.size} in total)"
   = render :partial => 'partials/study_table', :locals => {:studies => @my_studies}
