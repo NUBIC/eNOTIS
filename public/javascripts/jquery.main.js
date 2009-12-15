@@ -8,12 +8,5 @@ $(document).ready(function() {
 	$('input[name="query"]').liveSearch({url: '/search?format=js&query=', id: "livesearch-results"});
 	// flash messages
 	var flashWidth = $("#flash").css('width'); // save flash width. changing it to relative positioning (to slide up) decreases width
-	$("#flash").animate({width: flashWidth}, 3000).slideUp(1000);
-	// shortcut keys - http://net.tutsplus.com/javascript-ajax/how-to-create-a-keypress-navigation-using-jquery
-  // $(document).keypress(function(e) { // alert(e.which);
-  //     switch(e.which){
-  //    case 47: // user presses "/"
-  //       $('#query').focus(); break;  
-  //  }
-  // });
+	$("#flash").animate({width: flashWidth}, 5000).slideUp(1000);
 });
