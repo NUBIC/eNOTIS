@@ -12,7 +12,7 @@ module AutoSessionTimeoutHelper
                   url : '/active',
                   method : 'get',
                   minTimeout: #{frequency},
-                  multiplier : 1,
+                  maxTimeout: #{frequency * 2},
                   type : 'text'
                 },
                 function(data)
