@@ -50,7 +50,8 @@ namespace :db do
     desc 'Populate involvements: joins subjects(fake) and studies(random)'
     task :involvements_and_subects => :environment do
       puts "creating involvements and subjects..."
-      event_type_ids = DictionaryTerm.lookup_category_terms('Event').map(&:id)
+      # event_type_ids = DictionaryTerm.lookup_category_terms('Event').map(&:id)
+      event_type_ids = %w(consented withdrawn completed).map{|term| DictionaryTerm.lookup_term(term, :event)}.map(&:id)
       event_type_ids += Array.new(20, DictionaryTerm.lookup_term("Consented","Event").id) # weight this more heavily towards consent event types
       gender_type_ids = DictionaryTerm.lookup_category_terms('Gender').map(&:id)
       ethnicity_type_ids = DictionaryTerm.lookup_category_terms('Ethnicity').map(&:id)
@@ -65,7 +66,8 @@ namespace :db do
     desc 'Populate involvements: joins subjects(random) and studies(random)'
     task :involvements => :environment do
       puts "creating extra involvements..."
-      event_type_ids = DictionaryTerm.lookup_category_terms('Event').map(&:id)
+      # event_type_ids = DictionaryTerm.lookup_category_terms('Event').map(&:id)
+      event_type_ids = %w(consented withdrawn completed).map{|term| DictionaryTerm.lookup_term(term, :event)}.map(&:id)
       event_type_ids += Array.new(20, DictionaryTerm.lookup_term("Consented","Event").id) # weight this more heavily towards consent event types
       gender_type_ids = DictionaryTerm.lookup_category_terms('Gender').map(&:id)
       ethnicity_type_ids = DictionaryTerm.lookup_category_terms('Ethnicity').map(&:id)
