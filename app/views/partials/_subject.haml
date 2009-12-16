@@ -9,13 +9,7 @@
     = "gender: #{involvement.gender}"
 
 #studies
-  Other studies:
+  Other interventional studies:
   %ul
-    - (subject.involvements - [involvement]).each do |involvement|
-      %li= link_to(involvement.study.irb_number, study_path(involvement.study))
-
-#subject-events
-  Events:
-  %ul
-    - subject.involvement_events.each do |ie|
-      %li= link_to("#{ie.term} on #{ie.involvement.study.name}", study_path(ie.involvement.study, :anchor => "events"))
+    - subject.other_studies(involvement.study).each do |study|
+      %li= link_to(study.irb_number, study_path(study))
