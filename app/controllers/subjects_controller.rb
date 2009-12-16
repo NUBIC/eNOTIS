@@ -47,23 +47,28 @@ class SubjectsController < ApplicationController
     @study = Study.find_by_irb_number(params[:study_id]) # Study.find(:first,:conditions=>["irb_number='#{params[:study_id]}'"],:span=>:global)
     @study_upload = StudyUpload.new(:user_id=>current_user.id,:study_id => @study.id, :upload => params[:file])
     temp_file = Tempfile.new("results")
-    if csv_sanity_check(@study_upload.upload, temp_file)
-      @study_upload.save
-      publish :patient_upload, @study_upload.id.to_s
-      redirect_to params[:study_id].blank? ? studies_path : study_path(params[:study_id],:anchor=>"imports")
-    else
-      @study_upload.result = temp_file
-      temp_file.close!
-      results_file_name = @study_upload.upload_file_name.gsub(/(\.csv)?$/, '-result.csv')
-      headers['Content-Disposition'] = "attachment; filename=#{results_file_name}"
-
-      # Internet explorer requires special headers in order for a csv file to be downloaded instead of displayed
-      if request.env['HTTP_USER_AGENT'] =~ /msie/i
-        headers.merge!({'Pragma' => 'public', 'Content-type' => 'text/plain; charset=utf-8', 'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0', 'Expires' => '0'})
+    if @study_upload.upload.valid?      
+      if csv_sanity_check(@study_upload.upload, temp_file)
+        @study_upload.save
+        publish :patient_upload, @study_upload.id.to_s
+        redirect_to params[:study_id].blank? ? studies_path : study_path(params[:study_id],:anchor=>"imports")
       else
-        headers['Content-type'] = 'text/csv; charset=utf-8'        
+        @study_upload.result = temp_file
+        temp_file.close!
+        results_file_name = @study_upload.upload_file_name.gsub(/(\.csv)?$/, '-result.csv')
+        headers['Content-Disposition'] = "attachment; filename=#{results_file_name}"
+
+        # Internet explorer requires special headers in order for a csv file to be downloaded instead of displayed
+        if request.env['HTTP_USER_AGENT'] =~ /msie/i
+          headers.merge!({'Pragma' => 'public', 'Content-type' => 'text/plain; charset=utf-8', 'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0', 'Expires' => '0'})
+        else
+          headers['Content-type'] = 'text/csv; charset=utf-8'        
+        end
+        render :text => @study_upload.result.to_io.read
       end
-      render :text => @study_upload.result.to_io.read
+    else
+      flash[:error] = "Please provide a file to upload."
+      redirect_to study_path(@study)
     end
   end
 
