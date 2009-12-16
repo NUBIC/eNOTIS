@@ -14,8 +14,8 @@ class StudiesController < ApplicationController
     respond_to do |format|
       format.html do
         @my_studies = current_user.studies
-        @studies_count = Study.count
-        @studies = []
+        # @studies_count = Study.count
+        # @studies = []
       end
       # See http://datatables.net/forums/comments.php?DiscussionID=53 for json params
       format.json do
