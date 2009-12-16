@@ -57,6 +57,11 @@ class Subject < ActiveRecord::Base
    #subject.delete 
   end
   
+  def other_studies(study)
+    study.blank? ? studies : studies - [study]
+  end
+  
+  
   # Public class methods
   
   def self.find_or_create(params)

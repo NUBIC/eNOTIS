@@ -25,7 +25,7 @@
         = label_tag 'involvement[case_number]','Case Number'
         = text_field_tag('involvement[case_number]')
     .demographics
-      %h4 Demographics (required)
+      %h3 Demographics (required)
       %p
         = label_tag 'involvement[gender_type_id]','Gender'
         = select_tag('involvement[gender_type_id]',options_for_select(@genders.map{|gender|[gender.term.capitalize!,gender.id]}))
@@ -41,14 +41,14 @@
           %br
 
   .event
-    %h4= @subject.nil? ? "Initial event information" : "event information" 
+    %h3 Activity
     %p
-      = label_tag('involvement_events[][event_type_id]','Event Type')
+      = label_tag('involvement_events[][event_type_id]','Activity')
       = select_tag('involvement_events[][event_type_id]',options_for_select(@events.map{|event| [event.term.capitalize, event.id]}, params[:event_type_id].to_i))
     %p
       = label_tag('involvement_events[][note]', 'Note')
       = text_field_tag('involvement_events[][note]')
     %p
-      = label_tag('involvement_events[][occurred_on]','Event Date')
+      = label_tag('involvement_events[][occurred_on]','Date')
       = text_field_tag('involvement_events[][occurred_on]', Date.today.to_s)
     %p= submit_tag("Submit")
