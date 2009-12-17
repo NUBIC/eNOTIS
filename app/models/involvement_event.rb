@@ -48,7 +48,7 @@ class InvolvementEvent < ActiveRecord::Base
   # for study_uploads
   def self.sanity_check(params)
     errors = []
-    errors << "either an MRN or First Name, Last Name and Date of Birth or Case Number are required" if params[:mrn].blank? and (params[:first_name].blank? or params[:last_name].blank? or Chronic.parse(params[:birth_date]).nil?) and params[:case_number].blank?
+    errors << "either an MRN or (First Name, Last Name and Date of Birth) or Case Number are required" if params[:mrn].blank? and (params[:first_name].blank? or params[:last_name].blank? or Chronic.parse(params[:birth_date]).nil?) and params[:case_number].blank?
     [ [params[:race], "Race is required"],
       [params[:gender], "Gender is required"],
       [params[:ethnicity], "Ethnicity is required"],

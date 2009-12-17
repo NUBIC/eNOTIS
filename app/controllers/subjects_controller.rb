@@ -7,85 +7,74 @@ class SubjectsController < ApplicationController
   # Includes
   include ActiveMessaging::MessageSender
   include Chronic
-  #Reporting
-
 
   # Authentication
   before_filter :user_must_be_logged_in
 
   # Auditing
-  publishes_to :patient_upload
   has_view_trail :except => :index
 
-  # Public instance methods (actions)
-  def show
-    @subject = Subject.find(params[:id])
-    if params[:study]
-      @involvement = Involvement.find_by_subject_id_and_study_id(@subject.id, Study.find_by_irb_number(params[:study]).id)
-    end
-    # restrict showing involvements and involvement events to those that the current user manages
-    # TODO - manage this better - yoon
-    @involvements = @subject.involvements.with_coordinator(current_user.id)
-    @involvement_events = @involvements.map(&:involvement_events).flatten
-    respond_to do |format|
-      format.html
-      format.js {render :layout => false}
-    end
-  end
+  # Messaging
+  publishes_to :patient_upload
 
+  # Public instance methods (actions)
   def merge
-    # this action syncs a local records to a selected medical record
+    # syncs a local record to a selected medical record
     @local = Subject.find(params[:local_id])
     @study = @local.studies.first
-    Subject.find(:first,:conditions=>{:mrn=>params[:mrn]}, :span=>:global,:service_opts=>{:netid=>current_user.netid}).merge!(@local)
+    Subject.find(:first, :conditions=> {:mrn=>params[:mrn]}, :span => :global, :service_opts => {:netid => current_user.netid}).merge!(@local)
     flash[:notice] = "Subject Synced"
-    redirect_to study_path(@study.irb_number,:anchor=>"subjects")
+    redirect_to study_path(@study)
   end
   
   def create
-    # Subjects created via uploads
-    @study = Study.find_by_irb_number(params[:study_id]) # Study.find(:first,:conditions=>["irb_number='#{params[:study_id]}'"],:span=>:global)
-    @study_upload = StudyUpload.new(:user_id=>current_user.id,:study_id => @study.id, :upload => params[:file])
+    # Subjects are created via uploads
+    @study_upload = StudyUpload.new(:user_id => current_user.id, :study_id => params[:study_id], :upload => params[:file])
+    return redirect_to_studies_or_study(params[:study_id], :error, "Please provide a file to upload.") unless @study_upload.upload.valid?
+    
     temp_file = Tempfile.new("results")
-    if @study_upload.upload.valid?      
-      if csv_sanity_check(@study_upload.upload, temp_file)
-        @study_upload.save
-        publish :patient_upload, @study_upload.id.to_s
-        redirect_to params[:study_id].blank? ? studies_path : study_path(params[:study_id],:anchor=>"imports")
-      else
-        @study_upload.result = temp_file
-        temp_file.close!
-        results_file_name = @study_upload.upload_file_name.gsub(/(\.csv)?$/, '-result.csv')
-        headers['Content-Disposition'] = "attachment; filename=#{results_file_name}"
-
-        # Internet explorer requires special headers in order for a csv file to be downloaded instead of displayed
-        if request.env['HTTP_USER_AGENT'] =~ /msie/i
-          headers.merge!({'Pragma' => 'public', 'Content-type' => 'text/plain; charset=utf-8', 'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0', 'Expires' => '0'})
-        else
-          headers['Content-type'] = 'text/csv; charset=utf-8'        
-        end
-        render :text => @study_upload.result.to_io.read
-      end
+    if csv_sanity_check(@study_upload.upload, temp_file)
+      @study_upload.save
+      temp_file.close!
+      publish :patient_upload, @study_upload.id.to_s
+      redirect_to_studies_or_study params[:study_id]
     else
-      flash[:error] = "Please provide a file to upload."
-      redirect_to study_path(@study)
+      @study_upload.result = temp_file
+      temp_file.close!
+      setup_csv(request, headers, @study_upload.upload_file_name.gsub(/(\.csv)?$/, '-result.csv'))
+      render :text => @study_upload.result.to_io.read
     end
   end
-
+  
+  # Private instance methods
+  private
+  
+  def redirect_to_studies_or_study(study_id, flash_type = nil, flash_message = nil)
+    flash[flash_type] = flash_message if !flash_type.blank? && !flash_message.blank?
+    redirect_to study_id.blank? ? studies_path : study_path(study_id)
+  end
+  def setup_csv(r, h, filename)
+    h['Content-Disposition'] = "attachment; filename=#{filename}"
+    # Internet explorer requires special headers in order for a csv file to be downloaded instead of displayed
+    if r.env['HTTP_USER_AGENT'] =~ /msie/i
+      h.merge!({'Pragma' => 'public', 'Content-type' => 'text/plain; charset=utf-8', 'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0', 'Expires' => '0'})
+    else
+      h.merge!({'Content-type' => 'text/csv; charset=utf-8'})
+    end    
+  end
   def csv_sanity_check(csv, temp_file = Tempfile.new("results")) # csv can be a string, file, or Paperclip::Attachment
     # We may possibly want to sanity check dates with Chronic http://chronic.rubyforge.org/
     csv = csv.to_io if csv.class == Paperclip::Attachment
-    @validity = true
+    csv_is_valid = true
     FasterCSV.open(temp_file.path, "r+") do |temp_stream|
       FasterCSV.parse(csv, :headers => :first_row, :return_headers => false, :header_converters => :symbol) do |r|
         r[:irb_number] = params[:study_id]
         errors = InvolvementEvent.sanity_check(r)
         temp_stream << r.fields + [errors.join(". ")] unless errors.empty?
-        @validity = false if !errors.empty?
+        csv_is_valid = false if !errors.empty?
       end
     end
-    return @validity
+    return csv_is_valid
   end
- 
  end
 
