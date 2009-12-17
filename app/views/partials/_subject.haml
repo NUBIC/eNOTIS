@@ -1,7 +1,11 @@
 %h4
-  = subject.name 
-  = subject.synced? ? image_tag("icons/refresh_gray_19.png",:alt => "synced") : link_to(image_tag("icons/refresh_19.png",:alt=>"sync"), search_subjects_url(:subject=>subject), :rel => '#overlay')
-
+  = subject.name
+%p
+  - if false and subject.synced?
+    = " #{image_tag("icons/link.png", :alt => "synced", :class => 'sync')} linked to EMR"
+  - else
+    = link_to(" #{image_tag("icons/link_break.png", :alt=> "sync", :class => 'sync')} link to EMR", search_subjects_url(:subject => subject))
+  %span{:title => "This subject is #{"not" unless subject.synced?} linked to their electronic medical record (EMR). If other interventional studies on eNOTIS accrue and link this subject to their EMR, you will #{"not" unless subject.synced?} see that this subject is accrued on those studies."} (hover for explanation)
 %p
   = "mrn: #{subject.mrn}"
   = "dob: #{subject.birth_date}"

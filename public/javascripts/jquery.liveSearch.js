@@ -48,7 +48,7 @@ jQuery.fn.liveSearch = function (conf) {
 	var config = jQuery.extend({
 		url:			'/search?q=', 
 		id:				'jquery-live-search', 
-		duration:		400, 
+		duration:		200, 
 		typeDelay:		200,
 		loadingClass:	'loading', 
 		onSlideUp:		function () {}

@@ -46,7 +46,10 @@ class Involvement < ActiveRecord::Base
   def race_list
     self.races.map{|race| race.race_type.term}.join(";")
   end
-
+  
+  def subject_name_or_case_number
+    subject.name.blank? ? case_number : subject.name
+  end
   # Public class methods
   def self.update_or_create(params)
     if (ie = Involvement.find(:first, :conditions => {:study_id => params[:study_id], :subject_id => params[:subject_id]}))

@@ -1,35 +1,37 @@
 #study
   +squish
   
-  a.study
+  span.study_title
     :padding-right 16px
-    :background transparent url('/images/icons/comment.png') no-repeat bottom right
     :text-decoration none
     :font-size 20px
-
-  // study detail tooltip styling
-  #study-detail
+  a.study_information img
+    :vertical-align middle
+    :margin-left .2em
+  #study_information
     +column(48, true)
     :display none
+    :font-size 12px
     span.study_title
-      :font-size 18px
+      :font-size 16px
+      :padding-bottom 10px
     .details
       +column(16)
+      :margin-top 10px
       span
         :display block
     .staff
       +column(16)
+      :margin-top 10px
     .export
       +column(16, true)
+      :margin-top 10px
       a.export-subjects
-        :padding-left 18px
+        :font-size 15px
+        :padding-left 20px
         :background transparent url('/images/icons/table_save.png') no-repeat bottom left
-  
+
   #accrual
-    a.subject, a.involvement
-      :padding-right 16px
-      :background transparent url('/images/icons/comment.png') no-repeat bottom right
-      :text-decoration none
     a.add
       :padding-left 18px
       :background transparent url('/images/icons/add.png') no-repeat bottom left    
@@ -39,12 +41,16 @@
     // tooltip styling
     .tooltip
       // offsets for datatables
-      :margin -139px 0 0 -304px
       :font-size 11px
-    .subject.tooltip
-      :width 300px
-    .involvement.tooltip
-      :width 100px
+    .subject_information, .involvement_information
+      :display none
+    tr img
+      :vertical-align bottom
+    tr a.add_involvement img, tr a.subject img
+      :display none
+    tr:hover a.add_involvement img, tr:hover a.subject img
+      :display inline
+      
   #import
     :display none
     .upload
@@ -62,6 +68,4 @@
     +column(16)
   .event
     +column(16, true)
-
-    
 

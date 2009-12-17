@@ -1,7 +1,9 @@
 #study
-  = status_icon @study
-  = link_to @study.irb_number || "(no id)", "#", :title => "#{@study.status}: #{@study.title}", :class => 'study'
-  #study-detail.tooltip
+  %span.study_title
+    = status_icon @study
+    = @study.irb_number || "(no id)"
+    = link_to image_tag('/images/icons/information.png'), "#", :rel => "#study_information", :class => 'study_information'
+  #study_information.overlay
     .title
       %span.status
         = status_icon @study
@@ -25,17 +27,21 @@
         - @study.coordinators.each do |c|        
           %li= "#{c.first_name} #{c.last_name}"
 
-      Recent events
-      %ul
-        - @study_events.all(:limit => 5).each do |ie|
-          %li
-            -# ">" before = removes extra spacing around this tag
-            %dtr{:title => ie.description}>= ie.term
-            = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occurred_on || Date.today)} ago"
+      -# Recent events
+        %ul
+          - @study_events.all(:limit => 5).each do |ie|
+            %li
+              -# ">" before = removes extra spacing around this tag
+              %dtr{:title => ie.description}>= ie.term
+              = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occurred_on || Date.today)} ago"
     .export
       = link_to("Export subjects", new_report_path(:study => @study), :rel => '#overlay', :class => 'export-subjects') unless @study.subjects.empty?
   
   #accrual
+    #subject_information.overlay
+      .contentWrap
+    #involvement_information.overlay
+      .contentWrap
     - if @study.subjects.empty?
       %p 
         No subjects yet - watch the video on adding subjects or start adding some.
@@ -49,27 +55,27 @@
             - @events.each do |event|
               %th
                 %dtr{:title => event.description}= event.term
-                = link_to("( i )", "#", :id => "event_columns") if event.term == "completed"
         %tbody
           - @study.involvements.each do |involvement|
             %tr{:class => "subject_#{involvement.subject.id}"}
               %td
-                = link_to(involvement.subject.name.blank? ? involvement.case_number : involvement.subject.name, "#", :class => 'subject')
-                .tooltip.subject
+                = involvement.subject_name_or_case_number
+                = link_to image_tag('/images/icons/status_offline.png'), "#", :rel => "#subject_information", :class => 'subject'
+                .subject_information
                   = render :partial => 'partials/subject', :locals => {:subject => involvement.subject, :involvement => involvement}
               - @events.each do |event|
-                - if x = @study_events.all.detect{|e| e.involvement == involvement && e.event_type == event}
+                - if x = @study_events.detect{|e| e.involvement == involvement && e.event_type == event}
                   %td
-                    = link_to( x.occurred_on, "#", :title => event.term.capitalize, :class => 'involvement')
-                    .tooltip.involvement
+                    = link_to( "#{x.occurred_on} #{image_tag '/images/icons/note.png' unless x.note.blank?}", "#", :title => event.term.capitalize, :rel => "#involvement_information", :class => 'involvement')
+                    .involvement_information
+                      %p= x.term
+                      %p= x.note
                       %p
-                        = x.term
-                        = x.note
-                      %p= link_to "Remove this event", involvement_event_path(x), :method => :delete
+                        = image_tag('/images/icons/delete.png')
+                        = link_to "remove", involvement_event_path(x), :method => :delete
                 - else
-                  %td= link_to "+", new_involvement_event_path(:subject => involvement.subject, :study => @study, :event_type_id => event.id), :rel => '#overlay'
-                
-          
+                  %td= link_to image_tag('/images/icons/add.png'), new_involvement_event_path(:subject => involvement.subject, :study => @study, :event_type_id => event.id), :rel => '#overlay', :class => 'add_involvement'
+
     = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => '#overlay', :class => 'add')
     = link_to("Import", "#", :rel => "#import", :class => 'import')
   #import.overlay
