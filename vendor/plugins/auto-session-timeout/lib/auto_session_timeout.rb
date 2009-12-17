@@ -43,7 +43,7 @@ module AutoSessionTimeout
   
   def render_session_timeout
     flash[:notice] = "Your session has timed out."
-    redirect_to "/login"
+    redirect_to "/logout"
   end
   
 end
