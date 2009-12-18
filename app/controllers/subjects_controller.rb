@@ -46,6 +46,16 @@ class SubjectsController < ApplicationController
     end
   end
   
+  def search
+    #this method is designed specifically to search for a locally stored subject in the edw
+    @local = Subject.find(params[:subject])
+    @subjects = Subject.find(:all,:conditions=>{:first_name =>@local.first_name,:last_name =>@local.last_name,:birth_date => @local.birth_date},:span=>:foreign,:service_opts=>{:netid=>current_user.netid})
+    respond_to do |format|
+      format.html
+      format.js {render :layout => false}
+    end
+  end
+  
   # Private instance methods
   private
   
