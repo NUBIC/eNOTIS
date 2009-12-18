@@ -10,7 +10,7 @@
     = "gender: #{involvement.gender}"
 
 %p
-  - if false and subject.synced?
+  - if subject.synced?
     = "#{image_tag("icons/link.png", :alt => "synced", :class => 'sync')} linked to"
     %acronym{:title => "Electronic Medical Record"} EMR
     and interventional studies:
