@@ -2,9 +2,11 @@ class AuthenticationController < ApplicationController
   layout "layouts/public"
   auto_session_timeout_actions
   
+  skip_before_filter :auto_session_timeout_filter, :only => :index
   # Public instance methods (actions)
   def index
     # TODO System staus check
+    @filters = self.class.filter_chain
     @title = "measure, see, and improve your research"
     # @status = system_status
   end

@@ -6,17 +6,18 @@ module AutoSessionTimeout
   end
   
   module ClassMethods
-    def auto_session_timeout(expiration,warning=2.minutes)
-      prepend_before_filter do |c|
-        if c.session[:auto_session_expires_at] && c.session[:auto_session_expires_at] < Time.now
-          c.send :reset_session
+    def auto_session_timeout(expiration, warning = 2.minutes)
+      self.send(:define_method, :auto_session_timeout_filter) do
+        if self.session[:auto_session_expires_at] && self.session[:auto_session_expires_at] < Time.now
+          self.send :reset_session
         else
-          unless c.send(:active_url) == c.url_for(c.params)
-            c.session[:auto_session_expires_at] = Time.now + expiration
-            c.session[:auto_session_warning_at] = c.session[:auto_session_expires_at] - warning
+          unless self.send(:active_url) == self.url_for(self.params)
+            self.session[:auto_session_expires_at] = Time.now + expiration
+            self.session[:auto_session_warning_at] = self.session[:auto_session_expires_at] - warning
           end
-        end
+        end      
       end
+      prepend_before_filter :auto_session_timeout_filter
     end
     
     def auto_session_timeout_actions
