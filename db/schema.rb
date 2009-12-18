@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20090902092032) do
     t.datetime "updated_at"
   end
 
-  add_index "dictionary_terms", ["category", "code"], :name => "dictionary_attr_idx", :unique => true
+  add_index "dictionary_terms", ["code", "category"], :name => "dictionary_attr_idx", :unique => true
 
   create_table "involvement_events", :force => true do |t|
     t.integer  "involvement_id"
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(:version => 20090902092032) do
     t.datetime "updated_at"
   end
 
-  add_index "involvement_events", ["event_type_id", "involvement_id", "occurred_on"], :name => "inv_events_attr_idx", :unique => true
   add_index "involvement_events", ["event_type_id"], :name => "inv_events_type_idx"
+  add_index "involvement_events", ["involvement_id", "event_type_id", "occurred_on"], :name => "inv_events_attr_idx", :unique => true
   add_index "involvement_events", ["occurred_on"], :name => "inv_events_occurred_idx"
 
   create_table "involvements", :force => true do |t|
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(:version => 20090902092032) do
     t.datetime "updated_at"
   end
 
-  add_index "involvements", ["ethnicity_type_id", "gender_type_id", "study_id", "subject_id"], :name => "involvements_attr_idx", :unique => true
+  add_index "involvements", ["subject_id", "study_id", "ethnicity_type_id", "gender_type_id"], :name => "involvements_attr_idx", :unique => true
 
   create_table "races", :force => true do |t|
     t.integer  "involvement_id"
@@ -183,6 +183,6 @@ ActiveRecord::Schema.define(:version => 20090902092032) do
     t.datetime "created_at"
   end
 
-  add_index "versions", ["item_id", "item_type"], :name => "versions_attr_idx"
+  add_index "versions", ["item_type", "item_id"], :name => "versions_attr_idx"
 
 end
