@@ -18,22 +18,37 @@ $(document).ready(function() {
   $("#my_studies .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null, null]});
 	
 	// studies show
+  // dataTable
+  $("#accrual .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" }]});
+
 	// overlay
-  $("#study a[rel=#study_information]").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }});
+  $("#study a[rel=#study_information]").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 } });
 
   $("#study a[rel=#subject_information]").overlay({ 
-    onBeforeLoad: function() { var wrap = $("#subject_information .contentWrap"); wrap.html(this.getTrigger().next('.subject_information').html()); },
+    onBeforeLoad: function() { 
+      var wrap = $("#subject_information .contentWrap");
+      wrap.html(this.getTrigger().next('.subject_information').html());
+    },
+    onStart: function() {
+      var trigger = this.getTrigger();
+      $('#subject_information').css({'top': trigger.offset().top - 14, 'left': trigger.offset().left + trigger.outerWidth() });
+    },
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
   });
   $("#study a[rel=#involvement_information]").overlay({ 
-    onBeforeLoad: function() { var wrap = $("#involvement_information .contentWrap"); wrap.html(this.getTrigger().next('.involvement_information').html()); },
+    onBeforeLoad: function() { 
+      var wrap = $("#involvement_information .contentWrap");
+      wrap.html(this.getTrigger().next('.involvement_information').html());
+    },
+    onStart: function() {
+      var trigger = this.getTrigger();
+      $('#involvement_information').css({'top': trigger.offset().top, 'left': trigger.offset().left + trigger.outerWidth() + 5});
+    },
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
   });
   
   $("a[rel=#overlay]").overlay({expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }});
   $("a[rel=#import]").overlay({expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }});
   $('#overlay').css({'width': '955px'});
-  // dataTable
-  $("#accrual .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" }]});
 	
 });
