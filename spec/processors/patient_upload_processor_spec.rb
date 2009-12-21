@@ -55,7 +55,7 @@ describe PatientUploadProcessor do
       @study_upload = StudyUpload.find(upload_id)
       result = File.new(@study_upload.result.path,"r")
       content = result.readlines() 
-      content.to_s.should =~ /either an MRN or First Name, Last Name and Date of Birth or Case Number are required/i 
+      content.to_s.should =~ /either an MRN or \(First Name, Last Name and Date of Birth\) or Case Number are required/i 
       content.to_s.should =~ /Race is required/i 
       content.to_s.should =~ /Gender is required/i 
       content.to_s.should =~ /Ethnicity is required/i 
