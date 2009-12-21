@@ -37,7 +37,7 @@ class StudiesController < ApplicationController
 
   def show
     @study = Study.find_by_irb_number(params[:id])
-    # redirect_to studies_path unless @study.has_coordinator?(current_user)
+    return redirect_with_message default_path, :notice, "You dont' have access to study #{@study.irb_number}" unless @study.has_coordinator?(current_user)
     @title = @study.irb_number
     @study_events = InvolvementEvent.on_study(@study)
     @accruals = @study_events.with_event_types([DictionaryTerm.lookup_term("Consented",:event)])

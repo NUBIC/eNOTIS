@@ -37,5 +37,8 @@ class ApplicationController < ActionController::Base
     "up" #%w(up up up up up up up up up up up up up down scheduled_maintenance scheduled_restored).rand
   end
 
-  
+  def redirect_with_message(path, message_type, message)
+    flash[message_type] = message if !message.blank? and !message_type.blank?
+    redirect_to path
+  end
 end
