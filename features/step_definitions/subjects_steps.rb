@@ -38,46 +38,11 @@ Then /^I should see the add event form$/ do
   end
 end
 
-Then /^I should( not)? see events for "([^\"]*)"$/ do |bool, name|
-  # TODO - this matcher doesn't actually scope within the withins - http://github.com/brynary/webrat/issues#issue/8 - yoon
-  within("\#subject-events") do |div|
-    if bool == "not"
-      div.should_not contain(name)
-    else
-      div.should contain(name)
-    end
-
-  end
-  
+When /^I upload a file with valid data for 3 subjects$/ do  
+  attach_file(:file, File.join(RAILS_ROOT, 'features', 'upload_files', 'valid_upload.csv'))  
+  click_button "Upload"  
 end
-
- When /^I upload a file with valid data for 3 subjects$/ do  
-   attach_file(:file, File.join(RAILS_ROOT, 'features', 'upload_files', 'valid_upload.csv'))  
-   click_button "Upload"  
- end
-
 
 Then /^I should see an image with alt "([^\"]*)"$/ do |alt_text|
  response.should have_xpath("//img[@alt='#{alt_text}']")
 end
-
-# Given /^the following subject_registrations:$/ do |subject_registrations|
-#   SubjectRegistration.create!(subject_registrations.hashes)
-# end
-# 
-# When /^I delete the (\d+)(?:st|nd|rd|th) subject_registration$/ do |pos|
-#   visit subject_registrations_url
-#   within("table > tr:nth-child(#{pos.to_i+1})") do
-#     click_link "Destroy"
-#   end
-# end
-# 
-# Then /^I should see the following subject_registrations:$/ do |subject_registrations|
-#   subject_registrations.rows.each_with_index do |row, i|
-#     row.each_with_index do |cell, j|
-#       response.should have_selector("table > tr:nth-child(#{i+2}) > td:nth-child(#{j+1})") { |td|
-#         td.inner_text.should == cell
-#       }
-#     end
-#   end
-# end

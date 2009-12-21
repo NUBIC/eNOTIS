@@ -4,3 +4,7 @@ When /^I search for "([^\"]*)"$/ do |query|
   fill_in :query, :with => query
   click_button :search
 end
+
+Then /^I should see title "([^\"]*)"$/ do |title|
+  response.should have_xpath("//*[@title='#{title}']")
+end

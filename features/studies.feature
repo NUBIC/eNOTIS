@@ -11,7 +11,7 @@ Feature: Manage studies
   Scenario: A random user can view overview details on a study, including IRB status
     
   Scenario: A random user cannot a study page
-    Given a study "Vitamin E and concentration" with id "1248E" and status "Approved"
+    Given a study "Vitamin E and exertion" with id "1248E" and status "Approved"
     When I go to the study page for id "1248E"
     Then I should be redirected to the homepage
     

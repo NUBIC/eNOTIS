@@ -11,7 +11,7 @@ Given /^"([^\"]*)" has access to study id "([^\"]*)"$/ do |netid, id|
 end
 
 Given /^a study with id "([^\"]*)"$/ do |id|
-  Factory.create(:fake_study, :irb_number => id)
+  Factory.create(:fake_study, :irb_number => id, :status => "Not Under IRB Purview")
 end
 
 Given /^"([^\"]*)" is not authorized on any studies$/ do |netid|
@@ -27,4 +27,10 @@ When /^I log in as "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|
   end
 end
 
-
+Given /^I log in as "([^\"]*)"$/ do |name|
+  Given "a user \"#{name}\" with password \"314159\""
+  if User.find_by_netid(name).studies.blank?
+    Given "\"#{name}\" has access to study id \"314\""
+  end
+  Given "I log in as \"#{name}\" with password \"314159\""
+end

@@ -17,46 +17,41 @@ Feature: Search
     And the study "1248F" has the following subjects
       | first_name | last_name |
       | Buck       | Stoppsier |
+    And I go to the homepage
 
-  Scenario: Verifying my studies
-    When I go to the homepage
-    Then I should see "My Studies (1"
-
-  Scenario: A user can search for studies (with study id)
-    When I go to the homepage
-    And I search for study "1248E"
-    Then I should see "Vitamin E and exertion"
+  Scenario: A user can search for studies (by id)
+    And I search for "1248"
+    Then I should see title "Approved: Vitamin E and exertion"
+    And I should see "3 studies found"
 
   Scenario: A user can search for studies (with keyword in title/short title)
-    When I go to the homepage
-    And I search for study "Vitamin E"
-    Then I should see "Vitamin E and exertion"
-
+    And I search for "Vitamin E"
+    Then I should see title "Approved: Vitamin E and exertion"
+    And I should see "1 study found"
+    
   Scenario: A user can search for studies (fail)
-    When I go to the homepage
-    And I search for study "90210"
+    And I search for "90210"
     Then I should see "0 studies found"
     And I should be on the search page
 
-  Scenario: A user searches for a subjects
-    When I go to the search page
+  Scenario: A user can search for subjects
     And I search for "Marge"
     Then I should see "1 subject found"
   
-  Scenario: A user searches for some subjects, studies
-    When I go to the search page
+  Scenario: A user can search for subjects and studies
     And I search for "ex"
     Then I should see "1 subject found"
     And I should see "1 study found"
   
-  Scenario: A user searches for some subjects, studies, study statuses
+  Scenario: A user can search for some subjects, studies, statuses
     When I go to the search page
     And I search for "pp"
     Then I should see "1 subject found"
     And I should see "Droppov"
+    And I should not see "Stoppsier"
     And I should see "2 studies found"
-    And I should see "Vitamin E"
-    And I should see "Vitamin F"
+    And I should see title "Approved: Vitamin E and exertion"
+    And I should see "Vitamin F and fatigue"
   
   Scenario: A user searches for studies lowercase
   # Searchlogic does ILIKE for Postgres, but not for other db engines
