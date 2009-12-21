@@ -2,22 +2,46 @@
   :javascript
     $(document).ready(function(){$("#study_results .display").dataTable({"aoColumns": [{ "sType": "html" }, null, null, null]}); $("#subject_results .display").dataTable({"aoColumns": [{ "sType": "html" }]}); });
           
--#search_form
-  - form_tag(search_path, :method => :get) do
-    %span.search_hint Search for all studies and my subjects
-    %br
-    = text_field_tag :query, params[:query]
-    = check_box_tag :'for[]', "studies", (!params[:for].blank? ? params[:for].include?("studies") : true)
-    Studies
-    = check_box_tag :'for[]', "subjects", (!params[:for].blank? ? params[:for].include?("subjects") : true)
-    Subjects
-    = submit_tag :search
-
 #results
   - if @studies
     #study_results
       .heading= "#{pluralize(@studies.size, "study")} found"
-      = render :partial => 'partials/study_table', :locals => {:studies => @studies}
+      %table.display
+        %thead
+          %tr
+            %th Study
+            %th PI
+            %th Accrual
+        %tbody  
+          - @studies.each do |study|
+            %tr
+              %td
+                = status_icon study
+                - if study.has_coordinator?(current_user)
+                  = link_to study.irb_number || "(no id)", study_path(study.irb_number), :title => "#{study.status}: #{study.title}", :class => 'study'
+                - else
+                  = study.irb_number || "(no id)"
+                  = link_to image_tag('/images/icons/information.png'), "#", :rel => "#study_information", :class => 'study_information'
+                  .study_information
+                    .title
+                      %span.status
+                        = status_icon study
+                        = "#{study.status}:"
+                      %br
+                      %span.title= study.title
+                    .details
+                      %span.phase= "Phase #{study.phase}" unless study.phase.blank?
+                      %span.research_type= "Research Type: #{study.research_type}" unless study.phase.blank?
+                      %span.department= "Department: ..."
+                      %span.pi
+                        = "PI: #{study.pi_first_name} #{study.pi_last_name}"
+                        = link_to study.pi_email, "mailto:#{study.pi_email}"
+                      %span.sc
+                        = "Coord: #{study.sc_first_name} #{study.sc_last_name}" 
+                        = link_to study.sc_email, "mailto:#{study.sc_email}"
+
+              %td= study.pi_last_name
+              %td= study.accrual || 0
   - if @subjects
     #subject_results
       .heading= "#{pluralize(@subjects.size, "subject")} found"

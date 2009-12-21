@@ -14,12 +14,6 @@ module NavigationHelpers
     when /the login page/
       authentication_index_path
   
-    when /the all studies page/
-      studies_path
-      
-    when /my subjects/
-      subjects_path
-      
     when /the study page for id "([^\"]*)"/
       "/studies/#{$1}"
     

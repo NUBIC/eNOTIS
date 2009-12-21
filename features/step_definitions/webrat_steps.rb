@@ -116,4 +116,11 @@ end
 
 Then /^I should be on (.+)$/ do |page_name|
   URI.parse(current_url).path.should == path_to(page_name)
+  response.should be_success
+end
+
+Then /^I should be redirected to (.+)$/ do |page_name|
+  request.headers['HTTP_REFERER'].should_not be_nil
+  request.headers['HTTP_REFERER'].should_not == request.request_uri
+  URI.parse(current_url).path.should == path_to(page_name)
 end

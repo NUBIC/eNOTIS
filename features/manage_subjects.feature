@@ -23,7 +23,7 @@ Feature: Manage subjects
     And I select "Male" from "Gender"
     And I select "Not Hispanic Or Latino" from "Ethnicity"
     And I check "Asian"
-    And I select "Consented" from "Event Type"
+    And I select "Consented" from "Activity"
     And I fill in "Event Date" with "2009-07-01"
     And I press "Submit"
     Then I should be on the study page for id "1248E"
@@ -37,7 +37,7 @@ Feature: Manage subjects
     And I select "Male" from "Gender"
     And I select "Not Hispanic Or Latino" from "Ethnicity"
     And I check "Asian"
-    And I select "Consented" from "Event Type"
+    And I select "Consented" from "Activity"
     And I fill in "Event Date" with "2009-07-01"
     And I press "Submit"
     Then I should be on the study page for id "1248E"
@@ -53,7 +53,7 @@ Feature: Manage subjects
     And I select "Male" from "Gender"
     And I select "Not Hispanic Or Latino" from "Ethnicity"
     And I check "Asian"
-    And I select "Consented" from "Event Type"
+    And I select "Consented" from "Activity"
     And I fill in "Event Date" with "2009-07-01"
     And I press "Submit"
     Then I should be on the study page for id "1248E"
@@ -66,7 +66,7 @@ Feature: Manage subjects
     And I select "Male" from "Gender"
     And I select "Not Hispanic Or Latino" from "Ethnicity"
     And I check "Asian"
-    And I select "Consented" from "Event Type"
+    And I select "Consented" from "Activity"
     And I fill in "Event Date" with "2009-07-01"
     And I press "Submit"
     Then I should be on the study page for id "1248E"
@@ -79,7 +79,6 @@ Feature: Manage subjects
     And subject "90210b" is not synced
     And subject "90210b" has event "Consented" on study "1248E"
     When I go to the study page for id "1248E"
-    And I follow "Holly Wood"
     Then I should see an image with alt "sync"
   
   Scenario: A coordinator can see the add event form
@@ -88,8 +87,6 @@ Feature: Manage subjects
       | Holly      | Wood      | 90210c | 
     And subject "90210c" has event "Consented" on study "1248E"
     When I go to the study page for id "1248E"
-    And I follow "Holly Wood"
-    And I follow "Add Event"
     Then I should see the add event form
 
   Scenario: A coordinator can add an event for an existing subject
@@ -164,5 +161,5 @@ Feature: Manage subjects
     When I go to the search page
     And I search for "pp"
     Then I should see "1 subject found"
-    And I should see "Picop N Droppov"
-    And I should not see "Buck Stoppsier"
+    And I should see "Droppov"
+    And I should not see "Stoppsier"
