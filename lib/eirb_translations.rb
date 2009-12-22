@@ -30,7 +30,11 @@ EIRB_TO_NOTIS = {
 "ID"=> :irb_number,
 "Name"=> :name,
 "Study Title"=> :title, 
-"Project State.ID"=> :status
+"Project State.ID"=> :status,
+"Multi institution study" => :multi_inst_study,
+"Maximum number of subjects to be consented" => :max_subjects_to_be_consented,
+"Total number of subjects to be enrolled at all centers" => :total_subject_at_all_ctrs,
+"Subject population.Number of Subjects" => :subject_population
 }
 
 NOTIS_TO_EIRB = {
