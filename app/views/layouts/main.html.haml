@@ -10,7 +10,7 @@
   %body
     #container
       #header
-        #app_name= link_to_unless_current image_tag("enotis-swoop-logo.png",:alt => "eNOTIS"), default_path
+        #app_name= link_to_unless_current image_tag("enotis-swoop-logo.png", :alt => "eNOTIS"), default_path, :title => "eNOTIS Home"
         #search_box
           - form_tag(search_path, :method => :get) do 
             = text_field_tag("query")
