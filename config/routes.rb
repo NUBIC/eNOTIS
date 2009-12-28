@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :authentication, :collection => {:login => :post, :logout => :any, :access_help => :get}
+  map.resources :authentication, :collection => {:login => :post, :logout => :any, :help => :get}
   map.resources :studies
   map.resources :reports
   map.resources :subjects, :collection => {:search => :get, :merge => :post}

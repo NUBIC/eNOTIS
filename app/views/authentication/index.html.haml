@@ -1,21 +1,16 @@
-
 - content_for :head do
-  %script{:type => 'text/javascript'}
+  :javascript
     $(document).ready(function(){
     // one less click for login
     $("#netid").focus();
     // overlay
-    $("a[rel=#overlay]").overlay({ 
-    onBeforeLoad: function() { var wrap = this.getContent().find(".contentWrap"); wrap.load(this.getTrigger().attr("href"), "format=js"); },
-    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    });
+    $("a[rel=#help]").overlay({onBeforeLoad: function(){var wrap = this.getContent().find(".contentWrap"); wrap.load(this.getTrigger().attr("href"), "format=js");}, expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}});
     // scrollable
     $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
     // flash (messages)
     var flashWidth = $("#flash").css('width');
     $("#flash").animate({width: flashWidth}, 3000).slideUp(1000);
     });
-
 %ul.tabs
   %li= link_to "Measure", "#measure"
   %li= link_to "See", "#see"

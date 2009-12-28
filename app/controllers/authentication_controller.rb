@@ -35,7 +35,7 @@ class AuthenticationController < ApplicationController
     redirect_back_or_default(authentication_index_path) 
   end
   
-  def access_help
+  def help
     respond_to do |format|
       format.html
       format.js {render :layout => false}

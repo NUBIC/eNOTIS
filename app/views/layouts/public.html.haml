@@ -2,7 +2,7 @@
 !!!
 %html
   %head
-    %title= "eNOTIS :: #{@title}"
+    %title= "eNOTIS"
     = stylesheet_link_tag @view_stylesheets ||= "compiled/public"
     = javascript_include_tag @view_javascripts ||= "jquery.tools.min.js"
     = yield :head
@@ -11,16 +11,16 @@
       - unless RAILS_ENV == "production"
         #environment{:class => RAILS_ENV}= "eNOTIS is running in #{RAILS_ENV.upcase}"
       #header
-        #app_name= image_tag("enotis-swoop-logo.png",:alt => "eNOTIS")
+        #app_name= link_to_unless_current image_tag("enotis-swoop-logo.png", :alt => "eNOTIS"), default_path, :title => "eNOTIS Home"
         #login
-          -form_tag(login_authentication_path, :method => 'post') do
+          - form_tag(login_authentication_path, :method => 'post') do
             %label{:for => 'netid'} NetID
             = text_field_tag('netid')
             %br
             %label{:for => 'password'} Password
             = password_field_tag('password')
             %br
-            = link_to "I cannot access my account", access_help_authentication_path, :rel => "#overlay"
+            = link_to "I cannot access my account", help_authentication_path, :rel => "#help"
             = submit_tag('login')
       - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
         #flash= flash_messages(types)
@@ -31,7 +31,7 @@
         .nucatslogo= image_tag("nucats_logo.gif")
         .nubiclogo= image_tag("nubic_logo.gif")
         %p= "eNOTIS #{app_version_helper} &mdash; created by #{link_to("NUBIC", "http://www.nucats.northwestern.edu/centers/nubic")} for Northwestern University"
-      #overlay.overlay
+      #help.overlay
         .contentWrap
 
 
