@@ -1,6 +1,6 @@
 class StudiesController < ApplicationController
   layout "layouts/main"
-  
+  require 'array'
   # Authentication
   before_filter :user_must_be_logged_in
 
@@ -37,9 +37,12 @@ class StudiesController < ApplicationController
 
   def show
     @study = Study.find_by_irb_number(params[:id])
-    return redirect_with_message default_path, :notice, "You dont' have access to study #{@study.irb_number}" unless @study.has_coordinator?(current_user)
+    return redirect_with_message default_path, :notice, "You don't have access to study #{@study.irb_number}" unless @study.has_coordinator?(current_user)
     @title = @study.irb_number
     @study_events = InvolvementEvent.on_study(@study)
+    @ethnicity_stats = @study.involvements.count_all(:ethnicity_type_id).map{|id,count| [DictionaryTerm.find(id).term, count]}
+    @gender_stats = @study.involvements.count_all(:gender_type_id)
+    @race_stats = @study.involvements.count_all(:races, :race_type_id)
     @accruals = @study_events.with_event_types([DictionaryTerm.lookup_term("Consented",:event)])
     @events = %w(consented withdrawn completed).map{|term| DictionaryTerm.lookup_term(term, :event)}
     # @events = DictionaryTerm.lookup_category_terms(:event).select{|dt| desired_terms.include? dt.term}

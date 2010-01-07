@@ -36,7 +36,8 @@
               = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occurred_on || Date.today)} ago"
     .export
       = link_to("Export subjects", new_report_path(:study => @study), :rel => '#overlay', :class => 'export-subjects') unless @study.subjects.empty?
-  
+      %p Stats
+      %p= @ethnicity_stats.inspect
   #accrual
     #subject_information.overlay
       .contentWrap
