@@ -3,7 +3,7 @@ class Array
     self[Kernel.rand(self.length)] 
   end
   def count_all(attribute, subattribute=nil)
-    [[attribute.to_s, 'quantity']] + self.inject({}) do |hash, item|
+    self.inject({}) do |hash, item|
       if item.send(attribute).is_a? Array
         item.send(attribute).each do |x|
           hash[x.send(subattribute).to_s] ||= 0

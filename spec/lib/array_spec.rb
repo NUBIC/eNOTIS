@@ -7,9 +7,9 @@ describe Array do
           Factory(:involvement, :gender_type_id => 1, :ethnicity_type_id => 3, :race_type_ids => [8]) ]
   end
   it "should count attributes" do
-    @a.count_all(:gender_type_id).should == [["gender_type_id", "quantity"], ["1",1], ["2",2]]
+    @a.count_all(:gender_type_id).should == [["1",1], ["2",2]]
   end
   it "should count array attributes" do
-    @a.count_all(:races, :race_type_id).should == [["races", "quantity"], ["7",2], ["8",2], ["9", 1]]
+    @a.count_all(:races, :race_type_id).should == [["7",2], ["8",2], ["9", 1]]
   end
 end
