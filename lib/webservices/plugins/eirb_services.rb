@@ -19,9 +19,8 @@ class EirbServices
   {:name => "eNOTIS Study Key Research Personnel", :ext => "key_personnell"},
   {:name => "eNOTIS Study Principal Investigator", :ext => "principal_investigator"},
   {:name => "eNOTIS Study Status", :ext => "status"},
-  {:name => "eNOTIS Study Access List", :ext => "access_list"},
+  {:name => "eNOTIS Study Access", :ext => "access_list"},
   {:name => "eNOTIS Study Subject Populations", :ext => "populations"}].freeze
-
 
   cattr_accessor :eirb_adapter
 
@@ -85,10 +84,39 @@ WMETH
     search(search_settings)
   end
 
-  def self.search(settings)
+  def self.search(settings, convert_headers=true)
     connect unless connected?
     result = eirb_adapter.perform_search(settings) if connected?
-    convert_for_notis(result)   
+    (convert_headers) ? convert_for_notis(result) : result
+  end
+
+  # Used to create the eIRB half of the translations map
+  # Grabs the returned row headers for each query
+  def self.return_query_headers
+    headers = {}
+    STORED_SEARCHES.each do |s|
+      begin
+        results = search(SEARCH_DEFAULTS.merge({:savedSearchName => s[:name],:numRows => 1}),false)
+        headers[s[:name]] = results.first.keys # Results should be an array with one item in it
+      rescue
+        headers[s[:name]] = "FAILED"
+      end
+    end
+    headers
+  end
+
+  def self.pretty_print_translation_template
+    tt = "#Exported from eirb queries on #{Time.now}\n"
+    tt << "EIRB_TO_NOTIS = {\n"
+    headers = return_query_headers
+    headers.each do |k,v|
+      tt << "# #{k} \n"
+      [*v].each do |val|
+        tt << "\"#{val}\" => value\n"
+      end
+    end
+    tt << "}\n"
+    tt
   end
 
   # This method attempts to pull data from the service
