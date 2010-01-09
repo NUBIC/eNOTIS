@@ -11,6 +11,18 @@ class EirbServices
   
   DATA_REMAP = {}
 
+  STORED_SEARCHES = [{:name => "eNOTIS Study Accrual PR", :ext => "accrual"},
+  {:name => "eNOTIS Study Authorized Personnel", :ext => "authorized_personnel"},
+  {:name => "eNOTIS Study Basics", :ext => "basics"},
+  {:name => "eNOTIS Study Co-Investigators", :ext => "co_investigators"},
+  {:name => "eNOTIS Study Coordinators", :ext => "coordinators"},
+  {:name => "eNOTIS Study Key Research Personnel", :ext => "key_personnell"},
+  {:name => "eNOTIS Study Principal Investigator", :ext => "principal_investigator"},
+  {:name => "eNOTIS Study Status", :ext => "status"},
+  {:name => "eNOTIS Study Access List", :ext => "access_list"},
+  {:name => "eNOTIS Study Subject Populations", :ext => "populations"}].freeze
+
+
   cattr_accessor :eirb_adapter
 
   # initializing the eIrb connection
@@ -26,37 +38,19 @@ class EirbServices
   end
 
   # ======== eIRB webservice wrapper methods ========
-  def self.find_status(conditions)
-    default_search("eNOTIS Study Status",convert_for_eirb(conditions))
-  end
+    STORED_SEARCHES.each do |search|
 
-  def self.find_by_irb_number(conditions)
-    default_search("eNOTIS Study Basics",convert_for_eirb(conditions))
-  end 
-
-  def self.find_study_research_type(conditions)
-    default_search("eNOTIS Study Research Type",convert_for_eirb(conditions))
-  end
-
-  def self.find_by_netid(conditions)
-    default_search("eNOTIS Person Details",convert_for_eirb(conditions))
-  end
-  
-  def self.find_study_access(conditions = nil)
-    chunked_search("eNOTIS Study Access", (conditions ? convert_for_eirb(conditions) : nil) )
-  end
-
-  def self.find_all_study_states
-    chunked_search("eNOTIS Study Status")
-  end
-
-  def self.find_all_users
-    chunked_search("eNOTIS Person Details")
-  end
-
-  def self.find_all_study_basics
-    chunked_search("eNOTIS Study Basics")
-  end
+      meth=<<WMETH
+      def find_#{search[:ext]}(conditions = nil)
+        if conditions
+          default_search("#{search[:name]}", convert_for_eirb(conditions))
+        else
+          chunked_search("#{search[:name]}")
+        end
+      end
+WMETH
+      instance_eval(meth)
+    end
 
   # ======== Search helper methods =========
   def self.default_search(search_name, parameters=nil)
