@@ -4,43 +4,15 @@
     = @study.irb_number || "(no id)"
     = link_to image_tag('/images/icons/information.png'), "#", :rel => "#study_information", :class => 'study_information'
   #study_information.overlay
-    .title
-      %span.status
-        = status_icon @study
-        = "#{@study.status}"
-      %br
-      %span.study_title= @study.title
-    .details
-      %span.phase= "Phase #{@study.phase}" unless @study.phase.blank?
-      %span.research_type= "Research Type: #{@study.research_type}" unless @study.phase.blank?
-      %span.department= "Department: ..."
-      %span.pi
-        = "PI: #{@study.pi_first_name} #{@study.pi_last_name}"
-        = link_to @study.pi_email, "mailto:#{@study.pi_email}"
-      %span.sc
-        = "Coord: #{@study.sc_first_name} #{@study.sc_last_name}" 
-        = link_to @study.sc_email, "mailto:#{@study.sc_email}"
-    .staff
-      Staff list&nbsp;
-      %span.quiet (as listed in eIRB)
-      %ul
-        - @study.coordinators.each do |c|        
-          %li= "#{c.first_name} #{c.last_name}"
-
-      -# Recent events
-        %ul
-          - @study_events.all(:limit => 5).each do |ie|
-            %li
-              -# ">" before = removes extra spacing around this tag
-              %dtr{:title => ie.description}>= ie.term
-              = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occurred_on || Date.today)} ago"
-    .export
-      = link_to("Export subjects", new_report_path(:study => @study), :rel => '#overlay', :class => 'export-subjects') unless @study.subjects.empty?
-  
+    = render :partial => 'partials/study_info', :locals => {:study => @study}
   #accrual
     #subject_information.overlay
       .contentWrap
     #involvement_information.overlay
+      .contentWrap
+    #add_subject.overlay
+      .contentWrap
+    #export.overlay
       .contentWrap
     - if @study.subjects.empty?
       %p 
@@ -61,8 +33,7 @@
               %td
                 = involvement.subject_name_or_case_number
                 = link_to image_tag('/images/icons/status_offline.png'), "#", :rel => "#subject_information", :class => 'subject'
-                .subject_information
-                  = render :partial => 'partials/subject', :locals => {:subject => involvement.subject, :involvement => involvement}
+                = render :partial => 'partials/subject', :locals => {:subject => involvement.subject, :involvement => involvement}
               - @events.each do |event|
                 - if x = @study_events.detect{|e| e.involvement == involvement && e.event_type == event}
                   %td
@@ -74,9 +45,9 @@
                         = image_tag('/images/icons/delete.png')
                         = link_to "remove", involvement_event_path(x), :method => :delete
                 - else
-                  %td= link_to image_tag('/images/icons/add.png'), new_involvement_event_path(:subject => involvement.subject, :study => @study, :event_type_id => event.id), :rel => '#overlay', :class => 'add_involvement'
+                  %td= link_to image_tag('/images/icons/add.png'), new_involvement_event_path(:subject => involvement.subject, :study => @study, :event_type_id => event.id), :rel => '#involvement_information', :class => 'add_involvement'
 
-    = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => '#overlay', :class => 'add')
+    = link_to("Add Subject", new_involvement_event_path(:study => @study), :rel => '#add_subject', :class => 'add')
     = link_to("Import", "#", :rel => "#import", :class => 'import')
   #import.overlay
     .upload

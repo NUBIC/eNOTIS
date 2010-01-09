@@ -1,38 +1,7 @@
-// This file contains the sass styles for the main.html.haml layout
+// Styles for the admin views
 @import application.sass
-// Importing our custom modules for parts of the app
+@import search.sass
 @import datatables.sass
-
-body
-  :background-image url('/images/main-fade-bg.png')
-#search_box
-  +column(20)
-  :margin-top 43px
-  :text-align center
-#current_user_badge
-  :margin-top 10px
-  :float right
-  +bold
-    
-// The main wrapper div for the layout  
-#main
-  +column(48,true)
-  +squeeze
-  :background #fff url('/images/pane-texture-bg.png') repeat-x
-  +rounded_bottom_box( #fff )
-  :background-position 0 -35px
-
-.heading
-  // +rounded_top_box( !primary_data_bg_color )
-  +bold
-  +primary_data_text
-  // :padding-left 0.8em
-
-.footing
-  :text-align right
-
-#session-expire
-  :padding 50px
 
 #users
   +column(28)
@@ -43,7 +12,6 @@ body
   +squish
   
 .dataTables_length
-  // :display none
   :display inline
   :width 40%
   :float right
@@ -51,7 +19,6 @@ body
   :padding-right 0.5em
 
 .dataTables_filter 
-  // :display none
   :display inline
   :width 50%
   :float left
@@ -60,7 +27,6 @@ body
   :padding-bottom 0.5em
 
 .dataTables_info 
-  // :display none
   :display inline
   :width 60%
   :float left

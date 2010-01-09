@@ -16,24 +16,7 @@
             - else
               = study.irb_number || "(no id)"
               = link_to image_tag('/images/icons/information.png'), "#", :rel => "#study_information", :class => 'study_information'
-              .study_information
-                .title
-                  %span.status
-                    = status_icon study
-                    = "#{study.status}:"
-                  %br
-                  %span.title= study.title
-                .details
-                  %span.phase= "Phase #{study.phase}" unless study.phase.blank?
-                  %span.research_type= "Research Type: #{study.research_type}" unless study.phase.blank?
-                  %span.department= "Department: ..."
-                  %span.pi
-                    = "PI: #{study.pi_first_name} #{study.pi_last_name}"
-                    = link_to study.pi_email, "mailto:#{study.pi_email}"
-                  %span.sc
-                    = "Coord: #{study.sc_first_name} #{study.sc_last_name}" 
-                    = link_to study.sc_email, "mailto:#{study.sc_email}"
-
+              = render :partial => 'partials/study_info', :locals => {:study => study}
           %td= study.pi_last_name
           %td= study.accrual || 0
   #study_information.overlay

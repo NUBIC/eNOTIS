@@ -1,117 +1,78 @@
-// This file contains all color definitions
-// blueprint includes, custom mixins etc..
+// This file contains all color definitions blueprint includes, custom mixins etc..
 
-// Definitions and overrides
-!nu_purple=#520063 
-!nu_background=#CDCCCD
-!nu_page_background=#fff
+// basics
+!nu_purple= #520063
+!page_background_color=#fff
+!border_color= #666
+!shadow_color= #000
 
+// environments
+!staging_color= #FF6633
+!development_color = #FFF6BF
+
+// flash
+!flash_color = #514721
+!flash_background_color = #FFF6BF
+!flash_border_color = #FFD324
+
+// text
 !font_color = #333
 !quiet_color = !font_color + #333
 !loud_color = !font_color - #222
-!extra_quiet_color = !font_color + #666
- 
-!header_color = !font_color - #111
- 
+!blueprint_font_size = 12px
+
+// links
 !link_color = #009
 !link_hover_color = #000
 !link_focus_color = !link_hover_color
 !link_active_color = !link_color + #C00
 !link_visited_color = !link_color - #333
- 
-!feedback_border_color = #DDD
-!success_color = #264409
-!success_bg_color = #E6EFC2
-!success_border_color = #C6D880
- 
-!notice_color = #514721
-!notice_bg_color = #FFF6BF
-!notice_border_color = #FFD324
 
-!primary_data_color = #333 
-!primary_data_bg_color = #ABCDC5
-!primary_data_border_color = #819A94
-
-!secondary_data_color = #555  
-!secondary_data_bg_color = #DAE8E4
-!secondary_data_border_color = #A2B5B0
- 
-!error_color = #8A1F11
-!error_bg_color = #FBE3E4
-!error_border_color = #FBC2C4
- 
-!highlight_color = #FF0
-!added_color = #FFF
-!added_bg_color = #060
-!removed_color = #FFF
-!removed_bg_color = #900
- 
-!blueprint_table_header_color = #C3D9FF
-!blueprint_table_stripe_color = #E5ECF9
-
-// Grid settings
+// grids
 !blueprint_grid_columns = 50
 !blueprint_grid_width = 15px
 !blueprint_grid_margin = 5px
 
-// Font settings
-!blueprint_font_size = 12px
+// Because compass uses conditional assignment we define our vars first and the defaults take over the rest.
+// http://wiki.github.com/chriseppstein/compass/overriding-constants
 
-// Because compass uses conditional assignment
-// we define our vars first and the defaults take over
-// the rest. http://wiki.github.com/chriseppstein/compass/overriding-constants
 // Base imports
 @import compass/reset.sass
 @import compass/utilities.sass
 @import blueprint.sass
 @import blueprint/modules/buttons.sass
 
-// Custom eNOTIS border mixins
-=rounded_box( !bgcolor )
-  :border 1px solid #333
-  :border-color= !bgcolor - #333 
-  :-moz-border-radius 7px 7px
+// rounded boxes
+= rounded_box( !bgcolor )
   :background-color= !bgcolor
+  :-moz-border-radius 7px 7px
 
-=rounded_bottom_box( !bgcolor )
+= rounded_bottom_box( !bgcolor )
   :background-color= !bgcolor
   :-moz-border-radius 0 0 7px 7px
 
-=rounded_top_box( !bgcolor )
+= rounded_top_box( !bgcolor )
   :background-color= !bgcolor
   :-moz-border-radius 7px 7px 0 0
 
-=rounded_left_box( !bgcolor )
+= rounded_left_box( !bgcolor )
   :background-color= !bgcolor
   :-moz-border-radius 7px 0 0 7px
 
-=rounded_right_box( !bgcolor )
+= rounded_right_box( !bgcolor )
   :background-color= !bgcolor
   :-moz-border-radius 0 7px 7px 0
 
-
-=primary_data_text
-  :font-size 1.2em
- 
-=bold
+= bold
   :font-weight bold
 
-=normal
-  :font-weight normal
-
-=super
-  :font-size 1.4em
-  +bold
-
-// adds x number of grids in padding
-// "squeezes" in the "walls" around the text
-// only works on columnized elements
-=squeeze( !grids = 1)
+// adds x grids in left and right padding. squeezes the walls around the text of columnized elements
+= squeeze( !grids = 1)
   +prepend( !grids )
   +append( !grids )
 
-// takes the grid width and applies it to the top and bottom padding on the element
-=squish( !grids = 1 )
+// adds x grid widths to the top and bottom padding
+= squish( !grids = 1 )
   :margin-top= !grids * !blueprint_grid_outer_width
   :margin-bottom= !grids * !blueprint_grid_outer_width
   

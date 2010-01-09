@@ -1,21 +1,23 @@
-
-
-// On the search page
-#search_form
-  +column(40,true)
-  +prepend(1)
-  +squish
+#search_box
+  +column(20)
+  :margin-top 43px
+  :text-align center
+  input
+    :margin-top 3px
+    :vertical-align top
+    :padding 0.2em
+  #query
+    :margin-top 0
  
 #livesearch-results
   +column(46, true)
   +squeeze
   :display none
-  :background #fff
-  // :padding 5px 10px
+  :z-index 99
+  :background= !page_background_color
   :max-height 300px
   :overflow auto
   :position absolute
-  :z-index 99
   :top 75px
   :border 1px solid #d6d6d6
   :border-width 0 1px 1px 1px
