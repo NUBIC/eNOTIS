@@ -119,7 +119,7 @@ WMETH
         if existing = EIRB_TO_NOTIS[val]
           tt << pad_print_hash(val,existing,spaces)
         else
-          tt << pad_print_hash(val,"NEW_VALUE",spaces)
+          tt << pad_print_hash(val,:NEW_VALUE,spaces)
         end
       end
     end
@@ -140,7 +140,11 @@ WMETH
     (padding - key.to_s.length).times do
       t << " "
     end
-    t << "\"#{value}\"\n"
+    if value.is_a?(String)
+      t << "\"#{value}\",\n"
+    else
+      t << ":#{value},\n"
+    end
   end
 
   # This method attempts to pull data from the service
