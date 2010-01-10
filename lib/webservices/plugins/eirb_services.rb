@@ -105,18 +105,42 @@ WMETH
     headers
   end
 
+  # Creates a format for using in the eirb_translations file
+  # Reads the existing one to use it as a base and adds any
+  # keys that are missing with a blank value placeholder
   def self.pretty_print_translation_template
     tt = "#Exported from eirb queries on #{Time.now}\n"
     tt << "EIRB_TO_NOTIS = {\n"
     headers = return_query_headers
     headers.each do |k,v|
+      spaces = max_str(v)
       tt << "# #{k} \n"
       [*v].each do |val|
-        tt << "\"#{val}\" => value\n"
+        if existing = EIRB_TO_NOTIS[val]
+          tt << pad_print_hash(val,existing,spaces)
+        else
+          tt << pad_print_hash(val,"NEW_VALUE",spaces)
+        end
       end
     end
     tt << "}\n"
     tt
+  end
+
+  def self.max_str(arr)
+    max = 0
+    arr.each{|a| max = a.length if a.length > max }
+    max
+  end
+
+  def self.pad_print_hash(key,value,padding)
+    return nil if padding < key.to_s.length
+    padding += 3 #for the hash rocket
+    t = "\"#{key}\" =>"
+    (padding - key.to_s.length).times do
+      t << " "
+    end
+    t << "\"#{value}\"\n"
   end
 
   # This method attempts to pull data from the service
