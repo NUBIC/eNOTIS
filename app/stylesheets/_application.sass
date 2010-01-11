@@ -1,93 +1,81 @@
 @import base.sass
-// This file should contain the basic styles for the application
-// Debug import to show the grid
+// This file contains basic styles for the application
+
 html
   +blueprint-typography
   +blueprint-grid
-
 body
-  :background-color= !nu_page_background
+  :background-color= !page_background_color
+  :background-image url('/images/main-fade-bg.png')
   :background-repeat repeat-x
-
-// main container than holds everything
 #container
   +container
-  //+showgrid 
-  
+  // Debug import to show the grid
+  // +showgrid  
 #header
   +column(50,true)
   :height 75px
-  #app_name
-    +column(15)
-    :font-size 3em
-    :font-weight bold
-    :color = !nu_purple
-    img
-      :margin-top 10px
+#app_name
+  +column(15)
+  :font-size 3em
+  :font-weight bold
+  :color = !nu_purple
+  img
+    :margin-top 10px
 #flash
   :position absolute
   :top 0
-  // :left 50%
   :margin-left 322.5px
   :width 350px
-  // :margin 0 auto
-  // :margin-left -175px
   :text-align center
-  :border= 1px solid !notice_border_color
-  +rounded_bottom_box( !notice_bg_color )    
-  :color= !notice_color
+  :color= !flash_color
+  :border= 1px solid !flash_border_color
+  +rounded_bottom_box( !flash_background_color )    
   +bold
 
-// tooltip styling
-.tooltip
-  // must be initially hidden 
-  :display none
-  :z-index 999
-  :background-color #fff
-  :border 1px solid #666
-  :padding 10px
-  // :font-size 11px 
-  :color #000
-  :-moz-box-shadow 0 0 90px 5px #000 
-  :-webkit-box-shadow  0 0 90px #000
-
+#current_user_badge
+  :margin-top 10px
+  :float right
+  +bold
+#main
+  +column(48,true)
+  +squeeze
+  :background-color= !page_background_color
+  :background-image url('/images/pane-texture-bg.png')
+  :background-repeat repeat-x
+  +rounded_bottom_box( !page_background_color )
+  :background-position 0 -35px
 .heading
   +bold
-
+  :font-size 1.2em
+.tooltip, .overlay
+  // must be initially hidden
+  :display none
+  :z-index 999
+  :background-color= !page_background_color
+  :border= 1px solid !border_color
+  :padding 10px
+  :color= !font_color
+  :-moz-box-shadow= 0 0 90px 5px !shadow_color
+  :-webkit-box-shadow=  0 0 90px !shadow_color
+.overlay
+  :z-index 1000 
+.overlay .close
+  // close button positioned on upper right corner
+  :background-image url(/images/jquery-tools/apple-close.png) 
+  :cursor pointer 
+  :position absolute 
+  :right -12px
+  :top -12px
+  :height 28px
+  :width 28px
 #footer
   :margin-top 20px
   :padding-top 10px
-  +rounded_box( #fff )
+  +rounded_box( !page_background_color )
   +column(48,true)
   +squeeze
   p
     :margin-top 10px
-
-#overlay
-  :min-height 200px
-  
-// the overlayed element 
-.overlay
-  // must be initially hidden 
-  :display none 
-  // place overlay on top of other elements 
-  :z-index 10000 
-  // styling 
-  :background-color #fff
-  //#333 
-  //:width 675px
-  :padding 10px
-  :border 1px solid #666 
-  // CSS3 styling for latest browsers 
-  :-moz-box-shadow 0 0 90px 5px #000 
-  :-webkit-box-shadow  0 0 90px #000     
-
-// close button positioned on upper right corner
-.overlay .close
-  :background-image url(/images/jquery-tools/apple-close.png) 
-  :position absolute 
-  :right -12px 
-  :top -12px 
-  :cursor pointer 
-  :height 28px 
-  :width 28px
+#session-expire
+  :padding 50px

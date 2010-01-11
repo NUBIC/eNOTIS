@@ -1,5 +1,6 @@
-// Styles for views in the authentication controller
+// Styles for public views - authentication controller
 @import application.sass
+
 body
   :background-image url('/images/public-fade-bg.png')
 #environment
@@ -7,21 +8,18 @@ body
   :left 50%
   :width 350px
   :margin-left -175px
-  :background-color= !notice_bg_color
+  :background-color= !development_color
   :font-size 1.5em
   :text-align center
   &.staging
-    :background-color #FF6633
+    :background-color= !staging_color
 
 #login
   :margin-top 10px
   :float right
   :text-align right
 #main
-  +column(48,true)
-  +squeeze
-  :background #fff url('/images/pane-texture-bg.png') repeat-x
-  +rounded_bottom_box( #fff )
+  :background-position 0 0
   ul.tabs
     :background-color #d6d6d6
     :margin 0

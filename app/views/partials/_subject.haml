@@ -1,24 +1,23 @@
-%h4
-  = subject.name
+.subject_information
+  %h4
+    = subject.name
+  %p
+    = "mrn: #{subject.mrn}"
+    %br
+    = "dob: #{subject.birth_date}"
+    %br
+    - if involvement
+      = "gender: #{involvement.gender}"
 
-%p
-  = "mrn: #{subject.mrn}"
-  %br
-  = "dob: #{subject.birth_date}"
-  %br
-  - if involvement
-    = "gender: #{involvement.gender}"
-
-%p
-  - if subject.synced?
-    = "#{image_tag("icons/link.png", :alt => "synced", :class => 'sync')} linked to"
-    %acronym{:title => "Electronic Medical Record"} EMR
-    and interventional studies:
-    %ul
-      - subject.other_studies(involvement.study).each do |study|
-        %li= link_to(study.irb_number, study_path(study))
-  - else
-    = link_to("#{image_tag("icons/link_break.png", :alt=> "sync", :class => 'sync')} link to", search_subjects_url(:subject => subject))
-    %acronym{:title => "Electronic Medical Record"} EMR
-    = "to see other interventional studies #{subject.first_name} #{subject.last_name} is linked to in eNOTIS."
-  
+  %p
+    - if subject.synced?
+      = "#{image_tag("icons/link.png", :alt => "synced", :class => 'sync')} linked to"
+      %acronym{:title => "Electronic Medical Record"} EMR
+      and interventional studies:
+      %ul
+        - subject.other_studies(involvement.study).each do |study|
+          %li= link_to(study.irb_number, study_path(study))
+    - else
+      = link_to("#{image_tag("icons/link_break.png", :alt=> "sync", :class => 'sync')} link to", search_subjects_url(:subject => subject))
+      %acronym{:title => "Electronic Medical Record"} EMR
+      = "to see other interventional studies #{subject.first_name} #{subject.last_name} is linked to in eNOTIS."

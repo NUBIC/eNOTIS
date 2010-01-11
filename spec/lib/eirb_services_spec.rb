@@ -21,69 +21,16 @@ describe EirbServices do
 
     describe "finding data about studies" do 
 
-      it "can find the status of a study by id" do
-        p = @params.merge({:savedSearchName => "eNOTIS Study Status", 
-                      :parameters => {"ID" => "STU000123"}})
-        @search.should_receive(:perform_search).with(p)
-        @service.stub!(:eirb_adapter).and_return(@search)
-        @service.find_status({:irb_number=>"STU000123"})
-      end
-
-      it "can find the details of a study by id" do
-        p = @params.merge({:savedSearchName => "eNOTIS Study Basics", 
-                      :parameters => {"ID" => "STU000123"}})
-        @search.should_receive(:perform_search).with(p)
-        @service.stub!(:eirb_adapter).and_return(@search)
-        @service.find_by_irb_number({:irb_number=>"STU000123"})
-      end
-
-      it "can find the study type for a study" do
-        p = @params.merge({:savedSearchName => "eNOTIS Study Research Type", 
-                      :parameters => {"ID" => "STU000123"}})
-        @search.should_receive(:perform_search).with(p)
-        @service.stub!(:eirb_adapter).and_return(@search)
-        @service.find_study_research_type({:irb_number=>"STU000123"})
-      end  
-
-      it "can find the access list for a study" do
-        pending # not sure how to best test a paginated search
-        p = @params.merge({:savedSearchName => "eNOTIS Study Access", 
-                      :parameters => {"ID" => "STU000123"}})
-        @search.should_receive(:perform_search).with(p)
-        @service.stub!(:eirb_adapter).and_return(@search)
-        @service.find_study_access("STU000123")
-
-      end
-
-      it "can find all access lists for all studies" do
-        pending # not sure how to best test a paginated search
-        p = {:savedSearchName => "eNOTIS Study Access", 
-                      :parameters => nil}
-        @search.should_receive(:perform_search).with(hash_including(p))
-        @service.stub!(:eirb_adapter).and_return(@search)
-        @service.find_study_access()
+      EirbServices::STORED_SEARCHES.each do |search|
+        it "has the dynamic find methods" do
+          p = @params.merge({:savedSearchName => search[:name], 
+                        :parameters => {"ID" => "STU000123"}})
+          @search.should_receive(:perform_search).with(p)
+          @service.stub!(:eirb_adapter).and_return(@search)
+          @service.send("find_#{search[:ext]}",{:irb_number=>"STU000123"})
+        end
       end
     end 
-
-    describe "finding data about users" do
-       
-      it "searches for a user details" do
-        p = {:savedSearchName => "eNOTIS Person Details", 
-                      :parameters => {"UserID" => "abc123"}}
-        @search.should_receive(:perform_search).with(hash_including(p))
-        @service.stub!(:eirb_adapter).and_return(@search)
-        @service.find_by_netid({:netid=>"abc123"})
-      end
-
-      it "finds the details for all the users in eIRB" do
-        pending # not sure how to best test a paginated search
-        p = {:savedSearchName => "eNOTIS Person List",:parameters => nil}
-        @search.should_receive(:perform_search).with(hash_including({:savedSearchName => "eNOTIS Person List",:parameters => nil}))
-        @service.stub!(:eirb_adapter).and_return(@search)
-        @service.find_all_users
-      end
-
-    end
 
     it "knows if there is an active eirb connection" do
       @service.should_receive(:eirb_adapter).and_return(nil)
@@ -96,7 +43,7 @@ describe EirbServices do
       @service.stub(:connected?).and_return(false)
       #watching the connect method
       @service.should_receive(:connect)
-      @service.find_by_netid("abc123")
+      @service.find_basics("STU00000123")
 
     end
   end

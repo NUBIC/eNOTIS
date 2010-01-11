@@ -140,10 +140,3 @@ Feature: Manage subjects
   # Won't do per chat with David/Brian on 8/4 (is kinda irrelevant - there's not data that we show anymore)- yoon
   # Scenario: A coordinator can view data on a user they entered (user data) that has been synced with medical record (EDW)
 
-  Scenario: A coordinator can upload a subject list from a file to the study
-    When I go to the study page for id "1248D"
-    And I upload a file with valid data for 3 subjects
-    Then I should see "pi"
-    And I should see "Unavailable"
-    And I should see "Still Processing"
-

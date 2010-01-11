@@ -11,6 +11,17 @@ class EirbServices
   
   DATA_REMAP = {}
 
+  STORED_SEARCHES = [{:name => "eNOTIS Study Accrual PR", :ext => "accrual"},
+  {:name => "eNOTIS Study Authorized Personnel", :ext => "authorized_personnel"},
+  {:name => "eNOTIS Study Basics", :ext => "basics"},
+  {:name => "eNOTIS Study Co-Investigators", :ext => "co_investigators"},
+  {:name => "eNOTIS Study Coordinators", :ext => "coordinators"},
+  {:name => "eNOTIS Study Key Research Personnel", :ext => "key_personnell"},
+  {:name => "eNOTIS Study Principal Investigator", :ext => "principal_investigator"},
+  {:name => "eNOTIS Study Status", :ext => "status"},
+  {:name => "eNOTIS Study Access", :ext => "access_list"},
+  {:name => "eNOTIS Study Subject Populations", :ext => "populations"}].freeze
+
   cattr_accessor :eirb_adapter
 
   # initializing the eIrb connection
@@ -26,37 +37,19 @@ class EirbServices
   end
 
   # ======== eIRB webservice wrapper methods ========
-  def self.find_status(conditions)
-    default_search("eNOTIS Study Status",convert_for_eirb(conditions))
-  end
+    STORED_SEARCHES.each do |search|
 
-  def self.find_by_irb_number(conditions)
-    default_search("eNOTIS Study Basics",convert_for_eirb(conditions))
-  end 
-
-  def self.find_study_research_type(conditions)
-    default_search("eNOTIS Study Research Type",convert_for_eirb(conditions))
-  end
-
-  def self.find_by_netid(conditions)
-    default_search("eNOTIS Person Details",convert_for_eirb(conditions))
-  end
-  
-  def self.find_study_access(conditions = nil)
-    chunked_search("eNOTIS Study Access", (conditions ? convert_for_eirb(conditions) : nil) )
-  end
-
-  def self.find_all_study_states
-    chunked_search("eNOTIS Study Status")
-  end
-
-  def self.find_all_users
-    chunked_search("eNOTIS Person Details")
-  end
-
-  def self.find_all_study_basics
-    chunked_search("eNOTIS Study Basics")
-  end
+      meth=<<WMETH
+      def find_#{search[:ext]}(conditions = nil)
+        if conditions
+          default_search("#{search[:name]}", convert_for_eirb(conditions))
+        else
+          chunked_search("#{search[:name]}")
+        end
+      end
+WMETH
+      instance_eval(meth)
+    end
 
   # ======== Search helper methods =========
   def self.default_search(search_name, parameters=nil)
@@ -91,10 +84,67 @@ class EirbServices
     search(search_settings)
   end
 
-  def self.search(settings)
+  def self.search(settings, convert_headers=true)
     connect unless connected?
     result = eirb_adapter.perform_search(settings) if connected?
-    convert_for_notis(result)   
+    (convert_headers) ? convert_for_notis(result) : result
+  end
+
+  # Used to create the eIRB half of the translations map
+  # Grabs the returned row headers for each query
+  def self.return_query_headers
+    headers = {}
+    STORED_SEARCHES.each do |s|
+      begin
+        results = search(SEARCH_DEFAULTS.merge({:savedSearchName => s[:name],:numRows => 1}),false)
+        headers[s[:name]] = results.first.keys # Results should be an array with one item in it
+      rescue
+        headers[s[:name]] = "FAILED"
+      end
+    end
+    headers
+  end
+
+  # Creates a format for using in the eirb_translations file
+  # Reads the existing one to use it as a base and adds any
+  # keys that are missing with a blank value placeholder
+  def self.pretty_print_translation_template
+    tt = "#Exported from eirb queries on #{Time.now}\n"
+    tt << "EIRB_TO_NOTIS = {\n"
+    headers = return_query_headers
+    headers.each do |k,v|
+      spaces = max_str(v)
+      tt << "# #{k} \n"
+      [*v].each do |val|
+        if existing = EIRB_TO_NOTIS[val]
+          tt << pad_print_hash(val,existing,spaces)
+        else
+          tt << pad_print_hash(val,:NEW_VALUE,spaces)
+        end
+      end
+    end
+    tt << "}\n"
+    tt
+  end
+
+  def self.max_str(arr)
+    max = 0
+    arr.each{|a| max = a.length if a.length > max }
+    max
+  end
+
+  def self.pad_print_hash(key,value,padding)
+    return nil if padding < key.to_s.length
+    padding += 3 #for the hash rocket
+    t = "\"#{key}\" =>"
+    (padding - key.to_s.length).times do
+      t << " "
+    end
+    if value.is_a?(String)
+      t << "\"#{value}\",\n"
+    else
+      t << ":#{value},\n"
+    end
   end
 
   # This method attempts to pull data from the service
