@@ -17,7 +17,7 @@ class EirbServices
   {:name => "eNOTIS Study Co-Investigators", :ext => "co_investigators"},
   {:name => "eNOTIS Study Coordinators", :ext => "coordinators"},
   {:name => "eNOTIS Study Key Research Personnel", :ext => "key_personnell"},
-  {:name => "eNOTIS Study Principal Investigator", :ext => "principal_investigator"},
+  {:name => "eNOTIS Study Principal Investigator", :ext => "principal_investigators"},
   {:name => "eNOTIS Study Status", :ext => "status"},
   {:name => "eNOTIS Study Access", :ext => "access_list"},
   {:name => "eNOTIS Study Subject Populations", :ext => "populations"}].freeze
