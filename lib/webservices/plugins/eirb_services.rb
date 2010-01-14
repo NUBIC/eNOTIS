@@ -60,7 +60,7 @@ WMETH
  
   # Breaks search results into managble chunks of data
   # because eIrb chokes if a query is to large
-  def self.chunked_search(search_name, parameters=nil,num_rows=500)
+  def self.chunked_search(search_name, parameters=nil,num_rows=50)
     start_row = 1 #eirb has row 1 as the first row
     results = []
 

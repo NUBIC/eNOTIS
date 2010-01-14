@@ -18,7 +18,7 @@ class CouchStudy
   end
 
   def get_pis
-    EirbServcies.find_principal_investigators
+    EirbServices.find_principal_investigators
   end
 
   def get_co_pis
@@ -49,8 +49,10 @@ class CouchStudy
 
   # This does all the work
   def process
+    puts "Creating the studies"
     create_studies
     CHILD_DATA.each do |k,v|
+      puts "Processing '#{v}' for studies"
       #preping the instance var
       data = send("get_#{k}")
       data.each do |d|
@@ -64,9 +66,14 @@ class CouchStudy
     begin
       doc = @db.get(obj[:irb_number]) #find the doc
     rescue
+      puts "#{obj[:irb_number]} missing from basic query"
       doc = rescue_save(obj)
     end
-    doc[key]=obj
+    if doc[key] && doc[key].is_a?(Array)
+      doc[key] << obj
+    else
+      doc[key]=[obj]
+    end
     doc.save
   end
 
