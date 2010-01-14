@@ -17,7 +17,7 @@ class EirbServices
   {:name => "eNOTIS Study Co-Investigators", :ext => "co_investigators"},
   {:name => "eNOTIS Study Coordinators", :ext => "coordinators"},
   {:name => "eNOTIS Study Key Research Personnel", :ext => "key_personnell"},
-  {:name => "eNOTIS Study Principal Investigator", :ext => "principal_investigator"},
+  {:name => "eNOTIS Study Principal Investigator", :ext => "principal_investigators"},
   {:name => "eNOTIS Study Status", :ext => "status"},
   {:name => "eNOTIS Study Access", :ext => "access_list"},
   {:name => "eNOTIS Study Subject Populations", :ext => "populations"}].freeze
@@ -60,7 +60,7 @@ WMETH
  
   # Breaks search results into managble chunks of data
   # because eIrb chokes if a query is to large
-  def self.chunked_search(search_name, parameters=nil,num_rows=500)
+  def self.chunked_search(search_name, parameters=nil,num_rows=50)
     start_row = 1 #eirb has row 1 as the first row
     results = []
 
