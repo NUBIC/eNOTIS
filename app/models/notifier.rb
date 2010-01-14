@@ -12,6 +12,12 @@ class Notifier < ActionMailer::Base
    subject "[eNOTIS]#{service.name.upcase}: Status - #{service.status ? "up" : "down"}"
    body :service => service
  end
-  
+
+ def study_upload_failure(upload)
+   recipients support_email
+   from support_email
+   subject "[eNOTIS] Bulk Upload Failure"
+   body :upload => upload
+ end
 
 end

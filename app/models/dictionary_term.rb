@@ -14,9 +14,29 @@ class DictionaryTerm < ActiveRecord::Base
 
   # Filters
   before_save :downcase_attributes
- 
+  
+  
   # Public class methods
-  #
+  
+  # Class methods for convenience
+  # TODO refactor this into separate classes with foreign key constraints - yoon
+  class << self 
+    def all_terms
+      @@all = self.all
+    end
+    %w(gender ethnicity race event).each do |category|
+      # genders, ethnicities, races
+      define_method(category.pluralize.to_sym){ self.all_terms.select{|x| x.category == category}.map{|x| x.term} }
+      # gender(term), ethnicity(term), race(term)
+      define_method(category.to_sym){ |term| self.all_terms.detect{|x| x.category == category && x.term == term.downcase} }
+      # gender_id(term), ethnicity_id(term), race_id(term)
+      define_method("#{category}_id".to_sym) do |term|
+        r = self.all_terms.detect{|x| x.category == category && x.term == term.downcase}
+        r.blank? ? nil : r.id
+      end
+    end
+  end
+
   def self.lookup_category_terms(cat)
     find(:all, :conditions => ["lower(category)=?",cat.to_s.downcase])
   end

@@ -1,3 +1,4 @@
+require 'chronic'
 class StudyUpload < ActiveRecord::Base
 
   # Associations
@@ -17,4 +18,132 @@ class StudyUpload < ActiveRecord::Base
   # validates_attachment_content_type :upload, :content_type => ['text/csv', 'text/plain']
   # validates_attachment_content_type :result, :content_type => ['text/csv', 'text/plain']
 
+  def legit?
+    upload_exists? && parse_upload && create_subjects
+  end
+  def upload_exists?
+    # logger.info "upload exists?"
+    self.summary = "No file given, please upload a file." unless self.upload.valid?
+    return self.upload.valid?
+  end
+  def parse_upload
+    # logger.info "parse_upload"
+    csv_is_valid = true
+    temp_file = Paperclip::Tempfile.new("results.csv")
+    FasterCSV.open(temp_file.path, "r+") do |temp_stream|
+      FasterCSV.parse(self.upload.to_io, :headers => :first_row, :return_headers => true, :header_converters => :symbol) do |r|
+        if r.header_row? # check header row
+          return false if missing_columns?(r)
+          temp_stream << r.fields + ["Result"]
+        else # check non-header rows
+          if (e = errors_for_row(r)).compact.empty?
+            temp_stream << r.fields + ["Ok"]
+          else
+            temp_stream << r.fields + [e.join(". ")]
+            self.summary = "There were issues with the file you uploaded. Please open the result and fix the issues indicated."
+            csv_is_valid = false
+          end
+        end
+      end
+    end
+    self.result = temp_file if !csv_is_valid
+    self.result_file_name = self.upload_file_name.gsub(/(\.csv)?$/, '-result.csv')
+    temp_file.close!
+    self.save
+    return csv_is_valid
+  end
+  def create_subjects
+    # logger.info "create_subjects"
+    subjects_created = 0
+    temp_file = Paperclip::Tempfile.new("results2.csv")
+    FasterCSV.open(temp_file.path, "r+") do |temp_stream|
+      FasterCSV.parse(self.upload.to_io, :headers => :first_row, :return_headers => true, :header_converters => :symbol) do |r|
+        if r.header_row?
+          temp_stream << r.fields + ["Result"]
+        else
+          s = create_subject(r)
+          temp_stream << r.fields + [s ? "Created" : "Failed"]
+          subjects_created += 1 if s
+        end
+      end
+    end
+    self.summary = "#{subjects_created} subjects created."
+    self.result = temp_file
+    self.result_file_name = self.upload_file_name.gsub(/(\.csv)?$/, '-result.csv')
+    self.save
+    temp_file.close!
+    return subjects_created == 0 ? false : true
+  end
+  
+  def create_subject(r)
+    Study.transaction do # read http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
+      params = params_from_row(r)
+      # Subject - find or create a subject
+      subject = Subject.find_or_create_for_import(params)
+      raise ActiveRecord::Rollback if study.nil? or subject.nil?
+      params[:involvement].merge!({:subject_id => subject.id, :study_id => self.study.id})
+      
+      # Involvement - create an involvement
+      involvement = Involvement.update_or_create(params[:involvement])
+      raise ActiveRecord::Rollback if involvement.nil? or involvement.id.nil?      
+      params[:involvement_events].each{|ie| ie.merge!({:involvement_id => involvement.id}) }
+
+      # logger.info r.inspect
+      # logger.info params.inspect
+      
+      # InvolvementEvent - create the event
+      params[:involvement_events].each do |event|
+        InvolvementEvent.find_or_create(event)
+      end
+    end
+  end
+  
+  def params_from_row(r)
+    { :user => self.user.attributes.symbolize_keys,
+      :study => self.study.attributes.symbolize_keys,
+      :subject => { :mrn => r[:mrn], 
+                    :first_name => r[:first_name], 
+                    :last_name => r[:last_name], 
+                    :birth_date => (bd = Chronic.parse(r[:birth_date])).blank? ? nil : bd.to_date },
+      :involvement => { :case_number => r[:case_number], 
+                       :gender_type_id => DictionaryTerm.gender_id(r[:gender]),
+                       :ethnicity_type_id => DictionaryTerm.ethnicity_id(r[:ethnicity]),
+                       :race_type_ids => [r[:race], r[:race2]].map{|x| x.blank? ? nil : DictionaryTerm.race_id(x)}.compact
+                      },
+      :involvement_events => %w(consented withdrawn completed).map do |category|
+        if (event_date = Chronic.parse(r["#{category}_on".to_sym])).blank?
+          nil
+        else
+          { :occurred_on => event_date.to_date,
+            :event_type_id => DictionaryTerm.event_id(category),
+            :note => r["#{category}_note".to_sym]
+          }
+        end
+      end.compact
+    }
+  end
+  
+  def missing_columns?(r)
+    missing = %w(case_number mrn first_name last_name birth_date gender race ethnicity consented_on consented_note withdrawn_on withdrawn_note completed_on completed_note) - r.headers.map(&:to_s)
+    if missing.empty?
+      return false
+    else
+      self.summary = "The following columns are required: #{missing.join(',')}"
+      return true
+    end
+  end
+  def errors_for_row(r)
+    [check_identity(r)] + check_terms(r) + [check_event_dates(r)]
+  end
+  def check_identity(hash)
+    "Either MRN, first name/last name/birth date (with four digit year), or case number are required" if (hash[:mrn].blank? and (hash[:first_name].blank? or hash[:last_name].blank? or Chronic.parse(hash[:birth_date]).nil?) and hash[:case_number].blank?)
+  end
+  def check_terms(hash)
+    %w(gender ethnicity race).map do |category|
+      "#{hash[category.to_sym].blank? ? "Blank #{category.capitalize}" : "Unknown #{category.capitalize}: #{hash[category.to_sym]}"}" unless DictionaryTerm.send(category.pluralize).include?(hash[category.to_sym].to_s.downcase)
+    end
+  end
+  def check_event_dates(hash)
+    "Either consented on, withdrawn on, or completed on is required (with four digit year)" if (Chronic.parse(hash[:consented_on]).blank? and Chronic.parse(hash[:withdrawn_on]).blank? and Chronic.parse(hash[:completed_on]).blank?)
+  end
 end

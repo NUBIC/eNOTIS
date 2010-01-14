@@ -29,21 +29,24 @@ class SubjectsController < ApplicationController
   
   def create
     # Subjects are created via uploads
-    @study_upload = StudyUpload.new(:user_id => current_user.id, :study_id => params[:study_id], :upload => params[:file])
-    return redirect_to_studies_or_study(params[:study_id], :error, "Please provide a file to upload.") unless @study_upload.upload.valid?
+    @study = Study.find_by_irb_number(params[:study_id])
+    @up = StudyUpload.create(:user_id => current_user.id, :study_id => @study.id, :upload => params[:file])
+    success = @up.legit?
+    redirect_to_studies_or_study(params[:study_id], success ? :notice : :error, @up.summary)
+    # setup_csv(request, headers, @up.upload_file_name.gsub(/(\.csv)?$/, '-result.csv')
     
-    temp_file = Tempfile.new("results")
-    if csv_sanity_check(@study_upload.upload, temp_file)
-      @study_upload.save
-      temp_file.close!
-      publish :patient_upload, @study_upload.id.to_s
-      redirect_to_studies_or_study params[:study_id]
-    else
-      @study_upload.result = temp_file
-      temp_file.close!
-      setup_csv(request, headers, @study_upload.upload_file_name.gsub(/(\.csv)?$/, '-result.csv'))
-      render :text => @study_upload.result.to_io.read
-    end
+    # temp_file = Tempfile.new("results")
+    # if csv_sanity_check(@study_upload.upload, temp_file)
+    #   @study_upload.save
+    #   temp_file.close!
+    #   publish :patient_upload, @study_upload.id.to_s
+    #   redirect_to_studies_or_study params[:study_id]
+    # else
+    #   @study_upload.result = temp_file
+    #   temp_file.close!
+    #   setup_csv(request, headers, @study_upload.upload_file_name.gsub(/(\.csv)?$/, '-result.csv'))
+    #   render :text => @study_upload.result.to_io.read
+    # end
   end
   
   def search

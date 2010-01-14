@@ -42,7 +42,11 @@ class Subject < ActiveRecord::Base
   end
   
   def name
-    "#{self.last_name}, #{self.first_name}"
+    if first_name.blank? and last_name.blank?
+      "(no name)"
+    else
+      "#{self.last_name}, #{self.first_name}"
+    end
   end
   
   def birth_date=(date)
@@ -63,7 +67,10 @@ class Subject < ActiveRecord::Base
   
   
   # Public class methods
-  
+  def self.find_or_create_for_import(params)
+    s = params[:subject]
+    Subject.find(:first, :conditions => s) || Subject.create(s)    
+  end
   def self.find_or_create(params)
     @sub_params = params[:subject]
     @user = params[:user]
@@ -77,7 +84,7 @@ class Subject < ActiveRecord::Base
       end 
     end
       # if we've made it this far, the mrn was blank or the subject wasn't found by mrn
-    if !@sub_params[:first_name].blank? or !@sub_params[:last_name].blank? or !@sub_params[:birth_date].blank?
+    if !@sub_params[:first_name].blank? and !@sub_params[:last_name].blank? and !@sub_params[:birth_date].blank?
       #Check if there is a subject with same identifiers on the given study
       Subject.find_all_by_first_name_and_last_name_and_birth_date(@sub_params[:first_name],@sub_params[:last_name],Chronic.parse(@sub_params[:birth_date])).each do |subject|
         return subject if subject.studies.include?study
@@ -88,5 +95,5 @@ class Subject < ActiveRecord::Base
       params[:involvement][:case_number].blank? ? nil : Subject.create()
     end
   end
-    
+  
 end
