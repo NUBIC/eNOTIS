@@ -49,5 +49,7 @@ describe StudyUpload do
     @up = Factory(:study_upload, :upload => up('good'))
     @up.legit?.should be_true
     @up.summary.should =~ /7 subjects/
+    Subject.all.map(&:birth_date).compact.size.should == 5
+    InvolvementEvent.count.should == 7
   end
 end
