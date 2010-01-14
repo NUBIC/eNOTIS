@@ -17,7 +17,7 @@ class Notifier < ActionMailer::Base
    recipients support_email
    from support_email
    subject "[eNOTIS] Bulk Upload Failure"
-   body :=upload => upload
+   body :upload => upload
  end
 
 end
