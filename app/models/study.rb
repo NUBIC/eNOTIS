@@ -60,9 +60,9 @@ class Study < ActiveRecord::Base
     involvements.size
   end
 
-  def self.find_by_irb_number(irb_number)
-    find(:first,:conditions=>{:irb_number=>irb_number},:span=>:global)
-  end
+  #def self.find_by_irb_number(irb_number)
+  #  find(:first,:conditions=>{:irb_number=>irb_number},:span=>:global)
+  #end
 
   
 end
