@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(:version => 20090902092032) do
   create_table "study_uploads", :force => true do |t|
     t.integer  "study_id"
     t.integer  "user_id"
+    t.string   "state"
     t.string   "summary"
     t.string   "upload_file_name"
     t.string   "upload_content_type"

@@ -36,6 +36,7 @@ Rails::Initializer.run do |config|
   config.gem "activemessaging"
   config.gem "ruport", :lib => false
   config.gem "acts_as_reportable", :lib => false
+  config.gem "aasm"
 
   config.gem "thoughtbot-factory_girl", :version => '>=1.2.1', :lib => "factory_girl", :source => "http://gems.github.com"
   config.gem "populator", :version => '>=0.2.5'

@@ -3,6 +3,7 @@ class CreateStudyUploads < ActiveRecord::Migration
     create_table :study_uploads do |t|
       t.integer :study_id
       t.integer :user_id
+      t.string  :state
       t.string :summary
       t.string :upload_file_name
       t.string :upload_content_type
