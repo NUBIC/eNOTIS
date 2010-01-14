@@ -11,4 +11,4 @@ Feature: Manage subjects
   Scenario: A coordinator can upload a subject list from a file to the study
     When I go to the study page for id "1248C"
     And I upload a file with valid data for 3 subjects
-    Then I should see Subjects (3)
+    Then I should see "Subjects (3)"
