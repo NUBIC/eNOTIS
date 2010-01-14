@@ -9,7 +9,7 @@ class SpeedTest
       chunks.each do |size|
         begin 
           start = Time.now
-          users = EirbServices.chunked_search("eNOTIS Person List",nil,size)
+          users = EirbServices.chunked_search("eNOTIS Study Basics",nil,size)
           report(f,start,Time.now,size,users.size)
         end
       end
