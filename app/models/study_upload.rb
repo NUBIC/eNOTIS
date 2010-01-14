@@ -102,7 +102,7 @@ class StudyUpload < ActiveRecord::Base
           nil
         else
           { :occurred_on => event_date,
-            :event_type_id => DictionaryTerm.event_type_id(event_type),
+            :event_type_id => DictionaryTerm.event_id(event_type),
             :note => r["#{event_type}_note".to_sym]
           }.merge({:involvement_id => involvement.id})
         end

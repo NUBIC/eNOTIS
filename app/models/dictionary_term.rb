@@ -15,52 +15,28 @@ class DictionaryTerm < ActiveRecord::Base
   # Filters
   before_save :downcase_attributes
   
-  # %w(gender ethnicity race).each do |category|
-  #   # genders, ethnicities, races
-  #   define_method(category.pluralize.to_sym){}
-  #   # gender(term), ethnicity(term), race(term)
-  #   define_method(category.to_sym) do |term|
-  # 
-  #   end
-  #   # gender_id(term), ethnicity_id(term), race_id(term)
-  #   define_method("#{category}_id".to_sym) do |term|
-  # 
-  #   end
-  # end
-  
-  # Temporary methods 
-  # TODO refactor this into separate classes with foreign key constraints - yoon
-  def self.all_terms
-    @@all ||= self.all
-  end
-  def self.genders
-    self.all_terms.select{|x| x.category == "gender"}.map{|x| x.term}
-  end
-  def self.ethnicities
-    self.all_terms.select{|x| x.category == "ethnicity"}.map{|x| x.term}
-  end
-  def self.races
-    self.all_terms.select{|x| x.category == "race"}.map{|x| x.term}
-  end
-  def self.gender_id(term)
-    r = self.all_terms.detect{|x| x.category == "gender" && x.term == term.downcase}
-    r.blank? ? nil : r.id    
-  end
-  def self.ethnicity_id(term)
-    r = self.all_terms.detect{|x| x.category == "ethnicity" && x.term == term.downcase}
-    r.blank? ? nil : r.id
-  end
-  def self.race_id(term)
-    r = self.all_terms.detect{|x| x.category == "race" && x.term == term.downcase}
-    r.blank? ? nil : r.id    
-  end
-  def self.event_type_id(term)
-    r = self.all_terms.detect{|x| x.category == "event" && x.term == term.downcase}
-    r.blank? ? nil : r.id    
-  end
   
   # Public class methods
-  #
+  
+  # Class methods for convenience
+  # TODO refactor this into separate classes with foreign key constraints - yoon
+  class << self 
+    def all_terms
+      @@all = self.all
+    end
+    %w(gender ethnicity race event).each do |category|
+      # genders, ethnicities, races
+      define_method(category.pluralize.to_sym){ self.all_terms.select{|x| x.category == category}.map{|x| x.term} }
+      # gender(term), ethnicity(term), race(term)
+      define_method(category.to_sym){ |term| self.all_terms.detect{|x| x.category == category && x.term == term.downcase} }
+      # gender_id(term), ethnicity_id(term), race_id(term)
+      define_method("#{category}_id".to_sym) do |term|
+        r = self.all_terms.detect{|x| x.category == category && x.term == term.downcase}
+        r.blank? ? nil : r.id
+      end
+    end
+  end
+
   def self.lookup_category_terms(cat)
     find(:all, :conditions => ["lower(category)=?",cat.to_s.downcase])
   end
