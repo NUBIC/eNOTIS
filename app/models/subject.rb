@@ -42,7 +42,11 @@ class Subject < ActiveRecord::Base
   end
   
   def name
-    "#{self.last_name}, #{self.first_name}"
+    if first_name.blank? and last_name.blank?
+      "(no name)"
+    else
+      "#{self.last_name}, #{self.first_name}"
+    end
   end
   
   def birth_date=(date)
@@ -65,9 +69,7 @@ class Subject < ActiveRecord::Base
   # Public class methods
   def self.find_or_create_for_import(params)
     s = params[:subject]
-    Subject.find(:first, :conditions => s) || Subject.create(s)
-    
-    
+    Subject.find(:first, :conditions => s) || Subject.create(s)    
   end
   def self.find_or_create(params)
     @sub_params = params[:subject]
