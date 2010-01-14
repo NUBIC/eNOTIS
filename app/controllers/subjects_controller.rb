@@ -29,8 +29,9 @@ class SubjectsController < ApplicationController
   
   def create
     # Subjects are created via uploads
-    @up = StudyUpload.new(:user_id => current_user.id, :study_id => params[:study_id], :upload => params[:file])
-    success = @up.legit? && @up.create_subjects
+    @study = Study.find_by_irb_number(params[:study_id])
+    @up = StudyUpload.create(:user_id => current_user.id, :study_id => @study.id, :upload => params[:file])
+    success = @up.legit?
     redirect_to_studies_or_study(params[:study_id], success ? :notice : :error, @up.summary)
     # setup_csv(request, headers, @up.upload_file_name.gsub(/(\.csv)?$/, '-result.csv')
     

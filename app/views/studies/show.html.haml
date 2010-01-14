@@ -64,7 +64,7 @@
           %thead
             %tr
               %th Importer
-              %th Upload Date
+              %th Uploaded
               %th Original
               %th Result
               %th Status
@@ -72,7 +72,10 @@
             - @study.study_uploads.each do |u|
               %tr
                 %td= u.user.netid
-                %td= u.created_at
-                %td= link_to "View", u.upload.url
-                %td= (u.result_file_name.nil?) ? "Unavailable" : link_to( "View", u.result.url)
+                %td
+                  %span{:title => u.created_at.to_s(:long)}
+                    = time_ago_in_words(u.created_at)
+                    ago
+                %td= link_to "Original", u.upload.url
+                %td= (u.result_file_name.nil?) ? "Unavailable" : link_to("Result", u.result.url)
                 %td= u.summary || "Still Processing"
