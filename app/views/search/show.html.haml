@@ -52,4 +52,4 @@
         %tbody
           - @subjects.each do |subject|
             %tr
-              %td= link_to(subject.name || "(no name)", subject_url(subject))
+              %td= link_to(subject.name || "(no name)", study_path(subject.involvements.first.study))
