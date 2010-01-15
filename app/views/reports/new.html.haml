@@ -5,20 +5,20 @@
     %p Select Attributes
     %p 
       - ['mrn','first_name','last_name','birth_date'].each do |val|
-        = check_box_tag "subject[]",val
+        = check_box_tag "subject[]",val, :checked => true
         = label_tag "subject[]",val.titleize
         %br
-      = check_box_tag "involvement[attributes][]",'case_number'
+      = check_box_tag "involvement[attributes][]",'case_number', :checked => true
       = label_tag "involvement[attributes][]","Case Number"
       %br
       - ['ethnicity','gender','race_list'].each do |meth|
-        = check_box_tag "involvement[methods][]",meth
+        = check_box_tag "involvement[methods][]",meth, :checked => true
         = label_tag "involvement[methods][]",meth.titleize
         %br
-      = check_box_tag "event[methods][]",'event_type'
+      = check_box_tag "event[methods][]",'event_type', :checked => true
       = label_tag "event[methods][]","Event Type"
       %br
-      = check_box_tag  "event[attributes][]",'occurred_on'
+      = check_box_tag  "event[attributes][]",'occurred_on', :checked => true
       = label_tag "event[attributes][]"," Event Date"
     %p
       = label_tag "format","File Format"
