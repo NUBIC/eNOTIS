@@ -22,7 +22,7 @@ class DictionaryTerm < ActiveRecord::Base
   # TODO refactor this into separate classes with foreign key constraints - yoon
   class << self 
     def all_terms
-      @@all = self.all
+      @@all ||= self.all
     end
     %w(gender ethnicity race event).each do |category|
       # genders, ethnicities, races
