@@ -25,12 +25,15 @@ body
 #flash
   :position absolute
   :top 0
-  :margin-left 322.5px
-  :width 350px
+  :margin-left 297.5px
+  :width 400px
   :text-align center
   :color= !flash_color
   :border= 1px solid !flash_border_color
-  +rounded_bottom_box( !flash_background_color )    
+  :padding 5px 0
+  :font-size 17px
+  // +rounded_bottom_box( !flash_background_color )    
+  +rounded_bottom_box(!flash_border_color)
   +bold
 
 #current_user_badge

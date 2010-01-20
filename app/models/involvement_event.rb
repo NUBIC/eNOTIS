@@ -79,7 +79,7 @@ class InvolvementEvent < ActiveRecord::Base
   end
  
   def self.find_or_create(params)
-    logger.debug "find_or_create all inv_evnt: #{InvolvementEvent.find(:all).inspect}"
+    # logger.debug "find_or_create all inv_evnt: #{InvolvementEvent.find(:all).inspect}"
     InvolvementEvent.find(:first,:conditions => {
       :involvement_id => params[:involvement_id],
       :occurred_on=>Chronic.parse(params[:occurred_on]),
