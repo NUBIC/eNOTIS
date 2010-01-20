@@ -14,7 +14,7 @@ class Study < ActiveRecord::Base
   has_many :study_uploads
 
   # Mixins
-  has_paper_trail
+  #has_paper_trail #### None of these mixins are needed because we changed out
   # include WebServices
   # self.plugins=[EirbServices]
   
@@ -36,7 +36,11 @@ class Study < ActiveRecord::Base
   def open?
     self.status == "open"
   end
-  
+
+  def status
+    self.irb_status
+  end
+
   def stale?
     self.synced_at < 12.hours.ago # assumed synced is never nil
   end

@@ -4,7 +4,9 @@ require 'webservices/plugins/eirb_services'
 
 class CouchStudy
 
-  CHILD_DATA = {:pis => "pi",:co_pis => "co_pis",:coords => "coords", :al => "access_list",:pops => "populations", :acrl => "subject_accrual"}
+  CHILD_DATA = {:pops => "populations"}
+  #CHILD_DATA = {:pis => "pi",:co_pis => "co_pis",:coords => "coords", :al => "access_list",:pops => "populations",
+  #:acrl => "subject_accrual"}
 
   attr_accessor :db, :studies
 
@@ -50,7 +52,7 @@ class CouchStudy
   # This does all the work
   def process
     puts "Creating the studies"
-    create_studies
+    #create_studies
     CHILD_DATA.each do |k,v|
       puts "Processing '#{v}' for studies"
       #preping the instance var
