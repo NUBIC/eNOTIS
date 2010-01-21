@@ -6,7 +6,7 @@ require 'spec/autorun'
 require 'spec/rails'
 
 # import dictionary terms
-# system("rake dictionary_terms:import")
+system("rake dictionary_terms:import")
 
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
