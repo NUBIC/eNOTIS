@@ -4,9 +4,8 @@ require 'webservices/plugins/eirb_services'
 
 class CouchStudy
 
-  CHILD_DATA = {:pops => "populations"}
-  #CHILD_DATA = {:pis => "pi",:co_pis => "co_pis",:coords => "coords", :al => "access_list",:pops => "populations",
-  #:acrl => "subject_accrual"}
+  CDATA = {:pis => "pi",:co_pis => "co_pis",:coords => "coords", :al => "access_list",:pops => "populations", :acrl => "subject_accrual"}
+  PROC_ORDER = [:pis,:co_pis,:coords,:al,:pops,:acrl]
 
   attr_accessor :db, :studies
 
@@ -16,31 +15,31 @@ class CouchStudy
   end
 
   def get_studies
-    @studies = EirbServices.find_basics #finds (almost) all the studies
+    @studies = EirbServices.find_basics #find all the studies
   end
 
-  def get_pis
-    EirbServices.find_principal_investigators
+  def get_pis(id)
+    EirbServices.find_principal_investigators(:irb_number => id)
   end
 
-  def get_co_pis
-    EirbServices.find_co_investigators
+  def get_co_pis(id)
+    EirbServices.find_co_investigators(:irb_number => id)
   end
 
-  def get_coords
-    EirbServices.find_coordinators
+  def get_coords(id)
+    EirbServices.find_coordinators(:irb_number => id)
   end
 
-  def get_al
-    EirbServices.find_access_list
+  def get_al(id)
+    EirbServices.find_access_list(:irb_number => id)
   end
 
-  def get_pops
-    EirbServices.find_populations
+  def get_pops(id)
+    EirbServices.find_populations(:irb_number => id)
   end
 
-  def get_acrl
-    EirbServices.find_accrual
+  def get_acrl(id)
+    EirbServices.find_accrual(:irb_number => id)
   end
 
   def create_studies
@@ -52,13 +51,19 @@ class CouchStudy
   # This does all the work
   def process
     puts "Creating the studies"
-    #create_studies
-    CHILD_DATA.each do |k,v|
-      puts "Processing '#{v}' for studies"
-      #preping the instance var
-      data = send("get_#{k}")
-      data.each do |d|
-        append(v,d)
+    create_studies
+    puts "Done creating the studies"
+    @studies.each do |study|
+      PROC_ORDER.each do |k|
+        puts "Processing '#{k}' for study #{study[:irb_number]}"
+        begin
+        data = send("get_#{k}",study[:irb_number])
+        rescue
+        data = [{:irb_number => study[:irb_number],:error => "query to eirb failed"}]
+        end
+        data.each do |d|
+          append(CDATA[k],d)
+        end
       end
     end
   end
