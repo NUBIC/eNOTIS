@@ -34,6 +34,8 @@ class DictionaryTerm < ActiveRecord::Base
         r = self.all_terms.detect{|x| x.category == category && x.term == term.downcase}
         r.blank? ? nil : r.id
       end
+      # gender_ids, ethnicity_ids, race_ids, event_ids
+      define_method("#{category}_ids".to_sym){ self.all_terms.select{|x| x.category == category}.map(&:id) }
     end
   end
 
