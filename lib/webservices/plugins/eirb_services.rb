@@ -20,6 +20,8 @@ class EirbServices
   {:name => "eNOTIS Study Principal Investigator", :ext => "principal_investigators"},
   {:name => "eNOTIS Study Status", :ext => "status"},
   {:name => "eNOTIS Study Access", :ext => "access_list"},
+  {:name => "eNOTIS Person Details", :ext => "user"},
+  {:name => "eNOTIS Study Combined Priv", :ext => "study_combined_access"},
   {:name => "eNOTIS Study Subject Populations", :ext => "populations"}].freeze
 
   cattr_accessor :eirb_adapter
@@ -60,15 +62,20 @@ WMETH
  
   # Breaks search results into managble chunks of data
   # because eIrb chokes if a query is to large
-  def self.chunked_search(search_name, parameters=nil,num_rows=50)
+  def self.chunked_search(search_name, parameters=nil,num_rows=500)
     start_row = 1 #eirb has row 1 as the first row
     results = []
 
     loop do 
-      partial_results = paginated_search(search_name,start_row,num_rows,parameters)
-      break if partial_results.empty? 
-      results.concat(partial_results)
-      start_row += num_rows
+      begin
+        partial_results = paginated_search(search_name,start_row,num_rows,parameters)
+        break if partial_results.empty? 
+        results.concat(partial_results)
+        start_row += num_rows
+      rescue
+        #supress eirb errors and return incomplete dataset
+        break
+      end
     end
     results
   end
@@ -104,7 +111,8 @@ WMETH
     end
     headers
   end
-
+  
+  #TODO: move to rake task and move parts out of here
   # Creates a format for using in the eirb_translations file
   # Reads the existing one to use it as a base and adds any
   # keys that are missing with a blank value placeholder
@@ -184,3 +192,4 @@ WMETH
       return results
   end
 end
+
