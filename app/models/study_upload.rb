@@ -79,7 +79,7 @@ class StudyUpload < ActiveRecord::Base
     Study.transaction do # read http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
       params = params_from_row(r)
       # Subject - find or create a subject
-      subject = Subject.find_or_create_for_import(params)
+      subject = Subject.find_or_create(params)
       raise ActiveRecord::Rollback if study.nil? or subject.nil?
       params[:involvement].merge!({:subject_id => subject.id, :study_id => self.study.id})
       
