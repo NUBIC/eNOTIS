@@ -1,6 +1,6 @@
-require 'eirb_adapter'
-require 'eirb_translations'
-require 'service_logger'
+require 'webservices/eirb_adapter'
+require 'webservices/eirb_translations'
+require 'webservices/service_logger'
 
 class EirbServices
 

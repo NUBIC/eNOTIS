@@ -1,7 +1,7 @@
 Dir[File.dirname(__FILE__) + "/plugins/*.rb"].each {|file| require file}
 module WebServices
 
-  def  self.included(base)
+  def self.included(base)
     base.class_eval do 
       class << self
         attr_accessor :plugins

@@ -1,4 +1,4 @@
-require 'webservices/plugins/eirb_services'
+require 'webservices/eirb_services'
 
 namespace :users do
   desc "Loads in all users from eIRB, creates them if they don't exist, updates them if they do"

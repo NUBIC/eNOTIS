@@ -1,5 +1,5 @@
 require 'soap/wsdlDriver'
-require 'service_logger'
+require 'webservices/service_logger'
 
 # Acts as a middle layer between the EirbServices module and the Eirb Webservice.
 # Passes off queries to the eirb and returns queries
