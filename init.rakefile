@@ -1,0 +1,28 @@
+BUNDLER_VERSION="= 0.8.1"
+
+namespace :bundle do
+  desc "Build the bundler gem repo using the existing cache only"
+  task :expand => :ensure_bundler_available do
+    only = ENV["RAILS_ENV"] if ENV["RAILS_ENV"]
+    system("gem bundle --cached #{"--only #{only}" if only}")
+    fail "bundler failed" unless $? == 0
+  end
+
+  task :ensure_bundler_available do
+    `gem list -i bundler -v '#{BUNDLER_VERSION}'`
+    unless $? == 0
+      puts bordered_message("Installing bundler #{BUNDLER_VERSION}")
+      system("gem install bundler -v '#{BUNDLER_VERSION}'")
+      unless $? == 0
+        fail bordered_message("Install failed.\nPlease fix the problem and try again or manually install bundler #{BUNDLER_VERSION}.")
+      end
+    end
+  end
+
+  def bordered_message(msg)
+    len = msg.split("\n").collect { |l| l.size }.max
+    ['=' * len, msg, '=' * len].join("\n")
+  end
+end
+
+task :default => :'bundle:expand'

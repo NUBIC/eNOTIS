@@ -26,6 +26,12 @@
         %thead
           %tr
             %th= "Subjects (#{@study.subjects.size})"
+            %th MRN
+            %th Case #
+            %th Birth date
+            %th Gender
+            %th Ethnicity
+            %th Race
             - @events.each do |event|
               %th
                 %dtr{:title => event.description}= event.term
@@ -36,6 +42,12 @@
                 = involvement.subject_name_or_case_number
                 = link_to image_tag('/images/icons/status_offline.png'), "#", :rel => "#subject_information", :class => 'subject'
                 = render :partial => 'partials/subject', :locals => {:subject => involvement.subject, :involvement => involvement}
+              %th= involvement.subject.mrn
+              %th= involvement.case_number
+              %th= involvement.subject.birth_date.to_s
+              %th= involvement.gender
+              %th= involvement.ethnicity
+              %th= involvement.race_list
               - @events.each do |event|
                 - if x = @study_events.detect{|e| e.involvement == involvement && e.event_type == event}
                   %td
