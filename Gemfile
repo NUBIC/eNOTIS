@@ -34,7 +34,7 @@ gem "bcdatabase", '<1.0.0'
 gem "bcsec"
 
 # Testing
-only :test, :cucumber do
+only :test, :cucumber, :hudson do
   gem "rspec"
   gem "cucumber", '0.3.11'
   gem "webrat", ">= 0.6.0"
