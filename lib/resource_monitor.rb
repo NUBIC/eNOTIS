@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment") unle
 Dir[File.dirname(__FILE__) + "/webservices/plugins/*.rb"].each {|file| require file}
 #check the EDW status
 loop do
- [EdwServices,EirbServices].each do |service|
+ [Edw,Eirb].each do |service|
    status,message = service.service_test
    ResourceStatus.find_or_create({:name=>service.to_s.downcase}).update_attributes({:status=>status,:message=>message})
  end

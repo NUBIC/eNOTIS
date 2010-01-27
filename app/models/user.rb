@@ -23,11 +23,9 @@ class User < ActiveRecord::Base
   def self.authenticate(netid, password)
     return nil if netid.blank? || password.blank?
     u = find_by_netid(netid.downcase)
-    logger.debug("RAILS_ENV=#{RAILS_ENV}")
-    return u if u && ('development training'.include? RAILS_ENV) # bypass netid authentication in development and training
-    # TODO refactor this out - yoon
-    self.setup_bcsec
-    return u if u && NetidAuthenticator.valid_credentials?(netid, password)
+    # logger.debug("RAILS_ENV=#{RAILS_ENV}")
+    # bypass netid authentication in development
+    return u if u && ((%w(development training).include? RAILS_ENV) or NetidAuthenticator.valid_credentials?(netid, password))
     nil
   end
   
@@ -36,13 +34,6 @@ class User < ActiveRecord::Base
     u && !u.studies.empty?
   end
   
-  def self.setup_bcsec
-    # We are using ERB here because we've moved the configs to use bcdatabase, which has erb template code in it
-    yml = ERB.new(File.read(File.join(RAILS_ROOT,"config/bcsec.yml"))).result
-    config = ServiceConfig.new(RAILS_ENV, YAML.parse(yml))
-    ["ldap_server", "ldap_user", "ldap_password"].each{|option| Bcsec.send("#{option}=", config.send(option))}
-  end
-
   # Public instance methods
   def netid=(value)
     write_attribute :netid, (value ? value.downcase : nil)

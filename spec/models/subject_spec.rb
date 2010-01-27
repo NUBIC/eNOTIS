@@ -48,58 +48,40 @@ describe Subject do
       @subject.address_line1.should == "314 Circle Dr."
       @subject.pre_sync_data.should be_nil
     end
-    it "should move all involvements when" do
+
+    it "should move all involvements when synced" do
       @subject = Factory(:subject)
       @subject2 = Factory(:subject,:synced_at=>nil)
       2.times{Factory(:involvement,:subject => @subject2)}
       @subject2.should have(2).involvement
       @subject.merge!(@subject2)
       @subject.should have(2).involvements
-      
     end
-
-    
   end
   
   describe "finding and creating" do
     before(:each) do
       @found_subject = Factory(:subject)
       @created_subject = Factory(:subject)
-      @params={}
-      @params[:study]=Factory(:study)
-      @params[:user] = Factory(:user).attributes
-      @params[:involvement] = Factory(:involvement).attributes
+      @params = {:subject => {}}
     end
-    it "should find a subject, with good mrn in params" do
+    it "should find a subject, by params" do
       Subject.should_receive(:find).and_return(@found_subject)
-      @params[:subject]={:mrn => "90210"}
+      @params[:subject] = {:mrn => "90210", :first_name => "Pikop N", :last_name => "Dropov", :birth_date => "1934-02-12"}
       Subject.find_or_create(@params).should == @found_subject    
     end
-    it "should create a subject, with good fn/ln/dob in params" do
+    it "should create a subject if it isn't found" do
+      Subject.should_receive(:find).and_return(nil)
       Subject.should_receive(:create).and_return(@created_subject)
       @params[:subject] = {:first_name => "Pikop N", :last_name => "Dropov", :birth_date => "1934-02-12"}
       Subject.find_or_create(@params).should == @created_subject
     end
-    it "should find a subject, with good mrn, good fn/ln/dob in params" do
-      Subject.should_receive(:find).and_return(@found_subject)
-      @params[:subject] = {:mrn => "90210", :first_name => "Pikop N", :last_name => "Dropov", :birth_date => "1934-02-12"}
-      Subject.find_or_create(@params).should == @found_subject
-    end
-    it "should create a subject, with bad mrn, good fn/ln/dob in params" do
+    it "should return nil if not found or created" do
       Subject.should_receive(:find).and_return(nil)
-      Subject.should_receive(:find_all_by_first_name_and_last_name_and_birth_date).and_return([])
-      Subject.should_receive(:create).and_return(@created_subject)
-      @params[:subject]= {:mrn => "90210", :first_name => "Pikop N", :last_name => "Dropov", :birth_date => "1934-02-12"}
-      Subject.find_or_create(@params).should == @created_subject
-    end
-    it "should return nil, with bad mrn, bad fn/ln/dob in params" do
-      Subject.should_receive(:find).and_return(nil)
-      Subject.should_receive(:find_all_by_first_name_and_last_name_and_birth_date).and_return([])
       Subject.should_receive(:create).and_return(nil)
       @params[:subject] = {:mrn => "90210", :first_name => "Pikop N", :last_name => "Dropov", :birth_date => "1934-02-12"}
       Subject.find_or_create(@params).should == nil
     end
-    
   end
   
 end

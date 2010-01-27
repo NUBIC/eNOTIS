@@ -86,7 +86,7 @@ class CouchStudy
 
   # Called if parent not found (forces second call and create)
   def rescue_save(obj)
-    doc = EirbServices.find_basics(:irb_number => obj[:irb_number])
+    doc = Eirb.find_basics(:irb_number => obj[:irb_number])
     puts "#{obj[:irb_number]} referenced but not found" if doc.empty?
     d = doc.first
     hmap!(d)

@@ -1,8 +1,7 @@
 require 'ruport'
 # This model holds the events that are associated with a subject on
 # a study. These would be events that have clinical significance like
-# when the subject was consented, screened, withdrawn, etc...
-#require 'ruport'
+# when the subject was consented, withdrawn, etc...
 
 class InvolvementEvent < ActiveRecord::Base
   acts_as_reportable
@@ -46,17 +45,6 @@ class InvolvementEvent < ActiveRecord::Base
   # Public class methods
   
   # for study_uploads
-  def self.sanity_check(params)
-    errors = []
-    errors << "either an MRN or (First Name, Last Name and Date of Birth) or Case Number are required" if params[:mrn].blank? and (params[:first_name].blank? or params[:last_name].blank? or Chronic.parse(params[:birth_date]).nil?) and params[:case_number].blank?
-    [ [params[:race], "Race is required"],
-      [params[:gender], "Gender is required"],
-      [params[:ethnicity], "Ethnicity is required"],
-      [params[:event_type], "Event Type is required"],
-      [params[:event_date], "Event Date is required"]].each {|val, msg| errors << msg if val.blank?}
-    return errors
-  end
-  
   def self.add(params)
     Study.transaction do # read http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
       # Study - find the study using the hidden field

@@ -1,4 +1,0 @@
-class DataServiceError < RuntimeError
-
-
-end

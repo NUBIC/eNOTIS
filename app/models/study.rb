@@ -1,5 +1,3 @@
-require 'webservices/webservices'
-
 # Represents a Clinical Study/Trial. Holds just the basic information we need
 # for assigning subjects. The model holds the study number, some basic information
 # about the study (Title, PI, Description, Approval Date, etc.). Most of the data
@@ -13,14 +11,8 @@ class Study < ActiveRecord::Base
   has_many :subjects, :through => :involvements
   has_many :study_uploads
 
-  # Mixins
-  #has_paper_trail #### None of these mixins are needed because we changed out
-  # include WebServices
-  # self.plugins=[EirbServices]
-  
   # Validators
   validates_presence_of :synced_at, :irb_number
-  
   
   # Public instance methods
   
@@ -53,7 +45,6 @@ class Study < ActiveRecord::Base
   def has_coordinator?(user)
     user.admin? or coordinators.map(&:user).include? user
   end
-  
 
   def may_accrue?
     # For possible eIRB statuses, see doc/terms.csv
@@ -63,10 +54,6 @@ class Study < ActiveRecord::Base
   def accrual
     involvements.size
   end
-
-  # def self.find_by_irb_number(irb_number)
-  #  find(:first,:conditions=>{:irb_number=>irb_number},:span=>:global)
-  # end
   
 end
 
