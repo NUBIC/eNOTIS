@@ -62,12 +62,6 @@ namespace :deploy do
   end
 end
 
-# Install gems after deploy
-after "deploy", "gems:install"
-
-# Install the postgres gem after setup - it is needed for the rails initializer to run
-after "deploy:setup", "gems:install_postgres"
-
 # Administration tasks
 namespace :admin do
   desc "Creates admins via rake db:populate:admins"
@@ -101,122 +95,20 @@ namespace :bcdatabase do
   end
 end
 
-# Gems
-# http://henrik.nyh.se/2008/10/cap-gems-install-and-a-gem-dependency-gotcha
+# Bundler
 namespace :gems do
-  desc "Install postgres gem - needed for the rails initializer to run - which happens before gem dependencies"
-  task :install_postgres, :roles => :app do
-    sudo "gem install pg"
-  end
-    
-  desc "Install gems"
-  task :install, :roles => :app do
-    # always use sudo to rake gems
-    # sudo helper string substitution per http://github.com/jamis/capistrano/commit/b45290e6ae3acce465ab5b7b8a82b7ad73a022e3
-    run "cd #{current_path}/ && #{sudo} rake RAILS_ENV=#{rails_env} gems:install"
-
-  end
-  desc "Uninstall gems"
-  task :cleanup, :roles => :app do
-    gems_to_uninstall = %w(
-      airblade-paper_trail
-      acts_as_reportable
-      bcdatabase
-      bcsec
-      binarylogic-searchlogic
-      builder
-      capistrano
-      chriseppstein-compass
-      chronic
-      columnize
-      composite_primary_keys
-      cucumber
-      diff-lcs
-      faker
-      fastercsv
-      haml
-      haml-edge
-      highline
-      hoe
-      httpclient
-      libxml-ruby
-      linecache
-      net-scp
-      net-sftp
-      net-ssh
-      net-ssh-gateway
-      nokogiri
-      paperclip
-      polyglot
-      populator
-      rcov
-      rspec
-      rspec-rails
-      ruby-debug
-      ruby-debug-base
-      ruby-net-ldap
-      rubytree
-      ruport
-      session
-      soap4r
-      sqlite3-ruby
-      stomp
-      term-ansicolor
-      thoughtbot-factory_girl
-      treetop
-      wddx
-      webrat
-      yoon-view_trail
-      ZenTest
-    )
-    gems_to_uninstall.each do |gem_name|
-      run "sudo gem uninstall --all --ignore-dependencies --executables #{gem_name}"
-    end
+  desc "Create, clear, symlink the shared bundler_gems path and install Bundler cached gems"
+  task :bundle, :roles => :app do
+    run "mkdir -p #{shared_path}/bundler_gems/ruby/1.8/gems/* && rm -rf #{shared_path}/bundler_gems/ruby/1.8/gems/*"
+    run "cd #{release_path} && ln -nfs #{shared_path}/bundler_gems/ruby/1.8/gems #{release_path}/vendor/bundler_gems/ruby/1.8/gems"
+    run "cd #{release_path} && gem bundle --cached --only #{rails_env}"
   end
 end
+
+after 'deploy:update_code', 'gems:bundle'
 
 # Inspiration
 # http://github.com/guides/deploying-with-capistrano
 # http://www.brynary.com/2008/8/3/our-git-deployment-workflow
 # http://weblog.jamisbuck.org/2007/7/23/capistrano-multistage
-
-
-# Dynamic database.yml generation
-# http://shanesbrain.net/2007/5/30/managing-database-yml-with-capistrano-2-0
-# require 'erb'
-# 
-# set :db_user, "enotis"
-# set :db_password, ""
-
-# before "deploy:setup", :db
-# after "deploy:update_code", "db:symlink" 
-# 
-# namespace :db do
-#   desc "Create database yaml in shared path" 
-#   task :default do
-#     db_config = ERB.new <<-EOF
-#     base: &base
-#       adapter: oracle
-#       username: #{db_user}
-#       password: #{db_password}
-# 
-#     staging:
-#       adapter: sqlite3
-#       database: db/production.sqlite3
-#       pool: 5
-#       timeout: 5000
-#     
-#     production:
-#       database: nubic_#{application}
-#       <<: *base
-#     EOF
-# 
-#     run "mkdir -p #{shared_path}/config" 
-#     put db_config.result, "#{shared_path}/config/database.yml" 
-#   end
-# 
-#   desc "Make symlink for database yaml" 
-#   task :symlink do
-#     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml" 
-#   end
-# end
+# http://github.com/wycats/bundler

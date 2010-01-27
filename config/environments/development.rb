@@ -16,9 +16,5 @@ config.action_controller.perform_caching             = false
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
-# development environment gems
-config.gem "ruby-debug-base", :version => '>=0.10.3' # also installs dependencies: linecache
-config.gem "ruby-debug", :version => '>=0.10.3' # also installs dependencies: columnize
-
-require 'ruby-debug' if defined? Debugger # don't choke if we haven't the gem, e.g. the first time we run rake gems:install
+require 'ruby-debug' if defined? Debugger # don't choke if we haven't the gem
 
