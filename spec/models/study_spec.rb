@@ -3,7 +3,13 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Study do
   
   before(:each) do
+    @fake_data = {:foo => "bar", :irb_number => "STU00005151",
+      "coords" => [{"name" => "sally", :netid => "soc210"}],
+      "co_pis"=>[{"name" => "boop"},{"name" => "bop"}]}
+
+    Study.stub!(:couch_doc).and_return(@fake_data)
     @study = Factory(:study)
+    @study.irb_number = "STU0001031"
   end
 
  it "should not be valid with out an irb_number" do
@@ -27,9 +33,30 @@ describe Study do
  end
 
  describe "data from couchdb" do
+
    
    it "stores the json in the instance object" do
      @study.eirb_json.should_not be_nil
    end
+
+   it "should be json that is converted to a hash" do
+     @study.eirb_json.is_a?(Hash).should be(true)
+   end
+
+   # Note that it doesn't handle attrs from the json that are arrays of
+   # hashes very well. No real good solution for this at this point -BLC
+   it "decorates the model with attributes from the json" do
+     @study.eirb_json.should == @fake_data
+     @study.inspect
+     @study.foo.should == "bar"
+     @study.coords.should == @fake_data["coords"]
+     @study.coords.first["name"].should == "sally"
+   end
+
+   it "does not clobber the irb_number attribute that is already defined" do
+     # we cleverly placed the wrong irb_number in the fake data field
+    @study.irb_number.should == "STU0001031" # and NOT what came in with the fake data
+   end
+   
  end
 end
