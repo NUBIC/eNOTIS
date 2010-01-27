@@ -14,31 +14,31 @@ class CouchStudy
   end
 
   def get_studies
-    @studies = EirbServices.find_basics #finds (almost) all the studies
+    @studies = Eirb.find_basics #finds (almost) all the studies
   end
 
   def get_pis
-    EirbServices.find_principal_investigators
+    Eirb.find_principal_investigators
   end
 
   def get_co_pis
-    EirbServices.find_co_investigators
+    Eirb.find_co_investigators
   end
 
   def get_coords
-    EirbServices.find_coordinators
+    Eirb.find_coordinators
   end
 
   def get_al
-    EirbServices.find_access_list
+    Eirb.find_access_list
   end
 
   def get_pops
-    EirbServices.find_populations
+    Eirb.find_populations
   end
 
   def get_acrl
-    EirbServices.find_accrual
+    Eirb.find_accrual
   end
 
   def create_studies
@@ -79,7 +79,7 @@ class CouchStudy
 
   # Called if parent not found (forces second call and create)
   def rescue_save(obj)
-    doc = EirbServices.find_basics(:irb_number => obj[:irb_number])
+    doc = Eirb.find_basics(:irb_number => obj[:irb_number])
     puts "#{obj[:irb_number]} referenced but not found" if doc.empty?
     d = doc.first
     hmap!(d)

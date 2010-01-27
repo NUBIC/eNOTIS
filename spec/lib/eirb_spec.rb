@@ -1,33 +1,31 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/../soap_mock_helper')
 
-describe EirbServices do
+describe Eirb do
   
    it "should assign the class attribute eirb_adapter" do
     File.stub!(:read).and_return("")
-    ServiceConfig.stub!(:new).and_return(nil)
     EirbAdapter.stub!(:new).and_return("foo")
-    EirbServices.connect
-    EirbServices.eirb_adapter.should_not be_nil
+    Eirb.connect
+    Eirb.eirb_adapter.should_not be_nil
   end
   
   describe "with stubbed adapter" do
     before(:each) do
-      @service = EirbServices
+      @service = Eirb
       @service.stub!(:connect)
-      @params = EirbServices::SEARCH_DEFAULTS
+      @params = Eirb::SEARCH_DEFAULTS
       @search = mock(EirbAdapter) 
     end
 
     describe "finding data about studies" do 
-
-      EirbServices::STORED_SEARCHES.each do |search|
+      Eirb::STORED_SEARCHES.each do |search|
         it "has the dynamic find methods" do
           p = @params.merge({:savedSearchName => search[:name], 
                         :parameters => {"ID" => "STU000123"}})
           @search.should_receive(:perform_search).with(p)
           @service.stub!(:eirb_adapter).and_return(@search)
-          @service.send("find_#{search[:ext]}",{:irb_number=>"STU000123"})
+          @service.send("find_#{search[:ext]}", {:irb_number=>"STU000123"})
         end
       end
     end 
@@ -50,12 +48,12 @@ describe EirbServices do
   describe "converter should return appropriate values" do
     it "should return the corresponding values in the translator hash" do
       @converter = {"attribute1"=>"attribute1_converted","attribute2"=>"attribute2_converted"}
-      EdwServices.convert([{"attribute1"=>"test1","attribute2"=>"test2"}],@converter).should == [{:attribute1_converted=>"test1",:attribute2_converted=>"test2"}]
+      Webservices.convert([{"attribute1"=>"test1","attribute2"=>"test2"}],@converter).should == [{:attribute1_converted=>"test1",:attribute2_converted=>"test2"}]
     end
 
     it "should ignore any attribute that doesn't exist in the translator" do
        @converter = {"attribute1"=>"attribute1_converted","attribute2"=>"attribute2_converted"}
-       EdwServices.convert([{"attribut"=>"test1","attribute2"=>"test2"}],@converter).should == [{:attribute2_converted=>"test2"}]
+       Webservices.convert([{"attribut"=>"test1","attribute2"=>"test2"}],@converter).should == [{:attribute2_converted=>"test2"}]
     end
 
   end

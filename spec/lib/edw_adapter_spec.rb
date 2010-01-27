@@ -3,34 +3,25 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe EdwAdapter do
 
   before(:each) do
-    @config = Object.new
-    @config.stub!(:url).and_return("http://blah.com?action")
-    @config.stub!(:username).and_return("foo")
-    @config.stub!(:password).and_return("bar")
-    @config.stub!(:service_timeout).and_return("2")
-
+    @config = {:username => "user", :password => "secret", :url => "http://blah.com?action"}
+    WebserviceConfig.stub!(:new).and_return(@config)
     @agent = Object.new
     Net::HTTP.stub!(:new).and_return(@agent)
     @agent.stub!(:use_ssl=)
     @agent.stub!(:verify_mode=)
     @agent.stub!(:read_timeout=)
     @agent.stub!(:open_timeout=)
-
     @resp = Object.new()
     @resp.stub!(:body).and_return("<?xml version=\"1.0\" encoding=\"utf-8\"?><Detail><mrd_pt_id>9988101</mrd_pt_id></Detail>")
-
-    @agent.stub!(:request).and_return(@resp)
-    
-    
-    @adapter = EdwAdapter.new(@config)
-    
+    @agent.stub!(:request).and_return(@resp)  
+    @adapter = EdwAdapter.new
     @req = Object.new 
     Net::HTTP::Get.stub!(:new).and_return(@req)
     @req.stub!(:ntlm_auth)
   end
 
   it "sets up the request with login credentials" do
-    @req.should_receive(:ntlm_auth).with(@config.username, @config.password, true)
+    @req.should_receive(:ntlm_auth).with(@config[:username], @config[:password], true)
     @adapter.perform_search({:mrd_pt_id => "901"})
   end
 

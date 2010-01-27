@@ -2,36 +2,32 @@ require 'net/ntlm_http'
 require 'net/http'
 require 'net/https'
 require 'libxml'
-require 'service_logger'
 
-# Acts as a middle layer between the EdwServices module and the Edw Webservice.
-# Passes off queries to the edw and returns queries
+# Adapter layer between the Edw class and the Edw webservice. Passes off queries to the EDW webservice and returns an array of hashes
 class EdwAdapter
+  attr_accessor :agent
+  attr_accessor :config
 
-  attr_reader :agent
-  attr_reader :config
-
-  def initialize(config = ServiceConfig.new)
-    @config = config
-    @agent = Net::HTTP.new('edwbi.nmff.org', 443)
-    @agent.use_ssl = true
-    @agent.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    @agent.read_timeout = config.service_timeout.to_i
-    @agent.open_timeout = config.service_timeout.to_i
+  def initialize
+    self.config = WebserviceConfig.new("/etc/nubic/edw-#{RAILS_ENV.downcase}.yml")
+    self.agent = Net::HTTP.new('edwbi.nmff.org', 443)
+    self.agent.use_ssl = true
+    self.agent.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    self.agent.read_timeout = config[:service_timeout].to_i
+    self.agent.open_timeout = config[:service_timeout].to_i
   end
 
   # Accepts a param hash of values and converts hash parameters to query string (thanks, Rails!)
-  def perform_search(params = {},debug=false)
+  def perform_search(params = {})
     begin
-      report_url = config.url
       # TODO: figure out a better logger, with levels. - yoon
-      WSLOGGER.info("#{Time.now} [EdwAdapter] report: #{report_url}")
-      WSLOGGER.info("#{Time.now} [EdwAdapter] params: #{params}")
-      req = Net::HTTP::Get.new(report_url + "&" + params.to_query, {'connection' => 'keep-alive'})
-      req.ntlm_auth(config.username, config.password, true)
+      LOG.info("[EdwAdapter] report: #{config[:url]}")
+      LOG.info("[EdwAdapter] params: #{params}")
+      req = Net::HTTP::Get.new(config[:url] + "&" + params.to_query, {'connection' => 'keep-alive'})
+      req.ntlm_auth(config[:username], config[:password], true)
       # http.set_debug_output $stderr
-      xml_response = @agent.request(req).body
-      # WSLOGGER.debug("#{Time.now} [EdwAdapter] results: #{xml_response.inspect}")
+      xml_response = agent.request(req).body
+      # LOG.debug("#{Time.now} [EdwAdapter] results: #{xml_response.inspect}")
 
       ## TODO Handle errors better here - yoon
       ## Hush Warning: xmlns: URI ENOTIS_x0020_-_x0020_TEST is not absolute at :1.
@@ -41,8 +37,8 @@ class EdwAdapter
 
       xml_doc = LibXML::XML::Document.string(xml_response)
       return self.class.format_search_results(xml_doc || "")
-    rescue TimeoutError,StandardError => bang
-      raise DataServiceError.new(bang.message)
+    rescue TimeoutError, StandardError => bang
+      raise WebserviceError.new(bang.message)
     end
   end
 
@@ -57,5 +53,4 @@ class EdwAdapter
       hash
     end
   end
-
 end

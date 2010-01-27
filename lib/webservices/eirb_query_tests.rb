@@ -1,10 +1,4 @@
-require 'eirb_adapter'
-require 'eirb_translations'
-require 'service_logger'
-#require 'lib/webservices/plugins/eirb_adapter'
-
 class EirbQueryTests
-
   def self.test
     params = {:startRow => 825, 
               :numRows => 5,
@@ -42,7 +36,5 @@ class EirbQueryTests
       end
       puts " - "
     end
-   
   end
-  
 end

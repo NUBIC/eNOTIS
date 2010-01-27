@@ -61,9 +61,6 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 
-  # Webservices are namespaced in lib
-  config.load_paths << "#{RAILS_ROOT}/lib/webservices/"
-  
   # Email setup
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -72,5 +69,4 @@ Rails::Initializer.run do |config|
    :domain => "northwestern.edu"
   }
 
-  
 end

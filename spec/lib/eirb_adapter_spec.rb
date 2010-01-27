@@ -4,16 +4,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../soap_mock_helper')
 describe EirbAdapter do
 
    before(:each) do
-    config = Object.new
-    config.stub!(:url).and_return("http://blah.com")
-    config.stub!(:username).and_return("foo")
-    config.stub!(:password).and_return("bar")
-    config.stub!(:storename).and_return("eirb")
- 
     factory = Object.new
     factory.stub!(:create_rpc_driver).and_return(Object.new)
     SOAP::WSDLDriverFactory.stub!(:new).and_return(factory)
-    @adapter = EirbAdapter.new(config)
+    @adapter = EirbAdapter.new
   end
 
   describe "with valid login credentials" do
