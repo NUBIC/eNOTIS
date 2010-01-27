@@ -1,71 +1,35 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Study do
+  
   before(:each) do
+    @study = Factory(:study)
   end
+
+ it "should not be valid with out an irb_number" do
+   @study.irb_number = nil
+   @study.valid?.should be_false
+   @study.irb_number = "STU0001031"
+   @study.valid?.should be_true
+ end
   
-  it "should create a new instance given valid attributes" do
-    Factory(:study).should be_valid
-  end
-  
-  it "should tell us when the study is stale" do
-    @study = Factory(:study, :synced_at => 3.days.ago)
-    @study.should be_stale
-    @study.synced_at = 3.minutes.ago
-    @study.should_not be_stale
-  end
-  it "should allow us to sync with different data" do
-    @study = Factory(:study, :synced_at => 3.days.ago, :description => "Randomized Evaluation of Sinusitis With Vitamin A")
-    @study.sync!({:description => "Randomized Evaluation of Sinusitis With Vitamin A440"})
-    @study.description.should == "Randomized Evaluation of Sinusitis With Vitamin A440"
-    @study.synced_at.should >= 1.minute.ago
-  end
-  it "should tell us when we can accrue subjects" do
+ it "should tell us when we can accrue subjects" do
     ["Approved", "Exempt Approved", "Not Under IRB Purview", "Revision Closed", "Revision Open"].each do |status|
-      Factory(:study, :status => status).may_accrue?.should be_true
+      Factory(:study, :status => status).can_accrue?.should be_true
     end
     ["Rejected", "Suspended", "Withdrawn", "foo", nil].each do |status|
-      Factory(:study, :status => status).may_accrue?.should be_false
+      Factory(:study, :status => status).can_accrue?.should be_false
     end
   end
-  
-  describe "with subjects" do
-    it "should add a new subject, regardless of status(open) or subject syncing" do
-      params = {:ethnicity=>32,:gender=>30}
-      study = Factory.create(:study, :status => "open")
-      study.add_subject(Factory(:subject, :synced_at => nil),params)
-      study.add_subject(Factory(:subject, :synced_at => 2.minutes.ago),params)
-      study.should have(2).involvements
-    end
-    it "should add a new subject, regardless of status(closed) or subject syncing" do
-      params = {:ethnicity=>32,:gender=>30}
-      study = Factory.create(:study, :status => "closed")
-      study.add_subject(Factory(:subject, :synced_at => nil),params)
-      study.add_subject(Factory(:subject, :synced_at => 2.minutes.ago),params)
-      study.should have(2).involvements
-    end
-    it "should add a new subject once and only once" do
-      params = {:ethnicity=>32,:gender=>30}
-      study = Factory.create(:study, :status => "closed")
-      subject = Factory(:subject, :synced_at => nil)
-      5.times { study.add_subject(subject,params) }
-      study.should have(1).involvements
-    end
-  end
-  
-  describe "with users" do
-    it "should authorize users added to study.users" do
-      pending
-      study = Factory.create(:study)
-      user = Factory(:user)
-      study.users << u
-      study.authorized_user?(u).should == true
-    end
-    it "should not authorize other users" do
-      pending
-      study = Factory.create(:study)
-      user = Factory(:user)
-      study.authorized_user?(u).should == false
-    end
-  end
+
+ it "should override the default to_param method" do
+  @study.to_param.should == @study.irb_number 
+ end
+
+ describe "data from couchdb" do
+   
+   it "stores the json in the instance object" do
+     @study.eirb_json.should_not be_nil
+   end
+ end
 end
