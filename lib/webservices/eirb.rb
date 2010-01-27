@@ -19,19 +19,6 @@ class Eirb
 
   cattr_accessor :eirb_adapter
   
-  # Wrapper methods
-  STORED_SEARCHES.each do |search|
-    meth=<<WMETH
-    def find_#{search[:ext]}(conditions = nil)
-      if conditions
-        default_search("#{search[:name]}", Webservices.convert([conditions], NOTIS_TO_EIRB, false).first)
-      else
-        chunked_search("#{search[:name]}")
-      end
-    end
-WMETH
-    instance_eval(meth)
-  end
   class << self
     # initializing the eIRB connection
     def connect
@@ -51,7 +38,17 @@ WMETH
         return false, error.message
       end
     end
-
+    
+    # Wrapper methods
+    STORED_SEARCHES.each do |search|
+      send(:define_method, "find_#{search[:ext]}") do |conditions|
+        if conditions.blank?
+          chunked_search("#{search[:name]}")
+        else
+          default_search("#{search[:name]}", Webservices.convert([conditions], NOTIS_TO_EIRB, false).first)
+        end
+      end
+    end
     # Search methods
     def default_search(search_name, parameters=nil)
       search_settings = SEARCH_DEFAULTS.merge({:savedSearchName => search_name, :parameters => parameters})
