@@ -1,16 +1,5 @@
 .subject_information
-  %h4
-    = subject.name
-  %p
-    = "case#: #{involvement.case_number}"
-    %br
-    = "mrn: #{subject.mrn}"
-    %br
-    = "dob: #{subject.birth_date}"
-    %br
-    - if involvement
-      = "gender: #{involvement.gender}"
-
+  %h4= subject.name
   %p
     - if subject.synced?
       = "#{image_tag("icons/link.png", :alt => "synced", :class => 'sync')} linked to"

@@ -6,7 +6,6 @@
     %br
     %span.study_title= study.title
   .details
-    %span.phase= "Phase #{study.phase}" unless study.phase.blank?
     %span.research_type= "Research Type: #{study.research_type}" unless study.phase.blank?
     %span.department= "Department: ..."
     %span.pi
@@ -23,13 +22,3 @@
       %ul
         - study.coordinators.each do |c|        
           %li= "#{c.first_name} #{c.last_name}"
-
-      -# Recent events
-        %ul
-          - study_events.all(:limit => 5).each do |ie|
-            %li
-              -# ">" before = removes extra spacing around this tag
-              %dtr{:title => ie.description}>= ie.term
-              = ": #{ie.involvement.subject.name} #{time_ago_in_words(ie.occurred_on || Date.today)} ago"
-    .export
-      = link_to("Export subjects", new_report_path(:study => study), :rel => '#export', :class => 'export-subjects') unless study.subjects.empty?
