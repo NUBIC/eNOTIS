@@ -16,6 +16,10 @@ class Study < ActiveRecord::Base
 
   attr_accessor :eirb_json
 
+  attr_accessor :pi #temp until full transition can be made
+  attr_accessor :coords #temp until full transition can be made
+  attr_accessor :irb_statur #temp ... as above
+
   def self.couch_connect
     return @couch if @couch
     config = WebserviceConfig.new("/etc/nubic/couch-#{RAILS_ENV.downcase}.yml")
@@ -23,7 +27,12 @@ class Study < ActiveRecord::Base
   end
 
   def self.couch_doc(study_id)
-    couch_connect.get(study_id)
+    begin
+      couch_connect.get(study_id)
+    rescue
+      # TODO remove this when this access is depricated
+      {:irb_number => "not found", :pi => [{}], :coords => [{}]} # fail semi-silently, the doc was not found for some reason
+    end
   end
 
   # After load hook to load up the dynamic methods/attrs from our
@@ -49,9 +58,49 @@ class Study < ActiveRecord::Base
     end
   end
 
+  #methods to depricate
+  def pi_netid
+    pi.first["netid"] || "missing"
+  end
+
+  def pi_first_name
+    pi.first["first_name"] || "missing"
+  end
+
+  def pi_last_name
+    pi.first["last_name"] || "missing"
+  end
+
+  def pi_email
+    pi.first["email"] || "missing"
+  end
+
+  def sc_netid
+    coords.first["netid"] || "missing"
+  end
+
+  def sc_first_name
+    coords.first["first_name"] || "missing"
+  end
+
+  def sc_last_name
+    coords.first["last_name"] || "missing"
+  end
+
+  def sc_email
+    coords.first["email"] || "missing"
+  end
+  # end of methods to depricate
+
+
+
   # irb_number instead of id in urls
   def to_param
     self.irb_number
+  end
+
+  def status
+    irb_status
   end
   
   def has_coordinator?(user)
@@ -64,7 +113,8 @@ class Study < ActiveRecord::Base
 
   def can_accrue?
     # For possible eIRB statuses, see doc/terms.csv
-    ["Approved", "Exempt Approved", "Not Under IRB Purview", "Revision Closed", "Revision Open"].include? self.status
+    ["Approved", "Exempt Approved", "Not Under IRB Purview",
+      "Revision Closed", "Revision Open"].include? self.status
   end
   
 

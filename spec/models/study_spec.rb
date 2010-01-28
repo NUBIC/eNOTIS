@@ -21,10 +21,10 @@ describe Study do
   
  it "should tell us when we can accrue subjects" do
     ["Approved", "Exempt Approved", "Not Under IRB Purview", "Revision Closed", "Revision Open"].each do |status|
-      Factory(:study, :status => status).can_accrue?.should be_true
+      Factory(:study, :irb_status => status).can_accrue?.should be_true
     end
     ["Rejected", "Suspended", "Withdrawn", "foo", nil].each do |status|
-      Factory(:study, :status => status).can_accrue?.should be_false
+      Factory(:study, :irb_status => status).can_accrue?.should be_false
     end
   end
 

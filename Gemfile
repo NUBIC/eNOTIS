@@ -1,6 +1,6 @@
 # Basics
 gem "rails", "2.3.4"
-gem "pg"
+#gem "pg"
 gem "haml", '>=2.2.0'
 gem "chriseppstein-compass", '>=0.8.13'
 gem "capistrano", '>=2.5.8'
@@ -40,10 +40,9 @@ gem "rspec-rails",        :only => [:test, :cucumber]
 gem "ruby-debug-base", '>=0.10.3', :only => [:development]
 gem "ruby-debug", '>=0.10.3',      :only => [:development]
 
-source "http://gemcutter.org"
 source "http://download.bioinformatics.northwestern.edu/gems/"
 
 bundle_path "vendor/bundler_gems" # The default is: vendor/gems
 # bin_path "bin"
 
-disable_system_gems
+#disable_system_gems
