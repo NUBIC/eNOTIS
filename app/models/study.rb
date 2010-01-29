@@ -1,5 +1,6 @@
 
 require 'couchrest'
+require 'lib/webservices'
 
 # Represents a Clinical Study/Trial.
 class Study < ActiveRecord::Base
@@ -16,9 +17,9 @@ class Study < ActiveRecord::Base
 
   attr_accessor :eirb_json
 
-  attr_accessor :pi #temp until full transition can be made
-  attr_accessor :coords #temp until full transition can be made
-  attr_accessor :irb_statur #temp ... as above
+  [:pi, :coords, :irb_status, :name, :title, :research_type, :description].each do |a|
+  attr_accessor a #temp until full transition can be made
+  end
 
   def self.couch_connect
     return @couch if @couch
@@ -30,8 +31,22 @@ class Study < ActiveRecord::Base
     begin
       couch_connect.get(study_id)
     rescue
-      # TODO remove this when this access is depricated
+      # TODO remove this when old method name access is depricated
       {:irb_number => "not found", :pi => [{}], :coords => [{}]} # fail semi-silently, the doc was not found for some reason
+    end
+  end
+
+  def self.couch_view(view)
+    couch_connect.view("study/#{view}")
+  end
+
+  def self.update_from_cache
+    study_list = couch_view(:all_status)
+    study_list["rows"].each do |study|
+      local_study = find_by_irb_number(study["id"])
+      if local_study.nil?
+        create(:irb_number => study["id"])
+      end
     end
   end
 
@@ -90,6 +105,10 @@ class Study < ActiveRecord::Base
   def sc_email
     coords.first["email"] || "missing"
   end
+
+  def phase
+    nil
+  end
   # end of methods to depricate
 
 
@@ -105,6 +124,10 @@ class Study < ActiveRecord::Base
   
   def has_coordinator?(user)
     user.admin? or coordinators.map(&:user).include? user
+  end
+
+  def accrual
+    involvements.count
   end
 
   def may_accrue?

@@ -4,5 +4,10 @@ namespace :eirb do
    puts `ruby script/eirbtest.rb`
   end
 
+  desc "Runs study import from data cache"
+  task :study_import do
+    `script/runner 'Study.update_from_cache'` 
+  end
+
 end
 

@@ -69,7 +69,6 @@ Factory.define :study do |p|
   p.name                  {"Randomized Evaluation of Sinusitis With Vitamin A"}
   p.title                 {"Randomized Evaluation of Sinusitis With Vitamin A"}
   p.research_type         {}
-  p.phase                 {"II"}
   p.description           {"Rem fugit culpa unde facilis earum. Quas et vitae ut cumque nihil quidem aperiam architecto. Et asperiores inventore non nisi libero architecto quibusdam.\r\n\r\nVeniam fugiat voluptas laudantium in assumenda. Blanditiis recusandae illum necessitatibus. Quia nesciunt esse officia neque doloribus vel explicabo provident. Non sit vero iusto quibusdam explicabo. Nobis in architecto quam pariatur sit autem optio."}
   p.irb_status            {"Approved"}
   p.pi [{"netid" => "tuh532",
@@ -86,7 +85,6 @@ Factory.define :fake_study, :parent => :study do |p|
   p.title                 {Faker::Study.title}
   p.name                  {|me| s = me.title.split; "#{s.first} #{s.last}";}
   p.research_type         {["Bio-medical","Bio-medical","Bio-medical","Social/Behavioral",""].rand}
-  p.phase                 {["I","II","III","IV","n/a",nil].rand}
   p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
   p.irb_status            {Faker::Study.eirb_status}
   p.pi do |me|
