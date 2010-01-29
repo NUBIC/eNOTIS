@@ -35,10 +35,10 @@ gem "bcsec"
 
 # Testing
 only :test, :cucumber, :hudson do
-  gem "rspec"
-  gem "cucumber", '0.3.11'
-  gem "webrat", ">= 0.6.0"
-  gem "rspec-rails"
+  gem "rspec-rails", "~> 1.2.0"
+  gem "cucumber-rails", "~> 0.2.0"
+  gem "webrat", "~> 0.6.0"
+  gem "database_cleaner", "~> 0.0"
 end
 gem "ruby-debug-base", '>=0.10.3', :only => [:development]
 gem "ruby-debug", '>=0.10.3',      :only => [:development]
