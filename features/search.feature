@@ -20,26 +20,26 @@ Feature: Search
     And I go to the homepage
 
   Scenario: A user can search for studies (by id)
-    And I search for "1248"
+    When I search for "1248"
     Then I should see title "Approved: Vitamin E and exertion"
     And I should see "3 studies found"
 
   Scenario: A user can search for studies (with keyword in title/short title)
-    And I search for "Vitamin E"
+    When I search for "Vitamin E"
     Then I should see title "Approved: Vitamin E and exertion"
     And I should see "1 study found"
     
   Scenario: A user can search for studies (fail)
-    And I search for "90210"
+    When I search for "90210"
     Then I should see "0 studies found"
     And I should be on the search page
 
   Scenario: A user can search for subjects
-    And I search for "Marge"
+    When I search for "Marge"
     Then I should see "1 subject found"
   
   Scenario: A user can search for subjects and studies
-    And I search for "ex"
+    When I search for "ex"
     Then I should see "1 subject found"
     And I should see "1 study found"
   
