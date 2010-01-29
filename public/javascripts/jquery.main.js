@@ -22,11 +22,11 @@ $(document).ready(function() {
     $("#study a[rel=#study_information]").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 } });
 
     // subject overlay
-    $("#study a[rel=#subject_information]").overlay({ 
-      onBeforeLoad: function(){ $("#subject_information .contentWrap").html(this.getTrigger().next('.subject_information').html()); },
-      onStart: function(){ var trigger = this.getTrigger(); $('#subject_information').css({'top': trigger.offset().top - 14, 'left': trigger.offset().left + trigger.outerWidth() }); },
-      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    });
+    // $("#study a[rel=#subject_information]").overlay({ 
+    //   onBeforeLoad: function(){ $("#subject_information .contentWrap").html(this.getTrigger().next('.subject_information').html()); },
+    //   onStart: function(){ var trigger = this.getTrigger(); $('#subject_information').css({'top': trigger.offset().top - 14, 'left': trigger.offset().left + trigger.outerWidth() }); },
+    //   expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+    // });
     
     // involvement overlay
     $("#study a[rel=#involvement_information]").overlay({ 

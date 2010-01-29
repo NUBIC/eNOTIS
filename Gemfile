@@ -34,11 +34,16 @@ gem "bcdatabase", '<1.0.0'
 gem "bcsec"
 
 # Testing
-gem "rspec",              :only => [:test, :cucumber]
-gem "cucumber", '0.3.11', :only => [:test, :cucumber]
-gem "rspec-rails",        :only => [:test, :cucumber]
+only :test, :cucumber, :hudson do
+  gem "rspec"
+  gem "cucumber", '0.3.11'
+  gem "webrat", ">= 0.6.0"
+  gem "rspec-rails"
+end
 gem "ruby-debug-base", '>=0.10.3', :only => [:development]
 gem "ruby-debug", '>=0.10.3',      :only => [:development]
+
+gem "ci_reporter", "~> 1.6.0", :only => [:hudson]
 
 source "http://download.bioinformatics.northwestern.edu/gems/"
 
