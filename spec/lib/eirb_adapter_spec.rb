@@ -3,7 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../soap_mock_helper')
 
 describe EirbAdapter do
 
-   before(:each) do
+  before(:each) do
+    WebserviceConfig.stub!(:new).and_return({})
     factory = Object.new
     factory.stub!(:create_rpc_driver).and_return(Object.new)
     SOAP::WSDLDriverFactory.stub!(:new).and_return(factory)

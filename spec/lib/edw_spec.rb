@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Edw do
   it "should assign the class attribute edw_adapter" do
+    WebserviceConfig.stub!(:new).and_return({})
     Edw.connect
     Edw.edw_adapter.should_not be_nil
   end
