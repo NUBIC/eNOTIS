@@ -35,6 +35,7 @@ gem "bcsec"
 
 # Testing
 only :test, :cucumber, :hudson do
+  gem "rspec", "~> 1.2.0"
   gem "rspec-rails", "~> 1.2.0"
   gem "cucumber-rails", "~> 0.2.0"
   gem "webrat", "~> 0.6.0"

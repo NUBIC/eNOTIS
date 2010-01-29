@@ -89,10 +89,10 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/diff-lcs-1.1.2/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ci_reporter-1.6.0/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ci_reporter-1.6.0/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/faker-0.3.1/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/faker-0.3.1/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/acts_as_reportable-1.1.1/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/acts_as_reportable-1.1.1/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/faker-0.3.1/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/faker-0.3.1/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/haml-2.2.17/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/haml-2.2.17/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/chriseppstein-compass-0.8.15/bin")
@@ -103,8 +103,8 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/paperclip-2.1.2/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/binarylogic-searchlogic-2.1.7/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/binarylogic-searchlogic-2.1.7/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rspec-1.3.0/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rspec-1.3.0/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rspec-1.2.9/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rspec-1.2.9/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/aasm-2.1.4/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/aasm-2.1.4/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/treetop-1.4.3/bin")
@@ -229,10 +229,10 @@ module Bundler
   @bundled_specs["diff-lcs"].loaded_from = "#{dir}/specifications/diff-lcs-1.1.2.gemspec"
   @bundled_specs["ci_reporter"] = eval(File.read("#{dir}/specifications/ci_reporter-1.6.0.gemspec"))
   @bundled_specs["ci_reporter"].loaded_from = "#{dir}/specifications/ci_reporter-1.6.0.gemspec"
-  @bundled_specs["faker"] = eval(File.read("#{dir}/specifications/faker-0.3.1.gemspec"))
-  @bundled_specs["faker"].loaded_from = "#{dir}/specifications/faker-0.3.1.gemspec"
   @bundled_specs["acts_as_reportable"] = eval(File.read("#{dir}/specifications/acts_as_reportable-1.1.1.gemspec"))
   @bundled_specs["acts_as_reportable"].loaded_from = "#{dir}/specifications/acts_as_reportable-1.1.1.gemspec"
+  @bundled_specs["faker"] = eval(File.read("#{dir}/specifications/faker-0.3.1.gemspec"))
+  @bundled_specs["faker"].loaded_from = "#{dir}/specifications/faker-0.3.1.gemspec"
   @bundled_specs["haml"] = eval(File.read("#{dir}/specifications/haml-2.2.17.gemspec"))
   @bundled_specs["haml"].loaded_from = "#{dir}/specifications/haml-2.2.17.gemspec"
   @bundled_specs["chriseppstein-compass"] = eval(File.read("#{dir}/specifications/chriseppstein-compass-0.8.15.gemspec"))
@@ -243,8 +243,8 @@ module Bundler
   @bundled_specs["paperclip"].loaded_from = "#{dir}/specifications/paperclip-2.1.2.gemspec"
   @bundled_specs["binarylogic-searchlogic"] = eval(File.read("#{dir}/specifications/binarylogic-searchlogic-2.1.7.gemspec"))
   @bundled_specs["binarylogic-searchlogic"].loaded_from = "#{dir}/specifications/binarylogic-searchlogic-2.1.7.gemspec"
-  @bundled_specs["rspec"] = eval(File.read("#{dir}/specifications/rspec-1.3.0.gemspec"))
-  @bundled_specs["rspec"].loaded_from = "#{dir}/specifications/rspec-1.3.0.gemspec"
+  @bundled_specs["rspec"] = eval(File.read("#{dir}/specifications/rspec-1.2.9.gemspec"))
+  @bundled_specs["rspec"].loaded_from = "#{dir}/specifications/rspec-1.2.9.gemspec"
   @bundled_specs["aasm"] = eval(File.read("#{dir}/specifications/aasm-2.1.4.gemspec"))
   @bundled_specs["aasm"].loaded_from = "#{dir}/specifications/aasm-2.1.4.gemspec"
   @bundled_specs["treetop"] = eval(File.read("#{dir}/specifications/treetop-1.4.3.gemspec"))
