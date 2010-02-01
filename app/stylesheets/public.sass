@@ -65,21 +65,24 @@ body
       // a single item. must be floated in horizontal scrolling. typically, this element is the one that *you* will style the most. 
       div.item
         :float left
+        +column(48)
         // :width 955px
-        div.pane-column
-          +column(15)
+        // div.pane-column
+        //   +column(15)
+        //   :padding-right 20px
+        img
+          :float left
           :padding-right 20px
       div.current
         :border 1px inset #ccc 
         :background-color #cdcdcd
 
 #footer
-  .nulogo
-    +column(9)
-  .nucatslogo
-    +column(14)
-  .nubiclogo
-    +column(25, true)
-
+  .nulogo, .fsmlogo, .nucatslogo, .nubiclogo
+    :float left
+    :margin 0 3px
+  p.version
+    :clear left
+    :padding-top 10px
 #help
   :width 675px
