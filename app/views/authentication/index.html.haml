@@ -42,7 +42,12 @@
         
         
     #training.item
-      &nbsp;
+      %h2 eNOTIS supports two methods of tracking subject accrual
+      = image_tag 'corodinator_workflow.jpg'
+      %h3
+        Send your support requests to:
+        %br
+        = mail_to 'enotis-support@northwestern.edu'
     #questions.item
       = render :partial => 'partials/faq'
 
