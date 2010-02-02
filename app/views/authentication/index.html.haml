@@ -12,29 +12,39 @@
     $("#flash").animate({width: flashWidth}, 3000).slideUp(1000);
     });
 %ul.tabs
-  %li= link_to "Measure", "#measure"
-  %li= link_to "See", "#see"
-  %li= link_to "Improve", "#improve"
+  %li= link_to "About", "#about"
+  %li= link_to "Training", "#training"
+  %li= link_to "Questions", "#questions"
 .panes
   .items
-    #measure.item
-      %h2 Measure
-      = image_tag "measure.jpg"
-      %h4 Developed in response to requests from the clinical research community, eNOTIS is the subject registration system for all IRB-approved clinical research at Northwestern University
-      %h3 Add subjects to your study and track key clinical events: consent, withdrawal, completion
+    #about.item
+      %h2
+        eNOTIS is the subject registration system for all IRB-approved
+        %br
+        clinical research at Northwestern University
+      .col
+        %h3 Measure
+        = image_tag 'measure.jpg'
+        %h4 Developed in response to requests from the clinical research community
+        %h4 Add subjects to your study and track key clinical events: consent, withdrawal, completion
+      .col
+        %h3 See
+        = image_tag 'see.jpg'
+        %h4 Visualize accrual for all your studies in one place
+        %h4 Print or export your enrollment for reports
+        %h4 eNOTIS meets recent FDA guidelines on electronic reporting and addresses a mandate that accrual information be tracked, validated and reported periodically to clinicaltrials.gov
+      .col
+        %h3 Improve
+        = image_tag 'improve.jpg'
+        %h4 Make informed decisions about your research 
+        %h4 Ensure subject safety by verifying their participation in other trials 
+        %h4 eNOTIS reduces set-up time by accessing your study information through eIRB and subject identity through NU Enterprise Data Warehouse (EDW). This approach means less data entry and will reduce or eliminate the need for manual study tracking adoption
         
-    #see.item
-      %h2 See
-      = image_tag "see.jpg"
-      %h3 eNOTIS helps you visualize accrual for all your studies in a centralized repository
-      %h3 Print or export your enrollment for reporting purposes
-      %h4 eNOTIS meets recent FDA guidelines on electronic reporting and addresses a mandate that accrual information be tracked, validated and reported periodically to clinicaltrials.gov
-    #improve.item
-      %h2 Improve
-      = image_tag "improve.jpg"
-      %h3 Make informed decisions about your research 
-      %h3 Ensure subjects' safety by verifying their participation in other trials 
-      %h4 eNOTIS reduces set-up time by accessing your study information through eIRB and patient identity through the NU Enterprise Data Warehouse (EDW). This approach means less data entry and will reduce or eliminate the need for manual study tracking adoption
+        
+    #training.item
+      &nbsp;
+    #questions.item
+      = render :partial => 'partials/faq'
 
   -#system_status{:class => @status}
     .heading System status
