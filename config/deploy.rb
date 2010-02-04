@@ -107,6 +107,23 @@ end
 
 after 'deploy:update_code', 'gems:bundle'
 
+# Maintenance
+namespace :web do
+  desc "Display staticmatic maintenance page"
+  task :disable, :roles => :web, :except => { :no_release => true } do
+    on_rollback { run "rm -f #{current_path}/public/index.html" }
+    run "rm -f #{current_path}/public/index.html"
+    run "mkdir -p #{current_path}/public/images/static #{current_path}/public/stylesheets/static"
+    run "cp #{current_path}/static/site/index_coming_soon.html #{current_path}/public/index.html"
+    run "cp #{current_path}/static/site/images/static/* #{current_path}/public/images/static"
+    run "cp #{current_path}/static/site/stylesheets/static/* #{current_path}/public/stylesheets/static"
+  end
+
+  task :enable, :roles => :web, :except => { :no_release => true } do
+    run "rm -f #{current_path}/public/index.html"
+  end
+end
+
 # Inspiration
 # http://github.com/guides/deploying-with-capistrano
 # http://www.brynary.com/2008/8/3/our-git-deployment-workflow
