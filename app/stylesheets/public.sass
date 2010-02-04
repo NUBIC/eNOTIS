@@ -57,6 +57,8 @@ body
     :padding-top 20px
     h4, h3
       :color #333
+    h2
+      :font-weight bold
     // root element for scrollable items. Must be absolutely positioned and it should have a extremely large width to accomodate scrollable items. it's enough that you set width and height for the root element and not for this element. 
     div.items
       // this cannot be too large
@@ -77,9 +79,14 @@ body
           :float left
           :width 303px
           :padding-right 15px
+        div.col2
+          :float left
+          :width 48%
+          :padding-right 2%
         p.q
           :font-weight bold
           :margin-bottom 5px
+          :font-size 13px
         p.a
           
       div.current

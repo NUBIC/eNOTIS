@@ -1,23 +1,29 @@
-.col
+.col2
   %p.q When will we need to use eNOTIS?
-  %p.a= "Newly approved #{link_to 'interventional', 'http://prsinfo.clinicaltrials.gov/definitions.html#StudyType'} studies are required to enter accrual in eNOTIS as of March 1st, 2010. All current interventional studies are required to enter accrual into eNOTIS as of their next periodic review. For example, an interventional study coming up for review on April 15th, 2010 will be required to use eNOTIS for accrual information as of April 15th, 2010. eNOTIS has the ability to import existing subject lists in #{link_to 'csv format', 'http://en.wikipedia.org/wiki/Comma-separated_values'}, and will provide the IRB with accrual data for subsequent periodic reviews, reducing this reporting burden."
+  %p.a= "#{link_to 'Interventional', 'http://prsinfo.clinicaltrials.gov/definitions.html#StudyType'} studies approved after March 1st, 2010 are required to enter accrual in eNOTIS. Current interventional studies will be required to enter accrual into eNOTIS after their next periodic review. eNOTIS has the ability to import existing subject lists in #{link_to 'csv format', 'http://en.wikipedia.org/wiki/Comma-separated_values'}."
 
   %p.q What data will we need to enter?
   %p.a Subject identity, NIH race and ethnicity, gender, consent and completion dates. Study information will come from the eIRB and will not require double entry.
 
-.col
   %p.q Who will be able to accrue and view the list of subjects accrued on a study?
   %p.a For each study, the IRB authorized PI, co-PI and coordinators will be able to view the identity of subjects accrued on a study. Any additional roles and responsibilities should be clarified with the IRB and represented in the eIRB.
   
   %p.q When will eNOTIS reflect new and terminated personnel, as authorized personnel list revisions take time in eIRB?
   %p.a The IRB is committed to providing expedited review and implementation of faculty and staff changes for any IRB study. The University has immediate termination of access procedures in place, including netID cutoffs synchronized with physical notification in cases of employee termination.
 
-.col
-  %p.q What information will eNOTIS show about subjects and other studies?
-  %p.a Each subject is represented once in eNOTIS. Users who have accrued a subject will be able to view all other interventional studies a subject is accrued on. Confidential or sensitive participation will be identified by case number only, and will not be associated with other studies in eNOTIS.
+.col2
 
-  %p.q Is eNOTIS IRB approved? Will consent language will need to change to include use by eIRB?
-  %p.a eNOTIS is IRB approved, and does not require any additional consent language. eNOTIS is a secure and centrally managed resource for data that is already being tracked by all groups engaged in clinical research.
+  %p.q What information will eNOTIS show about subjects and other studies?
+  %p.a Each subject is represented once in eNOTIS. Users who have accrued a subject will be able to view all other studies a subject is accrued on. 
+
+  %p.q What if my protocol requires confidential participation?
+  %p.a Participants may be identified by case number only, and their participation will not be seen by other eNOTIS users.
+
+  %p.q Is eNOTIS IRB approved? Will consent language need to be updated?
+  %p.a
+    eNOTIS is IRB approved, please see 
+    = link_to "new consent templates", "http://www.research.northwestern.edu/OPRS/irb/templates/"
+    (under NU Informed Consents). eNOTIS is a secure and centrally managed resource for data that is already being tracked by all groups engaged in clinical research.
 
   %p.q What HIPAA or other security issues are raised by use of eNOTIS?
   %p.a All subject identity searches in eNOTIS are logged. All eNOTIS users have CITI training, as validated by the IRB. We do not anticipate any additional security or HIPAA-related issues.
