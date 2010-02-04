@@ -4,6 +4,7 @@ gem "pg"
 gem "haml", '>=2.2.0'
 gem "chriseppstein-compass", '>=0.8.13'
 gem "capistrano", '>=2.5.8'
+gem "fastthread"
 
 # External services
 gem "soap4r", '>=1.5.8'
