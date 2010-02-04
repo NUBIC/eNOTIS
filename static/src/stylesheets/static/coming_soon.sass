@@ -1,15 +1,154 @@
-body
-  :font
-    :family Verdana
-    :size 10pt
-  :text-align center
-#main
-  :width 1004px
+#container
+  :width 995px
   :margin 0 auto
-  :text-align left
-.column
+  // :overflow hidden
+  :display inline-block
+  :display block
+#header
+  :display inline
   :float left
-  :width 48%
-  :padding-right 2%
-.clear
-  :clear both
+  :margin-right 0
+  :width 995px
+  :height 75px
+* html #header
+  :overflow-x hidden
+#app_name
+  :display inline
+  :float left
+  :margin-right 5px
+  :width 295px
+  :font-size 3em
+  :font-weight bold
+  :color #520063
+#app_name img
+  :margin-top 10px
+#footer
+  :margin-top 20px
+  :padding-top 10px
+  :background-color white
+  :-moz-border-radius 7px 7px
+  :display inline
+  :float left
+  :margin-right 0
+  :width 955px
+  :padding-left 20px
+  :padding-right 20px
+body
+  :background-color white
+  :background-repeat repeat-x
+  :background-image url('/images/static/public-fade-bg.png')
+#main
+  :display inline
+  :float left
+  :margin-right 0
+  :width 955px
+  :padding-left 20px
+  :padding-right 20px
+  :background-color white
+  :background-image url('/images/pane-texture-bg.png')
+  :background-repeat repeat-x
+  :background-color white
+  :-moz-border-radius 0 0 7px 7px
+  :background-position 0 -35px
+  :background-position 0 0
+  :background-image url('/images/static/pane-texture-bg.png')
+  ul.tabs
+    :background-color #d6d6d6
+    :margin 0
+    :display block
+    :height 35px
+    :display inline
+    :float left
+    :margin-right 0
+    :width 995px
+    li
+      :background transparent
+      :list-style none
+      :display block
+      :float left
+      :width 278px
+      :padding 0 40px 0 0
+      a
+        :color #999999
+        :font-size 18px
+        :height 30px
+        :line-height 35px
+        :text-decoration none
+      a:hover
+        :color #555555
+      a.current
+        :border-bottom 7px solid #006699
+        :color #333333
+  // root element for the scrollable. when scrolling occurs this element stays still. 
+  div.panes
+    // required settings
+    :position relative
+    :overflow hidden 
+    // :width 955px
+    :display inline
+    :float left
+    :margin-right 0
+    :width 995px
+    :height 450px
+    :padding-top 20px
+    h4, h3
+      :color #333
+    h2
+      :font-weight bold
+    // root element for scrollable items. Must be absolutely positioned and it should have a extremely large width to accomodate scrollable items. it's enough that you set width and height for the root element and not for this element. 
+    div.items
+      // this cannot be too large
+      :width 20000em
+      :position absolute
+      // a single item. must be floated in horizontal scrolling. typically, this element is the one that *you* will style the most. 
+      div.item
+        :float left
+        :display inline
+        :float left
+        :margin-right 0
+        :width 995px
+        // :width 955px
+        // div.pane-column
+        //   +column(15)
+        //   :padding-right 20px
+        img
+          :float left
+          :padding-right 20px
+        div.col
+          :float left
+          :width 303px
+          :padding-right 15px
+        div.col2
+          :float left
+          :width 48%
+          :padding-right 2%
+        p.q
+          :font-weight bold
+          :margin-bottom 5px
+          :font-size 13px
+        p.a
+
+      div.current
+        :border 1px inset #ccc 
+        :background-color #cdcdcd
+
+#footer
+  :margin-top 20px
+  :padding-top 10px
+  :display inline
+  :float left
+  :margin-right 0
+  :width 955px
+  :padding-left 20px
+  :padding-right 20px
+  p
+    :margin-top 10px
+#footer
+  .nulogo, .fsmlogo, .nucatslogo, .nubiclogo
+    :float left
+    :margin 0 3px
+  p.version
+    :clear left
+    :padding-top 10px
+#help
+  :width 675px

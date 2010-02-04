@@ -2,53 +2,102 @@
 <html>
   <head>
     <title>eNOTIS</title>
-    <link href="stylesheets/static/coming_soon.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="stylesheets/static/application.css" media="all" rel="stylesheet" type="text/css"/><link href="stylesheets/static/coming_soon.css" media="all" rel="stylesheet" type="text/css"/>
+    <script language="javascript" src="javascripts/jquery.tools.min.js" type="text/javascript"></script>
+    <script type='text/javascript'>
+      //<![CDATA[
+        $(document).ready(function(){
+        // scrollable
+        $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
+        });
+      //]]>
+    </script>
   </head>
   <body>
-    <div id='main'>
-      <h1>
-        <img alt="eNOTIS" src="images/static/enotis-white.png"/>
-      </h1>
-      <h3>eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University</h3>
-      <div class='column' style='color:#520063;width:24%'>
-        <h2>Coming soon</h2>
-        <p>
-          For more information contact
-          <script type='text/javascript'>
-            //<![CDATA[
-              //<![CDATA[
-              <!--
-              var x="function f(x){var i,o=\"\",l=x.length;for(i=l-1;i>=0;i--) {try{o+=x.c" +
-              "harAt(i);}catch(e){}}return o;}f(\")\\\"function f(x,y){var i,o=\\\"\\\\\\\""+
-              "\\\\,l=x.length;for(i=0;i<l;i++){if(i>(42+y))y*=2;y%=127;o+=String.fromChar" +
-              "Code(x.charCodeAt(i)^(y++));}return o;}f(\\\"\\\\NDOXCJ^E\\\\\\\\034DF\\\\\\"+
-              "\\\\\\\\\\BRTW\\\\\\\\022\\\\\\\\031\\\\\\\\000\\\\\\\\\\\\\\\\\\\\\\\\036W" +
-              "2$$~\\\\\\\\030g+&!%>$v(  $8!\\\\\\\\023::$#0.?((8,1N\\\\\\\\004\\\\\\\\006" +
-              "\\\\\\\\0268GF\\\\\\\\023\\\\\\\\001\\\\\\\\035\\\\\\\\006\\\\\\\\016Q1L3RO" +
-              "\\\\\\\\027\\\\\\\\035\\\\\\\\033\\\\\\\\001\\\\\\\\037\\\\\\\\0048\\\\\\\\" +
-              "027\\\\\\\\025\\\\\\\\t\\\\\\\\010\\\\\\\\025\\\\\\\\teqrklP\\\\\\\\021%%7\\"+
-              "\\\\\\177k$xearzp\\\"\\\\,42)\\\"(f};)lo,0(rtsbus.o nruter};)i(tArahc.x=+o{" +
-              ")--i;0=>i;1-l=i(rof}}{)e(hctac};l=+l;x=+x{yrt{)801=!)31/l(tAedoCrahc.x(elih" +
-              "w;lo=l,htgnel.x=lo,\\\"\\\"=o,i rav{)x(f noitcnuf\")"                        ;
-              while(x=eval(x));
-              //-->
-              //]]>
-            //]]>
-          </script>
-        </p>
+    <div id='container'>
+      <div id='header'>
+        <div id='app_name'><img alt="eNOTIS" src="images/static/enotis-swoop-logo.png"/></div>
       </div>
-      <div class='column' style='width:35%'>
-        <p>eNOTIS is the web-based research subject enrollment application for Northwestern University.  Developed by the NUCATS Institute's Northwestern University Biomedical Informatics Center (NUBIC), eNOTIS is designed to track all research accrual on research studies under IRB oversight, including any study run through NUCATS, NMH, NMFF and RIC.</p>
+      <div id='main'>
+        <ul class='tabs'>
+          <li><a href="#about">About</a></li>
+          <li><a href="#training">Training</a></li>
+          <li><a href="#questions">Questions</a></li>
+        </ul>
+        <div class='panes'>
+          <div class='items'>
+            <div class='item' id='about'>
+              <h2>
+                eNOTIS is the subject registration system for all IRB-approved
+                <br />
+                clinical research at Northwestern University
+              </h2>
+              <div class='col'>
+                <h3>Measure</h3>
+                <img alt="Measure" src="images/static/measure.jpg"/>
+                <h4>Developed in response to requests from the clinical research community</h4>
+                <h4>Add subjects to your study and track key clinical events: consent, withdrawal, completion</h4>
+              </div>
+              <div class='col'>
+                <h3>See</h3>
+                <img alt="See" src="images/static/see.jpg"/>
+                <h4>Visualize accrual for all your studies in one place</h4>
+                <h4>Print or export your enrollment for reports</h4>
+                <h4>eNOTIS meets recent FDA guidelines on electronic reporting and addresses a mandate that accrual information be tracked, validated and reported periodically to clinicaltrials.gov</h4>
+              </div>
+              <div class='col'>
+                <h3>Improve</h3>
+                <img alt="Improve" src="images/static/improve.jpg"/>
+                <h4>Make informed decisions about your research</h4>
+                <h4>Ensure subject safety by verifying their participation in other trials</h4>
+                <h4>eNOTIS reduces set-up time by accessing your study information through eIRB and subject identity through NU Enterprise Data Warehouse (EDW). This approach means less data entry and will reduce or eliminate the need for manual study tracking adoption</h4>
+              </div>
+            </div>
+            <div class='item' id='training'>
+              <h2>eNOTIS supports two methods of tracking subject accrual</h2>
+              <img alt="Coordinator workflow" src="images/static/coordinator_workflow.jpg"/>
+              <h3>
+                Send your support requests to:
+                <br />
+                <a href="mailto:enotis-support@northwestern.edu">enotis-support@northwestern.edu</a>
+              </h3>
+            </div>
+            <div class='item' id='questions'>
+              <div class='col2'>
+                <p class='q'>When will we need to use eNOTIS?</p>
+                <p class='a'><a href="http://prsinfo.clinicaltrials.gov/definitions.html#StudyType">Interventional</a> studies approved after March 1st, 2010 are required to enter accrual in eNOTIS. Current interventional studies will be required to enter accrual into eNOTIS after their next periodic review. eNOTIS has the ability to import existing subject lists in <a href="http://en.wikipedia.org/wiki/Comma-separated_values">csv format</a>.</p>
+                <p class='q'>What data will we need to enter?</p>
+                <p class='a'>Subject identity, NIH race and ethnicity, gender, consent and completion dates. Study information will come from the eIRB and will not require double entry.</p>
+                <p class='q'>Who will be able to accrue and view the list of subjects accrued on a study?</p>
+                <p class='a'>For each study, the IRB authorized PI, co-PI and coordinators will be able to view the identity of subjects accrued on a study. Any additional roles and responsibilities should be clarified with the IRB and represented in the eIRB.</p>
+                <p class='q'>When will eNOTIS reflect new and terminated personnel, as authorized personnel list revisions take time in eIRB?</p>
+                <p class='a'>The IRB is committed to providing expedited review and implementation of faculty and staff changes for any IRB study. The University has immediate termination of access procedures in place, including netID cutoffs synchronized with physical notification in cases of employee termination.</p>
+              </div>
+              <div class='col2'>
+                <p class='q'>What information will eNOTIS show about subjects and other studies?</p>
+                <p class='a'>Each subject is represented once in eNOTIS. Users who have accrued a subject will be able to view all other studies a subject is accrued on.</p>
+                <p class='q'>What if my protocol requires confidential participation?</p>
+                <p class='a'>Participants may be identified by case number only, and their participation will not be seen by other eNOTIS users.</p>
+                <p class='q'>Is eNOTIS IRB approved? Will consent language need to be updated?</p>
+                <p class='a'>
+                  eNOTIS is IRB approved, please see
+                  <a href="http://www.research.northwestern.edu/OPRS/irb/templates/">new consent templates</a>
+                  (under NU Informed Consents). eNOTIS is a secure and centrally managed resource for data that is already being tracked by all groups engaged in clinical research.
+                </p>
+                <p class='q'>What HIPAA or other security issues are raised by use of eNOTIS?</p>
+                <p class='a'>All subject identity searches in eNOTIS are logged. All eNOTIS users have CITI training, as validated by the IRB. We do not anticipate any additional security or HIPAA-related issues.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class='column' style='width:35%'>
-        <p>eNOTIS will be the standard platform for NU and meets recent FDA guidelines on electronic reporting, addressing a mandate that accrual information be tracked, validated and reported periodically to clinicaltrials.gov. eNOTIS will reduce or eliminate the need for manual study tracking, which is often a resource-intensive part of clinical research.</p>
+      <div id='footer'>
+        <div class='nulogo'><img alt="Nu logo" src="images/static/nu_logo.gif"/></div>
+        <div class='fsmlogo'><img alt="Fsm logo" src="images/static/fsm-logo.gif"/></div>
+        <div class='nucatslogo'><img alt="Nucats logo" src="images/static/nucats_logo.gif"/></div>
+        <div class='nubiclogo'><img alt="Nubic logo" src="images/static/nubic_logo.gif"/></div>
+        <p class='version'>eNOTIS 0.0.1a &mdash; created by <a href="http://www.nucats.northwestern.edu/centers/nubic">NUBIC</a> for Northwestern University</p>
       </div>
-      <br class='clear' />
-      <p>
-        <img alt="Nu logo" src="images/static/nu_logo.gif"/>
-        <img alt="Nucats logo" src="images/static/nucats_logo.gif"/>
-        <img alt="Nubic logo" src="images/static/nubic_logo.gif"/>
-      </p>
     </div>
   </body>
 </html>

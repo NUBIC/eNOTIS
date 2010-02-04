@@ -1,17 +1,149 @@
+#container {
+  width: 995px;
+  margin: 0 auto;
+  display: inline-block;
+  display: block; }
+
+#header {
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 995px;
+  height: 75px; }
+
+* html #header {
+  overflow-x: hidden; }
+
+#app_name {
+  display: inline;
+  float: left;
+  margin-right: 5px;
+  width: 295px;
+  font-size: 3em;
+  font-weight: bold;
+  color: #520063; }
+
+#app_name img {
+  margin-top: 10px; }
+
+#footer {
+  margin-top: 20px;
+  padding-top: 10px;
+  background-color: white;
+  -moz-border-radius: 7px 7px;
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 955px;
+  padding-left: 20px;
+  padding-right: 20px; }
+
 body {
-  font-family: Verdana;
-  font-size: 10pt;
-  text-align: center; }
+  background-color: white;
+  background-repeat: repeat-x;
+  background-image: url('/images/static/public-fade-bg.png'); }
 
 #main {
-  width: 1004px;
-  margin: 0 auto;
-  text-align: left; }
-
-.column {
+  display: inline;
   float: left;
-  width: 48%;
-  padding-right: 2%; }
+  margin-right: 0;
+  width: 955px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: white;
+  background-image: url('/images/pane-texture-bg.png');
+  background-repeat: repeat-x;
+  background-color: white;
+  -moz-border-radius: 0 0 7px 7px;
+  background-position: 0 -35px;
+  background-position: 0 0;
+  background-image: url('/images/static/pane-texture-bg.png'); }
+  #main ul.tabs {
+    background-color: #d6d6d6;
+    margin: 0;
+    display: block;
+    height: 35px;
+    display: inline;
+    float: left;
+    margin-right: 0;
+    width: 995px; }
+    #main ul.tabs li {
+      background: transparent;
+      list-style: none;
+      display: block;
+      float: left;
+      width: 278px;
+      padding: 0 40px 0 0; }
+      #main ul.tabs li a {
+        color: #999999;
+        font-size: 18px;
+        height: 30px;
+        line-height: 35px;
+        text-decoration: none; }
+      #main ul.tabs li a:hover {
+        color: #555555; }
+      #main ul.tabs li a.current {
+        border-bottom: 7px solid #006699;
+        color: #333333; }
+  #main div.panes {
+    position: relative;
+    overflow: hidden;
+    display: inline;
+    float: left;
+    margin-right: 0;
+    width: 995px;
+    height: 450px;
+    padding-top: 20px; }
+    #main div.panes h4, #main div.panes h3 {
+      color: #333; }
+    #main div.panes h2 {
+      font-weight: bold; }
+    #main div.panes div.items {
+      width: 20000em;
+      position: absolute; }
+      #main div.panes div.items div.item {
+        float: left;
+        display: inline;
+        float: left;
+        margin-right: 0;
+        width: 995px; }
+        #main div.panes div.items div.item img {
+          float: left;
+          padding-right: 20px; }
+        #main div.panes div.items div.item div.col {
+          float: left;
+          width: 303px;
+          padding-right: 15px; }
+        #main div.panes div.items div.item div.col2 {
+          float: left;
+          width: 48%;
+          padding-right: 2%; }
+        #main div.panes div.items div.item p.q {
+          font-weight: bold;
+          margin-bottom: 5px;
+          font-size: 13px; }
+      #main div.panes div.items div.current {
+        border: 1px inset #ccc;
+        background-color: #cdcdcd; }
 
-.clear {
-  clear: both; }
+#footer {
+  margin-top: 20px;
+  padding-top: 10px;
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 955px;
+  padding-left: 20px;
+  padding-right: 20px; }
+  #footer p {
+    margin-top: 10px; }
+
+#footer .nulogo, #footer .fsmlogo, #footer .nucatslogo, #footer .nubiclogo {
+  float: left;
+  margin: 0 3px; }
+#footer p.version {
+  clear: left;
+  padding-top: 10px; }
+
+#help {
+  width: 675px; }

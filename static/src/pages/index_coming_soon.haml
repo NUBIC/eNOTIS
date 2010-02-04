@@ -1,39 +1,39 @@
-%h1
-  = img "static/enotis-white.png", :alt => "eNOTIS"
-%h3 eNOTIS is the subject registration system for all IRB approved clinical research at Northwestern University
+%ul.tabs
+  %li= link_to "About", "#about"
+  %li= link_to "Training", "#training"
+  %li= link_to "Questions", "#questions"
+.panes
+  .items
+    #about.item
+      %h2
+        eNOTIS is the subject registration system for all IRB-approved
+        %br
+        clinical research at Northwestern University
+      .col
+        %h3 Measure
+        = img 'static/measure.jpg'
+        %h4 Developed in response to requests from the clinical research community
+        %h4 Add subjects to your study and track key clinical events: consent, withdrawal, completion
+      .col
+        %h3 See
+        = img 'static/see.jpg'
+        %h4 Visualize accrual for all your studies in one place
+        %h4 Print or export your enrollment for reports
+        %h4 eNOTIS meets recent FDA guidelines on electronic reporting and addresses a mandate that accrual information be tracked, validated and reported periodically to clinicaltrials.gov
+      .col
+        %h3 Improve
+        = img 'static/improve.jpg'
+        %h4 Make informed decisions about your research 
+        %h4 Ensure subject safety by verifying their participation in other trials 
+        %h4 eNOTIS reduces set-up time by accessing your study information through eIRB and subject identity through NU Enterprise Data Warehouse (EDW). This approach means less data entry and will reduce or eliminate the need for manual study tracking adoption
 
-.column{:style => "color:#520063;width:24%"}
-  %h2 Coming soon
-  %p
-    For more information contact
-    :javascript
-      //<![CDATA[
-      <!--
-      var x="function f(x){var i,o=\"\",l=x.length;for(i=l-1;i>=0;i--) {try{o+=x.c" +
-      "harAt(i);}catch(e){}}return o;}f(\")\\\"function f(x,y){var i,o=\\\"\\\\\\\""+
-      "\\\\,l=x.length;for(i=0;i<l;i++){if(i>(42+y))y*=2;y%=127;o+=String.fromChar" +
-      "Code(x.charCodeAt(i)^(y++));}return o;}f(\\\"\\\\NDOXCJ^E\\\\\\\\034DF\\\\\\"+
-      "\\\\\\\\\\BRTW\\\\\\\\022\\\\\\\\031\\\\\\\\000\\\\\\\\\\\\\\\\\\\\\\\\036W" +
-      "2$$~\\\\\\\\030g+&!%>$v(  $8!\\\\\\\\023::$#0.?((8,1N\\\\\\\\004\\\\\\\\006" +
-      "\\\\\\\\0268GF\\\\\\\\023\\\\\\\\001\\\\\\\\035\\\\\\\\006\\\\\\\\016Q1L3RO" +
-      "\\\\\\\\027\\\\\\\\035\\\\\\\\033\\\\\\\\001\\\\\\\\037\\\\\\\\0048\\\\\\\\" +
-      "027\\\\\\\\025\\\\\\\\t\\\\\\\\010\\\\\\\\025\\\\\\\\teqrklP\\\\\\\\021%%7\\"+
-      "\\\\\\177k$xearzp\\\"\\\\,42)\\\"(f};)lo,0(rtsbus.o nruter};)i(tArahc.x=+o{" +
-      ")--i;0=>i;1-l=i(rof}}{)e(hctac};l=+l;x=+x{yrt{)801=!)31/l(tAedoCrahc.x(elih" +
-      "w;lo=l,htgnel.x=lo,\\\"\\\"=o,i rav{)x(f noitcnuf\")"                        ;
-      while(x=eval(x));
-      //-->
-      //]]>
 
-.column{:style => "width:35%"}
-  %p eNOTIS is the web-based research subject enrollment application for Northwestern University.  Developed by the NUCATS Institute's Northwestern University Biomedical Informatics Center (NUBIC), eNOTIS is designed to track all research accrual on research studies under IRB oversight, including any study run through NUCATS, NMH, NMFF and RIC.
-
-.column{:style => "width:35%"}
-  %p eNOTIS will be the standard platform for NU and meets recent FDA guidelines on electronic reporting, addressing a mandate that accrual information be tracked, validated and reported periodically to clinicaltrials.gov. eNOTIS will reduce or eliminate the need for manual study tracking, which is often a resource-intensive part of clinical research.
-
-%br.clear
-
-%p
-  = img "static/nu_logo.gif"
-  = img "static/nucats_logo.gif"
-  = img "static/nubic_logo.gif"
+    #training.item
+      %h2 eNOTIS supports two methods of tracking subject accrual
+      = img 'static/coordinator_workflow.jpg'
+      %h3
+        Send your support requests to:
+        %br
+        = link 'enotis-support@northwestern.edu', 'mailto:enotis-support@northwestern.edu'
+    #questions.item
+      = partial 'faq'
