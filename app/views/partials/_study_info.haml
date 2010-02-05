@@ -1,24 +1,22 @@
-.study_information
-  .title
-    %span.status
-      = status_icon study
-      = "#{study.status}:"
-    %br
-    %span.study_title= study.title
-  .details
-    %span.research_type= "Research Type: #{study.research_type}" unless study.phase.blank?
-    %span.department= "Department: ..."
-    %span.pi
-      = "PI: #{study.pi_first_name} #{study.pi_last_name}"
-      = link_to study.pi_email, "mailto:#{study.pi_email}"
-    %span.sc
-      = "Coord: #{study.sc_first_name} #{study.sc_last_name}" 
-      = link_to study.sc_email, "mailto:#{study.sc_email}"
-  
-  - if study.has_coordinator? current_user
-    .staff
-      Staff list&nbsp;
-      %span.quiet (as listed in eIRB)
-      %ul
-        - study.coordinators.each do |c|        
-          %li= "#{c.first_name} #{c.last_name}"
+.title
+  %span.status
+    = "#{study.status}:"
+  %br
+  %span.study_title= study.title
+.details
+  %span.research_type= "Research Type: #{study.research_type}" unless study.phase.blank?
+  %span.department= "Department: ..."
+  %span.pi
+    = "PI: #{study.pi_first_name} #{study.pi_last_name}"
+    = link_to study.pi_email, "mailto:#{study.pi_email}"
+  %span.sc
+    = "Coord: #{study.sc_first_name} #{study.sc_last_name}" 
+    = link_to study.sc_email, "mailto:#{study.sc_email}"
+
+- if study.has_coordinator? current_user
+  .staff
+    Staff list&nbsp;
+    %span.quiet (as listed in eIRB)
+    %ul
+      - study.coordinators.each do |c|        
+        %li= "#{c.first_name} #{c.last_name}"

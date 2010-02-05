@@ -19,8 +19,12 @@ $(document).ready(function() {
     $("#accrual .display").dataTable({"iDisplayLength": 30, "sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" }]});
 
     // study overlay
-    $("#study a[rel=#study_information]").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 } });
-
+    // $("#study a[rel=#study_information]").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 } });
+    $("#study a[rel=#study_information]").click(function(){
+      $('#study_information').slideToggle();
+      $(this).toggleClass('open');
+    });
+    
     // subject overlay
     // $("#study a[rel=#subject_information]").overlay({ 
     //   onBeforeLoad: function(){ $("#subject_information .contentWrap").html(this.getTrigger().next('.subject_information').html()); },
