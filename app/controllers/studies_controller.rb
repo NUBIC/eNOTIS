@@ -37,7 +37,7 @@ class StudiesController < ApplicationController
 
   def show
     @study = Study.find_by_irb_number(params[:id])
-    return redirect_with_message default_path, :notice, "You don't have access to study #{@study.irb_number}" unless @study.has_coordinator?(current_user)
+    return redirect_with_message(default_path, :notice, "You don't have access to study #{@study.irb_number}") unless @study.has_coordinator?(current_user)
     @title = @study.irb_number
     @study_events = InvolvementEvent.on_study(@study)
     @ethnicity_stats = @study.involvements.count_all(:ethnicity_type_id).map{|id,count| [DictionaryTerm.find(id).term, count]}

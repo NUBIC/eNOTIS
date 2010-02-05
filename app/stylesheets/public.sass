@@ -53,10 +53,12 @@ body
     :overflow hidden 
     // :width 955px
     +column(48,true)
-    :height 320px
+    :height 450px
     :padding-top 20px
     h4, h3
       :color #333
+    h2
+      :font-weight bold
     // root element for scrollable items. Must be absolutely positioned and it should have a extremely large width to accomodate scrollable items. it's enough that you set width and height for the root element and not for this element. 
     div.items
       // this cannot be too large
@@ -65,21 +67,38 @@ body
       // a single item. must be floated in horizontal scrolling. typically, this element is the one that *you* will style the most. 
       div.item
         :float left
+        +column(48)
         // :width 955px
-        div.pane-column
-          +column(15)
+        // div.pane-column
+        //   +column(15)
+        //   :padding-right 20px
+        img
+          :float left
           :padding-right 20px
+        div.col
+          :float left
+          :width 303px
+          :padding-right 15px
+        div.col2
+          :float left
+          :width 48%
+          :padding-right 2%
+        p.q
+          :font-weight bold
+          :margin-bottom 5px
+          :font-size 13px
+        p.a
+          
       div.current
         :border 1px inset #ccc 
         :background-color #cdcdcd
 
 #footer
-  .nulogo
-    +column(9)
-  .nucatslogo
-    +column(14)
-  .nubiclogo
-    +column(25, true)
-
+  .nulogo, .fsmlogo, .nucatslogo, .nubiclogo
+    :float left
+    :margin 0 3px
+  p.version
+    :clear left
+    :padding-top 10px
 #help
   :width 675px

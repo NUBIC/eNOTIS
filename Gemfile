@@ -4,6 +4,7 @@ gem "rails", "2.3.4"
 gem "haml", '>=2.2.0'
 gem "chriseppstein-compass", '>=0.8.13'
 gem "capistrano", '>=2.5.8'
+gem "fastthread"
 
 # External services
 gem "soap4r", '>=1.5.8'
@@ -35,10 +36,11 @@ gem "bcsec"
 
 # Testing
 only :test, :cucumber, :hudson do
-  gem "rspec"
-  gem "cucumber", '0.3.11'
-  gem "webrat", ">= 0.6.0"
-  gem "rspec-rails"
+  gem "rspec", "~> 1.2.0"
+  gem "rspec-rails", "~> 1.2.0"
+  gem "cucumber-rails", "~> 0.2.0"
+  gem "webrat", "~> 0.6.0"
+  gem "database_cleaner", "~> 0.0"
 end
 gem "ruby-debug-base", '>=0.10.3', :only => [:development]
 gem "ruby-debug", '>=0.10.3',      :only => [:development]

@@ -1,4 +1,4 @@
-Feature: Manage subjects
+Feature: Upload subjects
   In order to update a study
   As a coordinator
   I want to add subjects to a study
@@ -12,3 +12,4 @@ Feature: Manage subjects
     When I go to the study page for id "STU001248"
     And I upload a file with valid data for 3 subjects
     Then I should see "Subjects (3)"
+

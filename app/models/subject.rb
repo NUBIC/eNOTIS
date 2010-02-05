@@ -19,6 +19,8 @@ class Subject < ActiveRecord::Base
   # Public class methods
   def self.find_or_create(params)
     s = params[:subject]
+    s.keys.each{|k| s[k] = nil if s[k].blank?}
+    s.delete(:case_number)
     Subject.find(:first, :conditions => s) || Subject.create(s)
   end
   

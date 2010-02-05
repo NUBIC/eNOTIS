@@ -2,7 +2,23 @@
 %html
   %head
     %title eNOTIS
-    = stylesheets
+    = stylesheets "static/application", "static/coming_soon"
+    = javascripts 'jquery.tools.min'
+    :javascript
+      $(document).ready(function(){
+      // scrollable
+      $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
+      });
   %body
-    #main
-      = yield
+    #container
+      #header
+        #app_name= img "static/enotis-swoop-logo.png", :alt => "eNOTIS"
+      #main
+        =yield
+      #footer
+        .nulogo= img("static/nu_logo.gif")
+        .fsmlogo= img("static/fsm-logo.gif")
+        .nucatslogo= img("static/nucats_logo.gif")
+        .nubiclogo= img("static/nubic_logo.gif")
+        %p.version= "eNOTIS 0.0.1a &mdash; created by #{link("NUBIC", "http://www.nucats.northwestern.edu/centers/nubic")} for Northwestern University"
+

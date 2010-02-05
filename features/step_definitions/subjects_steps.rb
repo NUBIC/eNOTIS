@@ -38,11 +38,18 @@ Then /^I should see the add event form$/ do
   end
 end
 
-When /^I upload a file with valid data for 3 subjects$/ do  
-  attach_file(:file, File.join(RAILS_ROOT, 'features', 'upload_files', 'valid_upload.csv'))  
+When /^I upload a file with valid data for 7 subjects$/ do  
+  attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', 'good.csv'))  
   click_button "Upload"  
 end
 
 Then /^I should see an image with alt "([^\"]*)"$/ do |alt_text|
  response.should have_xpath("//img[@alt='#{alt_text}']")
+end
+
+Then /^I should be redirected to (.+?)$/ do |page_name|
+  request.headers['HTTP_REFERER'].should_not be_nil
+  request.headers['HTTP_REFERER'].should_not == request.request_uri
+
+  Then "I should be on #{page_name}"
 end
