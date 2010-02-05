@@ -1,3 +1,6 @@
+- content_for :head do
+  = javascript_include_tag 'highcharts/highcharts', 'jquery.charts'
+
 #study
   %span.study_title
     = link_to "#{status_icon @study} #{@study.irb_number || "(no id)"}", "#", :rel => "#study_information", :class => 'study_information'
@@ -6,6 +9,9 @@
   = link_to("Export subjects", new_report_path(:study => @study), :rel => '#export', :class => 'export-subjects') unless @study.subjects.empty?
   #study_information
     = render :partial => 'partials/study_info', :locals => {:study => @study}
+  #foo{:style => "width: 250px; height: 150px;"}
+    foo
+    %br
   #accrual
     #subject_information.overlay
       .contentWrap
