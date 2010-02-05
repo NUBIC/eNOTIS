@@ -83,6 +83,7 @@ end
 
 Factory.define :fake_study, :parent => :study do |p|
   p.title                 {Faker::Study.title}
+  p.irb_number            {Factory.next :irb_number}
   p.name                  {|me| s = me.title.split; "#{s.first} #{s.last}";}
   p.research_type         {["Bio-medical","Bio-medical","Bio-medical","Social/Behavioral",""].rand}
   p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}

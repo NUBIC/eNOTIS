@@ -30,7 +30,7 @@ end
 Given /^I log in as "([^\"]*)"$/ do |name|
   Given "a user \"#{name}\" with password \"314159\""
   if User.find_by_netid(name).studies.blank?
-    Given "\"#{name}\" has access to study id \"314\""
+    Given "\"#{name}\" has access to study id \"STU000314\""
   end
   Given "I log in as \"#{name}\" with password \"314159\""
 end

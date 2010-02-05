@@ -2,6 +2,14 @@ class CreateStudies < ActiveRecord::Migration
   def self.up
     create_table :studies do |t|
       t.string :irb_number
+      t.string :irb_status
+      t.string :name
+      t.text :title
+      t.text :description
+      t.datetime :approved_date
+      t.datetime :closed_or_completed_date
+      t.datetime :expiration_date
+      t.string :research_type
       t.timestamps
     end
 

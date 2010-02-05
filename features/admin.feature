@@ -5,7 +5,7 @@ Feature: Developer admin access
 
   Scenario: A normal user should not be able to visit the hub
     Given a user "gns144" with password "stjames"
-    And "gns144" has access to study id "144"
+    And "gns144" has access to study id "STU00144"
     When I log in as "gns144" with password "stjames"
     And I go to the hub page
     Then I should be on the homepage

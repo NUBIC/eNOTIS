@@ -1,6 +1,7 @@
 
 require 'couchrest'
 require 'lib/webservices'
+require 'chronic'
 
 # Represents a Clinical Study/Trial.
 class Study < ActiveRecord::Base
@@ -17,8 +18,8 @@ class Study < ActiveRecord::Base
 
   attr_accessor :eirb_json
 
-  [:pi, :coords, :irb_status, :name, :title, :research_type, :description].each do |a|
-  attr_accessor a #temp until full transition can be made
+  [:pi, :coords].each do |a|
+     attr_accessor a #temp until full transition can be made
   end
 
   def self.couch_connect
@@ -44,8 +45,20 @@ class Study < ActiveRecord::Base
     study_list = couch_view(:all_status)
     study_list["rows"].each do |study|
       local_study = find_by_irb_number(study["id"])
+      params = {:irb_number => study["id"],
+              :name => study["name"],
+              :title => study["title"],
+              :description => study["description"],
+              :expiration_date => Chronic.parse(study["expiration_date"]),
+              :irb_status => study["irb_status"],
+              :approved_date => Chronic.parse(study["approved_date"]),
+              :research_type => study["research_type"],
+              :closed_or_completed_date => study["closed_or_completed_date"]}#TODO THIS will break next cache update - notice name change for attr :-BLC
+
       if local_study.nil?
-        create(:irb_number => study["id"])
+        create(params)   
+      else
+        local_study.update_attributes(params)
       end
     end
   end

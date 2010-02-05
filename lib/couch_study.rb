@@ -1,11 +1,10 @@
 require 'rubygems'
 require 'couchrest'
-require 'webservices/plugins/eirb_services'
+require 'webservices/eirb'
 
 class CouchStudy
 
-  CDATA = {:pis => "pi",:co_pis => "co_pis",:coords => "coords", :al => "access_list",:pops => "populations", :acrl => "subject_accrual"}
-  PROC_ORDER = [:pis,:co_pis,:coords,:al,:pops,:acrl]
+  SEARCHES = Eirb::STORED_SEARCHES.dup.delete_if{|d| d[:ext] == "basics"}
 
   attr_accessor :db, :studies
 
@@ -15,31 +14,7 @@ class CouchStudy
   end
 
   def get_studies
-    @studies = EirbServices.find_basics #find all the studies
-  end
-
-  def get_pis(id)
-    EirbServices.find_principal_investigators(:irb_number => id)
-  end
-
-  def get_co_pis(id)
-    EirbServices.find_co_investigators(:irb_number => id)
-  end
-
-  def get_coords(id)
-    EirbServices.find_coordinators(:irb_number => id)
-  end
-
-  def get_al(id)
-    EirbServices.find_access_list(:irb_number => id)
-  end
-
-  def get_pops(id)
-    EirbServices.find_populations(:irb_number => id)
-  end
-
-  def get_acrl(id)
-    EirbServices.find_accrual(:irb_number => id)
+    @studies = Eirb.find_basics #find all the studies
   end
 
   def create_studies
@@ -54,15 +29,16 @@ class CouchStudy
     create_studies
     puts "Done creating the studies"
     @studies.each do |study|
-      PROC_ORDER.each do |k|
-        puts "Processing '#{k}' for study #{study[:irb_number]}"
+      puts "Study #{study[:irb_number]}"
+      SEARCHES.each do |k|
+        puts "---Processing '#{k[:name]}'"
         begin
-        data = send("get_#{k}",study[:irb_number])
+          data = Eirb.send("find_#{k[:ext]}",{:irb_number => study[:irb_number]})
         rescue
-        data = [{:irb_number => study[:irb_number],:error => "query to eirb failed"}]
+          data = [{:irb_number => study[:irb_number],:error => "query to eirb failed"}]
         end
         data.each do |d|
-          append(CDATA[k],d)
+          append(k[:ext],d)
         end
       end
     end
@@ -76,10 +52,11 @@ class CouchStudy
       puts "#{obj[:irb_number]} missing from basic query"
       doc = rescue_save(obj)
     end
+    #TODO fix! -THis will not work for updating data!
     if doc[key] && doc[key].is_a?(Array)
       doc[key] << obj
     else
-      doc[key]=[obj]
+      doc[key]=obj
     end
     doc.save
   end

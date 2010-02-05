@@ -90,6 +90,14 @@ ActiveRecord::Schema.define(:version => 20090902092032) do
 
   create_table "studies", :force => true do |t|
     t.string   "irb_number"
+    t.string   "irb_status"
+    t.string   "name"
+    t.text     "title"
+    t.text     "description"
+    t.datetime "approved_date"
+    t.datetime "closed_or_completed_date"
+    t.datetime "expiration_date"
+    t.string   "research_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
