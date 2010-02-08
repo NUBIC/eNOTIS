@@ -24,17 +24,24 @@ body
     :margin-top 10px
 #flash
   :position absolute
-  :top 0
+  :top 13px
   :margin-left 297.5px
   :width 400px
   :text-align center
   :color= !flash_color
-  :border= 1px solid !flash_border_color
-  :padding 5px 0
-  :font-size 17px
-  // +rounded_bottom_box( !flash_background_color )    
-  +rounded_bottom_box(!flash_border_color)
-  +bold
+  :font-size 16px
+  +rounded_box(!flash_border_color)
+  .close
+    :display none
+    :background-image url('/images/jquery-tools/apple-close.png')
+    :cursor pointer
+    :height 28px
+    :position absolute
+    :right -12px
+    :top -12px
+    :width 28px
+  &:hover .close
+    :display inline
 
 #current_user_badge
   :margin-top 10px
