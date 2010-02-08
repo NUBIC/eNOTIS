@@ -15,7 +15,7 @@ bin
 vendor/bundler_gems/ruby/1.8/doc/*
 vendor/bundler_gems/ruby/1.8/gems/*
 vendor/bundler_gems/ruby/1.8/specifications/*
-
+vendor/bundler_gems/ruby/1.8/environment.rb
 
 # db/schema.rb
 # if schema.rb isn't included in source control, it is generated on the fly on the server without group write permissions, preventing other developers from running migrations on the same deployment
