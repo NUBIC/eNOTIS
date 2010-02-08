@@ -46,17 +46,18 @@ class CouchStudy
 
   def append(key,obj)
     #look in the obj for the irb_number
-    begin
+    #begin
       doc = @db.get(obj[:irb_number]) #find the doc
-    rescue
-      puts "#{obj[:irb_number]} missing from basic query"
-      doc = rescue_save(obj)
-    end
+    #rescue
+    #  puts "#{obj[:irb_number]} missing from basic query"
+    #  doc = rescue_save(obj)
+    #end
+    
     #TODO fix! -THis will not work for updating data!
     if doc[key] && doc[key].is_a?(Array)
       doc[key] << obj
     else
-      doc[key]=obj
+      doc[key]=[obj] #make sure we're putting the object in array if we expect it that way
     end
     doc.save
   end

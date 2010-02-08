@@ -1,3 +1,4 @@
+
 require 'webservices'
 class Eirb
   # basic settings for single row queries
@@ -12,8 +13,8 @@ class Eirb
    # {:name => "eNOTIS Study Authorized Access", :ext => "authorized_access"},
    # {:name => "eNOTIS Study Authorized Personnel", :ext => "authorized_personnel"},
     {:name => "eNOTIS Study Basics", :ext => "basics"},
-   # {:name => "eNOTIS Study Co-Investigators", :ext => "co_investigators"},
-    {:name => "eNOTIS Study Combined Priv", :ext => "combined_access"},
+    {:name => "eNOTIS Study Co-Investigators", :ext => "co_investigators"},
+   # DO NOT USE! --> does not map data properly {:name => "eNOTIS Study Combined Priv", :ext => "combined_access"},
    # {:name => "eNOTIS Study Contact List", :ext => "contact_list"},
     {:name => "eNOTIS Study Coordinators", :ext => "coordinators"},
    # {:name => "eNOTIS Study Key Research Personnel", :ext => "key_personnel"},
@@ -35,11 +36,10 @@ class Eirb
     end
     
     # This method attempts to pull data from the service
-    def service_test
-      config = WebserviceConfig.new("/etc/nubic/eirb-#{RAILS_ENV.downcase}.yml")
+    def service_test(irb_number)
       begin
-        result = find_by_irb_number({:irb_number => config[:test_irb_number]})
-        status = (result.first ? (result.first[:irb_number] == config[:test_irb_number]) : false)
+        result = find_basics({:irb_number => irb_number})
+        status = (result.first ? (result.first[:irb_number] == irb_number) : false)
         return status, status ? "All good" : "invalid data retrieved"
       rescue => error
         return false, error.message
@@ -64,7 +64,7 @@ class Eirb
     end
     
     # Breaks search results into managble chunks of data because eIrb chokes if a query is to large
-    def chunked_search(search_name, parameters=nil,num_rows=100)
+    def chunked_search(search_name, parameters=nil,num_rows=500)
       start_row = 1 # eirb has row 1 as the first row
       results = []
       loop do 

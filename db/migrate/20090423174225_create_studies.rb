@@ -5,7 +5,6 @@ class CreateStudies < ActiveRecord::Migration
       t.string :irb_status
       t.string :name
       t.text :title
-      t.text :description
       t.datetime :approved_date
       t.datetime :closed_or_completed_date
       t.datetime :expiration_date

@@ -18,27 +18,23 @@ class Study < ActiveRecord::Base
 
   attr_accessor :eirb_json
 
-  [:pi, :coords].each do |a|
-     attr_accessor a #temp until full transition can be made
-  end
-
-  def self.couch_connect
-    return @couch if @couch
+  def self.cache_connect
+    return @cache if @cache
     config = WebserviceConfig.new("/etc/nubic/couch-#{RAILS_ENV.downcase}.yml")
-    @couch = CouchRest.database("#{config[:url]}:#{config[:port]}/#{config[:db]}")
+    @cache = CouchRest.database("#{config[:url]}:#{config[:port]}/#{config[:db]}")
   end
 
-  def self.couch_doc(study_id)
+  def self.cache_doc(study_id)
     begin
-      couch_connect.get(study_id)
+      cache_connect.get(study_id)
     rescue
       # TODO remove this when old method name access is depricated
-      {:irb_number => "not found", :pi => [{}], :coords => [{}]} # fail semi-silently, the doc was not found for some reason
+      {:irb_number => "Not Found", :principal_investigators => [{}], :coordinators=> [{}], :co_investigators => [{}]} # fail semi-silently, the doc was not found for some reason
     end
   end
 
-  def self.couch_view(view)
-    couch_connect.view("study/#{view}")
+  def self.cache_view(view)
+    cache_connect.view("study/#{view}")
   end
 
   def self.update_from_cache
@@ -79,7 +75,7 @@ class Study < ActiveRecord::Base
     attach.delete(:irb_number)
     attach.each do |k,v|
       instance_eval(%{ 
-       def #{k} 
+       def cache_#{k} 
          @eirb_json[:#{k}] || @eirb_json["#{k}"]
        end
       })
@@ -88,35 +84,35 @@ class Study < ActiveRecord::Base
 
   #methods to depricate
   def pi_netid
-    pi.first["netid"] || "missing"
+    cache_principal_investigators.first["netid"] || "missing"
   end
 
   def pi_first_name
-    pi.first["first_name"] || "missing"
+    cache_principal_investigators.first["first_name"] || "missing"
   end
 
   def pi_last_name
-    pi.first["last_name"] || "missing"
+    cache_principal_investigators.first["last_name"] || "missing"
   end
 
   def pi_email
-    pi.first["email"] || "missing"
+    cache_principal_investigators.first["email"] || "missing"
   end
 
   def sc_netid
-    coords.first["netid"] || "missing"
+    cache_coordinators.first["netid"] || "missing"
   end
 
   def sc_first_name
-    coords.first["first_name"] || "missing"
+    cache_coordinators.first["first_name"] || "missing"
   end
 
   def sc_last_name
-    coords.first["last_name"] || "missing"
+    cache_coordinators.first["last_name"] || "missing"
   end
 
   def sc_email
-    coords.first["email"] || "missing"
+    cache_coordinators.first["email"] || "missing"
   end
 
   def phase
@@ -136,7 +132,7 @@ class Study < ActiveRecord::Base
   end
   
   def has_coordinator?(user)
-    user.admin? or coordinators.map(&:user).include? user
+    user.admin? or coordinators.map{|m| m[:netid]}.include? user
   end
 
   def accrual
