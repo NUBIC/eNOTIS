@@ -1,7 +1,7 @@
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 
-Given /^a study "([^\"]*)" with id "([^\"]*)" and status "([^\"]*)"$/ do |title, id, status|
-  Factory.create(:fake_study, :title => title, :name => title, :irb_number => id, :status => status)
+Given /^a study "([^\"]*)" with id "([^\"]*)" and irb_status "([^\"]*)"$/ do |title, id, status|
+  Factory.create(:fake_study, :title => title, :name => title, :irb_number => id, :irb_status => status)
 end
 
 Given /^a user "([^\"]*)" named "([^\"]*)" "([^\"]*)"$/ do |netid, fn, ln|

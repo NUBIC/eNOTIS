@@ -5,9 +5,9 @@ Feature: Search
   
   Background:
     Given I log in as "joe"
-    And a study "Vitamin E and exertion" with id "STU001251" and status "Approved"
-    And a study "Vitamin F and fatigue" with id "STU001252" and status "Approved"
-    And a study "Vitamin G and gingivitis" with id "STU001253" and status "Review"
+    And a study "Vitamin E and exertion" with id "STU001251" and irb_status "Approved"
+    And a study "Vitamin F and fatigue" with id "STU001252" and irb_status "Approved"
+    And a study "Vitamin G and gingivitis" with id "STU001253" and irb_status "Review"
     And "joe" has access to study id "STU001251"
     And the study "STU001251" has the following subjects
       | first_name | last_name |
@@ -20,7 +20,7 @@ Feature: Search
     And I go to the homepage
 
   Scenario: A user can search for studies (by id)
-    And I search for "STU001251"
+    And I search for "STU00125" 
     Then I should see title "Approved: Vitamin E and exertion"
     And I should see "3 studies found"
 

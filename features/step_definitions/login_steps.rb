@@ -11,7 +11,7 @@ Given /^"([^\"]*)" has access to study id "([^\"]*)"$/ do |netid, id|
 end
 
 Given /^a study with id "([^\"]*)"$/ do |id|
-  Factory.create(:fake_study, :irb_number => id, :status => "Not Under IRB Purview")
+  Factory.create(:fake_study, :irb_number => id, :irb_status => "Not Under IRB Purview")
 end
 
 Given /^"([^\"]*)" is not authorized on any studies$/ do |netid|
