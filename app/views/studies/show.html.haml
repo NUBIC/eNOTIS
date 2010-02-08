@@ -2,8 +2,9 @@
   %span.study_title
     = link_to "#{status_icon @study} #{@study.irb_number || "(no id)"}", "#", :rel => "#study_information", :class => 'study_information'
   = link_to("Import", "#", :rel => "#import", :class => 'import')
-  |
-  = link_to("Export subjects", new_report_path(:study => @study), :rel => '#export', :class => 'export-subjects') unless @study.subjects.empty?
+  - unless @study.subjects.empty?
+    |
+    = link_to("Export subjects", new_report_path(:study => @study), :rel => '#export', :class => 'export-subjects') 
   #study_information
     = render :partial => 'partials/study_info', :locals => {:study => @study}
   #accrual
