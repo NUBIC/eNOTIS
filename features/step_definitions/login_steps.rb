@@ -6,8 +6,13 @@ Given /^a user "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|
 end
 
 Given /^"([^\"]*)" has access to study id "([^\"]*)"$/ do |netid, id|
-  Given "a study with id \"#{id}\"" unless Study.find_by_irb_number(id)
-  Factory(:coordinator, :user => User.find_by_netid(netid), :study => Study.find_by_irb_number(id))
+  study =  Study.find_by_irb_number(id)
+  user =  User.find_by_netid(netid)
+  Given "a study with id \"#{id}\"" unless study
+  study = Study.find_by_irb_number(id)
+  c = Factory(:coordinator, :user => user, :study => study)
+  study = Study.find_by_irb_number(id)
+  study.has_coordinator?(user).should be_true
 end
 
 Given /^a study with id "([^\"]*)"$/ do |id|

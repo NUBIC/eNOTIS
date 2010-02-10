@@ -12,15 +12,11 @@ class Study < ActiveRecord::Base
   has_many :coordinators
   has_many :subjects, :through => :involvements
   has_many :study_uploads 
-  
-  # Validators
-  validates_format_of :irb_number, :with => /^STU.+/, :message => "invalid study number format"
 
   attr_accessor :eirb_json
 
-#  [:principal_investigators, :coordinators, :co_investigators] each do |m|
-#    attr_accessor m
-#  end
+  # Validators
+  validates_format_of :irb_number, :with => /^STU.+/, :message => "invalid study number format"
 
   def self.cache_connect
     return @cache if @cache
@@ -28,7 +24,7 @@ class Study < ActiveRecord::Base
     @cache = CouchRest.database("#{config[:url]}:#{config[:port]}/#{config[:db]}")
   end
 
-  def self.cache_doc(study_id)
+  def self.cache_doc(study_id = nil)
     begin
       cache_connect.get(study_id)
     rescue
@@ -41,20 +37,18 @@ class Study < ActiveRecord::Base
     cache_connect.view("study/#{view}")
   end
 
-  def self.update_from_cache
-    study_list = couch_view(:all_status)
+  def self.update_all_from_cache
+    study_list = cache_view(:all_status)
     study_list["rows"].each do |study|
       local_study = find_by_irb_number(study["id"])
       params = {:irb_number => study["id"],
               :name => study["name"],
               :title => study["title"],
-              :description => study["description"],
               :expiration_date => Chronic.parse(study["expiration_date"]),
               :irb_status => study["irb_status"],
               :approved_date => Chronic.parse(study["approved_date"]),
               :research_type => study["research_type"],
-              :closed_or_completed_date => study["closed_or_completed_date"]} #TODO THIS will break next cache update - notice name change for attr :-BLC
-
+              :closed_or_completed_date => study["closed_or_completed_date"]}
       if local_study.nil?
         create(params)   
       else
@@ -70,23 +64,16 @@ class Study < ActiveRecord::Base
   end
 
   def refresh_cache
-    @eirb_json = Study.cache_doc(self.irb_number) 
+    self.eirb_json = Study.cache_doc(self.irb_number) 
+  end
+
+  def eirb_json=(val)
+    @eirb_json = val
     attach_attributes
   end
 
-  # attaching the hash keys as methods to have them
-  # return data as if they were defined attributes of 
-  # the model. Note: they are read-only
-  def attach_attributes
-    attach = @eirb_json.clone
-    attach.delete(:irb_number)
-    attach.each do |k,v|
-      instance_eval(%{ 
-       def cache_#{k} 
-         @eirb_json[:#{k}] || @eirb_json["#{k}"]
-       end
-      })
-    end
+  def eirb_json
+    @eirb_json
   end
 
   #methods to depricate
@@ -125,8 +112,11 @@ class Study < ActiveRecord::Base
   def phase
     nil
   end
-  # end of methods to depricate
 
+  def status
+    irb_status
+  end
+  # end of methods to depricate
 
 
   # irb_number instead of id in urls
@@ -134,12 +124,8 @@ class Study < ActiveRecord::Base
     self.irb_number
   end
 
-  def status
-    irb_status
-  end
-  
   def has_coordinator?(user)
-    user.admin? or coordinators.map{|m| m[:netid]}.include? user
+    user.admin? or coordinators.map(&:netid).include? user.netid
   end
 
   def accrual
@@ -155,7 +141,22 @@ class Study < ActiveRecord::Base
     ["Approved", "Exempt Approved", "Not Under IRB Purview",
       "Revision Closed", "Revision Open"].include? self.status
   end
-  
+
+   private
+  # attaching the hash keys as methods to have them
+  # return data as if they were defined attributes of 
+  # the model. Note: they are read-only
+  def attach_attributes
+    attach = @eirb_json.clone
+    attach.delete(:irb_number)
+    attach.each do |k,v|
+      instance_eval(%{ 
+       def cache_#{k} 
+         @eirb_json[:#{k}] || @eirb_json["#{k}"]
+       end
+      })
+    end
+  end
 
 end
 
