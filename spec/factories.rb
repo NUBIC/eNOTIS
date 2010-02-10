@@ -71,14 +71,15 @@ Factory.define :study do |p|
   p.research_type         {}
   p.description           {"Rem fugit culpa unde facilis earum. Quas et vitae ut cumque nihil quidem aperiam architecto. Et asperiores inventore non nisi libero architecto quibusdam.\r\n\r\nVeniam fugiat voluptas laudantium in assumenda. Blanditiis recusandae illum necessitatibus. Quia nesciunt esse officia neque doloribus vel explicabo provident. Non sit vero iusto quibusdam explicabo. Nobis in architecto quam pariatur sit autem optio."}
   p.irb_status            {"Approved"}
-  p.pi [{"netid" => "tuh532",
+  p.eirb_json             {{
+    "principal_investigators" => [{"netid" => "tuh532",
         "first_name" => "Terry",
         "last_name" => "Hulu",
-        "email" => "t-hulu@northwestern.edu"}]
-  p.coords [{"netid" => "cab133",
+        "email" => "t-hulu@northwestern.edu"}],
+    "coordinators" => [{"netid" => "cab133",
         "first_name" => "Carter",
         "last_name" => "Baggs",
-        "email" => "cbaggs@northwestern.edu"}]
+        "email" => "cbaggs@northwestern.edu"}]}}
 end
 
 Factory.define :fake_study, :parent => :study do |p|
@@ -88,17 +89,16 @@ Factory.define :fake_study, :parent => :study do |p|
   p.research_type         {["Bio-medical","Bio-medical","Bio-medical","Social/Behavioral",""].rand}
   p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
   p.irb_status            {Faker::Study.eirb_status}
-  p.pi do |me|
+  p.eirb_json do |me|
+    {:principal_investigators =>
     [{"first_name" => Faker::Name.first_name,
     "last_name" => Faker::Name.last_name,
     "email" => Faker::Internet.email,
-    "netid" => "#{me.pi_first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{me.pi_last_name.gsub(/[^a-zA-Z]/,'')[0,2]}#{(100..999).to_a.rand}".downcase}] 
-  end
-  p.coords do |me|
-    [{"first_name" => Faker::Name.first_name,
+    "netid" => "#{me.pi_first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{me.pi_last_name.gsub(/[^a-zA-Z]/,'')[0,2]}#{(100..999).to_a.rand}".downcase}],
+    :coordinators => [{"first_name" => Faker::Name.first_name,
     "last_name" => Faker::Name.last_name,
     "email" => Faker::Internet.email,
-    "netid" => "#{me.pi_first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{me.pi_last_name.gsub(/[^a-zA-Z]/,'')[0,2]}#{(100..999).to_a.rand}".downcase}]
+    "netid" => "#{me.pi_first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{me.pi_last_name.gsub(/[^a-zA-Z]/,'')[0,2]}#{(100..999).to_a.rand}".downcase}]}
   end
 
 end

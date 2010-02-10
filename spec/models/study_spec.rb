@@ -4,11 +4,12 @@ describe Study do
   
   before(:each) do
     @fake_data = {:foo => "bar", :irb_number => "STU00005151",
-      "coords" => [{"name" => "sally", :netid => "soc210"}],
-      "co_pis"=>[{"name" => "boop"},{"name" => "bop"}]}
+      "coordinators" => [{"name" => "sally", :netid => "soc210"}],
+      "principal_investigators"=>[{"name" => "boop"},{"name" => "bop"}]}
 
-    Study.stub!(:couch_doc).and_return(@fake_data)
+    Study.stub!(:cache_doc).and_return(@fake_data)
     @study = Factory(:study)
+    @study.refresh_cache
     @study.irb_number = "STU0001031"
   end
 
@@ -58,9 +59,8 @@ describe Study do
    it "decorates the model with attributes from the json" do
      @study.eirb_json.should == @fake_data
      @study.inspect
-     @study.foo.should == "bar"
-     @study.coords.should == @fake_data["coords"]
-     @study.coords.first["name"].should == "sally"
+     @study.cache_foo.should == "bar"
+     @study.cache_coordinators.should == @fake_data["coordinators"]
    end
 
    it "does not clobber the irb_number attribute that is already defined" do

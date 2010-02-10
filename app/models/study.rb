@@ -18,6 +18,10 @@ class Study < ActiveRecord::Base
 
   attr_accessor :eirb_json
 
+#  [:principal_investigators, :coordinators, :co_investigators] each do |m|
+#    attr_accessor m
+#  end
+
   def self.cache_connect
     return @cache if @cache
     config = WebserviceConfig.new("/etc/nubic/couch-#{RAILS_ENV.downcase}.yml")
@@ -49,7 +53,7 @@ class Study < ActiveRecord::Base
               :irb_status => study["irb_status"],
               :approved_date => Chronic.parse(study["approved_date"]),
               :research_type => study["research_type"],
-              :closed_or_completed_date => study["closed_or_completed_date"]}#TODO THIS will break next cache update - notice name change for attr :-BLC
+              :closed_or_completed_date => study["closed_or_completed_date"]} #TODO THIS will break next cache update - notice name change for attr :-BLC
 
       if local_study.nil?
         create(params)   
@@ -62,8 +66,11 @@ class Study < ActiveRecord::Base
   # After load hook to load up the dynamic methods/attrs from our
   # CouchDB store
   def after_initialize
-    doc_str = Study.couch_doc(self.irb_number) 
-    @eirb_json = doc_str
+    refresh_cache
+  end
+
+  def refresh_cache
+    @eirb_json = Study.cache_doc(self.irb_number) 
     attach_attributes
   end
 
