@@ -1,12 +1,12 @@
 require 'fastercsv'
-require 'activemessaging/processor'
+# require 'activemessaging/processor'
 
 class SubjectsController < ApplicationController
   layout "layouts/main"  
 
   # Includes
-  include ActiveMessaging::MessageSender
-  include Chronic
+  # include ActiveMessaging::MessageSender
+  # include Chronic
 
   # Authentication
   before_filter :user_must_be_logged_in
@@ -15,7 +15,7 @@ class SubjectsController < ApplicationController
   has_view_trail :except => :index
 
   # Messaging
-  publishes_to :patient_upload
+  # publishes_to :patient_upload
 
   # Public instance methods (actions)
   def merge

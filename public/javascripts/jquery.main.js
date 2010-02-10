@@ -3,8 +3,7 @@ $(document).ready(function() {
 	$('input[name="query"]').liveSearch({url: '/search?format=js&query=', id: "livesearch-results"});
 
 	// flash messages
-	var flashWidth = $("#flash").css('width'); // save flash width. changing it to relative positioning (to slide up) decreases width
-	$("#flash").animate({width: flashWidth}, 5000).slideUp(1000);
+  $("#flash .close").click(function(){$("#flash").fadeOut(300);});
 	
 	// studies index
     $("#my_studies a[rel=#study_information]").overlay({ 
@@ -17,7 +16,8 @@ $(document).ready(function() {
 	// studies show
     // dataTable
     $("#accrual .display").dataTable({"iDisplayLength": 30, "sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" }]});
-
+    $("#accrual .display td:empty, #import .display td:empty").html("--");
+    
     // study overlay
     // $("#study a[rel=#study_information]").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 } });
     $("#study a[rel=#study_information]").click(function(){

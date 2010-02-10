@@ -9,8 +9,8 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastthread-1.0.7/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastthread-1.0.7/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastthread-1.0.7/ext")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/stomp-1.1.3/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/stomp-1.1.3/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/stomp-1.1.4/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/stomp-1.1.4/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/term-ansicolor-1.0.4/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/term-ansicolor-1.0.4/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/activesupport-2.3.4/bin")
@@ -19,12 +19,12 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/builder-2.1.2/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/json_pure-1.2.0/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/json_pure-1.2.0/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/activemessaging-0.6.1/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/activemessaging-0.6.1/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/populator-0.2.5/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/populator-0.2.5/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ci_reporter-1.6.0/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ci_reporter-1.6.0/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/activemessaging-0.6.1/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/activemessaging-0.6.1/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/cucumber-rails-0.2.4/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/cucumber-rails-0.2.4/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/linecache-0.43/bin")
@@ -70,12 +70,6 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/chriseppstein-compass-0.8.17/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/diff-lcs-1.1.2/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/diff-lcs-1.1.2/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rspec-1.2.9/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rspec-1.2.9/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/aasm-2.1.5/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/aasm-2.1.5/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rspec-rails-1.2.9/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rspec-rails-1.2.9/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/activeresource-2.3.4/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/activeresource-2.3.4/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/airblade-paper_trail-1.1.1/bin")
@@ -86,6 +80,12 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/gemcutter-0.3.0/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/net-sftp-2.0.4/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/net-sftp-2.0.4/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rspec-1.2.9/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rspec-1.2.9/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/aasm-2.1.5/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/aasm-2.1.5/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rspec-rails-1.2.9/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rspec-rails-1.2.9/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rubyforge-2.0.3/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rubyforge-2.0.3/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/hoe-2.5.0/bin")
@@ -111,8 +111,6 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/treetop-1.4.3/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/cucumber-0.6.2/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/cucumber-0.6.2/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ruby-debug-base-0.10.3/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ruby-debug-base-0.10.3/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/activerecord-2.3.4/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/activerecord-2.3.4/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/binarylogic-searchlogic-2.1.7/bin")
@@ -121,6 +119,8 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/composite_primary_keys-2.3.2/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/bcsec-1.4.8/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/bcsec-1.4.8/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ruby-debug-base-0.10.3/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ruby-debug-base-0.10.3/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rails-2.3.4/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rails-2.3.4/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/columnize-0.3.1/bin")
@@ -131,14 +131,14 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/capistrano-2.5.14/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/bcdatabase-0.6.3/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/bcdatabase-0.6.3/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastercsv-1.5.1/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastercsv-1.5.1/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ruport-1.6.3/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ruport-1.6.3/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ruby-debug-0.10.3/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ruby-debug-0.10.3/cli")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/faker-0.3.1/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/faker-0.3.1/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastercsv-1.5.1/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastercsv-1.5.1/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ruport-1.6.3/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ruport-1.6.3/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/acts_as_reportable-1.1.1/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/acts_as_reportable-1.1.1/lib")
 
@@ -149,8 +149,8 @@ module Bundler
   @bundled_specs = {}
   @bundled_specs["fastthread"] = eval(File.read("#{dir}/specifications/fastthread-1.0.7.gemspec"))
   @bundled_specs["fastthread"].loaded_from = "#{dir}/specifications/fastthread-1.0.7.gemspec"
-  @bundled_specs["stomp"] = eval(File.read("#{dir}/specifications/stomp-1.1.3.gemspec"))
-  @bundled_specs["stomp"].loaded_from = "#{dir}/specifications/stomp-1.1.3.gemspec"
+  @bundled_specs["stomp"] = eval(File.read("#{dir}/specifications/stomp-1.1.4.gemspec"))
+  @bundled_specs["stomp"].loaded_from = "#{dir}/specifications/stomp-1.1.4.gemspec"
   @bundled_specs["term-ansicolor"] = eval(File.read("#{dir}/specifications/term-ansicolor-1.0.4.gemspec"))
   @bundled_specs["term-ansicolor"].loaded_from = "#{dir}/specifications/term-ansicolor-1.0.4.gemspec"
   @bundled_specs["activesupport"] = eval(File.read("#{dir}/specifications/activesupport-2.3.4.gemspec"))
@@ -159,12 +159,12 @@ module Bundler
   @bundled_specs["builder"].loaded_from = "#{dir}/specifications/builder-2.1.2.gemspec"
   @bundled_specs["json_pure"] = eval(File.read("#{dir}/specifications/json_pure-1.2.0.gemspec"))
   @bundled_specs["json_pure"].loaded_from = "#{dir}/specifications/json_pure-1.2.0.gemspec"
+  @bundled_specs["activemessaging"] = eval(File.read("#{dir}/specifications/activemessaging-0.6.1.gemspec"))
+  @bundled_specs["activemessaging"].loaded_from = "#{dir}/specifications/activemessaging-0.6.1.gemspec"
   @bundled_specs["populator"] = eval(File.read("#{dir}/specifications/populator-0.2.5.gemspec"))
   @bundled_specs["populator"].loaded_from = "#{dir}/specifications/populator-0.2.5.gemspec"
   @bundled_specs["ci_reporter"] = eval(File.read("#{dir}/specifications/ci_reporter-1.6.0.gemspec"))
   @bundled_specs["ci_reporter"].loaded_from = "#{dir}/specifications/ci_reporter-1.6.0.gemspec"
-  @bundled_specs["activemessaging"] = eval(File.read("#{dir}/specifications/activemessaging-0.6.1.gemspec"))
-  @bundled_specs["activemessaging"].loaded_from = "#{dir}/specifications/activemessaging-0.6.1.gemspec"
   @bundled_specs["cucumber-rails"] = eval(File.read("#{dir}/specifications/cucumber-rails-0.2.4.gemspec"))
   @bundled_specs["cucumber-rails"].loaded_from = "#{dir}/specifications/cucumber-rails-0.2.4.gemspec"
   @bundled_specs["linecache"] = eval(File.read("#{dir}/specifications/linecache-0.43.gemspec"))
@@ -209,12 +209,6 @@ module Bundler
   @bundled_specs["chriseppstein-compass"].loaded_from = "#{dir}/specifications/chriseppstein-compass-0.8.17.gemspec"
   @bundled_specs["diff-lcs"] = eval(File.read("#{dir}/specifications/diff-lcs-1.1.2.gemspec"))
   @bundled_specs["diff-lcs"].loaded_from = "#{dir}/specifications/diff-lcs-1.1.2.gemspec"
-  @bundled_specs["rspec"] = eval(File.read("#{dir}/specifications/rspec-1.2.9.gemspec"))
-  @bundled_specs["rspec"].loaded_from = "#{dir}/specifications/rspec-1.2.9.gemspec"
-  @bundled_specs["aasm"] = eval(File.read("#{dir}/specifications/aasm-2.1.5.gemspec"))
-  @bundled_specs["aasm"].loaded_from = "#{dir}/specifications/aasm-2.1.5.gemspec"
-  @bundled_specs["rspec-rails"] = eval(File.read("#{dir}/specifications/rspec-rails-1.2.9.gemspec"))
-  @bundled_specs["rspec-rails"].loaded_from = "#{dir}/specifications/rspec-rails-1.2.9.gemspec"
   @bundled_specs["activeresource"] = eval(File.read("#{dir}/specifications/activeresource-2.3.4.gemspec"))
   @bundled_specs["activeresource"].loaded_from = "#{dir}/specifications/activeresource-2.3.4.gemspec"
   @bundled_specs["airblade-paper_trail"] = eval(File.read("#{dir}/specifications/airblade-paper_trail-1.1.1.gemspec"))
@@ -225,6 +219,12 @@ module Bundler
   @bundled_specs["gemcutter"].loaded_from = "#{dir}/specifications/gemcutter-0.3.0.gemspec"
   @bundled_specs["net-sftp"] = eval(File.read("#{dir}/specifications/net-sftp-2.0.4.gemspec"))
   @bundled_specs["net-sftp"].loaded_from = "#{dir}/specifications/net-sftp-2.0.4.gemspec"
+  @bundled_specs["rspec"] = eval(File.read("#{dir}/specifications/rspec-1.2.9.gemspec"))
+  @bundled_specs["rspec"].loaded_from = "#{dir}/specifications/rspec-1.2.9.gemspec"
+  @bundled_specs["aasm"] = eval(File.read("#{dir}/specifications/aasm-2.1.5.gemspec"))
+  @bundled_specs["aasm"].loaded_from = "#{dir}/specifications/aasm-2.1.5.gemspec"
+  @bundled_specs["rspec-rails"] = eval(File.read("#{dir}/specifications/rspec-rails-1.2.9.gemspec"))
+  @bundled_specs["rspec-rails"].loaded_from = "#{dir}/specifications/rspec-rails-1.2.9.gemspec"
   @bundled_specs["rubyforge"] = eval(File.read("#{dir}/specifications/rubyforge-2.0.3.gemspec"))
   @bundled_specs["rubyforge"].loaded_from = "#{dir}/specifications/rubyforge-2.0.3.gemspec"
   @bundled_specs["hoe"] = eval(File.read("#{dir}/specifications/hoe-2.5.0.gemspec"))
@@ -249,8 +249,6 @@ module Bundler
   @bundled_specs["treetop"].loaded_from = "#{dir}/specifications/treetop-1.4.3.gemspec"
   @bundled_specs["cucumber"] = eval(File.read("#{dir}/specifications/cucumber-0.6.2.gemspec"))
   @bundled_specs["cucumber"].loaded_from = "#{dir}/specifications/cucumber-0.6.2.gemspec"
-  @bundled_specs["ruby-debug-base"] = eval(File.read("#{dir}/specifications/ruby-debug-base-0.10.3.gemspec"))
-  @bundled_specs["ruby-debug-base"].loaded_from = "#{dir}/specifications/ruby-debug-base-0.10.3.gemspec"
   @bundled_specs["activerecord"] = eval(File.read("#{dir}/specifications/activerecord-2.3.4.gemspec"))
   @bundled_specs["activerecord"].loaded_from = "#{dir}/specifications/activerecord-2.3.4.gemspec"
   @bundled_specs["binarylogic-searchlogic"] = eval(File.read("#{dir}/specifications/binarylogic-searchlogic-2.1.7.gemspec"))
@@ -259,6 +257,8 @@ module Bundler
   @bundled_specs["composite_primary_keys"].loaded_from = "#{dir}/specifications/composite_primary_keys-2.3.2.gemspec"
   @bundled_specs["bcsec"] = eval(File.read("#{dir}/specifications/bcsec-1.4.8.gemspec"))
   @bundled_specs["bcsec"].loaded_from = "#{dir}/specifications/bcsec-1.4.8.gemspec"
+  @bundled_specs["ruby-debug-base"] = eval(File.read("#{dir}/specifications/ruby-debug-base-0.10.3.gemspec"))
+  @bundled_specs["ruby-debug-base"].loaded_from = "#{dir}/specifications/ruby-debug-base-0.10.3.gemspec"
   @bundled_specs["rails"] = eval(File.read("#{dir}/specifications/rails-2.3.4.gemspec"))
   @bundled_specs["rails"].loaded_from = "#{dir}/specifications/rails-2.3.4.gemspec"
   @bundled_specs["columnize"] = eval(File.read("#{dir}/specifications/columnize-0.3.1.gemspec"))
@@ -269,14 +269,14 @@ module Bundler
   @bundled_specs["capistrano"].loaded_from = "#{dir}/specifications/capistrano-2.5.14.gemspec"
   @bundled_specs["bcdatabase"] = eval(File.read("#{dir}/specifications/bcdatabase-0.6.3.gemspec"))
   @bundled_specs["bcdatabase"].loaded_from = "#{dir}/specifications/bcdatabase-0.6.3.gemspec"
-  @bundled_specs["fastercsv"] = eval(File.read("#{dir}/specifications/fastercsv-1.5.1.gemspec"))
-  @bundled_specs["fastercsv"].loaded_from = "#{dir}/specifications/fastercsv-1.5.1.gemspec"
-  @bundled_specs["ruport"] = eval(File.read("#{dir}/specifications/ruport-1.6.3.gemspec"))
-  @bundled_specs["ruport"].loaded_from = "#{dir}/specifications/ruport-1.6.3.gemspec"
   @bundled_specs["ruby-debug"] = eval(File.read("#{dir}/specifications/ruby-debug-0.10.3.gemspec"))
   @bundled_specs["ruby-debug"].loaded_from = "#{dir}/specifications/ruby-debug-0.10.3.gemspec"
   @bundled_specs["faker"] = eval(File.read("#{dir}/specifications/faker-0.3.1.gemspec"))
   @bundled_specs["faker"].loaded_from = "#{dir}/specifications/faker-0.3.1.gemspec"
+  @bundled_specs["fastercsv"] = eval(File.read("#{dir}/specifications/fastercsv-1.5.1.gemspec"))
+  @bundled_specs["fastercsv"].loaded_from = "#{dir}/specifications/fastercsv-1.5.1.gemspec"
+  @bundled_specs["ruport"] = eval(File.read("#{dir}/specifications/ruport-1.6.3.gemspec"))
+  @bundled_specs["ruport"].loaded_from = "#{dir}/specifications/ruport-1.6.3.gemspec"
   @bundled_specs["acts_as_reportable"] = eval(File.read("#{dir}/specifications/acts_as_reportable-1.1.1.gemspec"))
   @bundled_specs["acts_as_reportable"].loaded_from = "#{dir}/specifications/acts_as_reportable-1.1.1.gemspec"
 

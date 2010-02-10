@@ -129,6 +129,7 @@ class StudyUpload < ActiveRecord::Base
       return false
     else
       self.summary = "The following columns are required: #{missing.join(',')}"
+      self.save
       return true
     end
   end

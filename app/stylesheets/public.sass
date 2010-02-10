@@ -5,15 +5,11 @@ body
   :background-image url('/images/public-fade-bg.png')
 #environment
   :position absolute
-  :left 50%
-  :width 350px
-  :margin-left -175px
   :background-color= !development_color
-  :font-size 1.5em
-  :text-align center
+  :font-size 18px
+  :padding 0 5px
   &.staging
-    :background-color= !staging_color
-
+    +rounded_bottom_box(!flash_border_color)
 #login
   :margin-top 10px
   :float right
