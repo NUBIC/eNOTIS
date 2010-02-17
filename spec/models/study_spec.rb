@@ -37,7 +37,7 @@ describe Study do
 
    it "updates studies that are in the local database with the studies in couchdb" do
      fake_studies = {"rows" => [{"id" => "STU0123"}, {"id" => "STU0421"}, {"id" => "STU02345"}]}
-     Study.should_receive(:cache_view).with(:all_status).and_return(fake_studies)
+     Study.should_receive(:cache_view).with(:all).and_return(fake_studies)
      Study.delete_all
      Study.find(:all).should be_empty
      Study.update_all_from_cache

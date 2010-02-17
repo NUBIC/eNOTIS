@@ -38,7 +38,7 @@ class Study < ActiveRecord::Base
   end
 
   def self.update_all_from_cache
-    study_list = cache_view(:all_status)
+    study_list = cache_view(:all)
     study_list["rows"].each do |study|
       local_study = find_by_irb_number(study["id"])
       params = {:irb_number => study["id"],
@@ -53,6 +53,7 @@ class Study < ActiveRecord::Base
         create(params)   
       else
         local_study.update_attributes(params)
+        local_study.save
       end
     end
   end
