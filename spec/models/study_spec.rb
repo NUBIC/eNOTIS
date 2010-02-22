@@ -34,18 +34,40 @@ describe Study do
  end
 
  describe "data from couchdb" do
+    
+   before(:each) do
+      @fake_studies = {"rows" => [
+       {"key" => "STU0123", "value" => {"irb_number" => "STU0123", "name" => "Study A"}},
+       {"key" => "STU0412", "value" => {"irb_number" => "STU0421", "name" => "Study B"}},
+       {"key" => "STU02345", "value" => {"irb_number" => "STU02345","name" => "Study C"}}
+     ]}
+   end
 
-   it "updates studies that are in the local database with the studies in couchdb" do
-     fake_studies = {"rows" => [{"id" => "STU0123"}, {"id" => "STU0421"}, {"id" => "STU02345"}]}
-     Study.should_receive(:cache_view).with(:all).and_return(fake_studies)
+   it "creates studies in the local database with the studies in couchdb" do
+     Study.should_receive(:cache_view).with(:all).and_return(@fake_studies)           
      Study.delete_all
      Study.find(:all).should be_empty
      Study.update_all_from_cache
-     fake_studies["rows"].each do |s|
-       Study.find(:all).map(&:irb_number).should include(s["id"])
+     @fake_studies["rows"].each do |s|
+       Study.find(:all).map{|m| m["irb_number"]}.should include(s["value"]["irb_number"])
      end
    end
    
+   it "updates studies in the local db with study data in the cache" do
+     Study.should_receive(:cache_view).with(:all).and_return(@fake_studies)      
+     Study.update_all_from_cache
+     study = Study.find_by_irb_number("STU0123")
+     study.should_not be_nil
+     study.name.should == "Study A"
+     @fake_studies = {"rows" => [{"key" => "STU0123", "value" => {"irb_number" => "STU0123", "name" => "Updated Study A"}}]}
+     
+     Study.should_receive(:cache_view).with(:all).and_return(@fake_studies)      
+     Study.update_all_from_cache
+     study = Study.find_by_irb_number("STU0123")
+     study.should_not be_nil
+     study.name.should == "Updated Study A"
+  end
+
    it "stores the json in the instance object" do
      @study.eirb_json.should_not be_nil
    end

@@ -39,9 +39,9 @@ class Study < ActiveRecord::Base
 
   def self.update_all_from_cache
     study_list = cache_view(:all)
-    study_list["rows"].each do |study|
-      local_study = find_by_irb_number(study["id"])
-      params = {:irb_number => study["id"],
+    study_list["rows"].each do |study_hash|
+      study = study_hash["value"]
+      params = {:irb_number => study["irb_number"],
               :name => study["name"],
               :title => study["title"],
               :expiration_date => Chronic.parse(study["expiration_date"]),
@@ -49,11 +49,38 @@ class Study < ActiveRecord::Base
               :approved_date => Chronic.parse(study["approved_date"]),
               :research_type => study["research_type"],
               :closed_or_completed_date => study["closed_or_completed_date"]}
+      local_study = find_by_irb_number(params[:irb_number])      
       if local_study.nil?
         create(params)   
       else
-        local_study.update_attributes(params)
-        local_study.save
+        local_study.update_attributes!(params)
+      end
+    end
+  end
+
+  # TODO: consider refactoring the data cache to a separate class
+  def self.update_coordinators_from_cache
+    #looks at the local studies and updates access list from the cache
+    coord_list = cache_view(:access_list)
+    coord_list["rows"].each do |entry|
+      study = find_by_irb_number(entry["key"])
+      if study 
+        study.coordinators.clear
+        entry["value"].each do |user_hash|        
+          params = {:netid => user_hash["netid"],
+            :email => user_hash["email"],
+            :first_name => user_hash["first_name"],
+            :last_name => user_hash["last_name"]}
+          unless params[:netid].empty? # a lot are blank actually
+            user = User.find_by_netid(params[:netid])
+            if user
+              user.update_attributes(params)
+            else
+              user = User.create(params)
+            end
+            study.coordinators.create(:user => user)
+          end
+        end
       end
     end
   end
