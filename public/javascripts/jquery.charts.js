@@ -43,7 +43,8 @@ function pieChart(location, title, data){
     series: [{
 			type: 'pie',
 			name: title,
-			data: [["female", 2], ["male", 2], ["not reported", 4], ["unknown", 1]]
+			data: data
+			// data: [["female", 2], ["male", 2], ["not reported", 4], ["unknown", 1]]
 
       // series: [{
       //       name: 'Tokyo',
