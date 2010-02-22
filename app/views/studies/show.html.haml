@@ -5,7 +5,8 @@
     pieChart("gender", "Gender", []);
     pieChart("race", "Race", []);
     pieChart("ethnicity", "Ethnicity", []);
-    $('#study_information').hide();
+    $('#study_information').hide(100); // $('#study_information').animate({opacity: 1}, 100, function(){$(this).hide()});
+    // need an arbitrary delay to have hide happen after pieChart
     });
 #study
   %span.study_title
