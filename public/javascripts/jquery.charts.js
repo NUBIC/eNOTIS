@@ -1,11 +1,11 @@
-$(document).ready(function() {
-	var chart = new Highcharts.Chart({
+function pieChart(location, title, data){
+  new Highcharts.Chart({
 		chart: {
-			renderTo: 'foo',
+			renderTo: location,
 			margin: [25,100,25,25]
 		},
 		title: {
-			text: 'Genders'
+			text: title
 		},
 		plotArea: {
 			shadow: null,
@@ -42,7 +42,7 @@ $(document).ready(function() {
 		},
     series: [{
 			type: 'pie',
-			name: 'Browser share',
+			name: title,
 			data: [["female", 2], ["male", 2], ["not reported", 4], ["unknown", 1]]
 
       // series: [{
@@ -73,6 +73,5 @@ $(document).ready(function() {
 			//data: [3.40, 1.05, 2.90, 1.65, 1.35, 2.59, 1.39, 3.07, 2.82]
 		}]
 	});
-	
-	
-});
+  
+}
