@@ -58,12 +58,12 @@
                 = involvement.subject_name_or_case_number
                 -# = link_to image_tag('/images/icons/status_offline.png'), "#", :rel => "#subject_information", :class => 'subject'
                 -#= render :partial => 'partials/subject', :locals => {:subject => involvement.subject, :involvement => involvement}
-              %th= involvement.subject.mrn
-              %th= involvement.case_number
-              %th= involvement.subject.birth_date.to_s
-              %th= involvement.gender
-              %th= involvement.ethnicity
-              %th= involvement.race_list
+              %td= involvement.subject.mrn
+              %td= involvement.case_number
+              %td= involvement.subject.birth_date.to_s
+              %td= involvement.gender
+              %td= involvement.ethnicity
+              %td= involvement.race_list
               - @events.each do |event|
                 - if x = @study_events.detect{|e| e.involvement == involvement && e.event_type == event}
                   %td
