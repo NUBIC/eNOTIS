@@ -15,7 +15,7 @@ class Race < ActiveRecord::Base
   
   def short_race_type
     term = race_type.term
-    (term[0..12].length == term.length) ? term : term[0..10] + "..."
+    (term[0..12].length == term.length) ? term : term[0..10] + "&#0133;"
   end
   
 end
