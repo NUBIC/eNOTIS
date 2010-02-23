@@ -14,7 +14,8 @@ class Race < ActiveRecord::Base
   has_paper_trail
   
   def short_race_type
-    race_type.term[0..12]
+    term = race_type.term
+    (term[0..12].length == term.length) ? term : term[0..10] + "..."
   end
   
 end

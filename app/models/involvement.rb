@@ -39,7 +39,9 @@ class Involvement < ActiveRecord::Base
     self.ethnicity_type ? self.ethnicity_type.term : nil
   end
   def short_ethnicity
-    self.ethnicity_type ? self.ethnicity_type.term[0..12] : ""
+    return "" unless self.ethnicity_type
+    term = self.ethnicity_type.term
+    (term[0..12].length == term.length) ? term : term[0..10] + "..."
   end
 
   def gender
