@@ -13,4 +13,8 @@ class Race < ActiveRecord::Base
   # Mixins
   has_paper_trail
   
+  def short_race_type
+    race_type.term[0..12]
+  end
+  
 end

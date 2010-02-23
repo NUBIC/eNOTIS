@@ -2,9 +2,9 @@
   = javascript_include_tag 'highcharts/highcharts', 'jquery.charts'
   %script{:type => "text/javascript"}
     $(document).ready(function(){
-    = "pieChart('gender', 'Gender', [['female', 2], ['male', 2], ['not reported', 4], ['unknown', 1]]);"
-    = "pieChart('race', 'Race', [['asian', 2], ['white', 2]]);"
-    = "pieChart('ethnicity', 'Ethnicity', [['hispanic', 1], ['non-hispanic', 3], ['not reported', 4], ['unknown', 1]]);"
+    = "pieChart('gender', 'Gender', #{@gender_stats.inspect});"
+    = "pieChart('race', 'Race', #{@race_stats.inspect});"
+    = "pieChart('ethnicity', 'Ethnicity', #{@ethnicity_stats.inspect});"
     $('#study_information').hide(100); // $('#study_information').animate({opacity: 1}, 100, function(){$(this).hide()});
     // need an arbitrary delay to have hide happen after pieChart
     });

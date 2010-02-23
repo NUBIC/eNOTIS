@@ -2,7 +2,7 @@ function pieChart(location, title, data){
   new Highcharts.Chart({
 		chart: {
 			renderTo: location,
-			margin: [25,100,25,25]
+			margin: [25,100,25,0]
 		},
 		title: {
 			text: title
@@ -14,7 +14,7 @@ function pieChart(location, title, data){
 		},
 		tooltip: {
 			formatter: function() {
-				return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+				return '<b>'+ this.point.name +'</b>: '+ this.y;
 			}
 		},
 		plotOptions: {
