@@ -15,9 +15,9 @@ $(document).ready(function() {
 	
 	// studies show
     // dataTable
-    $("#accrual .display").dataTable({"iDisplayLength": 30, "sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" },{ "sType": "html" },{ "sType": "html" },{ "sType": "html" }]});
+    $("#accrual .display").dataTable({"iDisplayLength": 30, "sPaginationType": "full_numbers","aoColumns": [null,null,null,null,null,null,null,{ "sType": "html" },{ "sType": "html" },{ "sType": "html" }]});
     $("#accrual .display td:empty, #import .display td:empty").html("--");
-    
+
     // study overlay
     // $("#study a[rel=#study_information]").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 } });
     $("#study a[rel=#study_information]").click(function(){

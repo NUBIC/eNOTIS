@@ -18,7 +18,7 @@ namespace :db do
       [User, Coordinator, Study, Involvement, Subject, InvolvementEvent,DictionaryTerm].each(&:delete_all)
     end
 
-    desc 'Populate admins(Reggie, Brian, David, Mark)'
+    desc 'Populate admins(Brian, David, Mark, Laura)'
     task :admins => [:environment, :"users:create_admins"]
 
     desc 'Populate users(fake)'
@@ -58,6 +58,7 @@ namespace :db do
       300.times do |i|
         involvement = Factory.create( :involvement, :study => random(Study), :subject => Factory.create(:fake_subject),
                                       :gender_type_id => gender_type_ids.rand, :ethnicity_type_id => ethnicity_type_ids.rand)
+        Factory.create(:race, :involvement => involvement)
         blip && Factory.create( :involvement_event, :event_type_id => event_type_ids.rand, :involvement => involvement )
       end
       puts
@@ -74,6 +75,7 @@ namespace :db do
       200.times do |i|
         involvement = Factory.create( :involvement, :study => random(Study), :subject => random(Subject),
                                       :gender_type_id => gender_type_ids.rand, :ethnicity_type_id => ethnicity_type_ids.rand)
+        Factory.create(:race, :involvement => involvement)
         blip && Factory.create( :involvement_event, :event_type_id => event_type_ids.rand, :involvement => involvement )
       end
       puts

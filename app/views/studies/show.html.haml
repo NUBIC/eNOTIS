@@ -1,3 +1,13 @@
+- content_for :head do
+  = javascript_include_tag 'highcharts/highcharts', 'jquery.charts'
+  %script{:type => "text/javascript"}
+    $(document).ready(function(){
+    = "pieChart('gender', 'Gender', #{@gender_stats.inspect});"
+    = "pieChart('race', 'Race', #{@race_stats.inspect});"
+    = "pieChart('ethnicity', 'Ethnicity', #{@ethnicity_stats.inspect});"
+    $('#study_information').hide(100); // $('#study_information').animate({opacity: 1}, 100, function(){$(this).hide()});
+    // need an arbitrary delay to have hide happen after pieChart
+    });
 #study
   %span.study_title
     = link_to "#{status_icon @study} #{@study.irb_number || "(no id)"}", "#", :rel => "#study_information", :class => 'study_information'
@@ -7,6 +17,11 @@
     = link_to("Export subjects", new_report_path(:study => @study), :rel => '#export', :class => 'export-subjects') 
   #study_information
     = render :partial => 'partials/study_info', :locals => {:study => @study}
+    %br.clear
+    #gender.chart
+    #ethnicity.chart
+    #race.chart
+  %br.clear
   #accrual
     #subject_information.overlay
       .contentWrap

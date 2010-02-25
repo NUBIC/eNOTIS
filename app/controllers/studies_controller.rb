@@ -39,10 +39,11 @@ class StudiesController < ApplicationController
     @study = Study.find_by_irb_number(params[:id])
     return redirect_with_message(default_path, :notice, "You don't have access to study #{@study.irb_number}") unless @study.has_coordinator?(current_user)
     @title = @study.irb_number
+    @involvements = @study.involvements
     @study_events = InvolvementEvent.on_study(@study)
-    @ethnicity_stats = @study.involvements.count_all(:ethnicity_type_id).map{|id,count| [DictionaryTerm.find(id).term, count]}
-    @gender_stats = @study.involvements.count_all(:gender_type_id)
-    @race_stats = @study.involvements.count_all(:races, :race_type_id)
+    @ethnicity_stats = @involvements.count_all(:short_ethnicity)
+    @gender_stats = @involvements.count_all(:gender)
+    @race_stats = @involvements.count_all(:races, :short_race_type)
     @accruals = @study_events.with_event_types([DictionaryTerm.lookup_term("Consented",:event)])
     @events = %w(consented withdrawn completed).map{|term| DictionaryTerm.lookup_term(term, :event)}
     # @events = DictionaryTerm.lookup_category_terms(:event).select{|dt| desired_terms.include? dt.term}

@@ -38,6 +38,9 @@ class Involvement < ActiveRecord::Base
   def ethnicity
     self.ethnicity_type ? self.ethnicity_type.term : nil
   end
+  def short_ethnicity
+    self.ethnicity_type ? self.ethnicity_type.term[0..12] : ""
+  end
 
   def gender
     self.gender_type ? self.gender_type.term : nil
