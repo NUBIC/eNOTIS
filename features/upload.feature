@@ -5,11 +5,12 @@ Feature: Upload subjects
 
   Background:
     Given I log in as "pi"
-    And a study "Vitamin C and concentration" with id "1248C" and status "Approved"
-    And "pi" has access to study id "1248C"
+    And a study "Vitamin C and concentration" with id "STU001248" and irb_status "Approved"
+    And "pi" has access to study id "STU001248"
 
   Scenario: A coordinator can upload a subject list from a file to the study
-    When I go to the study page for id "1248C"
+    When I go to the study page for id "STU001248"
     And I upload a file with valid data for 7 subjects
-    And I go to the study page for id "1248C"
+    And I go to the study page for id "STU001248"
     Then I should see "Subjects (7)"
+

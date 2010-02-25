@@ -6,7 +6,19 @@ describe Coordinator do
   end
 
   it "should create a new instance given valid attributes" do
-    Factory(:coordinator).should be_valid
+    user = Factory(:user, :netid => "abc123")
+    study = Factory(:study, :irb_number => "STU0010101")
+    coord = Factory(:coordinator, :user => user, :study => study)
+    coord.should be_valid
+    study.coordinators.map(&:netid).include?("abc123").should be_true
   end
-  
+ 
+  it "should create a new instance given valid attributes (fake study)" do
+    user = Factory(:user, :netid => "abc123")
+    study = Factory(:fake_study, :irb_number => "STU0010101")
+    coord = Factory(:coordinator, :user => user, :study => study)
+    coord.should be_valid
+    study.coordinators.map(&:netid).include?("abc123").should be_true
+  end
+
 end

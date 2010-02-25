@@ -16,8 +16,9 @@ class AuthenticationController < ApplicationController
     user = User.authenticate(params[:netid], params[:password])
 
     if user
-      # Protects against session fixation attacks, causes request forgery protection if user resubmits an earlier form using back button. Uncomment if you understand the tradeoffs.
-      # reset_session
+      # Protects against session fixation attacks, causes request forgery protection 
+      # if user resubmits an earlier form using back button. Uncomment if you understand the tradeoffs.
+      reset_session
       self.current_user = user
       redirect_back_or_default(default_path)
       flash[:notice] = "Logged in successfully as #{current_user.netid}"

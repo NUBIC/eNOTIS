@@ -1,21 +1,27 @@
+
+require 'webservices'
 class Eirb
   # basic settings for single row queries
   SEARCH_DEFAULTS = {  :startRow => 1, 
                        :numRows => -1,
                        :expandMultiValueCells => true}.freeze
 
-  STORED_SEARCHES = [ {:name => "eNOTIS Study Accrual PR", :ext => "accrual"},
-                      {:name => "eNOTIS Study Authorized Personnel", :ext => "authorized_personnel"},
-                      {:name => "eNOTIS Study Basics", :ext => "basics"},
-                      {:name => "eNOTIS Study Co-Investigators", :ext => "co_investigators"},
-                      {:name => "eNOTIS Study Coordinators", :ext => "coordinators"},
-                      {:name => "eNOTIS Study Key Research Personnel", :ext => "key_personnell"},
-                      {:name => "eNOTIS Study Principal Investigator", :ext => "principal_investigators"},
-                      {:name => "eNOTIS Study Status", :ext => "status"},
-                      {:name => "eNOTIS Study Access", :ext => "access_list"},
-                      {:name => "eNOTIS Person Details", :ext => "user"},
-                      {:name => "eNOTIS Study Combined Priv", :ext => "study_combined_access"},
-                      {:name => "eNOTIS Study Subject Populations", :ext => "populations"}].freeze
+  STORED_SEARCHES = [# {:name => "eNOTIS Person Details", :ext => "user"}, # not used currently
+   # {:name => "eNOTIS Study Access", :ext => "access_list"},
+   # {:name => "eNOTIS Study Accrual", :ext => "accrual"},
+   # {:name => "eNOTIS Study Accrual PR", :ext => "periodic_review_accrual"},
+   # {:name => "eNOTIS Study Authorized Access", :ext => "authorized_access"},
+   # {:name => "eNOTIS Study Authorized Personnel", :ext => "authorized_personnel"},
+    {:name => "eNOTIS Study Basics", :ext => "basics"},
+    {:name => "eNOTIS Study Co-Investigators", :ext => "co_investigators"},
+   # DO NOT USE! --> does not map data properly {:name => "eNOTIS Study Combined Priv", :ext => "combined_access"},
+   # {:name => "eNOTIS Study Contact List", :ext => "contact_list"},
+    {:name => "eNOTIS Study Coordinators", :ext => "coordinators"},
+   # {:name => "eNOTIS Study Key Research Personnel", :ext => "key_personnel"},
+    {:name => "eNOTIS Study Principal Investigator", :ext => "principal_investigators"},
+   # {:name => "eNOTIS Study Status", :ext => "status"},
+   # {:name => "eNOTIS Study Subject Populations", :ext => "populations"}
+   ].freeze
 
   cattr_accessor :eirb_adapter
   
@@ -24,15 +30,16 @@ class Eirb
     def connect
       self.eirb_adapter ||= EirbAdapter.new
     end
+
     def connected?
       !eirb_adapter.nil?
     end
+    
     # This method attempts to pull data from the service
-    def service_test
-      config = WebserviceConfig.new("/etc/nubic/eirb-#{RAILS_ENV.downcase}.yml")
+    def service_test(irb_number)
       begin
-        result = find_by_irb_number({:irb_number => config[:test_irb_number]})
-        status = (result.first ? (result.first[:irb_number] == config[:test_irb_number]) : false)
+        result = find_basics({:irb_number => irb_number})
+        status = (result.first ? (result.first[:irb_number] == irb_number) : false)
         return status, status ? "All good" : "invalid data retrieved"
       rescue => error
         return false, error.message
@@ -41,19 +48,21 @@ class Eirb
     
     # Wrapper methods
     STORED_SEARCHES.each do |search|
-      send(:define_method, "find_#{search[:ext]}") do |conditions|
-        if conditions.blank?
+      send(:define_method, "find_#{search[:ext]}") do |*args|
+        if args.empty?
           chunked_search("#{search[:name]}")
         else
-          default_search("#{search[:name]}", Webservices.convert([conditions], NOTIS_TO_EIRB, false).first)
+          default_search("#{search[:name]}", Webservices.convert(args, NOTIS_TO_EIRB, false).first)
         end
       end
     end
+    
     # Search methods
     def default_search(search_name, parameters=nil)
       search_settings = SEARCH_DEFAULTS.merge({:savedSearchName => search_name, :parameters => parameters})
       search(search_settings)
     end
+    
     # Breaks search results into managble chunks of data because eIrb chokes if a query is to large
     def chunked_search(search_name, parameters=nil,num_rows=500)
       start_row = 1 # eirb has row 1 as the first row
@@ -62,15 +71,18 @@ class Eirb
         begin
           partial_results = paginated_search(search_name,start_row,num_rows,parameters)
           break if partial_results.empty? 
-          results.concat(partial_results)
-          start_row += num_rows
-        rescue
+          results.concat(partial_results)          
+        rescue => e
+          LOG.warn("Chunked Search Failed!\n#{e.message}")
           #supress eirb errors and return incomplete dataset
-          break
+          #  break
+        ensure
+          start_row += num_rows
         end
       end
       results
     end
+    
     def paginated_search(search_name,start_row,num_rows,parameters=nil)
       search_settings = SEARCH_DEFAULTS.merge({
        :savedSearchName => search_name,
@@ -80,6 +92,7 @@ class Eirb
       })
       search(search_settings)
     end
+    
     def search(settings, convert_headers=true)
       connect unless connected?
       result = eirb_adapter.perform_search(settings) if connected?

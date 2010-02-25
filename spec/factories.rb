@@ -69,36 +69,38 @@ Factory.define :study do |p|
   p.name                  {"Randomized Evaluation of Sinusitis With Vitamin A"}
   p.title                 {"Randomized Evaluation of Sinusitis With Vitamin A"}
   p.research_type         {}
-  p.phase                 {"II"}
-  p.description           {"Rem fugit culpa unde facilis earum. Quas et vitae ut cumque nihil quidem aperiam architecto. Et asperiores inventore non nisi libero architecto quibusdam.\r\n\r\nVeniam fugiat voluptas laudantium in assumenda. Blanditiis recusandae illum necessitatibus. Quia nesciunt esse officia neque doloribus vel explicabo provident. Non sit vero iusto quibusdam explicabo. Nobis in architecto quam pariatur sit autem optio."}
-  p.status                {"Approved"}
-  p.pi_netid              {"tuh532"}
-  p.pi_first_name         {"Terry"}
-  p.pi_last_name          {"Hulu"}
-  p.pi_email              {"t-hulu@northwestern.edu"}
-  p.sc_netid              {"cab133"}
-  p.sc_first_name         {"Carter"}
-  p.sc_last_name          {"Baggs"}
-  p.sc_email              {"cbaggs@northwestern.edu"}
-  p.synced_at             {3.minutes.ago}
+  #p.description           {"Rem fugit culpa unde facilis earum. Quas et vitae ut cumque nihil quidem aperiam architecto. Et asperiores inventore non nisi libero architecto quibusdam.\r\n\r\nVeniam fugiat voluptas laudantium in assumenda. Blanditiis recusandae illum necessitatibus. Quia nesciunt esse officia neque doloribus vel explicabo provident. Non sit vero iusto quibusdam explicabo. Nobis in architecto quam pariatur sit autem optio."}
+  p.irb_status            {"Approved"}
+  p.eirb_json             {{
+    "principal_investigators" => [{"netid" => "tuh532",
+        "first_name" => "Terry",
+        "last_name" => "Hulu",
+        "email" => "t-hulu@northwestern.edu"}],
+    "coordinators" => [{"netid" => "cab133",
+        "first_name" => "Carter",
+        "last_name" => "Baggs",
+        "email" => "cbaggs@northwestern.edu"}]}}
 end
 
 Factory.define :fake_study, :parent => :study do |p|
   p.title                 {Faker::Study.title}
+  p.irb_number            {Factory.next :irb_number}
   p.name                  {|me| s = me.title.split; "#{s.first} #{s.last}";}
   p.research_type         {["Bio-medical","Bio-medical","Bio-medical","Social/Behavioral",""].rand}
-  p.phase                 {["I","II","III","IV","n/a",nil].rand}
-  p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
-  p.status                {Faker::Study.eirb_status}
-  p.pi_first_name         {Faker::Name.first_name}
-  p.pi_last_name          {Faker::Name.last_name}
-  p.pi_email              {Faker::Internet.email}
-  p.pi_netid              {|me| "#{me.pi_first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{me.pi_last_name.gsub(/[^a-zA-Z]/,'')[0,2]}#{(100..999).to_a.rand}".downcase}
-  p.sc_first_name         {Faker::Name.first_name}
-  p.sc_last_name          {Faker::Name.last_name}
-  p.sc_email              {Faker::Internet.email}
-  p.sc_netid              {|me| "#{me.sc_first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{me.sc_last_name.gsub(/[^a-zA-Z]/,'')[0,2]}#{(100..999).to_a.rand}".downcase}
-  p.synced_at             {Populator.value_in_range(2.days.ago..2.minutes.ago)}
+  #p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
+  p.irb_status            {Faker::Study.eirb_status}
+  p.eirb_json do |me|
+    {:principal_investigators =>
+    [{"first_name" => Faker::Name.first_name,
+    "last_name" => Faker::Name.last_name,
+    "email" => Faker::Internet.email,
+    "netid" => "#{Faker::Name.first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{Faker::Name.last_name.gsub(/[^a-zA-Z]/,'')[0,2]}#{(100..999).to_a.rand}".downcase}],
+    :coordinators => [{"first_name" => Faker::Name.first_name,
+    "last_name" => Faker::Name.last_name,
+    "email" => Faker::Internet.email,
+    "netid" => "#{Faker::Name.first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{Faker::Name.last_name.gsub(/[^a-zA-Z]/,'')[0,2]}#{(100..999).to_a.rand}".downcase}]}
+  end
+
 end
 
 Factory.sequence :email do |n|

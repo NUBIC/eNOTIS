@@ -1,9 +1,9 @@
 # Basics
 gem "rails", "2.3.4"
 gem "pg"
-gem "haml", '>=2.2.0'
-gem "chriseppstein-compass", '>=0.8.13'
-gem "capistrano", '>=2.5.8'
+gem "haml", '~> 2.2.0'
+gem "chriseppstein-compass", '~> 0.8.0'
+gem "capistrano", '~> 2.5.0'
 gem "fastthread"
 
 # External services
@@ -12,6 +12,7 @@ gem "libxml-ruby", '>=1.1.3'
 gem "stomp", '>=1.1'
 gem "activemessaging"
 gem "aasm"
+gem "couchrest"
 
 # Import/export
 gem "fastercsv", '>=1.5.0'

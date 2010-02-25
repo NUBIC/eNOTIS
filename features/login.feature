@@ -5,7 +5,7 @@ Feature: User access to system
 
   Background: 
     Given a user "pi" with password "314159"
-    And "pi" has access to study id "1234"
+    And "pi" has access to study id "STU0001234"
 
   Scenario: An authorized user should be able to login
     When I log in as "pi" with password "314159"

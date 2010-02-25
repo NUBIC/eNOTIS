@@ -1,10 +1,10 @@
 require 'rubygems'
 require 'couchrest'
-require 'webservices/plugins/eirb_services'
+require 'webservices/eirb'
 
 class CouchStudy
 
-  CHILD_DATA = {:pis => "pi",:co_pis => "co_pis",:coords => "coords", :al => "access_list",:pops => "populations", :acrl => "subject_accrual"}
+  SEARCHES = Eirb::STORED_SEARCHES.dup.delete_if{|d| d[:ext] == "basics"}
 
   attr_accessor :db, :studies
 
@@ -14,31 +14,7 @@ class CouchStudy
   end
 
   def get_studies
-    @studies = Eirb.find_basics #finds (almost) all the studies
-  end
-
-  def get_pis
-    Eirb.find_principal_investigators
-  end
-
-  def get_co_pis
-    Eirb.find_co_investigators
-  end
-
-  def get_coords
-    Eirb.find_coordinators
-  end
-
-  def get_al
-    Eirb.find_access_list
-  end
-
-  def get_pops
-    Eirb.find_populations
-  end
-
-  def get_acrl
-    Eirb.find_accrual
+    @studies = Eirb.find_basics #find all the studies
   end
 
   def create_studies
@@ -51,28 +27,37 @@ class CouchStudy
   def process
     puts "Creating the studies"
     create_studies
-    CHILD_DATA.each do |k,v|
-      puts "Processing '#{v}' for studies"
-      #preping the instance var
-      data = send("get_#{k}")
-      data.each do |d|
-        append(v,d)
+    puts "Done creating the studies"
+    @studies.each do |study|
+      puts "Study #{study[:irb_number]}"
+      SEARCHES.each do |k|
+        puts "---Processing '#{k[:name]}'"
+        begin
+          data = Eirb.send("find_#{k[:ext]}",{:irb_number => study[:irb_number]})
+        rescue
+          data = [{:irb_number => study[:irb_number],:error => "query to eirb failed"}]
+        end
+        data.each do |d|
+          append(k[:ext],d)
+        end
       end
     end
   end
 
   def append(key,obj)
     #look in the obj for the irb_number
-    begin
+    #begin
       doc = @db.get(obj[:irb_number]) #find the doc
-    rescue
-      puts "#{obj[:irb_number]} missing from basic query"
-      doc = rescue_save(obj)
-    end
+    #rescue
+    #  puts "#{obj[:irb_number]} missing from basic query"
+    #  doc = rescue_save(obj)
+    #end
+    
+    #TODO fix! -THis will not work for updating data!
     if doc[key] && doc[key].is_a?(Array)
       doc[key] << obj
     else
-      doc[key]=[obj]
+      doc[key]=[obj] #make sure we're putting the object in array if we expect it that way
     end
     doc.save
   end
