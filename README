@@ -26,3 +26,9 @@ and credentials files:
   password:
 
 /etc/nubc/db/p[environment].yml, e.g. /etc/nubc/pstage.yml (not needed in development or test)
+
+/etc/nubc/couch-[environment].yml, e.g. /etc/nubc/couch-development.yml, which should contain the following keys:
+  url: "http://localhost"
+  port: 5984
+  db: "eirb_prod"
+  
