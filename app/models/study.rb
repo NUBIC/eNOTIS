@@ -60,18 +60,20 @@ class Study < ActiveRecord::Base
 
   # TODO: consider refactoring the data cache to a separate class
   def self.update_coordinators_from_cache
+    #clearing the old data
+    Coordinator.delete_all
     #looks at the local studies and updates access list from the cache
     coord_list = cache_view(:access_list)
     coord_list["rows"].each do |entry|
       study = find_by_irb_number(entry["key"])
       if study 
-        study.coordinators.clear
+        
         entry["value"].each do |user_hash|        
           params = {:netid => user_hash["netid"],
             :email => user_hash["email"],
             :first_name => user_hash["first_name"],
             :last_name => user_hash["last_name"]}
-          unless params[:netid].empty? # a lot are blank actually
+          unless params[:netid].nil? || params[:netid].empty? # a lot are blank actually
             user = User.find_by_netid(params[:netid])
             if user
               user.update_attributes(params)
@@ -80,9 +82,10 @@ class Study < ActiveRecord::Base
             end
             study.coordinators.create(:user => user)
           end
+          
         end
       end
-    end
+    end    
   end
 
   # After load hook to load up the dynamic methods/attrs from our
