@@ -11,11 +11,14 @@ namespace :db do
 
     task :default => [:environment, :clear_db, :admins, :"dictionary_terms:import", :users, :coordinators_and_studies, :coordinators, :involvements_and_subects, :involvements, :sample_netids]
     
+    desc 'Populates database with basic data'
+    task :basics => [:admins, :"dictionary_terms:import"]
+      
     desc 'Clear models: User, Coordinator, Study, Involvement, Subject, InvolvementEvent,DictionaryTerm'
     task :clear_db => :environment do
       puts
       puts "clearing db..."
-      [User, Coordinator, Study, Involvement, Subject, InvolvementEvent,DictionaryTerm].each(&:delete_all)
+      [User, Coordinator, Study, Involvement, Subject, InvolvementEvent, DictionaryTerm].each(&:delete_all)
     end
 
     desc 'Populate admins(Brian, David, Mark, Laura)'
