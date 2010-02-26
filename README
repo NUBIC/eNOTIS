@@ -1,5 +1,14 @@
 == Welcome to eNOTIS
 
+eNOTIS requires a few commands to get the data to start up:
+
+script/console
+  Study.update_all_from_cache
+  Study.update_coordinators_from_cache
+  
+rake users:create_admins
+rake dictionary_terms:import
+
 eNOTIS depends on a few important gems:
 
 bundler, currently the 0.8 branch
@@ -26,3 +35,9 @@ and credentials files:
   password:
 
 /etc/nubc/db/p[environment].yml, e.g. /etc/nubc/pstage.yml (not needed in development or test)
+
+/etc/nubc/couch-[environment].yml, e.g. /etc/nubc/couch-development.yml, which should contain the following keys:
+  url: "http://localhost"
+  port: 5984
+  db: "eirb_prod"
+  
