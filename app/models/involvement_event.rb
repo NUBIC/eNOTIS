@@ -75,7 +75,7 @@ class InvolvementEvent < ActiveRecord::Base
   end
   
   def self.count_accruals
-    InvolvementEvent.count(:involvement_id, :distinct => true, :conditions => ["event_type_id =? ", DictionaryTerm.lookup_term("Consented","Event").id])
+    InvolvementEvent.count(:involvement_id, :distinct => true, :conditions => ["event_type_id =? ", DictionaryTerm.event_id("consented")])
   end
  
   private

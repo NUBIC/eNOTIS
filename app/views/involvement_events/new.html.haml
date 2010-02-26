@@ -28,7 +28,7 @@
       %h3 Demographics (required)
       %p
         = label_tag 'involvement[gender_type_id]','Gender'
-        = select_tag('involvement[gender_type_id]',options_for_select(@genders.map{|gender|[gender.term.capitalize!,gender.id]}))
+        = select_tag('involvement[gender_type_id]',options_for_select(@genders.map{|gender|[gender.term.capitalize,gender.id]}))
       %p
         = label_tag 'involvement[ethnicity_type_id]','Ethnicity'
         = select_tag('involvement[ethnicity_type_id]',options_for_select(@ethnicities.map{|ethnicity|[ethnicity.term.titleize,ethnicity.id]}))
@@ -37,7 +37,7 @@
         %br
         - @races.each do |race|
           = check_box_tag "involvement[race_type_ids][]", race.id
-          = label_tag "involvement[race_type_ids][]", race.term.capitalize!
+          = label_tag "involvement[race_type_ids][]", race.term.capitalize
           %br
 
   .event
