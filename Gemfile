@@ -35,6 +35,12 @@ gem "binarylogic-searchlogic"
 gem "bcdatabase", '<1.0.0'
 gem "bcsec"
 
+# irb magic
+only :development do
+  gem "wirble"
+  gem "hirb"
+end
+
 # Testing
 only :test, :cucumber, :hudson do
   gem "rspec", "~> 1.2.0"

@@ -17,12 +17,12 @@ module Bundler
   ENV["PATH"]     = "#{dir}/../../../../bin:#{ENV["PATH"]}"
   ENV["RUBYOPT"]  = "-r#{file} #{ENV["RUBYOPT"]}"
 
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/httpclient-2.1.5.2/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/httpclient-2.1.5.2/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/net-ssh-2.0.20/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/net-ssh-2.0.20/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/net-ssh-gateway-1.0.1/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/net-ssh-gateway-1.0.1/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/httpclient-2.1.5.2/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/httpclient-2.1.5.2/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastercsv-1.5.1/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastercsv-1.5.1/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/json_pure-1.2.0/bin")
@@ -32,6 +32,8 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastthread-1.0.7/ext")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rake-0.8.7/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rake-0.8.7/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/wirble-0.1.3/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/wirble-0.1.3/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/net-scp-1.0.2/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/net-scp-1.0.2/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/database_cleaner-0.5.0/bin")
@@ -67,6 +69,8 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/libxml-ruby-1.1.3/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/libxml-ruby-1.1.3/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/libxml-ruby-1.1.3/ext/libxml")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/hirb-0.2.10/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/hirb-0.2.10/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/composite_primary_keys-2.3.2/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/composite_primary_keys-2.3.2/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/pg-0.8.0/bin")
@@ -114,12 +118,6 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/treetop-1.4.4/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/cucumber-0.6.2/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/cucumber-0.6.2/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/color-1.4.1/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/color-1.4.1/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/pdf-writer-1.1.8/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/pdf-writer-1.1.8/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ruport-1.6.3/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ruport-1.6.3/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/actionmailer-2.3.4/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/actionmailer-2.3.4/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/capistrano-2.5.16/bin")
@@ -154,6 +152,12 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/mime-types-1.16/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rest-client-1.3.1/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rest-client-1.3.1/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/color-1.4.1/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/color-1.4.1/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/pdf-writer-1.1.8/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/pdf-writer-1.1.8/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ruport-1.6.3/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ruport-1.6.3/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/bcdatabase-0.6.3/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/bcdatabase-0.6.3/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/bcsec-1.4.8/bin")
@@ -166,12 +170,12 @@ module Bundler
   require "rubygems" unless respond_to?(:gem) # 1.9 already has RubyGems loaded
 
   @bundled_specs = {}
-  @bundled_specs["httpclient"] = eval(File.read("#{dir}/specifications/httpclient-2.1.5.2.gemspec"))
-  @bundled_specs["httpclient"].loaded_from = "#{dir}/specifications/httpclient-2.1.5.2.gemspec"
   @bundled_specs["net-ssh"] = eval(File.read("#{dir}/specifications/net-ssh-2.0.20.gemspec"))
   @bundled_specs["net-ssh"].loaded_from = "#{dir}/specifications/net-ssh-2.0.20.gemspec"
   @bundled_specs["net-ssh-gateway"] = eval(File.read("#{dir}/specifications/net-ssh-gateway-1.0.1.gemspec"))
   @bundled_specs["net-ssh-gateway"].loaded_from = "#{dir}/specifications/net-ssh-gateway-1.0.1.gemspec"
+  @bundled_specs["httpclient"] = eval(File.read("#{dir}/specifications/httpclient-2.1.5.2.gemspec"))
+  @bundled_specs["httpclient"].loaded_from = "#{dir}/specifications/httpclient-2.1.5.2.gemspec"
   @bundled_specs["fastercsv"] = eval(File.read("#{dir}/specifications/fastercsv-1.5.1.gemspec"))
   @bundled_specs["fastercsv"].loaded_from = "#{dir}/specifications/fastercsv-1.5.1.gemspec"
   @bundled_specs["json_pure"] = eval(File.read("#{dir}/specifications/json_pure-1.2.0.gemspec"))
@@ -180,6 +184,8 @@ module Bundler
   @bundled_specs["fastthread"].loaded_from = "#{dir}/specifications/fastthread-1.0.7.gemspec"
   @bundled_specs["rake"] = eval(File.read("#{dir}/specifications/rake-0.8.7.gemspec"))
   @bundled_specs["rake"].loaded_from = "#{dir}/specifications/rake-0.8.7.gemspec"
+  @bundled_specs["wirble"] = eval(File.read("#{dir}/specifications/wirble-0.1.3.gemspec"))
+  @bundled_specs["wirble"].loaded_from = "#{dir}/specifications/wirble-0.1.3.gemspec"
   @bundled_specs["net-scp"] = eval(File.read("#{dir}/specifications/net-scp-1.0.2.gemspec"))
   @bundled_specs["net-scp"].loaded_from = "#{dir}/specifications/net-scp-1.0.2.gemspec"
   @bundled_specs["database_cleaner"] = eval(File.read("#{dir}/specifications/database_cleaner-0.5.0.gemspec"))
@@ -214,6 +220,8 @@ module Bundler
   @bundled_specs["factory_girl"].loaded_from = "#{dir}/specifications/factory_girl-1.2.3.gemspec"
   @bundled_specs["libxml-ruby"] = eval(File.read("#{dir}/specifications/libxml-ruby-1.1.3.gemspec"))
   @bundled_specs["libxml-ruby"].loaded_from = "#{dir}/specifications/libxml-ruby-1.1.3.gemspec"
+  @bundled_specs["hirb"] = eval(File.read("#{dir}/specifications/hirb-0.2.10.gemspec"))
+  @bundled_specs["hirb"].loaded_from = "#{dir}/specifications/hirb-0.2.10.gemspec"
   @bundled_specs["composite_primary_keys"] = eval(File.read("#{dir}/specifications/composite_primary_keys-2.3.2.gemspec"))
   @bundled_specs["composite_primary_keys"].loaded_from = "#{dir}/specifications/composite_primary_keys-2.3.2.gemspec"
   @bundled_specs["pg"] = eval(File.read("#{dir}/specifications/pg-0.8.0.gemspec"))
@@ -260,12 +268,6 @@ module Bundler
   @bundled_specs["treetop"].loaded_from = "#{dir}/specifications/treetop-1.4.4.gemspec"
   @bundled_specs["cucumber"] = eval(File.read("#{dir}/specifications/cucumber-0.6.2.gemspec"))
   @bundled_specs["cucumber"].loaded_from = "#{dir}/specifications/cucumber-0.6.2.gemspec"
-  @bundled_specs["color"] = eval(File.read("#{dir}/specifications/color-1.4.1.gemspec"))
-  @bundled_specs["color"].loaded_from = "#{dir}/specifications/color-1.4.1.gemspec"
-  @bundled_specs["pdf-writer"] = eval(File.read("#{dir}/specifications/pdf-writer-1.1.8.gemspec"))
-  @bundled_specs["pdf-writer"].loaded_from = "#{dir}/specifications/pdf-writer-1.1.8.gemspec"
-  @bundled_specs["ruport"] = eval(File.read("#{dir}/specifications/ruport-1.6.3.gemspec"))
-  @bundled_specs["ruport"].loaded_from = "#{dir}/specifications/ruport-1.6.3.gemspec"
   @bundled_specs["actionmailer"] = eval(File.read("#{dir}/specifications/actionmailer-2.3.4.gemspec"))
   @bundled_specs["actionmailer"].loaded_from = "#{dir}/specifications/actionmailer-2.3.4.gemspec"
   @bundled_specs["capistrano"] = eval(File.read("#{dir}/specifications/capistrano-2.5.16.gemspec"))
@@ -300,6 +302,12 @@ module Bundler
   @bundled_specs["mime-types"].loaded_from = "#{dir}/specifications/mime-types-1.16.gemspec"
   @bundled_specs["rest-client"] = eval(File.read("#{dir}/specifications/rest-client-1.3.1.gemspec"))
   @bundled_specs["rest-client"].loaded_from = "#{dir}/specifications/rest-client-1.3.1.gemspec"
+  @bundled_specs["color"] = eval(File.read("#{dir}/specifications/color-1.4.1.gemspec"))
+  @bundled_specs["color"].loaded_from = "#{dir}/specifications/color-1.4.1.gemspec"
+  @bundled_specs["pdf-writer"] = eval(File.read("#{dir}/specifications/pdf-writer-1.1.8.gemspec"))
+  @bundled_specs["pdf-writer"].loaded_from = "#{dir}/specifications/pdf-writer-1.1.8.gemspec"
+  @bundled_specs["ruport"] = eval(File.read("#{dir}/specifications/ruport-1.6.3.gemspec"))
+  @bundled_specs["ruport"].loaded_from = "#{dir}/specifications/ruport-1.6.3.gemspec"
   @bundled_specs["bcdatabase"] = eval(File.read("#{dir}/specifications/bcdatabase-0.6.3.gemspec"))
   @bundled_specs["bcdatabase"].loaded_from = "#{dir}/specifications/bcdatabase-0.6.3.gemspec"
   @bundled_specs["bcsec"] = eval(File.read("#{dir}/specifications/bcsec-1.4.8.gemspec"))
