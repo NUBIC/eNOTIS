@@ -17,14 +17,14 @@ module Bundler
   ENV["PATH"]     = "#{dir}/../../../../bin:#{ENV["PATH"]}"
   ENV["RUBYOPT"]  = "-r#{file} #{ENV["RUBYOPT"]}"
 
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastercsv-1.5.1/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastercsv-1.5.1/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/net-ssh-2.0.20/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/net-ssh-2.0.20/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/net-ssh-gateway-1.0.1/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/net-ssh-gateway-1.0.1/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/httpclient-2.1.5.2/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/httpclient-2.1.5.2/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastercsv-1.5.1/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastercsv-1.5.1/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/json_pure-1.2.0/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/json_pure-1.2.0/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/fastthread-1.0.7/bin")
@@ -85,6 +85,8 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rack-1.0.1/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/chronic-0.2.3/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/chronic-0.2.3/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rdiscount-1.5.8/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/rdiscount-1.5.8/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/builder-2.1.2/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/builder-2.1.2/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/nokogiri-1.4.1/bin")
@@ -96,16 +98,16 @@ module Bundler
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/diff-lcs-1.1.2/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ci_reporter-1.6.0/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/ci_reporter-1.6.0/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/acts_as_reportable-1.1.1/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/acts_as_reportable-1.1.1/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/faker-0.3.1/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/faker-0.3.1/lib")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/highline-1.5.2/bin")
-  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/highline-1.5.2/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/acts_as_reportable-1.1.1/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/acts_as_reportable-1.1.1/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/haml-2.2.20/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/haml-2.2.20/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/chriseppstein-compass-0.8.17/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/chriseppstein-compass-0.8.17/lib")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/highline-1.5.2/bin")
+  $LOAD_PATH.unshift File.expand_path("#{dir}/gems/highline-1.5.2/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/paperclip-2.1.2/bin")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/paperclip-2.1.2/lib")
   $LOAD_PATH.unshift File.expand_path("#{dir}/gems/binarylogic-searchlogic-2.1.7/bin")
@@ -170,14 +172,14 @@ module Bundler
   require "rubygems" unless respond_to?(:gem) # 1.9 already has RubyGems loaded
 
   @bundled_specs = {}
+  @bundled_specs["fastercsv"] = eval(File.read("#{dir}/specifications/fastercsv-1.5.1.gemspec"))
+  @bundled_specs["fastercsv"].loaded_from = "#{dir}/specifications/fastercsv-1.5.1.gemspec"
   @bundled_specs["net-ssh"] = eval(File.read("#{dir}/specifications/net-ssh-2.0.20.gemspec"))
   @bundled_specs["net-ssh"].loaded_from = "#{dir}/specifications/net-ssh-2.0.20.gemspec"
   @bundled_specs["net-ssh-gateway"] = eval(File.read("#{dir}/specifications/net-ssh-gateway-1.0.1.gemspec"))
   @bundled_specs["net-ssh-gateway"].loaded_from = "#{dir}/specifications/net-ssh-gateway-1.0.1.gemspec"
   @bundled_specs["httpclient"] = eval(File.read("#{dir}/specifications/httpclient-2.1.5.2.gemspec"))
   @bundled_specs["httpclient"].loaded_from = "#{dir}/specifications/httpclient-2.1.5.2.gemspec"
-  @bundled_specs["fastercsv"] = eval(File.read("#{dir}/specifications/fastercsv-1.5.1.gemspec"))
-  @bundled_specs["fastercsv"].loaded_from = "#{dir}/specifications/fastercsv-1.5.1.gemspec"
   @bundled_specs["json_pure"] = eval(File.read("#{dir}/specifications/json_pure-1.2.0.gemspec"))
   @bundled_specs["json_pure"].loaded_from = "#{dir}/specifications/json_pure-1.2.0.gemspec"
   @bundled_specs["fastthread"] = eval(File.read("#{dir}/specifications/fastthread-1.0.7.gemspec"))
@@ -236,6 +238,8 @@ module Bundler
   @bundled_specs["rack"].loaded_from = "#{dir}/specifications/rack-1.0.1.gemspec"
   @bundled_specs["chronic"] = eval(File.read("#{dir}/specifications/chronic-0.2.3.gemspec"))
   @bundled_specs["chronic"].loaded_from = "#{dir}/specifications/chronic-0.2.3.gemspec"
+  @bundled_specs["rdiscount"] = eval(File.read("#{dir}/specifications/rdiscount-1.5.8.gemspec"))
+  @bundled_specs["rdiscount"].loaded_from = "#{dir}/specifications/rdiscount-1.5.8.gemspec"
   @bundled_specs["builder"] = eval(File.read("#{dir}/specifications/builder-2.1.2.gemspec"))
   @bundled_specs["builder"].loaded_from = "#{dir}/specifications/builder-2.1.2.gemspec"
   @bundled_specs["nokogiri"] = eval(File.read("#{dir}/specifications/nokogiri-1.4.1.gemspec"))
@@ -246,16 +250,16 @@ module Bundler
   @bundled_specs["diff-lcs"].loaded_from = "#{dir}/specifications/diff-lcs-1.1.2.gemspec"
   @bundled_specs["ci_reporter"] = eval(File.read("#{dir}/specifications/ci_reporter-1.6.0.gemspec"))
   @bundled_specs["ci_reporter"].loaded_from = "#{dir}/specifications/ci_reporter-1.6.0.gemspec"
-  @bundled_specs["acts_as_reportable"] = eval(File.read("#{dir}/specifications/acts_as_reportable-1.1.1.gemspec"))
-  @bundled_specs["acts_as_reportable"].loaded_from = "#{dir}/specifications/acts_as_reportable-1.1.1.gemspec"
   @bundled_specs["faker"] = eval(File.read("#{dir}/specifications/faker-0.3.1.gemspec"))
   @bundled_specs["faker"].loaded_from = "#{dir}/specifications/faker-0.3.1.gemspec"
-  @bundled_specs["highline"] = eval(File.read("#{dir}/specifications/highline-1.5.2.gemspec"))
-  @bundled_specs["highline"].loaded_from = "#{dir}/specifications/highline-1.5.2.gemspec"
+  @bundled_specs["acts_as_reportable"] = eval(File.read("#{dir}/specifications/acts_as_reportable-1.1.1.gemspec"))
+  @bundled_specs["acts_as_reportable"].loaded_from = "#{dir}/specifications/acts_as_reportable-1.1.1.gemspec"
   @bundled_specs["haml"] = eval(File.read("#{dir}/specifications/haml-2.2.20.gemspec"))
   @bundled_specs["haml"].loaded_from = "#{dir}/specifications/haml-2.2.20.gemspec"
   @bundled_specs["chriseppstein-compass"] = eval(File.read("#{dir}/specifications/chriseppstein-compass-0.8.17.gemspec"))
   @bundled_specs["chriseppstein-compass"].loaded_from = "#{dir}/specifications/chriseppstein-compass-0.8.17.gemspec"
+  @bundled_specs["highline"] = eval(File.read("#{dir}/specifications/highline-1.5.2.gemspec"))
+  @bundled_specs["highline"].loaded_from = "#{dir}/specifications/highline-1.5.2.gemspec"
   @bundled_specs["paperclip"] = eval(File.read("#{dir}/specifications/paperclip-2.1.2.gemspec"))
   @bundled_specs["paperclip"].loaded_from = "#{dir}/specifications/paperclip-2.1.2.gemspec"
   @bundled_specs["binarylogic-searchlogic"] = eval(File.read("#{dir}/specifications/binarylogic-searchlogic-2.1.7.gemspec"))

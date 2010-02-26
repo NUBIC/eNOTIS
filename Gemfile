@@ -2,6 +2,7 @@
 gem "rails", "2.3.4"
 gem "pg"
 gem "haml", '~> 2.2.0'
+gem "rdiscount"
 gem "chriseppstein-compass", '~> 0.8.0'
 gem "capistrano", '~> 2.5.0'
 gem "fastthread"
