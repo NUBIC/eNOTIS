@@ -7,7 +7,7 @@ if ENV["RAILS_ENV"] == "hudson"
     ENV["CI_REPORTS"] = "reports/spec-xml"
 
     desc "Execute the CI build"
-    task :all => [:"log:clear", :"db:migrate", :spec, :cucumber]
+    task :all => [:"log:clear", :"db:migrate:reset", :spec, :cucumber]
 
     desc "Execute the spec suite without setting up the database and with ci_reporter enabled"
     Spec::Rake::SpecTask.new(:spec => [:"ci:setup:rspec"]) do |t|
