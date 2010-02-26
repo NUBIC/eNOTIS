@@ -44,9 +44,9 @@ describe InvolvementEvent do
   
   it "should let me know how many accruals (unique by involvement) were completed to date" do
     InvolvementEvent.count_accruals.should == 0
-    event_type_id = DictionaryTerm.lookup_term("Consented","Event").id
-    gender_type_ids = DictionaryTerm.lookup_category_terms('Gender').map(&:id)
-    ethnicity_type_ids = DictionaryTerm.lookup_category_terms('Ethnicity').map(&:id)
+    event_type_id = DictionaryTerm.event_id("consented")
+    gender_type_ids = DictionaryTerm.gender_ids
+    ethnicity_type_ids = DictionaryTerm.ethnicity_ids
     10.times do |i|
       involvement = Factory.create( :involvement, :study => Factory.create(:fake_study), :subject => Factory.create(:fake_subject),
                                     :gender_type_id => gender_type_ids.rand, :ethnicity_type_id => ethnicity_type_ids.rand)

@@ -15,21 +15,20 @@ class DictionaryTerm < ActiveRecord::Base
   # Filters
   before_save :downcase_attributes
   
-  
   # Public class methods
-  
-  # Class methods for convenience
   # TODO refactor this into separate classes with foreign key constraints - yoon
   class << self 
     def all_terms
       @@all ||= self.all
     end
     %w(gender ethnicity race event).each do |category|
-      # genders, ethnicities, races
+      # gender_objects, ethnicity_objects, race_objects, event_objects
+      define_method("#{category}_objects".to_sym){ self.all_terms.select{|x| x.category == category} }
+      # genders, ethnicities, races, events (just the terms)
       define_method(category.pluralize.to_sym){ self.all_terms.select{|x| x.category == category}.map{|x| x.term} }
-      # gender(term), ethnicity(term), race(term)
+      # gender(term), ethnicity(term), race(term), event(term)
       define_method(category.to_sym){ |term| self.all_terms.detect{|x| x.category == category && x.term == term.downcase} }
-      # gender_id(term), ethnicity_id(term), race_id(term)
+      # gender_id(term), ethnicity_id(term), race_id(term), event_id(term)
       define_method("#{category}_id".to_sym) do |term|
         r = self.all_terms.detect{|x| x.category == category && x.term == term.downcase}
         r.blank? ? nil : r.id
@@ -37,23 +36,6 @@ class DictionaryTerm < ActiveRecord::Base
       # gender_ids, ethnicity_ids, race_ids, event_ids
       define_method("#{category}_ids".to_sym){ self.all_terms.select{|x| x.category == category}.map(&:id) }
     end
-  end
-
-  def self.lookup_category_terms(cat)
-    find(:all, :conditions => ["lower(category)=?",cat.to_s.downcase])
-  end
-
-  # Some helper methods than wrap finders
-  def self.lookup_code(code, cat)
-    find(:first, :conditions => ["lower(code)=? and lower(category)=?",code.to_s.downcase, cat.to_s.downcase])
-  end
-
-  def self.lookup_term(term, cat)
-    find(:first, :conditions => ["lower(term)=? and lower(category)=?",term.to_s.downcase, cat.to_s.downcase])
-  end
-
-  def self.source_terms(source)
-    find(:all, :conditions => ["lower(source)=?",source.to_s.downcase])
   end
  
   # Public instance methods
@@ -69,5 +51,5 @@ class DictionaryTerm < ActiveRecord::Base
     self.code.downcase! if self.code
     self.category.downcase! if self.category
   end
-
+  
 end
