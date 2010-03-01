@@ -1,0 +1,20 @@
+%table.display
+  %thead
+    %tr
+      %th Study
+      %th PI
+      %th Accrual
+  %tbody  
+    - studies.each do |study|
+      %tr
+        %td
+          = status_icon study
+          - if study.has_coordinator?(current_user)
+            = link_to study.irb_number || "(no id)", study_path(study.irb_number), :title => "#{study.status}: #{study.title}", :class => 'study'
+          - else
+            = study.irb_number || "(no id)"
+            = link_to image_tag('/images/icons/information.png'), "#", :rel => "#study_information", :class => 'study_information'
+            .study_information
+              = render :partial => 'partials/study_info', :locals => {:study => study}
+        %td= study.pi_last_name
+        %td= study.accrual || 0
