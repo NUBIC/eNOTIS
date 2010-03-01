@@ -44,8 +44,8 @@ class StudiesController < ApplicationController
     @ethnicity_stats = @involvements.count_all(:short_ethnicity)
     @gender_stats = @involvements.count_all(:gender)
     @race_stats = @involvements.count_all(:races, :short_race_type)
-    @accruals = @study_events.with_event_types([DictionaryTerm.lookup_term("Consented",:event)])
-    @events = %w(consented withdrawn completed).map{|term| DictionaryTerm.lookup_term(term, :event)}
+    @accruals = @study_events.with_event_types([DictionaryTerm.event("Consented")])
+    @events = %w(consented withdrawn completed).map{|term| DictionaryTerm.event(term)}
     # @events = DictionaryTerm.lookup_category_terms(:event).select{|dt| desired_terms.include? dt.term}
   end
 
