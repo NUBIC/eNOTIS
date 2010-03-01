@@ -107,47 +107,22 @@ class Study < ActiveRecord::Base
     @eirb_json
   end
 
-  #methods to depricate
-  def pi_netid
-    cache_principal_investigators.first["netid"] || "missing"
-  end
+  # methods to depricate
+  ######################
+    # pi_last_name is being used, others (sc_email, etc.) have been moved to application_helper.rb's people_info method - yoon
+    def pi_last_name
+      cache_principal_investigators.first["last_name"] || "missing"
+    end
 
-  def pi_first_name
-    cache_principal_investigators.first["first_name"] || "missing"
-  end
+    def phase
+      nil
+    end
 
-  def pi_last_name
-    cache_principal_investigators.first["last_name"] || "missing"
-  end
-
-  def pi_email
-    cache_principal_investigators.first["email"] || "missing"
-  end
-
-  def sc_netid
-    cache_coordinators.first["netid"] || "missing"
-  end
-
-  def sc_first_name
-    cache_coordinators.first["first_name"] || "missing"
-  end
-
-  def sc_last_name
-    cache_coordinators.first["last_name"] || "missing"
-  end
-
-  def sc_email
-    cache_coordinators.first["email"] || "missing"
-  end
-
-  def phase
-    nil
-  end
-
-  def status
-    irb_status
-  end
-  # end of methods to depricate
+    def status
+      irb_status
+    end
+  ##########################
+  # end methods to depricate
 
 
   # irb_number instead of id in urls
@@ -173,7 +148,7 @@ class Study < ActiveRecord::Base
       "Revision Closed", "Revision Open"].include? self.status
   end
 
-   private
+  private
   # attaching the hash keys as methods to have them
   # return data as if they were defined attributes of 
   # the model. Note: they are read-only

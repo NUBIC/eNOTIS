@@ -1,28 +1,23 @@
-br.clear
-  :clear both
 #report
   +squish
 #study
   +squish
-  
   span.study_title
     :padding-right 16px
-    :text-decoration none
     :font-size 20px
-  a.study_information
-    :background transparent url('/images/icons/toggle-down.png') 99% 50% no-repeat
-    :text-decoration none
-    :padding 2px 16px 3px 5px
-    &:hover
-      :background #eee url('/images/icons/toggle-down.png') 99%  50% no-repeat
-  a.study_information.open
-    :background #eee url('/images/icons/toggle-up.png') 99% 50% no-repeat
+    a
+      :text-decoration none
+      :background transparent url('/images/icons/toggle-down.png') 99% 50% no-repeat
+      :padding 2px 16px 3px 5px
+      &:hover
+        :background-color #eee
+    a.open
+      :background #eee url('/images/icons/toggle-up.png') 99% 50% no-repeat
   #study_information
     +column(46, true)
     +squeeze
     :padding-top 10px
     :background #eee
-    // :display none
     :font-size 12px
     span.study_title
       :font-size 16px
@@ -32,45 +27,30 @@ br.clear
       :margin-top 10px
       span
         :display block
-    .staff
-      +column(16)
-      :margin-top 10px
-    .export
-      +column(16, true)
-      :margin-top 10px
-      a.export-subjects
-        :font-size 15px
-        :padding-left 20px
-        :background transparent url('/images/icons/table_save.png') no-repeat bottom left
-    .chart
-      :width 250px
-      :height 150px
-      :float left
-  #accrual
+    .charts
+      :clear left
+      .chart
+        :width 250px
+        :height 150px
+        :float left
+  #actions
+    :font-size 20px
+    :float right
+    a
+      :text-decoration none
+      :margin-left 10px
     a.add
-      :padding-left 18px
-      :background transparent url('/images/icons/add.png') no-repeat bottom left    
+      :padding-left 20px
+      :background transparent url('/images/icons/add.png') no-repeat center left    
     a.import
-      :padding-left 18px
-      :background transparent url('/images/icons/table_add.png') no-repeat bottom left
-    // tooltip styling
-    .tooltip
-      // offsets for datatables
-      :font-size 11px
-    #add_subject
-      :width 955px
-    #subject_information, #add_involvement
-      :width 250px
-    #involvement_information
-      :width 200px
-    .subject_information, .involvement_information
-      :display none
-    tr img
-      :vertical-align bottom
-    tr a.add_involvement img, tr a.subject img
-      :display none
-    tr:hover a.add_involvement img, tr:hover a.subject img
-      :display inline
+      :padding-left 20px
+      :background transparent url('/images/icons/table_add.png') no-repeat center left
+    a.export
+      :padding-left 20px
+      :background transparent url('/images/icons/table_save.png') no-repeat center left    
+  #accrual
+    th dtr.withdrawn, td span.withdrawn
+      :color #aaa
       
   #import
     :display none
@@ -78,15 +58,4 @@ br.clear
       +column(24)
     .uploads
       +column(24, true)
-
-#new_involvement_event
-  p.center
-    :text-align center
-  +column(48)
-  .subject
-    +column(16)
-  .demographics
-    +column(16)
-  .event
-    +column(16, true)
 
