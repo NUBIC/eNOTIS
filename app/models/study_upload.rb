@@ -1,3 +1,4 @@
+require 'fastercsv'
 require 'chronic'
 class StudyUpload < ActiveRecord::Base
 

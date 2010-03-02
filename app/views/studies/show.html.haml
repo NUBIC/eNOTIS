@@ -15,7 +15,7 @@
 #study
   %span.study_title= link_to "#{status_icon @study} #{@study.irb_number || "(no id)"}", "#", :rel => "#study_information"
   #actions
-    = link_to("Add", new_involvement_event_path(:study => @study), :rel => '#subject', :class => 'add')
+    = link_to("Add", new_involvement_path(:study => @study), :rel => '#subject', :class => 'add')
     = link_to("Import", "#", :rel => "#import", :class => 'import')
     = link_to("Export", new_report_path(:study => @study), :rel => '#export', :class => 'export') unless @involvements.empty?
   #study_information
@@ -59,15 +59,15 @@
               %td<
                 = event_info(involvement, "completed")
                 = event_info(involvement, "withdrawn")
-    #subject.overlay
-      .contentWrap
-    #export.overlay
-      .contentWrap
+  #subject.overlay
+    .contentWrap
+  #export.overlay
+    .contentWrap
   #import.overlay
     .upload
       Import subjects
-      - form_tag('/subjects', :multipart => true) do
-        = hidden_field_tag("study_id",@study.irb_number.to_s)
+      - form_tag(upload_involvements_path, :multipart => true) do
+        = hidden_field_tag("study_id", @study.irb_number.to_s)
         = file_field_tag(:file)
         = submit_tag( "Upload" )
       %br
