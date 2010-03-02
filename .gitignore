@@ -9,6 +9,7 @@ public/uploads/*
 public/results/*
 app/stylesheets/.sass-cache/*
 public/stylesheets/compiled/*.css
+rerun.txt
 # Bundler
 bin
 !vendor/bundler_gems/ruby/1.8/cache/*
