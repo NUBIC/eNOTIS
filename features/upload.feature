@@ -4,9 +4,8 @@ Feature: Upload subjects
   I want to add subjects to a study
 
   Background:
-    Given I log in as "pi"
     And a study "Vitamin C and concentration" with id "STU001248" and irb_status "Approved"
-    And "pi" has access to study id "STU001248"
+    Given I log in as "pi" with password "secret" on study "STU001248"
 
   Scenario: A coordinator can upload a subject list from a file to the study
     When I go to the study page for id "STU001248"

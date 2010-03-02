@@ -1,3 +1,20 @@
+require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
+
+Given /^a study "([^\"]*)" with id "([^\"]*)" and irb_status "([^\"]*)"$/ do |title, id, status|
+  Factory.create(:fake_study, :title => title, :name => title, :irb_number => id, :irb_status => status)
+end
+
+Given /^the study "([^\"]*)" has the following subjects$/ do |id, table|
+  study = Study.find_by_irb_number(id)
+  table.hashes.each do |hash|
+    Factory(:involvement, :study => study, :subject => Factory(:fake_subject, hash))
+  end
+end
+
+Given /^the study "([^\"]*)" has an upload by "([^\"]*)"$/ do |id, netid|
+  Factory.create(:study_upload, :study_id => Study.find_by_irb_number(id).id, :user_id => User.find_by_netid(netid).id)
+end
+
 Given /^a subject with mrn "([^\"]*)"$/ do |mrn|
  Factory(:subject, :mrn => mrn)
 end
@@ -41,15 +58,4 @@ end
 When /^I upload a file with valid data for 7 subjects$/ do  
   attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', 'good.csv'))  
   click_button "Upload"  
-end
-
-Then /^I should see an image with alt "([^\"]*)"$/ do |alt_text|
- response.should have_xpath("//img[@alt='#{alt_text}']")
-end
-
-Then /^I should be redirected to (.+?)$/ do |page_name|
-  request.headers['HTTP_REFERER'].should_not be_nil
-  request.headers['HTTP_REFERER'].should_not == request.request_uri
-
-  Then "I should be on #{page_name}"
 end

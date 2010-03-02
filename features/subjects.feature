@@ -4,13 +4,12 @@ Feature: Manage subjects
   I want to add subjects to a study
   
   Background:
-    Given I log in as "pi"
-    And a study "Vitamin D and delerium" with id "STU001248" and irb_status "Approved"
-    And "pi" has access to study id "STU001248"
+    Given a study "Vitamin D and delerium" with id "STU001248" and irb_status "Approved"
+    And I log in as "pi" with password "secret" on study "STU001248"
 
   Scenario: A coordinator can see the add subject form
     When I go to the study page for id "STU001248"
-    And I follow "Add Subject"
+    And I follow "Add"
     Then I should see the add subject form
 
   # Scenario: A coordinator can add an event for a new subject
@@ -32,7 +31,7 @@ Feature: Manage subjects
   # Scenario: A coordinator can add a subject that can not be located in the medical record
   Scenario: A coordinator can add a subject (by fn/ln/dob) that does not exist
     When I go to the study page for id "STU001248"
-    And I follow "Add Subject"
+    And I follow "Add"
     And I fill in "First Name" with "Jack"
     And I fill in "Last Name" with "Daripur"
     And I fill in "Birth Date" with "8/7/65"
@@ -47,7 +46,7 @@ Feature: Manage subjects
 
   Scenario: A coordinator can add a subject with only a casenumber
     When I go to the study page for id "STU001248"
-    And I follow "Add Subject"
+    And I follow "Add"
     And I fill in "Case Number" with "Case2"
     And I select "Male" from "Gender"
     And I select "Not Hispanic Or Latino" from "Ethnicity"

@@ -4,11 +4,9 @@ Feature: Search
   I want to search by various terms
   
   Background:
-    Given I log in as "joe"
-    And a study "Vitamin E and exertion" with id "STU001251" and irb_status "Approved"
+    Given a study "Vitamin E and exertion" with id "STU001251" and irb_status "Approved"
     And a study "Vitamin F and fatigue" with id "STU001252" and irb_status "Approved"
     And a study "Vitamin G and gingivitis" with id "STU001253" and irb_status "Review"
-    And "joe" has access to study id "STU001251"
     And the study "STU001251" has the following subjects
       | first_name | last_name |
       | Marge      | Innovera  |
@@ -17,10 +15,11 @@ Feature: Search
     And the study "STU001252" has the following subjects
       | first_name | last_name |
       | Buck       | Stoppsier |
+    And I log in as "joe" with password "secret" on study "STU001251"
     And I go to the homepage
 
   Scenario: A user can search for studies (by id)
-    And I search for "STU00125" 
+    When I search for "STU00125" 
     Then I should see title "Approved: Vitamin E and exertion"
     And I should see "3 studies found"
 

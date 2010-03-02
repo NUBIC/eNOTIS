@@ -29,11 +29,6 @@ class User < ActiveRecord::Base
     nil
   end
   
-  def self.authorize_entry(netid)
-    u = find_by_netid(netid.downcase)
-    u && !u.studies.empty?
-  end
-  
   # Public instance methods
   def netid=(value)
     write_attribute :netid, (value ? value.downcase : nil)

@@ -4,22 +4,20 @@ Feature: Manage studies
   I want find a study and view detailed information
 
   Background:
-    Given I log in as "pi"
     And a study "Vitamin C and concentration" with id "STU001248" and irb_status "Approved"
-    And "pi" has access to study id "STU001248"
-      
-  Scenario: A random user can view overview details on a study, including IRB irb_status
-    
-  Scenario: A random user cannot a study page
+    Given I log in as "pi" with password "secret" on study "STU001248"
+  
+  Scenario: A random user cannot view a study page
     Given a study "Vitamin E and exertion" with id "STU001249" and irb_status "Approved"
     When I go to the study page for id "STU001249"
     Then I should be redirected to the homepage
     
   Scenario: A random user can view contact information for other coordinators
     Given a user "suzq" named "Sue Z" "Quou"
-    And "suzq" has access to study id "STU001250"
+    And "suzq" is on study "STU001250"
     When I go to the study page for id "STU001250"
     Then "Sue Z Quou" should be a link
+    # TODO - is this really working?
 
   Scenario: A coordinator can view all subjects they have access to on a study
     Given the study "STU001248" has the following subjects
