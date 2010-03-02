@@ -11,13 +11,10 @@ Feature: Manage studies
     Given a study "Vitamin E and exertion" with id "STU001249" and irb_status "Approved"
     When I go to the study page for id "STU001249"
     Then I should be redirected to the homepage
-    
+    And I should see "You don't have access to study STU001249"
+  
   Scenario: A random user can view contact information for other coordinators
-    Given a user "suzq" named "Sue Z" "Quou"
-    And "suzq" is on study "STU001250"
-    When I go to the study page for id "STU001250"
-    Then "Sue Z Quou" should be a link
-    # TODO - is this really working?
+  # Brian not interested in testing right now, not essential enough to put in db
 
   Scenario: A coordinator can view all subjects they have access to on a study
     Given the study "STU001248" has the following subjects
@@ -34,4 +31,5 @@ Feature: Manage studies
     Given the study "STU001248" has an upload by "pi"
     When I go to the study page for id "STU001248"
     And I follow "Import"
-    Then I should see "pi"
+    Then I should see "Importer"
+    And I should see "Original"

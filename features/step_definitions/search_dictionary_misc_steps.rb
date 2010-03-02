@@ -9,11 +9,9 @@ Then /^I should see title "([^\"]*)"$/ do |title|
   response.should have_xpath("//*[@title='#{title}']")
 end
 
-
 Then /^"([^\"]*)" should be a link$/ do |text|
-  response.should have_tag("a", :content => text)
+  response.should have_tag("a", :text => text)
 end
-
 
 Then /^I should see an image with alt "([^\"]*)"$/ do |alt_text|
  response.should have_xpath("//img[@alt='#{alt_text}']")
@@ -25,7 +23,6 @@ Then /^I should be redirected to (.+?)$/ do |page_name|
 
   Then "I should be on #{page_name}"
 end
-
 
 Given /^the following dictionary terms$/ do |table|
   table.hashes.each{|hash| Factory.create(:dictionary_term, hash) }
