@@ -34,7 +34,7 @@ module ControllerAuthentication
     def access_denied
       store_location
       flash[:notice] = "You are not authorized on any studies. Please contact the eIRB" if logged_in?
-      redirect_to authentication_index_path
+      redirect_to login_path
     end
 
     # Store the URI of the current request in the session. We can return to this location by calling #redirect_back_or_default.

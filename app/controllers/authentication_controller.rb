@@ -33,7 +33,7 @@ class AuthenticationController < ApplicationController
   def logout
     logout_killing_session!
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default(authentication_index_path) 
+    redirect_back_or_default(login_path) 
   end
   
   def help
