@@ -10,6 +10,7 @@ class InvolvementEvent < ActiveRecord::Base
   belongs_to :event_type, :class_name => "DictionaryTerm", :foreign_key => :event_type_id
   
   # Named scopes
+  default_scope :order => "occurred_on"
   named_scope :with_event_types, lambda {|event_type_ids| { :conditions => ['event_type_id in (?)', event_type_ids ]}}
   named_scope :on_study, lambda {|study_id| { :include => :involvement, :conditions => ['involvements.study_id=?', study_id], :order => 'involvement_events.occurred_on DESC' } } do
     def to_graph
@@ -68,10 +69,12 @@ class InvolvementEvent < ActiveRecord::Base
  
   def self.find_or_create(params)
     # logger.debug "find_or_create all inv_evnt: #{InvolvementEvent.find(:all).inspect}"
-    InvolvementEvent.find(:first,:conditions => {
-      :involvement_id => params[:involvement_id],
-      :occurred_on=>Chronic.parse(params[:occurred_on]),
-      :event_type_id=>params[:event_type_id]}) || InvolvementEvent.create(params)
+    return nil if params[:occurred_on].blank?
+    InvolvementEvent.find(:first, :conditions => { 
+      :involvement_id => params[:involvement_id], 
+      :occurred_on    => Chronic.parse(params[:occurred_on]), 
+      :event_type_id  => params[:event_type_id] }
+    ) || InvolvementEvent.create(params)
   end
   
   def self.count_accruals

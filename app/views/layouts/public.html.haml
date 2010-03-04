@@ -13,14 +13,14 @@
       #header
         #app_name= link_to_unless_current image_tag("enotis-swoop-logo.png", :alt => "eNOTIS"), default_path, :title => "eNOTIS Home"
         #login
-          - form_tag(login_authentication_path, :method => 'post') do
+          - form_tag(auth_path, :method => 'post') do
             %label{:for => 'netid'} NetID
             = text_field_tag('netid')
             %br
             %label{:for => 'password'} Password
             = password_field_tag('password')
             %br
-            = link_to "I cannot access my account", help_authentication_path, :rel => "#help"
+            = link_to "I cannot access my account", login_help_path, :rel => "#help"
             = submit_tag('login')
         - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
           #flash

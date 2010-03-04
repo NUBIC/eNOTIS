@@ -1,0 +1,34 @@
+- form_for(@involvement) do |f|
+  = hidden_field_tag 'study[irb_number]', params[:study]
+  = f.hidden_field :id
+  .subject
+    %h4 Subject
+    %ol
+      %li.case_number
+        = f.label      :case_number
+        = f.text_field :case_number
+      - f.fields_for :subject do |builder|
+        = render 'subject_fields', :f => builder
+  .demographics
+    %h4 Demographics
+    %ol
+      %li
+        = f.label  :gender_type_id, "Gender"
+        = f.select :gender_type_id, gender_options
+      %li
+        = f.label  :ethnicity_type_id, "Ethnicity"
+        = f.select :ethnicity_type_id, ethnicity_options
+      %li
+        = label_tag "Race"
+        - DictionaryTerm.race_objects.each do |race|
+          = check_box_tag "involvement[race_type_ids][]#{race.id}", race.id, @involvement.race_type_ids.include?(race.id)
+          = label_tag "involvement[race_type_ids][]#{race.id}", race.term.titleize, :class => "box"
+          %br
+  .accrual
+    %h4 Accrual
+    %ol
+      - f.fields_for :involvement_events do |builder|
+        = render 'involvement_event_fields', :f => builder
+  = f.submit "Save"
+  or
+  = link_to "Cancel", study_path(params[:study])

@@ -1,3 +1,24 @@
+form#new_involvement, form.edit_involvement
+  ol
+    :list-style none
+    :margin 0
+    li
+      label
+        :display block
+      label.box
+        :display inline
+  .subject, .demographics, .consented, completed
+    :float left
+    :width 24%
+  .subject
+    li.case_number, li.mrn, li.first_name, li.middle_name
+      :float left
+      :width 100px
+      input
+        :width 90px
+    li.last_name, li.first_name, li.birth_date
+      :clear left
+      
 #report
   +squish
 #study
@@ -51,7 +72,6 @@
   #accrual
     th dtr.withdrawn, td span.withdrawn
       :color #aaa
-      
   #import
     :display none
     .upload
