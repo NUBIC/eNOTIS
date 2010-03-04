@@ -21,7 +21,7 @@ namespace :db do
       [User, Coordinator, Study, Involvement, Subject, InvolvementEvent, DictionaryTerm].each(&:delete_all)
     end
 
-    desc 'Populate admins(Brian, David, Mark, Laura)'
+    desc 'Populate admins(Brian, David, Mark, Laura, Sam)'
     task :admins => [:environment, :"users:create_admins"]
 
     desc 'Populate users(fake)'
