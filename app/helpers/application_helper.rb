@@ -35,7 +35,7 @@ module ApplicationHelper
   def ethnicity_options
     options_for_select(DictionaryTerm.ethnicity_objects.map{|e| [e.term.titleize, e.id]})
   end
-  def completed_options
-    options_for_select(%w(completed withdrawn).map{|t| DictionaryTerm.event(t)}.map{|t| [t.term.titleize, t.id]})
+  def event_options(selected = nil)
+    options_for_select(%w(consented completed withdrawn).map{|t| DictionaryTerm.event(t)}.map{|t| [t.term.titleize, t.id]}, selected)
   end
 end

@@ -1,0 +1,5 @@
+= f.hidden_field :id
+- %w(mrn last_name first_name middle_name birth_date).each do |attr|
+  %li{:class => attr}
+    = f.label attr
+    = f.text_field attr

@@ -1,18 +1,14 @@
 - form_for(@involvement) do |f|
   = hidden_field_tag 'study[irb_number]', params[:study]
+  = f.hidden_field :id
   .subject
     %h4 Subject
-    - fields_for @subject do |sf|
-      = sf.hidden_field :id unless @subject.new_record?
-      %ol
-        %li.case_number
-          = f.label      :case_number
-          = f.text_field :case_number
-        - %w(mrn last_name first_name middle_name birth_date).each do |attr|
-          %li{:class => attr}
-            = sf.label attr
-            = sf.text_field attr
-      
+    %ol
+      %li.case_number
+        = f.label      :case_number
+        = f.text_field :case_number
+      - f.fields_for :subject do |builder|
+        = render 'subject_fields', :f => builder
   .demographics
     %h4 Demographics
     %ol
@@ -25,34 +21,14 @@
       %li
         = label_tag "Race"
         - DictionaryTerm.race_objects.each do |race|
-          = check_box_tag "involvement[race_type_ids][]#{race.id}", race.id
+          = check_box_tag "involvement[race_type_ids][]#{race.id}", race.id, @involvement.race_type_ids.include?(race.id)
           = label_tag "involvement[race_type_ids][]#{race.id}", race.term.titleize, :class => "box"
           %br
   .accrual
     %h4 Accrual
-    - fields_for "involvement_events[]", @consented do |cf|
-      %ol
-        %li
-          = cf.hidden_field :event_type_id
-      
-          -# note taken out until it is requested
-          -# = cf.label      :note
-          -# = cf.text_field :note
-        %li
-          = cf.label      :occurred_on, "Consented on"
-          = cf.text_field :occurred_on
-
-    - fields_for "involvement_events[]", @completed do |wf|
-      %ol
-        %li
-          = wf.select :event_type_id, completed_options, :include_blank => true
-          -# note taken out until it is requested
-          -#= wf.label      :note
-          -#= wf.text_field :note
-        %li
-          = wf.label      :occurred_on, "On"
-          = wf.text_field :occurred_on
-
+    %ol
+      - f.fields_for :involvement_events do |builder|
+        = render 'involvement_event_fields', :f => builder
   = f.submit "Save"
   or
   = link_to "Cancel", study_path(params[:study])

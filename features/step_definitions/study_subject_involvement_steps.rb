@@ -8,12 +8,8 @@ When /^I add a subject "([^\"]*)" "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do 
   select "Female", :from => "Gender"
   select "Not Hispanic Or Latino", :from => "Ethnicity"
   check "Asian"
-  if event == "Consented"
-    fill_in "Consented on", :with => date
-  else
-    select event, :from => "involvement_events[]event_type_id"
-    fill_in "On", :with => date
-  end
+  select event, :from => "Activity"
+  fill_in "On", :with => date
   click_button "Save"
 end
 
@@ -24,12 +20,8 @@ When /^I add a case number "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do |case_n
   select "Female", :from => "Gender"
   select "Not Hispanic Or Latino", :from => "Ethnicity"
   check "Asian"
-  if event == "Consented"
-    fill_in "Consented on", :with => date
-  else
-    select event, :from => "involvement_events[]event_type_id"
-    fill_in "On", :with => date
-  end
+  select event, :from => "Activity"
+  fill_in "On", :with => date
   click_button "Save"
 end
 

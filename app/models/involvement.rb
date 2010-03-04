@@ -7,8 +7,6 @@
 #require 'ruport'
 require 'ruport'
 class Involvement < ActiveRecord::Base
-
-  
   acts_as_reportable
 	
   # Associations
@@ -19,29 +17,34 @@ class Involvement < ActiveRecord::Base
   belongs_to :ethnicity_type, :class_name => "DictionaryTerm", :foreign_key => :ethnicity_type_id
   has_many :races
   
+  # Atrributes
+  accepts_nested_attributes_for :involvement_events, :reject_if => lambda { |a| a[:occurred_on].blank? or a[:event_type_id].blank? }
+  accepts_nested_attributes_for :subject
+  
   # Named scope
   named_scope :with_coordinator, lambda {|user_id| { :include => {:study => :coordinators}, :conditions => ['coordinators.user_id = ?', user_id ]}}
 
   # Mixins
   has_paper_trail
+  
   # Validations
   validates_presence_of :gender_type_id, :ethnicity_type_id
-
-  # Public instance methods
   
+  # Public instance methods
   def consented
     involvement_events.detect{|e| e.event_type_id == DictionaryTerm.event_id("Consented")}
   end
   def completed
     involvement_events.detect{|e| e.event_type_id == DictionaryTerm.event_id("Completed") or e.event_type_id == DictionaryTerm.event_id("Withdrawn")}
   end
-  # Races are additive - this method finds the new race_type_ids and creates an associated race for each one
-  def race_type_ids=(race_type_ids)
-    race_type_ids = race_type_ids.map{|i| i.is_a?(Hash) ? i.keys : i}.flatten.map(&:to_i)
-    new_races = race_type_ids - self.races.map(&:race_type_id)
-    new_races.each{|race_type_id| self.races.build(:race_type_id => race_type_id)}
+  def race_type_ids=(new_ids)
+    new_ids = new_ids.map{|i| i.is_a?(Hash) ? i.keys : i}.flatten.map(&:to_i)
+    races_to_build = new_ids - self.race_type_ids
+    # Races are no longer additive
+    races_to_remove = self.race_type_ids - new_ids
+    races_to_build.each{|i| self.races.build(:race_type_id => i)}
+    races_to_remove.each{|i| self.races.select{|x| x.race_type_id == i}.map(&:destroy)}
   end
-  
   def race_type_ids
     races.map(&:race_type_id)
   end

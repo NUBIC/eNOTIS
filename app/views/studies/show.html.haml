@@ -42,6 +42,7 @@
               %dtr{:title => DictionaryTerm.event("withdrawn").description, :class => "withdrawn"} Withdrawn
               %br
               %dtr{:title => DictionaryTerm.event("completed").description} Completed
+            %th Edit
         %tbody
           - @study.involvements.each do |involvement|
             %tr{:class => "subject_#{involvement.subject.id}"}
@@ -59,6 +60,7 @@
               %td<
                 = event_info(involvement, "completed")
                 = event_info(involvement, "withdrawn")
+              %td= link_to "Edit", edit_involvement_path(involvement)
   #subject.overlay
     .contentWrap
   #export.overlay
