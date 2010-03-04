@@ -28,13 +28,23 @@ class Involvement < ActiveRecord::Base
   validates_presence_of :gender_type_id, :ethnicity_type_id
 
   # Public instance methods
-
+  
+  def consented
+    involvement_events.detect{|e| e.event_type_id == DictionaryTerm.event_id("Consented")}
+  end
+  def completed
+    involvement_events.detect{|e| e.event_type_id == DictionaryTerm.event_id("Completed") or e.event_type_id == DictionaryTerm.event_id("Withdrawn")}
+  end
   # Races are additive - this method finds the new race_type_ids and creates an associated race for each one
   def race_type_ids=(race_type_ids)
+    race_type_ids = race_type_ids.map{|i| i.is_a?(Hash) ? i.keys : i}.flatten.map(&:to_i)
     new_races = race_type_ids - self.races.map(&:race_type_id)
     new_races.each{|race_type_id| self.races.build(:race_type_id => race_type_id)}
   end
-
+  
+  def race_type_ids
+    races.map(&:race_type_id)
+  end
   def ethnicity
     self.ethnicity_type ? self.ethnicity_type.term : nil
   end

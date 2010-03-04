@@ -1,7 +1,36 @@
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 
-Given /^a study "([^\"]*)" with id "([^\"]*)" and irb_status "([^\"]*)"$/ do |title, id, status|
-  Factory.create(:fake_study, :title => title, :name => title, :irb_number => id, :irb_status => status)
+When /^I add a subject "([^\"]*)" "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do |first, last, event, date|
+  When %(I follow "Add")
+  fill_in "First name", :with => first
+  fill_in "Last name", :with => last
+  fill_in "Birth date", :with => "8/7/65"
+  select "Female", :from => "Gender"
+  select "Not Hispanic Or Latino", :from => "Ethnicity"
+  check "Asian"
+  if event == "Consented"
+    fill_in "Consented on", :with => date
+  else
+    select event, :from => "involvement_events[]event_type_id"
+    fill_in "On", :with => date
+  end
+  click_button "Save"
+end
+
+When /^I add a case number "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do |case_number, event, date|
+  When %(I follow "Add")
+  fill_in "Case number", :with => case_number
+  fill_in "Birth date", :with => "8/7/65"
+  select "Female", :from => "Gender"
+  select "Not Hispanic Or Latino", :from => "Ethnicity"
+  check "Asian"
+  if event == "Consented"
+    fill_in "Consented on", :with => date
+  else
+    select event, :from => "involvement_events[]event_type_id"
+    fill_in "On", :with => date
+  end
+  click_button "Save"
 end
 
 Given /^the study "([^\"]*)" has the following subjects$/ do |id, table|
@@ -19,19 +48,6 @@ Given /^a subject with mrn "([^\"]*)"$/ do |mrn|
  Factory(:subject, :mrn => mrn)
 end
 
-Then /^I should see the add subject form$/ do
-  response.should have_tag("form[action=?]", involvement_events_path) do
-    with_tag("input[name=?]", "subject[mrn]")
-    with_tag("input[name=?]", "subject[first_name]")
-    with_tag("input[name=?]", "subject[last_name]")
-    with_tag("input[name=?]", "subject[birth_date]")
-  end
-end
-
-Given /^subject "([^\"]*)" is not synced$/ do |mrn|
-  Subject.find_by_mrn(mrn).update_attributes(:synced_at => nil)
-end
-
 Given /^subject "([^\"]*)" has event "([^\"]*)" on study "([^\"]*)"$/ do |mrn, term, irb_number|
   unless involvement = Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number))
     involvement = Factory(:involvement, :subject => Subject.find_by_mrn(mrn), :study => Study.find_by_irb_number(irb_number))
@@ -45,14 +61,6 @@ end
 
 Then /^subject "([^\"]*)" should not be involved with study "([^\"]*)"$/ do |mrn, irb_number|
   Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number)).should be_blank
-end
-
-Then /^I should see the add event form$/ do
-  response.should have_tag("form[action=?]", involvement_events_path) do
-    with_tag("select[name=?]", "involvement_events[][event_type_id]")
-    with_tag("input[name=?]", "involvement_events[][occurred_on]")
-    with_tag("input[name=?]", "involvement_events[][note]")
-  end
 end
 
 When /^I upload a file with valid data for 7 subjects$/ do  

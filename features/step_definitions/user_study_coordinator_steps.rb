@@ -31,6 +31,10 @@ Given /^a study with id "([^\"]*)"$/ do |irb_number|
   study.should be_valid
 end
 
+Given /^a study "([^\"]*)" with id "([^\"]*)" and irb_status "([^\"]*)"$/ do |title, irb_number, irb_status|
+  Factory.create(:fake_study, :title => title, :name => title, :irb_number => irb_number, :irb_status => irb_status)
+end
+
 Given /^I log in as "([^\"]*)" with password "([^\"]*)" on study "([^\"]*)"$/ do |netid, password, irb_number|
   Given %(a user "#{netid}" with password "#{password}" on study "#{irb_number}")
   Given %(I log in as "#{name}" with password "#{password}")

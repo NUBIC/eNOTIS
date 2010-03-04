@@ -68,10 +68,12 @@ class InvolvementEvent < ActiveRecord::Base
  
   def self.find_or_create(params)
     # logger.debug "find_or_create all inv_evnt: #{InvolvementEvent.find(:all).inspect}"
-    InvolvementEvent.find(:first,:conditions => {
-      :involvement_id => params[:involvement_id],
-      :occurred_on=>Chronic.parse(params[:occurred_on]),
-      :event_type_id=>params[:event_type_id]}) || InvolvementEvent.create(params)
+    return nil if params[:occured_on].blank?
+    InvolvementEvent.find(:first, :conditions => { 
+      :involvement_id => params[:involvement_id], 
+      :occurred_on    => Chronic.parse(params[:occurred_on]), 
+      :event_type_id  => params[:event_type_id] }
+    ) || InvolvementEvent.create(params)
   end
   
   def self.count_accruals

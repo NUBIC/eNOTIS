@@ -17,18 +17,32 @@ class InvolvementsController < ApplicationController
   end
 
   def new
-    # @subject = Subject.find(params[:subject][:id])
-    # @study = Study.find_by_irb_number(params[:study][:irb_number])
+    @involvement = Involvement.new
+    @subject = Subject.new
+    @consented = InvolvementEvent.new(:event_type_id => DictionaryTerm.event_id("consented"))
+    @completed = InvolvementEvent.new
+    respond_to do |format|
+      format.html
+      format.js {render :layout => false}
+    end
   end
   
   def edit
-    # @subject = Subject.find(params[:subject][:id])
-    # @study = Study.find_by_irb_number(params[:study][:irb_number])  
+    @involvement = Involvement.find(params[:id])
+    @subject = @involvement.subject
+    @consented = @involvement.consented
+    @completed = @involvement.completed
   end
   
   def create
-    # @subject = Subject.find(params[:subject][:id])
-    # @study = Study.find_by_irb_number(params[:study][:irb_number])
+    # return render :text => params.inspect
+    params[:user] = current_user.attributes.symbolize_keys
+    if InvolvementEvent.add(params)
+      flash[:notice] = params[:subject].has_key?(:id) ? "Added" : "Created"
+    else
+      flash[:error] = "Error"
+    end
+    redirect_to study_path(params[:study][:irb_number])
   end
   
   def update

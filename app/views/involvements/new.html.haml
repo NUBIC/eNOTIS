@@ -1,54 +1,58 @@
-- form_for @involvement do |form|
+- form_for(@involvement) do |f|
   = hidden_field_tag 'study[irb_number]', params[:study]
-  - unless @subject.nil?
-    = hidden_field_tag("subject[id]", @subject.id)
-  - else
-    .subject
-      %h3 Subject (required)
-      %p
-        = label_tag 'subject[mrn]','MRN'
-        = text_field_tag('subject[mrn]')
-      %p.center OR
-      %p
-        %br
-        = label_tag 'subject[first_name]', 'First Name'
-        = text_field_tag('subject[first_name]')
-        %br
-        = label_tag 'subject[last_name]',  'Last Name'
-        = text_field_tag('subject[last_name]')
-        %br
-        = label_tag 'subject[birth_date]', 'Birth Date'
-        = text_field_tag('subject[birth_date]')
-      %p.center AND/OR
-      %p
-        %br
-        = label_tag 'involvement[case_number]','Case Number'
-        = text_field_tag('involvement[case_number]')
-    .demographics
-      %h3 Demographics (required)
-      %p
-        = label_tag 'involvement[gender_type_id]','Gender'
-        = select_tag('involvement[gender_type_id]',options_for_select(@genders.map{|gender|[gender.term.capitalize,gender.id]}))
-      %p
-        = label_tag 'involvement[ethnicity_type_id]','Ethnicity'
-        = select_tag('involvement[ethnicity_type_id]',options_for_select(@ethnicities.map{|ethnicity|[ethnicity.term.titleize,ethnicity.id]}))
-      %p
-        Race
-        %br
-        - @races.each do |race|
-          = check_box_tag "involvement[race_type_ids][]", race.id
-          = label_tag "involvement[race_type_ids][]", race.term.capitalize
+  .subject
+    %h4 Subject
+    - fields_for @subject do |sf|
+      = sf.hidden_field :id unless @subject.new_record?
+      %ol
+        %li.case_number
+          = f.label      :case_number
+          = f.text_field :case_number
+        - %w(mrn last_name first_name middle_name birth_date).each do |attr|
+          %li{:class => attr}
+            = sf.label attr
+            = sf.text_field attr
+      
+  .demographics
+    %h4 Demographics
+    %ol
+      %li
+        = f.label  :gender_type_id, "Gender"
+        = f.select :gender_type_id, gender_options
+      %li
+        = f.label  :ethnicity_type_id, "Ethnicity"
+        = f.select :ethnicity_type_id, ethnicity_options
+      %li
+        = label_tag "Race"
+        - DictionaryTerm.race_objects.each do |race|
+          = check_box_tag "involvement[race_type_ids][]#{race.id}", race.id
+          = label_tag "involvement[race_type_ids][]#{race.id}", race.term.titleize, :class => "box"
           %br
+  .accrual
+    %h4 Accrual
+    - fields_for "involvement_events[]", @consented do |cf|
+      %ol
+        %li
+          = cf.hidden_field :event_type_id
+      
+          -# note taken out until it is requested
+          -# = cf.label      :note
+          -# = cf.text_field :note
+        %li
+          = cf.label      :occurred_on, "Consented on"
+          = cf.text_field :occurred_on
 
-  .event
-    %h3 Activity
-    %p
-      = label_tag('involvement_events[][event_type_id]','Activity')
-      = select_tag('involvement_events[][event_type_id]',options_for_select(@events.map{|event| [event.term.capitalize, event.id]}, params[:event_type_id].to_i))
-    %p
-      = label_tag('involvement_events[][note]', 'Note')
-      = text_field_tag('involvement_events[][note]')
-    %p
-      = label_tag('involvement_events[][occurred_on]','Date')
-      = text_field_tag('involvement_events[][occurred_on]', Date.today.to_s)
-    %p= submit_tag("Submit")
+    - fields_for "involvement_events[]", @completed do |wf|
+      %ol
+        %li
+          = wf.select :event_type_id, completed_options, :include_blank => true
+          -# note taken out until it is requested
+          -#= wf.label      :note
+          -#= wf.text_field :note
+        %li
+          = wf.label      :occurred_on, "On"
+          = wf.text_field :occurred_on
+
+  = f.submit "Save"
+  or
+  = link_to "Cancel", study_path(params[:study])
