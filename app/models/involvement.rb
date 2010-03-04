@@ -18,7 +18,7 @@ class Involvement < ActiveRecord::Base
   has_many :races
   
   # Atrributes
-  accepts_nested_attributes_for :involvement_events, :reject_if => lambda { |a| a[:occurred_on].blank? or a[:event_type_id].blank? }
+  accepts_nested_attributes_for :involvement_events, :reject_if => lambda {|a| a["occurred_on"].blank? or a["event_type_id"].blank? }
   accepts_nested_attributes_for :subject
   
   # Named scope

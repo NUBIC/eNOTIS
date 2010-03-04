@@ -1,6 +1,5 @@
 - form_for(@involvement) do |f|
   = hidden_field_tag 'study[irb_number]', params[:study]
-  = f.hidden_field :id
   .subject
     %h4 Subject
     %ol
@@ -14,10 +13,10 @@
     %ol
       %li
         = f.label  :gender_type_id, "Gender"
-        = f.select :gender_type_id, gender_options
+        = f.select :gender_type_id, gender_options(@involvement.gender_type_id)
       %li
         = f.label  :ethnicity_type_id, "Ethnicity"
-        = f.select :ethnicity_type_id, ethnicity_options
+        = f.select :ethnicity_type_id, ethnicity_options(@involvement.ethnicity_type_id)
       %li
         = label_tag "Race"
         - DictionaryTerm.race_objects.each do |race|

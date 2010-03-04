@@ -29,11 +29,11 @@ module ApplicationHelper
     end
   end
   
-  def gender_options
-    options_for_select(DictionaryTerm.gender_objects.map{|g| [g.term.titleize, g.id]})
+  def gender_options(selected = nil)
+    options_for_select(DictionaryTerm.gender_objects.map{|g| [g.term.titleize, g.id]}, selected)
   end
-  def ethnicity_options
-    options_for_select(DictionaryTerm.ethnicity_objects.map{|e| [e.term.titleize, e.id]})
+  def ethnicity_options(selected = nil)
+    options_for_select(DictionaryTerm.ethnicity_objects.map{|e| [e.term.titleize, e.id]}, selected)
   end
   def event_options(selected = nil)
     options_for_select(%w(consented completed withdrawn).map{|t| DictionaryTerm.event(t)}.map{|t| [t.term.titleize, t.id]}, selected)
