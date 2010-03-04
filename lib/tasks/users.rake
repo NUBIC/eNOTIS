@@ -73,7 +73,7 @@ namespace :users do
               {:netid => "david", :first_name => "David",   :last_name => "Were",            :email => "d-were@northwestern.edu"},
               {:netid => "laura", :first_name => "Laura",   :last_name => "Wimbiscus Yoon",  :email => "laurawimbiscus2008@u.northwestern.edu"},
               {:netid => "yoon", :first_name => "Mark",    :last_name => "Wimbiscus Yoon",  :email => "yoon@northwestern.edu"},
-              {:netid => "sjg304", :first_name => "Sam",     :last_name => "Granieri",        :email => "sam-granieri-jr@northwestern.edu"}]
+              {:netid => "sam", :first_name => "Sam",     :last_name => "Granieri",        :email => "sam-granieri-jr@northwestern.edu"}]
     nons.each do |hash|
       User.create(hash) unless (exists = User.find_by_netid(hash[:netid]))
       puts exists ? "#{hash[:netid]} already exists" : "Created #{hash[:netid]}"
