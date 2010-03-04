@@ -14,7 +14,7 @@
         #current_user_badge
           = "#{current_user.name} (#{current_user.netid})"
           |
-          = link_to('Logout', logout_authentication_path)
+          = link_to('Logout', logout_path)
         %br{:style => "clear: right"}
         #search_box
           - form_tag(search_path, :method => :get) do 

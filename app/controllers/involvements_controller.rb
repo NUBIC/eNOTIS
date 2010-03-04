@@ -17,28 +17,54 @@ class InvolvementsController < ApplicationController
   end
 
   def new
-    # @subject = Subject.find(params[:subject][:id])
-    # @study = Study.find_by_irb_number(params[:study][:irb_number])
+    @involvement = Involvement.new
+    @involvement.subject = Subject.new
+    @involvement.involvement_events.build(:event_type_id => DictionaryTerm.event_id("consented"))
+    @involvement.involvement_events.build(:event_type_id => DictionaryTerm.event_id("completed"))
+    respond_to do |format|
+      format.html
+      format.js {render :layout => false}
+    end
   end
   
   def edit
-    # @subject = Subject.find(params[:subject][:id])
-    # @study = Study.find_by_irb_number(params[:study][:irb_number])  
+    @involvement = Involvement.find(params[:id])
+    params[:study] = @involvement.study.irb_number
+    @involvement.involvement_events.build(:event_type_id => DictionaryTerm.event_id("consented")) unless @involvement.consented
+    @involvement.involvement_events.build(:event_type_id => DictionaryTerm.event_id("completed")) unless @involvement.completed
+    respond_to do |format|
+      format.html {render :action => :new}
+      format.js {render :layout => false, :action => :new}
+    end
   end
   
   def create
-    # @subject = Subject.find(params[:subject][:id])
-    # @study = Study.find_by_irb_number(params[:study][:irb_number])
+    study = Study.find_by_irb_number(params[:study][:irb_number])
+    @involvement = Involvement.new(params[:involvement].merge(:study => study))
+    if @involvement.save
+      flash[:notice] = "Created"
+    else
+      flash[:error] = "Error"
+    end
+    redirect_to study_path(study)
   end
   
   def update
-    # @subject = Subject.find(params[:subject][:id])
-    # @study = Study.find_by_irb_number(params[:study][:irb_number])
+    @involvement = Involvement.find(params[:id])
+    study = Study.find_by_irb_number(params[:study][:irb_number])
+    if @involvement.update_attributes(params[:involvement])
+      flash[:notice] = "Created"
+    else
+      flash[:error] = "Error"
+    end
+    redirect_to study_path(study)
   end
   
   def destroy
-    # @subject = Subject.find(params[:subject][:id])
-    # @study = Study.find_by_irb_number(params[:study][:irb_number])    
+    # @involvement_event = InvolvementEvent.find(params[:id])
+    # destination = study_path(@involvement_event.involvement.study)
+    # @involvement_event.destroy
+    # redirect_to destination
   end
   
   def upload

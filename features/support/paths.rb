@@ -12,7 +12,7 @@ module NavigationHelpers
       '/'
     
     when /the login page/
-      authentication_index_path
+      login_path
 
     when /the study page for id "([^\"]*)"/
       "/studies/#{$1}"

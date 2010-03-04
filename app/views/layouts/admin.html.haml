@@ -16,7 +16,7 @@
         #current_user_badge
           = "#{current_user.name} (#{current_user.netid})"
           |
-          = link_to('Logout', logout_authentication_path)
+          = link_to('Logout', logout_path)
       - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
         #flash= flash_messages(types)
       #main

@@ -28,4 +28,14 @@ module ApplicationHelper
       content_tag("span", :class => event_type, :title => event_type.capitalize){ "#{event.occurred_on}#{image_tag '/images/icons/note.png' unless event.note.blank?}" }
     end
   end
+  
+  def gender_options
+    options_for_select(DictionaryTerm.gender_objects.map{|g| [g.term.titleize, g.id]})
+  end
+  def ethnicity_options
+    options_for_select(DictionaryTerm.ethnicity_objects.map{|e| [e.term.titleize, e.id]})
+  end
+  def event_options(selected = nil)
+    options_for_select(%w(consented completed withdrawn).map{|t| DictionaryTerm.event(t)}.map{|t| [t.term.titleize, t.id]}, selected)
+  end
 end
