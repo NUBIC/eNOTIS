@@ -1,1 +1,2 @@
-case_number,mrn,first_name,last_name,birth_date,gender,race,race2,ethnicity,consented_on,consented_note,withdrawn_on,withdrawn_note,completed_on,completed_note,,,,,Female,Not Reported,,Unknown,3/4/2009,,,,,
+case_number,mrn,first_name,last_name,birth_date,gender,race,ethnicity,consented_on,consented_note,withdrawn_on,withdrawn_note,completed_on,completed_note
+,,,,,Female,Not Reported,Unknown,3/4/2009,,,,,

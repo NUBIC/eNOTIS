@@ -6,7 +6,6 @@ class AdminController < ApplicationController
   # Public instance methods (actions)
   def index
     @users = User.all
-    @dictionary_terms = DictionaryTerm.all
   end
   
   protected

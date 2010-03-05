@@ -7,7 +7,6 @@ script/console
   Study.update_coordinators_from_cache
   
 rake users:create_admins
-rake dictionary_terms:import
 
 eNOTIS depends on a few important gems:
 

@@ -34,51 +34,31 @@ ActiveRecord::Schema.define(:version => 20090902092032) do
 
   add_index "coordinators", ["study_id", "user_id"], :name => "coordinators_attr_idx", :unique => true
 
-  create_table "dictionary_terms", :force => true do |t|
-    t.string   "term"
-    t.string   "code"
-    t.string   "category"
-    t.string   "source"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "dictionary_terms", ["code", "category"], :name => "dictionary_attr_idx", :unique => true
-
   create_table "involvement_events", :force => true do |t|
     t.integer  "involvement_id"
-    t.integer  "event_type_id"
+    t.string   "event"
     t.date     "occurred_on"
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "involvement_events", ["event_type_id"], :name => "inv_events_type_idx"
-  add_index "involvement_events", ["involvement_id", "event_type_id", "occurred_on"], :name => "inv_events_attr_idx", :unique => true
+  add_index "involvement_events", ["event"], :name => "inv_events_event_idx"
+  add_index "involvement_events", ["involvement_id", "event", "occurred_on"], :name => "inv_events_attr_idx", :unique => true
   add_index "involvement_events", ["occurred_on"], :name => "inv_events_occurred_idx"
 
   create_table "involvements", :force => true do |t|
     t.integer  "subject_id"
     t.integer  "study_id"
-    t.integer  "ethnicity_type_id"
-    t.integer  "gender_type_id"
+    t.string   "ethnicity"
+    t.string   "gender"
+    t.string   "race"
     t.string   "case_number"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "involvements", ["subject_id", "study_id", "ethnicity_type_id", "gender_type_id"], :name => "involvements_attr_idx", :unique => true
-
-  create_table "races", :force => true do |t|
-    t.integer  "involvement_id"
-    t.integer  "race_type_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "races", ["involvement_id", "race_type_id"], :name => "races_attr_idx", :unique => true
+  add_index "involvements", ["subject_id", "study_id", "ethnicity", "gender"], :name => "involvements_attr_idx", :unique => true
 
   create_table "resource_statuses", :force => true do |t|
     t.string   "name",       :null => false

@@ -9,16 +9,13 @@ namespace :db do
 
   namespace :populate do
 
-    task :default => [:environment, :clear_db, :admins, :"dictionary_terms:import", :users, :coordinators_and_studies, :coordinators, :involvements_and_subects, :involvements, :sample_netids]
-    
-    desc 'Populates database with basic data'
-    task :basics => [:admins, :"dictionary_terms:import"]
+    task :default => [:environment, :clear_db, :admins, :users, :coordinators_and_studies, :coordinators, :involvements_and_subects, :involvements, :sample_netids]
       
-    desc 'Clear models: User, Coordinator, Study, Involvement, Subject, InvolvementEvent,DictionaryTerm'
+    desc 'Clear models: User, Coordinator, Study, Involvement, Subject, InvolvementEvent'
     task :clear_db => :environment do
       puts
       puts "clearing db..."
-      [User, Coordinator, Study, Involvement, Subject, InvolvementEvent, DictionaryTerm].each(&:delete_all)
+      [User, Coordinator, Study, Involvement, Subject, InvolvementEvent].each(&:delete_all)
     end
 
     desc 'Populate admins(Brian, David, Mark, Laura, Sam)'
@@ -53,15 +50,12 @@ namespace :db do
     desc 'Populate involvements: joins subjects(fake) and studies(random)'
     task :involvements_and_subects => :environment do
       puts "creating involvements and subjects..."
-      event_type_ids = %w(consented withdrawn completed).map{|term| DictionaryTerm.event_id(term)}
-      event_type_ids += Array.new(20, DictionaryTerm.event_id("consented")) # weight this more heavily towards consent event types
-      gender_type_ids = DictionaryTerm.gender_ids
-      ethnicity_type_ids = DictionaryTerm.ethnicity_ids
+      events = InvolvementEvent.events += Array.new(20, "Consented") # weight this more heavily towards consent event types
       300.times do |i|
         involvement = Factory.create( :involvement, :study => random(Study), :subject => Factory.create(:fake_subject),
-                                      :gender_type_id => gender_type_ids.rand, :ethnicity_type_id => ethnicity_type_ids.rand)
-        Factory.create(:race, :involvement => involvement)
-        blip && Factory.create( :involvement_event, :event_type_id => event_type_ids.rand, :involvement => involvement )
+                                      :gender => Involvement.genders.rand, :ethnicity => Involvement.ethnicities.rand,
+                                      :race => Involvement.races.rand)
+        blip && Factory.create( :involvement_event, :event => events.rand, :involvement => involvement )
       end
       puts
     end
@@ -69,15 +63,12 @@ namespace :db do
     desc 'Populate involvements: joins subjects(random) and studies(random)'
     task :involvements => :environment do
       puts "creating extra involvements..."
-      event_type_ids = %w(consented withdrawn completed).map{|term| DictionaryTerm.event_id(term)}
-      event_type_ids += Array.new(20, DictionaryTerm.event_id("consented")) # weight this more heavily towards consent event types
-      gender_type_ids = DictionaryTerm.gender_ids
-      ethnicity_type_ids = DictionaryTerm.ethnicity_ids
+      events = InvolvementEvent.events += Array.new(20, "Consented") # weight this more heavily towards consent event types
       200.times do |i|
-        involvement = Factory.create( :involvement, :study => random(Study), :subject => random(Subject),
-                                      :gender_type_id => gender_type_ids.rand, :ethnicity_type_id => ethnicity_type_ids.rand)
-        Factory.create(:race, :involvement => involvement)
-        blip && Factory.create( :involvement_event, :event_type_id => event_type_ids.rand, :involvement => involvement )
+        involvement = Factory.create( :involvement, :study => random(Study), :subject => Factory.create(:fake_subject),
+                                      :gender => Involvement.genders.rand, :ethnicity => Involvement.ethnicities.rand,
+                                      :race => Involvement.races.rand)
+        blip && Factory.create( :involvement_event, :event => events.rand, :involvement => involvement )
       end
       puts
     end

@@ -1,6 +1,6 @@
 %li
-  = f.label :event_type_id, "Activity"
-  = f.select :event_type_id, event_options(f.object.event_type_id), :include_blank => true
+  = f.label :event, "Activity"
+  = f.select :event, event_options(f.object.event), :include_blank => true
   -# note taken out until it is requested
   -#= f.label      :note
   -#= f.text_field :note

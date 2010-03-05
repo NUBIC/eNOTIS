@@ -23,7 +23,3 @@ Then /^I should be redirected to (.+?)$/ do |page_name|
 
   Then "I should be on #{page_name}"
 end
-
-Given /^the following dictionary terms$/ do |table|
-  table.hashes.each{|hash| Factory.create(:dictionary_term, hash) }
-end

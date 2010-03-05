@@ -42,7 +42,7 @@ class StudiesController < ApplicationController
     @involvements = @study.involvements
     @ethnicity_stats = @involvements.count_all(:short_ethnicity)
     @gender_stats = @involvements.count_all(:gender)
-    @race_stats = @involvements.count_all(:races, :short_race_type)
+    @race_stats = @involvements.count_all(:short_race)
   end
 
 end

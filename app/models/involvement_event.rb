@@ -7,11 +7,9 @@ class InvolvementEvent < ActiveRecord::Base
   acts_as_reportable
   # Associations
   belongs_to :involvement
-  belongs_to :event_type, :class_name => "DictionaryTerm", :foreign_key => :event_type_id
   
   # Named scopes
   default_scope :order => "occurred_on"
-  named_scope :with_event_types, lambda {|event_type_ids| { :conditions => ['event_type_id in (?)', event_type_ids ]}}
   named_scope :on_study, lambda {|study_id| { :include => :involvement, :conditions => ['involvements.study_id=?', study_id], :order => 'involvement_events.occurred_on DESC' } } do
     def to_graph
       results = {}
@@ -30,21 +28,27 @@ class InvolvementEvent < ActiveRecord::Base
   
   # Callbacks
   before_destroy :destroy_childless_parent
-  
+
   # Public instance methods
-  def term
-    event_type.term.capitalize
-  end
-  def description
-    event_type.description
-  end
-  
   def occurred_on=(date)
     write_attribute :occurred_on, Chronic.parse(date)
   end
 
   # Public class methods
-  
+  class << self 
+    def event_definitions 
+      [ ["Consented", "Subject has signed informed consent forms."],
+        ["Completed", "Subject has completed study and is no longer receiving treatment/s or services."],
+        ["Withdrawn", "Subject has been removed from study (include notes field for reason/description)."] ]
+    end
+    def events
+      self.event_definitions.transpose[0]
+    end
+    def define_event(term)
+      (self.event_definitions.detect{|t,d| t == term} || [])[1]
+    end
+  end
+
   # for study_uploads
   def self.add(params)
     Study.transaction do # read http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
@@ -73,12 +77,12 @@ class InvolvementEvent < ActiveRecord::Base
     InvolvementEvent.find(:first, :conditions => { 
       :involvement_id => params[:involvement_id], 
       :occurred_on    => Chronic.parse(params[:occurred_on]), 
-      :event_type_id  => params[:event_type_id] }
+      :event          => params[:event] }
     ) || InvolvementEvent.create(params)
   end
   
   def self.count_accruals
-    InvolvementEvent.count(:involvement_id, :distinct => true, :conditions => ["event_type_id =? ", DictionaryTerm.event_id("consented")])
+    InvolvementEvent.count(:involvement_id, :distinct => true, :conditions => ["event =? ", "Consented"])
   end
  
   private

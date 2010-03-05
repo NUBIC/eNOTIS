@@ -13,12 +13,9 @@ class Involvement < ActiveRecord::Base
   belongs_to :subject
 	belongs_to :study
   has_many :involvement_events
-  belongs_to :gender_type, :class_name => "DictionaryTerm", :foreign_key => :gender_type_id
-  belongs_to :ethnicity_type, :class_name => "DictionaryTerm", :foreign_key => :ethnicity_type_id
-  has_many :races
   
   # Atrributes
-  accepts_nested_attributes_for :involvement_events, :reject_if => lambda {|a| a["occurred_on"].blank? or a["event_type_id"].blank? }
+  accepts_nested_attributes_for :involvement_events, :reject_if => lambda {|a| a["occurred_on"].blank? or a["event"].blank? }
   accepts_nested_attributes_for :subject
   
   # Named scope
@@ -28,43 +25,54 @@ class Involvement < ActiveRecord::Base
   has_paper_trail
   
   # Validations
-  validates_presence_of :gender_type_id, :ethnicity_type_id
+  validates_presence_of :gender, :ethnicity, :race
   
-  # Public instance methods
-  def consented
-    involvement_events.detect{|e| e.event_type_id == DictionaryTerm.event_id("Consented")}
-  end
-  def completed
-    involvement_events.detect{|e| e.event_type_id == DictionaryTerm.event_id("Completed") or e.event_type_id == DictionaryTerm.event_id("Withdrawn")}
-  end
-  def race_type_ids=(new_ids)
-    new_ids = new_ids.map{|i| i.is_a?(Hash) ? i.keys : i}.flatten.map(&:to_i)
-    races_to_build = new_ids - self.race_type_ids
-    # Races are no longer additive
-    races_to_remove = self.race_type_ids - new_ids
-    races_to_build.each{|i| self.races.build(:race_type_id => i)}
-    races_to_remove.each{|i| self.races.select{|x| x.race_type_id == i}.map(&:destroy)}
-  end
-  def race_type_ids
-    races.map(&:race_type_id)
-  end
-  def ethnicity
-    self.ethnicity_type ? self.ethnicity_type.term : nil
+  # Public class methods
+  
+  class << self 
+    def gender_definitions 
+      [ ["Male",                     "A person identifying with the male sex or gender"],
+        ["Female",                   "A person identifying with the female sex or gender"],
+        ["Unknown or Not Reported",  ""] ]
+    end
+
+    def ethnicity_definitions
+      [ ["Hispanic or Latino",      "A person of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race. The term \"Spanish origin\" can also be used in addition to \"Hispanic or Latino.\""],
+        ["Not Hispanic or Latino",  "A person NOT of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race."],
+        ["Unknown",                 "Individuals not reporting ethnicity"] ]
+    end
+    def race_definitions
+      [ ["American Indian/Alaska Native",          "A person having origins in any of the original peoples of North, Central, or South America, and who maintains tribal affiliations or community attachment."],
+        ["Asian",                                  "A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam."],
+        ["Black/African American",                 "A person having origins in any of the black racial groups of Africa."],
+        ["Native Hawaiian/Other Pacific Islander", "A person having origins in any of the original peoples of Hawaii, Guam, Samoa, or other Pacific Islands."],
+        ["White",                                  "A person having origins in any of the original peoples of Europe, the Middle East, or North Africa."],
+        ["More than one race",                     ""],
+        ["Unknown or Not Reported",                ""] ]
+    end
+    %w(gender ethnicity race).each do |category|
+      # genders, ethnicities, races
+      define_method("#{category.pluralize}".to_sym){ self.send("#{category}_definitions").transpose[0] }
+      # define_gender, define_ethnicity, define_race
+      define_method("define_#{category}".to_sym){|term| (self.send("#{category}_definitions").detect{|t,d| t == term} || [])[1] } 
+    end
   end
   def short_ethnicity
-    return "" unless self.ethnicity_type
-    term = self.ethnicity_type.term
-    (term[0..12].length == term.length) ? term : term[0..10] + "&#0133;"
+    return "" if ethnicity.blank?
+    (ethnicity[0..12].length == ethnicity.length) ? ethnicity : ethnicity[0..10] + "&#0133;"
+  end
+  def short_race
+    return "" if race.blank?
+    (race[0..12].length == race.length) ? race : race[0..10] + "&#0133;"
   end
 
-  def gender
-    self.gender_type ? self.gender_type.term : nil
+  # Public instance methods
+  def consented
+    involvement_events.detect{|e| e.event == "Consented"}
+  end                                    
+  def completed                          
+    involvement_events.detect{|e| e.event == "Completed" or e.event == "Withdrawn"}
   end
-
-  def race_list
-    self.races.map{|race| race.race_type.term}.join(";")
-  end
-  
   def subject_name_or_case_number
     subject.name.blank? ? case_number : subject.name
   end

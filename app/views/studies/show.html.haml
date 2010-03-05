@@ -37,11 +37,11 @@
             %th Ethnicity
             %th Race
             %th
-              %dtr{:title => DictionaryTerm.event("consented").description} Consented
+              %dtr{:title => InvolvementEvent.define_event("Consented")} Consented
             %th
-              %dtr{:title => DictionaryTerm.event("withdrawn").description, :class => "withdrawn"} Withdrawn
+              %dtr{:title => InvolvementEvent.define_event("Withdrawn"), :class => "withdrawn"} Withdrawn
               %br
-              %dtr{:title => DictionaryTerm.event("completed").description} Completed
+              %dtr{:title => InvolvementEvent.define_event("Completed")} Completed
             %th Edit
         %tbody
           - @study.involvements.each do |involvement|
@@ -55,7 +55,7 @@
               %td= involvement.subject.birth_date.to_s
               %td= involvement.gender
               %td= involvement.ethnicity
-              %td= involvement.race_list
+              %td= involvement.race
               %td= event_info(involvement, "consented")
               %td<
                 = event_info(involvement, "completed")

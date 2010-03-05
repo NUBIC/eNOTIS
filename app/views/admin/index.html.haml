@@ -19,21 +19,6 @@
           %td= user.name
           %td= user.netid
           -# %td= user.studies.map{|study| link_to(study.irb_number, study_path(study), :title => study.title)}.join(", ")
-#dictionary_terms
-  = pluralize @dictionary_terms.size, "dictionary term"
-  %table.display
-    %thead
-      %tr
-        %th Category
-        %th Term
-        %th Code
-    %tbody
-      - @dictionary_terms.each do |term|
-        %tr
-          %td= term.category
-          %td 
-            %dfn{:title => term.description}= term.term
-          %td= term.code
 
 %img{:class => 'hub', :src => '/images/hub.jpg', :style => "display:none;"}
    

@@ -47,15 +47,7 @@ class ExternalEventProcessor < ApplicationProcessor
 
   def normalize(params)
     params = symbolize(params)
-    params[:involvement][:gender_type_id] = DictionaryTerm.gender_id(params[:involvement][:gender])
-    params[:involvement].delete(:gender)
-    params[:involvement][:ethnicity_type_id]  = DictionaryTerm.ethnicity_id(params[:involvement][:ethnicity])
-    params[:involvement].delete(:ethnicity)
     new_events=[]
-    params[:involvement_events].each do |val|
-      val[:event_type_id] = DictionaryTerm.event_id(val[:type])
-      val.delete(:type)
-    end
     return params
   end
   #recursively symbolize the parameters

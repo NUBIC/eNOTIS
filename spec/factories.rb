@@ -125,16 +125,14 @@ end
 Factory.define :involvement do |i|
   i.association   :subject
   i.association   :study
-  i.ethnicity_type_id {DictionaryTerm.ethnicity_ids.rand}
-  i.gender_type_id    {DictionaryTerm.gender_ids.rand}
-  # i.association   :ethnicity_type, :factory => :dictionary_term
-  # i.association   :gender_type, :factory => :dictionary_term
+  i.ethnicity     {Involvement.ethnicities.rand}
+  i.gender        {Involvement.genders.rand}
+  i.race          {Involvement.races.rand}
 end
 
 Factory.define :involvement_event do |e|
   e.association   :involvement
-  e.event_type_id {DictionaryTerm.event_ids.rand}
-  # e.association   :event_type, :factory => :dictionary_term
+  e.event         {InvolvementEvent.events.rand}
   e.note          {}
   e.occurred_on    {["today","yesterday"].rand}
 end
@@ -142,12 +140,6 @@ end
 Factory.define :coordinator do |u|
   u.association   :user
   u.association   :study
-end
-
-Factory.define :race do |r|
-  r.association   :involvement
-  r.race_type_id  {DictionaryTerm.race_ids.rand}
-  # r.association   :race_type, :factory => :dictionary_term
 end
 
 Factory.define :study_upload do |s|
@@ -160,12 +152,4 @@ Factory.define :study_upload do |s|
   # s.result_file_name        {"bar.csv"}
   # s.result_content_type     {"text/csv"}
   # s.result_file_size        {1023}
-end
-
-Factory.define :dictionary_term do |d|
-  d.category        {%w(ethnicity Gender Event Race).rand}
-  d.term            {|me| me.category == "Gender" ? %w(Male Female).rand : Faker::Lorem.words(1).to_s }
-  d.code            {|me| [me.category.downcase, me.term.downcase].join("-").gsub(/[^a-z]/, "-")}
-  d.source          {Faker::Lorem.words(2).join(" ")}
-  d.description     {Faker::Lorem.paragraphs(1).to_s}
 end

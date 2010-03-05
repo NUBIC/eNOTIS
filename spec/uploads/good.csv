@@ -1,1 +1,8 @@
-case_number,mrn,first_name,last_name,birth_date,gender,race,race2,ethnicity,consented_on,consented_note,withdrawn_on,withdrawn_note,completed_on,completed_note,,Meghan,O'Keefe,1/3/1956,Female,Not Reported,,Unknown,3/4/2009,,,,,,,Solon,Gorczany,5/2/1934,Male,Multiracial,,Not Hispanic or Latino,3/5/2009,,,,,12125,,,,,Male,Multiracial,,Hispanic or Latino,,,3/6/2009,,,,G123E123,,,,Female,Black/African American,,Not Hispanic or Latino,,,3/7/2009,,,,,Leonel,Boyle,9/2/2004,Male,White,,Not Hispanic or Latino,,,,,3/8/2009,,,Antwan,Marquardt,6/5/1978,Male,Multiracial,,Hispanic or Latino,,,,,3/6/2009,,,Wilma,Leffler,8/5/1967,Female,Black/African American,,Not Hispanic or Latino,,,,,3/7/2009,
+case_number,mrn,first_name,last_name,birth_date,gender,race,ethnicity,consented_on,consented_note,withdrawn_on,withdrawn_note,completed_on,completed_note
+,,Meghan,O'Keefe,1/3/1956,Female,Unknown or Not Reported,Unknown,3/4/2009,,,,,
+,,Solon,Gorczany,5/2/1934,Male,More than one race,Not Hispanic or Latino,3/5/2009,,,,,
+12125,,,,,Male,More than one race,Hispanic or Latino,,,3/6/2009,,,
+,G123E123,,,,Female,Black/African American,Not Hispanic or Latino,,,3/7/2009,,,
+,,Leonel,Boyle,9/2/2004,Male,White,Not Hispanic or Latino,,,,,3/8/2009,
+,,Antwan,Marquardt,6/5/1978,Male,More than one race,Hispanic or Latino,,,,,3/6/2009,
+,,Wilma,Leffler,8/5/1967,Female,Black/African American,Not Hispanic or Latino,,,,,3/7/2009,

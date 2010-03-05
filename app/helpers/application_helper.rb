@@ -23,19 +23,22 @@ module ApplicationHelper
     people.empty? ? nil : "#{title}: " + people.join(", ") + "<br/>"
   end
   
-  def event_info(involvement, event_type)
-    if event = involvement.involvement_events.detect{|e| e.event_type_id == DictionaryTerm.event_id(event_type)}
-      content_tag("span", :class => event_type, :title => event_type.capitalize){ "#{event.occurred_on}#{image_tag '/images/icons/note.png' unless event.note.blank?}" }
+  def event_info(involvement, event)
+    if involvement_event = involvement.involvement_events.detect{|e| e.event == event}
+      content_tag("span", :class => event.downcase, :title => event){ "#{involvement_event.occurred_on}#{image_tag '/images/icons/note.png' unless involvement_event.note.blank?}" }
     end
   end
   
   def gender_options(selected = nil)
-    options_for_select(DictionaryTerm.gender_objects.map{|g| [g.term.titleize, g.id]}, selected)
+    options_for_select(Involvement.genders, selected)
   end
   def ethnicity_options(selected = nil)
-    options_for_select(DictionaryTerm.ethnicity_objects.map{|e| [e.term.titleize, e.id]}, selected)
+    options_for_select(Involvement.ethnicities, selected)
+  end
+  def race_options(selected = nil)
+    options_for_select(Involvement.races, selected)
   end
   def event_options(selected = nil)
-    options_for_select(%w(consented completed withdrawn).map{|t| DictionaryTerm.event(t)}.map{|t| [t.term.titleize, t.id]}, selected)
+    options_for_select(InvolvementEvent.events, selected)
   end
 end

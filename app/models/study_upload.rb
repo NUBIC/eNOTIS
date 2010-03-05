@@ -107,16 +107,15 @@ class StudyUpload < ActiveRecord::Base
                     :last_name => r[:last_name], 
                     :birth_date => (bd = Chronic.parse(r[:birth_date])).blank? ? nil : bd.to_date },
       :involvement => { :case_number => r[:case_number], 
-                       :gender_type_id => DictionaryTerm.gender_id(r[:gender]),
-                       :ethnicity_type_id => DictionaryTerm.ethnicity_id(r[:ethnicity]),
-                       :race_type_ids => [r[:race], r[:race2]].map{|x| x.blank? ? nil : DictionaryTerm.race_id(x)}.compact
-                      },
+                       :gender => r[:gender],
+                       :ethnicity => r[:ethnicity],
+                       :race => r[:race]},
       :involvement_events => %w(consented withdrawn completed).map do |category|
         if (event_date = Chronic.parse(r["#{category}_on".to_sym])).blank?
           nil
         else
           { :occurred_on => event_date.to_date,
-            :event_type_id => DictionaryTerm.event_id(category),
+            :event => category,
             :note => r["#{category}_note".to_sym]
           }
         end
@@ -142,7 +141,7 @@ class StudyUpload < ActiveRecord::Base
   end
   def check_terms(hash)
     %w(gender ethnicity race).map do |category|
-      "#{hash[category.to_sym].blank? ? "Blank #{category.capitalize}" : "Unknown #{category.capitalize}: #{hash[category.to_sym]}"}" unless DictionaryTerm.send(category.pluralize).include?(hash[category.to_sym].to_s.downcase)
+      "#{hash[category.to_sym].blank? ? "Blank #{category.capitalize}" : "Unknown #{category.capitalize}: #{hash[category.to_sym]}"}" unless Involvement.send(category.pluralize).include?(hash[category.to_sym].to_s)
     end
   end
   def check_event_dates(hash)

@@ -1,0 +1,22 @@
+Category,Term,Code,Description,Source
+Status,Not yet recruiting,status-not-yet-recruiting,Participants are not yet being recruited or enrolled,Clinicaltrials.gov
+Status,Recruiting,status-recruiting,Participants are currently being recruited and enrolled,Clinicaltrials.gov
+Status,Completed,status-completed,"The study has concluded normally; participants are no longer being examined or treated (i.e., last patient's last visit has occurred)",Clinicaltrials.gov
+Status,Suspended,status-suspended,Recruiting or enrolling participants has halted prematurely but potentially will resume,Clinicaltrials.gov
+Status,Terminated,status-terminated,Recruiting or enrolling participants has halted prematurely and will not resume; participants are no longer being examined or treated,Clinicaltrials.gov
+Status,Withdrawn,status-withdrawn,"Study halted prematurely, prior to enrollment of first participant",Clinicaltrials.gov
+Event,Contact - Email,event-contact---email,Participant has been contacted via email to participate in study. ,GIM Documentation
+Event,Contact - Phone,event-contact---phone,Participant has been contacted via phone to participate in study. ,GIM Documentation
+Event,Contact - Face-to-Face,event-contact---face-to-face,Participant has been contacted face-to-face to participate in study. ,GIM Documentation
+Event,Contact - Letter,event-contact---letter,Participant has been contacted via letter to participate in study. ,GIM Documentation
+Event,Enrolled,event-enrolled,Participant has been consented and has met eligibility criteria for study.,GIM Documentation
+Event,Prescreened,event-prescreened,The beginning of the informed consent process.,CRU Documentation
+Event,Screened,event-screened,In-depth informed consent discussion where procedures are performed per protocol. (synthesized),CRU Documentation
+Event,Run-in,event-run-in,The period between screening visit and randomization visit.,CRU Documentation
+Event,Randomization,event-randomization,The method for determining which study design arm the subject is assigned to.,CRU Documentation
+Event,Screen Failure,event-screen-failure,The subject did not meet all inclusion/exclusion criteria after signing consent.,CRU Documentation
+Event,Unscheduled Visit,event-unscheduled-visit,"Visit which occurs between protocol-specified visits which can be requested by the investigator, sponsor or subject (synthesized).",CRU Documentation
+Event,Re-screened,event-re-screened,,
+Event,Declined,event-declined,"Participant is not interested in ""XYZ"" study",GIM Documentation
+Event,Ineligible,event-ineligible,Participant did not meet study criteria,GIM Documentation
+SubjectData,Do Not Contact,subjectdata-do-not-contact,Participant is not interested in participating in research at all,GIM Documentation

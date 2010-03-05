@@ -6,8 +6,8 @@ When /^I add a subject "([^\"]*)" "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do 
   fill_in "Last name", :with => last
   fill_in "Birth date", :with => "8/7/65"
   select "Female", :from => "Gender"
-  select "Not Hispanic Or Latino", :from => "Ethnicity"
-  check "Asian"
+  select "Not Hispanic or Latino", :from => "Ethnicity"
+  select "Asian", :from => "Race"
   select event, :from => "Activity"
   fill_in "On", :with => date
   click_button "Save"
@@ -18,8 +18,8 @@ When /^I add a case number "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do |case_n
   fill_in "Case number", :with => case_number
   fill_in "Birth date", :with => "8/7/65"
   select "Female", :from => "Gender"
-  select "Not Hispanic Or Latino", :from => "Ethnicity"
-  check "Asian"
+  select "Not Hispanic or Latino", :from => "Ethnicity"
+  select "Asian", :from => "Race"
   select event, :from => "Activity"
   fill_in "On", :with => date
   click_button "Save"
@@ -44,7 +44,7 @@ Given /^subject "([^\"]*)" has event "([^\"]*)" on study "([^\"]*)"$/ do |mrn, t
   unless involvement = Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number))
     involvement = Factory(:involvement, :subject => Subject.find_by_mrn(mrn), :study => Study.find_by_irb_number(irb_number))
   end
-  Factory(:involvement_event, :involvement => involvement, :event_type_id => DictionaryTerm.event_id(term))
+  Factory(:involvement_event, :involvement => involvement, :event => term)
 end
 
 Then /^subject "([^\"]*)" should have (\d+) events? on study "([^\"]*)"$/ do |mrn, x, irb_number|
