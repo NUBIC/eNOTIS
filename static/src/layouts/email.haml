@@ -1,0 +1,29 @@
+!!!
+%html
+  %head
+    %title eNOTIS
+    %style{:type => 'text/css'}
+      :sass
+        #main
+          :font-family Trebuchet MS, Helvetica, sans-serif
+          :width 500px
+          :margin 0 auto
+          span.slogan
+            :color #006699
+            :display block
+          span.link
+            :margin-left 40px
+        #footer
+          :width 500px
+          :margin 0 auto
+          img
+            :float left
+  %body
+    #main
+      = yield
+    #footer
+      .nulogo= img("static/nu_logo.gif")
+      .fsmlogo= img("static/fsm-logo.gif")
+      .nucatslogo= img("static/nucats_logo.gif")
+      .nubiclogo= img("static/nubic_logo.gif")
+
