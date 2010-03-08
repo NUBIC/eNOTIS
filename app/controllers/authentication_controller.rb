@@ -8,6 +8,7 @@ class AuthenticationController < ApplicationController
     # TODO System status check
     @filters = self.class.filter_chain
     @title = "measure, see, and improve your research"
+    @studies_count = Study.count
     # @status = system_status
   end
   

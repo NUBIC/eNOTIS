@@ -18,14 +18,15 @@
   .items
     #about.item
       %h2
-        eNOTIS is the subject registration system for all IRB-approved
+        eNOTIS is the subject registration system for all IRB-approved 
         %br
         clinical research at Northwestern University
       .col
         %h3 Measure
         = image_tag 'measure.jpg'
-        %h4 Developed in response to requests from the clinical research community
+        %h4 Developed in collaboration with the clinical research community
         %h4 Add subjects to your study and track key clinical events: consent, withdrawal, completion
+        %h3= "#{number_with_delimiter @studies_count} studies (and counting)"
       .col
         %h3 See
         = image_tag 'see.jpg'
@@ -37,8 +38,7 @@
         = image_tag 'improve.jpg'
         %h4 Make informed decisions about your research 
         %h4 Ensure subject safety by verifying their participation in other trials 
-        %h4 eNOTIS reduces set-up time by accessing your study information through eIRB and subject identity through NU Enterprise Data Warehouse (EDW). This approach means less data entry and will reduce or eliminate the need for manual study tracking adoption
-        
+        %h4 Spend less time entering and tracking data by hand: studies are pre-loaded from eIRB and subject identity verified via NU Enterprise Data Warehouse (EDW)
         
     #training.item
       %h2 eNOTIS supports two methods of tracking subject accrual
