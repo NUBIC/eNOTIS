@@ -46,6 +46,18 @@ namespace :db do
       end
       puts
     end
+    
+    desc 'Populate one coordinator: joins user(given) and studies(random)'
+    task :coordinator => :environment do
+      puts "creating extra coordinators for #{ENV['NETID']}..."
+      10.times do |i| 
+        begin
+          blip && Factory.create(:coordinator, :study => random(Study), :user => User.find_by_netid(ENV['NETID']))
+        rescue
+        end
+      end
+      puts
+    end
 
     desc 'Populate involvements: joins subjects(fake) and studies(random)'
     task :involvements_and_subects => :environment do
