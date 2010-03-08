@@ -65,6 +65,10 @@ class Involvement < ActiveRecord::Base
     return "" if race.blank?
     (race[0..12].length == race.length) ? race : race[0..10] + "&#0133;"
   end
+  def short_gender
+    return "" if gender.blank?
+    (gender[0..12].length == gender.length) ? gender : gender[0..10] + "&#0133;"
+  end
 
   # Public instance methods
   def consented

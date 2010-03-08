@@ -25,6 +25,7 @@
     %ol
       - f.fields_for :involvement_events do |builder|
         = render 'involvement_event_fields', :f => builder
-  = f.submit "Save"
-  or
-  = link_to "Cancel", study_path(params[:study])
+  .submit
+    = f.submit "Save"
+    or
+    = link_to "Cancel", study_path(params[:study])

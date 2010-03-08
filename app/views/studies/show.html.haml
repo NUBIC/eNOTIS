@@ -15,83 +15,49 @@
 #study
   %span.study_title= link_to "#{status_icon @study} #{@study.irb_number || "(no id)"}", "#", :rel => "#study_information"
   #actions
-    = link_to("Add", new_involvement_path(:study => @study), :rel => '#subject', :class => 'add')
-    = link_to("Import", "#", :rel => "#import", :class => 'import')
+    = link_to("Add", new_involvement_path(:study => @study), :rel => '#involvement', :class => 'add')
+    = link_to("Import", import_study_path, :rel => "#import", :class => 'import')
     = link_to("Export", new_report_path(:study => @study), :rel => '#export', :class => 'export') unless @involvements.empty?
   #study_information
     = render :partial => 'partials/study_info', :locals => {:study => @study}
   #accrual
-    - if @involvements.empty?
-      :markdown
-        No subjects yet - watch the video on adding subjects or start adding some.<br/>
-        ![](/images/video.jpg)
-    - else
-      %table.display
-        %thead
-          %tr
-            %th= "Subjects (#{@involvements.size})"
-            %th MRN
-            %th Case#
-            %th Birth date
-            %th Gender
-            %th Ethnicity
-            %th Race
-            %th
-              %dtr{:title => InvolvementEvent.define_event("Consented")} Consented
-            %th
-              %dtr{:title => InvolvementEvent.define_event("Withdrawn"), :class => "withdrawn"} Withdrawn
-              %br
-              %dtr{:title => InvolvementEvent.define_event("Completed")} Completed
-            %th Edit
-        %tbody
-          - @study.involvements.each do |involvement|
-            %tr{:class => "subject_#{involvement.subject.id}"}
-              %td
-                = involvement.subject_name_or_case_number
-                -# = link_to image_tag('/images/icons/status_offline.png'), "#", :rel => "#subject_information", :class => 'subject'
-                -#= render :partial => 'partials/subject', :locals => {:subject => involvement.subject, :involvement => involvement}
-              %td= involvement.subject.mrn
-              %td= involvement.case_number
-              %td= involvement.subject.birth_date.to_s
-              %td= involvement.gender
-              %td= involvement.ethnicity
-              %td= involvement.race
-              %td= event_info(involvement, "consented")
-              %td<
-                = event_info(involvement, "completed")
-                = event_info(involvement, "withdrawn")
-              %td= link_to "Edit", edit_involvement_path(involvement)
-  #subject.overlay
-    .contentWrap
+    .subject_count= "Subjects (#{@involvements.size})"
+    %table.display
+      %thead
+        %tr
+          %th Case#
+          %th MRN
+          %th Name
+          %th Birth date
+          %th Gender
+          %th Ethnicity
+          %th Race
+          %th
+            %dtr{:title => InvolvementEvent.define_event("Consented")} Consented
+          %th
+            %dtr{:title => InvolvementEvent.define_event("Withdrawn"), :class => "withdrawn"} Withdrawn
+            %br
+            %dtr{:title => InvolvementEvent.define_event("Completed")} Completed
+          %th Edit
+      %tbody
+        - @study.involvements.each do |involvement|
+          %tr{:class => "subject_#{involvement.subject.id}"}
+            %td= involvement.case_number
+            %td= involvement.subject.mrn
+            %td
+              = involvement.subject_name_or_case_number
+            %td= involvement.subject.birth_date.to_s
+            %td= involvement.gender
+            %td= involvement.ethnicity
+            %td= involvement.race
+            %td= event_info(involvement, "consented")
+            %td<
+              = event_info(involvement, "completed")
+              = event_info(involvement, "withdrawn")
+            %td= link_to "Edit", edit_involvement_path(involvement), :rel => "#involvement"
+  #involvement.overlay
+    .wrap
   #export.overlay
-    .contentWrap
+    .wrap
   #import.overlay
-    .upload
-      Import subjects
-      - form_tag(upload_involvements_path, :multipart => true) do
-        = hidden_field_tag("study_id", @study.irb_number.to_s)
-        = file_field_tag(:file)
-        = submit_tag( "Upload" )
-      %br
-      %p= "Uploads need a few essential columns (see the #{link_to 'example file', '/documents/sample.csv'}) for eNOTIS to read them."
-    - unless @study.study_uploads.blank?
-      .uploads
-        %table.display
-          %thead
-            %tr
-              %th Importer
-              %th Uploaded
-              %th Original
-              %th Result
-              %th Status
-          %tbody
-            - @study.study_uploads.each do |u|
-              %tr
-                %td= u.user.netid
-                %td
-                  %span{:title => u.created_at.to_s(:long)}
-                    = time_ago_in_words(u.created_at)
-                    ago
-                %td= link_to "Original", u.upload.url
-                %td= link_to("Result", u.result.url) unless u.result_file_name.nil?
-                %td= u.summary
+    .wrap

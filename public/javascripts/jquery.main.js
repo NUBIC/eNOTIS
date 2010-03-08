@@ -15,57 +15,30 @@ $(document).ready(function() {
 	
 	// studies show
     // dataTable
-    $("#accrual .display").dataTable({"iDisplayLength": 30, "sPaginationType": "full_numbers","aoColumns": [null,null,null,null,null,null,null,{ "sType": "html" },{ "sType": "html" }]});
+    $("#accrual .display").dataTable({"iDisplayLength": 30, "sPaginationType": "full_numbers", "oLanguage": {"sZeroRecords": "No subjects yet - click 'Add' or 'Import' to get started."},"aoColumns": [null,null,null,null,null,null,null,{ "sType": "html" },{ "sType": "html" }]});
     $("#accrual .display td:empty, #import .display td:empty").html("--");
 
     // study information
-    // $("#study a[rel=#study_information]").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 } });
     $("#study a[rel=#study_information]").click(function(){
       $('#study_information').slideToggle();
       $(this).toggleClass('open');
     });
-    
-    // subject overlay
-    // $("#study a[rel=#subject_information]").overlay({ 
-    //   onBeforeLoad: function(){ $("#subject_information .contentWrap").html(this.getTrigger().next('.subject_information').html()); },
-    //   onStart: function(){ var trigger = this.getTrigger(); $('#subject_information').css({'top': trigger.offset().top - 14, 'left': trigger.offset().left + trigger.outerWidth() }); },
-    //   expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    // });
+
+    // import overlay
+    $("a[rel=#import]").overlay({
+      onBeforeLoad: function(){ $("#import .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
+    });	
     
     // involvement overlay
-    // $("#study a[rel=#involvement_information]").overlay({ 
-    //   onBeforeLoad: function(){ $("#involvement_information .contentWrap").html(this.getTrigger().next('.involvement_information').html()); },
-    //   onStart: function() {
-    //     var trigger = this.getTrigger();
-    //     $('#involvement_information').css({'top': trigger.offset().top, 'left': trigger.offset().left + trigger.outerWidth() + 5});
-    //   },
-    //   expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    // });
-    
-    // $("#study a[rel=#add_involvement]").overlay({ 
-    //   onBeforeLoad: function(){ var wrap = $("#add_involvement .contentWrap"); wrap.load(this.getTrigger().attr("href"), "format=js"); },
-    //   onStart: function() {
-    //     var trigger = this.getTrigger();
-    //     $('#involvement_information').css({'top': trigger.offset().top, 'left': trigger.offset().left + trigger.outerWidth() + 5});
-    //   },
-    //   expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    // });
-  
-    // import overlay
-    $("a[rel=#import]").overlay({expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }});	
+    $("a[rel=#involvement]").overlay({
+      onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
+    });
 
-    // add overlay
-    // $("#study a[rel=#add_subject]").overlay({ 
-    //   onBeforeLoad: function(){ var wrap = $("#add_subject .contentWrap"); wrap.load(this.getTrigger().attr("href"), "format=js"); },
-    //   // onStart: function() {
-    //   //   var trigger = this.getTrigger();
-    //   //   $('#add_subject').css({'top': trigger.offset().top, 'left': trigger.offset().left + trigger.outerWidth() + 5});
-    //   // },
-    //   expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    // });
-    // $("a[rel=#add_subject]").overlay({
-    //   onBeforeLoad: function() { var wrap = this.getContent().find(".contentWrap"); wrap.load(this.getTrigger().attr("href"), "format=js"); },
-    //   onStart: function(){ var trigger = this.getTrigger(); $('#subject_information').css({'top': trigger.offset().top - 14, 'left': trigger.offset().left + trigger.outerWidth() }); },
-    //   expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    // });
+    // export overlay
+    $("a[rel=#export]").overlay({
+      onBeforeLoad: function(){ $("#export .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
+    });
 });

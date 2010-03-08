@@ -41,8 +41,16 @@ class StudiesController < ApplicationController
     @title = @study.irb_number
     @involvements = @study.involvements
     @ethnicity_stats = @involvements.count_all(:short_ethnicity)
-    @gender_stats = @involvements.count_all(:gender)
+    @gender_stats = @involvements.count_all(:short_gender)
     @race_stats = @involvements.count_all(:short_race)
+  end
+  
+  def import
+    @study = Study.find_by_irb_number(params[:id])
+    respond_to do |format|
+      format.html
+      format.js {render :layout => false}
+    end
   end
 
 end

@@ -1,28 +1,5 @@
-form#new_involvement, form.edit_involvement
-  ol
-    :list-style none
-    :margin 0
-    li
-      label
-        :display block
-      label.box
-        :display inline
-  .subject, .demographics, .consented, completed
-    :float left
-    :width 24%
-  .subject
-    li.case_number, li.mrn, li.first_name, li.middle_name
-      :float left
-      :width 100px
-      input
-        :width 90px
-    li.last_name, li.first_name, li.birth_date
-      :clear left
-      
 #report
-  +squish
 #study
-  +squish
   span.study_title
     :padding-right 16px
     :font-size 20px
@@ -72,10 +49,40 @@ form#new_involvement, form.edit_involvement
   #accrual
     th dtr.withdrawn, td span.withdrawn
       :color #aaa
+    .subject_count
+      :font-weight bold
+      :padding 5px 10px
   #import
-    :display none
+    :width 475px
     .upload
-      +column(24)
+      :margin-top 0
+      +column(24, true)
     .uploads
       +column(24, true)
-
+  #involvement
+    :width 909px
+  #export
+    :width 475px
+form#new_involvement, form.edit_involvement
+  ol
+    :list-style none
+    :margin 0
+    li
+      label
+        :display block
+      label.box
+        :display inline
+  .subject, .demographics, .accrual
+    :float left
+    :width 303px
+  .subject
+    li.case_number, li.mrn, li.first_name, li.middle_name
+      :float left
+      :width 100px
+      input
+        :width 90px
+    li.last_name, li.first_name, li.birth_date
+      :clear left
+  .submit
+    :clear both
+    :text-align right

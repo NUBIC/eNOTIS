@@ -1,0 +1,29 @@
+.upload
+  Import subjects
+  - form_tag(upload_involvements_path, :multipart => true) do
+    = hidden_field_tag("study_id", @study.irb_number.to_s)
+    = file_field_tag(:file)
+    = submit_tag( "Upload" )
+  %br
+  %p= "Uploads need a few essential columns (see the #{link_to 'example file', '/documents/sample.csv'}) for eNOTIS to read them."
+- unless @study.study_uploads.blank?
+  .uploads
+    %table.display
+      %thead
+        %tr
+          %th Importer
+          %th Uploaded
+          %th Original
+          %th Result
+          %th Status
+      %tbody
+        - @study.study_uploads.each do |u|
+          %tr
+            %td= u.user.netid
+            %td
+              %span{:title => u.created_at.to_s(:long)}
+                = time_ago_in_words(u.created_at)
+                ago
+            %td= link_to "Original", u.upload.url
+            %td= link_to("Result", u.result.url) unless u.result_file_name.nil?
+            %td= u.summary
