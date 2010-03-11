@@ -62,7 +62,7 @@ namespace :db do
     desc 'Populate involvements: joins subjects(fake) and studies(random)'
     task :involvements_and_subects => :environment do
       puts "creating involvements and subjects..."
-      events = InvolvementEvent.events += Array.new(20, "Consented") # weight this more heavily towards consent event types
+      events = InvolvementEvent.events.concat(Array.new(20, "Consented")) # weight this more heavily towards consent event types
       300.times do |i|
         involvement = Factory.create( :involvement, :study => random(Study), :subject => Factory.create(:fake_subject),
                                       :gender => Involvement.genders.rand, :ethnicity => Involvement.ethnicities.rand,
@@ -75,7 +75,7 @@ namespace :db do
     desc 'Populate involvements: joins subjects(random) and studies(random)'
     task :involvements => :environment do
       puts "creating extra involvements..."
-      events = InvolvementEvent.events += Array.new(20, "Consented") # weight this more heavily towards consent event types
+      events = InvolvementEvent.events.concat(Array.new(20, "Consented")) # weight this more heavily towards consent event types
       200.times do |i|
         involvement = Factory.create( :involvement, :study => random(Study), :subject => Factory.create(:fake_subject),
                                       :gender => Involvement.genders.rand, :ethnicity => Involvement.ethnicities.rand,
