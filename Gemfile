@@ -1,9 +1,9 @@
 # Basics
-gem "rails", "2.3.4"
-gem "pg"
+gem "rails", "2.3.5"
+gem "pg", '~> 0.9.0'
 gem "haml", '~> 2.2.0'
 gem "rdiscount"
-gem "chriseppstein-compass", '~> 0.8.0'
+gem "compass", '~> 0.8.0'
 gem "capistrano", '~> 2.5.0'
 gem "fastthread"
 
@@ -26,38 +26,33 @@ gem "populator", '>=0.2.5'
 gem "faker", '>=0.3.1'
 
 # Auditing
-gem "airblade-paper_trail", '>=1.1.1'
-gem "yoon-view_trail", '>=0.3.1', :require_as => "view_trail"
+gem "paper_trail", '>=1.1.1'
+gem "samgranieri-view_trail", '>=0.3.1', :require => "view_trail"
 
 # Search
-gem "binarylogic-searchlogic"
+gem "searchlogic"
 
 # Authentication
-gem "bcdatabase", '<1.0.0'
+gem "bcdatabase"#, '<1.0.0'
 gem "bcsec"
 
 # irb magic
-only :development do
+group :development do
   gem "wirble"
   gem "hirb"
 end
 
 # Testing
-only :test, :cucumber, :hudson do
+group :test, :cucumber, :hudson do
   gem "rspec", "~> 1.2.0"
   gem "rspec-rails", "~> 1.2.0"
   gem "cucumber-rails", "~> 0.2.0"
   gem "webrat", "~> 0.6.0"
   gem "database_cleaner", "~> 0.0"
 end
-gem "ruby-debug-base", '>=0.10.3', :only => [:development]
-gem "ruby-debug", '>=0.10.3',      :only => [:development]
 
-gem "ci_reporter", "~> 1.6.0", :only => [:hudson]
+gem "ruby-debug-base", '>=0.10.3', :group => [:development]
+gem "ruby-debug", '>=0.10.3',      :group => [:development]
+gem "ci_reporter", "~> 1.6.0", :group => [:hudson]
 
 source "http://download.bioinformatics.northwestern.edu/gems/"
-
-bundle_path "vendor/bundler_gems" # The default is: vendor/gems
-# bin_path "bin"
-
-disable_system_gems
