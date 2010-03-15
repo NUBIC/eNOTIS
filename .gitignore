@@ -11,7 +11,7 @@ app/stylesheets/.sass-cache/*
 public/stylesheets/compiled/*.css
 rerun.txt
 # Bundler
-.bundle/environment.rb
+.bundle/*
 Gemfile.lock
 
 # db/schema.rb

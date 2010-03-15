@@ -27,7 +27,7 @@ gem "faker", '>=0.3.1'
 
 # Auditing
 gem "paper_trail", '>=1.1.1'
-gem "samgranieri-view_trail", '>=0.3.1', :require => "view_trail"
+gem "view_trail", '>=0.3.1', :require => "view_trail"
 
 # Search
 gem "searchlogic"
