@@ -56,3 +56,4 @@ gem "ruby-debug", '>=0.10.3',      :group => [:development]
 gem "ci_reporter", "~> 1.6.0", :group => [:hudson]
 
 source "http://download.bioinformatics.northwestern.edu/gems/"
+source :rubygems
