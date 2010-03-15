@@ -99,9 +99,8 @@ end
 namespace :gems do
   desc "Create, clear, symlink the shared bundler_gems path and install Bundler cached gems"
   task :bundle, :roles => :app do
-    run "mkdir -p #{release_path}/vendor/bundler_gems/ruby/1.8/ && mkdir -p #{shared_path}/bundler_gems/ruby/1.8/gems/ && rm -rf #{shared_path}/bundler_gems/ruby/1.8/gems/*"
-    run "cd #{release_path} && ln -nfs #{shared_path}/bundler_gems/ruby/1.8/gems #{release_path}/vendor/bundler_gems/ruby/1.8/gems"
-    run "cd #{release_path} && gem bundle --cached --only #{rails_env}"
+    run "cd #{release_path} && bundle install"
+    run "cd #{release_path} && bundle lock"
   end
 end
 
