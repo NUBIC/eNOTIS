@@ -3,6 +3,8 @@ class AuthenticationController < ApplicationController
   auto_session_timeout_actions
   
   skip_before_filter :auto_session_timeout_filter, :only => :index
+  skip_before_filter :verify_authenticity_token, :only => :login
+  
   # Public instance methods (actions)
   def index
     # TODO System status check
