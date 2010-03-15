@@ -18,7 +18,7 @@ module AutoSessionTimeoutHelper
                 function(data)
                 {
                   if (data == 'expired')
-                    window.location.href = '/timeout';
+                    window.location.href = '/logout';
                   if (data == 'warning')
                     $("#session-expire").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }, closeOnClick: false, api: true }).load();
                 });
