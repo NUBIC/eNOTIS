@@ -112,7 +112,7 @@ namespace :web do
   desc "Enable static pages"
   task :static, :roles => :web, :except => { :no_release => true } do
     run "mkdir -p #{current_path}/public/images/static #{current_path}/public/stylesheets/static"
-    run "cp #{current_path}/static/site/* #{current_path}/public/"
+    run "cp #{current_path}/static/site/*.html #{current_path}/public/"
     run "cp #{current_path}/static/site/images/static/* #{current_path}/public/images/static"
     run "cp #{current_path}/static/site/stylesheets/static/* #{current_path}/public/stylesheets/static"
   end
