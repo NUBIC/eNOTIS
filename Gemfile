@@ -46,7 +46,7 @@ end
 group :test, :cucumber, :hudson do
   gem "rspec", "~> 1.2.0"
   gem "rspec-rails", "~> 1.2.0"
-  gem "cucumber-rails", "~> 0.2.0"
+  gem "cucumber-rails", "~> 0.3.0"
   gem "webrat", "~> 0.6.0"
   gem "database_cleaner", "~> 0.0"
 end

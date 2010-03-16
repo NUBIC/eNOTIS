@@ -115,7 +115,7 @@ dependencies:
     - :test
     - :cucumber
     - :hudson
-    version: ~> 0.2.0
+    version: ~> 0.3.0
   ci_reporter: 
     group: 
     - :hudson
@@ -171,10 +171,10 @@ specs:
     version: 2.3.5
 - bcdatabase: 
     version: 1.0.1
-- gemcutter: 
-    version: 0.5.0
 - color: 
     version: 1.4.1
+- gemcutter: 
+    version: 0.5.0
 - treetop: 
     version: 1.4.4
 - view_trail: 
@@ -185,18 +185,18 @@ specs:
     version: 1.2.9
 - paperclip: 
     version: 2.1.2
-- haml: 
-    version: 2.2.21
 - highline: 
     version: 1.5.2
+- haml: 
+    version: 2.2.21
 - acts_as_reportable: 
     version: 1.1.1
 - faker: 
     version: 0.3.1
-- ci_reporter: 
-    version: 1.6.0
 - paper_trail: 
     version: 1.4.0
+- ci_reporter: 
+    version: 1.6.0
 - diff-lcs: 
     version: 1.1.2
 - compass: 
@@ -220,17 +220,17 @@ specs:
 - rubigen: 
     version: 1.5.4
 - cucumber-rails: 
-    version: 0.2.4
+    version: 0.3.0
 - couchrest: 
     version: "0.35"
 - pg: 
     version: 0.9.0
 - composite_primary_keys: 
     version: 2.3.5.1
-- aasm: 
-    version: 2.1.5
 - hoe: 
     version: 2.5.0
+- aasm: 
+    version: 2.1.5
 - hirb: 
     version: 0.3.1
 - libxml-ruby: 
@@ -243,10 +243,10 @@ specs:
     version: 2.0.4
 - bcsec: 
     version: 1.6.1
-- mime-types: 
-    version: "1.16"
 - rubyforge: 
     version: 2.0.4
+- mime-types: 
+    version: "1.16"
 - activemessaging: 
     version: 0.6.1
 - populator: 
@@ -261,18 +261,18 @@ specs:
     version: 1.0.5
 - ruby-net-ldap: 
     version: 0.0.4
-- ruport: 
-    version: 1.6.3
 - searchlogic: 
     version: 2.4.12
-- soap4r: 
-    version: 1.5.8
+- ruport: 
+    version: 1.6.3
 - ruby-debug: 
     version: 0.10.3
-- rspec-rails: 
-    version: 1.2.9
+- soap4r: 
+    version: 1.5.8
 - database_cleaner: 
     version: 0.5.0
+- rspec-rails: 
+    version: 1.2.9
 - rubytree: 
     version: 0.6.2
 - net-scp: 
@@ -291,11 +291,11 @@ specs:
     version: 0.10.3
 - json_pure: 
     version: 1.2.3
+- rails: 
+    version: 2.3.5
 - httpclient: 
     version: 2.1.5.2
 - activerecord: 
-    version: 2.3.5
-- rails: 
     version: 2.3.5
 - fastercsv: 
     version: 1.5.1
@@ -303,7 +303,7 @@ specs:
     version: 1.0.1
 - net-ssh: 
     version: 2.0.20
-hash: d7a203ee05384dd6462121fef2368030f9256c04
+hash: cf1fa73074f66e18ed8ae4f8ac0707a5443d80bd
 sources: 
 - Rubygems: 
     uri: http://download.bioinformatics.northwestern.edu/gems/

@@ -55,7 +55,8 @@ Then /^subject "([^\"]*)" should not be involved with study "([^\"]*)"$/ do |mrn
   Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number)).should be_blank
 end
 
-When /^I upload a file with valid data for 7 subjects$/ do  
+When /^I upload a file with valid data for 7 subjects$/ do
+  click_link("Import")
   attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', 'good.csv'))  
   click_button "Upload"  
 end

@@ -52,7 +52,7 @@ Cucumber::Rails::World.use_transactional_fixtures = true
 require 'database_cleaner'
 DatabaseCleaner.strategy = :truncation
 
-Bundler.require_env RAILS_ENV
+Bundler.require RAILS_ENV
 
 # for stubbing
 require 'spec/stubs/cucumber'
