@@ -100,7 +100,6 @@ namespace :bundler do
   desc "Create, clear, symlink the shared bundler_gems path and install Bundler cached gems"
   task :install, :roles => :app do
     run "cd #{release_path} && /opt/ruby-enterprise-1.8.7-2010.01/bin/bundle install"
-    run "cd #{release_path} && /opt/ruby-enterprise-1.8.7-2010.01/bin/bundle lock"
   end
 end
 
