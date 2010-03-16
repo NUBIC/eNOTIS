@@ -19,7 +19,12 @@ set :use_sudo, false
 ssh_options[:forward_agent] = true
 
 # Version control
-default_run_options[:pty] = true # to get the passphrase prompt from git
+default_run_options[:pty]   = true # to get the passphrase prompt from git
+
+# System Path -- ensure that any capistrano command knows about Ruby Enterprise Edition. 
+# Caveat: Assumes we're using CENTOS with Kerberos
+default_environment['PATH'] = "/opt/ruby-enterprise/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin"
+
 set :scm, "git"
 set :repository, "ssh://code.bioinformatics.northwestern.edu/git/enotis.git"
 
@@ -97,9 +102,13 @@ end
 
 # Bundler
 namespace :bundler do
+  desc "check_paths"
+  task :check_paths, :roles => :app do
+    run "echo $PATH"
+  end
   desc "Create, clear, symlink the shared bundler_gems path and install Bundler cached gems"
   task :install, :roles => :app do
-    run "cd #{release_path} && /opt/ruby-enterprise/bin/bundle install"
+    run "cd #{release_path} && bundle install"
   end
 end
 
