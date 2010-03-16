@@ -107,16 +107,22 @@ after 'deploy:update_code', 'bundler:install'
 
 # Maintenance
 namespace :web do
-  desc "Display staticmatic maintenance page"
-  task :disable, :roles => :web, :except => { :no_release => true } do
-    on_rollback { run "rm -f #{current_path}/public/index.html" }
-    run "rm -f #{current_path}/public/index.html"
+  desc "Enable static pages"
+  task :static, :roles => :web, :except => { :no_release => true } do
     run "mkdir -p #{current_path}/public/images/static #{current_path}/public/stylesheets/static"
-    run "cp #{current_path}/static/site/index_coming_soon.html #{current_path}/public/index.html"
+    run "cp #{current_path}/static/site/* #{current_path}/public/"
     run "cp #{current_path}/static/site/images/static/* #{current_path}/public/images/static"
     run "cp #{current_path}/static/site/stylesheets/static/* #{current_path}/public/stylesheets/static"
   end
-
+  
+  desc "Display static maintenance page"
+  task :disable => :static, :roles => :web, :except => { :no_release => true } do
+    on_rollback { run "rm -f #{current_path}/public/index.html" }
+    run "rm -f #{current_path}/public/index.html"
+    run "cp #{current_path}/public/index_coming_soon.html #{current_path}/public/index.html"
+  end
+  
+  desc "Hide static maintenance page"
   task :enable, :roles => :web, :except => { :no_release => true } do
     run "rm -f #{current_path}/public/index.html"
   end
