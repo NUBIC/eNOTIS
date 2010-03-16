@@ -105,6 +105,8 @@ end
 
 after 'deploy:update_code', 'bundler:install'
 
+before 'web:disable', 'web:static'
+
 # Maintenance
 namespace :web do
   desc "Enable static pages"
@@ -116,7 +118,7 @@ namespace :web do
   end
   
   desc "Display static maintenance page"
-  task :disable => :static, :roles => :web, :except => { :no_release => true } do
+  task :disable, :roles => :web, :except => { :no_release => true } do
     on_rollback { run "rm -f #{current_path}/public/index.html" }
     run "rm -f #{current_path}/public/index.html"
     run "cp #{current_path}/public/index_coming_soon.html #{current_path}/public/index.html"
