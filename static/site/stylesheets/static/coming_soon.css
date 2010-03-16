@@ -140,9 +140,11 @@ body {
   #footer p {
     margin-top: 10px; }
 
-#footer .nulogo, #footer .fsmlogo, #footer .nucatslogo, #footer .nubiclogo {
+#footer .nulogo, #footer .fsmlogo, #footer .nucatslogo, #footer .nubiclogo, #footer .nmhlogo, #footer .nmfflogo {
   float: left;
-  margin: 0 3px; }
+  margin: 3px; }
+#footer .nmhlogo {
+  clear: left; }
 #footer p.version {
   clear: left;
   padding-top: 10px; }
