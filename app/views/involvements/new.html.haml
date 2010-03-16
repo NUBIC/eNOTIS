@@ -2,6 +2,7 @@
   = hidden_field_tag 'study[irb_number]', params[:study]
   .subject
     %h4 Subject
+    %span.hint Case number or all other fields required
     %ol
       %li.case_number
         = f.label      :case_number
@@ -10,6 +11,7 @@
         = render 'subject_fields', :f => builder
   .demographics
     %h4 Demographics
+    %span.hint Gender, ethnicity, race required
     %ol
       %li
         = f.label  :gender, "Gender"
@@ -22,6 +24,7 @@
         = f.select :race, race_options(@involvement.race)
   .accrual
     %h4 Accrual
+    %span.hint One activity required
     %ol
       - f.fields_for :involvement_events do |builder|
         = render 'involvement_event_fields', :f => builder
