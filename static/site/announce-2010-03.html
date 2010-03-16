@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>eNOTIS</title>
+    <link href="stylesheets/static/application.css" media="all" rel="stylesheet" type="text/css"/><link href="stylesheets/static/coming_soon.css" media="all" rel="stylesheet" type="text/css"/>
+    <script language="javascript" src="javascripts/jquery.tools.min.js" type="text/javascript"></script>
+    <script type='text/javascript'>
+      //<![CDATA[
+        $(document).ready(function(){
+        // scrollable
+        $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
+        });
+      //]]>
+    </script>
+  </head>
+  <body>
+    <div id='container'>
+      <div id='header'>
+        <div id='app_name'><img alt="eNOTIS" src="images/static/enotis-swoop-logo.png"/></div>
+      </div>
+      <div id='main'>
+        <style type='text/css'>
+          #main div.panes {
+            height: 750px; }
+        </style>
+        <ul class='tabs'>
+          &nbsp;
+        </ul>
+        <div class='panes'>
+          <div class='items'>
+            <div class='item'>
+              <h2>To members of the clinical research community at Northwestern,</h2>
+              <h3>
+                We are pleased to announce that eNOTIS, a new subject registration system for all IRB approved clinical research at Northwestern University, is now available online at:
+                <a href="https://enotis.nubic.northwestern.edu">enotis.northwestern.edu</a>
+              </h3>
+              <div class='col'>
+                <p>The first phase is for interventional studies, with plans to expand to other areas of clinical research management over the coming months, although any clinical research study approved at Northwestern is eligible to use eNOTIS. All study coordinators, PIs, and department leadership who are have one or more clinical research studies open in eIRB will have access to eNOTIS using a Northwestern netid and password. Training and resources are also available at the eNOTIS website.</p>
+                <p>Developed by the NUCATS Institute's Northwestern University Biomedical Informatics Center (NUBIC), eNOTIS is designed to track participant accrual for research studies under IRB oversight, which includes any study run through NUCATS, NMH, NMFF and RIC. CMH has a separate IRB and currently the bulk of CMH clinical studies are not tracked in eIRB. eNOTIS allows researchers to see if subjects are participating in multiple studies, view accrual information and read general descriptions of studies on a current and historic basis. However, eNOTIS users only have read/write access to specific details on their own studies and subjects.</p>
+              </div>
+              <div class='col'>
+                <h3>eNOTIS Key Facts</h3>
+                <ul>
+                  <li>eNOTIS will become the centralized repository for subject enrollment. This will provide a rich source of data for reporting and ease the management burden on researchers and administrators in tracking approach, consent, participation and completion on all IRB approved studies.</li>
+                  <li>The centralization of this information promotes better collaboration and compliance. This effort is in direct response to investigator requests for a coordinated, cross-institutional system and is part of the larger goal of re-engineering the clinical trial research process. The eNOTIS concept was highly-endorsed by the clinical research process taskforce.</li>
+                  <li>The first phase of eNOTIS is aimed at tracking research participant accrual and completion. eNOTIS offers import mechanisms to allow researches to work with other clinical trial systems, such as drug company studies, with a minimum of additional effort. However, non-anonymous tracking of participants in eNOTIS does require information such as race and ethnicity on participants to satisfy IRB periodic reviews, facilitate clinicaltrials.gov reporting and NIH requirements.</li>
+                  <li>The second phase of eNOTIS will include a centralized patient study calendar. Later phases will address adverse event reporting and financial billing processes.</li>
+                </ul>
+              </div>
+              <div class='col'>
+                <p>Subject safety is at the core of the system: eNOTIS is both HIPAA compliant and recognized by the Northwestern IRB as an approved clinical research system. eNOTIS speeds up clinical trial set-up time by providing access to information about clinical studies through eIRB and to patient medical records through the NU Enterprise Data Warehouse (EDW). This approach means less data entry and will reduce or eliminate the need for manual study tracking adoption.</p>
+                <p>
+                  eNOTIS meets recent FDA guidelines on electronic reporting, addressing a mandate that accrual information be tracked, validated and reported periodically to
+                  <a href="http://clinicaltrials.gov">clinicaltrials.gov.</a>
+                </p>
+                <p>eNOTIS is supported by joint efforts across Northwestern's medical enterprise including the Office of Research, the Dean of Feinberg School of Medicine, the Dean of Research, Feinberg School of Medicine and the NUCATS Institute.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer'>
+        <div class='nulogo'><img alt="Nu logo" src="images/static/nu_logo.gif"/></div>
+        <div class='fsmlogo'><img alt="Fsm logo" src="images/static/fsm-logo.gif"/></div>
+        <div class='nucatslogo'><img alt="Nucats logo" src="images/static/nucats_logo.gif"/></div>
+        <div class='nubiclogo'><img alt="Nubic logo" src="images/static/nubic_logo.gif"/></div>
+        <p class='version'>eNOTIS 0.0.1a &mdash; created by <a href="http://www.nucats.northwestern.edu/centers/nubic">NUBIC</a> for Northwestern University</p>
+      </div>
+    </div>
+  </body>
+</html>

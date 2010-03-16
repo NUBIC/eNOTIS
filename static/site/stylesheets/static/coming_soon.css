@@ -98,6 +98,8 @@ body {
       color: #333; }
     #main div.panes h2 {
       font-weight: bold; }
+    #main div.panes h3 {
+      line-height: 120%; }
     #main div.panes div.items {
       width: 20000em;
       position: absolute; }
