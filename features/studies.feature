@@ -33,3 +33,9 @@ Feature: Manage studies
     And I follow "Import"
     Then I should see "Importer"
     And I should see "Original"
+
+  Scenario: A user will be gracefully redirected to the studies page when accessing a bogus study
+    Given a study "Vitamin E and exertion" with id "STU001249" and irb_status "Approved"
+    When I go to the study page for id "werewolf"
+    Then I should be redirected to the studies page
+  

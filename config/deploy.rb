@@ -113,6 +113,7 @@ namespace :bundler do
 end
 
 after 'deploy:update_code', 'bundler:install'
+after 'deploy:update_code', 'deploy:cleanup'
 
 before 'web:disable', 'web:static'
 
