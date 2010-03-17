@@ -2,30 +2,8 @@
 %html
   %head
     %title eNOTIS
-    %style{:type => 'text/css'}
-      :sass
-        body
-          :background-color #fffaca
-          :margin 0
-          :padding 0
-        .clear
-          :clear both
-        #main
-          a img
-            :border 0
-            :outline 0
-          :background-color #fff
-          :font-family Trebuchet MS, Helvetica, sans-serif
-          :width 500px
-          :margin 0 auto
-          :padding 10px 20px
-          span.slogan
-            :color #006699
-            :display block
-            a
-              :text-decoration none
-  %body
-    #main
+  %body{:style => "background-color: #fffaca; margin: 0; padding: 0;"}
+    #main{:style => "background-color: #fff; font-family: Trebuchet MS, Helvetica, sans-serif; width: 500px; margin: 0 auto; padding: 10px 20px;"}
       = yield
 
 
