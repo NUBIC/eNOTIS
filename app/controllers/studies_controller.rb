@@ -37,12 +37,16 @@ class StudiesController < ApplicationController
 
   def show
     @study = Study.find_by_irb_number(params[:id], :include => {:involvements => :involvement_events})
-    return redirect_with_message(default_path, :notice, "You don't have access to study #{@study.irb_number}") unless @study.has_coordinator?(current_user)
-    @title = @study.irb_number
-    @involvements = @study.involvements
-    @ethnicity_stats = @involvements.count_all(:short_ethnicity)
-    @gender_stats = @involvements.count_all(:short_gender)
-    @race_stats = @involvements.count_all(:short_race)
+    if @study
+      return redirect_with_message(default_path, :notice, "You don't have access to study #{@study.irb_number}") unless @study.has_coordinator?(current_user)
+      @title = @study.irb_number
+      @involvements = @study.involvements
+      @ethnicity_stats = @involvements.count_all(:short_ethnicity)
+      @gender_stats = @involvements.count_all(:short_gender)
+      @race_stats = @involvements.count_all(:short_race)
+    else
+      redirect_to studies_path
+    end
   end
   
   def import
