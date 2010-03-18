@@ -13,7 +13,7 @@ module ApplicationHelper
   
   def status_icon(study)
     # study.may_accrue? ? "O" : "X"
-    study.may_accrue? ? image_tag('/images/status-on.png', :alt => "O") : image_tag('/images/status-off.png', :alt => "X")
+    study.may_accrue? ? image_tag('/images/status-on.png', :alt => "O", :title => study.irb_status) : image_tag('/images/status-off.png', :alt => "X", :title => study.irb_status)
   end
   
   def people_info(arr, title)

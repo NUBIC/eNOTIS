@@ -1,9 +1,6 @@
-.title
-  %span.status
-    = "#{study.status}:"
-  %br
-  %span.study_title= study.title
 .details
+  IRB status:
+  = "#{study.status}"
   %span.research_type= "Research Type: #{study.research_type}" unless study.research_type.blank?
   = people_info(study.cache_principal_investigators, "PI")
   = people_info(study.cache_co_investigators, "Co")

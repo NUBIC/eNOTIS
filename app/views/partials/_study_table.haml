@@ -1,7 +1,8 @@
 %table.display
   %thead
     %tr
-      %th Study
+      %th IRB number
+      %th Name
       %th PI
       %th Accrual
   %tbody  
@@ -16,5 +17,6 @@
             = link_to image_tag('/images/icons/information.png'), "#", :rel => "#study_information", :class => 'study_information'
             .study_information
               = render :partial => 'partials/study_info', :locals => {:study => study}
+        %td= study.name
         %td= study.pi_last_name
         %td= study.accrual || 0

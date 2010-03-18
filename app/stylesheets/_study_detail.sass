@@ -1,7 +1,7 @@
 #report
 #study
-  span.study_title
-    :padding-right 16px
+  #study_title
+    +column(48, true)
     :font-size 20px
     a
       :text-decoration none
@@ -11,6 +11,12 @@
         :background-color #eee
     a.open
       :background #eee url('/images/icons/toggle-up.png') 99% 50% no-repeat
+    :white-space nowrap
+    :text-overflow ellipsis
+    :overflow hidden
+    span.name
+      :font-size 16px
+      :color #666
   #study_information
     +column(46, true)
     +squeeze
@@ -31,27 +37,28 @@
         :width 250px
         :height 150px
         :float left
-  #actions
-    :font-size 20px
-    :float right
-    a
-      :text-decoration none
-      :margin-left 10px
-    a.add
-      :padding-left 20px
-      :background transparent url('/images/icons/add.png') no-repeat center left    
-    a.import
-      :padding-left 20px
-      :background transparent url('/images/icons/table_add.png') no-repeat center left
-    a.export
-      :padding-left 20px
-      :background transparent url('/images/icons/table_save.png') no-repeat center left    
   #accrual
-    th dtr.withdrawn, td span.withdrawn
-      :color #aaa
     .subject_count
+      :float left
       :font-weight bold
       :padding 5px 10px
+    #actions
+      :font-size 20px
+      :float right
+      a
+        :text-decoration none
+        :margin-left 10px
+      a.add
+        :padding-left 20px
+        :background transparent url('/images/icons/add.png') no-repeat center left    
+      a.import
+        :padding-left 20px
+        :background transparent url('/images/icons/table_add.png') no-repeat center left
+      a.export
+        :padding-left 20px
+        :background transparent url('/images/icons/table_save.png') no-repeat center left        
+    th dtr.withdrawn, td span.withdrawn
+      :color #aaa  
   #import
     :width 475px
     .upload

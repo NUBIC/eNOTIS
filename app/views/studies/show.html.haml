@@ -13,15 +13,17 @@
     });
 
 #study
-  %span.study_title= link_to "#{status_icon @study} #{@study.irb_number || "(no id)"}", "#", :rel => "#study_information"
-  #actions
-    = link_to("Add", new_involvement_path(:study => @study), :rel => '#involvement', :class => 'add')
-    = link_to("Import", import_study_path, :rel => "#import", :class => 'import')
-    = link_to("Export", new_report_path(:study => @study), :rel => '#export', :class => 'export') unless @involvements.empty?
+  #study_title
+    = link_to "#{status_icon @study} #{@study.irb_number || "(no id)"}", "#", :rel => "#study_information"
+    %span.name{:title => @study.name}= @study.name
   #study_information
     = render :partial => 'partials/study_info', :locals => {:study => @study}
   #accrual
     .subject_count= "Subjects (#{@involvements.size})"
+    #actions
+      = link_to("Add", new_involvement_path(:study => @study), :rel => '#involvement', :class => 'add')
+      = link_to("Import", import_study_path, :rel => "#import", :class => 'import')
+      = link_to("Export", new_report_path(:study => @study), :rel => '#export', :class => 'export') unless @involvements.empty?
     %table.display
       %thead
         %tr
