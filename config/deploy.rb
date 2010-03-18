@@ -114,6 +114,7 @@ end
 
 after 'deploy:update_code', 'bundler:install'
 after 'deploy:update_code', 'deploy:cleanup'
+after 'deploy:update_code', 'web:static'
 
 before 'web:disable', 'web:static'
 
