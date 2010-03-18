@@ -16,6 +16,12 @@ module ApplicationHelper
     study.may_accrue? ? image_tag('/images/status-on.png', :alt => "O", :title => study.irb_status) : image_tag('/images/status-off.png', :alt => "X", :title => study.irb_status)
   end
   
+  def start_end_info(study)
+    [ study.approved_date.blank? ? nil : study.approved_date.strftime("Approved: %b %d, %Y"),
+      study.expiration_date.blank? ? nil : study.expiration_date.strftime("Expiration: %b %d, %Y"),
+      study.closed_or_completed_date.blank? ? nil : study.closed_or_completed_date.strftime("Closed/completed: %b %d, %Y") ].compact.join("<br/>")
+  end
+  
   def people_info(arr, title)
     people = arr.compact.map do |p|
       (p["first_name"].blank? or p["last_name"].blank? or p["email"].blank?) ? nil : "#{p["first_name"]} #{p["last_name"]} " + mail_to(p["email"])

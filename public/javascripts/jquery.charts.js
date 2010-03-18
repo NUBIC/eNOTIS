@@ -2,7 +2,7 @@ function pieChart(location, title, data){
   new Highcharts.Chart({
 		chart: {
 			renderTo: location,
-			margin: [25,100,25,0]
+			margin: [25,125,25,0]
 		},
 		title: {
 			text: title
