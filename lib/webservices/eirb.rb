@@ -7,7 +7,7 @@ class Eirb
                        :expandMultiValueCells => true}.freeze
 
   STORED_SEARCHES = [# {:name => "eNOTIS Person Details", :ext => "user"}, # not used currently
-   # {:name => "eNOTIS Study Access", :ext => "access_list"},
+   {:name => "eNOTIS Study Access", :ext => "access_list"},
    # {:name => "eNOTIS Study Accrual", :ext => "accrual"},
    # {:name => "eNOTIS Study Accrual PR", :ext => "periodic_review_accrual"},
    # {:name => "eNOTIS Study Authorized Access", :ext => "authorized_access"},
@@ -19,8 +19,8 @@ class Eirb
     {:name => "eNOTIS Study Coordinators", :ext => "coordinators"},
    # {:name => "eNOTIS Study Key Research Personnel", :ext => "key_personnel"},
     {:name => "eNOTIS Study Principal Investigator", :ext => "principal_investigators"},
-   # {:name => "eNOTIS Study Status", :ext => "status"},
-   # {:name => "eNOTIS Study Subject Populations", :ext => "populations"}
+   {:name => "eNOTIS Study Status", :ext => "status"},
+   {:name => "eNOTIS Study Subject Populations", :ext => "populations"}
    ].freeze
 
   cattr_accessor :eirb_adapter
