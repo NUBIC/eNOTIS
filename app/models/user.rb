@@ -29,6 +29,15 @@ class User < ActiveRecord::Base
     nil
   end
   
+  # Returns netids absent from the User model
+  # 
+  # @param [Array] netids to check
+  # @return [Array] netids absent from the User model
+  def self.absent_netids(arr)
+    arr = arr.uniq.compact
+    arr - self.find_all_by_netid(arr).map(&:netid)
+  end
+  
   # Public instance methods
   def netid=(value)
     write_attribute :netid, (value ? value.downcase : nil)

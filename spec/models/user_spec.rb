@@ -14,4 +14,11 @@ describe User do
     Bcsec::NetidAuthenticator.should_receive(:valid_credentials?).with('ord312', 'airport').and_return(true)
     User.authenticate('ord312','airport').should be_true
   end
+  
+  it "should find netids that are absent from the User model" do
+    Factory(:user, :netid => "foo")
+    User.absent_netids(["foo"]).should == []
+    User.absent_netids(%w(foo bar)).should == ["bar"]
+    User.absent_netids(%w(bar baz)).should == ["bar", "baz"]
+  end
 end
