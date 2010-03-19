@@ -42,6 +42,10 @@ group :development do
   gem "hirb"
 end
 
+# Resque
+gem 'redis' , '0.1.2'
+gem 'resque', '~>1.6.0'
+
 # Testing
 group :test, :cucumber, :hudson do
   gem "rspec", "~> 1.2.0"
