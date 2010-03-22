@@ -26,7 +26,7 @@ class AuthenticationController < ApplicationController
       redirect_back_or_default(default_path)
       flash[:notice] = "Logged in successfully as #{current_user.netid}"
     else
-      note_failed_signin
+      note_failed_signin(user)
       @netid = params[:netid]
       # @status = system_status
       render :action => 'index'
@@ -53,9 +53,14 @@ class AuthenticationController < ApplicationController
   # Protected instance methods
   protected
   # Track failed login attempts
-  def note_failed_signin
-    flash[:notice] = "Couldn't log you in as '#{params[:netid]}'<br/>Visit <a href='http://password.northwestern.edu'>password.northwestern.edu</a> for password help."
-    logger.warn "Failed login for '#{params[:netid]}' from #{request.remote_ip} at #{Time.now.utc}"
+  def note_failed_signin(user)
+    if user.nil?
+      flash[:notice] = "Couldn't log you in as '#{params[:netid]}'<br/>Visit <a href='http://password.northwestern.edu'>password.northwestern.edu</a> for password help."
+      logger.warn "Failed login for '#{params[:netid]}' from #{request.remote_ip} at #{Time.now.utc}"
+    else
+      flash[:notice] = "You are not currently associated with any IRB-approved studies as a PI, co-Investigator, or Coordinator. Please contact the eIRB."
+      logger.warn "Failed login, user doesn't exist for '#{params[:netid]}' from #{request.remote_ip} at #{Time.now.utc}"
+    end
   end
   
 end
