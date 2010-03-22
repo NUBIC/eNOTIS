@@ -24,20 +24,20 @@ $(document).ready(function() {
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
     
-    //// involvement overlay
+    // involvement overlay
     $("a[rel=#involvement]").overlay({
      onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
 
-    //// export overlay
+    // export overlay
     $("a[rel=#export]").overlay({
      onBeforeLoad: function(){ $("#export .wrap").load(this.getTrigger().attr("href"), "format=js"); },
      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
     
     // study information
-    $("#study a.study_information").click(function(){
+    $("#study a[rel=#study_information]").click(function(){
       $('#study_information').slideToggle();
       $(this).toggleClass('open');
       return false;
