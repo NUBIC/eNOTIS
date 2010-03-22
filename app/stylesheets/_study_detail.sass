@@ -5,12 +5,15 @@
     :font-size 20px
     a
       :text-decoration none
-      :background transparent url('/images/icons/toggle-down.png') 99% 50% no-repeat
-      :padding 2px 16px 3px 5px
+      :background transparent url('/images/icons/toggle.png') 97% -2px no-repeat
+      :padding 0 28px 3px 5px
+      :height 30px
+      +rounded_box(#d0d0d0)
       &:hover
-        :background-color #eee
+        :background #dfdfdf url('/images/icons/toggle.png') 97% -32px no-repeat
     a.open
-      :background #eee url('/images/icons/toggle-up.png') 99% 50% no-repeat
+      +rounded_top_box(#dfdfdf)
+      :background #dfdfdf url('/images/icons/toggle.png') 97% -62px no-repeat
     :white-space nowrap
     :text-overflow ellipsis
     :overflow hidden
@@ -21,7 +24,9 @@
     +column(46, true)
     +squeeze
     :padding-top 10px
-    :background #eee
+    :padding-bottom 10px
+    :margin-bottom 5px
+    :background #dfdfdf
     :font-size 12px
     span.study_title
       :font-size 16px
