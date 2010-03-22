@@ -29,7 +29,7 @@ class Study < ActiveRecord::Base
       cache_connect.get(study_id)
     rescue
       # TODO remove this when old method name access is depricated
-      {:irb_number => "Not Found", :principal_investigators => [{}], :coordinators=> [{}], :co_investigators => [{}]} # fail semi-silently, the doc was not found for some reason
+      {:accrual_goal => "", :irb_number => "Not Found", :principal_investigators => [{}], :coordinators=> [{}], :co_investigators => [{}]} # fail semi-silently, the doc was not found for some reason
     end
   end
 
@@ -111,7 +111,7 @@ class Study < ActiveRecord::Base
   ######################
     # pi_last_name is being used, others (sc_email, etc.) have been moved to application_helper.rb's people_info method - yoon
     def pi_last_name
-      cache_principal_investigators.first["last_name"] || "missing"
+      cache_principal_investigators.first["last_name"] || ""
     end
 
     def phase
@@ -120,6 +120,10 @@ class Study < ActiveRecord::Base
 
     def status
       irb_status
+    end
+    
+    def accrual_goal
+      cache_accrual_goal || ""
     end
   ##########################
   # end methods to depricate

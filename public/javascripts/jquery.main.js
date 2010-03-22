@@ -11,7 +11,7 @@ $(document).ready(function() {
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
   });
   // datatables
-  $("#my_studies .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null, null]});
+  $("#my_studies .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null, null, null, null]});
 	
 	// studies show
     // dataTable
