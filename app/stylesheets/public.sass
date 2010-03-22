@@ -3,17 +3,24 @@
 
 body
   :background-image url('/images/public-fade-bg.png')
+#container
+  :position relative
 #environment
   :position absolute
   :background-color= !development_color
   :font-size 18px
   :padding 0 5px
+  :top 0
+  :left 0
   &.staging
     +rounded_bottom_box(!flash_border_color)
 #login
-  :margin-top 10px
+  :margin-top 5px
   :float right
   :text-align right
+  #netid, #password
+    :width 150px
+    :padding 0
 #main
   :background-position 0 0
   ul.tabs
