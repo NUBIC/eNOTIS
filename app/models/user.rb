@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
     # logger.debug("RAILS_ENV=#{RAILS_ENV}")
     # bypass netid authentication in development
     return u if u && ((%w(development training).include? RAILS_ENV) or NetidAuthenticator.valid_credentials?(netid, password))
-    return false if u.nil? && NetidAuthenticator.valid_credentials?(netid, password)
+    return false if u.nil? && ((%w(development training).include? RAILS_ENV) or NetidAuthenticator.valid_credentials?(netid, password))
     nil
   end
   

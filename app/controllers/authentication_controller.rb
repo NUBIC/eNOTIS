@@ -58,7 +58,7 @@ class AuthenticationController < ApplicationController
       flash[:notice] = "Couldn't log you in as '#{params[:netid]}'<br/>Visit <a href='http://password.northwestern.edu'>password.northwestern.edu</a> for password help."
       logger.warn "Failed login for '#{params[:netid]}' from #{request.remote_ip} at #{Time.now.utc}"
     else
-      flash[:notice] = "You are not currently associated with any IRB-approved studies as a PI, co-Investigator, or Coordinator. Please contact the eIRB."
+      flash[:notice] = "You are not currently associated with any IRB-approved studies as a PI, Co-Investigator, or Coordinator."
       logger.warn "Failed login, user doesn't exist for '#{params[:netid]}' from #{request.remote_ip} at #{Time.now.utc}"
     end
   end
