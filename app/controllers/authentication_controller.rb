@@ -11,6 +11,8 @@ class AuthenticationController < ApplicationController
     @filters = self.class.filter_chain
     @title = "measure, see, and improve your research"
     @studies_count = Study.count
+    @users_count = Activity.count(:whodiddit, :distinct => true) # :conditions => ["created_at >= ?", 1.month.ago])
+    @accrual_count = Involvement.count # (:conditions => ["updated_at >= ?", 1.month.ago])
     # @status = system_status
   end
   
