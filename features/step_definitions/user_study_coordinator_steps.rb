@@ -13,6 +13,10 @@ Given /^a user "([^\"]*)" with password "([^\"]*)"(?: on study "([^\"]*))?"$/ do
   Given %("#{netid}" is on study "#{irb_number}") unless irb_number.blank?
 end
 
+Given /^a nonuser "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|
+  User.stub!(:authenticate).and_return{|n,p| p == password ? false : nil }
+end
+
 Given /^"([^\"]*)" is on study "([^\"]*)"$/ do |netid, irb_number|
   #user
   user = User.find_by_netid(netid)

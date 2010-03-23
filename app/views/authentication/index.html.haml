@@ -26,7 +26,8 @@
         = image_tag 'measure.jpg'
         %h4 Developed in collaboration with the clinical research community
         %h4 Add subjects to your study and track key clinical events: consent, withdrawal, completion
-        %h3= "#{number_with_delimiter @studies_count} studies (and counting)"
+        %h3= "#{number_with_delimiter @studies_count} studies with #{number_with_delimiter @accrual_count} accruals"
+        %h3= "#{number_with_delimiter @users_count} active users"
       .col
         %h3 See
         = image_tag 'see.jpg'

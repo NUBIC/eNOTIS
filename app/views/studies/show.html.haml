@@ -1,5 +1,5 @@
 - content_for :head do
-  = javascript_include_tag 'highcharts/highcharts', 'jquery.charts'
+  = javascript_include_tag 'highcharts/highcharts', 'highcharts/excanvas.compiled', 'jquery.charts'
   %script{:type => "text/javascript"}
     $(document).ready(function(){
     - if @involvements.empty?

@@ -11,7 +11,7 @@ $(document).ready(function() {
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
   });
   // datatables
-  $("#my_studies .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null, null]});
+  $("#my_studies .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null, null, null, null]});
 	
 	// studies show
     // dataTable
@@ -24,20 +24,23 @@ $(document).ready(function() {
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
     
-    //// involvement overlay
+    // involvement overlay
     $("a[rel=#involvement]").overlay({
      onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
 
-    //// export overlay
+    // export overlay
     $("a[rel=#export]").overlay({
      onBeforeLoad: function(){ $("#export .wrap").load(this.getTrigger().attr("href"), "format=js"); },
      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
     
     // study information
-    $("#study a.study_information").click(function(){
+    if(!jQuery.support.cssFloat){
+     $("#study a[rel=#study_information]").corner("top").css("height", "28px"); 
+    }
+    $("#study a[rel=#study_information]").click(function(){
       $('#study_information').slideToggle();
       $(this).toggleClass('open');
       return false;

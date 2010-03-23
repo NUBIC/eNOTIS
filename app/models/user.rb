@@ -20,12 +20,19 @@ class User < ActiveRecord::Base
   # attributes from eirb, not on this list or in db: fax_number, eirb_create_date
   
   # Public class methods
+  
+  # Authenticates a user by netid and password
+  # 
+  # @param [String] netid Northwestern netID for user
+  # @param [String] password password for user
+  # @return [User, false, nil] User if user exists and in dev mode or user is authenticated, false if user doesn't exist and is authenticated, nil if not authenticated
   def self.authenticate(netid, password)
     return nil if netid.blank? || password.blank?
     u = find_by_netid(netid.downcase)
     # logger.debug("RAILS_ENV=#{RAILS_ENV}")
     # bypass netid authentication in development
     return u if u && ((%w(development training).include? RAILS_ENV) or NetidAuthenticator.valid_credentials?(netid, password))
+    return false if u.nil? && ((%w(development training).include? RAILS_ENV) or NetidAuthenticator.valid_credentials?(netid, password))
     nil
   end
   

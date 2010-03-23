@@ -1,4 +1,15 @@
-- %w(mrn last_name first_name middle_name birth_date).each do |attr|
-  %li{:class => attr}
-    = f.label attr
-    = f.text_field attr
+%li{:class => "mrn"}
+  = f.label :mrn, "MRN"
+  = f.text_field :mrn
+%li{:class => "last_name"}
+  = f.label :last_name
+  = f.text_field :last_name
+%li{:class => "first_name"}
+  = f.label :first_name
+  = f.text_field :first_name
+%li{:class => "middle_name"}
+  = f.label :middle_name, "Middle (optional)"
+  = f.text_field :middle_name
+%li{:class => "birth_date"}
+  = f.label :birth_date
+  = f.text_field :birth_date

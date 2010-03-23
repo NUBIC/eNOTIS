@@ -5,6 +5,7 @@
       %th Name
       %th PI
       %th Accrual
+      %th Goal
   %tbody  
     - studies.each do |study|
       %tr
@@ -20,3 +21,4 @@
         %td= study.name
         %td= study.pi_last_name
         %td= study.accrual || 0
+        %td= study.accrual_goal

@@ -14,7 +14,7 @@ function pieChart(location, title, data){
 		},
 		tooltip: {
 			formatter: function() {
-				return '<b>'+ this.point.name +'</b>: '+ this.y;
+				return this.point.name.substring(0,7) +': '+ this.y; // truncate tooltips to fit
 			}
 		},
 		plotOptions: {

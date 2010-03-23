@@ -33,7 +33,7 @@ module ControllerAuthentication
     # Redirect as appropriate when an access request fails. The default action is to redirect to the login screen. Override this method in your controllers if you want to have special behavior in case the user is not authorized to access the requested action.  For example, a popup window might simply close itself.
     def access_denied
       store_location
-      flash[:notice] = "You are not authorized on any studies. Please contact the eIRB" if logged_in?
+      flash[:notice] = "You are not currently associated with any IRB-approved studies as a PI, Co-Investigator, or Coordinator." if logged_in?
       redirect_to login_path
     end
 

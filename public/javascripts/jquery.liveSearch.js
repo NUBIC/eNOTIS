@@ -94,40 +94,22 @@ jQuery.fn.liveSearch = function (conf) {
 					if (this.timer) {
 						clearTimeout(this.timer);
 					}
-
-					this.timer = setTimeout(function () {
-						jQuery.get(config.url + q, function (data) {
-							input.removeClass(config.loadingClass);
-
-							if (data.length && q.length > 2) {
-								// var tmpOffset	= input.offset();
-								// var inputDim	= {
-								// 	left:		tmpOffset.left, 
-								// 	top:		tmpOffset.top, 
-								// 	width:		input.outerWidth(), 
-								// 	height:		input.outerHeight()
-								// };
-                // 
-								// inputDim.topNHeight	= inputDim.top + inputDim.height;
-								// inputDim.widthNShift	= inputDim.width - resultsShift;
-                //
-								// liveSearch.css({
-								// 	position:	'absolute', 
-								// 	left:		inputDim.left + 'px', 
-								// 	top:		inputDim.topNHeight + 'px',
-								// 	width:		inputDim.widthNShift + 'px'
-								// });
-
-								liveSearch.html(data).filter(":hidden").slideDown(config.duration);
-							}
-							else {
-								liveSearch.filter(":visible").slideUp(config.duration, function () {
-									config.onSlideUp();
-								});
-							}
-						});
-					}, config.typeDelay);
-
+          if(q.length > 2){
+  					this.timer = setTimeout(function () {
+  						jQuery.get(config.url + q, function (data) {
+  							input.removeClass(config.loadingClass);
+  							if (data.length) {
+  								liveSearch.html(data).filter(":hidden").slideDown(config.duration);
+  							}
+  							else {
+  								liveSearch.filter(":visible").slideUp(config.duration, function(){ config.onSlideUp(); });
+  							}
+  						});
+  					}, config.typeDelay);
+          }
+          else {
+            liveSearch.filter(":visible").slideUp(config.duration, function(){ config.onSlideUp(); });
+          }
 					this.lastValue = this.value;
 				}
 			});
