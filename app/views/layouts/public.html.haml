@@ -3,8 +3,8 @@
 %html
   %head
     %title= "eNOTIS"
-    = stylesheet_link_tag @view_stylesheets ||= "compiled/public"
-    = javascript_include_tag @view_javascripts ||= "jquery.tools.min.js"
+    = stylesheet_link_tag "compiled/public"
+    = javascript_include_tag "jquery.tools.min.js"
     = yield :head
   %body
     #container
