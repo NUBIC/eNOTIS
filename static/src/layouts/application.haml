@@ -8,7 +8,10 @@
       $(document).ready(function(){
       // scrollable
       $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
+      // overlay
+      $("a[rel=#database-language]").overlay({expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}});
       });
+      
   %body
     #container
       #header
