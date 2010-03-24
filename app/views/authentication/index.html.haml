@@ -5,6 +5,7 @@
     $("#netid").focus();
     // overlay
     $("a[rel=#help]").overlay({onBeforeLoad: function(){var wrap = this.getContent().find(".contentWrap"); wrap.load(this.getTrigger().attr("href"), "format=js");}, expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}});
+    $("a[rel=#database-language]").overlay({expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}});
     // scrollable
     $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
     // flash (messages)
@@ -54,6 +55,7 @@
   -#system_status{:class => @status}
     .heading System status
     %p= ApplicationController::SYSTEM_STATUSES[@status.to_sym]
-
-
+#database-language.overlay
+  %h3 IRB consent template language, "Database" section
+  %p We are committed to respecting your privacy and keeping your personal identifiable information confidential. When choosing to take part in this study, you are giving us permission to add your identifiable information to databases and registries that may be accessed by other researchers and administrators at Northwestern University. Identifiable information includes your name, address, date of birth, phone number, medical record number, and social security number. Your information may then be used to track your participation in all research at Northwestern University. Also, your information without identifiers may be used to create reports for quality control purposes and may be sent to government databases such as ClinicalTrials.gov, a database that contains information on research that is conducted in the United States and around the world.
 
