@@ -8,6 +8,7 @@ namespace :eirb do
   task :study_import do
     `script/runner 'Study.update_from_cache'` 
   end
+  
   desc "nightly_validation"
   task :nightly_validation=>:environment do
     require 'webservices/eirb'

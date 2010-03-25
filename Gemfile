@@ -43,7 +43,7 @@ group :development do
 end
 
 # Resque
-gem 'redis' , '0.1.2'
+gem 'redis' , '0.2.0'
 gem 'resque', '~>1.6.0'
 
 # Testing
