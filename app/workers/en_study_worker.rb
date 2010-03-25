@@ -1,6 +1,6 @@
 class ENStudyWorker
   @queue = :validator
-  def self.perform(irb_number, irb_status)
+  def self.perform(irb_number)
     Eirb.connect
     # puts Eirb.find_status({:irb_number=>irb_number})
     

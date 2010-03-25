@@ -143,7 +143,7 @@ dependencies:
   redis: 
     group: 
     - :default
-    version: = 0.1.2
+    version: = 0.2.0
   ruby-debug-base: 
     group: 
     - :development
@@ -167,161 +167,161 @@ dependencies:
 specs: 
 - rake: 
     version: 0.8.7
-- stomp: 
-    version: 1.1.5
-- activesupport: 
-    version: 2.3.5
-- wddx: 
-    version: 0.4.1
-- capistrano: 
-    version: 2.5.18
-- actionmailer: 
-    version: 2.3.5
-- bcdatabase: 
-    version: 1.0.1
-- gemcutter: 
-    version: 0.5.0
-- color: 
-    version: 1.4.1
-- treetop: 
-    version: 1.4.4
-- view_trail: 
-    version: 0.3.1
-- actionpack: 
-    version: 2.3.5
-- rspec: 
-    version: 1.2.9
-- paperclip: 
-    version: 2.1.2
-- haml: 
-    version: 2.2.21
-- highline: 
-    version: 1.5.2
-- faker: 
-    version: 0.3.1
-- acts_as_reportable: 
-    version: 1.1.1
-- paper_trail: 
-    version: 1.4.0
-- ci_reporter: 
-    version: 1.6.0
-- resque: 
-    version: 1.6.0
-- diff-lcs: 
-    version: 1.1.2
-- compass: 
-    version: 0.8.17
-- nokogiri: 
-    version: 1.4.1
-- builder: 
-    version: 2.1.2
-- sinatra: 
-    version: 0.9.6
-- schema_qualified_tables: 
-    version: 1.0.0
-- pdf-writer: 
-    version: 1.1.8
-- rdiscount: 
-    version: 1.6.3
-- chronic: 
-    version: 0.2.3
-- rack: 
-    version: 1.0.1
-- polyglot: 
-    version: 0.3.0
-- rubigen: 
-    version: 1.5.4
-- cucumber-rails: 
-    version: 0.3.0
-- couchrest: 
-    version: "0.35"
-- pg: 
-    version: 0.9.0
-- composite_primary_keys: 
-    version: 2.3.5.1
-- hoe: 
-    version: 2.5.0
 - aasm: 
     version: 2.1.5
-- hirb: 
-    version: 0.3.1
-- libxml-ruby: 
-    version: 1.1.3
-- redis: 
-    version: 0.1.2
-- factory_girl: 
-    version: 1.2.3
-- webrat: 
-    version: 0.6.0
-- vegas: 
-    version: 0.1.5
-- net-sftp: 
-    version: 2.0.4
-- bcsec: 
-    version: 1.6.1
-- rubyforge: 
-    version: 2.0.4
-- mime-types: 
-    version: "1.16"
+- activesupport: 
+    version: 2.3.5
+- rack: 
+    version: 1.0.1
+- actionpack: 
+    version: 2.3.5
+- actionmailer: 
+    version: 2.3.5
+- rubigen: 
+    version: 1.5.4
 - activemessaging: 
     version: 0.6.1
-- populator: 
-    version: 0.2.5
-- redis-namespace: 
-    version: 0.3.0
-- linecache: 
-    version: "0.43"
-- rest-client: 
-    version: 1.4.2
-- columnize: 
-    version: 0.3.1
-- term-ansicolor: 
-    version: 1.0.5
-- ruby-net-ldap: 
-    version: 0.0.4
-- searchlogic: 
-    version: 2.4.12
-- ruport: 
-    version: 1.6.3
-- soap4r: 
-    version: 1.5.8
-- ruby-debug: 
-    version: 0.10.3
-- database_cleaner: 
-    version: 0.5.0
-- rspec-rails: 
-    version: 1.2.9
-- rubytree: 
-    version: 0.6.2
-- wirble: 
-    version: 0.1.3
-- cucumber: 
-    version: 0.6.3
-- net-scp: 
-    version: 1.0.2
-- transaction-simple: 
-    version: 1.4.0
-- fastthread: 
-    version: 1.0.7
-- ruby-debug-base: 
-    version: 0.10.3
-- activeresource: 
-    version: 2.3.5
-- json_pure: 
-    version: 1.2.3
-- net-ssh: 
-    version: 2.0.20
-- net-ssh-gateway: 
-    version: 1.0.1
-- fastercsv: 
-    version: 1.5.3
-- rails: 
-    version: 2.3.5
 - activerecord: 
     version: 2.3.5
+- activeresource: 
+    version: 2.3.5
+- fastercsv: 
+    version: 1.5.3
+- color: 
+    version: 1.4.1
+- json_pure: 
+    version: 1.2.3
+- gemcutter: 
+    version: 0.5.0
+- rubyforge: 
+    version: 2.0.4
+- hoe: 
+    version: 2.5.0
+- transaction-simple: 
+    version: 1.4.0
+- pdf-writer: 
+    version: 1.1.8
+- ruport: 
+    version: 1.6.3
+- acts_as_reportable: 
+    version: 1.1.1
+- highline: 
+    version: 1.5.2
+- bcdatabase: 
+    version: 1.0.1
+- composite_primary_keys: 
+    version: 2.3.5.1
+- ruby-net-ldap: 
+    version: 0.0.4
+- rubytree: 
+    version: 0.6.2
+- schema_qualified_tables: 
+    version: 1.0.0
+- wddx: 
+    version: 0.4.1
+- bcsec: 
+    version: 1.6.2
+- builder: 
+    version: 2.1.2
+- net-ssh: 
+    version: 2.0.21
+- net-scp: 
+    version: 1.0.2
+- net-sftp: 
+    version: 2.0.4
+- net-ssh-gateway: 
+    version: 1.0.1
+- capistrano: 
+    version: 2.5.18
+- chronic: 
+    version: 0.2.3
+- ci_reporter: 
+    version: 1.6.0
+- columnize: 
+    version: 0.3.1
+- haml: 
+    version: 2.2.22
+- compass: 
+    version: 0.8.17
+- mime-types: 
+    version: "1.16"
+- rest-client: 
+    version: 1.4.2
+- couchrest: 
+    version: "0.35"
+- diff-lcs: 
+    version: 1.1.2
+- polyglot: 
+    version: 0.3.0
+- term-ansicolor: 
+    version: 1.0.5
+- treetop: 
+    version: 1.4.4
+- cucumber: 
+    version: 0.6.3
+- cucumber-rails: 
+    version: 0.3.0
+- database_cleaner: 
+    version: 0.5.0
+- factory_girl: 
+    version: 1.2.3
+- faker: 
+    version: 0.3.1
+- fastthread: 
+    version: 1.0.7
+- hirb: 
+    version: 0.3.1
 - httpclient: 
     version: 2.1.5.2
-hash: 02685cb5010e59931e2921f920b660b07ddb0900
+- libxml-ruby: 
+    version: 1.1.3
+- linecache: 
+    version: "0.43"
+- nokogiri: 
+    version: 1.4.1
+- paper_trail: 
+    version: 1.5.0
+- paperclip: 
+    version: 2.1.2
+- pg: 
+    version: 0.9.0
+- populator: 
+    version: 0.2.5
+- rails: 
+    version: 2.3.5
+- rdiscount: 
+    version: 1.6.3
+- redis: 
+    version: 0.2.0
+- redis-namespace: 
+    version: 0.3.0
+- sinatra: 
+    version: "1.0"
+- vegas: 
+    version: 0.1.5
+- resque: 
+    version: 1.6.0
+- rspec: 
+    version: 1.2.9
+- rspec-rails: 
+    version: 1.2.9
+- ruby-debug-base: 
+    version: 0.10.3
+- ruby-debug: 
+    version: 0.10.3
+- searchlogic: 
+    version: 2.4.12
+- soap4r: 
+    version: 1.5.8
+- stomp: 
+    version: 1.1.5
+- view_trail: 
+    version: 0.3.1
+- webrat: 
+    version: 0.6.0
+- wirble: 
+    version: 0.1.3
+hash: abdc44b6965e8cdb4d5e2e6b56236f30fd7322d0
 sources: 
 - Rubygems: 
     uri: http://download.bioinformatics.northwestern.edu/gems/
