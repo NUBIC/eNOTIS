@@ -108,7 +108,7 @@ body {
         display: inline;
         float: left;
         margin-right: 0;
-        width: 995px; }
+        width: 955px; }
         #main div.panes div.items div.item img {
           float: left;
           padding-right: 20px; }
@@ -149,5 +149,28 @@ body {
   clear: left;
   padding-top: 10px; }
 
-#help {
+.tooltip, .overlay {
+  display: none;
+  z-index: 999;
+  background-color: #fff;
+  border: 1px solid #666;
+  padding: 10px;
+  color: #333;
+  -moz-box-shadow: 0 0 90px 5px #000;
+  -webkit-box-shadow: 0 0 90px #000; }
+
+.overlay {
+  z-index: 1000; }
+
+.overlay .close {
+  background-image: url(/images/static/apple-close.png);
+  cursor: pointer;
+  position: absolute;
+  right: -12px;
+  top: -12px;
+  height: 28px;
+  width: 28px; }
+
+#database-language {
+  margin-top: 250px;
   width: 675px; }

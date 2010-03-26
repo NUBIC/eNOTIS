@@ -30,7 +30,7 @@ class StudiesController < ApplicationController
                               :order => order,
                               :conditions => [query_cols.map{|x| "#{x} LIKE ?"}.join(" OR "), q,q])
         results = studies.map do |study|
-          [ image_tag("/images/status-#{study.may_accrue? ? 'on' : 'off'}.png") + link_to (study_path(study), study.irb_number, :title => study.title),
+          [ image_tag("/images/status-#{study.may_accrue? ? 'on' : 'off'}.png") + link_to(study_path(study), study.irb_number, :title => study.title),
             study.name,
             study.pi_last_name,
             study.accrual,

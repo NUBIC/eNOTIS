@@ -1,5 +1,6 @@
 - content_for :head do
-  = javascript_include_tag 'highcharts/highcharts', 'highcharts/excanvas.compiled', 'jquery.charts'
+  = stylesheet_link_tag 'jquery-ui-1.7.2.custom'
+  = javascript_include_tag 'highcharts/highcharts', 'highcharts/excanvas.compiled', 'jquery.charts', 'jquery-ui-1.7.2.custom.min', :cache => "cache/study"
   %script{:type => "text/javascript"}
     $(document).ready(function(){
     - if @involvements.empty?
@@ -8,10 +9,8 @@
       = "pieChart('gender', 'Gender', #{@gender_stats.inspect});"
       = "pieChart('race', 'Race', #{@race_stats.inspect});"
       = "pieChart('ethnicity', 'Ethnicity', #{@ethnicity_stats.inspect});"
-    $('#study_information').hide(10);
-    // need an arbitrary delay to have hide happen after pieChart
+    $('#study_information').hide(10); // need an arbitrary delay to have hide happen after pieChart
     });
-
 #study
   #study_title
     = link_to "#{status_icon @study} #{@study.irb_number || "(no id)"}", "#", :rel => "#study_information"

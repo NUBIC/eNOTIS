@@ -9,6 +9,8 @@
         $(document).ready(function(){
         // scrollable
         $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
+        // overlay
+        $("a[rel=#database-language]").overlay({expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}});
         });
       //]]>
     </script>
@@ -80,12 +82,16 @@
                 <p class='q'>What if my protocol requires confidential participation?</p>
                 <p class='a'>Participants may be identified by case number only, and their participation will not be seen by other eNOTIS users.</p>
                 <p class='q'>Is eNOTIS IRB approved? Will consent language need to be updated?</p>
-                <p class='a'>eNOTIS is IRB approved, and language that covers the use of eNOTIS is now part of <a href="http://www.research.northwestern.edu/OPRS/irb/templates/">the IRB consent template</a>. If you use that template, you will not require any additional consent language. eNOTIS is a secure and centrally managed resource for data that is already being tracked by all groups engaged in clinical research.</p>
+                <p class='a'>eNOTIS is IRB approved, and all studies may begin using eNOTIS without first updating their current consent forms. <a href="#" rel="#database-language">The language that covers the use of eNOTIS</a> is now part of <a href="http://www.research.northwestern.edu/OPRS/irb/templates/#informed-consent">the IRB consent template</a>, in the "Database" section. Please note that the consent form must be updated to include the language covering eNOTIS during the next consent form revision or continuing review. eNOTIS is a secure and centrally managed resource for data that is already being tracked by all groups engaged in clinical research.</p>
                 <p class='q'>What HIPAA or other security issues are raised by use of eNOTIS?</p>
                 <p class='a'>All subject identity searches in eNOTIS are logged. All eNOTIS users have CITI training, as validated by the IRB. We do not anticipate any additional security or HIPAA-related issues.</p>
               </div>
             </div>
           </div>
+        </div>
+        <div class='overlay' id='database-language'>
+          <h3>IRB consent template language, "Database" section</h3>
+          <p>We are committed to respecting your privacy and keeping your personal identifiable information confidential. When choosing to take part in this study, you are giving us permission to add your identifiable information to databases and registries that may be accessed by other researchers and administrators at Northwestern University. Identifiable information includes your name, address, date of birth, phone number, medical record number, and social security number. Your information may then be used to track your participation in all research at Northwestern University. Also, your information without identifiers may be used to create reports for quality control purposes and may be sent to government databases such as ClinicalTrials.gov, a database that contains information on research that is conducted in the United States and around the world.</p>
         </div>
       </div>
       <div id='footer'>
