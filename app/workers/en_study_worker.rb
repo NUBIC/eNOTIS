@@ -1,12 +1,31 @@
 class ENStudyWorker
   @queue = :validator
   def self.perform(irb_number)
-    Eirb.connect
-    # puts Eirb.find_status({:irb_number=>irb_number})
-    
-    # puts Eirb.find_basics({:irb_number=>irb_number}).inspect
-    puts Study.find_by_irb_number(irb_number).inspect
-    
-    # [{:expiration_date=>"4/24/2008", :closed_or_completed_date=>"", :irb_number=>"STU00000507", :approved_date=>"4/25/2007", :research_type=>"Social/Behavioral", :irb_status=>"Expired", :accrual_goal=>"300", :title=>"Decision-making under static and dynamic ambiguity", :total_subjects_at_all_ctrs=>"", :name=>"Decision-making", :multi_inst_study=>"", :periodic_review_open=>"false"}]
+    # check for the study's existence
+    study = Study.find_by_irb_number(irb_number)
+    if study
+      puts "the study exists!"
+      # # check for coordinators
+      # Resque.enqueue(ENCoordinatorChecker, irb_number, study.id)
+      # # check for principal_investigators
+      # Resque.enqueue(ENPrincipalInvestigatorChecker, irb_number, study.id)
+      # # check for co_investigators
+      # Resque.enqueue(ENCoInvestigatorChecker, irb_number, study.id)
+    else
+      # create the study
+      # Resque.enqueue(ENStudyCreator, irb_number)
+      eirb_study = Eirb.find_basics({:irb_number=>irb_number})[0]
+      params = {
+        :irb_number               => eirb_study[:irb_number],
+        :name                     => eirb_study[:name],
+        :title                    => eirb_study[:title],
+        :expiration_date          => Chronic.parse(eirb_study[:expiration_date]),
+        :irb_status               => eirb_study[:irb_status],
+        :approved_date            => Chronic.parse(eirb_study[:approved_date]),
+        :research_type            => eirb_study[:research_type],
+        :closed_or_completed_date => eirb_study[:closed_or_completed_date]
+      }
+      Study.create(params)
+    end
   end
 end
