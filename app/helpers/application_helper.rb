@@ -29,8 +29,13 @@ module ApplicationHelper
     people.empty? ? nil : "#{title}: " + people.join(", ") + "<br/>"
   end
   
+  # Finds an involvement event given a parent involvement and event name
+  # 
+  # @param [Involvement] involvement parent of the involvement event
+  # @param [String] event name of the event to find, case insensitive
+  # @return [String, nil] an html span with the event date and note icon (if a note exists). nil if no involvement event found
   def event_info(involvement, event)
-    if involvement_event = involvement.involvement_events.detect{|e| e.event == event}
+    if involvement_event = involvement.involvement_events.detect{|e| e.event.downcase == event.downcase}
       content_tag("span", :class => event.downcase, :title => event){ "#{involvement_event.occurred_on}#{image_tag '/images/icons/note.png' unless involvement_event.note.blank?}" }
     end
   end
