@@ -38,9 +38,6 @@ $(document).ready(function() {
     });
     
     // study information
-    if(!jQuery.support.cssFloat){
-     $("#study a[rel=#study_information]").corner("top").css("height", "28px"); 
-    }
     $("#study a[rel=#study_information]").click(function(){
       $('#study_information').slideToggle();
       $(this).toggleClass('open');

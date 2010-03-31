@@ -14,11 +14,15 @@
 #study
   #study_title
     = link_to "#{status_icon @study} #{@study.irb_number || "(no id)"}", "#", :rel => "#study_information"
-    %span.name{:title => @study.name}= @study.name
+  #study_name_and_count
+    .study_name{:title => @study.name}= @study.name
+    .subject_count
+      = "Subjects #{@involvements.size}"
+      %span{:title => "Accural goal"}= " | #{@study.accrual_goal}" unless @study.accrual_goal.blank?
   #study_information
     = render :partial => 'partials/study_info', :locals => {:study => @study}
+    
   #accrual
-    .subject_count= "Subjects (#{@involvements.size})"
     #actions
       = link_to("Add", new_involvement_path(:study => @study), :rel => '#involvement', :class => 'add')
       = link_to("Import", import_study_path, :rel => "#import", :class => 'import')

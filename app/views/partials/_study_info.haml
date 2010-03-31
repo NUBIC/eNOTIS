@@ -1,5 +1,8 @@
+.charts
+  #gender.chart
+  #ethnicity.chart
+  #race.chart
 .details
-  %h4 Details (via eIRB)
   Status:
   = "#{study.status}"
   %br
@@ -8,7 +11,3 @@
   = people_info(study.cache_principal_investigators, "PI")
   = people_info(study.cache_co_investigators, "CoI")
   = people_info(study.cache_coordinators, "Coordinator")
-.charts
-  #gender.chart
-  #ethnicity.chart
-  #race.chart

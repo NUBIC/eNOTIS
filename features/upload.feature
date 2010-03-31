@@ -11,5 +11,5 @@ Feature: Upload subjects
     When I go to the study page for id "STU001248"
     And I upload a file with valid data for 7 subjects
     And I go to the study page for id "STU001248"
-    Then I should see "Subjects (7)"
+    Then I should see "Subjects 7"
 
