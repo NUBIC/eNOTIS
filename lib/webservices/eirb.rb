@@ -4,23 +4,24 @@ class Eirb
   # basic settings for single row queries
   SEARCH_DEFAULTS = {  :startRow => 1, 
                        :numRows => -1,
-                       :expandMultiValueCells => true}.freeze
+                       :expandMultiValueCells => true
+                       }.freeze
 
   STORED_SEARCHES = [# {:name => "eNOTIS Person Details", :ext => "user"}, # not used currently
-   {:name => "eNOTIS Study Access", :ext => "access_list"},
-   # {:name => "eNOTIS Study Accrual", :ext => "accrual"},
-   # {:name => "eNOTIS Study Accrual PR", :ext => "periodic_review_accrual"},
-   # {:name => "eNOTIS Study Authorized Access", :ext => "authorized_access"},
-   # {:name => "eNOTIS Study Authorized Personnel", :ext => "authorized_personnel"},
+    {:name => "eNOTIS Study Access", :ext => "access_list"},
+    # {:name => "eNOTIS Study Accrual", :ext => "accrual"},
+    # {:name => "eNOTIS Study Accrual PR", :ext => "periodic_review_accrual"},
+    # {:name => "eNOTIS Study Authorized Access", :ext => "authorized_access"},
+    # {:name => "eNOTIS Study Authorized Personnel", :ext => "authorized_personnel"},
     {:name => "eNOTIS Study Basics", :ext => "basics"},
     {:name => "eNOTIS Study Co-Investigators", :ext => "co_investigators"},
-   # DO NOT USE! --> does not map data properly {:name => "eNOTIS Study Combined Priv", :ext => "combined_access"},
-   # {:name => "eNOTIS Study Contact List", :ext => "contact_list"},
+    # DO NOT USE! --> does not map data properly {:name => "eNOTIS Study Combined Priv", :ext => "combined_access"},
+    # {:name => "eNOTIS Study Contact List", :ext => "contact_list"},
     {:name => "eNOTIS Study Coordinators", :ext => "coordinators"},
-   # {:name => "eNOTIS Study Key Research Personnel", :ext => "key_personnel"},
+    # {:name => "eNOTIS Study Key Research Personnel", :ext => "key_personnel"},
     {:name => "eNOTIS Study Principal Investigator", :ext => "principal_investigators"},
-   {:name => "eNOTIS Study Status", :ext => "status"},
-   {:name => "eNOTIS Study Subject Populations", :ext => "populations"}
+    {:name => "eNOTIS Study Status", :ext => "status"},
+    {:name => "eNOTIS Study Subject Populations", :ext => "populations"}
    ].freeze
 
   cattr_accessor :eirb_adapter
