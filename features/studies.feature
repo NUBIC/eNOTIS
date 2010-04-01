@@ -23,7 +23,7 @@ Feature: Manage studies
     | Picop N    | Dropov    |
     | Dewey      | Cheetham  |
     When I go to the study page for id "STU001248"
-    Then I should see "Subjects (3)"
+    Then I should see "Subjects 3"
     And I should see "Innovera"
     And I should see "Dropov"
 

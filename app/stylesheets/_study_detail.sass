@@ -1,40 +1,34 @@
 #report
 #study
   #study_title
-    +column(48, true)
+    +column(9.5)
     :font-size 20px
     a
       :text-decoration none
-      :background transparent url('/images/icons/toggle.png') 97% -2px no-repeat
+      :background transparent url('/images/icons/toggle.png') right -2px no-repeat
       :padding 0 28px 0px 5px
       :height 30px
-      +rounded_box(#ddd)
-      &:hover
-        :background #ccc url('/images/icons/toggle.png') 97% -32px no-repeat
     a.open
-      +rounded_top_box(#ccc)
-      :background #ccc url('/images/icons/toggle.png') 97% -62px no-repeat
-    :white-space nowrap
-    :text-overflow ellipsis
-    :overflow hidden
-    span.name
+      :background transparent url('/images/icons/toggle.png') right -32px no-repeat
+  #study_name_and_count
+    +column(36, true)
+    +squeeze
+    :border-left 1px solid #bababa
+    .study_name
       :font-size 16px
       :color #666
+      :white-space nowrap
+      :overflow hidden
+    .subject_count
+      :font-size 20px
+      :color #444
   #study_information
-    +column(46, true)
+    :margin-left 190px
+    +column(36, true)
     +squeeze
-    :padding-top 10px
-    :padding-bottom 10px
-    :margin-bottom 5px
-    :margin-top -2px
-    :background #ccc
-    :font-size 12px
-    span.study_title
-      :font-size 16px
-      :padding-bottom 10px
+    :border-left 1px solid #bababa
     .details
-      :float left
-      :width 240px
+      :clear left
       span
         :display block
     .charts
@@ -43,10 +37,6 @@
         :height 150px
         :float left
   #accrual
-    .subject_count
-      :float left
-      :font-weight bold
-      :padding 5px 10px
     #actions
       :font-size 20px
       :float right

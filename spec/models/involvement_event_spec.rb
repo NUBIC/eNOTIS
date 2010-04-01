@@ -36,8 +36,13 @@ describe InvolvementEvent do
   it "should not remove parent invovlement on destroy if it has siblings" do
     involvement = Factory(:involvement)
     involvement_id = involvement.id
-    event = Factory(:involvement_event, :involvement => involvement)
-    sibling = Factory(:involvement_event, :involvement => involvement)
+    # Added :event => "Consented", and :event => "Widthdrawn" to prevent duplicate key errors in test
+    # the index:
+    #   ["involvement_id", "event", "occurred_on"], :name => "inv_events_attr_idx", :unique => true
+    # is violated when two factory generated involvement events have the same date and event
+    # this happens quite often. Since there are 3 events, and two possible days, the probability is 1/6.  
+    event = Factory(:involvement_event, :involvement => involvement, :event => "Consented")
+    sibling = Factory(:involvement_event, :involvement => involvement, :event => "Withdrawn")
     event.destroy
     Involvement.find_by_id(involvement_id).should_not == nil
   end
