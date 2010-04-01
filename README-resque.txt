@@ -17,6 +17,6 @@ To install redis
 To start redis
   cd RAILS_ROOT && redis-server config/redis.conf
 To start workers 
-  cd RAILS_ROOT && COUNT=1 QUEUES=critical,high,medium,low,validator rake environment resque:workers
+  cd RAILS_ROOT && COUNT=4 QUEUES=critical,high,medium,low,validator rake environment resque:workers
 To start the sinatra app locally
   cd RAILS_ROOT && resque-web config/initializers/resque.rb
