@@ -65,6 +65,10 @@ namespace :deploy do
     desc "#{t} task is a no-op with mod_rails"
     task t, :roles => :app do ; end
   end
+  desc "Fix permissions"
+  task :permissions do
+    sudo "chmod -R g+w #{shared_path} #{current_path}"
+  end
 end
 
 # Administration tasks
@@ -85,7 +89,7 @@ namespace :admin do
   
   desc "Imports coordinators from eirb"
   task :import_from_eirb, :roles => :app do
-    run "cd #{current_path} && RAILS_ENV=#{rails_env} script/runner \"PaperTrail.whodunnit='system'; Coordinator.import_from_eirb\""
+    run "cd #{current_path} && rake RAILS_ENV=#{rails_env} couch"
   end
 end
 
@@ -108,13 +112,15 @@ namespace :bundler do
   end
   desc "Create, clear, symlink the shared bundler_gems path and install Bundler cached gems"
   task :install, :roles => :app do
-    run "cd #{release_path} && bundle install"
+    run "mkdir -p #{shared_path}/bundle"
+    run "cd #{release_path} && bundle install #{shared_path}/bundle"
   end
 end
 
 after 'deploy:update_code', 'bundler:install'
-after 'deploy:update_code', 'deploy:cleanup'
 after 'deploy:update_code', 'web:static'
+after 'deploy:update_code', 'deploy:cleanup'
+after 'deploy:update_code', 'deploy:permissions'
 
 before 'web:disable', 'web:static'
 
