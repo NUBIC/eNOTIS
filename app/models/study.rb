@@ -36,7 +36,31 @@ class Study < ActiveRecord::Base
   def self.cache_view(view)
     cache_connect.view("study/#{view}")
   end
-
+  def self.update_all_from_redis
+    redis      = Redis::Namespace.new('eNOTIS:study', :redis => Redis.new)
+    study_list = redis.keys '*'
+    study_list.each do |redis_study|
+      study  = HashWithIndifferentAccess.new(redis.hgetall(redis_study))
+      params = {
+        :irb_number               => study[:irb_number],
+        :name                     => study[:name],
+        :title                    => study[:title],
+        :expiration_date          => Chronic.parse(study[:expiration_date]),
+        :irb_status               => study[:irb_status],
+        :approved_date            => Chronic.parse(study[:approved_date]),
+        :research_type            => study[:research_type],
+        :closed_or_completed_date => study[:closed_or_completed_date]
+      }
+      local_study = find_by_irb_number(params[:irb_number])
+      if local_study.nil?
+        create(params)   
+      else
+        local_study.update_attributes!(params)
+      end
+    end
+  end
+  
+  
   def self.update_all_from_cache
     study_list = cache_view(:all)
     study_list["rows"].each do |study_hash|
@@ -87,7 +111,25 @@ class Study < ActiveRecord::Base
       end
     end    
   end
-
+  
+  def self.update_coordinators_from_redis
+    Coordinator.delete_all
+    redis = Redis::Namespace.new('eNOTIS:coordinators', :redis => Redis.new)
+    studies = redis.keys '*'
+    studies.each do |study|
+      redis.lrange(study,0,redis.llen(study)).each do |coordinator|
+        begin
+          c = Coordinator.new
+          c.study = Study.find_by_irb_number(study)
+          c.user = User.find_by_netid(coordinator)
+          c.save
+        rescue Exception => e
+          puts "failed to create coordinator for study #{study} and user #{coordinator}"
+        end
+      end
+    end
+  end
+  
   # After load hook to load up the dynamic methods/attrs from our
   # CouchDB store
   def after_initialize
