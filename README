@@ -1,42 +1,82 @@
-== Welcome to eNOTIS 
+== Welcome to eNOTIS ==
+
+eNOTIS is a research tool provided by NUCATS to aid researchers in managing patients on clinical trials. Developed in response to requests from the NU clinical research community, eNOTIS will be the primary clinical trial management system for all research at Northwestern University, utilizing the latest in web technology and security measures. Subject safety is at the core of the system: eNOTIS is both HIPAA compliant and recognized by the Northwestern IRB as an approved clinical research system. eNOTIS speeds up clinical trial set-up time by providing access to information about clinical studies through eIRB and to patient medical records through the NU Enterprise Data Warehouse (EDW). This approach means less data entry and will reduce or eliminate the need for manual study tracking adoption.
+
+== Installation ==
 
 eNOTIS requires a few commands to get the data to start up:
 
-script/console
-  Study.update_all_from_cache
-  Study.update_coordinators_from_cache
-  
-rake users:create_admins
+    rake couch  # imports studies and users from couchdb
+    rake users:create_admins # creates admin users
+
+== Dependencies ==
 
 eNOTIS depends on a few important gems:
 
-bundler, currently the 0.8 branch
-pg, which may require archflags for OSX when you bundle:
+* bundler, currently the 0.9 branch
+* pg, which may require archflags for OSX when you bundle: > env ARCHFLAGS="-arch i386" gem bundle
+* and credentials files:
+  - /etc/nubc/bcsec-[environment].yml, e.g. /etc/nubc/bcsec-staging.yml (not needed in development)
+
+  - /etc/nubc/edw-[environment].yml, e.g. /etc/nubc/edw-staging.yml, which should contain the following keys:
   
-  > env ARCHFLAGS="-arch i386" gem bundle
-
-and credentials files:
-
-/etc/nubc/bcsec-[environment].yml, e.g. /etc/nubc/bcsec-staging.yml (not needed in development)
-
-/etc/nubc/edw-[environment].yml, e.g. /etc/nubc/edw-staging.yml, which should contain the following keys:
+    username:
+    password:
+    service_timeout:
+    url:
+    test_mrn:
   
-  username:
-  password:
-  service_timeout:
-  url:
-  test_mrn:
+  - /etc/nubc/eirb-[environment].yml, e.g. /etc/nubc/eirb-staging.yml, which should contain the following keys:
+
+    url:
+    username: 
+    password:
+
+  - /etc/nubc/db/p[environment].yml, e.g. /etc/nubc/pstage.yml (not needed in development or test)
+
+  - /etc/nubc/couch-[environment].yml, e.g. /etc/nubc/couch-development.yml, which should contain the following keys:
+
+    url: "http://localhost"
+    port: 5984
+    db: "eirb_prod"
   
-/etc/nubc/eirb-[environment].yml, e.g. /etc/nubc/eirb-staging.yml, which should contain the following keys:
+== Changes ==
 
-  url:
-  username: 
-  password:
+1.2.0
 
-/etc/nubc/db/p[environment].yml, e.g. /etc/nubc/pstage.yml (not needed in development or test)
+* change factories to prevent duplicate key contraint errors on the involvement events index. The key is violated when two factory generated involvement events have the same date and event. This happens quite often. Since there are 3 events, and two possible days, the probability is 1/6. closes #2325
+* version bump
 
-/etc/nubc/couch-[environment].yml, e.g. /etc/nubc/couch-development.yml, which should contain the following keys:
-  url: "http://localhost"
-  port: 5984
-  db: "eirb_prod"
-  
+1.1.0
+
+* adding accrual goal and reorganizing study name, title, and charts. closes #1551.
+* button darkens when you hover/open, matching style of datatables. references #1536
+* removing space between method and parenthesis
+* make event info helper case insensitive. closes #2344
+* adding irb consent template database language overlay to static pages
+* adding irb consent template database language overlay
+* extra language regarding consent forms in faq. references #2301
+* extra language regarding consent forms in faq. closes #2301
+* adding datepicker to involvement overlay. closes #1932
+* cleanup of old graphs js
+* cache javascripts in production via rails method. does not minify or compress. ignore javascripts/cache directory
+* adding logins, accruals to front page. closes #1560
+* truncate tooltip on charts. use excanvas for ie
+* study irb number toggle adjustments for ie7. references #1536
+* study irb number toggle button more noticable. references #1536
+* fixing flash/environment centering. references #2312
+* centering flash on IE7. references #2312
+* not associated message for non-users, in development. references #2298
+* stylesheet tweaks for IE7 - environment badge positioning and login box height. closes #2312
+* only search for queries greater than 3 characters. references #1538
+* adding accrual to study list tables. references #1551
+* cleanup of unused study partial
+* mandatory field notes. references #1929
+* study info dropdown fix. references #2294
+* give a not associated message for users who authenticate but aren't in users table. references #2298
+* typo - an extra comma in the overlay calls in jquery.main.js. http://amix.dk/blog/post/19388. closes #2294
+* method to determine whether an array of netids is represented in the User model. good for checking on people who can't log in. references #2298
+* fixing enotis-support => enotissupport email. closes #2297
+* adding dates from eirb. references #1551
+* adding study title to study list and detail pages. closes #2288
+* manually limiting search to 30 results. references #1538
