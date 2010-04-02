@@ -12,9 +12,19 @@ class ENRedisStudyPopulator
         study_hash.each do |k,v|
           r.hset(study_key,k,v)
         end
+        description_hash = Eirb.find_description({:irb_number=>irb_number})[0]
+        if description_hash
+          r.hset(study_key, "description",  description_hash[:description])
+        end
+        inclusion_exclusion_hash = Eirb.find_inc_excl({:irb_number=>irb_number})[0]
+        if inclusion_exclusion_hash
+          r.hset(study_key, "population_protocol_page",  inclusion_exclusion_hash[:population_protocol_page])
+          r.hset(study_key, "exclusion_criteria",  inclusion_exclusion_hash[:exclusion_criteria])
+          r.hset(study_key, "inclusion_criteria",  inclusion_exclusion_hash[:inclusion_criteria])
+        end
       end
     end
     end_time = Time.now
-    puts "Imported #{study_key} in #{end_time - start_time} seconds"
+    puts "Finished Imported #{study_key} in #{end_time - start_time} seconds"
   end
 end

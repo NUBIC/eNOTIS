@@ -21,7 +21,9 @@ class Eirb
     # {:name => "eNOTIS Study Key Research Personnel", :ext => "key_personnel"},
     {:name => "eNOTIS Study Principal Investigator", :ext => "principal_investigators"},
     {:name => "eNOTIS Study Status", :ext => "status"},
-    {:name => "eNOTIS Study Subject Populations", :ext => "populations"}
+    {:name => "eNOTIS Study Subject Populations", :ext => "populations"},
+    {:name=>"eNOTIS Study Description", :ext => "description"},
+    {:name => "eNOTIS Study Inclusion Exclusion", :ext => "inc_excl"}
    ].freeze
 
   cattr_accessor :eirb_adapter
