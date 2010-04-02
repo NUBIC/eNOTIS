@@ -1,19 +1,15 @@
 #Exported from eirb queries on Fri Jan 15 06:43:35 -0600 2010
 EIRB_TO_NOTIS = {
-# eNOTIS Study Combined Priv 
-"Study Staff - Study Coordinator.Contact Information.E-mail: Preferred.E-Mail" =>        :email,
-"Study Staff - Study Coordinator.Last Name" =>                                           :last_name,
-"Study Staff - Co-Investigators.First Name" =>                                           :first_name,
-"Study Staff - Co-Investigators.User ID" =>                                              :netid,
-"Study Staff - Study Coordinator.First Name" =>                                          :first_name,
-"Study Staff - Principal Investigator.First Name" =>                                     :first_name,
-"Study Staff - Principal Investigator.Last Name" =>                                      :last_name,
-"ID" =>                                                                                  :irb_number,
-"Study Staff - Principal Investigator.User ID" =>                                        :netid,
-"Study Staff - Co-Investigators.Contact Information.E-mail: Preferred.E-Mail" =>         :email,
-"Study Staff - Co-Investigators.Last Name" =>                                            :last_name,
-"Study Staff - Study Coordinator.User ID" =>                                             :netid,
-"Study Staff - Principal Investigator.Contact Information.E-mail: Preferred.E-Mail" =>   :email,
+# eNOTIS Study Description 
+"ID" =>            :irb_number,
+"Description" =>   :description,
+  
+# eNOTIS Study Inclusion Exclusion 
+"SF - Subject / Participant Population.Page where the information can be found in the protocol" =>   :population_protocol_page,
+"SF - Subject / Participant Population.Exclusion criteria" =>                                        :exclusion_criteria,
+"ID" =>                                                                                              :irb_number,
+"SF - Subject / Participant Population.Inclusion criteria" =>                                        :inclusion_criteria,
+  
 # eNOTIS Study Subject Populations 
 "SF - Subject / Participant Population.Subject population.Number of Subjects" =>                           :number_of_subjects,
 "SF - Subject / Participant Population.Subject population.Subject Population.Research Type.Help Text" =>   :research_type_txt,
@@ -38,48 +34,23 @@ EIRB_TO_NOTIS = {
 "SF - Subject / Participant Population.Total number of subjects to be enrolled at all centers" =>   :total_subjects_at_all_ctrs,
 "SF - Subject / Participant Population.Multi institution study" =>                                  :multi_inst_study,
 "ID" =>                                                                                             :irb_number,
-"study_description" =>                                                                              :description,
 "Periodic Review Open" =>                                                                           :periodic_review_open,
 "Date Closed-Completed" =>                                                                          :closed_or_completed_date,
 "Research Type.Name" =>                                                                             :research_type,
 "SF - Subject / Participant Population.Maximum number of subjects to be consented" =>               :accrual_goal,
 # eNOTIS Study Authorized Personnel 
-"SF - Authorized Personnel.Authorized Personnel.Person.Training Certification.Certification Completion Date" =>   :cert_complete_date,
-"SF - Authorized Personnel.Authorized Personnel.Person.Training Certification.Other Description/Note" =>          :cert_descr,
-"SF - Authorized Personnel.Authorized Personnel.Date Created" =>                                                  :cert_created_date,
-"SF - Authorized Personnel.Authorized Personnel.Person.First Name" =>                                             :first_name,
-"SF - Authorized Personnel.Authorized Personnel.Person.Training Type.TrainingType" =>                             :training_type,
-"SF - Authorized Personnel.Authorized Personnel.Date Modified" =>                                                 :modified_date,
 "SF - Authorized Personnel.Authorized Personnel.Person.User ID" =>                                                :netid,
 "ID" =>                                                                                                           :irb_number,
-"SF - Authorized Personnel.Authorized Personnel.Person.Training Certification.Training Verified" =>               :training_verified,
 "SF - Authorized Personnel.Authorized Personnel.Project Role" =>                                                  :project_role,
-# eNOTIS Study Key Research Personnel 
-"SF - Authorized Personnel.Key Research Personnel.Last Name" =>                  :last_name,
-"SF - Authorized Personnel.Key Research Personnel.First Name" =>                 :first_name,
-"ID" =>                                                                          :irb_number,
-"SF - Authorized Personnel.Key Research Personnel.Date Modified" =>              :modified_date,
-"SF - Authorized Personnel.Key Research Personnel.Email Address" =>              :email,
-"SF - Authorized Personnel.Key Research Personnel.Institution" =>                :institution,
-"SF - Authorized Personnel.Key Research Personnel.Role in Research Project" =>   :project_role,
-"SF - Authorized Personnel.Key Research Personnel.Phone Number" =>               :phone,
-"SF - Authorized Personnel.Key Research Personnel.Date Created" =>               :created_date,
 # eNOTIS Study Status 
 "Project State.ID" =>   :irb_status,
 "ID" =>                 :irb_number,
 # eNOTIS Study Coordinators 
-"Study Staff - Study Coordinator.Contact Information.E-mail: Preferred.E-Mail" =>   :email,
-"Study Staff - Study Coordinator.Last Name" =>                                      :last_name,
-"Study Staff - Study Coordinator.Employer.Name" =>                                  :employer,
-"Study Staff - Study Coordinator.First Name" =>                                     :first_name,
 "ID" =>                                                                             :irb_number,
 "Study Staff - Study Coordinator.User ID" =>                                        :netid,
 # eNOTIS Study Access 
 "Study Access.User ID" =>                                        :netid,
-"Study Access.Last Name" =>                                      :last_name,
-"Study Access.First Name" =>                                     :first_name,
 "ID" =>                                                          :irb_number,
-"Study Access.Contact Information.E-mail: Preferred.E-Mail" =>   :email,
 # eNOTIS Study Accrual PR 
 "SF - Number of Research Subjects.Subjects consented to date" =>                    :subjects_consented_to_date,
 "Parent Study.ID" =>                                                                :irb_number,
@@ -92,19 +63,11 @@ EIRB_TO_NOTIS = {
 "SF - Number of Research Subjects.Consent form for each" =>                         :each_consented,
 "SF - Number of Research Subjects.Subjects withdrawn" =>                            :subjects_withdrawn,
 # eNOTIS Study Principal Investigator 
-"Study Staff - Principal Investigator.Title" =>                                          :title,
-"Study Staff - Principal Investigator.First Name" =>                                     :first_name,
-"Study Staff - Principal Investigator.Last Name" =>                                      :last_name,
 "ID" =>                                                                                  :irb_number,
 "Study Staff - Principal Investigator.User ID" =>                                        :netid,
-"Study Staff - Principal Investigator.Employer.Name" =>                                  :employer,
-"Study Staff - Principal Investigator.Temporary Department" =>                           :temp_department,
-"Study Staff - Principal Investigator.Contact Information.E-mail: Preferred.E-Mail" =>   :email,
 # eNOTIS Study Co-Investigators 
-"Study Staff - Co-Investigators.First Name" =>   :first_name,
 "Study Staff - Co-Investigators.User ID" =>      :netid,
 "ID" =>                                          :irb_number,
-"Study Staff - Co-Investigators.Last Name" =>    :last_name,
 }
 
 
