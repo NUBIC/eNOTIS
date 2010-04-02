@@ -9,17 +9,9 @@ namespace :eirb do
     `script/runner 'Study.update_from_cache'` 
   end
 
-  desc "nightly_validation"
-  task :nightly_validation=>:environment do
-    require 'webservices/eirb'
-    Eirb.connect
-    Eirb.find_status.each do |result|
-      Resque.enqueue ENStudyWorker, result[:irb_number]
-    end
-  end
-
-  desc "redis_fill"
-  task :redis_fill => :environment do
+  # TODO: get the most recent changes instead of pulling _everything_ every night
+  desc "Nightly Queue primer for fresh data"
+  task :redis_import=>:environment do
     require 'webservices/eirb'
     Eirb.connect
     puts "#{Time.now}: getting status "
@@ -35,4 +27,3 @@ namespace :eirb do
     end
   end
 end
-

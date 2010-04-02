@@ -3,10 +3,6 @@ http://github.com/defunkt/resque
 http://github.com/blog/542-introducing-resque
 
 To install redis
-  Homebrew
-    brew install redis
-  Macports
-    sudo port install redis
   From source
     git clone git://github.com/antirez/redis.git
     cd redis
