@@ -20,13 +20,27 @@ class Study < ActiveRecord::Base
 
   def self.cache_connect
     return @cache if @cache
+    
+    # CouchDB
     config = WebserviceConfig.new("/etc/nubic/couch-#{RAILS_ENV.downcase}.yml")
     @cache = CouchRest.database("#{config[:url]}:#{config[:port]}/#{config[:db]}")
+    
+    # Redis
+    # config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
+    # @cache = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
   end
 
   def self.cache_doc(study_id = nil)
     begin
+      # CouchDB
       cache_connect.get(study_id)
+      
+      # Redis
+      # cache_connect.hgetall("study:#{study_id}").merge({
+      #   :principal_investigators => cache_principal_investigators(study_id),
+      #   :coordinators            => cache_coordinators(study_id),
+      #   :co_investigators        => cache_co_investigators(study_id)
+      # })
     rescue
       # TODO remove this when old method name access is depricated
       {:accrual_goal => "", :irb_number => "Not Found", :principal_investigators => [{}], :coordinators=> [{}], :co_investigators => [{}]} # fail semi-silently, the doc was not found for some reason
@@ -36,6 +50,19 @@ class Study < ActiveRecord::Base
   def self.cache_view(view)
     cache_connect.view("study/#{view}")
   end
+  
+  # def self.cache_principal_investigators(irb_number)
+  #   User.multi_cache_lookup(cache_connect.lrange("primary_investigators:#{irb_number}",0,-1)).map{|x| {:first_name=>x[:first_name], :last_name=>x[:last_name],:email=>x[:email]}}
+  # end
+  # 
+  # def self.cache_co_investigators(irb_number)
+  #   User.multi_cache_lookup(cache_connect.lrange("co_investigators:#{irb_number}",0,-1)).map{|x| {:first_name=>x[:first_name], :last_name=>x[:last_name],:email=>x[:email]}}
+  # end
+  # 
+  # def self.cache_coordinators(irb_number)
+  #   User.multi_cache_lookup(cache_connect.lrange("coordinators:#{irb_number}",0,-1)).map{|x| {:first_name=>x[:first_name], :last_name=>x[:last_name],:email=>x[:email]}}
+  # end
+  
   def self.update_all_from_redis
     redis      = Redis::Namespace.new('eNOTIS:study', :redis => Redis.new)
     study_list = redis.keys '*'
@@ -59,7 +86,6 @@ class Study < ActiveRecord::Base
       end
     end
   end
-  
   
   def self.update_all_from_cache
     study_list = cache_view(:all)
@@ -149,26 +175,26 @@ class Study < ActiveRecord::Base
     @eirb_json
   end
 
-  # methods to depricate
+  # methods to deprecate
   ######################
-    # pi_last_name is being used, others (sc_email, etc.) have been moved to application_helper.rb's people_info method - yoon
-    def pi_last_name
-      cache_principal_investigators.first["last_name"] || ""
-    end
+  # pi_last_name is being used, others (sc_email, etc.) have been moved to application_helper.rb's people_info method - yoon
+  def pi_last_name
+    cache_principal_investigators.first["last_name"] || ""
+  end
 
-    def phase
-      nil
-    end
+  def phase
+    nil
+  end
 
-    def status
-      irb_status
-    end
-    
-    def accrual_goal
-      cache_accrual_goal || ""
-    end
+  def status
+    irb_status
+  end
+
+  def accrual_goal
+    cache_accrual_goal || ""
+  end
   ##########################
-  # end methods to depricate
+  # end methods to deprecate
 
 
   # irb_number instead of id in urls
