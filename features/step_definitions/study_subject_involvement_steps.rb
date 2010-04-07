@@ -60,3 +60,12 @@ When /^I upload a file with valid data for 7 subjects$/ do
   attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', 'good.csv'))  
   click_button "Upload"  
 end
+
+When /^I export a csv of subjects$/ do
+  click_link("Export")
+  select "CSV", :from=>"File Format"  
+  click_button("Export Data")
+end
+
+
+

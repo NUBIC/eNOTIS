@@ -38,4 +38,12 @@ Feature: Manage studies
     Given a study "Vitamin E and exertion" with id "STU001249" and irb_status "Approved"
     When I go to the study page for id "werewolf"
     Then I should be redirected to the studies page
-  
+
+
+  Scenario: A coordinator can download all subjects on a study
+    Given the study "STU001248" has the following subjects
+    | first_name | last_name |
+    | Marge      | Innovera  |
+    When I go to the study page for id "STU001248"
+    And I export a csv of subjects 
+    Then I should see "Marge"
