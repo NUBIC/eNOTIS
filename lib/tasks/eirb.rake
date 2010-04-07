@@ -15,10 +15,10 @@ namespace :eirb do
     require 'webservices/eirb'
     Eirb.connect
     puts "#{Time.now}: getting status "
-    statuses = Eirb.find_status
+    irb_numbers = Eirb.find_study_export
     puts "#{Time.now}: finishing getting status "
-    statuses.each do |result|
-      irb_number = result[:irb_number]
+    irb_numbers.each do |numbers|
+      irb_number = numbers[:irb_number]
       puts "Priming queues for #{irb_number}"
       Resque.enqueue(ENRedisStudyPopulator, irb_number)
       Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'coordinator')
