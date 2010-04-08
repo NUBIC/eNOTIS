@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
   map.active      '/active', :controller => 'authentication', :action => 'active'
   
   map.resources   :studies, :member => {:import => :get}
-  map.resources   :involvements, :collection => {:upload => :post}
+  map.resources   :involvements, :collection => {:upload => :post, :sample => :get}
   map.resource    :search, :controller => :search
   map.resources   :reports
   map.hub         '/hub', {:controller => "admin", :action => "index"}

@@ -5,7 +5,7 @@
     = file_field_tag(:file)
     = submit_tag( "Upload" )
   %br
-  %p= "Uploads need a few essential columns (see the #{link_to 'example file', '/documents/sample.csv'}) for eNOTIS to read them."
+  %p= "Uploads need a few essential columns (see the #{link_to 'example file', sample_involvements_path}) for eNOTIS to read them."
 - unless @study.study_uploads.blank?
   .uploads
     %table.display
