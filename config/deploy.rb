@@ -117,21 +117,18 @@ namespace :bundler do
   end
 end
 
-after 'deploy:update_code', 'bundler:install'
-after 'deploy:update_code', 'web:static'
-after 'deploy:update_code', 'deploy:cleanup'
-after 'deploy:update_code', 'deploy:permissions'
+after 'deploy:update_code', 'bundler:install', 'web:static', 'web:uploads_and_results', 'deploy:cleanup', 'deploy:permissions'
 
 before 'web:disable', 'web:static'
+after 'web:enable', 'deploy:restart'
 
 # Maintenance
 namespace :web do
   desc "Enable static pages"
   task :static, :roles => :web, :except => { :no_release => true } do
-    run "mkdir -p #{current_path}/public/images/static #{current_path}/public/stylesheets/static"
-    run "cp #{current_path}/static/site/*.html #{current_path}/public/"
-    run "cp #{current_path}/static/site/images/static/* #{current_path}/public/images/static"
-    run "cp #{current_path}/static/site/stylesheets/static/* #{current_path}/public/stylesheets/static"
+    run "cp #{latest_release}/static/site/*.html #{latest_release}/public/"
+    run "ln -fs #{latest_release}/static/site/images/static #{latest_release}/public/images/static"
+    run "ln -fs #{latest_release}/static/site/stylesheets/static #{latest_release}/public/stylesheets/static"
   end
   
   desc "Display static maintenance page"
@@ -144,6 +141,13 @@ namespace :web do
   desc "Hide static maintenance page"
   task :enable, :roles => :web, :except => { :no_release => true } do
     run "rm -f #{current_path}/public/index.html"
+  end
+  
+  desc "Link upload/result files"
+  task :uploads_and_results, :roles => :web, :except => {:no_release => true} do
+    run "mkdir -p #{shared_path}/uploads #{shared_path}/results"
+    run "ln -fs #{shared_path}/uploads #{latest_release}/public/uploads"
+    run "ln -fs #{shared_path}/results #{latest_release}/public/results"
   end
 end
 
