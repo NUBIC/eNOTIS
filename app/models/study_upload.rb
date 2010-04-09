@@ -126,7 +126,7 @@ class StudyUpload < ActiveRecord::Base
   end
   
   def missing_columns?(r)
-    missing = self.required_columns - r.headers.map(&:to_s)
+    missing = StudyUpload.required_columns - r.headers.map(&:to_s)
     if missing.empty?
       return false
     else
