@@ -46,7 +46,7 @@ end
 # Resque
 gem 'redis' , '0.2.0'
 gem 'resque', '1.7.1'
-gem 'resque-multi-job-forks'
+gem 'resque-multi-job-forks', '0.1.2'
 
 # Testing
 group :test, :cucumber, :hudson do
