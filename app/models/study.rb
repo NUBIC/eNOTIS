@@ -22,46 +22,65 @@ class Study < ActiveRecord::Base
     return @cache if @cache
     
     # CouchDB
-    config = WebserviceConfig.new("/etc/nubic/couch-#{RAILS_ENV.downcase}.yml")
-    @cache = CouchRest.database("#{config[:url]}:#{config[:port]}/#{config[:db]}")
+    # config = WebserviceConfig.new("/etc/nubic/couch-#{RAILS_ENV.downcase}.yml")
+    # @cache = CouchRest.database("#{config[:url]}:#{config[:port]}/#{config[:db]}")
     
     # Redis
-    # config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-    # @cache = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
+    config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
+    @cache = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
   end
 
   def self.cache_doc(study_id = nil)
-    begin
-      # CouchDB
-      cache_connect.get(study_id)
-      
-      # Redis
-      # cache_connect.hgetall("study:#{study_id}").merge({
-      #   :principal_investigators => cache_principal_investigators(study_id),
-      #   :coordinators            => cache_coordinators(study_id),
-      #   :co_investigators        => cache_co_investigators(study_id)
-      # })
-    rescue
-      # TODO remove this when old method name access is depricated
-      {:accrual_goal => "", :irb_number => "Not Found", :principal_investigators => [{}], :coordinators=> [{}], :co_investigators => [{}]} # fail semi-silently, the doc was not found for some reason
-    end
+    # CouchDB
+    # cache_connect.get(study_id)
+
+    # Redis
+    HashWithIndifferentAccess.new(cache_connect.hgetall("study:#{study_id}")).merge({
+      :principal_investigators => cache_principal_investigators(study_id),
+      :coordinators            => cache_coordinators(study_id),
+      :co_investigators        => cache_co_investigators(study_id)
+    })
+  rescue
+    # TODO remove this when old method name access is depricated
+    {:accrual_goal => "", :irb_number => "Not Found", :principal_investigators => [{}], :coordinators=> [{}], :co_investigators => [{}]} # fail semi-silently, the doc was not found for some reason
   end
 
   def self.cache_view(view)
     cache_connect.view("study/#{view}")
   end
   
-  # def self.cache_principal_investigators(irb_number)
-  #   User.multi_cache_lookup(cache_connect.lrange("primary_investigators:#{irb_number}",0,-1)).map{|x| {:first_name=>x[:first_name], :last_name=>x[:last_name],:email=>x[:email]}}
-  # end
-  # 
-  # def self.cache_co_investigators(irb_number)
-  #   User.multi_cache_lookup(cache_connect.lrange("co_investigators:#{irb_number}",0,-1)).map{|x| {:first_name=>x[:first_name], :last_name=>x[:last_name],:email=>x[:email]}}
-  # end
-  # 
-  # def self.cache_coordinators(irb_number)
-  #   User.multi_cache_lookup(cache_connect.lrange("coordinators:#{irb_number}",0,-1)).map{|x| {:first_name=>x[:first_name], :last_name=>x[:last_name],:email=>x[:email]}}
-  # end
+  def self.cache_principal_investigators(irb_number)
+    User.multi_cache_lookup(cache_connect.lrange("primary_investigators:#{irb_number}",0,-1)).try(:map){ |pi| {
+      :first_name => pi[:first_name], 
+      :last_name  => pi[:last_name],
+      :email      => pi[:email]
+    }}
+  rescue
+    logger.warn "Unable to lookup principal investigators for study #{irb_number}. "
+    [{}]
+  end
+  
+  def self.cache_co_investigators(irb_number)
+    User.multi_cache_lookup(cache_connect.lrange("co_investigators:#{irb_number}",0,-1)).try(:map){ |co_inv| {
+      :first_name => co_inv[:first_name], 
+      :last_name  => co_inv[:last_name],
+      :email      => co_inv[:email]
+    }}
+  rescue
+    logger.warn "Unable to lookup co investigators for study #{irb_number}. "
+    [{}]
+  end
+  
+  def self.cache_coordinators(irb_number)
+    User.multi_cache_lookup(cache_connect.lrange("coordinators:#{irb_number}",0,-1)).try(:map){ |coord| {
+      :first_name => coord[:first_name], 
+      :last_name  => coord[:last_name],
+      :email      => coord[:email]
+    }}
+  rescue
+    logger.warn "Unable to lookup coordinators for study #{irb_number}. "
+    [{}]
+  end
   
   def self.update_all_from_redis
     redis      = Redis::Namespace.new('eNOTIS:study', :redis => Redis.new)
