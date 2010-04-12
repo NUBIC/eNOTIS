@@ -9,21 +9,39 @@ namespace :eirb do
     `script/runner 'Study.update_from_cache'` 
   end
 
-  # TODO: get the most recent changes instead of pulling _everything_ every night
-  desc "Nightly Queue primer for fresh data"
-  task :redis_import=>:environment do
-    require 'webservices/eirb'
-    Eirb.connect
-    puts "#{Time.now}: getting status "
-    irb_numbers = Eirb.find_study_export
-    puts "#{Time.now}: finishing getting status "
-    irb_numbers.each do |numbers|
-      irb_number = numbers[:irb_number]
-      puts "Priming queues for #{irb_number}"
-      Resque.enqueue(ENRedisStudyPopulator, irb_number)
-      Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'coordinator')
-      Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'co_investigators')
-      Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'primary_investigators')
+  namespace :redis do
+    desc "Full Import"
+    task :full_import => [:dependent, :tasks] do
+      require 'webservices/eirb'
+      Eirb.connect
+      puts "#{Time.now}: Getting status for all studies "
+      irb_numbers = Eirb.find_study_export
+      puts "#{Time.now}: finishing getting status "
+      irb_numbers.each do |numbers|
+        irb_number = numbers[:irb_number]
+        puts "Priming queues for #{irb_number}"
+        Resque.enqueue(ENRedisStudyPopulator, irb_number)
+        Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'coordinator')
+        Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'co_investigators')
+        Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'primary_investigators')
+      end
+    end
+    
+    desc "Nightly 1 day import"
+    task :nightly_import => :environment do
+      require 'webservices/eirb'
+      Eirb.connect
+      puts "#{Time.now}: getting status "
+      irb_numbers = Eirb.find_recent_studies
+      puts "#{Time.now}: finishing getting status "
+      irb_numbers.each do |numbers|
+        irb_number = numbers[:irb_number]
+        puts "Priming queues for #{irb_number}"
+        Resque.enqueue(ENRedisStudyPopulator, irb_number, true)
+        Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'coordinator', true)
+        Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'co_investigators', true)
+        Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'primary_investigators', true)
+      end
     end
   end
 end
