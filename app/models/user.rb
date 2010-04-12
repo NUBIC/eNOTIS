@@ -110,7 +110,7 @@ class User < ActiveRecord::Base
     HashWithIndifferentAccess.new(cache_connect.hgetall(netid))
   end
   
-  def self.multi_cache_lookup(*netids)
-    netids.inject([]){ |result, netid| result << self.redis_cache_lookup(netid) }
+  def self.multi_cache_lookup(netids)
+    netids.inject([]){ |result, netid| result << redis_cache_lookup(netid)}
   end
 end

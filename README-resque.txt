@@ -19,9 +19,9 @@ To start the sinatra app locally
 
 To start the nightly importing process
 First, setup an SSH Tunnel (if your'e running this at your desk)
-sudo ssh -f -N -L 636:directory.northwestern.edu:636 <<YourNetID>>@enotis-staging.nubic.northwestern.edu
+sudo ssh -f -N -L 636:directory.northwestern.edu:636 sjg304@enotis-staging.nubic.northwestern.edu
 
 Then , open up 3 tabs in Terminal.app and type these commands (at RAILS_ROOT)
 JOBS_PER_FORK=100 COUNT=3 QUEUES=redis_study_populator rake environment resque:workers
 JOBS_PER_FORK=100 COUNT=3 QUEUES=redis_people_populator rake environment resque:workers
-JOBS_PER_FORK=1   COUNT=1 QUEUES=redis_ldapper rake environment resque:workers
+JOBS_PER_FORK=100 COUNT=1 QUEUES=redis_ldapper rake environment resque:workers
