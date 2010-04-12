@@ -5,43 +5,64 @@ class ENRedisPeoplePopulator
   Resque.before_first_fork do
     Eirb.connect
   end
+  
   def self.perform(irb_number, use_case, force=false)
-    r = Redis.new
+    config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
+    redis = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
+    # redis = Redis.new
     start_time = Time.now
     case use_case
     when "coordinator"
-      coordinators_key = "eNOTIS:coordinators:#{irb_number}"
-      unless r.exists(coordinators_key) || force==true
-        Eirb.find_coordinators({:irb_number => irb_number}).each do |coordinator|
-          netid = coordinator[:netid]
-          r.lpush(coordinators_key,netid) unless r.lrange(coordinators_key,0,-1).include? netid
-          Resque.enqueue(ENRedisLdapper,netid)
-        end
+      coordinators_key = "coordinators:#{irb_number}"
+      if force==true
+        import_coordinators(irb_number,redis,coordinators_key)
+      else
+        import_coordinators(irb_number,redis,coordinators_key) unless redis.exists(coordinators_key)
       end
       end_time = Time.now
       puts "Imported #{coordinators_key} in #{end_time - start_time} seconds"
     when "co_investigators"
-      co_investigators_key = "eNOTIS:co_investigators:#{irb_number}"
-      unless r.exists(co_investigators_key) || force==true
-        Eirb.find_co_investigators({:irb_number => irb_number}).each do |co_investigator|
-          netid = co_investigator[:netid]
-          r.lpush(co_investigators_key,netid) unless r.lrange(co_investigators_key,0,-1).include? netid
-          Resque.enqueue(ENRedisLdapper,netid)
-        end
+      co_investigators_key = "co_investigators:#{irb_number}"
+      if force==true
+        import_co_investigators(irb_number,redis,co_investigators_key)
+      else
+        import_co_investigators(irb_number,redis,co_investigators_key) unless redis.exists(co_investigators_key)
       end
       end_time = Time.now
       puts "Imported #{co_investigators_key} in #{end_time - start_time} seconds"
     when "primary_investigators"
-      pi_key = "eNOTIS:primary_investigators:#{irb_number}"
-      unless r.exists(pi_key) || force == true
-        Eirb.find_principal_investigators({:irb_number => irb_number}).each do |principal_investigator|
-          netid = principal_investigator[:netid]
-          r.lpush(pi_key,netid) unless r.lrange(pi_key,0,-1).include? netid
-          Resque.enqueue(ENRedisLdapper,netid)
-        end
+      pi_key = "primary_investigators:#{irb_number}"
+      if force==true
+        import_co_investigators(irb_number,redis,pi_key)
+      else
+        import_co_investigators(irb_number,redis,pi_key) unless redis.exists(pi_key)
       end
       end_time = Time.now
       puts "Imported #{pi_key} in #{end_time - start_time} seconds"
+    end
+  end
+  
+  def self.import_coordinators(irb_number,redis,coordinators_key)
+    Eirb.find_coordinators({:irb_number => irb_number}).each do |coordinator|
+      netid = coordinator[:netid]
+      redis.lpush(coordinators_key,netid) unless redis.lrange(coordinators_key,0,-1).include? netid
+      Resque.enqueue(ENRedisLdapper,netid)
+    end
+  end
+  
+  def self.import_co_investigators(irb_number,redis,co_investigators_key)
+    Eirb.find_co_investigators({:irb_number => irb_number}).each do |co_investigator|
+      netid = co_investigator[:netid]
+      redis.lpush(co_investigators_key,netid) unless redis.lrange(co_investigators_key,0,-1).include? netid
+      Resque.enqueue(ENRedisLdapper,netid)
+    end
+  end
+  
+  def self.import_primary_investigators(irb_number,redis,pi_key)
+    Eirb.find_principal_investigators({:irb_number => irb_number}).each do |principal_investigator|
+      netid = principal_investigator[:netid]
+      redis.lpush(pi_key,netid) unless redis.lrange(pi_key,0,-1).include? netid
+      Resque.enqueue(ENRedisLdapper,netid)
     end
   end
 end
