@@ -26,9 +26,10 @@ $(document).ready(function() {
     
     // involvement overlay
     $("a[rel=#involvement]").overlay({
-     onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
-     onLoad: function(){ $("#involvement input.date").datepicker({changeMonth: true, changeYear: true}); }
+      onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
+      onLoad: function(){ $("#involvement input.date").datepicker({changeMonth: true, changeYear: true});
+        $("#involvement input.dob").datepicker({changeMonth: true, changeYear: true, yearRange: '-120:+0'}); }
     });
 
     // export overlay
