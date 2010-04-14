@@ -18,7 +18,9 @@ class StudyUpload < ActiveRecord::Base
   # TODO, try turning these two validations on - yoon
   # validates_attachment_content_type :upload, :content_type => ['text/csv', 'text/plain']
   # validates_attachment_content_type :result, :content_type => ['text/csv', 'text/plain']
-
+  def self.required_columns
+    %w(case_number mrn first_name last_name birth_date gender race ethnicity consented_on consented_note withdrawn_on withdrawn_note completed_on completed_note)
+  end
   def legit?
     upload_exists? && parse_upload && create_subjects
   end
@@ -124,11 +126,11 @@ class StudyUpload < ActiveRecord::Base
   end
   
   def missing_columns?(r)
-    missing = %w(case_number mrn first_name last_name birth_date gender race ethnicity consented_on consented_note withdrawn_on withdrawn_note completed_on completed_note) - r.headers.map(&:to_s)
+    missing = StudyUpload.required_columns - r.headers.map(&:to_s)
     if missing.empty?
       return false
     else
-      self.summary = "The following columns are required: #{missing.join(',')}"
+      self.summary = "The following columns are required: #{missing.join(', ')}"
       self.save
       return true
     end

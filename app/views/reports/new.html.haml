@@ -8,18 +8,15 @@
         = check_box_tag "subject[]",val, :checked => true
         = label_tag "subject[]",val.titleize
         %br
-      = check_box_tag "involvement[attributes][]",'case_number', :checked => true
-      = label_tag "involvement[attributes][]","Case Number"
-      %br
-      - ['ethnicity','gender','race_list'].each do |meth|
-        = check_box_tag "involvement[methods][]",meth, :checked => true
-        = label_tag "involvement[methods][]",meth.titleize
+      -['case_number','ethnicity','gender','race'].each do |attr|
+        = check_box_tag "involvement[attributes][]",attr, :checked => true
+        = label_tag "involvement[attributes][]",attr.titleize
         %br
-      = check_box_tag "event[methods][]",'event_type', :checked => true
-      = label_tag "event[methods][]","Event Type"
+      = check_box_tag "event[attributes][]",'event', :checked => true
+      = label_tag "event[attributes][]","Event Type"
       %br
-      = check_box_tag  "event[attributes][]",'occurred_on', :checked => true
-      = label_tag "event[attributes][]"," Event Date"
+      = check_box_tag "event[attributes][]",'occurred_on', :checked => true
+      = label_tag "event[attributes][]","Event Date"
     %p
       = label_tag "format","File Format"
       = select_tag('format',options_for_select([["PDF","pdf"],["CSV","csv"]]))

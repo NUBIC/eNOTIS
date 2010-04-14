@@ -11,13 +11,13 @@ class Report
     :conditions => {:study_id=>study.id},
     :include => {:subject => {:only=>params[:subject] || []}, :involvement_events => {:only => event[:attributes] || [],:methods=>event[:methods] ||[]}})
     #properly name columns
-    report.rename_columns("involvement_events.event_type"=>"Event Type",
+    report.rename_columns("involvement_events.event"=>"Event Type",
                           "involvement_events.occurred_on"=>"Event Date","case_number"=> "Case Number","subject.mrn" =>"MRN",
 		         "subject.first_name"=>"First Name","subject.last_name"=>"Last Name",
-                         "subject.birth_date"=>"Birth Date","race_list"=>"Races",
+                         "subject.birth_date"=>"Birth Date","race"=>"Race",
                          "gender"=>"Gender","ethnicity"=>"Ethnicity")
     #Data Order
-    report.reorder("MRN","Case Number","Last Name","First Name","Birth Date","Gender","Ethnicity","Races","Event Type","Event Date")
+    report.reorder("MRN","Case Number","Last Name","First Name","Birth Date","Gender","Ethnicity","Race","Event Type","Event Date")
     report.as(params[:format].to_sym)
   end
  

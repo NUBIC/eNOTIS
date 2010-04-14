@@ -84,6 +84,13 @@ class InvolvementsController < ApplicationController
     # redirect_to study_path(@study)
   end
   
+  def sample
+    # IE headers
+    headers.merge!({'Pragma' => 'public', 'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0', 'Expires' => '0'}) if request.env['HTTP_USER_AGENT'] =~ /msie/i
+    # download, don't view in browser
+    send_data StudyUpload.required_columns.join(","), :filename => 'sample.csv', :content_type => 'text/csv'
+  end
+  
   # Private instance methods
   private
   

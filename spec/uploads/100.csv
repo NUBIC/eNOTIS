@@ -1,101 +1,1 @@
-case_number,mrn,first_name,last_name,birth_date,gender,race,ethnicity,consented_on,consented_note,withdrawn_on,withdrawn_note,completed_on,completed_note
-,,Marlene,Cummings,2/22/1966,Female,american indian/alaska native,Unknown,3/11/2009,,,,,
-,,Edgar,Kohler,1/26/1942,Male,black/african american,Not Hispanic or Latino,3/12/2009,,,,,
-,,Luther,Towne,8/28/1945,Male,white,Hispanic or Latino,3/13/2009,,,,,
-,,Maximo,Ondricka,2/9/1994,Female,native hawaiian/other pacific islander,Not Hispanic or Latino,3/14/2009,,,,,
-,,Jedidiah,Boyle,6/20/1987,Male,unknown,Not Hispanic or Latino,3/15/2009,,,,,
-,,Clotilde,Toy,11/14/1989,Male,native hawaiian/other pacific islander,Hispanic or Latino,3/16/2009,,,,,
-,,Chloe,O'Kon,12/26/1985,Female,unknown,Not Hispanic or Latino,3/17/2009,,,,,
-,,Anika,Ruecker,5/15/1942,Female,american indian/alaska native,Unknown,3/18/2009,,,,4/7/2009,
-,,Veda,Boehm,7/19/1982,Male,black/african american,Not Hispanic or Latino,3/19/2009,,,,4/8/2009,
-,,Christ,Kertzmann,9/4/1943,Male,asian,Hispanic or Latino,3/20/2009,,,,4/9/2009,
-,,Edwina,Dach,12/2/1987,Female,black/african american,Not Hispanic or Latino,3/21/2009,,,,4/10/2009,
-,,Weldon,Pouros,1/13/1966,Male,unknown,Not Hispanic or Latino,3/22/2009,,,,4/11/2009,
-,,Olin,Roberts,1/25/1989,Male,black/african american,Hispanic or Latino,3/23/2009,,,,4/12/2009,
-,,Lamont,Parisian,10/29/1947,Female,unknown,Not Hispanic or Latino,3/24/2009,,,,4/13/2009,
-,,King,Wilderman,12/17/1945,Female,native hawaiian/other pacific islander,Unknown,3/25/2009,,,,4/14/2009,
-,,Marcelo,Hoeger,7/24/1955,Male,black/african american,Not Hispanic or Latino,3/26/2009,,,,4/15/2009
-,,Lavern,Shields,11/17/1982,Male,american indian/alaska native,Hispanic or Latino,3/27/2009,,,,
-,,Sammy,Kreiger,7/6/1970,Female,black/african american,Not Hispanic or Latino,3/28/2009,,,,
-,,Cathryn,Stoltenberg,1/30/1955,Male,american indian/alaska native,Not Hispanic or Latino,3/29/2009,,,,
-,,Rebeka,McCullough,3/7/1941,Male,multiracial,Hispanic or Latino,3/30/2009,,,,
-,,Candelario,Spinka,11/29/1984,Female,asian,Not Hispanic or Latino,3/31/2009,,,,
-,,Florian,Towne,3/5/1953,Female,asian,Unknown,4/1/2009,,,,
-,,Jeremie,Brakus,9/11/1949,Male,unknown,Not Hispanic or Latino,4/2/2009,,,,
-,,Melisa,Hartmann,9/9/1966,Male,white,Hispanic or Latino,4/3/2009,,,,
-,,Sierra,McLaughlin,3/27/1960,Female,not reported,Not Hispanic or Latino,4/4/2009,,,,
-,,Amparo,Bashirian,2/24/1966,Male,black/african american,Not Hispanic or Latino,4/5/2009,,,,
-,,Maximillia,Wiegand,1/8/1990,Male,asian,Hispanic or Latino,4/6/2009,,,,
-,,Maymie,O'Keefe,1/1/1996,Female,native hawaiian/other pacific islander,Not Hispanic or Latino,4/7/2009,,,,
-,,Tyler,Glover,4/11/1954,Female,asian,Unknown,4/8/2009,,,,
-,,Caleigh,Kutch,7/4/1970,Male,black/african american,Not Hispanic or Latino,4/9/2009,,,,
-,,Abelardo,Gottlieb,12/29/1984,Male,native hawaiian/other pacific islander,Hispanic or Latino,4/10/2009,,,,
-,,Blair,Dietrich,10/7/1947,Female,american indian/alaska native,Not Hispanic or Latino,4/11/2009
-,,Adella,McGlynn,8/19/1964,Male,asian,Not Hispanic or Latino,4/12/2009
-,,Angelina,Greenholt,3/20/1960,Male,native hawaiian/other pacific islander,Hispanic or Latino,4/13/2009
-,,Odell,Huels,5/1/1972,Female,american indian/alaska native,Not Hispanic or Latino,4/14/2009
-,,Hannah,Koelpin,3/9/1959,Female,multiracial,Unknown,4/15/2009
-,,Elwyn,Borer,2/15/1957,Male,native hawaiian/other pacific islander,Not Hispanic or Latino,4/16/2009
-,,Ulices,Becker,3/21/1996,Male,native hawaiian/other pacific islander,Hispanic or Latino,4/17/2009
-,,Eve,Paucek,9/19/1961,Female,unknown,Not Hispanic or Latino,4/18/2009
-,,Camden,Goyette,1/10/1942,Male,unknown,Not Hispanic or Latino,4/19/2009
-,,Samson,Pacocha,11/5/1975,Male,multiracial,Hispanic or Latino,4/20/2009
-,,Milo,Hermann,5/22/1970,Female,multiracial,Not Hispanic or Latino,4/21/2009
-,,Dane,Pollich,7/16/1964,Female,american indian/alaska native,Unknown,4/22/2009
-,,Aryanna,Kessler,12/31/1963,Male,asian,Not Hispanic or Latino,4/23/2009
-,,Willie,Huels,10/15/1962,Male,multiracial,Hispanic or Latino,4/24/2009
-,,Grayce,Medhurst,11/21/1987,Female,asian,Not Hispanic or Latino,4/25/2009
-,,Abraham,Schoen,5/23/1978,Male,unknown,Not Hispanic or Latino,4/26/2009
-,,Howell,Erdman,7/17/1988,Male,asian,Hispanic or Latino,4/27/2009,,,,5/13/2009
-,,Oceane,Gottlieb,4/6/1949,Female,native hawaiian/other pacific islander,Not Hispanic or Latino,4/28/2009,,,,5/14/2009
-,,Desiree,Steuber,12/17/1960,Female,black/african american,Unknown,4/29/2009,,,,5/15/2009
-,,Vada,Prohaska,4/9/1973,Male,asian,Not Hispanic or Latino,4/30/2009,,,,5/16/2009
-,,Beryl,Mueller,5/8/1972,Male,white,Hispanic or Latino,5/1/2009,,,,5/17/2009
-,,Camryn,Pouros,6/22/1972,Female,white,Not Hispanic or Latino,5/2/2009,,,,5/18/2009
-,,Zelda,Douglas,9/17/1973,Male,asian,Not Hispanic or Latino,5/3/2009,,,,5/19/2009
-,,Kip,Grady,11/1/1955,Male,not reported,Hispanic or Latino,5/4/2009,,,,5/20/2009
-,,Kaden,Schroeder,5/16/1970,Female,not reported,Not Hispanic or Latino,5/5/2009,,,,5/21/2009
-,,Hillary,Aufderhar,10/5/1944,Female,multiracial,Unknown,5/6/2009,,,,5/22/2009
-,,Courtney,Oberbrunner,6/28/1997,Male,white,Not Hispanic or Latino,5/7/2009,,,,
-,,Patrick,Moen,11/25/1953,Male,black/african american,Hispanic or Latino,5/8/2009,,,,
-,,Joey,Koepp,2/21/1947,Female,black/african american,Not Hispanic or Latino,5/9/2009,,,,
-,,Hildegard,Marks,1/4/1970,Male,native hawaiian/other pacific islander,Not Hispanic or Latino,5/10/2009,,,,
-,,Carlotta,Emard,10/16/1948,Male,asian,Hispanic or Latino,5/11/2009,,,,
-,,Naomi,Breitenberg,1/2/1964,Female,not reported,Not Hispanic or Latino,5/12/2009,,,,
-,,Blanche,Kihn,5/25/1977,Female,black/african american,Unknown,5/13/2009,,,,
-,,Shanna,Stroman,3/29/1975,Male,asian,Not Hispanic or Latino,5/14/2009,,,,
-,,Mara,Botsford,6/22/1963,Male,black/african american,Hispanic or Latino,5/15/2009,,,,
-,,Ressie,Kuhic,7/28/1996,Female,not reported,Not Hispanic or Latino,5/16/2009,,,,
-,,Karlee,Feeney,8/19/1989,Male,native hawaiian/other pacific islander,Not Hispanic or Latino,5/17/2009,,,,
-,,Urban,Monahan,9/11/1977,Male,not reported,Hispanic or Latino,5/18/2009,,,,
-,,Marilou,Baumbach,6/18/1960,Female,multiracial,Not Hispanic or Latino,5/19/2009,,,,
-,,Laron,Padberg,3/1/1986,Female,native hawaiian/other pacific islander,Unknown,5/20/2009,,,,
-,,Lysanne,Farrell,6/11/1979,Male,not reported,Not Hispanic or Latino,5/21/2009,,,,6/7/2009
-,,Lenore,Roob,8/17/1978,Male,black/african american,Hispanic or Latino,5/22/2009,,,,6/8/2009
-,,Emanuel,Bruen,8/12/1986,Female,white,Not Hispanic or Latino,5/23/2009,,,,6/9/2009
-,,Marlin,Quitzon,7/28/1973,Male,native hawaiian/other pacific islander,Not Hispanic or Latino,5/24/2009,,,,6/10/2009
-,,Alphonso,Treutel,10/6/1987,Male,native hawaiian/other pacific islander,Hispanic or Latino,5/25/2009,,,,6/11/2009
-,,Destiny,Cummings,1/13/1997,Female,native hawaiian/other pacific islander,Not Hispanic or Latino,5/26/2009,,,,6/12/2009
-,,Gwen,Rowe,5/15/1976,Female,not reported,Unknown,5/27/2009,,,,6/13/2009
-,,Joannie,Lakin,9/13/1991,Male,unknown,Not Hispanic or Latino,5/28/2009,,,,
-,,Sofia,Stracke,11/9/1943,Male,not reported,Hispanic or Latino,5/29/2009
-,,Hulda,Gaylord,9/30/1943,Female,unknown,Not Hispanic or Latino,5/30/2009
-,,Guido,Fay,1/19/1954,Male,unknown,Not Hispanic or Latino,5/31/2009
-,,Janelle,Green,12/24/1995,Male,multiracial,Hispanic or Latino,6/1/2009
-,,Melisa,Moen,5/6/1976,Female,not reported,Not Hispanic or Latino,6/2/2009
-,,Maximus,Fahey,6/19/1969,Female,asian,Unknown,6/3/2009
-,,Ayana,Metz,7/26/1950,Male,asian,Not Hispanic or Latino,6/4/2009
-,,Armando,Gleason,6/27/1992,Male,white,Hispanic or Latino,6/5/2009
-,,Sophia,Kohler,12/11/1944,Female,unknown,Not Hispanic or Latino,6/6/2009
-,,Gaston,Ledner,5/1/1984,Male,white,Not Hispanic or Latino,6/7/2009
-,,Kathleen,Kovacek,5/22/1943,Male,american indian/alaska native,Hispanic or Latino,6/8/2009
-,,Rae,King,10/11/1994,Female,not reported,Not Hispanic or Latino,6/9/2009
-,,Leonardo,Volkman,8/22/1977,Female,native hawaiian/other pacific islander,Unknown,6/10/2009
-,,Tito,Kirlin,4/25/1954,Male,white,Not Hispanic or Latino,6/11/2009
-,,Abel,Will,10/11/1997,Male,black/african american,Hispanic or Latino,6/12/2009
-,,Janick,Ratke,6/6/1997,Female,multiracial,Not Hispanic or Latino,6/13/2009
-,,Justyn,Hegmann,4/19/1991,Male,unknown,Not Hispanic or Latino,6/14/2009
-,,Wyman,Bailey,5/30/1949,Male,multiracial,Hispanic or Latino,6/15/2009
-,,Zechariah,Schroeder,12/25/1985,Female,not reported,Not Hispanic or Latino,6/16/2009
-,,Mustafa,Schumm,4/12/1957,Female,native hawaiian/other pacific islander,Unknown,6/17/2009
-,,Lessie,Altenwerth,11/10/1968,Male,not reported,Not Hispanic or Latino,6/18/2009
+case_number,mrn,first_name,last_name,birth_date,gender,race,ethnicity,consented_on,consented_note,withdrawn_on,withdrawn_note,completed_on,completed_note,,Marlene,Cummings,2/22/1966,Female,American Indian/Alaska Native,Unknown,3/11/2009,,,,,,,Edgar,Kohler,1/26/1942,Male,Black/African American,Not Hispanic or Latino,3/12/2009,,,,,,,Luther,Towne,8/28/1945,Male,White,Hispanic or Latino,3/13/2009,,,,,,,Maximo,Ondricka,2/9/1994,Female,Native Hawaiian/Other Pacific Islander,Not Hispanic or Latino,3/14/2009,,,,,,,Jedidiah,Boyle,6/20/1987,Male,Unknown or Not Reported,Not Hispanic or Latino,3/15/2009,,,,,,,Clotilde,Toy,11/14/1989,Male,Native Hawaiian/Other Pacific Islander,Hispanic or Latino,3/16/2009,,,,,,,Chloe,O'Kon,12/26/1985,Female,Unknown or Not Reported,Not Hispanic or Latino,3/17/2009,,,,,,,Anika,Ruecker,5/15/1942,Female,American Indian/Alaska Native,Unknown,3/18/2009,,,,4/7/2009,,,Veda,Boehm,7/19/1982,Male,Black/African American,Not Hispanic or Latino,3/19/2009,,,,4/8/2009,,,Christ,Kertzmann,9/4/1943,Male,Asian,Hispanic or Latino,3/20/2009,,,,4/9/2009,,,Edwina,Dach,12/2/1987,Female,Black/African American,Not Hispanic or Latino,3/21/2009,,,,4/10/2009,,,Weldon,Pouros,1/13/1966,Male,Unknown or Not Reported,Not Hispanic or Latino,3/22/2009,,,,4/11/2009,,,Olin,Roberts,1/25/1989,Male,Black/African American,Hispanic or Latino,3/23/2009,,,,4/12/2009,,,Lamont,Parisian,10/29/1947,Female,Unknown or Not Reported,Not Hispanic or Latino,3/24/2009,,,,4/13/2009,,,King,Wilderman,12/17/1945,Female,Native Hawaiian/Other Pacific Islander,Unknown,3/25/2009,,,,4/14/2009,,,Marcelo,Hoeger,7/24/1955,Male,Black/African American,Not Hispanic or Latino,3/26/2009,,,,4/15/2009,,Lavern,Shields,11/17/1982,Male,American Indian/Alaska Native,Hispanic or Latino,3/27/2009,,,,,,Sammy,Kreiger,7/6/1970,Female,Black/African American,Not Hispanic or Latino,3/28/2009,,,,,,Cathryn,Stoltenberg,1/30/1955,Male,American Indian/Alaska Native,Not Hispanic or Latino,3/29/2009,,,,,,Rebeka,McCullough,3/7/1941,Male,More than one race,Hispanic or Latino,3/30/2009,,,,,,Candelario,Spinka,11/29/1984,Female,Asian,Not Hispanic or Latino,3/31/2009,,,,,,Florian,Towne,3/5/1953,Female,Asian,Unknown,4/1/2009,,,,,,Jeremie,Brakus,9/11/1949,Male,Unknown or Not Reported,Not Hispanic or Latino,4/2/2009,,,,,,Melisa,Hartmann,9/9/1966,Male,White,Hispanic or Latino,4/3/2009,,,,,,Sierra,McLaughlin,3/27/1960,Female,Unknown or Not Reported,Not Hispanic or Latino,4/4/2009,,,,,,Amparo,Bashirian,2/24/1966,Male,Black/African American,Not Hispanic or Latino,4/5/2009,,,,,,Maximillia,Wiegand,1/8/1990,Male,Asian,Hispanic or Latino,4/6/2009,,,,,,Maymie,O'Keefe,1/1/1996,Female,Native Hawaiian/Other Pacific Islander,Not Hispanic or Latino,4/7/2009,,,,,,Tyler,Glover,4/11/1954,Female,Asian,Unknown,4/8/2009,,,,,,Caleigh,Kutch,7/4/1970,Male,Black/African American,Not Hispanic or Latino,4/9/2009,,,,,,Abelardo,Gottlieb,12/29/1984,Male,Native Hawaiian/Other Pacific Islander,Hispanic or Latino,4/10/2009,,,,,,Blair,Dietrich,10/7/1947,Female,American Indian/Alaska Native,Not Hispanic or Latino,4/11/2009,,Adella,McGlynn,8/19/1964,Male,Asian,Not Hispanic or Latino,4/12/2009,,Angelina,Greenholt,3/20/1960,Male,Native Hawaiian/Other Pacific Islander,Hispanic or Latino,4/13/2009,,Odell,Huels,5/1/1972,Female,American Indian/Alaska Native,Not Hispanic or Latino,4/14/2009,,Hannah,Koelpin,3/9/1959,Female,More than one race,Unknown,4/15/2009,,Elwyn,Borer,2/15/1957,Male,Native Hawaiian/Other Pacific Islander,Not Hispanic or Latino,4/16/2009,,Ulices,Becker,3/21/1996,Male,Native Hawaiian/Other Pacific Islander,Hispanic or Latino,4/17/2009,,Eve,Paucek,9/19/1961,Female,Unknown or Not Reported,Not Hispanic or Latino,4/18/2009,,Camden,Goyette,1/10/1942,Male,Unknown or Not Reported,Not Hispanic or Latino,4/19/2009,,Samson,Pacocha,11/5/1975,Male,More than one race,Hispanic or Latino,4/20/2009,,Milo,Hermann,5/22/1970,Female,More than one race,Not Hispanic or Latino,4/21/2009,,Dane,Pollich,7/16/1964,Female,American Indian/Alaska Native,Unknown,4/22/2009,,Aryanna,Kessler,12/31/1963,Male,Asian,Not Hispanic or Latino,4/23/2009,,Willie,Huels,10/15/1962,Male,More than one race,Hispanic or Latino,4/24/2009,,Grayce,Medhurst,11/21/1987,Female,Asian,Not Hispanic or Latino,4/25/2009,,Abraham,Schoen,5/23/1978,Male,Unknown or Not Reported,Not Hispanic or Latino,4/26/2009,,Howell,Erdman,7/17/1988,Male,Asian,Hispanic or Latino,4/27/2009,,,,5/13/2009,,Oceane,Gottlieb,4/6/1949,Female,Native Hawaiian/Other Pacific Islander,Not Hispanic or Latino,4/28/2009,,,,5/14/2009,,Desiree,Steuber,12/17/1960,Female,Black/African American,Unknown,4/29/2009,,,,5/15/2009,,Vada,Prohaska,4/9/1973,Male,Asian,Not Hispanic or Latino,4/30/2009,,,,5/16/2009,,Beryl,Mueller,5/8/1972,Male,White,Hispanic or Latino,5/1/2009,,,,5/17/2009,,Camryn,Pouros,6/22/1972,Female,White,Not Hispanic or Latino,5/2/2009,,,,5/18/2009,,Zelda,Douglas,9/17/1973,Male,Asian,Not Hispanic or Latino,5/3/2009,,,,5/19/2009,,Kip,Grady,11/1/1955,Male,Unknown or Not Reported,Hispanic or Latino,5/4/2009,,,,5/20/2009,,Kaden,Schroeder,5/16/1970,Female,Unknown or Not Reported,Not Hispanic or Latino,5/5/2009,,,,5/21/2009,,Hillary,Aufderhar,10/5/1944,Female,More than one race,Unknown,5/6/2009,,,,5/22/2009,,Courtney,Oberbrunner,6/28/1997,Male,White,Not Hispanic or Latino,5/7/2009,,,,,,Patrick,Moen,11/25/1953,Male,Black/African American,Hispanic or Latino,5/8/2009,,,,,,Joey,Koepp,2/21/1947,Female,Black/African American,Not Hispanic or Latino,5/9/2009,,,,,,Hildegard,Marks,1/4/1970,Male,Native Hawaiian/Other Pacific Islander,Not Hispanic or Latino,5/10/2009,,,,,,Carlotta,Emard,10/16/1948,Male,Asian,Hispanic or Latino,5/11/2009,,,,,,Naomi,Breitenberg,1/2/1964,Female,Unknown or Not Reported,Not Hispanic or Latino,5/12/2009,,,,,,Blanche,Kihn,5/25/1977,Female,Black/African American,Unknown,5/13/2009,,,,,,Shanna,Stroman,3/29/1975,Male,Asian,Not Hispanic or Latino,5/14/2009,,,,,,Mara,Botsford,6/22/1963,Male,Black/African American,Hispanic or Latino,5/15/2009,,,,,,Ressie,Kuhic,7/28/1996,Female,Unknown or Not Reported,Not Hispanic or Latino,5/16/2009,,,,,,Karlee,Feeney,8/19/1989,Male,Native Hawaiian/Other Pacific Islander,Not Hispanic or Latino,5/17/2009,,,,,,Urban,Monahan,9/11/1977,Male,Unknown or Not Reported,Hispanic or Latino,5/18/2009,,,,,,Marilou,Baumbach,6/18/1960,Female,More than one race,Not Hispanic or Latino,5/19/2009,,,,,,Laron,Padberg,3/1/1986,Female,Native Hawaiian/Other Pacific Islander,Unknown,5/20/2009,,,,,,Lysanne,Farrell,6/11/1979,Male,Unknown or Not Reported,Not Hispanic or Latino,5/21/2009,,,,6/7/2009,,Lenore,Roob,8/17/1978,Male,Black/African American,Hispanic or Latino,5/22/2009,,,,6/8/2009,,Emanuel,Bruen,8/12/1986,Female,White,Not Hispanic or Latino,5/23/2009,,,,6/9/2009,,Marlin,Quitzon,7/28/1973,Male,Native Hawaiian/Other Pacific Islander,Not Hispanic or Latino,5/24/2009,,,,6/10/2009,,Alphonso,Treutel,10/6/1987,Male,Native Hawaiian/Other Pacific Islander,Hispanic or Latino,5/25/2009,,,,6/11/2009,,Destiny,Cummings,1/13/1997,Female,Native Hawaiian/Other Pacific Islander,Not Hispanic or Latino,5/26/2009,,,,6/12/2009,,Gwen,Rowe,5/15/1976,Female,Unknown or Not Reported,Unknown,5/27/2009,,,,6/13/2009,,Joannie,Lakin,9/13/1991,Male,Unknown or Not Reported,Not Hispanic or Latino,5/28/2009,,,,,,Sofia,Stracke,11/9/1943,Male,Unknown or Not Reported,Hispanic or Latino,5/29/2009,,Hulda,Gaylord,9/30/1943,Female,Unknown or Not Reported,Not Hispanic or Latino,5/30/2009,,Guido,Fay,1/19/1954,Male,Unknown or Not Reported,Not Hispanic or Latino,5/31/2009,,Janelle,Green,12/24/1995,Male,More than one race,Hispanic or Latino,6/1/2009,,Melisa,Moen,5/6/1976,Female,Unknown or Not Reported,Not Hispanic or Latino,6/2/2009,,Maximus,Fahey,6/19/1969,Female,Asian,Unknown,6/3/2009,,Ayana,Metz,7/26/1950,Male,Asian,Not Hispanic or Latino,6/4/2009,,Armando,Gleason,6/27/1992,Male,White,Hispanic or Latino,6/5/2009,,Sophia,Kohler,12/11/1944,Female,Unknown or Not Reported,Not Hispanic or Latino,6/6/2009,,Gaston,Ledner,5/1/1984,Male,White,Not Hispanic or Latino,6/7/2009,,Kathleen,Kovacek,5/22/1943,Male,American Indian/Alaska Native,Hispanic or Latino,6/8/2009,,Rae,King,10/11/1994,Female,Unknown or Not Reported,Not Hispanic or Latino,6/9/2009,,Leonardo,Volkman,8/22/1977,Female,Native Hawaiian/Other Pacific Islander,Unknown,6/10/2009,,Tito,Kirlin,4/25/1954,Male,White,Not Hispanic or Latino,6/11/2009,,Abel,Will,10/11/1997,Male,Black/African American,Hispanic or Latino,6/12/2009,,Janick,Ratke,6/6/1997,Female,More than one race,Not Hispanic or Latino,6/13/2009,,Justyn,Hegmann,4/19/1991,Male,Unknown or Not Reported,Not Hispanic or Latino,6/14/2009,,Wyman,Bailey,5/30/1949,Male,More than one race,Hispanic or Latino,6/15/2009,,Zechariah,Schroeder,12/25/1985,Female,Unknown or Not Reported,Not Hispanic or Latino,6/16/2009,,Mustafa,Schumm,4/12/1957,Female,Native Hawaiian/Other Pacific Islander,Unknown,6/17/2009,,Lessie,Altenwerth,11/10/1968,Male,Unknown or Not Reported,Not Hispanic or Latino,6/18/2009
