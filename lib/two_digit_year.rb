@@ -2,7 +2,8 @@ require 'chronic'
 
 class TwoDigitYear
   # https://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/2019-format-two-digit-years-correctly
-  
+  # http://chronic.rubyforge.org/
+  # http://chronic.rubyforge.org/classes/Chronic.html
   class << self
     def compensate_for_two_digit_year(date, cutoff_year = Date.today.strftime("%y").to_i)
       return nil if date.nil?
