@@ -34,7 +34,7 @@
         %th last accrual
     %tbody
       - @active_studies.each do |study, involvements|
-        - users = @active_users.select{|user, activities| activities.any?{|a| a.params.to_s =~ /#{study.irb_number}/ }}.map(&:first).uniq
+        - users = @active_users.select{|user, activities| activities.any?{|a| a.action != "show" && a.params.to_s =~ /#{study.irb_number}/ }}.map(&:first).uniq
         %tr
           %td= link_to study.irb_number, study_path(study)
           %td= involvements.size
