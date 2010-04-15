@@ -34,11 +34,11 @@
         %th last accrual
     %tbody
       - @active_studies.each do |study, involvements|
-        - users = User.find(Activity.find(:all, :conditions => ["action != ? AND params LIKE ?", "show", "%#{study.irb_number}%"]).map(&:whodiddit).uniq)
+        - users = @active_users.select{|user, activities| activities.any?{|a| a.params.to_s =~ /#{study.irb_number}/ }}.map(&:first).uniq
         %tr
           %td= link_to study.irb_number, study_path(study)
           %td= involvements.size
-          %th= users.map{|u| mail_to u.email, u.name}.join(", ")
+          %td= users.map{|u| mail_to u.email, u.name}.join(", ")
           %td= users.map(&:netid).join(", ")
           %td= "#{involvements.first.updated_at.to_date.to_s(:db)} | #{time_ago_in_words(involvements.first.updated_at)} ago"
 
