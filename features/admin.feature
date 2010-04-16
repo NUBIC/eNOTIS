@@ -7,18 +7,3 @@ Feature: Developer admin access
     Given I log in as "gns144" with password "stjames" on study "STU00144"
     And I go to the hub page
     Then I should be on the homepage
-    
-  Scenario: An admin should be able to visit the hub, see users and netids
-    Given the following users
-      | first_name | last_name | netid  |
-      | Pi         | Patel     | pip312 |
-      | Noah       | Fence     | nof112 |
-      | Joe        | King      | jki123 |
-    When I log in as admin "pbr312" with password "beer"
-    And I go to the hub page
-    Then I should be on the hub page
-    And I should see "4 users"
-    And I should see "Pi Patel"
-    And I should see "pip312"
-    And I should see "Noah Fence"
-    And I should see "Joe King"
