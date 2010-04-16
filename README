@@ -44,6 +44,17 @@ eNOTIS depends on a few important gems:
 
 1.3.0
 
+1.2.1
+
+* fixing bad ranges in death dates for fake subjects. closes #2629
+* handle csv exceptions better. closes #2320
+* removing old admin scenario
+* exclude searches in studies activities
+* more efficient queries, allow less vertical spacing on tables
+* show active users and studies in admin hub
+* activity belongs to user
+* new spring colors
+
 1.2.0
 
 * gracefully handle two digit years. closes #2616
