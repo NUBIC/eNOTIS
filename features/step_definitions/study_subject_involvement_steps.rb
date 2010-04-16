@@ -61,6 +61,19 @@ When /^I upload a file with valid data for 7 subjects$/ do
   click_button "Upload"  
 end
 
+When /^I upload an xls file$/ do
+  click_link("Import")
+  attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', 'excel.xls'))  
+  click_button "Upload"  
+end
+
+When /^I upload an xlsx file$/ do
+  click_link("Import")
+  attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', 'excel.xls'))  
+  click_button "Upload"  
+end
+
+
 When /^I export a csv of subjects$/ do
   click_link("Export")
   select "CSV", :from=>"File Format"  

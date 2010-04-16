@@ -15,13 +15,13 @@ describe StudyUpload do
   it "should fail if upload is blank" do
     @up = StudyUpload.new(:user_id => 2, :study_id => 2, :upload => nil)
     @up.legit?.should be_false
-    @up.summary.should =~ /please upload a file/
+    @up.summary.should =~ /Please upload a file/
   end
   
   it "should fail if upload doesn't have valid columns" do
     @up = Factory(:study_upload, :upload => up('missing_columns'))
     @up.legit?.should be_false
-    @up.summary.should =~ /columns are required/
+    @up.summary.should =~ /missing required columns/
   end
   
   it "should have errors if upload has blank or invalid race, ethnicity, or gender values" do

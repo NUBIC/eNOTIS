@@ -26,34 +26,43 @@ class StudyUpload < ActiveRecord::Base
   end
   def upload_exists?
     # logger.info "upload exists?"
-    self.summary = "No file given, please upload a file." unless self.upload.valid?
+    self.summary = "Oops. Please upload a file." unless self.upload.valid?
     return self.upload.valid?
   end
   def parse_upload
-    # logger.info "parse_upload"
-    csv_is_valid = true
-    temp_file = Paperclip::Tempfile.new("results.csv")
-    FasterCSV.open(temp_file.path, "r+") do |temp_stream|
-      FasterCSV.parse(self.upload.to_io, :headers => :first_row, :return_headers => true, :header_converters => :symbol) do |r|
-        if r.header_row? # check header row
-          return false if missing_columns?(r)
-          temp_stream << r.fields + ["Result"]
-        else # check non-header rows
-          if (e = errors_for_row(r)).compact.empty?
-            temp_stream << r.fields + ["Ok"]
-          else
-            temp_stream << r.fields + [e.join(". ")]
-            self.summary = "There were issues with the file you uploaded. Please open the result and fix the issues indicated."
-            csv_is_valid = false
+    begin
+      # logger.info "parse_upload"
+      csv_is_valid = true
+      temp_file = Paperclip::Tempfile.new("results.csv")
+      FasterCSV.open(temp_file.path, "r+") do |temp_stream|
+        FasterCSV.parse(self.upload.to_io, :headers => :first_row, :return_headers => true, :header_converters => :symbol) do |r|
+          if r.header_row? # check header row
+            if missing_columns?(r)
+              csv_is_valid = false
+              return false
+            end
+            temp_stream << r.fields + ["Result"]
+          else # check non-header rows
+            if (e = errors_for_row(r)).compact.empty?
+              temp_stream << r.fields + ["Ok"]
+            else
+              temp_stream << r.fields + [e.join(". ")]
+              self.summary = "Oops. Your upload had some issues. Please open the result and fix the issues indicated."
+              csv_is_valid = false
+            end
           end
         end
       end
+      self.result = temp_file if !csv_is_valid
+      self.result_file_name = self.upload_file_name.gsub(/(\.csv)?$/, '-result.csv')
+    rescue #FasterCSV::MalformedCSVError
+      csv_is_valid = false
+      self.summary = "Oops. Your upload is not a valid CSV file."
+    ensure
+      temp_file.close!
+      self.save
+      return csv_is_valid
     end
-    self.result = temp_file if !csv_is_valid
-    self.result_file_name = self.upload_file_name.gsub(/(\.csv)?$/, '-result.csv')
-    temp_file.close!
-    self.save
-    return csv_is_valid
   end
   def create_subjects
     # logger.info "create_subjects"
@@ -130,7 +139,7 @@ class StudyUpload < ActiveRecord::Base
     if missing.empty?
       return false
     else
-      self.summary = "The following columns are required: #{missing.join(', ')}"
+      self.summary = "Oops. Your upload is missing required columns: #{missing.join(', ')}"
       self.save
       return true
     end
