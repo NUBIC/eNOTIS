@@ -44,7 +44,7 @@ class InvolvementsController < ApplicationController
     if @involvement.save
       flash[:notice] = "Created"
     else
-      flash[:error] = "Error"
+      flash[:error] = "Error: #{@involvement.errors.full_messages}"
     end
     redirect_to study_path(study)
   end
@@ -56,7 +56,7 @@ class InvolvementsController < ApplicationController
     if @involvement.update_attributes(params[:involvement])
       flash[:notice] = "Created"
     else
-      flash[:error] = "Error #{@involvement.errors.full_messages }"
+      flash[:error] = "Error: #{@involvement.errors.full_messages}"
     end
     redirect_to study_path(study)
   end
