@@ -55,12 +55,17 @@
     th dtr.withdrawn, td span.withdrawn
       :color #aaa  
   #import
-    :width 475px
+    +column(48)
+    :display none
     .upload
       :margin-top 0
-      +column(24, true)
+      +column(16)
+    .instructions
+      +column(32, true)
+      table tr td
+        :padding 0 5px 0 0
     .uploads
-      +column(24, true)
+      +column(48, true)
   #involvement
     :width 909px
   #export
