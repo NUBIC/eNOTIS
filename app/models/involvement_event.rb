@@ -8,6 +8,9 @@ class InvolvementEvent < ActiveRecord::Base
   # Associations
   belongs_to :involvement
   
+  # Validations
+  validates_uniqueness_of :event, :scope => [:involvement_id, :occurred_on], :message => "This activity and date has already been entered"
+  
   # Named scopes
   default_scope :order => "occurred_on"
   named_scope :on_study, lambda {|study_id| { :include => :involvement, :conditions => ['involvements.study_id=?', study_id], :order => 'involvement_events.occurred_on DESC' } } do

@@ -51,11 +51,12 @@ class InvolvementsController < ApplicationController
   
   def update
     @involvement = Involvement.find(params[:id])
+    @involvement_events = @involvement.involvement_events
     study = Study.find_by_irb_number(params[:study][:irb_number])
     if @involvement.update_attributes(params[:involvement])
       flash[:notice] = "Created"
     else
-      flash[:error] = "Error"
+      flash[:error] = "Error #{@involvement.errors.full_messages }"
     end
     redirect_to study_path(study)
   end
