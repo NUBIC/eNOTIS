@@ -14,4 +14,7 @@ describe TwoDigitYear do
   it "should handle nils" do
     TwoDigitYear.compensate_for_two_digit_year(nil).should be_nil
   end
+  it "should handle blanks" do
+    TwoDigitYear.compensate_for_two_digit_year("").should be_nil
+  end
 end
