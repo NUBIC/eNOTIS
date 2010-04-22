@@ -17,7 +17,11 @@ describe InvolvementEvent do
     b = Factory.build(:involvement_event, :event => event, :occurred_on => occurred_on, :involvement => involvement)
     b.should_not be_valid
   end
-
+  it "should accept events (case insensitive) and set the right case" do
+    InvolvementEvent.new(:event => "cOnSeNtEd").event.should == "Consented"
+    InvolvementEvent.new(:event => "completed").event.should == "Completed"
+    InvolvementEvent.new(:event => "WITHDRAWN").event.should == "Withdrawn"
+  end
   it "should return all involvement events on a given study" do
     @study = Factory(:fake_study)
     @not_my_study = Factory(:fake_study)

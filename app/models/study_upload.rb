@@ -152,7 +152,7 @@ class StudyUpload < ActiveRecord::Base
   end
   def check_terms(hash)
     %w(gender ethnicity race).map do |category|
-      "#{hash[category.to_sym].blank? ? "Blank #{category.capitalize}" : "Unknown #{category.capitalize}: #{hash[category.to_sym]}"}" unless Involvement.send(category.pluralize).include?(hash[category.to_sym].to_s)
+      "#{hash[category.to_sym].blank? ? "Blank #{category.capitalize}" : "Unknown #{category.capitalize}: #{hash[category.to_sym]}"}" unless Involvement.send(category.pluralize).map(&:downcase).include?(hash[category.to_sym].downcase.to_s)
     end
   end
   def check_event_dates(hash)

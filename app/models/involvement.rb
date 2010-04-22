@@ -15,7 +15,7 @@ class Involvement < ActiveRecord::Base
   has_many :involvement_events
   
   # Atrributes
-  accepts_nested_attributes_for :involvement_events, :reject_if => lambda {|a| a["occurred_on"].blank? or a["event"].blank? }
+  accepts_nested_attributes_for :involvement_events, :reject_if => lambda {|a| logger.warn("**** #{a.inspect}"); true }#raise "foo" if (a["occurred_on"].blank? or a["event"].blank?) }
   accepts_nested_attributes_for :subject
   
   # Named scope
@@ -54,8 +54,12 @@ class Involvement < ActiveRecord::Base
       # genders, ethnicities, races
       define_method("#{category.pluralize}".to_sym){ self.send("#{category}_definitions").transpose[0] }
       # define_gender, define_ethnicity, define_race
-      define_method("define_#{category}".to_sym){|term| (self.send("#{category}_definitions").detect{|t,d| t == term} || [])[1] } 
+      define_method("define_#{category}".to_sym){|term| (self.send("#{category}_definitions").detect{|t,d| t == term} || [])[1] }
     end
+  end
+  %w(gender ethnicity race).each do |category|
+    # gender=, ethnicity=, race= (make case insensitive)
+    define_method("#{category}="){|term| write_attribute(category.to_sym, self.class.send(category.pluralize).detect{|x| x.downcase == term.downcase})}
   end
   def short_ethnicity
     return "" if ethnicity.blank?
