@@ -38,7 +38,7 @@ class InvolvementEvent < ActiveRecord::Base
     write_attribute :occurred_on, Chronic.parse(date)
   end
   def event=(e)
-    write_attribute :event, self.class.events.detect{|x| x.downcase == e.downcase}
+    write_attribute :event, self.class.events.detect{|x| x.downcase == e.to_s.downcase}
   end
 
   # Public class methods
