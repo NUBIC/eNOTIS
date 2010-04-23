@@ -37,8 +37,9 @@ class User < ActiveRecord::Base
   end
   
   # Fills in data in postgres from the redis copy of the ldap server
-  def self.redis_import
-    redis = Redis::Namespace.new('eNOTIS:user', :redis => Redis.new)
+  def self.update_from_redis
+    config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
+    redis = Redis::Namespace.new('eNOTIS:user',:redis => Redis.new(config))
     users = redis.keys '*'
     users.each do |redis_user|
       user_hash = HashWithIndifferentAccess.new(redis.hgetall(redis_user))
@@ -108,9 +109,5 @@ class User < ActiveRecord::Base
   
   def self.redis_cache_lookup(netid)
     HashWithIndifferentAccess.new(cache_connect.hgetall(netid))
-  end
-  
-  def self.multi_cache_lookup(netids)
-    netids.inject([]){ |result, netid| result << redis_cache_lookup(netid)}
-  end
+  end  
 end

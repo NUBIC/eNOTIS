@@ -30,12 +30,12 @@ class ENRedisPeoplePopulator
       end
       end_time = Time.now
       puts "Imported #{co_investigators_key} in #{end_time - start_time} seconds"
-    when "primary_investigators"
-      pi_key = "primary_investigators:#{irb_number}"
+    when "principal_investigators"
+      pi_key = "principal_investigators:#{irb_number}"
       if force==true
-        import_co_investigators(irb_number,redis,pi_key)
+        import_principal_investigators(irb_number,redis,pi_key)
       else
-        import_co_investigators(irb_number,redis,pi_key) unless redis.exists(pi_key)
+        import_principal_investigators(irb_number,redis,pi_key) unless redis.exists(pi_key)
       end
       end_time = Time.now
       puts "Imported #{pi_key} in #{end_time - start_time} seconds"
@@ -45,7 +45,7 @@ class ENRedisPeoplePopulator
   def self.import_coordinators(irb_number,redis,coordinators_key)
     Eirb.find_coordinators({:irb_number => irb_number}).each do |coordinator|
       netid = coordinator[:netid]
-      redis.lpush(coordinators_key,netid) unless redis.lrange(coordinators_key,0,-1).include? netid
+      redis.sadd(coordinators_key,netid)
       Resque.enqueue(ENRedisLdapper,netid)
     end
   end
@@ -53,15 +53,15 @@ class ENRedisPeoplePopulator
   def self.import_co_investigators(irb_number,redis,co_investigators_key)
     Eirb.find_co_investigators({:irb_number => irb_number}).each do |co_investigator|
       netid = co_investigator[:netid]
-      redis.lpush(co_investigators_key,netid) unless redis.lrange(co_investigators_key,0,-1).include? netid
+      redis.sadd(co_investigators_key,netid)
       Resque.enqueue(ENRedisLdapper,netid)
     end
   end
   
-  def self.import_primary_investigators(irb_number,redis,pi_key)
+  def self.import_principal_investigators(irb_number,redis,pi_key)
     Eirb.find_principal_investigators({:irb_number => irb_number}).each do |principal_investigator|
       netid = principal_investigator[:netid]
-      redis.lpush(pi_key,netid) unless redis.lrange(pi_key,0,-1).include? netid
+      redis.sadd(pi_key,netid)
       Resque.enqueue(ENRedisLdapper,netid)
     end
   end

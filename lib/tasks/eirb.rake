@@ -9,9 +9,9 @@ namespace :eirb do
     `script/runner 'Study.update_from_cache'` 
   end
 
-  namespace :redis do
+  namespace :redis_import do
     desc "Full Import"
-    task :full_import => [:dependent, :tasks] do
+    task :full => :environment do
       require 'webservices/eirb'
       Eirb.connect
       puts "#{Time.now}: Getting status for all studies "
@@ -20,15 +20,16 @@ namespace :eirb do
       irb_numbers.each do |numbers|
         irb_number = numbers[:irb_number]
         puts "Priming queues for #{irb_number}"
-        Resque.enqueue(ENRedisStudyPopulator, irb_number)
-        Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'coordinator')
-        Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'co_investigators')
-        Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'primary_investigators')
+        # Resque.enqueue(ENRedisStudyPopulator, irb_number)
+        Resque.enqueue(ENRedisAuthorizedPersonnelPopulator, irb_number)
+        # Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'coordinator')
+        # Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'co_investigators')
+        # Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'principal_investigators')
       end
     end
     
     desc "Nightly 1 day import"
-    task :nightly_import => :environment do
+    task :nightly => :environment do
       require 'webservices/eirb'
       Eirb.connect
       puts "#{Time.now}: getting status "
@@ -40,7 +41,7 @@ namespace :eirb do
         Resque.enqueue(ENRedisStudyPopulator, irb_number, true)
         Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'coordinator', true)
         Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'co_investigators', true)
-        Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'primary_investigators', true)
+        Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'principal_investigators', true)
       end
     end
   end
