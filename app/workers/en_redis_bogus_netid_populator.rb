@@ -1,6 +1,7 @@
-class ENRedisLdapper
-  @queue = :redis_ldapper
-  
+class ENRedisBogusNetidPopulator
+
+  @queue = :redis_bogus_netid
+
   def self.perform(netid, email, force=false)
     if Rails.env.production?
       conf_data = YAML::load(File.read("/etc/nubic/bcsec-prod.yml"))
@@ -15,18 +16,6 @@ class ENRedisLdapper
       ldap_server     "directory.northwestern.edu"
     end
     
-    r = Redis.new
-    user_key = "eNOTIS:user:#{netid}"
-    unless r.exists(user_key) || force==true
-      user = Bcsec::NetidAuthenticator.find_user(netid)
-      if user 
-        user.instance_values.each do |k,v|
-          r.hset(user_key,k,v)
-        end
-      else
-        Resque.enqueue(ENRedisBogusNetid, email)
-      end
-    end
-    puts "Imported #{user_key}"
+    #TODO: Handle Bogus emails once Rhett adds the capability to BCSEC
   end
 end
