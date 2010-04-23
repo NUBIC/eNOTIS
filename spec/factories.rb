@@ -47,7 +47,7 @@ Factory.define :fake_subject, :parent => :subject do |p|
   p.middle_name               {Faker::Name.first_name}
   p.last_name                 {Faker::Name.last_name}
   p.birth_date                {Populator.value_in_range(70.years.ago..12.years.ago).to_date}
-  p.death_date                {|me| DEATH_RATE.rand ? Populator.value_in_range(((me.birth_date || 12.years.ago)+5.years)..2.years.ago) : nil}
+  p.death_date                {|me| DEATH_RATE.rand ? Populator.value_in_range((((me.birth_date || 12.years.ago)+5.years).to_date)..(2.years.ago.to_date)) : nil}
   p.address_line1             {Faker::Address.street_address}
   p.address_line2             {Faker::Address.secondary_address}
   p.address_line3             {nil} 

@@ -25,6 +25,17 @@ When /^I add a case number "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do |case_n
   click_button "Save"
 end
 
+Then /^I add edit subject "([^\"]*)" "([^\"]*)" with 2nd event "([^\"]*)" on "([^\"]*)"$/ do |first, last, event, date|
+  sid = Subject.find_by_first_name_and_last_name(first, last).id
+  within ".subject_#{sid}" do |scope|
+    scope.click_link "Edit"
+  end
+  select event, :from => :involvement_involvement_events_attributes_1_event
+  fill_in :involvement_involvement_events_attributes_1_occurred_on, :with => date
+  click_button "Save"
+end
+
+
 Given /^the study "([^\"]*)" has the following subjects$/ do |id, table|
   study = Study.find_by_irb_number(id)
   table.hashes.each do |hash|
@@ -48,8 +59,17 @@ Given /^subject "([^\"]*)" has event "([^\"]*)" on study "([^\"]*)"$/ do |mrn, t
 end
 
 Then /^subject "([^\"]*)" should have (\d+) events? on study "([^\"]*)"$/ do |mrn, x, irb_number|
-  Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number)).involvement_events.should have(x.to_i).involvement_events
+  subject_id = Subject.find_by_mrn(mrn).id
+  study_id = Study.find_by_irb_number(irb_number).id
+  Involvement.find_by_subject_id_and_study_id(subject_id, study_id).involvement_events.should have(x.to_i).involvement_events
 end
+
+Then /^subject "([^\"]*)" "([^\"]*)" should have (\d+) events? on study "([^\"]*)"$/ do |first, last, x, irb_number|
+  subject_id = Subject.find_by_first_name_and_last_name(first, last).id
+  study_id = Study.find_by_irb_number(irb_number).id
+  Involvement.find_by_subject_id_and_study_id(subject_id, study_id).involvement_events.should have(x.to_i).involvement_events
+end
+
 
 Then /^subject "([^\"]*)" should not be involved with study "([^\"]*)"$/ do |mrn, irb_number|
   Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number)).should be_blank
@@ -60,6 +80,19 @@ When /^I upload a file with valid data for 7 subjects$/ do
   attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', 'good.csv'))  
   click_button "Upload"  
 end
+
+When /^I upload an xls file$/ do
+  click_link("Import")
+  attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', 'excel.xls'))  
+  click_button "Upload"  
+end
+
+When /^I upload an xlsx file$/ do
+  click_link("Import")
+  attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', 'excel.xls'))  
+  click_button "Upload"  
+end
+
 
 When /^I export a csv of subjects$/ do
   click_link("Export")

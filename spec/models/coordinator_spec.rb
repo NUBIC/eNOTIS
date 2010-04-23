@@ -21,4 +21,8 @@ describe Coordinator do
     study.coordinators.map(&:netid).include?("abc123").should be_true
   end
 
+  it "should be invalid without user or study" do
+    Coordinator.new(:user_id => 3).should have(1).error_on(:study_id)
+    Coordinator.new(:study_id => 1).should have(1).error_on(:user_id)
+  end
 end

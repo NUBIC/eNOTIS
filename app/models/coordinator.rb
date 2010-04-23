@@ -10,6 +10,7 @@ class Coordinator < ActiveRecord::Base
  
   # Validators
   validates_uniqueness_of :user_id, :scope => :study_id
+  validates_presence_of :user_id, :study_id
 
   def self.update_from_redis
     Coordinator.delete_all

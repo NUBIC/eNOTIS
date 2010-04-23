@@ -8,6 +8,10 @@ class InvolvementEvent < ActiveRecord::Base
   # Associations
   belongs_to :involvement
   
+  # Validations
+  validates_uniqueness_of :event, :scope => [:involvement_id, :occurred_on], :message => "This activity and date has already been entered"
+  validates_inclusion_of :event, :in => %w(Consented Completed Withdrawn)  
+
   # Named scopes
   default_scope :order => "occurred_on"
   named_scope :on_study, lambda {|study_id| { :include => :involvement, :conditions => ['involvements.study_id=?', study_id], :order => 'involvement_events.occurred_on DESC' } } do
@@ -32,6 +36,9 @@ class InvolvementEvent < ActiveRecord::Base
   # Public instance methods
   def occurred_on=(date)
     write_attribute :occurred_on, Chronic.parse(date)
+  end
+  def event=(e)
+    write_attribute :event, self.class.events.detect{|x| x.downcase == e.to_s.downcase}
   end
 
   # Public class methods

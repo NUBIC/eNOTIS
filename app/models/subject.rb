@@ -2,8 +2,10 @@
 # We store enough data to sync the local db record with the subject data in the EDW.
 # The model stores the fields and information about the source system for the data.
 require 'ruport'
+require 'two_digit_year'
 
 class Subject < ActiveRecord::Base
+  
   # Associations
   has_many :involvements
   has_many :studies, :through => :involvements
@@ -54,7 +56,7 @@ class Subject < ActiveRecord::Base
   end
   
   def birth_date=(date)
-    write_attribute :birth_date, Chronic.parse(date)
+    write_attribute :birth_date, TwoDigitYear.compensate_for_two_digit_year(date)
   end
 
   def merge!(subject)

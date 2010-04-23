@@ -42,10 +42,36 @@ eNOTIS depends on a few important gems:
   
 == Changes ==
 
+1.3.0
+
+1.2.1
+
+* fixing bad ranges in death dates for fake subjects. closes #2629
+* handle csv exceptions better. closes #2320
+* removing old admin scenario
+* exclude searches in studies activities
+* more efficient queries, allow less vertical spacing on tables
+* show active users and studies in admin hub
+* activity belongs to user
+* new spring colors
+
 1.2.0
 
-* change factories to prevent duplicate key contraint errors on the involvement events index. The key is violated when two factory generated involvement events have the same date and event. This happens quite often. Since there are 3 events, and two possible days, the probability is 1/6. closes #2325
-* version bump
+* gracefully handle two digit years. closes #2616
+* date picker for date of birth
+* fixed upload of 100
+* symlink static web images and stylesheets. symlink uploads and results to shared path. closes #2535
+* typo in StudyUpload calling required_columns on self (instance) instead of StudyUpload (class)
+* changing sample file to be dynamically generated, and downloaded as an attachment instead of inlined into browser. References 
+#2536
+* added feature for downloads #2493
+* closes #2493
+* version number change
+* use shared bundler directory. enforce group permissions after deploy. closes #2304
+* updated installation instructions, changes since 1.0.0
+* change factories to prevent duplicate key contraint errors on the involvement events index. The key is violated when two facto
+ry generated involvement events have the same date and event. This happens quite often. Since there are 3 events, and two possib
+le days, the probability is 1/6. closes #2325
 
 1.1.0
 

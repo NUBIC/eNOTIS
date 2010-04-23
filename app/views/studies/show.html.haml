@@ -12,16 +12,17 @@
     $('#study_information').hide(10); // need an arbitrary delay to have hide happen after pieChart
     });
 #study
-  #study_title
+  .title
     = link_to "#{status_icon @study} #{@study.irb_number || "(no id)"}", "#", :rel => "#study_information"
-  #study_name_and_count
-    .study_name{:title => @study.name}= @study.name
-    .subject_count
-      = "Subjects #{@involvements.size}"
-      %span{:title => "Accural goal"}= " | #{@study.accrual_goal}" unless @study.accrual_goal.blank?
+  .name{:title => @study.name}= @study.name
+  .accrual_count
+    = @involvements.size
+    %label Subjects
+  .accrual_goal
+    = @study.accrual_goal.blank? ? "&nbsp;" : @study.accrual_goal
+    %label Goal
   #study_information
     = render :partial => 'partials/study_info', :locals => {:study => @study}
-    
   #accrual
     #actions
       = link_to("Add", new_involvement_path(:study => @study), :rel => '#involvement', :class => 'add')

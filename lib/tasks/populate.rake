@@ -91,7 +91,15 @@ namespace :db do
       10.times { |i| puts random(User).netid}
       puts
     end 
-
+    
+    desc 'Populate vip coordinators manually'
+    task :vip => :environment do
+      while !(pair = ask("netid, irb_number: ")).blank? do
+        netid, irb_number = pair.split(",", 2).map(&:strip)
+        coord = Coordinator.create(:user => User.find_by_netid(netid), :study => Study.find_by_irb_number(irb_number))
+        puts coord.save ? coord.inspect : coord.all_errors
+      end
+    end
   end
 end
 
@@ -104,4 +112,8 @@ end
 def blip
   print %w(\\ /).rand # print %w(! @ # $ % ^ & * ( ) _ + - = { } [ ] \\ | ; : ' " " ' < > , . / ?).rand  # print (%w(a b c d e f g h i j k l m n o p q r s t u v w x y z) + Array.new(10, " ")).rand
   return true
+end
+def ask(message)
+  print message
+  STDIN.gets.chomp
 end

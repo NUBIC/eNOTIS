@@ -19,10 +19,19 @@ Feature: Manage subjects
     And I should see "Created"
 
   Scenario: A coordinator can add an event for an existing subject
-    # And subject "90210d" should have 2 events on study "STU001248"
+    When I add a subject "Jack" "Daripur" with "Consented" on "2009-07-01"
+    Then I should be on the study page for id "STU001248"
+    And I should see "Created"
+    And I add edit subject "Jack" "Daripur" with 2nd event "Completed" on "2010-04-19"
+    And subject "Jack" "Daripur" should have 2 events on study "STU001248"
 
-  Scenario: A coordinator can remove an event for an existing subject
-    # Then subject "90210e" should have 1 event on study "STU001248"
+  Scenario: A coordinator cannot add a duplicate event for an existing subject
+    When I add a subject "Jack" "Daripur" with "Consented" on "2009-07-01"
+    Then I should be on the study page for id "STU001248"
+    And I should see "Created"
+    And I add edit subject "Jack" "Daripur" with 2nd event "Consented" on "2009-07-01"
+    Then I should see " has already been entered"
+    And subject "Jack" "Daripur" should have 1 events on study "STU001248"
   
   Scenario: A coordinator can remove a subject by deleting all involvement events
     # Then subject "90210f" should not be involved with study "STU001248"

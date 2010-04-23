@@ -1,32 +1,49 @@
 #report
 #study
-  #study_title
+  .title
     +column(9.5)
     :font-size 20px
     a
       :text-decoration none
       :background transparent url('/images/icons/toggle.png') right -2px no-repeat
       :padding 0 28px 0px 5px
-      :height 30px
+      :height 30px 
     a.open
       :background transparent url('/images/icons/toggle.png') right -32px no-repeat
-  #study_name_and_count
+  .name, .accrual_count, #study_information
+    :border-left 1px solid #bababa
+  .name
     +column(36, true)
     +squeeze
-    :border-left 1px solid #bababa
-    .study_name
-      :font-size 16px
-      :color #666
-      :white-space nowrap
-      :overflow hidden
-    .subject_count
-      :font-size 20px
-      :color #444
+    :font-size 16px
+    :line-height 30px
+    :color #666
+    :white-space nowrap
+    :overflow hidden
+  .accrual_count, .accrual_goal
+    :float left
+    label
+      :display block
+      :font-size 11px
+      :color #999
+      :font-weight normal
+  .accrual_count
+    :margin 0 6px 0 190px
+    :padding-left 20px
+    :text-align right
+    :font-size 20px
+    :color #222
+    :font-weight bold
+  .accrual_goal
+    :margin-top 6px
+    :padding-left 24px
+    :text-align left
+    :font-size 16px
+    :background transparent url('/images/slash.png') no-repeat
   #study_information
     :margin-left 190px
     +column(36, true)
     +squeeze
-    :border-left 1px solid #bababa
     .details
       :clear left
       span
@@ -37,6 +54,7 @@
         :height 150px
         :float left
   #accrual
+    :clear left
     #actions
       :font-size 20px
       :float right
@@ -55,12 +73,17 @@
     th dtr.withdrawn, td span.withdrawn
       :color #aaa  
   #import
-    :width 475px
+    +column(48)
+    :display none
     .upload
       :margin-top 0
-      +column(24, true)
+      +column(16)
+    .instructions
+      +column(32, true)
+      table tr td
+        :padding 0 5px 0 0
     .uploads
-      +column(24, true)
+      +column(48, true)
   #involvement
     :width 909px
   #export

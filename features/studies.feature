@@ -23,7 +23,7 @@ Feature: Manage studies
     | Picop N    | Dropov    |
     | Dewey      | Cheetham  |
     When I go to the study page for id "STU001248"
-    Then I should see "Subjects 3"
+    Then I should see "3"
     And I should see "Innovera"
     And I should see "Dropov"
 
@@ -38,7 +38,6 @@ Feature: Manage studies
     Given a study "Vitamin E and exertion" with id "STU001249" and irb_status "Approved"
     When I go to the study page for id "werewolf"
     Then I should be redirected to the studies page
-
 
   Scenario: A coordinator can download all subjects on a study
     Given the study "STU001248" has the following subjects
