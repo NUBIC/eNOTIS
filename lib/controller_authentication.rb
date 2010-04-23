@@ -65,7 +65,6 @@ module ControllerAuthentication
     # However, **all session state variables should be unset here**.
     def logout_keeping_session!
       # Kill server-side auth cookie
-      @current_user.forget_me if @current_user.is_a? User
       @current_user = false     # not logged in, and don't do it for me
       session[:user_id] = nil   # keeps the session but kill our variable
       # explicitly kill any other session variables you set

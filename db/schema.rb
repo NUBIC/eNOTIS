@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090902092032) do
+ActiveRecord::Schema.define(:version => 20100419194501) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -24,6 +24,29 @@ ActiveRecord::Schema.define(:version => 20090902092032) do
     t.string  "key"
     t.text    "value"
   end
+
+  create_table "authorized_people", :force => true do |t|
+    t.integer  "study_id"
+    t.integer  "user_id"
+    t.string   "project_role"
+    t.string   "consent_role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "authorized_people", ["consent_role"], :name => "index_authorized_people_on_consent_role"
+  add_index "authorized_people", ["project_role"], :name => "index_authorized_people_on_project_role"
+  add_index "authorized_people", ["study_id"], :name => "index_authorized_people_on_study_id"
+  add_index "authorized_people", ["user_id"], :name => "index_authorized_people_on_user_id"
+
+  create_table "co_investigators", :force => true do |t|
+    t.integer  "study_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "co_investigators", ["study_id", "user_id"], :name => "co_investigators_attr_idx", :unique => true
 
   create_table "coordinators", :force => true do |t|
     t.integer  "study_id"
@@ -59,6 +82,15 @@ ActiveRecord::Schema.define(:version => 20090902092032) do
   end
 
   add_index "involvements", ["subject_id", "study_id", "ethnicity", "gender"], :name => "involvements_attr_idx", :unique => true
+
+  create_table "principal_investigators", :force => true do |t|
+    t.integer  "study_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "principal_investigators", ["study_id", "user_id"], :name => "principal_investigators_attr_idx", :unique => true
 
   create_table "resource_statuses", :force => true do |t|
     t.string   "name",       :null => false

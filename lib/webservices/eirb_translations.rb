@@ -42,6 +42,8 @@ EIRB_TO_NOTIS = {
 "SF - Authorized Personnel.Authorized Personnel.Person.User ID" =>                                                :netid,
 "ID" =>                                                                                                           :irb_number,
 "SF - Authorized Personnel.Authorized Personnel.Project Role" =>                                                  :project_role,
+"SF - Authorized Personnel.Authorized Personnel.Role is consent process" =>
+:consent_role,
 # eNOTIS Study Status 
 "Project State.ID" =>   :irb_status,
 "ID" =>                 :irb_number,

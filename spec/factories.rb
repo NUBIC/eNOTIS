@@ -71,15 +71,6 @@ Factory.define :study do |p|
   p.research_type         {}
   #p.description           {"Rem fugit culpa unde facilis earum. Quas et vitae ut cumque nihil quidem aperiam architecto. Et asperiores inventore non nisi libero architecto quibusdam.\r\n\r\nVeniam fugiat voluptas laudantium in assumenda. Blanditiis recusandae illum necessitatibus. Quia nesciunt esse officia neque doloribus vel explicabo provident. Non sit vero iusto quibusdam explicabo. Nobis in architecto quam pariatur sit autem optio."}
   p.irb_status            {"Approved"}
-  p.eirb_json             {{
-    "principal_investigators" => [{"netid" => "tuh532",
-        "first_name" => "Terry",
-        "last_name" => "Hulu",
-        "email" => "t-hulu@northwestern.edu"}],
-    "coordinators" => [{"netid" => "cab133",
-        "first_name" => "Carter",
-        "last_name" => "Baggs",
-        "email" => "cbaggs@northwestern.edu"}]}}
 end
 
 Factory.define :fake_study, :parent => :study do |p|
@@ -89,18 +80,6 @@ Factory.define :fake_study, :parent => :study do |p|
   p.research_type         {["Bio-medical","Bio-medical","Bio-medical","Social/Behavioral",""].rand}
   #p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
   p.irb_status            {Faker::Study.eirb_status}
-  p.eirb_json do |me|
-    {:principal_investigators =>
-    [{"first_name" => Faker::Name.first_name,
-    "last_name" => Faker::Name.last_name,
-    "email" => Faker::Internet.email,
-    "netid" => "#{Faker::Name.first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{Faker::Name.last_name.gsub(/[^a-zA-Z]/,'')[0,2]}#{(100..999).to_a.rand}".downcase}],
-    :coordinators => [{"first_name" => Faker::Name.first_name,
-    "last_name" => Faker::Name.last_name,
-    "email" => Faker::Internet.email,
-    "netid" => "#{Faker::Name.first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{Faker::Name.last_name.gsub(/[^a-zA-Z]/,'')[0,2]}#{(100..999).to_a.rand}".downcase}]}
-  end
-
 end
 
 Factory.sequence :email do |n|
@@ -138,6 +117,16 @@ Factory.define :involvement_event do |e|
 end
 
 Factory.define :coordinator do |u|
+  u.association   :user
+  u.association   :study
+end
+
+Factory.define :principal_investigator do |u|
+  u.association   :user
+  u.association   :study
+end
+
+Factory.define :co_investigator do |u|
   u.association   :user
   u.association   :study
 end
