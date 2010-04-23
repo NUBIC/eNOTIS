@@ -6,6 +6,7 @@ To install redis
   From source
     git clone git://github.com/antirez/redis.git
     cd redis
+    git checkout v1.3.10
     make 32bit
     sudo mv redis-server /usr/local/bin
     sudo mv redis-cli /usr/local/bin
@@ -15,7 +16,7 @@ To start redis
 To start workers 
   cd RAILS_ROOT && JOBS_PER_WORKER=100 COUNT=4 QUEUES=<any queue> rake environment resque:workers
 To start the sinatra app locally
-  cd RAILS_ROOT && resque-web config/initializers/resque.rb
+  cd RAILS_ROOT && resque-web _1.7.1_ config/initializers/resque.rb
 
 To start the nightly importing process
 First, setup an SSH Tunnel (if your'e running this at your desk)
@@ -26,11 +27,9 @@ Then , open up 4 tabs in Terminal.app and type these commands (at RAILS_ROOT)
 rake eirb:redis_import:full
 JOBS_PER_FORK=25 COUNT=4 QUEUES=redis_study_populator rake environment resque:workers
 JOBS_PER_FORK=25 COUNT=4 QUEUES=redis_people_populator rake environment resque:workers
-JOBS_PER_FORK=100 COUNT=1 QUEUES=redis_ldapper rake environment resque:workers
+JOBS_PER_FORK=100 COUNT=1 QUEUES=redis_authorized_personnel_populator, redis_ldapper rake environment resque:workers
 
 For the Nightly Work
 rake eirb:redis_import:nightly
-JOBS_PER_FORK=25 COUNT=3 QUEUES=redis_study_populator,redis_people_populator,redis_ldapper rake environment resque:workers
+JOBS_PER_FORK=25 COUNT=3 QUEUES=redis_study_populator,redis_people_populator rake environment resque:workers
 JOBS_PER_FORK=25 COUNT=3 QUEUES=redis_authorized_personnel_populator,redis_ldapper rake environment resque:workers
-
-redis_authorized_personnel_populator

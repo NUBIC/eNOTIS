@@ -19,6 +19,6 @@
             .study_information
               = render :partial => 'partials/study_info', :locals => {:study => study}
         %td= study.name
-        %td= study.try(:principal_investigator).try(:last_name)
+        / %td= study.try(:principal_investigator).try(:last_name)
         %td= study.accrual || 0
         %td= study.accrual_goal

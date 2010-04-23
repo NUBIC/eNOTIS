@@ -9,18 +9,8 @@ class ENRedisPeoplePopulator
   def self.perform(irb_number, use_case, force=false)
     config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
     redis = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
-    # redis = Redis.new
     start_time = Time.now
     case use_case
-    when "coordinator"
-      coordinators_key = "coordinators:#{irb_number}"
-      if force==true
-        import_coordinators(irb_number,redis,coordinators_key)
-      else
-        import_coordinators(irb_number,redis,coordinators_key) unless redis.exists(coordinators_key)
-      end
-      end_time = Time.now
-      puts "Imported #{coordinators_key} in #{end_time - start_time} seconds"
     when "co_investigators"
       co_investigators_key = "co_investigators:#{irb_number}"
       if force==true
@@ -42,27 +32,20 @@ class ENRedisPeoplePopulator
     end
   end
   
-  def self.import_coordinators(irb_number,redis,coordinators_key)
-    Eirb.find_coordinators({:irb_number => irb_number}).each do |coordinator|
-      netid = coordinator[:netid]
-      redis.sadd(coordinators_key,netid)
-      Resque.enqueue(ENRedisLdapper,netid)
-    end
-  end
   
   def self.import_co_investigators(irb_number,redis,co_investigators_key)
     Eirb.find_co_investigators({:irb_number => irb_number}).each do |co_investigator|
-      netid = co_investigator[:netid]
+      netid,email = co_investigator[:netid],co_investigator[:email]
       redis.sadd(co_investigators_key,netid)
-      Resque.enqueue(ENRedisLdapper,netid)
+      Resque.enqueue(ENRedisLdapper,netid,email)
     end
   end
   
   def self.import_principal_investigators(irb_number,redis,pi_key)
     Eirb.find_principal_investigators({:irb_number => irb_number}).each do |principal_investigator|
-      netid = principal_investigator[:netid]
+      netid,email = principal_investigator[:netid],principal_investigator[:email]
       redis.sadd(pi_key,netid)
-      Resque.enqueue(ENRedisLdapper,netid)
+      Resque.enqueue(ENRedisLdapper,netid,email)
     end
   end
 end

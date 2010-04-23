@@ -3,9 +3,8 @@
 
 class User < ActiveRecord::Base
   # Associations
-  has_many :coordinators
-  delegate :as_coordinator, :to => :coordinators #so we can use the syntax user.as_coordinator.studies
-  has_many :studies, :through => :coordinators
+  has_many :roles
+  has_many :studies, :through => :roles
 
   # Mixins
   include Bcsec

@@ -45,7 +45,14 @@ class ENRedisStudyPopulator
       end
       inc_exc_end_time = Time.now
       puts "#{inc_exc_end_time}: Imported #{study_key} inclusion/exclusion in #{inc_exc_end_time - inc_exc_start_time} seconds"
+      funding_source_hashes =  Eirb.find_funding_sources({:irb_number=>irb_number})
+      if funding_source_hashes && !funding_source_hashes.blank?
+        funding_source_hashes.each_with_index do |fsh,i|
+          fsh.each do |k,v|
+            redis.hset("#{study_key}:funding_source:#{i}",k,v)
+          end
+        end
+      end
     end
-    
   end
 end

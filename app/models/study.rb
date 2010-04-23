@@ -5,9 +5,7 @@ class Study < ActiveRecord::Base
 
   # Associations
   has_many :involvements
-  has_many :coordinators
-  has_many :co_investigators
-  has_one  :principal_investigator
+  has_many :roles
   has_many :subjects, :through => :involvements
   has_many :study_uploads
 
@@ -31,14 +29,31 @@ class Study < ActiveRecord::Base
     study_list.each do |redis_study|
       study  = HashWithIndifferentAccess.new(redis.hgetall(redis_study))
       params = {
-        :irb_number               => study[:irb_number],
-        :name                     => study[:name],
-        :title                    => study[:title],
-        :expiration_date          => Chronic.parse(study[:expiration_date]),
-        :irb_status               => study[:irb_status],
-        :approved_date            => Chronic.parse(study[:approved_date]),
-        :research_type            => study[:research_type],
-        :closed_or_completed_date => study[:closed_or_completed_date]
+        :accrual_goal                      => study[:accrual_goal], 
+        :approved_date                     => Chronic.parse(study[:approved_date]),
+        :clinical_trial_submitter          => study[:clinical_trial_submitter], 
+        :closed_or_completed_date          => study[:closed_or_completed_date],
+        :completed_date                    => Chronic.parse(study[:completed_date]), 
+        :created_date                      => Chronic.parse(study[:created_date]),
+        :description                       => study[:description],
+        :exclusion_criteria                => study[:exclusion_criteria],
+        :expiration_date                   => Chronic.parse(study[:expiration_date]),
+        :expired_date                      => Chronic.parse(study[:expired_date]), 
+        :fda_offlabel_agent                => study[:fda_offlabel_agent],
+        :fda_unapproved_agent              => study[:fda_unapproved_agent],
+        :inclusion_criteria                => study[:inclusion_criteria],
+        :irb_number                        => study[:irb_number],
+        :irb_status                        => study[:irb_status],
+        :is_a_clinical_investigation       => study[:is_a_clinical_investigation],
+        :modified_date                     => Chronic.parse(study[:modified_date]),
+        :multi_inst_study                  => study[:multi_inst_study],
+        :name                              => study[:name],
+        :periodic_review_open              => study[:periodic_review_open],
+        :research_type                     => study[:research_type],
+        :review_type_requested             => study[:review_type_requested],
+        :subject_expected_completion_count => study[:subject_expected_completion_count],
+        :title                             => study[:title],
+        :total_subjects_at_all_ctrs        => study[:total_subjects_at_all_ctrs]
       }
       local_study = find_by_irb_number(params[:irb_number])
       if local_study.nil?

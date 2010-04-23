@@ -20,11 +20,10 @@ namespace :eirb do
       irb_numbers.each do |numbers|
         irb_number = numbers[:irb_number]
         puts "Priming queues for #{irb_number}"
-        # Resque.enqueue(ENRedisStudyPopulator, irb_number)
+        Resque.enqueue(ENRedisStudyPopulator, irb_number)
         Resque.enqueue(ENRedisAuthorizedPersonnelPopulator, irb_number)
-        # Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'coordinator')
-        # Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'co_investigators')
-        # Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'principal_investigators')
+        Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'co_investigators')
+        Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'principal_investigators')
       end
     end
     
@@ -39,7 +38,7 @@ namespace :eirb do
         irb_number = numbers[:irb_number]
         puts "Priming queues for #{irb_number}"
         Resque.enqueue(ENRedisStudyPopulator, irb_number, true)
-        Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'coordinator', true)
+        Resque.enqueue(ENRedisAuthorizedPersonnelPopulator, irb_number)
         Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'co_investigators', true)
         Resque.enqueue(ENRedisPeoplePopulator, irb_number, 'principal_investigators', true)
       end
