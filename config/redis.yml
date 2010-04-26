@@ -1,0 +1,21 @@
+development:
+  host: localhost
+  port: 6379
+
+production:
+  host: localhost
+  port: 6379
+
+staging:
+  host: localhost
+  port: 6379
+
+test:
+  host: localhost
+  port: 6379
+  db: 1
+  
+cucumber:
+  host: localhost
+  port: 6379
+  db: 1

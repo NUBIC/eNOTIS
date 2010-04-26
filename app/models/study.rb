@@ -1,132 +1,90 @@
-
-require 'couchrest'
-require 'lib/webservices'
 require 'chronic'
 
 # Represents a Clinical Study/Trial.
 class Study < ActiveRecord::Base
 
-  
   # Associations
   has_many :involvements
-  has_many :coordinators
+  has_many :roles
   has_many :subjects, :through => :involvements
-  has_many :study_uploads 
-
-  attr_accessor :eirb_json
+  has_many :study_uploads
 
   # Validators
   validates_format_of :irb_number, :with => /^STU.+/, :message => "invalid study number format"
-
+  
   def self.cache_connect
     return @cache if @cache
-    config = WebserviceConfig.new("/etc/nubic/couch-#{RAILS_ENV.downcase}.yml")
-    @cache = CouchRest.database("#{config[:url]}:#{config[:port]}/#{config[:db]}")
+    config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
+    @cache = Redis::Namespace.new('eNOTIS:study', :redis => Redis.new(config))
   end
-
-  def self.cache_doc(study_id = nil)
-    begin
-      cache_connect.get(study_id)
-    rescue
-      # TODO remove this when old method name access is depricated
-      {:accrual_goal => "", :irb_number => "Not Found", :principal_investigators => [{}], :coordinators=> [{}], :co_investigators => [{}]} # fail semi-silently, the doc was not found for some reason
-    end
-  end
-
-  def self.cache_view(view)
-    cache_connect.view("study/#{view}")
-  end
-
-  def self.update_all_from_cache
-    study_list = cache_view(:all)
-    study_list["rows"].each do |study_hash|
-      study = study_hash["value"]
-      params = {:irb_number => study["irb_number"],
-              :name => study["name"],
-              :title => study["title"],
-              :expiration_date => Chronic.parse(study["expiration_date"]),
-              :irb_status => study["irb_status"],
-              :approved_date => Chronic.parse(study["approved_date"]),
-              :research_type => study["research_type"],
-              :closed_or_completed_date => study["closed_or_completed_date"]}
-      local_study = find_by_irb_number(params[:irb_number])      
+  
+  def self.redis_cache_lookup(irb_number)
+    HashWithIndifferentAccess.new(cache_connect.hgetall(irb_number))
+  end  
+  
+  def self.update_from_redis
+    config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
+    redis = Redis::Namespace.new('eNOTIS:study',:redis => Redis.new(config))
+    study_list = redis.keys '*'
+    study_list.each do |redis_study|
+      study  = HashWithIndifferentAccess.new(redis.hgetall(redis_study))
+      params = {
+        :accrual_goal                      => study[:accrual_goal], 
+        :approved_date                     => Chronic.parse(study[:approved_date]),
+        :clinical_trial_submitter          => study[:clinical_trial_submitter], 
+        :closed_or_completed_date          => study[:closed_or_completed_date],
+        :completed_date                    => Chronic.parse(study[:completed_date]), 
+        :created_date                      => Chronic.parse(study[:created_date]),
+        :description                       => study[:description],
+        :exclusion_criteria                => study[:exclusion_criteria],
+        :expiration_date                   => Chronic.parse(study[:expiration_date]),
+        :expired_date                      => Chronic.parse(study[:expired_date]), 
+        :fda_offlabel_agent                => study[:fda_offlabel_agent],
+        :fda_unapproved_agent              => study[:fda_unapproved_agent],
+        :inclusion_criteria                => study[:inclusion_criteria],
+        :irb_number                        => study[:irb_number],
+        :irb_status                        => study[:irb_status],
+        :is_a_clinical_investigation       => study[:is_a_clinical_investigation],
+        :modified_date                     => Chronic.parse(study[:modified_date]),
+        :multi_inst_study                  => study[:multi_inst_study],
+        :name                              => study[:name],
+        :periodic_review_open              => study[:periodic_review_open],
+        :research_type                     => study[:research_type],
+        :review_type_requested             => study[:review_type_requested],
+        :subject_expected_completion_count => study[:subject_expected_completion_count],
+        :title                             => study[:title],
+        :total_subjects_at_all_ctrs        => study[:total_subjects_at_all_ctrs]
+      }
+      local_study = find_by_irb_number(params[:irb_number])
       if local_study.nil?
-        create(params)   
+        create(params)
       else
         local_study.update_attributes!(params)
       end
     end
   end
 
-  # TODO: consider refactoring the data cache to a separate class
-  def self.update_coordinators_from_cache
-    #clearing the old data
-    Coordinator.delete_all
-    #looks at the local studies and updates access list from the cache
-    coord_list = cache_view(:access_list)
-    coord_list["rows"].each do |entry|
-      study = find_by_irb_number(entry["key"])
-      if study 
-        
-        entry["value"].each do |user_hash|        
-          params = {:netid => user_hash["netid"],
-            :email => user_hash["email"],
-            :first_name => user_hash["first_name"],
-            :last_name => user_hash["last_name"]}
-          unless params[:netid].nil? || params[:netid].empty? # a lot are blank actually
-            user = User.find_by_netid(params[:netid])
-            if user
-              user.update_attributes(params)
-            else
-              user = User.create(params)
-            end
-            study.coordinators.create(:user => user)
-          end
-          
-        end
-      end
-    end    
-  end
-
-  # After load hook to load up the dynamic methods/attrs from our
-  # CouchDB store
-  def after_initialize
-    refresh_cache
-  end
-
-  def refresh_cache
-    self.eirb_json = Study.cache_doc(self.irb_number) 
-  end
-
-  def eirb_json=(val)
-    @eirb_json = val
-    attach_attributes
-  end
-
-  def eirb_json
-    @eirb_json
-  end
-
-  # methods to depricate
+  # methods to deprecate
   ######################
-    # pi_last_name is being used, others (sc_email, etc.) have been moved to application_helper.rb's people_info method - yoon
-    def pi_last_name
-      cache_principal_investigators.first["last_name"] || ""
-    end
+  # pi_last_name is being used, others (sc_email, etc.) have been moved to application_helper.rb's people_info method - yoon
+  def pi_last_name
+    logger.warn("DEPRECATED METHOD")
+    self.principal_investigator.last_name
+  end
 
-    def phase
-      nil
-    end
+  def phase
+    nil
+  end
 
-    def status
-      irb_status
-    end
-    
-    def accrual_goal
-      cache_accrual_goal || ""
-    end
+  def status
+    irb_status
+  end
+
+  def accrual_goal
+    cache_accrual_goal rescue ""
+  end
   ##########################
-  # end methods to depricate
+  # end methods to deprecate
 
 
   # irb_number instead of id in urls
@@ -151,24 +109,4 @@ class Study < ActiveRecord::Base
     ["Approved", "Exempt Approved", "Not Under IRB Purview",
       "Revision Closed", "Revision Open"].include? self.status
   end
-
-  private
-  # attaching the hash keys as methods to have them
-  # return data as if they were defined attributes of 
-  # the model. Note: they are read-only
-  def attach_attributes
-    attach = @eirb_json.clone
-    attach.delete(:irb_number)
-    attach.each do |k,v|
-      instance_eval(%{ 
-       def cache_#{k} 
-         @eirb_json[:#{k}] || @eirb_json["#{k}"]
-       end
-      })
-    end
-  end
-
 end
-
-
-

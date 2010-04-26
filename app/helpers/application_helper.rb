@@ -23,8 +23,8 @@ module ApplicationHelper
   end
   
   def people_info(arr, title)
-    people = arr.compact.map do |p|
-      (p["first_name"].blank? or p["last_name"].blank? or p["email"].blank?) ? nil : mail_to(p["email"], "#{p["first_name"]} #{p["last_name"]}")
+    people = [*arr].compact.map do |p|
+      (p.user["first_name"].blank? or p.user["last_name"].blank? or p.user["email"].blank?) ? nil : mail_to(p.user["email"], "#{p.user["first_name"]} #{p.user["last_name"]}")
     end.uniq.compact
     people.empty? ? nil : "#{title}: " + people.join(", ") + "<br/>"
   end

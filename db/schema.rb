@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090902092032) do
+ActiveRecord::Schema.define(:version => 20100423194405) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -24,15 +24,6 @@ ActiveRecord::Schema.define(:version => 20090902092032) do
     t.string  "key"
     t.text    "value"
   end
-
-  create_table "coordinators", :force => true do |t|
-    t.integer  "study_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "coordinators", ["study_id", "user_id"], :name => "coordinators_attr_idx", :unique => true
 
   create_table "involvement_events", :force => true do |t|
     t.integer  "involvement_id"
@@ -68,6 +59,20 @@ ActiveRecord::Schema.define(:version => 20090902092032) do
     t.datetime "updated_at"
   end
 
+  create_table "roles", :force => true do |t|
+    t.integer  "study_id"
+    t.integer  "user_id"
+    t.string   "project_role"
+    t.string   "consent_role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "roles", ["consent_role"], :name => "index_authorized_people_on_consent_role"
+  add_index "roles", ["project_role"], :name => "index_authorized_people_on_project_role"
+  add_index "roles", ["study_id"], :name => "index_authorized_people_on_study_id"
+  add_index "roles", ["user_id"], :name => "index_authorized_people_on_user_id"
+
   create_table "studies", :force => true do |t|
     t.string   "irb_number"
     t.string   "irb_status"
@@ -79,6 +84,21 @@ ActiveRecord::Schema.define(:version => 20090902092032) do
     t.string   "research_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "review_type_requested"
+    t.string   "fda_unapproved_agent"
+    t.integer  "accrual_goal"
+    t.datetime "expired_date"
+    t.string   "clinical_trial_submitter"
+    t.string   "created_date"
+    t.boolean  "is_a_clinical_investigation"
+    t.datetime "modified_date"
+    t.boolean  "multi_inst_study"
+    t.boolean  "periodic_review_open"
+    t.integer  "subject_expected_completion_count"
+    t.integer  "total_subjects_at_all_ctrs"
+    t.text     "inclusion_criteria"
+    t.text     "exclusion_criteria"
+    t.text     "description"
   end
 
   add_index "studies", ["irb_number"], :name => "studies_irb_number_idx", :unique => true
