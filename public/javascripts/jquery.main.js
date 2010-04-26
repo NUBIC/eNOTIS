@@ -29,7 +29,19 @@ $(document).ready(function() {
       onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
       onLoad: function(){ $("#involvement input.date").datepicker({changeMonth: true, changeYear: true});
-        $("#involvement input.dob").datepicker({changeMonth: true, changeYear: true, yearRange: '-120:+0'}); }
+        $("#involvement input.dob").datepicker({
+          showButtonPanel: true,
+          changeMonth: true,
+          changeYear: true,
+          onSelect: function(dateText, inst){ inst.stayOpen = true; },
+          onChangeMonthYear: function(year, month, inst) {
+            inst.currentMonth = inst.selectedMonth = inst.drawMonth = month - 1;
+            inst.currentYear = inst.selectedYear = inst.drawYear = year;
+            inst.currentDay = inst.selectedDay = inst.selectedDay;
+          },
+          yearRange: '-120:+0'
+        });
+      }
     });
 
     // export overlay

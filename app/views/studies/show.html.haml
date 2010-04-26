@@ -1,6 +1,6 @@
 - content_for :head do
   = stylesheet_link_tag 'jquery-ui-1.7.2.custom'
-  = javascript_include_tag 'highcharts/highcharts', 'highcharts/excanvas.compiled', 'jquery.charts', 'jquery-ui-1.7.2.custom.min', :cache => "cache/study"
+  = javascript_include_tag 'highcharts/highcharts', 'highcharts/excanvas.compiled', 'jquery.charts', 'jquery-ui-1.7.2.custom-datepicker', :cache => "cache/study"
   %script{:type => "text/javascript"}
     $(document).ready(function(){
     - if @involvements.empty?
