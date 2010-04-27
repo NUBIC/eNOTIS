@@ -1,4 +1,3 @@
-#!/usr/bin/env ruby
 require 'rubygems'
 require 'http-access2' 
 gem 'soap4r', '>=1.5.8'

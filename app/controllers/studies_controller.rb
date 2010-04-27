@@ -32,7 +32,7 @@ class StudiesController < ApplicationController
         results = studies.map do |study|
           [ image_tag("/images/status-#{study.may_accrue? ? 'on' : 'off'}.png") + link_to(study_path(study), study.irb_number, :title => study.title),
             study.name,
-            study.principal_investigator.last_name,
+            study.pi_last_name,
             study.accrual,
             study.accrual_goal]
         end
