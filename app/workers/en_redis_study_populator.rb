@@ -1,4 +1,4 @@
-require 'webservices/eirb'
+ require 'webservices/eirb'
 
 class ENRedisStudyPopulator
   @queue = :redis_study_populator
@@ -12,6 +12,7 @@ class ENRedisStudyPopulator
     start_time = Time.now
     study_key  = "study:#{irb_number}"
     if force==true
+      puts "Forced importing #{study_key}"
       import(irb_number,redis,study_key)
     else
       import(irb_number,redis,study_key) unless redis.exists(study_key)

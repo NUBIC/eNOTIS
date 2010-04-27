@@ -1,7 +1,7 @@
 class ENRedisLdapper
   @queue = :redis_ldapper
   
-  def self.perform(netid, email, force=false)
+  def self.perform(netid, email, irb_number, force=false)
     if Rails.env.production?
       conf_data = YAML::load(File.read("/etc/nubic/bcsec-prod.yml"))
     else
@@ -24,7 +24,7 @@ class ENRedisLdapper
           r.hset(user_key,k,v)
         end
       else
-        Resque.enqueue(ENRedisBogusNetid, email)
+        Resque.enqueue(ENRedisBogusNetidPopulator, netid, email, irb_number)
       end
     end
     puts "Imported #{user_key}"
