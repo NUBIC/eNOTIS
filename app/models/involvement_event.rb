@@ -14,6 +14,7 @@ class InvolvementEvent < ActiveRecord::Base
 
   # Named scopes
   default_scope :order => "occurred_on"
+  named_scope :accruals, {:conditions => {:event => "Consented"}}
   named_scope :on_study, lambda {|study_id| { :include => :involvement, :conditions => ['involvements.study_id=?', study_id], :order => 'involvement_events.occurred_on DESC' } } do
     def to_graph
       results = {}

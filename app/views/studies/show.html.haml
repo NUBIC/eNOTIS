@@ -9,7 +9,7 @@
       = "pieChart('gender', 'Gender', #{@gender_stats.inspect});"
       = "pieChart('race', 'Race', #{@race_stats.inspect});"
       = "pieChart('ethnicity', 'Ethnicity', #{@ethnicity_stats.inspect});"
-      = "dotChart(#{InvolvementEvent.on_study(@study).to_dot_chart.inspect});"
+      = "dotChart(#{InvolvementEvent.accruals.on_study(@study).to_dot_chart.inspect});"
     $('#study_information').hide(10); // need an arbitrary delay to have hide happen after pieChart
     });
 #study
