@@ -2,6 +2,7 @@ class AddColumnsToStudies < ActiveRecord::Migration
   def self.up
     add_column :studies, :review_type_requested, :string
     add_column :studies, :fda_unapproved_agent, :string
+    add_column :studies, :fda_offlabel_agent, :string
     add_column :studies, :accrual_goal, :integer
     add_column :studies, :expired_date, :datetime
     add_column :studies, :clinical_trial_submitter, :string
@@ -58,6 +59,7 @@ class AddColumnsToStudies < ActiveRecord::Migration
     remove_column :studies, :clinical_trial_submitter
     remove_column :studies, :expired_date
     remove_column :studies, :accrual_goal
+    remove_column :studies, :fda_offlabel_agent
     remove_column :studies, :fda_unapproved_agent
     remove_column :studies, :review_type_requested
   end

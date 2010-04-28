@@ -1,4 +1,3 @@
-# lib/tasks/redis.rake
 desc 'Connects, updates studies, updates coordinators'
 task :redis => :"redis:default"
 
