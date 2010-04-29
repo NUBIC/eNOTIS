@@ -44,6 +44,22 @@ eNOTIS depends on a few important gems:
 
 1.3.0
 
+* dot chart for accruals (consented) only
+* g.raphael dot chart for accruals by month and by day of week. closes #2594
+* include subjects in study retrieval for more efficient db queries
+* method to count involvement events by month and by day of week. for dot chart.
+* user auth doesn't need forget_me
+* Date picker for birth dates should not automatically close when a date is selected. closes #2631
+* rake task to add coordinators manually by netid/irb number. references #2298
+* coordinators should have studies and users
+* display accrual and goal as ratio
+* two digit year class should handle blanks
+* accept downcase attributes, set them to the proper case. closes #2666
+* better instructions for imports. references #1947
+* show involvement errors in flash message on create as well
+* validate uniqueness of involvement events by event, date, and involvement. closes #2319
+* add parenthesis to a randomizer in fake_subject factory
+
 1.2.1
 
 * fixing bad ranges in death dates for fake subjects. closes #2629
