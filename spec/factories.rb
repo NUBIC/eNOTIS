@@ -116,19 +116,27 @@ Factory.define :involvement_event do |e|
   e.occurred_on    {["today","yesterday"].rand}
 end
 
-Factory.define :coordinator do |u|
+Factory.define :role do |u|
   u.association   :user
   u.association   :study
+  u.project_role {["PI","Principal Investigator","Co-Investigator","Coordinator","Co-INV","Statistican"].rand}
+  u.consent_role {["Obtaining","Obtaining","Obtaining","Oversight","None",""].rand}
 end
 
-Factory.define :principal_investigator do |u|
+# This type of role will only be able to edit/view patients (ie accrue them)
+Factory.define :role_accrues, :parent => :role do |u|
   u.association   :user
   u.association   :study
+  u.project_role {["PI","Principal Investigator","Co-Investigator","Coordinator","Co-INV","Statistican"].rand}
+  u.consent_role "Obtaining"
 end
 
-Factory.define :co_investigator do |u|
+# This type of role will only be able to view patients and not edit them (ie no accrual privs)
+Factory.define :role_views, :parent => :role do |u|
   u.association   :user
   u.association   :study
+  u.project_role {["PI","Principal Investigator","Co-Investigator","Coordinator","Co-INV","Statistican"].rand}
+  u.consent_role {["Oversight","None",""].rand}
 end
 
 Factory.define :study_upload do |s|

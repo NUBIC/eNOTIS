@@ -7,7 +7,7 @@ class Study < ActiveRecord::Base
   has_many :involvements
   has_many :roles
   has_many :subjects, :through => :involvements
-  has_many :study_upload
+  has_many :study_uploads
   has_many :funding_sources, :dependent => :delete_all
 
   # Validators
@@ -45,7 +45,7 @@ class Study < ActiveRecord::Base
         :inclusion_criteria                => study[:inclusion_criteria],
         :irb_number                        => study[:irb_number],
         :irb_status                        => study[:irb_status],
-        :is_a_clinical_investigation       => (study[:is_a_clinical_investigation] =~ /yes/i)? true : false,
+        :is_a_clinical_investigation       => study[:is_a_clinical_investigation],
         :modified_date                     => Chronic.parse(study[:modified_date]),
         :name                              => study[:name],
         :periodic_review_open              => study[:periodic_review_open],
@@ -75,36 +75,25 @@ class Study < ActiveRecord::Base
     end
   end
 
-  # methods to deprecate
-  ######################
-  # pi_last_name is being used, others (sc_email, etc.) have been moved to application_helper.rb's people_info method - yoon
-  def pi_last_name
-    logger.warn("DEPRECATED METHOD")
-    self.principal_investigator.last_name
-  end
-
-  def phase
-    nil
-  end
-
+  # We should probably try to phase this method out and just use irb_status -BLC
   def status
     irb_status
   end
-
-  def accrual_goal
-    cache_accrual_goal rescue ""
-  end
-  ##########################
-  # end methods to deprecate
-
 
   # irb_number instead of id in urls
   def to_param
     self.irb_number
   end
 
+  def has_role?(user)
+    user.admin? or roles.map(&:netid).include? user.netid
+  end
+
+  #TODO: This is a temporary fix -BLC
+  # We need to phase out these named roles for a more binary authorization
+  # for can_accrue ==true (ie view/edit patients) vs can_accrue ==false (can only view)
   def has_coordinator?(user)
-    user.admin? or coordinators.map(&:netid).include? user.netid
+    has_role?(user)
   end
 
   def accrual

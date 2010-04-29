@@ -25,9 +25,9 @@ Given /^"([^\"]*)" is on study "([^\"]*)"$/ do |netid, irb_number|
   study = Study.find_by_irb_number(irb_number) || Factory.create(:fake_study, :irb_number => irb_number, :irb_status => "Not Under IRB Purview")
   study.should be_valid
   # coordinator
-  coordinator = Factory(:coordinator, :user => user, :study => study)
+  coordinator = Factory(:role_accrues, :user => user, :study => study)
   coordinator.should be_valid
-  study.has_coordinator?(user).should be_true
+  study.has_role?(user).should be_true
 end
 
 Given /^a study with id "([^\"]*)"$/ do |irb_number|

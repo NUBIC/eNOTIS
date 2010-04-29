@@ -4,7 +4,15 @@ class Role < ActiveRecord::Base
   belongs_to :study
   delegate :first_name, :last_name, :name, :netid, :to => :user
   
-  #TODO: 
+  validates_presence_of :user_id
+  validates_presence_of :study_id
+  
+  attr_protected :consent_role #defines app permissions
+
+  def can_accrue?
+    consent_role == "Obtaining"
+  end
+  
   def self.update_from_redis
     Role.delete_all
     config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
