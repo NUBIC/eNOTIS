@@ -4,7 +4,7 @@
   %script{:type => "text/javascript"}
     $(document).ready(function(){
     - if @involvements.empty?
-      $('#study_information .charts').hide();
+      $('#study_information .charts, #study_information .dotchart').hide();
     - else
       = "pieChart('gender', 'Gender', #{@gender_stats.inspect});"
       = "pieChart('race', 'Race', #{@race_stats.inspect});"
