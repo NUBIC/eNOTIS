@@ -127,15 +127,12 @@ namespace :web do
   desc "Enable static pages"
   task :static, :roles => :web, :except => { :no_release => true } do
     run "cp #{latest_release}/static/site/*.html #{latest_release}/public/"
-    run "ln -fs #{latest_release}/static/site/images/static #{latest_release}/public/images/static"
-    run "ln -fs #{latest_release}/static/site/stylesheets/static #{latest_release}/public/stylesheets/static"
   end
   
   desc "Display static maintenance page"
   task :disable, :roles => :web, :except => { :no_release => true } do
     on_rollback { run "rm -f #{current_path}/public/index.html" }
-    run "rm -f #{current_path}/public/index.html"
-    run "cp #{current_path}/public/index_coming_soon.html #{current_path}/public/index.html"
+    run "mv #{current_path}/public/index_coming_soon.html #{current_path}/public/index.html"
   end
   
   desc "Hide static maintenance page"
