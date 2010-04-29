@@ -44,9 +44,9 @@ group :development do
 end
 
 # Resque
-gem 'redis' , '0.2.0'
-gem 'resque', '1.7.1'
-gem 'resque-multi-job-forks', '0.1.2'
+gem 'redis' , '1.0.7'
+gem 'resque', '~> 1.8.0'
+gem 'resque-jobs-per-fork', '~> 0.3.0'
 
 # Testing
 group :test, :cucumber, :hudson do

@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20100423194405) do
     t.datetime "updated_at"
     t.string   "review_type_requested"
     t.string   "fda_unapproved_agent"
+    t.string   "fda_offlabel_agent"
     t.integer  "accrual_goal"
     t.datetime "expired_date"
     t.string   "clinical_trial_submitter"
