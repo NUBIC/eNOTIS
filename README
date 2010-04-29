@@ -44,6 +44,9 @@ eNOTIS depends on a few important gems:
 
 1.3.0
 
+* both enotissupport and enotis emails on front page
+* hide dotchart for studies without involvements
+* forcing index\_coming\_soon to use application layout
 * static assets are symlinked now, no copying needed
 * new graphics for measure see improve
 * symlink instead of copy static site assets. change layout to match new colors. static version bump
