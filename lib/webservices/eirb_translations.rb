@@ -21,7 +21,6 @@ EIRB_TO_NOTIS = {
 "Expired Date" =>                                                                                   :expired_date,
 "Date Approved" =>                                                                                  :approved_date,
 "Project State.ID" =>                                                                               :irb_status,
-"SF - Subject / Participant Population.Multi institution study" =>                                  :multi_inst_study,
 "Name" =>                                                                                           :name,
 "SF - Subject / Participant Population.Total number of subjects to be enrolled at all centers" =>   :total_subjects_at_all_ctrs,
 "Date Expiration" =>                                                                                :expiration_date,
@@ -46,7 +45,7 @@ EIRB_TO_NOTIS = {
 "ID" =>                                                       :irb_number,
 "Subject population.Number of Subjects" =>                    :number_of_study_subjects,
 "Maximum number of subjects to be consented" =>               :accrual_goal,
-"Multi institution study" =>                                  :is_multi_institude_study,
+"Multi institution study" =>                                  :is_multi_institute_study,
 # eNOTIS Study Access 
 "ID" =>                     :irb_number,
 "Study Access.User ID" =>   :netid,
