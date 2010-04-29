@@ -36,7 +36,7 @@
 body
   :background-color white
   :background-repeat repeat-x
-  :background-image url('/images/static/public-fade-bg.png')
+  :background-image url('/images/public-fade-bg.png')
 #main
   :display inline
   :float left
@@ -45,15 +45,14 @@ body
   :padding-left 20px
   :padding-right 20px
   :background-color white
-  :background-image url('/images/pane-texture-bg.png')
   :background-repeat repeat-x
   :background-color white
   :-moz-border-radius 0 0 7px 7px
   :background-position 0 -35px
   :background-position 0 0
-  :background-image url('/images/static/pane-texture-bg.png')
+  :background-image url('/images/pane-texture-bg.png')
   ul.tabs
-    :background-color #d6d6d6
+    :background-color #51483d
     :margin 0
     :display block
     :height 35px
@@ -69,16 +68,16 @@ body
       :width 278px
       :padding 0 40px 0 0
       a
-        :color #999999
+        :color #b3b3b3
         :font-size 18px
         :height 30px
         :line-height 35px
         :text-decoration none
       a:hover
-        :color #555555
+        :color #dadada
       a.current
-        :border-bottom 7px solid #006699
-        :color #333333
+        :border-bottom 7px solid #5eab4f
+        :color #fdfbe9
   // root element for the scrollable. when scrolling occurs this element stays still. 
   div.panes
     // required settings
@@ -168,7 +167,7 @@ body
   :z-index 1000 
 .overlay .close
   // close button positioned on upper right corner
-  :background-image url(/images/static/apple-close.png) 
+  :background-image url(/images/apple-close.png) 
   :cursor pointer 
   :position absolute 
   :right -12px
