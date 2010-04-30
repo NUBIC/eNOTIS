@@ -9,6 +9,7 @@ class ENRedisAuthorizedPersonnelPopulator
   def self.perform(irb_number, force=false)
     config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
     redis = Redis::Namespace.new('eNOTIS:role', :redis => Redis.new(config))
+    start_time = Time.now
     eirb_array = Eirb.find_authorized_personnel({:irb_number => irb_number})
     eirb_array.each do |authorized_person|
       Resque.enqueue(ENRedisLdapper,authorized_person[:netid],authorized_person[:email],irb_number, force)
@@ -16,7 +17,8 @@ class ENRedisAuthorizedPersonnelPopulator
       redis.hset(coordinator_key, 'project_role', authorized_person[:project_role])
       redis.hset(coordinator_key, 'consent_role', authorized_person[:consent_role])
       redis.hset(coordinator_key, 'email', authorized_person[:email])
-      
     end
+    end_time = Time.now
+    puts "#{end_time}: Imported Roles for study # #{irb_number} in #{end_time - start_time} seconds"
   end
 end

@@ -10,6 +10,10 @@ staging:
   host: localhost
   port: 6379
 
+hudson:
+  host: localhost
+  port: 6379
+
 test:
   host: localhost
   port: 6379
