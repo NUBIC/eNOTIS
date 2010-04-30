@@ -1,16 +1,13 @@
-.charts
-  #gender.chart
-  #ethnicity.chart
-  #race.chart
 .details
-  Status:
-  = "#{study.status}"
-  %br
   = start_end_info(study)
   %span.research_type= "Research Type: #{study.research_type}" unless study.research_type.blank?
   = people_info(study.cache_principal_investigators, "PI")
   = people_info(study.cache_co_investigators, "CoI")
   = people_info(study.cache_coordinators, "Coordinator")
-.dotchart
-  %h3 Accruals by month and weekday
-  #by_month_and_weekday
+.charts
+  #gender.chart
+  #ethnicity.chart
+  #race.chart
+  .dotchart
+    %h3 Accruals by month and weekday
+    #by_month_and_weekday

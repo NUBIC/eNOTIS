@@ -53,7 +53,6 @@ $(document).ready(function() {
     // study information
     $("#study a[rel=#study_information]").click(function(){
       $('#study_information').slideToggle();
-      $(this).toggleClass('open');
       return false;
     });
 });
