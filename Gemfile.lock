@@ -306,7 +306,7 @@ specs:
 - vegas: 
     version: 0.1.6
 - resque: 
-    version: 1.8.0
+    version: 1.8.1
 - resque-jobs-per-fork: 
     version: 0.3.1
 - rspec: 
