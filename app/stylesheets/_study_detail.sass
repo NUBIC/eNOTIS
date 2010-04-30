@@ -1,62 +1,67 @@
 #report
 #study
-  .title
-    +column(9.5)
-    :font-size 20px
-    a
-      :text-decoration none
-      :background transparent url('/images/icons/toggle.png') right -2px no-repeat
-      :padding 0 28px 0px 5px
-      :height 30px 
-    a.open
-      :background transparent url('/images/icons/toggle.png') right -32px no-repeat
-  .name, .accrual_count, #study_information
-    :border-left 1px solid #bababa
-  .name
-    +column(36, true)
-    +squeeze
-    :font-size 16px
-    :line-height 30px
-    :color #666
+  .title, .accrual_count, .accrual_goal, .name
+    :font-size 17.5px
+    :color #222
     :white-space nowrap
     :overflow hidden
-  .accrual_count, .accrual_goal
-    :float left
-    label
+    label, span.status
       :display block
       :font-size 11px
       :color #999
       :font-weight normal
+  .title
+    +column(6)
+    span.irb_number
+      :display block
+      :color #999
+      strong
+        :color #222
+        :font-weight normal
+    span.on
+      :color green
   .accrual_count
-    :margin 0 6px 0 190px
-    :padding-left 20px
+    +column(2.5)
     :text-align right
-    :font-size 20px
-    :color #222
     :font-weight bold
   .accrual_goal
-    :margin-top 6px
-    :padding-left 24px
-    :text-align left
-    :font-size 16px
+    +column(2.5)
+    :border-right 1px solid #ccc
+    :margin-top 4px
+    :padding 0 2px 0 18px
     :background transparent url('/images/slash.png') no-repeat
+    :font-size 16px
+  .name
+    +column(34, true)
+    :padding-left 15px
   #study_information
-    :margin-left 190px
-    +column(36, true)
-    +squeeze
+    +column(48, true)
     .details
-      :clear left
+      +column(12)
+      :margin-right 4px
+      :border-right 1px solid #ccc
       span
         :display block
     .charts
+      +column(36,true)
       .chart
         :width 225px
         :height 150px
         :float left
+    .dotchart
+      :float right
+      :width 450px
+      h3
+        :margin-left 40px
+        :margin-bottom 0
+        :color #3e576f
+      #by_month_and_weekday
+        :height 275px
+        :margin-top -25px
   #accrual
     :clear left
     #actions
-      :font-size 20px
+      :font-size 17px
       :float right
       a
         :text-decoration none

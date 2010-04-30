@@ -1,14 +1,11 @@
-.charts 
+.details
+  = start_end_info(study)
+  %span.research_type= "Research Type: #{study.research_type}" unless study.research_type.blank?
+  = people_info(study.roles)
+.charts
   #gender.chart
   #ethnicity.chart
   #race.chart
-.details
-  Status:
-  = "#{study.status}"
-  %br
-  = start_end_info(study)
-  %span.research_type= "Research Type: #{study.research_type}" unless study.research_type.blank?
-  / = people_info(study.principal_investigator, "PI")
-  / = people_info(study.co_investigators, "CoI")
-  / = people_info(study.coordinators, "Coordinator")
-  / # = authorized_people study.authorized_people.inspect
+  .dotchart
+    %h3 Accruals by month and weekday
+    #by_month_and_weekday

@@ -14,6 +14,7 @@ class InvolvementEvent < ActiveRecord::Base
 
   # Named scopes
   default_scope :order => "occurred_on"
+  named_scope :accruals, {:conditions => {:event => "Consented"}}
   named_scope :on_study, lambda {|study_id| { :include => :involvement, :conditions => ['involvements.study_id=?', study_id], :order => 'involvement_events.occurred_on DESC' } } do
     def to_graph
       results = {}
@@ -24,7 +25,20 @@ class InvolvementEvent < ActiveRecord::Base
       total = 0
       results.sort.map{|date, value| [date, total+=value]}
     end
+    def to_dot_chart
+      results = Array.new(12 * 7, 0)
+      (self.blank? ? [] : self).each do |e|
+        # pos is position in the bubble chart array
+        #   xs [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        #   ys [7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        #   basically, the chart from left to right, row by row from top to bottom
+        pos = 12*((7 - e.occurred_on.wday)%7) + (e.occurred_on.month - 1)
+        results[pos] += 1
+      end
+      results
+    end
   end
+  
   named_scope :on_studies, lambda {|study_ids| { :include => :involvement, :conditions => ['involvements.study_id in (?)', study_ids], :order => 'involvement_events.occurred_on DESC' } }
   
   # Mixins

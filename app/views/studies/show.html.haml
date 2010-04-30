@@ -1,43 +1,42 @@
 - content_for :head do
   = stylesheet_link_tag 'jquery-ui-1.7.2.custom'
-  = javascript_include_tag 'highcharts/highcharts', 'highcharts/excanvas.compiled', 'jquery.charts', 'jquery-ui-1.7.2.custom-datepicker', :cache => "cache/study"
+  = javascript_include_tag 'highcharts/highcharts', 'highcharts/excanvas.compiled', 'jquery.charts', 'jquery-ui-1.7.2.custom-datepicker', 'raphael-min', 'g.raphael-min', 'g.dot-min', :cache => "cache/study"
   %script{:type => "text/javascript"}
     $(document).ready(function(){
     - if @involvements.empty?
-      $('#study_information .charts').hide();
+      $('#study_information .charts, #study_information .dotchart').hide();
     - else
       = "pieChart('gender', 'Gender', #{@gender_stats.inspect});"
       = "pieChart('race', 'Race', #{@race_stats.inspect});"
       = "pieChart('ethnicity', 'Ethnicity', #{@ethnicity_stats.inspect});"
+      = "dotChart(#{InvolvementEvent.accruals.on_study(@study).to_dot_chart.inspect});"
     $('#study_information').hide(10); // need an arbitrary delay to have hide happen after pieChart
     });
 #study
   .title
-    = link_to "#{status_icon @study} #{@study.irb_number || "(no id)"}", "#", :rel => "#study_information"
-  .name{:title => @study.name}= @study.name
+    = pretty_irb_number @study
+    = pretty_status @study
   .accrual_count
     = @involvements.size
     %label Subjects
   .accrual_goal
     = @study.accrual_goal.blank? ? "&nbsp;" : @study.accrual_goal
     %label Goal
+  .name{:title => @study.name}= @study.name
+
   #study_information
     = render :partial => 'partials/study_info', :locals => {:study => @study}
   #accrual
     #actions
+      = link_to("Details and Graphs", '#', :rel => '#study_information')
       = link_to("Add", new_involvement_path(:study => @study), :rel => '#involvement', :class => 'add')
       = link_to("Import", import_study_path, :rel => "#import", :class => 'import')
       = link_to("Export", new_report_path(:study => @study), :rel => '#export', :class => 'export') unless @involvements.empty?
     %table.display
       %thead
         %tr
-          %th Case#
-          %th MRN
-          %th Name
-          %th Birth date
-          %th Gender
-          %th Ethnicity
-          %th Race
+          - %w(Case# MRN Name Birth\ date Gender Ethnicty Race).each do |header|
+            %th= header
           %th
             %dtr{:title => InvolvementEvent.define_event("Consented")} Consented
           %th

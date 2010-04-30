@@ -42,7 +42,7 @@ class StudiesController < ApplicationController
   end
 
   def show
-    @study = Study.find_by_irb_number(params[:id], :include => {:involvements => :involvement_events})
+    @study = Study.find_by_irb_number(params[:id], :include => {:involvements => [:subject, :involvement_events]})
     if @study
       return redirect_with_message(default_path, :notice, "You don't have access to study #{@study.irb_number}") unless @study.has_coordinator?(current_user)
       @title = @study.irb_number
