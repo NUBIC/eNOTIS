@@ -15,6 +15,19 @@ module ApplicationHelper
     # study.may_accrue? ? "O" : "X"
     study.may_accrue? ? image_tag('/images/status-on.png', :alt => "O", :title => study.irb_status) : image_tag('/images/status-off.png', :alt => "X", :title => study.irb_status)
   end
+  def pretty_irb_number(study)
+    m = study.irb_number.match(/(STU0*)(\d*)/)
+    if study.irb_number.blank?
+      content_tag("span", "(no IRB number)", :class => "irb_number")
+    elsif !m.blank? and !m[1].blank? and !m[2].blank?
+      content_tag("span", m[1] + content_tag("strong", m[2]), :class => "irb_number")
+    else
+      content_tag("span", study.irb_number, :class => "irb_number")
+    end
+  end
+  def pretty_status(study)
+    content_tag(:span, study.irb_status, :class => study.may_accrue? ? "status on" : "status off")
+  end
   
   def start_end_info(study)
     [ study.approved_date.blank? ? nil : study.approved_date.strftime("Approved: %b %d, %Y"),
