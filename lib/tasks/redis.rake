@@ -22,4 +22,13 @@ namespace :redis do
     Role.update_from_redis
     puts "  Authorized Personnel"
   end
+  
+  namespace :resque do
+    desc "requeue failed jobs"
+    task :requeue=> :environment do
+      0.upto(Resque::Failure.count).each{|failure| Resque::Failure.requeue(failure)}
+      Resque::Failure.clear
+    end
+  end
+  
 end
