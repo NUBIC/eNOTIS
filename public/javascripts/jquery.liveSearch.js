@@ -81,7 +81,7 @@ jQuery.fn.liveSearch = function (conf) {
 					}
 					else {
 						liveSearch.slideDown(config.duration);
-						jQuery('a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#' + config.id).offset().top, -1*jQuery('#' + config.id).offset().left]});
+						jQuery('#livesearch-results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#' + config.id).offset().top, -1*jQuery('#' + config.id).offset().left]});
 					}
 				}
 			})
@@ -100,7 +100,7 @@ jQuery.fn.liveSearch = function (conf) {
   							input.removeClass(config.loadingClass);
   							if (data.length) {
   								liveSearch.html(data).filter(":hidden").slideDown(config.duration);
-  								jQuery('a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#' + config.id).offset().top, -1*jQuery('#' + config.id).offset().left]});
+  								jQuery('#livesearch-results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#' + config.id).offset().top, -1*jQuery('#' + config.id).offset().left]});
   							}
   							else {
   								liveSearch.filter(":visible").slideUp(config.duration, function(){ config.onSlideUp(); });
