@@ -13,6 +13,9 @@ $(document).ready(function() {
   // datatables
   $("#my_studies .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null, null, null, null]});
 	
+	// search page
+	jQuery('#results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#results').offset().top, -1*jQuery('#results').offset().left]});
+	
 	// studies show
     // dataTable
     $("#accrual .display").dataTable({"iDisplayLength": 30, "sPaginationType": "full_numbers", "oLanguage": {"sZeroRecords": "No subjects yet - click 'Add' or 'Import' to get started."},"aoColumns": [null,null,null,null,null,null,null,{ "sType": "html" },{ "sType": "html" }]});
