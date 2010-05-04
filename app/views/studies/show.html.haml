@@ -12,7 +12,7 @@
       = "dotChart(#{InvolvementEvent.accruals.on_study(@study).to_dot_chart.inspect});"
       - tc_array = InvolvementEvent.accruals.on_study(@study).to_time_chart
       = "timeChart('timechart', 'Monthly and total accruals', #{tc_array[0].inspect}, #{tc_array[1].inspect})"
-    // $('#study_information').hide(10); // need an arbitrary delay to have hide happen after pieChart
+    $('#study_information').hide(10); // need an arbitrary delay to have hide happen after pieChart
     });
 #study
   .title
