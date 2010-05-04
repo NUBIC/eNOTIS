@@ -18,7 +18,7 @@ function dotChart(data, axisx, axisy){
   }
   var data = data || [294, 300, 204, 255, 348, 383, 334, 217, 114, 33, 44, 26, 41, 39, 52, 17, 13, 2, 0, 2, 5, 6, 64, 153, 294, 313, 195, 280, 365, 392, 340, 184, 87, 35, 43, 55, 53, 79, 49, 19, 6, 1, 0, 1, 1, 10, 50, 181, 246, 246, 220, 249, 355, 373, 332, 233, 85, 54, 28, 33, 45, 72, 54, 28, 5, 5, 0, 1, 2, 3, 58, 167, 206, 245, 194, 207, 334, 290, 261, 160, 61, 28, 11, 26, 33, 46, 36, 5, 6, 0, 0, 0, 0, 0, 0, 9, 9, 10, 7, 10, 14, 3, 3, 7, 0, 3, 4, 4, 6, 28, 24, 3, 5, 0, 0, 0, 0, 0, 0, 4, 3, 4, 4, 3, 4, 13, 10, 7, 2, 3, 6, 1, 9, 33, 32, 6, 2, 1, 3, 0, 0, 4, 40, 128, 212, 263, 202, 248, 307, 306, 284, 222, 79, 39, 26, 33, 40, 61, 54, 17, 3, 0, 0, 0, 3, 7, 70, 199];
   r.g.txtattr.font = "11px 'Fontin Sans', Fontin-Sans, sans-serif";
-  r.g.dotchart(10, 10, 450, 250, xs, ys, data, {symbol: "o", max: 10, heat: true, axis: "0 0 1 1", axisxstep: Array.max(xs), axisystep: Array.max(ys) - 1, axisxlabels: axisx, axisxtype: " ", axisytype: " ", axisylabels: axisy}).hover(function () {
+  r.g.dotchart(10, 10, 350, 250, xs, ys, data, {symbol: "o", max: 10, heat: true, axis: "0 0 1 1", axisxstep: Array.max(xs), axisystep: Array.max(ys) - 1, axisxlabels: axisx, axisxtype: " ", axisytype: " ", axisylabels: axisy}).hover(function () {
       if(this.value > 0){
         this.tag = this.tag || r.g.tag(this.x, this.y, this.value, 0, this.r + 2).insertBefore(this);
         this.tag.show();
@@ -192,3 +192,96 @@ function pieChart(location, title, data){
 	});
   
 }
+
+function timeChart(location, title, data1, data2){
+  new Highcharts.Chart({
+     chart: {
+        renderTo: location,
+        margin: [50, 40, 40, 40],
+        zoomType: 'xy'
+     },
+     title: {
+        text: title,
+        style: {
+           margin: '10px 0 0 0' // center it
+        }
+     },
+     // subtitle: {
+     //    text: 'Source: WorldClimate.com',
+     //    style: {
+     //       margin: '0 0 0 0' // center it
+     //    }
+     // },
+     xAxis: [{
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+           'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+     }],
+     yAxis: [{ // Primary yAxis
+        labels: {
+           // formatter: function() {
+           //    return this.value +'Â°C';
+           // },
+           style: {
+              color: '#89A54E'
+           }
+        },
+        title: {
+           text: 'Monthly',
+           style: {
+              color: '#89A54E'
+           },
+           margin: 27
+        }
+     }, { // Secondary yAxis
+        title: {
+           text: 'Total',
+           margin: 27,
+           style: {
+              color: '#4572A7'
+           }
+        },
+        labels: {
+           // formatter: function() {
+           //    return this.value +' mm';
+           // },
+           style: {
+              color: '#4572A7'
+           }
+        },
+        opposite: true
+     }],
+     tooltip: {
+        formatter: function() {
+           return '<b>'+ this.series.name +'</b><br/>'+
+              this.x +': '+ this.y; // +
+              //(this.series.name == 'Rainfall' ? ' mm' : 'Â°C');
+        }
+     },
+     legend: {
+        layout: 'vertical',
+        style: {
+           left: '50px',
+           bottom: 'auto',
+           right: 'auto',
+           top: '40px'
+        },
+        backgroundColor: '#FFFFFF'
+     },
+     series: [{
+        name: 'Total',
+        color: '#4572A7',
+        type: 'line',
+        yAxis: 1,
+        data: data1
+        //data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]      
+
+     }, {
+        name: 'Monthly',
+        color: '#89A54E',
+        type: 'column',
+        data: data2
+        //data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+     }]
+  });
+}
+

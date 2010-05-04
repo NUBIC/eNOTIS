@@ -10,7 +10,9 @@
       = "pieChart('race', 'Race', #{@race_stats.inspect});"
       = "pieChart('ethnicity', 'Ethnicity', #{@ethnicity_stats.inspect});"
       = "dotChart(#{InvolvementEvent.accruals.on_study(@study).to_dot_chart.inspect});"
-    $('#study_information').hide(10); // need an arbitrary delay to have hide happen after pieChart
+      - tc_array = InvolvementEvent.accruals.on_study(@study).to_time_chart
+      = "timeChart('timechart', 'Monthly and total accruals', #{tc_array[0].inspect}, #{tc_array[1].inspect})"
+    // $('#study_information').hide(10); // need an arbitrary delay to have hide happen after pieChart
     });
 #study
   .title
@@ -31,6 +33,7 @@
       #gender.chart
       #ethnicity.chart
       #race.chart
+      #timechart
       .dotchart
         %h3 Accruals by month and weekday
         #by_month_and_weekday  
