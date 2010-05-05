@@ -10,6 +10,8 @@
       = "pieChart('race', 'Race', #{@race_stats.inspect});"
       = "pieChart('ethnicity', 'Ethnicity', #{@ethnicity_stats.inspect});"
       = "dotChart(#{InvolvementEvent.accruals.on_study(@study).to_dot_chart.inspect});"
+      - tc_array = InvolvementEvent.accruals.on_study(@study).to_time_chart
+      = "timeChart('timechart', 'Monthly and total accruals', #{tc_array[0].inspect}, #{tc_array[1].inspect})"
     $('#study_information').hide(10); // need an arbitrary delay to have hide happen after pieChart
     });
 #study
@@ -25,10 +27,19 @@
   .name{:title => @study.name}= @study.name
 
   #study_information
-    = render :partial => 'partials/study_info', :locals => {:study => @study}
+    .details
+      = render :partial => 'partials/study_info', :locals => {:study => @study}
+    .charts
+      #gender.chart
+      #ethnicity.chart
+      #race.chart
+      #timechart
+      .dotchart
+        %h3 Accruals by month and weekday
+        #by_month_and_weekday  
   #accrual
     #actions
-      = link_to("Details and Graphs", '#', :rel => '#study_information')
+      = link_to("Details and Charts", '#', :rel => '#study_information', :class => 'charts')
       = link_to("Add", new_involvement_path(:study => @study), :rel => '#involvement', :class => 'add')
       = link_to("Import", import_study_path, :rel => "#import", :class => 'import')
       = link_to("Export", new_report_path(:study => @study), :rel => '#export', :class => 'export') unless @involvements.empty?

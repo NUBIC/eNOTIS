@@ -25,6 +25,17 @@ class InvolvementEvent < ActiveRecord::Base
       total = 0
       results.sort.map{|date, value| [date, total+=value]}
     end
+    def to_time_chart
+      # 0th array is total, 1st array is by month
+      results = [Array.new(12, 0), Array.new(12, 0)]
+      (self.blank? ? [] : self).each do |e|
+        # pos is month on chart (from 0..11)
+        pos = (e.occurred_on.month - 1)
+        results[1][pos] += 1
+        (pos..11).each{|j| results[0][j] += 1}
+      end
+      results
+    end
     def to_dot_chart
       results = Array.new(12 * 7, 0)
       (self.blank? ? [] : self).each do |e|

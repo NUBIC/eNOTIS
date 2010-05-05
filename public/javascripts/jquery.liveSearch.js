@@ -72,7 +72,6 @@ jQuery.fn.liveSearch = function (conf) {
 	return this.each(function () {
 		var input		= jQuery(this).attr('autocomplete', 'off');
 		var resultsShift	= parseInt(liveSearch.css('paddingLeft'), 10) + parseInt(liveSearch.css('paddingRight'), 10) + parseInt(liveSearch.css('borderLeftWidth'), 10) + parseInt(liveSearch.css('borderRightWidth'), 10);
-
 		input
 			.focus(function () {
 				if (this.value !== '') {
@@ -82,6 +81,7 @@ jQuery.fn.liveSearch = function (conf) {
 					}
 					else {
 						liveSearch.slideDown(config.duration);
+						jQuery('#livesearch-results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#' + config.id).offset().top, -1*jQuery('#' + config.id).offset().left]});
 					}
 				}
 			})
@@ -100,6 +100,7 @@ jQuery.fn.liveSearch = function (conf) {
   							input.removeClass(config.loadingClass);
   							if (data.length) {
   								liveSearch.html(data).filter(":hidden").slideDown(config.duration);
+  								jQuery('#livesearch-results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#' + config.id).offset().top, -1*jQuery('#' + config.id).offset().left]});
   							}
   							else {
   								liveSearch.filter(":visible").slideUp(config.duration, function(){ config.onSlideUp(); });

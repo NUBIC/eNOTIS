@@ -14,23 +14,38 @@
   :display none
   :z-index 99
   :background= !page_background_color
-  :max-height 300px
-  :overflow auto
+  // :max-height 300px
+  // :overflow auto
   :position absolute
   :top 75px
   :border 1px solid #d6d6d6
   :border-width 0 1px 1px 1px
   :-moz-box-shadow 0 10px 10px 3px #666
   :-webkit-box-shadow  0 10px 10px #666
-  
+#livesearch-results, #results
+  div.study_information
+    :width 235px
+    :padding 10px
+    :background= !page_background_color
+    :border 1px solid #d6d6d6
+    :border-width 0 1px 1px 1px
+    :-moz-box-shadow 0 10px 10px 3px #666
+    :-webkit-box-shadow  0 10px 10px #666
+    :z-index 999
+    span
+      :display block
+    
+    
 #results
   +column(46,true)
   +squish
   #study_results
-    +column(22.5)
+    +column(30)
+    .irb_number
+      :white-space nowrap
   #subject_results
     +prepend(1)
-    +column(22.5, true)
+    +column(15, true)
   div.study_information
     :display none
   
