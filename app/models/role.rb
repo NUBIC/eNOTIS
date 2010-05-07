@@ -10,7 +10,7 @@ class Role < ActiveRecord::Base
   attr_protected :consent_role #defines app permissions
 
   def can_accrue?
-    consent_role == " "
+    consent_role == "Obtaining"
   end
   
   def self.update_from_redis
