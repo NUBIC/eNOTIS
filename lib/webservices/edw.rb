@@ -1,3 +1,5 @@
+require 'webservices'
+
 class Edw
   cattr_accessor :edw_adapter
   

@@ -6,9 +6,9 @@ eNOTIS is a research tool provided by NUCATS to aid researchers in managing pati
 
 eNOTIS requires a few commands to get the data to start up:
 
-    rake couch  # imports studies and users from couchdb
     rake users:create_admins # creates admin users
-
+    rake redis #imports data from redis store
+    
 == Dependencies ==
 
 eNOTIS depends on a few important gems:
