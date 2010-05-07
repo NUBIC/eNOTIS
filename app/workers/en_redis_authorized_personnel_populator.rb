@@ -2,7 +2,7 @@ require 'webservices/eirb'
 
 class ENRedisAuthorizedPersonnelPopulator
   @queue = :redis_authorized_personnel_populator
-  Resque.before_first_fork do
+  Resque.before_perform_jobs_per_fork do
     Eirb.connect
   end
   
@@ -29,7 +29,7 @@ class ENRedisAuthorizedPersonnelPopulator
     authorized_people.reject!{|person| priveleged_netids.include? person[:netid]}
     authorized_people.each do |authorized_person|  
       Resque.enqueue(ENRedisLdapper, authorized_person[:netid], authorized_person[:email], irb_number, force)
-      authorized_person_key = "#{authorized_person[:irb_number]}:#{authorized_person[:netid]}"
+      authorized_person_key = "authorized_personnel:#{authorized_person[:irb_number]}:#{authorized_person[:netid]}"
       redis.hset(authorized_person_key, 'project_role', authorized_person[:project_role])
       redis.hset(authorized_person_key, 'consent_role', authorized_person[:consent_role])
       redis.hset(authorized_person_key, 'email', authorized_person[:email])

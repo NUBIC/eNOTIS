@@ -26,7 +26,14 @@ namespace :redis do
   namespace :resque do
     desc "requeue failed jobs"
     task :requeue=> :environment do
-      0.upto(Resque::Failure.count).each{|failure| Resque::Failure.requeue(failure)}
+      0.upto(Resque::Failure.count).each_with_index do |failure, index|
+        begin
+          Resque::Failure.requeue(index)
+        rescue Exception => e
+          puts "Failure at #{index}"
+        ensure
+        end
+      end
       Resque::Failure.clear
     end
   end

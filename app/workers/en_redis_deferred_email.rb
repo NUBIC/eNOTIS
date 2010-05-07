@@ -15,7 +15,8 @@ class ENRedisDeferredEmail
       ldap_server     "directory.northwestern.edu"
     end
 
-    r = Redis.new
+    config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
+    r = Redis::Namespace.new('eNOTIS:role', :redis => Redis.new(config))
     user_key = "eNOTIS:user:#{netid}"
     if r.exists(user_key)
       userhash = HashWithIndifferentAccess.new(r.hgetall(user_key))
@@ -34,7 +35,7 @@ class ENRedisDeferredEmail
   end
   
   def self.create_role_entry(redis, irb_number, netid, project_role, consent_role, email)
-    authorized_person_key = "#{irb_number}:#{netid}"
+    authorized_person_key = "authorized_personnel:#{irb_number}:#{netid}"
     redis.hset(authorized_person_key, 'project_role', project_role)
     redis.hset(authorized_person_key, 'consent_role', consent_role)
     redis.hset(authorized_person_key, 'email', email)

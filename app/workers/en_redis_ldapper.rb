@@ -15,7 +15,7 @@ class ENRedisLdapper
       ldap_server     "directory.northwestern.edu"
     end
     
-    r = Redis.new
+    r = Redis::Namespace.new('eNOTIS:role', :redis => Redis.new(config))
     user_key = "eNOTIS:user:#{netid}"
     unless r.exists(user_key) || force==true
       user = Bcsec::NetidAuthenticator.find_user(netid)
