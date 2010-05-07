@@ -50,6 +50,6 @@ describe StudyUpload do
     @up.legit?.should be_true
     @up.summary.should =~ /7 subjects/
     Subject.all.map(&:birth_date).compact.size.should == 5
-    InvolvementEvent.count.should == 7
+    InvolvementEvent.count.should == 12
   end
 end
