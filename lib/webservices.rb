@@ -9,14 +9,14 @@ module Webservices
   
   def self.convert(values, converter, symbolized = true)
     results = []
-    return values unless !values.nil?
+    return values if values.nil?
     values.each do |val|
       result = {}
       val.each do |key, value|
         if symbolized
-      	  result[converter[key.to_s].to_sym] = value unless !converter.has_key? key.to_s
+      	  result[converter[key.to_s].to_sym] = value if converter.has_key? key.to_s
       	else
-      	  result[converter[key]] = value unless !converter.has_key? key
+      	  result[converter[key]] = value if converter.has_key? key
     	  end
       end
       results << result
