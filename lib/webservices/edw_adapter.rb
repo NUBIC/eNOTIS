@@ -35,7 +35,7 @@ class EdwAdapter
       req = Net::HTTP::Get.new(config[:url] + "/#{URI.encode(report_name)}" + "&" + params.to_query, {'connection' => 'keep-alive'})
       req.ntlm_auth(config[:username], config[:password], true)
        
-      self.agent.set_debug_output $stderr
+      #self.agent.set_debug_output $stderr
       xml_response = agent.request(req).body
       #LOG.debug("#{Time.now} [EdwAdapter] results: #{xml_response.inspect}")
 

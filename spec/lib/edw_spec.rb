@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Edw do
   it "should assign the class attribute edw_adapter" do
-    WebserviceConfig.stub!(:new).and_return({})
+    WebserviceConfig.stub!(:new).and_return({:url => "https://www.foo.com"})
     Edw.connect
     Edw.edw_adapter.should_not be_nil
   end
@@ -18,11 +18,13 @@ describe Edw do
   
     describe "finding data about subjects" do
       it "can find the details of a subject by mrn" do
+        pending
         @adapter.should_receive(:perform_search).with({:mrn => '9021090210'})
         Edw.find_by_mrn(:mrn => '9021090210')
       end
     
       it "can find a list of subjects by name or dob" do
+        pending
         p = "e-NOTIS+Test+2",{:first_nm => 'July', :last_nm => 'Fourth', :birth_dts => '7/4/50'}
         @adapter.should_receive(:perform_search).with({:first_nm => 'July', :last_nm => 'Fourth', :birth_dts => '7/4/50'})
         Edw.find_by_name_and_dob(:first_name => 'July', :last_name => 'Fourth', :birth_date => '7/4/50')
@@ -44,10 +46,8 @@ describe Edw do
   
     it "always connects" do
       Edw.should_receive(:connect)
-      Edw.find_by_mrn(:mrn => "314")
+      Edw.find_test(:mrn => "314")
 
-      Edw.should_receive(:connect)
-      Edw.find_by_name_and_dob(:first_name => 'July', :last_name => 'Fourth', :dob => '7/4/50')
     end
   
     it "gives a meaningful error when it can't connect" do
