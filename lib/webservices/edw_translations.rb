@@ -9,13 +9,18 @@ EDW_TO_NOTIS = {
   'zip_code'   => 'zip',
   'home_phone_txt' => 'phone_number',
   'birth_dts'=>'birth_date',
-  'mrn'=>'mrn'
+  'mrn'=>'mrn',
+  "last_name" => :last_name,
+  "first_name" => :first_name,
+  "middle_name" => :middle_name,
+  "user_id" => :netid
 }
 
 NOTIS_TO_EDW = {
- 'first_name' => 'first_nm',
- 'last_name' => 'last_nm',
- 'mrn' => 'mrn',
- 'birth_date'=>'birth_dts',
- 'netid' => 'net_id'
+ :first_name => "first_nm",
+ :last_name => "last_nm",
+ :mrn => "mrn",
+ :birth_date =>"birth_dts",
+ :netid => "net_id",
+ :irb_number => "irb_number"
 }
