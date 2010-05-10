@@ -8,6 +8,9 @@ development:
   database: enotis_development
   username: enotis
   password: s1t_0n_3
+  encoding: utf8
+  template: template0
+# I added encoding and template to fix a problem on my dev machine with postgres 8.4 -BLC
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -17,6 +20,8 @@ test: &TEST
   database: enotis_test
   username: enotis
   password: s1t_0n_3
+  encoding: utf8
+  template: template0
 
 cucumber:
   <<: *TEST

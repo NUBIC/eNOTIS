@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe EdwAdapter do
 
   before(:each) do
-    @config = {:username => "user", :password => "secret", :url => "http://blah.com?action"}
+    @config = {:username => "user", :password => "secret", :url => "https://blah.com?action"}
     WebserviceConfig.stub!(:new).and_return(@config)
     @agent = Object.new
     Net::HTTP.stub!(:new).and_return(@agent)
@@ -22,22 +22,22 @@ describe EdwAdapter do
 
   it "sets up the request with login credentials" do
     @req.should_receive(:ntlm_auth).with(@config[:username], @config[:password], true)
-    @adapter.perform_search({:mrd_pt_id => "901"})
+    @adapter.perform_search("foo",{:mrd_pt_id => "901"})
   end
 
   it "assembles a request with a query string" do
-    Net::HTTP::Get.should_receive(:new).with("http://blah.com?action&mrd_pt_id=901", {'connection' => 'keep-alive'})
-    @adapter.perform_search({:mrd_pt_id => "901"})
+    Net::HTTP::Get.should_receive(:new).with("https://blah.com?action/foo&mrd_pt_id=901&rs%3ACommand=Render&rs%3Aformat=XML", {'connection' => 'keep-alive'})
+    @adapter.perform_search("foo",{:mrd_pt_id => "901"})
   end
   
   it "assembles a request with a multi-part query string" do
-    Net::HTTP::Get.should_receive(:new).with("http://blah.com?action&dob=7%2F4%2F50&name=July+Forth", {'connection' => 'keep-alive'})
-    @adapter.perform_search({:name => "July Forth", :dob => "7/4/50"})
+    Net::HTTP::Get.should_receive(:new).with("https://blah.com?action/foo&dob=7%2F4%2F50&name=July+Forth&rs%3ACommand=Render&rs%3Aformat=XML", {'connection' => 'keep-alive'})
+    @adapter.perform_search("foo",{:name => "July Forth", :dob => "7/4/50"})
   end
   
   it "calls the adapter with the request" do
     @agent.should_receive(:request).with(@req)
-    @adapter.perform_search({:mrd_pt_id => "901"})
+    @adapter.perform_search("foo",{:mrd_pt_id => "901"})
   end
   
   it "can convert returned XML results to a hash" do
@@ -57,6 +57,6 @@ describe EdwAdapter do
       :birth_dts => "6/9/1954"}]
 
     @agent.should_receive(:request).and_return(response)
-    @adapter.perform_search({:mrd_pt_id => "9988101"}).should == arr_of_hashes
+    @adapter.perform_search("foo",{:mrd_pt_id => "9988101"}).should == arr_of_hashes
   end
 end

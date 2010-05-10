@@ -2,6 +2,7 @@ require 'net/ntlm_http'
 require 'net/http'
 require 'net/https'
 require 'libxml'
+require 'uri'
 
 # Adapter layer between the Edw class and the Edw webservice. Passes off queries to the EDW webservice and returns an array of hashes
 class EdwAdapter
@@ -10,24 +11,33 @@ class EdwAdapter
 
   def initialize
     self.config = WebserviceConfig.new("/etc/nubic/edw-#{RAILS_ENV.downcase}.yml")
-    self.agent = Net::HTTP.new('edwbi.nmff.org', 443)
-    self.agent.use_ssl = true
-    self.agent.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    uri = URI.parse(config[:url])
+    self.agent = Net::HTTP.new(uri.host, uri.port)
+    if uri.port == 443
+      self.agent.use_ssl = true 
+      self.agent.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    else
+      raise "Use SSL for all EDW queries"
+    end 
     self.agent.read_timeout = config[:service_timeout].to_i
     self.agent.open_timeout = config[:service_timeout].to_i
   end
 
   # Accepts a param hash of values and converts hash parameters to query string (thanks, Rails!)
-  def perform_search(params = {})
+  def perform_search(report_name, params = {})
     begin
-      # TODO: figure out a better logger, with levels. - yoon
-      LOG.info("[EdwAdapter] report: #{config[:url]}")
-      LOG.info("[EdwAdapter] params: #{params}")
-      req = Net::HTTP::Get.new(config[:url] + "&" + params.to_query, {'connection' => 'keep-alive'})
+      # additional report params 
+      params.merge!({"rs:Command" => "Render", "rs:format" => "XML"})
+      
+      LOG.info("[EdwAdapter] url: #{config[:url]}")
+      LOG.info("[EdwAdapter] report: #{report_name}, params: #{params.inspect}")
+
+      req = Net::HTTP::Get.new(config[:url] + "/#{URI.encode(report_name)}" + "&" + params.to_query, {'connection' => 'keep-alive'})
       req.ntlm_auth(config[:username], config[:password], true)
-      # http.set_debug_output $stderr
+       
+      #self.agent.set_debug_output $stderr
       xml_response = agent.request(req).body
-      # LOG.debug("#{Time.now} [EdwAdapter] results: #{xml_response.inspect}")
+      #LOG.debug("#{Time.now} [EdwAdapter] results: #{xml_response.inspect}")
 
       ## TODO Handle errors better here - yoon
       ## Hush Warning: xmlns: URI ENOTIS_x0020_-_x0020_TEST is not absolute at :1.
