@@ -8,7 +8,7 @@ class Role < ActiveRecord::Base
   validates_presence_of :study_id
   
   attr_protected :consent_role #defines app permissions
-  validates_uniqueness_of :user_id, :scope => [:study_id, :project_role, :consent_role]
+  # validates_uniqueness_of :user_id, :scope => [:study_id, :project_role, :consent_role]
   def can_accrue?
     consent_role == "Obtaining"
   end
