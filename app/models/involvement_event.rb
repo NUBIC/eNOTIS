@@ -10,7 +10,9 @@ class InvolvementEvent < ActiveRecord::Base
   
   # Validations
   validates_uniqueness_of :event, :scope => [:involvement_id, :occurred_on], :message => "This activity and date has already been entered"
-  validates_inclusion_of :event, :in => %w(Consented Completed Withdrawn)  
+  validates_inclusion_of :event, :in => %w(Consented Completed Withdrawn)
+  validates_presence_of :occurred_on
+  validates_numericality_of :involvement_id, :only_integer => true
 
   # Named scopes
   default_scope :order => "occurred_on"
