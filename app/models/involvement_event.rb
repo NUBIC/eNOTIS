@@ -11,7 +11,11 @@ class InvolvementEvent < ActiveRecord::Base
   # Validations
   validates_uniqueness_of :event, :scope => [:involvement_id, :occurred_on], :message => "This activity and date has already been entered"
   validates_inclusion_of :event, :in => %w(Consented Completed Withdrawn)
-  validates_presence_of :occurred_on, :involvement_id
+  validates_presence_of :occurred_on
+  
+  # this validation will work in Rails 2.3.6
+  # https://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/2815-nested-models-build-should-directly-assign-the-parent
+  # validates_presence_of :involvement_id
 
   # Named scopes
   default_scope :order => "occurred_on"
