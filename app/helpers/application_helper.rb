@@ -26,7 +26,8 @@ module ApplicationHelper
     end
   end
   def pretty_status(study)
-    content_tag(:span, study.irb_status, :class => study.may_accrue? ? "status on" : "status off")
+    # the class name affects sorting within study tables
+    content_tag(:span, study.irb_status, :class => study.may_accrue? ? "sortabove status on" : "sortbelow status off")
   end
   
   def start_end_info(study)

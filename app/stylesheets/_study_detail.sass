@@ -14,12 +14,6 @@
     +column(6)
     span.irb_number
       :display block
-      :color #999
-      strong
-        :color #222
-        :font-weight normal
-    span.on
-      :color green
   .accrual_count
     +column(2.5)
     :text-align right
@@ -34,6 +28,10 @@
   .name
     +column(34, true)
     :padding-left 15px
+    span.short_name
+      :display block
+      :font-size 12px
+      :color #222
   #study_information
     +column(48, true)
     .details

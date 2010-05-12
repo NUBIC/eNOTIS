@@ -1,6 +1,7 @@
 %table.display
   %thead
     %tr
+      %th Status
       %th IRB number
       %th Name
       %th PI
@@ -9,12 +10,13 @@
   %tbody  
     - studies.each do |study|
       %tr
+        %td.status
+          = pretty_status study
         %td.irb_number
-          = status_icon study
           - if study.has_coordinator?(current_user)
-            = link_to study.irb_number || "(no id)", study_path(study.irb_number), :title => "#{study.status}: #{study.title}", :class => 'study'
+            = link_to pretty_irb_number(study), study_path(study.irb_number), :title => "#{study.status}: #{study.title}", :class => 'study'
           - else
-            = study.irb_number || "(no id)"
+            = pretty_irb_number(study)
             = link_to image_tag('/images/icons/information.png'), "#", :rel => "#study_information", :class => 'study_information'
             .study_information
               = render :partial => 'partials/study_info', :locals => {:study => study}

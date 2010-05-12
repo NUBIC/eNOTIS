@@ -11,10 +11,12 @@ $(document).ready(function() {
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
   });
   // datatables
-  $("#my_studies .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [{ "sType": "html" }, null, null, null, null]});
+  $("#my_studies .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [null, { "sType": "html" }, null, null, null, null]});
 	
 	// search page
 	jQuery('#results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#results').offset().top, -1*jQuery('#results').offset().left]});
+  $("#study_results .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [null, { "sType": "html" }, null, null, null, null]});
+  $("#subject_results .display").dataTable({"aoColumns": [{ "sType": "html" }]});
 	
 	// studies show
     // dataTable
