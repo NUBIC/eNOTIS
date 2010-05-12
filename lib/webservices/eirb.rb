@@ -7,7 +7,8 @@ class Eirb
                        :expandMultiValueCells => true
                        }.freeze
 
-  STORED_SEARCHES = [# {:name => "eNOTIS Person Details", :ext => "user"}, # not used currently
+  STORED_SEARCHES = [
+    {:name => "eNOTIS Person Details", :ext => "user"}, # not used currently
     {:name => "eNOTIS Study Access", :ext => "access_list"},
     {:name => "eNOTIS Study Accrual", :ext => "accrual"},
     # {:name => "eNOTIS Study Accrual PR", :ext => "periodic_review_accrual"},

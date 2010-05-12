@@ -3,6 +3,23 @@ EIRB_TO_NOTIS = {
 # eNOTIS Study Contact List 
 "Contacts.User ID" =>   :netid,
 "ID" =>                 :irb_number,
+# eNOTIS Person Details 
+"Contact Information.Address: Business.City" =>                   :city,
+"Contact Information.Address: Business.First Line" =>             :address_1,
+"Contact Information.Address: Business.Postal Code" =>            :zip_code,
+"Contact Information.Address: Business.Second Line" =>            :address_2,
+"Contact Information.Address: Business.State or Province.ID" =>   :state,
+"Contact Information.Address: Business.Third Line" =>             :address_3,
+"Contact Information.E-mail: Preferred.E-Mail" =>                 :email,
+"Contact Information.Phone: Business.Phone Number" =>             :business_phone,
+"Contact Information.Phone: Fax.Phone Number" =>                  :fax,
+"Created Date" =>                                                 :created_date,
+"Description" =>                                                  :description,
+"First Name" =>                                                   :first_name,
+"Last Name" =>                                                    :last_name,
+"Middle Name" =>                                                  :middle_name,
+"Title" =>                                                        :title,
+"User ID" =>                                                      :username,
 # eNOTIS Study Export 
 "Modified Date" =>   :modified_date,
 "ID" =>              :irb_number,
@@ -88,5 +105,5 @@ NOTIS_TO_EIRB = {
   :irb_number   => "ID",
   :description  => "Description",
   :status       => "Project Status.ID",
-  :netid        => "NETID" 
+  :netid        => "UserID" 
 }

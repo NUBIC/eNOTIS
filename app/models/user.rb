@@ -42,19 +42,22 @@ class User < ActiveRecord::Base
     users = redis.keys '*'
     users.each do |redis_user|
       user_hash = HashWithIndifferentAccess.new(redis.hgetall(redis_user))
-      ar_user              = self.find_or_create_by_netid(redis_user)
-      ar_user.email        = user_hash[:email]
-      ar_user.first_name   = user_hash[:first_name]
-      ar_user.last_name    = user_hash[:last_name]
-      ar_user.middle_name  = user_hash[:middle_name]
-      ar_user.title        = user_hash[:title] 
+      ar_user = self.find_by_netid(redis_user.downcase) || self.new
+      ar_user.email       = user_hash[:email]
+      ar_user.first_name  = user_hash[:first_name]
+      ar_user.last_name   = user_hash[:last_name]
+      ar_user.middle_name = user_hash[:middle_name]
+      ar_user.title       = user_hash[:title] 
       ar_user.address_line1, ar_user.address_line2, ar_useraddress_line3 = user_hash[:address].split("\n")
       ar_user.city         = user_hash[:city]
       ar_user.state        = user_hash[:state]
       ar_user.zip          = user_hash[:zip]
       ar_user.country      = user_hash[:country]
       ar_user.phone_number = user_hash[:phone_number]
-      ar_user.save
+      ar_user.netid        = user_hash[:username]
+      unless ar_user.save
+        puts "cant save #{user_hash[:username]}"
+      end
     end
   end
   # Returns netids absent from the User model

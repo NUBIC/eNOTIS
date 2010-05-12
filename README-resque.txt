@@ -26,8 +26,9 @@ For the mass importing:
 Then , open up 4 tabs in Terminal.app and type these commands (at RAILS_ROOT)
 rake eirb:redis_import:full
 JOBS_PER_FORK=25 COUNT=3 QUEUES=redis_study_populator rake environment resque:workers
-JOBS_PER_FORK=25 COUNT=3 QUEUES=redis_authorized_personnel_populator rake environment resque:workers
-JOBS_PER_FORK=100 COUNT=1 QUEUES=redis_ldapper,redis_deferred_email rake environment resque:workers
+JOBS_PER_FORK=1 COUNT=6 QUEUES=redis_authorized_personnel_populator rake environment resque:workers
+JOBS_PER_FORK=1 COUNT=2 QUEUES=redis_ldapper rake environment resque:workers
+JOBS_PER_FORK=1 COUNT=3 QUEUES=redis_deferred_email rake environment resque:workers
 
 For the Nightly Work
 rake eirb:redis_import:nightly
