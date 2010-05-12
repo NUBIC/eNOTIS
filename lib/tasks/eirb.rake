@@ -20,7 +20,7 @@ namespace :eirb do
       irb_numbers.each do |numbers|
         irb_number = numbers[:irb_number]
         puts "Priming queues for #{irb_number}"
-        Resque.enqueue(ENRedisStudyPopulator, irb_number, true)
+        # Resque.enqueue(ENRedisStudyPopulator, irb_number, true)
         Resque.enqueue(ENRedisAuthorizedPersonnelPopulator, irb_number)
       end
     end
