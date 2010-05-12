@@ -14,7 +14,8 @@ class Role < ActiveRecord::Base
   end
   
   def self.update_from_redis
-    ActiveRecord::Base.connection.execute('truncate roles restart identity')
+    ActiveRecord::Base.connection.execute('truncate roles')
+    ActiveRecord::Base.connection.execute('alter sequence authorized_people_id_seq restart with 1')
     config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
     redis  = Redis::Namespace.new('eNOTIS',:redis => Redis.new(config))
     
