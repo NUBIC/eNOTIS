@@ -2,7 +2,7 @@ require 'webservices/eirb'
 
 class ENRedisPeoplePopulator
   @queue = :redis_people_populator
-  Resque.before_first_fork do
+  Resque.before_perform_jobs_per_fork do
     Eirb.connect
   end
   

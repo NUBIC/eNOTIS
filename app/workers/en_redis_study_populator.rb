@@ -2,7 +2,7 @@
 
 class ENRedisStudyPopulator
   @queue = :redis_study_populator
-  Resque.before_first_fork do
+  Resque.before_perform_jobs_per_fork do
     Eirb.connect
   end
   

@@ -16,105 +16,86 @@ class Role < ActiveRecord::Base
   def self.update_from_redis
     ActiveRecord::Base.connection.execute('truncate roles restart identity')
     config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-    redis  = Redis::Namespace.new('eNOTIS:role',:redis => Redis.new(config))
+    redis  = Redis::Namespace.new('eNOTIS',:redis => Redis.new(config))
     
     puts "Principal Investigators"
     project_role = "Principal Investigator"
     consent_role = "Obtaining"
-    principal_investigator_list = redis.keys 'principal_investigators:*'
+    principal_investigator_list = redis.keys 'role:principal_investigators:*'
     principal_investigator_list.each do |principal_investigator|
-      study = principal_investigator.split(":")[1]
-      
-      principal_investigator.each do |pis|
-        netids = redis.smembers(principal_investigator)
-        netids.each do |netid|
-          begin
-            role              = Role.new
-            role.study        = Study.find_by_irb_number(study)
-            role.user         = User.find_by_netid(netid)
-            role.project_role = project_role
-            role.consent_role = consent_role
-            unless role.save
-              if role.errors.on(:user_id) == "can't be blank"
-                puts "\tMissing netid = #{study} - #{netid} - #{project_role} - #{consent_role}"
-                Resque.enqueue(ENRedisIncompleteRole, study, netid, project_role, consent_role)
-              elsif role.errors.on(:study_id) == "can't be blank"
-                Resque.enqueue(ENRedisMissingStudy, study)
-              else
-                debugger
-                puts "Error Saving Principal Invesigator - #{study} - #{netid} - #{project_role} - #{consent_role}"
-              end
-            end
-          rescue Exception    => e
-            puts "failed to create Authorized Person for study #{study} and user #{netid}"
-          end
+      study = principal_investigator.split(":")[2]
+      netids = redis.smembers(principal_investigator)
+      netids.each do |netid|
+        begin
+          role              = Role.new
+          role.study        = Study.find_by_irb_number(study)
+          role.user         = user_lookup(redis,study,netid,project_role,consent_role)
+          role.project_role = project_role
+          role.consent_role = consent_role
+          role.save
+        rescue Exception    => e
+          puts "failed to create Authorized Person for study #{study} and user #{netid}"
         end
       end
     end
     
-    puts "\tCo Investigators"
+    puts "Co Investigators"
     project_role = "Co-Investigator"
     consent_role = "Obtaining"
-    
-    co_investigator_list        = redis.keys 'co_investigators:*'
+    co_investigator_list        = redis.keys 'role:co_investigators:*'
     co_investigator_list.each do |co_investigator|
-      study = co_investigator.split(":")[1]
-      co_investigator.each do |coi|
-        netids = redis.smembers(co_investigator)
-        netids.each do |netid|
-          begin
-            role              = Role.new
-            role.study        = Study.find_by_irb_number(study)
-            role.user         = User.find_by_netid(netid)
-            role.project_role = project_role
-            role.consent_role = consent_role
-            unless role.save
-              if role.errors.on(:user_id) == "can't be blank"
-                puts "\tMissing Netid = #{study} - #{netid} - #{project_role} - #{consent_role}"
-                Resque.enqueue(ENRedisIncompleteRole, study, netid, project_role, consent_role)
-              elsif role.errors.on(:study_id) == "can't be blank"
-                Resque.enqueue(ENRedisMissingStudy, study)
-              else
-                debugger
-                puts "Error Saving Co-Invesigator - #{study} - #{netid} - #{project_role} - #{consent_role}"
-              end
-            end
-          rescue Exception    => e
-            puts "failed to create CoInvestigator for study #{study} and user #{netid}"
-          end
+      study = co_investigator.split(":")[2]
+      netids = redis.smembers(co_investigator)
+      netids.each do |netid|
+        begin
+          role              = Role.new
+          role.study        = Study.find_by_irb_number(study)
+          role.user         = user_lookup(redis,study,netid,project_role,consent_role)
+          role.project_role = project_role
+          role.consent_role = consent_role
+          role.save
+        rescue Exception    => e
+          puts "failed to create CoInvestigator for study #{study} and user #{netid}"
         end
       end
     end
     
-    puts "\tUnstructured Text Entry"
-    authorized_personnel_list   = redis.keys 'authorized_personnel:*'
+    puts "Authorized Personnel"
+    authorized_personnel_list   = redis.keys 'role:authorized_personnel:*'
     authorized_personnel_list.each do |authorized_person|
-      study,netid = authorized_person.split(':')[1,2]
-      project_role = redis.hget(authorized_person,'project_role')
-      consent_role = redis.hget(authorized_person,'consent_role')
-      begin
-        role              = Role.new
-        role.study        = Study.find_by_irb_number(study)
-        role.user         = User.find_by_netid(netid)
-        role.project_role = project_role
-        role.consent_role = consent_role
-        unless role.save
-          if role.errors.on(:user_id) == "can't be blank"
-            puts "\tMissing netid = #{study} - #{netid} - #{project_role} - #{consent_role}"
-            Resque.enqueue(ENRedisIncompleteRole, study, netid, project_role, consent_role)
-          elsif role.errors.on(:study_id) == "can't be blank"
-            Resque.enqueue(ENRedisMissingStudy, study)
-          elsif role.errors.on(:user_id) == "has already been taken"
-            Resque.enqueue(ENRedisDupeUser, study, netid, project_role, consent_role)
-          else
-            debugger
-            puts "UnstructuredRoleError - #{study} - #{netid} - #{project_role} - #{consent_role}"
-          end
+      if (redis.type authorized_person) != 'set'
+        study,netid = authorized_person.split(':')[2,3]
+        project_role = redis.hget(authorized_person,'project_role')
+        consent_role = redis.hget(authorized_person,'consent_role')
+        begin
+          role              = Role.new
+          role.study        = Study.find_by_irb_number(study)
+          role.user         = user_lookup(redis,study,netid,project_role,consent_role)
+          role.project_role = project_role
+          role.consent_role = consent_role
+          role.save
+        rescue Exception    => e
+          puts "\tfailed to create Role - for study #{study} and user #{netid}
+          on project_role #{project_role} -  #{consent_role}"
         end
-      rescue Exception    => e
-        puts "\tfailed to create Role - for study #{study} and user #{netid}
-        on project_role #{project_role} -  #{consent_role}"
-      end      
+      end
+    end
+  end
+
+  private
+  def self.user_lookup(redis,study,netid,project_role,consent_role)
+    if (user= User.find_by_netid(netid))
+      user
+    elsif(user2=User.find_by_netid(netid.downcase))
+      user2
+    elsif(user3 = User.find_by_netid(redis.hget("user_aliases",netid)))
+      user3
+    elsif(user4 = User.find_by_netid(redis.hget("user_aliases",netid.downcase)))
+      user4
+    else
+      puts "\tMissing Netid = #{study} - #{netid} - #{project_role} - #{consent_role}"
+      Resque.enqueue(ENRedisIncompleteRole, study, netid, project_role, consent_role)
+      nil
     end
   end
 end
