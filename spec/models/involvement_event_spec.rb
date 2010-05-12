@@ -71,8 +71,11 @@ describe InvolvementEvent do
   it "should let me know how many accruals (unique by involvement) were completed to date" do
     InvolvementEvent.count_accruals.should == 0
     10.times do |i|
-      involvement = Factory.create( :involvement, :study => Factory.create(:fake_study), :subject => Factory.create(:fake_subject),
-                                    :gender => Involvement.genders.rand, :ethnicity => Involvement.ethnicities.rand, :race => Involvement.races.rand)
+      involvement = Factory.create( :involvement, :study => Factory.create(:fake_study), 
+                                   :subject => Factory.create(:fake_subject),
+                                    :gender => Involvement.genders.rand, 
+                                    :ethnicity => Involvement.ethnicities.rand,
+                                    :races => Involvement.races.rand)
       Factory.create( :involvement_event, :event => "Consented",:occurred_on=>(i+10).days.ago,:involvement => involvement )
     end
     involvement_ids = Involvement.all.map(&:id)

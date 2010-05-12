@@ -21,14 +21,17 @@ class StudyUpload < ActiveRecord::Base
   def self.required_columns
     %w(case_number mrn first_name last_name birth_date gender race ethnicity consented_on consented_note withdrawn_on withdrawn_note completed_on completed_note)
   end
+
   def legit?
     upload_exists? && parse_upload && create_subjects
   end
+  
   def upload_exists?
     # logger.info "upload exists?"
     self.summary = "Oops. Please upload a file." unless self.upload.valid?
     return self.upload.valid?
   end
+  
   def parse_upload
     begin
       # logger.info "parse_upload"
@@ -64,6 +67,7 @@ class StudyUpload < ActiveRecord::Base
       return csv_is_valid
     end
   end
+ 
   def create_subjects
     # logger.info "create_subjects"
     subjects_created = 0
@@ -116,7 +120,7 @@ class StudyUpload < ActiveRecord::Base
       :subject => { :mrn => r[:mrn], 
                     :first_name => r[:first_name], 
                     :last_name => r[:last_name], 
-                    :birth_date => (bd = Chronic.parse(r[:birth_date])).blank? ? nil : bd.to_date },
+                    :birth_date => r[:birth_date]},
       :involvement => { :case_number => r[:case_number], 
                        :gender => r[:gender],
                        :ethnicity => r[:ethnicity],
@@ -144,18 +148,23 @@ class StudyUpload < ActiveRecord::Base
       return true
     end
   end
+
   def errors_for_row(r)
     [check_identity(r)] + check_terms(r) + [check_event_dates(r)]
   end
+  
   def check_identity(hash)
     "Either MRN, first name/last name/birth date (with four digit year), or case number are required" if (hash[:mrn].blank? and (hash[:first_name].blank? or hash[:last_name].blank? or Chronic.parse(hash[:birth_date]).nil?) and hash[:case_number].blank?)
   end
+  
   def check_terms(hash)
     %w(gender ethnicity race).map do |category|
       "#{hash[category.to_sym].blank? ? "Blank #{category.capitalize}" : "Unknown #{category.capitalize}: #{hash[category.to_sym]}"}" unless Involvement.send(category.pluralize).map(&:downcase).include?(hash[category.to_sym].to_s.downcase)
     end
   end
+  
   def check_event_dates(hash)
     "Either consented on, withdrawn on, or completed on is required (with four digit year)" if (Chronic.parse(hash[:consented_on]).blank? and Chronic.parse(hash[:withdrawn_on]).blank? and Chronic.parse(hash[:completed_on]).blank?)
   end
+
 end

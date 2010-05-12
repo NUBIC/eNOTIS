@@ -8,17 +8,39 @@ describe Involvement do
   it "should create a new instance given valid attributes" do
     @involvement.should be_valid
   end
+
   it "should accept gender, ethnicity, and race (case insensitive) and set the right case" do
     Involvement.new(:gender => "FEMALE").gender.should == "Female"
     Involvement.new(:gender => "m").gender.should == nil
     Involvement.new(:ethnicity => "HiSpAnIc Or LaTiNo").ethnicity.should == "Hispanic or Latino"
-    Involvement.new(:race => "asian").race.should == "Asian"
+    Involvement.new(:races => "asian").races.include?("Asian").should be_true
   end
-  
+
+  describe "NIH Race requirements" do
+    before(:each) do
+      @i = Involvement.new(:gender => "Male", :ethnicity => "Hispanic or Latino", 
+                           :races => ["American Indian/Alaska Native", "Asian"])
+    end
+
+    it "accepts multiple races as per NIH requirements" do
+
+      @i.races.include?("American Indian/Alaska Native").should be_true
+      @i.races.include?("Asian").should be_true
+    end
+
+
+    it "accepts race being set via 'races' or 'race'" do
+      @i.race = "Asian"
+      @i.races.include?("Asian").should be_true
+      @i.races = ["Asian", "White"]
+      @i.race.include?("Asian").should be_true
+      @i.race.include?("White").should be_true
+    end
+  end
   it "should handle two digit years in dates" do
     @involvement.update_attributes("subject_attributes"=> {"birth_date"=>"12/18/34"})
     @involvement.subject.birth_date.should == Date.parse("1934-12-18")
-    
+
     @involvement.update_attributes("subject_attributes"=> {"birth_date"=>"12/18/07"})
     @involvement.subject.birth_date.should == Date.parse("2007-12-18")
   end
