@@ -3,7 +3,7 @@ class DemographicsUpdate < ActiveRecord::Migration
   
   def self.up
     puts "Beginning data migration and db change"
-    puts "-#{20.times{print"="}}-"
+    puts "-====================================-"
 
     # Adding the new columns as defined in the class
     puts "Adding new fields:"
@@ -35,7 +35,7 @@ class DemographicsUpdate < ActiveRecord::Migration
 
   def self.down
     puts "Rolling data migration and db change"
-    puts "-#{20.times{print "="}}-"
+    puts "-===================================-"
 
     puts "Adding back old race column"
     add_column(:involvements, :race, :string)

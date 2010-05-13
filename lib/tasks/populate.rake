@@ -9,7 +9,7 @@ namespace :db do
 
   namespace :populate do
 
-    task :default => [:environment, :clear_db, :admins, :users, :roles_and_studies, :roles, :involvements_and_subects, :involvements, :sample_netids]
+    task :default => [:environment, :clear_db, :admins, :users, :roles_and_studies, :roles, :involvements_and_subjects, :involvements, :sample_netids]
       
     desc 'Clear models: User,Roles, Study, Involvement, Subject, InvolvementEvent'
     task :clear_db => :environment do
@@ -60,7 +60,7 @@ namespace :db do
     end
 
     desc 'Populate involvements: joins subjects(fake) and studies(random)'
-    task :involvements_and_subects => :environment do
+    task :involvements_and_subjects => :environment do
       puts "creating involvements and subjects..."
       events = InvolvementEvent.events.concat(Array.new(20, "Consented")) # weight this more heavily towards consent event types
       300.times do |i|

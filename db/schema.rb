@@ -55,12 +55,12 @@ ActiveRecord::Schema.define(:version => 20100510212946) do
     t.string   "case_number"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_unknown_or_not_reported",                   :default => false
-    t.boolean  "is_american_indian_or_alaska_native",          :default => false
-    t.boolean  "is_asian",                                     :default => false
-    t.boolean  "is_black_or_african_american",                 :default => false
-    t.boolean  "is_native_hawaiian_or_other_pacific_islander", :default => false
-    t.boolean  "is_white",                                     :default => false
+    t.boolean  "race_is_american_indian_or_alaska_native",          :default => false
+    t.boolean  "race_is_asian",                                     :default => false
+    t.boolean  "race_is_black_or_african_american",                 :default => false
+    t.boolean  "race_is_native_hawaiian_or_other_pacific_islander", :default => false
+    t.boolean  "race_is_white",                                     :default => false
+    t.boolean  "race_is_unknown_or_not_reported",                   :default => false
   end
 
   add_index "involvements", ["subject_id", "study_id", "ethnicity", "gender"], :name => "involvements_attr_idx", :unique => true
