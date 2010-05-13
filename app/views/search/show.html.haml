@@ -1,7 +1,3 @@
-- content_for :head do
-  :javascript
-    $(document).ready(function(){$("#study_results .display").dataTable({"aoColumns": [{ "sType": "html" }, null, null, null]}); $("#subject_results .display").dataTable({"aoColumns": [{ "sType": "html" }]}); });
-          
 #results
   - if @studies
     #study_results

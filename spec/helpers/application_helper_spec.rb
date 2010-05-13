@@ -19,8 +19,8 @@ describe ApplicationHelper do
     helper.pretty_irb_number(Study.new(:irb_number => "")).should == '<span class="irb_number">(no IRB number)</span>'
   end
   it "should emphasize study status" do
-    helper.pretty_status(Study.new(:irb_status => "Approved")).should == '<span class="status on">Approved</span>'
-    helper.pretty_status(Study.new(:irb_status => "Withdrawn")).should == '<span class="status off">Withdrawn</span>'
-    helper.pretty_status(Study.new(:irb_status => "")).should == '<span class="status off"></span>'
+    helper.pretty_status(Study.new(:irb_status => "Approved")).should == '<span class="sortabove status on">Approved</span>'
+    helper.pretty_status(Study.new(:irb_status => "Withdrawn")).should == '<span class="sortbelow status off">Withdrawn</span>'
+    helper.pretty_status(Study.new(:irb_status => "")).should == '<span class="sortbelow status off"></span>'
   end
 end

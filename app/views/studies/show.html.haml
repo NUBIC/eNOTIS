@@ -24,7 +24,10 @@
   .accrual_goal
     = @study.accrual_goal.blank? ? "&nbsp;" : @study.accrual_goal
     %label Goal
-  .name{:title => @study.name}= @study.name
+  .name{:title => @study.title}
+    = @study.title
+    %span.short_name= @study.name
+  
 
   #study_information
     .details
