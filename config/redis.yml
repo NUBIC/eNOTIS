@@ -7,7 +7,11 @@ production:
   port: 6379
 
 staging:
-  host: localhost
+  host: q.staging
+  port: 6379
+
+production:
+  host: q.prod
   port: 6379
 
 hudson:

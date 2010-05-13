@@ -2,5 +2,5 @@ development: localhost:6379
 test: localhost:6379
 cucumber: localhost:6379
 hudson: localhost:6379
-staging: localhost:6379
-production: localhost:6379
+staging: q.staging:6379
+production: q.prod:6379
