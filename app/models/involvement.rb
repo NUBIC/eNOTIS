@@ -124,6 +124,12 @@ class Involvement < ActiveRecord::Base
   alias :race :races
   alias :race= :races=
 
+  def races_as_str
+    races.join(", ")
+  end
+
+  alias :race_as_str :races_as_str
+
   # A setter for the race_is_unknown_or_not_reported attribute
   # because it has to clear all other races
   # NOTE: Checking for "1" or true because rails passes the params 
