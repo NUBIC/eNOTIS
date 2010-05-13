@@ -1,24 +1,30 @@
 class AddFkConstraints < ActiveRecord::Migration
   def self.up
-    
-    execute 'ALTER TABLE co_investigators ADD CONSTRAINT fk_co_investigators_users FOREIGN KEY (user_id) REFERENCES users(id)'
-    execute 'ALTER TABLE co_investigators ADD CONSTRAINT fk_co_investigators_studies FOREIGN KEY (study_id) REFERENCES studies(id)'
-    
-    execute 'ALTER TABLE coordinators ADD CONSTRAINT fk_coordinators_users FOREIGN KEY (user_id) REFERENCES users(id)'
-    execute 'ALTER TABLE coordinators ADD CONSTRAINT fk_coordinators_studies FOREIGN KEY (study_id) REFERENCES studies(id)'
-    
-    execute 'ALTER TABLE principal_investigators ADD CONSTRAINT fk_principal_investigators_users FOREIGN KEY (user_id) REFERENCES users(id)'
-    execute 'ALTER TABLE principal_investigators ADD CONSTRAINT fk_principal_investigators_studies FOREIGN KEY (study_id) REFERENCES studies(id)'
+    drop_table :principal_investigators
+    drop_table :co_investigators
+    drop_table :coordinators
   end
 
   def self.down
-    execute 'ALTER TABLE principal_investigators DROP CONSTRAINT fk_principal_investigators_studies'
-    execute 'ALTER TABLE principal_investigators drop CONSTRAINT fk_principal_investigators_users'
+    create_table "coordinators", :force => true do |t|
+      t.integer  "study_id"
+      t.integer  "user_id"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
     
-    execute 'ALTER TABLE coordinators DROP CONSTRAINT fk_coordinators_studies'
-    execute 'ALTER TABLE coordinators DROP CONSTRAINT fk_coordinators_users'
+    create_table "co_investigators", :force => true do |t|
+      t.integer  "study_id"
+      t.integer  "user_id"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
     
-    execute 'ALTER TABLE co_investigators DROP CONSTRAINT fk_co_investigators_studies'
-    execute 'ALTER TABLE co_investigators DROP CONSTRAINT fk_co_investigators_users'
+    create_table "principal_investigators", :force => true do |t|
+      t.integer  "study_id"
+      t.integer  "user_id"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
   end
 end

@@ -17,33 +17,33 @@ class AddColumnsToStudies < ActiveRecord::Migration
     add_column :studies, :exclusion_criteria, :text
     add_column :studies, :description, :text
     rename_table :authorized_people, :roles
-    drop_table :principal_investigators
-    drop_table :co_investigators
-    drop_table :coordinators
+    # drop_table :principal_investigators
+    # drop_table :co_investigators
+    # drop_table :coordinators
     #TODO: check foreign key cascading at some later date
   end
 
   def self.down
-    create_table "coordinators", :force => true do |t|
-      t.integer  "study_id"
-      t.integer  "user_id"
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-    
-    create_table "co_investigators", :force => true do |t|
-      t.integer  "study_id"
-      t.integer  "user_id"
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-    
-    create_table "principal_investigators", :force => true do |t|
-      t.integer  "study_id"
-      t.integer  "user_id"
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
+    # create_table "coordinators", :force => true do |t|
+    #   t.integer  "study_id"
+    #   t.integer  "user_id"
+    #   t.datetime "created_at"
+    #   t.datetime "updated_at"
+    # end
+    # 
+    # create_table "co_investigators", :force => true do |t|
+    #   t.integer  "study_id"
+    #   t.integer  "user_id"
+    #   t.datetime "created_at"
+    #   t.datetime "updated_at"
+    # end
+    # 
+    # create_table "principal_investigators", :force => true do |t|
+    #   t.integer  "study_id"
+    #   t.integer  "user_id"
+    #   t.datetime "created_at"
+    #   t.datetime "updated_at"
+    # end
     
     rename_table :roles, :authorized_people
     remove_column :studies, :description
