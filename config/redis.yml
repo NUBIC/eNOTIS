@@ -7,11 +7,11 @@ production:
   port: 6379
 
 staging:
-  host: q.staging
+  host: q-staging.nubic.northwestern.edu
   port: 6379
 
 production:
-  host: q.prod
+  host: q-prod.nubic.northwestern.edu
   port: 6379
 
 hudson:
