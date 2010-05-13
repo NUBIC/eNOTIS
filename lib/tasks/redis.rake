@@ -22,7 +22,14 @@ namespace :redis do
     Role.update_from_redis
     puts "  Authorized Personnel"
   end
-  
+  namespace :roles do
+    desc "clear"
+    task :clear=>:environment do
+      redis = Redis.new
+      keys =  redis.keys 'eNOTIS:role:*'
+      keys.each{|k| redis.del k}
+    end
+  end
   namespace :resque do
     desc "requeue failed jobs"
     task :requeue=> :environment do

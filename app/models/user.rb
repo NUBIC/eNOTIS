@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
       ar_user.last_name   = user_hash[:last_name]
       ar_user.middle_name = user_hash[:middle_name]
       ar_user.title       = user_hash[:title] 
-      ar_user.address_line1, ar_user.address_line2, ar_useraddress_line3 = user_hash[:address].split("\n")
+      ar_user.address_line1, ar_user.address_line2, ar_user.address_line3 = user_hash[:address].split("\n")
       ar_user.city         = user_hash[:city]
       ar_user.state        = user_hash[:state]
       ar_user.zip          = user_hash[:zip]

@@ -1,7 +1,7 @@
 class ENRedisLdapper
   @queue = :redis_ldapper
 
-  def self.perform(irb_number, netid, project_role, consent_role)
+  def self.perform(irb_number, netid, project_role, consent_role, source, redo_netid=nil)
     if Rails.env.production?
       conf_data = YAML::load(File.read("/etc/nubic/bcsec-prod.yml"))
     else
@@ -18,22 +18,20 @@ class ENRedisLdapper
     redis = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
 
     user_key = "user:#{netid}"
-    if redis.exists(user_key)
-      userhash = HashWithIndifferentAccess.new(redis.hgetall(user_key))
-      create_role_entry(redis, irb_number, netid, project_role, consent_role, userhash[:email])
-    else
+    unless redis.exists(user_key) || redo_netid
       user = Bcsec::NetidAuthenticator.find_user(netid)
       if user
-        user.instance_values.each do |k,v|
-          redis.hset(user_key,k,v)
+        user.instance_variables.each do |var|
+          redis.hset(user_key,var.gsub("@",""),user.instance_variable_get(var))
         end
-        userhash = HashWithIndifferentAccess.new(redis.hgetall(user_key))
-        create_role_entry(redis, irb_number, netid, project_role, consent_role, userhash[:email])
       else
-        Resque.enqueue(ENRedisBogusNetidPopulator, netid, irb_number, project_role, consent_role )
+        Resque.enqueue(ENRedisBogusNetidPopulator, netid, irb_number, project_role, consent_role ,source)
       end
     end
-    puts "Imported #{user_key}"
+    if source == "authorized_personnel"
+      userhash = HashWithIndifferentAccess.new(redis.hgetall(user_key))
+      create_role_entry(redis, irb_number, netid, project_role, consent_role, userhash[:email])
+    end
   end
 
   def self.create_role_entry(redis, irb_number, netid, project_role, consent_role, email)

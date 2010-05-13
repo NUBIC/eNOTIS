@@ -19,7 +19,7 @@ class Role < ActiveRecord::Base
     config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
     redis  = Redis::Namespace.new('eNOTIS',:redis => Redis.new(config))
     
-    puts "Principal Investigators"
+    puts "\tPrincipal Investigators"
     project_role = "Principal Investigator"
     consent_role = "Obtaining"
     principal_investigator_list = redis.keys 'role:principal_investigators:*'
@@ -40,7 +40,7 @@ class Role < ActiveRecord::Base
       end
     end
     
-    puts "Co Investigators"
+    puts "\tCo Investigators"
     project_role = "Co-Investigator"
     consent_role = "Obtaining"
     co_investigator_list        = redis.keys 'role:co_investigators:*'
@@ -61,7 +61,7 @@ class Role < ActiveRecord::Base
       end
     end
     
-    puts "Authorized Personnel"
+    puts "\tAuthorized Personnel"
     authorized_personnel_list   = redis.keys 'role:authorized_personnel:*'
     authorized_personnel_list.each do |authorized_person|
       if (redis.type authorized_person) != 'set'
