@@ -22,9 +22,13 @@ class ReportsController < ApplicationController
   def create
     result = Report.export(params)
     if params[:format]=="pdf"
-      send_data(result,:type => 'application/pdf',:filename =>  "#{params[:study][:irb_number]}.pdf")
+      send_data(result,
+                :type => 'application/pdf',
+                :filename =>  "#{params[:study][:irb_number]}.pdf")
     elsif params[:format]=="csv"
-      send_data(result,:type => 'text/csv; charset=utf-8; header=present',:filename => "#{params[:study][:irb_number]}.csv")
+      send_data(result,
+                :type => 'text/csv; charset=utf-8; header=present',
+                :filename => "#{params[:study][:irb_number]}.csv")
     end
   end
 

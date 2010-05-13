@@ -9,13 +9,13 @@ namespace :db do
 
   namespace :populate do
 
-    task :default => [:environment, :clear_db, :admins, :users, :coordinators_and_studies, :coordinators, :involvements_and_subects, :involvements, :sample_netids]
+    task :default => [:environment, :clear_db, :admins, :users, :roles_and_studies, :roles, :involvements_and_subjects, :involvements, :sample_netids]
       
-    desc 'Clear models: User, Coordinator, Study, Involvement, Subject, InvolvementEvent'
+    desc 'Clear models: User,Roles, Study, Involvement, Subject, InvolvementEvent'
     task :clear_db => :environment do
       puts
       puts "clearing db..."
-      [User, Coordinator, Study, Involvement, Subject, InvolvementEvent].each(&:delete_all)
+      [Role, InvolvementEvent, Involvement, Study, Subject, User].each(&:delete_all)
     end
 
     desc 'Populate admins(Brian, David, Mark, Laura, Sam)'
@@ -28,31 +28,31 @@ namespace :db do
       puts
     end
 
-    desc 'Populate coordinators: joins users(random) and studies(fake)'
-    task :coordinators_and_studies => :environment do      
-      puts "creating coordinators and studies..."
-      80.times { |i| blip && Factory.create(:coordinator, :study => Factory.create(:fake_study), :user => random(User))}
+    desc 'Populate roles: joins users(random) and studies(fake)'
+    task :roles_and_studies => :environment do      
+      puts "creating roles and studies..."
+      80.times { |i| blip && Factory.create(:role_accrues, :study => Factory.create(:fake_study), :user => random(User))}
       puts
     end
 
-    desc 'Populate coordinators: joins users(random) and studies(random)'
-    task :coordinators => :environment do
-      puts "creating extra coordinators..."
+    desc 'Populate roles: joins users(random) and studies(random)'
+    task :roles => :environment do
+      puts "creating extra roles..."
       50.times do |i| 
         begin
-          blip && Factory.create(:coordinator, :study => random(Study), :user => random(User))
+          blip && Factory.create(:role_accrues, :study => random(Study), :user => random(User))
         rescue
         end
       end
       puts
     end
     
-    desc 'Populate one coordinator: joins user(given) and studies(random)'
-    task :coordinator => :environment do
-      puts "creating extra coordinators for #{ENV['NETID']}..."
+    desc 'Populate one role: joins user(given) and studies(random)'
+    task :roles => :environment do
+      puts "creating extra accrual role for #{ENV['NETID']}..."
       10.times do |i| 
         begin
-          blip && Factory.create(:coordinator, :study => random(Study), :user => User.find_by_netid(ENV['NETID']))
+          blip && Factory.create(:role_accrues, :study => random(Study), :user => User.find_by_netid(ENV['NETID']))
         rescue
         end
       end
@@ -60,7 +60,7 @@ namespace :db do
     end
 
     desc 'Populate involvements: joins subjects(fake) and studies(random)'
-    task :involvements_and_subects => :environment do
+    task :involvements_and_subjects => :environment do
       puts "creating involvements and subjects..."
       events = InvolvementEvent.events.concat(Array.new(20, "Consented")) # weight this more heavily towards consent event types
       300.times do |i|
@@ -92,11 +92,11 @@ namespace :db do
       puts
     end 
     
-    desc 'Populate vip coordinators manually'
+    desc 'Populate VIP roles manually. Does not set accrual flag'
     task :vip => :environment do
       while !(pair = ask("netid, irb_number: ")).blank? do
         netid, irb_number = pair.split(",", 2).map(&:strip)
-        coord = Coordinator.create(:user => User.find_by_netid(netid), :study => Study.find_by_irb_number(irb_number))
+        coord = Role.create(:user => User.find_by_netid(netid), :study => Study.find_by_irb_number(irb_number))
         puts coord.save ? coord.inspect : coord.all_errors
       end
     end

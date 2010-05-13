@@ -15,6 +15,7 @@ module ApplicationHelper
     # study.may_accrue? ? "O" : "X"
     study.may_accrue? ? image_tag('/images/status-on.png', :alt => "O", :title => study.irb_status) : image_tag('/images/status-off.png', :alt => "X", :title => study.irb_status)
   end
+
   def pretty_irb_number(study)
     m = study.irb_number.match(/(STU0*)(\d*)/)
     if study.irb_number.blank?
@@ -25,6 +26,7 @@ module ApplicationHelper
       content_tag("span", study.irb_number, :class => "irb_number")
     end
   end
+  
   def pretty_status(study)
     # the class name affects sorting within study tables
     content_tag(:span, study.irb_status, :class => study.may_accrue? ? "sortabove status on" : "sortbelow status off")
@@ -57,12 +59,20 @@ module ApplicationHelper
   def gender_options(selected = nil)
     options_for_select(Involvement.genders, selected)
   end
+  
   def ethnicity_options(selected = nil)
     options_for_select(Involvement.ethnicities, selected)
   end
-  def race_options(selected = nil)
-    options_for_select(Involvement.races, selected)
+ 
+  # RACE_ATTRIBUTES is a hash so this method strips the keys and sorts them
+  # It also will remove one of the keys (likely the :is_unknown_or_not_reported "Race" 
+  # attribute since this attribute we need to handle differently than the others)
+  def race_options(key_to_delete)
+    keys = Involvement::RACE_ATTRIBUTES.keys.sort{|a,b| a.to_s <=> b.to_s}
+    keys.delete(key_to_delete.to_sym)
+    keys  
   end
+  
   def event_options(selected = nil)
     options_for_select(InvolvementEvent.events, selected)
   end

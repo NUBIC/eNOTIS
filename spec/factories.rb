@@ -106,7 +106,8 @@ Factory.define :involvement do |i|
   i.association   :study
   i.ethnicity     {Involvement.ethnicities.rand}
   i.gender        {Involvement.genders.rand}
-  i.race          {Involvement.races.rand}
+  i.races          {Involvement.races.rand}
+
 end
 
 Factory.define :involvement_event do |e|

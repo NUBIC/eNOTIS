@@ -8,10 +8,13 @@
         = check_box_tag "subject[]",val, :checked => true
         = label_tag "subject[]",val.titleize
         %br
-      -['case_number','ethnicity','gender','race'].each do |attr|
+      -['case_number','ethnicity','gender'].each do |attr|
         = check_box_tag "involvement[attributes][]",attr, :checked => true
         = label_tag "involvement[attributes][]",attr.titleize
         %br
+      = check_box_tag "involvement[methods][]", :race_as_str, :checked => true
+      = label_tag "involvement[methods][]", "Race"
+      %br
       = check_box_tag "event[attributes][]",'event', :checked => true
       = label_tag "event[attributes][]","Event Type"
       %br

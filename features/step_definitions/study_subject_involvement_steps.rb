@@ -7,7 +7,7 @@ When /^I add a subject "([^\"]*)" "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do 
   fill_in "Birth date", :with => "8/7/65"
   select "Female", :from => "Gender"
   select "Not Hispanic or Latino", :from => "Ethnicity"
-  select "Asian", :from => "Race"
+  check "Asian"#, :from => "Race"
   select event, :from => "Activity"
   fill_in "On", :with => date
   click_button "Save"
@@ -19,7 +19,7 @@ When /^I add a case number "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do |case_n
   fill_in "Birth date", :with => "8/7/65"
   select "Female", :from => "Gender"
   select "Not Hispanic or Latino", :from => "Ethnicity"
-  select "Asian", :from => "Race"
+  check "Asian"#, :from => "Race"
   select event, :from => "Activity"
   fill_in "On", :with => date
   click_button "Save"

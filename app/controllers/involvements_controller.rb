@@ -54,7 +54,7 @@ class InvolvementsController < ApplicationController
     @involvement_events = @involvement.involvement_events
     study = Study.find_by_irb_number(params[:study][:irb_number])
     if @involvement.update_attributes(params[:involvement])
-      flash[:notice] = "Created"
+      flash[:notice] = "Updated"
     else
       flash[:error] = "Error: #{@involvement.errors.full_messages}"
     end
