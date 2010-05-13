@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100428211930) do
+ActiveRecord::Schema.define(:version => 20100512205401) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -153,8 +153,6 @@ ActiveRecord::Schema.define(:version => 20100428211930) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "subjects", ["mrn"], :name => "subjects_mrn_idx", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "netid"
