@@ -13,17 +13,19 @@ class DemographicsUpdate < ActiveRecord::Migration
     end
 
     Involvement.find(:all).each do |inv|
-      if RDEFS.values.include?(inv.race)
-        puts "moving race #{inv.race} on Involvement ID#{inv.id}"
-        inv.races = inv.race
+      old_race = Involvement.find_by_sql("select involvement.race from involvements where involvement.id = #{inv.id}").first[:race]
+      if RDEFS.values.include?(old_race)
+        puts "moving race #{old_race} on Involvement ID#{inv.id}"
+        inv.race = old_race
         inv.save
       end
     end
     
     # double check
     Involvement.find(:all).each do |inv|
-      if inv.race != inv.races.first
-        raise "!!! Data move error on #{inv.inspect}"
+      old_race = Involvement.find_by_sql("select involvement.race from involvements where involvement.id = #{inv.id}").first[:race]      
+      if inv.race != old_race and RDEFS.values.include?(old_race)
+        raise "!!! Data move error on #{inv.inspect} - Old race #{old_race}"
       else
         puts "Data move OKAY for Involvment ID#{inv.id}"
       end
