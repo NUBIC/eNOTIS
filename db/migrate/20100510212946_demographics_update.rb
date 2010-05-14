@@ -24,8 +24,8 @@ class DemographicsUpdate < ActiveRecord::Migration
     # double check
     Involvement.find(:all).each do |inv|
       old_race = Involvement.find_by_sql("select involvements.race from involvements where involvements.id = #{inv.id}").first[:race]      
-      if inv.race != old_race and RDEFS.values.include?(old_race)
-        raise "!!! Data move error on #{inv.inspect} - Old race #{old_race}"
+      if inv.race.first != old_race and RDEFS.values.include?(old_race)
+        raise "!!! Data move error on #{inv.inspect} - Old race '#{old_race}' Set Race '#{inv.race}'"
       else
         puts "Data move OKAY for Involvment ID#{inv.id}"
       end
