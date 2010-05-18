@@ -42,6 +42,89 @@ eNOTIS depends on a few important gems:
   
 == Changes ==
 
+1.4.0
+
+* Everyone can see resque now under admin/jobs using the username and password enotis_jobs
+* one more fix to migrations
+* fix to new demo migration
+* update to the migration. was not working on staging
+* fixing the addresses for resque and redis
+* removing some extraneous foreign key checks
+* one weird little database change
+* One last check before deploying this to staging
+* fix for demographics export in pdf and csv
+* Specs and features pass on demographics change. Some minor UI work is still needed but fuctionality is there.
+* Refactored and Finished Review Board and Data Warehouse import
+* removed subject index. references #2667
+* fixing pretty_status spec to account for sorting
+* separate study status and title. add long and short title to study detail page. sort studies by status. closes #2595. closes #2773.
+* search by title and name
+* modified the role updating task to work on postgresql 8.3
+* specs and features passing on demographics change. also fixed a study import bug regarding two digit years, the study_upload model was
+trying to convert the data before the special code for two digit years was run, this caused an error
+* Updated eNOTIS import project to use the edw and import authorized personnel successfully
+* Updated rake populate script for change from coordinators to roles, and to support new FK constraints on deleting everything
+* paper trail uses a different, thread safe method, to store whodunnit. this customization was interfering with the new method. just sto
+re user ids. closes #2830
+* won't validate presence_of involvement for now, until Rails 2.3.6 patch
+* won't validate presence_of involvement for now, until Rails 2.3.6 patch
+* validate presence, not numericality, of involvement\_id in involvement\_event
+* validate involvmenet events date and involvement_id. closes #2829
+* reverting the validation
+* adding in more queues for error tracking
+* specs passing now. some edw adapter specs need refactoring. they are fragile
+* had to change the database.yml to fix a bug in postgres 8.4 which I use on my dev machine
+* updated edw webservices to work with multiple reports. Report names are defined in the Edw class
+* fix for spec failing - added more involvement events
+* getting specs to pass
+* updated redis importing to account for authorized personnel not marked as principal_investigator or coinvestigators
+* getting specs to pass
+* updated redis importing to account for authorized personnel not marked as principal_investigator or coinvestigators
+* fake pi name for demo
+* updated dates for demo
+* more specific on tooltips - keeps add button from accidentally being a tooltop
+* start with charts rolled up
+* time chart, line and bar. closes #2593
+* tooltips for study
+* Additional resque queues
+* show charts in study detail page only. icon for charts.
+* Additional resque queues
+* blank pi's for now
+* ignoring rackup file
+* adding unicorn and fixing gemfile* error pages: spilled milk. aw snap. ruh roh.
+* Updated specs and features from changes to datamodel, specs and features passing
+* an attempt at better error pages
+* changing study detail page header layout. show irb number, full text of status, subjects/goal, and name in one line. details and graph
+s button for toggling graphs.
+* helpers for prettier study title and status
+* user auth doesn't need forget_me
+* removed muliti institute import field from translation and eirb redis import. This field is not used consistently in eirb for us to det
+ermine if a study is multi-institute or not
+* updated branch to handle the funding sources as child model of the study. Added code to the redis import process to get the data into 
+the models
+* upgrading Gemfile and resque notes
+* Fixing study import
+* more work on importing
+* More work on #2254. removed couch stuff and simplified a bit
+* Update config files to account for more environments
+* updating documentation and initial work on replacing couchdb with redis
+* refactoring populators
+* adding the ability to pull in just the most recently modified studies (within 1 day)
+* Locking multi-job-forks
+* More work on redis importing and migrating from couch to redis
+* quick fix
+* Finishing up notes for redis
+* Additional resque notes
+* We're now importing study description and inclusion and exclusion
+* import data from redis to studies and users
+* renamed activerecord resque task
+* more work
+* further chopping up of work
+* quick commit
+* adding in the first steps for referencing the EIRB and chopping it up with resque
+* Standalone scripts should have the shebang and be executable
+* Initial Resque Setup for development. references #2254
+
 1.3.0
 
 * both enotissupport and enotis emails on front page
