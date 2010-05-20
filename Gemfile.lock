@@ -252,7 +252,7 @@ specs:
 - mime-types: 
     version: "1.16"
 - rest-client: 
-    version: 1.5.0
+    version: 1.5.1
 - couchrest: 
     version: "0.37"
 - diff-lcs: 
@@ -260,11 +260,11 @@ specs:
 - trollop: 
     version: 1.16.2
 - gherkin: 
-    version: 1.0.24
+    version: 1.0.30
 - term-ansicolor: 
     version: 1.0.5
 - cucumber: 
-    version: 0.7.2
+    version: 0.7.3
 - cucumber-rails: 
     version: 0.3.1
 - database_cleaner: 
@@ -276,7 +276,7 @@ specs:
 - fastthread: 
     version: 1.0.7
 - hirb: 
-    version: 0.3.1
+    version: 0.3.2
 - httpclient: 
     version: 2.1.5.2
 - libxml-ruby: 
@@ -296,17 +296,17 @@ specs:
 - rails: 
     version: 2.3.5
 - rdiscount: 
-    version: 1.6.3.1
+    version: 1.6.3.2
 - redis: 
     version: 1.0.7
 - redis-namespace: 
-    version: 0.4.2
+    version: 0.4.4
 - sinatra: 
     version: "1.0"
 - vegas: 
     version: 0.1.6
 - resque: 
-    version: 1.8.2
+    version: 1.8.5
 - resque-jobs-per-fork: 
     version: 0.3.1
 - rspec: 

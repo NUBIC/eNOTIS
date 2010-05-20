@@ -4,16 +4,14 @@ namespace :eirb do
     puts `ruby script/eirbtest.rb`
   end
 
-  desc "Runs study import from data cache"
-  task :study_import do
-    `script/runner 'Study.update_from_cache'` 
-  end
-
   namespace :redis_import do
     desc "Full Import"
     task :full => :environment do
       require 'webservices/eirb'
       Eirb.connect
+      redis = Redis.new
+      keys =  redis.keys 'eNOTIS:*'
+      keys.each{|k| redis.del k}
       puts "#{Time.now}: Getting status for all studies "
       irb_numbers = Eirb.find_study_export
       puts "#{Time.now}: finishing getting status "

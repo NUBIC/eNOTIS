@@ -71,6 +71,45 @@ namespace :deploy do
   end
 end
 
+namespace :resque do
+  desc "Requeue Failed Jobs"
+  task :requeue, :roles => :app  do
+    run "cd #{current_path} && rake RAILS_ENV=#{rails_env} redis:resque:requeue"
+  end
+  desc "Restart workers"
+  task :restart, :roles => :app do
+    %w(people study).each do |worker_type|
+      1.upto(2) do |num|
+        run "cd #{shared_path}/pids && kill -QUIT `cat resque_#{worker_type}_#{num}.pid`"
+      end
+    end
+  end
+  desc "Pause workers"
+  task :pause,:roles => :app  do
+    %w(people study).each do |worker_type|
+      1.upto(2) do |num|
+        run "cd #{shared_path}/pids && kill -USR2 `cat resque_#{worker_type}_#{num}.pid`"
+      end
+    end
+  end
+  desc "Resume workers"
+  task :resume, :roles => :app  do
+    %w(people study).each do |worker_type|
+      1.upto(2) do |num|
+        run "cd #{shared_path}/pids && kill -CONT `cat resque_#{worker_type}_#{num}.pid`"
+      end
+    end
+  end
+  desc "Kill workers"
+  task :kill , :roles => :app do
+    %w(people study).each do |worker_type|
+      1.upto(2) do |num|
+        run "cd #{shared_path}/pids && kill -TERM `cat resque_#{worker_type}_#{num}.pid`"
+      end
+    end
+  end
+end
+
 # Administration tasks
 namespace :admin do
   desc "Creates admins via rake db:populate:admins"
@@ -87,9 +126,9 @@ namespace :admin do
     end
   end
   
-  desc "Imports coordinators from eirb"
-  task :import_from_eirb, :roles => :app do
-    run "cd #{current_path} && rake RAILS_ENV=#{rails_env} couch"
+  desc "Imports from redis"
+  task :import_from_redis, :roles => :app do
+    run "cd #{current_path} && rake RAILS_ENV=#{rails_env} redis"
   end
 end
 
@@ -117,7 +156,7 @@ namespace :bundler do
   end
 end
 
-after 'deploy:update_code', 'bundler:install', 'web:static', 'web:uploads_and_results', 'deploy:cleanup', 'deploy:permissions'
+after 'deploy:update_code', 'bundler:install', 'web:static', 'web:uploads_and_results', 'deploy:cleanup', 'deploy:permissions', 'resque:restart'
 
 before 'web:disable', 'web:static'
 after 'web:enable', 'deploy:restart'

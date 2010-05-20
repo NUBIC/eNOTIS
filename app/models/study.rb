@@ -12,17 +12,7 @@ class Study < ActiveRecord::Base
 
   # Validators
   validates_format_of :irb_number, :with => /^STU.+/, :message => "invalid study number format"
-  
-  def self.cache_connect
-    return @cache if @cache
-    config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-    @cache = Redis::Namespace.new('eNOTIS:study', :redis => Redis.new(config))
-  end
-  
-  def self.redis_cache_lookup(irb_number)
-    HashWithIndifferentAccess.new(cache_connect.hgetall(irb_number))
-  end  
-  
+    
   def self.update_from_redis
     config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
     redis = Redis::Namespace.new('eNOTIS:study',:redis => Redis.new(config))

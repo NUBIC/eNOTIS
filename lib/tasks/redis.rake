@@ -18,9 +18,9 @@ namespace :redis do
   
   desc 'Updates roles'
   task :roles => :environment do
-    puts "Authorized Personnel..."
+    puts "Roles..."
     Role.update_from_redis
-    puts "  Authorized Personnel"
+    puts "  Roles"
   end
   namespace :roles do
     desc "clear"
@@ -30,7 +30,15 @@ namespace :redis do
       keys.each{|k| redis.del k}
     end
   end
+
   namespace :resque do
+    desc "Deliver Failure count of the day"
+    task :failure_notify do
+      if Resque::Failure.count >= 100
+        Notifier.deliver_daily_failed_jobs
+      end
+    end
+    
     desc "requeue failed jobs"
     task :requeue=> :environment do
       0.upto(Resque::Failure.count).each_with_index do |failure, index|

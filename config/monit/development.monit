@@ -1,0 +1,57 @@
+set daemon 30
+set httpd port 2812 address localhost
+        allow localhost
+        allow admin:monit
+
+set mailserver ns.northwestern.edu
+set mail-format { from: monit@enotis-staging.nubic.northwestern.edu }
+set alert sam-granieri-jr@northwestern.edu
+
+set logfile /Users/samgranieri/Sites/enotis/log/monit.log
+
+check process resque_study1 with pidfile "/Users/samgranieri/Sites/enotis/tmp/pids/resque_study1.pid"
+  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; JOBS_PER_FORK=25 QUEUE=redis_study_populator nohup rake resque:work > log/resque_study.log 2>&1 &  echo $! > tmp/pids/resque_study1.pid' "
+  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis && kill -s QUIT `cat tmp/pids/resque_study1.pid` && rm -f tmp/pids/resque_study1.pid; exit 0;'"
+  group resque_workers
+  
+check process resque_study2 with pidfile "/Users/samgranieri/Sites/enotis/tmp/pids/resque_study2.pid"
+  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; JOBS_PER_FORK=25 QUEUE=redis_study_populator nohup rake resque:work > log/resque_study.log 2>&1 &  echo $! > tmp/pids/resque_study2.pid'"
+  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis && kill -s QUIT `cat tmp/pids/resque_study2.pid` && rm -f tmp/pids/resque_study2.pid; exit 0;'"
+  group resque_workers
+
+check process resque_study3 with pidfile "/Users/samgranieri/Sites/enotis/tmp/pids/resque_study3.pid"
+  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; JOBS_PER_FORK=25 QUEUE=redis_study_populator nohup rake resque:work > log/resque_study.log 2>&1 &  echo $! > tmp/pids/resque_study3.pid'"
+  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis && kill -s QUIT `cat tmp/pids/resque_study3.pid` && rm -f tmp/pids/resque_study3.pid; exit 0;'"
+  group resque_workers
+  
+check process resque_enotis_people_populator1 with pidfile "/Users/samgranieri/Sites/enotis/tmp/pids/resque_enotis_people_populator1.pid"
+  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; JOBS_PER_FORK=25 QUEUE=redis_authorized_personnel_populator,redis_ldapper,redis_bogus_netid nohup rake resque:work  > log/resque_people.log 2>&1 &  echo $! > tmp/pids/resque_enotis_people_populator1.pid'"
+  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; kill -s QUIT `cat tmp/pids/resque_enotis_people_populator1.pid` && rm -f tmp/pids/resque_enotis_people_populator1.pid; exit 0;'"
+  group resque_workers
+  
+check process resque_enotis_people_populator2 with pidfile "/Users/samgranieri/Sites/enotis/tmp/pids/resque_enotis_people_populator2.pid"
+  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; JOBS_PER_FORK=25 QUEUE=redis_authorized_personnel_populator,redis_ldapper,redis_bogus_netid nohup rake resque:work  > log/resque_people.log 2>&1 &  echo $! > tmp/pids/resque_enotis_people_populator2.pid'"
+  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; kill -s QUIT `cat tmp/pids/resque_enotis_people_populator2.pid` && rm -f tmp/pids/resque_enotis_people_populator2.pid; exit 0;'"
+  group resque_workers
+
+check process resque_enotis_people_populator3 with pidfile "/Users/samgranieri/Sites/enotis/tmp/pids/resque_enotis_people_populator3.pid"
+  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; JOBS_PER_FORK=25 QUEUE=redis_authorized_personnel_populator,redis_ldapper,redis_bogus_netid nohup rake resque:work  > log/resque_people.log 2>&1 &  echo $! > tmp/pids/resque_enotis_people_populator3.pid'"
+  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; kill -s QUIT `cat tmp/pids/resque_enotis_people_populator3.pid` && rm -f tmp/pids/resque_enotis_people_populator3.pid; exit 0;'"
+  group resque_workers
+
+check host 127.0.0.1 with address 127.0.0.1 
+  if failed port 6379   
+   send "SET redis_heartbeat 10\r\npulsecheck\r\n"   
+   expect "OK"   
+   send "EXISTS redis_heartbeat\r\n"   
+   expect ":1"
+   send "GET redis_heartbeat\r\n"
+   expect "pulsecheck\r\n"
+  then alert   
+
+
+check process redis with pidfile  /usr/local/var/run/redis.pid
+  start program = "/usr/local/bin/redis-server /usr/local/etc/redis.conf"
+  stop program = "/usr/local/bin/redis-cli SHUTDOWN"
+  if failed host 127.0.0.1 port 6379 then restart
+  if 2 restarts within 2 cycles then alert

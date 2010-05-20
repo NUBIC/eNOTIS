@@ -25,11 +25,13 @@ class ENRedisStudyPopulator
     basic_start_time = Time.now
     study_hash = Eirb.find_basics(:irb_number=>irb_number)[0]
     basic_end_time = Time.now
-    puts "#{basic_end_time}: Imported #{study_key} study basics in #{basic_end_time - basic_start_time} seconds"
     if study_hash
+      
+      puts "#{basic_end_time}: Imported #{study_key} study basics in #{basic_end_time - basic_start_time} seconds"
       study_hash.each do |k,v|
         redis.hset(study_key,k,v)
       end
+      
       desc_start_time = Time.now
       description_hash = Eirb.find_description({:irb_number=>irb_number})[0]
       if description_hash
@@ -37,6 +39,7 @@ class ENRedisStudyPopulator
       end
       desc_end_time = Time.now
       puts "#{desc_end_time}: Imported #{study_key} description in #{desc_end_time - desc_start_time} seconds"
+      
       inc_exc_start_time = Time.now
       inclusion_exclusion_hash = Eirb.find_inc_excl({:irb_number=>irb_number})[0]
       if inclusion_exclusion_hash
@@ -46,6 +49,7 @@ class ENRedisStudyPopulator
       end
       inc_exc_end_time = Time.now
       puts "#{inc_exc_end_time}: Imported #{study_key} inclusion/exclusion in #{inc_exc_end_time - inc_exc_start_time} seconds"
+      
       funding_source_hashes =  Eirb.find_funding_sources({:irb_number=>irb_number})
       if funding_source_hashes && !funding_source_hashes.blank?
         funding_source_hashes.each_with_index do |fsh,i|
@@ -54,6 +58,10 @@ class ENRedisStudyPopulator
           end
         end
       end
+      
+    else
+      puts "Study #{irb_number} not found in the IRB"
     end
+  
   end
 end

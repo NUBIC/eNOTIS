@@ -102,14 +102,5 @@ class User < ActiveRecord::Base
   def name
     "#{self.first_name} #{self.last_name}"
   end
-  
-  def self.cache_connect
-    return @cache if @cache
-    config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-    @cache = Redis::Namespace.new('eNOTIS:user', :redis => Redis.new(config))
-  end
-  
-  def self.redis_cache_lookup(netid)
-    HashWithIndifferentAccess.new(cache_connect.hgetall(netid))
-  end  
+
 end
