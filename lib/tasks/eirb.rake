@@ -9,8 +9,9 @@ namespace :eirb do
     task :full => :environment do
       require 'webservices/eirb'
       Eirb.connect
-      redis = Redis.new
-      keys =  redis.keys 'eNOTIS:*'
+      config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
+      redis  = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
+      keys   = redis.keys '*'
       keys.each{|k| redis.del k}
       puts "#{Time.now}: Getting status for all studies "
       irb_numbers = Eirb.find_study_export

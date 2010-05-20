@@ -2,7 +2,6 @@ check process resque_study_1 with pidfile "/var/www/apps/enotis/current/tmp/pids
   start program = "/bin/sh -c 'cd /var/www/apps/enotis/current; RAILS_ENV=production JOBS_PER_FORK=25 QUEUE=redis_study_populator  nohup /opt/ruby-enterprise/bin/rake resque:work > log/resque_study.log 2>&1 & echo $! > tmp/pids/resque_study_1.pid'" as uid sjg304 and gid users
   stop program = "/bin/sh -c 'cd /var/www/apps/enotis/current && kill -s QUIT `cat tmp/pids/resque_study_1.pid` && rm -f tmp/pids/resque_study_1.pid; exit 0;'"
   group resque_workers
-  if failed host q-production.nubic.northwestern.edu port 6379 protocol http and request '/testing' hostheader 'example.com' with timeout 20 seconds for 2 cycles then alert
   
 check process resque_study_2 with pidfile "/var/www/apps/enotis/current/tmp/pids/resque_study_2.pid"
   start program = "/bin/sh -c 'cd /var/www/apps/enotis/current; RAILS_ENV=production JOBS_PER_FORK=25 QUEUE=redis_study_populator  nohup /opt/ruby-enterprise/bin/rake resque:work > log/resque_study.log 2>&1 & echo $! > tmp/pids/resque_study_2.pid'" as uid sjg304 and gid users
@@ -38,3 +37,4 @@ check host q-prod.nubic.northwestern.edu with address q-prod.nubic.northwestern.
    send "GET redis_heartbeat\r\n"
    expect "pulsecheck\r\n"
   then alert   
+  if failed host q-production.nubic.northwestern.edu port 6379 protocol http and request '/testing' hostheader 'example.com' with timeout 20 seconds for 2 cycles then alert

@@ -79,7 +79,7 @@ namespace :resque do
   desc "Restart workers"
   task :restart, :roles => :app do
     %w(people study).each do |worker_type|
-      1.upto(2) do |num|
+      1.upto(3) do |num|
         run "cd #{shared_path}/pids && kill -QUIT `cat resque_#{worker_type}_#{num}.pid`"
       end
     end
@@ -87,7 +87,7 @@ namespace :resque do
   desc "Pause workers"
   task :pause,:roles => :app  do
     %w(people study).each do |worker_type|
-      1.upto(2) do |num|
+      1.upto(3) do |num|
         run "cd #{shared_path}/pids && kill -USR2 `cat resque_#{worker_type}_#{num}.pid`"
       end
     end
@@ -95,7 +95,7 @@ namespace :resque do
   desc "Resume workers"
   task :resume, :roles => :app  do
     %w(people study).each do |worker_type|
-      1.upto(2) do |num|
+      1.upto(3) do |num|
         run "cd #{shared_path}/pids && kill -CONT `cat resque_#{worker_type}_#{num}.pid`"
       end
     end
@@ -103,7 +103,7 @@ namespace :resque do
   desc "Kill workers"
   task :kill , :roles => :app do
     %w(people study).each do |worker_type|
-      1.upto(2) do |num|
+      1.upto(3) do |num|
         run "cd #{shared_path}/pids && kill -TERM `cat resque_#{worker_type}_#{num}.pid`"
       end
     end
