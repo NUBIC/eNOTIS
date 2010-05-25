@@ -45,7 +45,7 @@ end
 
 # Resque
 gem 'redis' , '1.0.7'
-gem 'resque', '1.8.2'
+gem 'resque', '~> 1.8.0'
 gem 'resque-jobs-per-fork', '~> 0.3.0'
 
 # Testing
