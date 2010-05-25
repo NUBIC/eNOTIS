@@ -38,3 +38,4 @@ check host q-prod.nubic.northwestern.edu with address q-prod.nubic.northwestern.
    expect "pulsecheck\r\n"
   then alert   
   if failed host q-production.nubic.northwestern.edu port 6379 protocol http and request '/testing' hostheader 'example.com' with timeout 20 seconds for 2 cycles then alert
+
