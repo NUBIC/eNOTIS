@@ -30,7 +30,7 @@ class ENRedisBogusNetidPopulator
     # If the user is not in the review board, then dump it in another resque queue
     eirb_user = HashWithIndifferentAccess.new(Eirb.find_user({:netid=>netid})[0])
 
-    if eirb_user
+    if !eirb_user.blank?
       email = eirb_user[:email]
       # Now we look up the user in LDAP by email address and first and last name
       found_by_email = Bcsec::NetidAuthenticator.find_user(:email=>email)
