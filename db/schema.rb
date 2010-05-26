@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100512205401) do
+ActiveRecord::Schema.define(:version => 20100526185217) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -55,23 +55,15 @@ ActiveRecord::Schema.define(:version => 20100512205401) do
     t.string   "case_number"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "race_is_american_indian_or_alaska_native",          :default => false
-    t.boolean  "race_is_asian",                                     :default => false
-    t.boolean  "race_is_black_or_african_american",                 :default => false
     t.boolean  "race_is_native_hawaiian_or_other_pacific_islander", :default => false
     t.boolean  "race_is_white",                                     :default => false
     t.boolean  "race_is_unknown_or_not_reported",                   :default => false
+    t.boolean  "race_is_american_indian_or_alaska_native",          :default => false
+    t.boolean  "race_is_asian",                                     :default => false
+    t.boolean  "race_is_black_or_african_american",                 :default => false
   end
 
   add_index "involvements", ["subject_id", "study_id", "ethnicity", "gender"], :name => "involvements_attr_idx", :unique => true
-
-  create_table "resource_statuses", :force => true do |t|
-    t.string   "name",       :null => false
-    t.boolean  "status"
-    t.string   "message"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "roles", :force => true do |t|
     t.integer  "study_id"
