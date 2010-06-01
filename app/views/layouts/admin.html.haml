@@ -11,14 +11,16 @@
     #container
       #header
         #app_name= image_tag("enotis-swoop-logo.png",:alt => "eNOTIS")
-        #search_box
-          = link_to "&laquo; back to enotis", default_path
         #current_user_badge
           = "#{current_user.name} (#{current_user.netid})"
           |
           = link_to('Logout', logout_path)
-      - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
-        #flash= flash_messages(types)
+        #search_box
+          = link_to "&laquo; back to enotis", default_path
+        - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
+          #flash
+            = flash_messages(types)
+            .close
       #main
         #livesearch-results
         = yield

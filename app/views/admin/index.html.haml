@@ -4,7 +4,10 @@
     $(document).ready(function(){
     // show the Data Tables
     $(".display").dataTable({"sPaginationType": "full_numbers"});
+    // easter egg
     $("img.hub").fadeIn(10000);
+    // flash messages
+    $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
     });
 #active_users
   %span.heading= pluralize @active_users.size, "active user"
