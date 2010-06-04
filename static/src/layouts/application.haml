@@ -19,9 +19,9 @@
       #main
         =yield
       #footer
-        .nulogo= img("nu_logo.gif")
-        .fsmlogo= img("fsm-logo.gif")
-        .nucatslogo= img("nucats_logo.gif")
-        .nubiclogo= img("nubic_logo.gif")
+        .nulogo= link img("nu_logo.gif"), "http://www.northwestern.edu"
+        .fsmlogo= link img("fsm-logo.gif"), "http://www.feinberg.northwestern.edu"
+        .nucatslogo= link img("nucats_logo.gif"), "http://www.nucats.northwestern.edu"
+        .nubiclogo= link img("nubic_logo.gif"), "http://www.nucats.northwestern.edu/centers/nubic"
         %p.version= "eNOTIS v1.4.0 &mdash; created by #{link("NUBIC", "http://www.nucats.northwestern.edu/centers/nubic")} for Northwestern University"
 
