@@ -9,4 +9,7 @@ class Array
       hash
     end.to_a.sort
   end
+  def rotate(x=1)
+    x.times{ push shift }
+  end
 end

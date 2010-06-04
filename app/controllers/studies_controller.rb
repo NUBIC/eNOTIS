@@ -47,9 +47,13 @@ class StudiesController < ApplicationController
       return redirect_with_message(default_path, :notice, "You don't have access to study #{@study.irb_number}") unless @study.has_coordinator?(current_user)
       @title = @study.irb_number
       @involvements = @study.involvements
-      @ethnicity_stats = @involvements.count_all(:short_ethnicity)
-      @gender_stats = @involvements.count_all(:short_gender)
-      @race_stats = @involvements.count_all(:short_race)
+      unless @involvements.empty?        
+        @ethnicity_stats = @involvements.count_all(:short_ethnicity)
+        @gender_stats = @involvements.count_all(:short_gender)
+        @race_stats = @involvements.count_all(:short_race)
+        @time_stats = InvolvementEvent.accruals.on_study(@study).in_last_12_months.to_time_chart
+        @dot_stats = InvolvementEvent.accruals.on_study(@study).to_dot_chart.inspect
+      end
     else
       redirect_to studies_path
     end

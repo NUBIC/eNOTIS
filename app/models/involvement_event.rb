@@ -20,6 +20,7 @@ class InvolvementEvent < ActiveRecord::Base
   # Named scopes
   default_scope :order => "occurred_on"
   named_scope :accruals, {:conditions => {:event => "Consented"}}
+  named_scope :in_last_12_months, { :conditions => { :occurred_on => 12.months.ago..Date.today }}
   named_scope :on_study, lambda {|study_id| { :include => :involvement, :conditions => ['involvements.study_id=?', study_id], :order => 'involvement_events.occurred_on DESC' } } do
     def to_graph
       results = {}
@@ -30,16 +31,17 @@ class InvolvementEvent < ActiveRecord::Base
       total = 0
       results.sort.map{|date, value| [date, total+=value]}
     end
+    
     def to_time_chart
-      # 0th array is total, 1st array is by month
-      results = [Array.new(12, 0), Array.new(12, 0)]
-      (self.blank? ? [] : self).each do |e|
-        # pos is month on chart (from 0..11)
-        pos = (e.occurred_on.month - 1)
-        results[1][pos] += 1
-        (pos..11).each{|j| results[0][j] += 1}
-      end
-      results
+      # 0th array is xaxis, 1st array is accruals by month, 2nd array is total
+      months = %w(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)
+      monthly = Array.new(12, 0)
+      totals = Array.new(12, 0)
+      (self.blank? ? [] : self).each{|e| monthly[e.occurred_on.month - 1] += 1 }
+      months.rotate(Date.today.month)
+      monthly.rotate(Date.today.month)
+      monthly.each_with_index{|obj, i| totals[i] = totals[i-1] + monthly[i] }
+      [months, monthly, totals]
     end
     def to_dot_chart
       results = Array.new(12 * 7, 0)
