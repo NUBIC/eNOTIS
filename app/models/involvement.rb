@@ -172,8 +172,7 @@ class Involvement < ActiveRecord::Base
     involvement_events.detect{|e| e.event == "Consented"}
   end                                    
 
-  # Why a method named "completed" when it also handles the "withdrawn" case? - BLC
-  def completed                          
+  def completed_or_withdrawn
     involvement_events.detect{|e| e.event == "Completed" or e.event == "Withdrawn"}
   end
  

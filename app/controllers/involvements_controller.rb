@@ -31,7 +31,7 @@ class InvolvementsController < ApplicationController
     @involvement = Involvement.find(params[:id])
     params[:study] = @involvement.study.irb_number
     @involvement.involvement_events.build(:event => "Consented") unless @involvement.consented
-    @involvement.involvement_events.build(:event => "Completed") unless @involvement.completed
+    @involvement.involvement_events.build(:event => "Completed") unless @involvement.completed_or_withdrawn
     respond_to do |format|
       format.html {render :action => :new}
       format.js {render :layout => false, :action => :new}
