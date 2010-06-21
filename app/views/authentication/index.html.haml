@@ -1,4 +1,5 @@
 - content_for :head do
+  = javascript_include_tag 'flowplayer-3.2.2.min'
   :javascript
     $(document).ready(function(){
     // one less click for login
@@ -10,6 +11,7 @@
     $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
     // flash (messages)
     $("#flash .close").click(function(){$("#flash").fadeOut(300);});
+    flowplayer("player", "/media/flowplayer-3.2.2.swf", {clip: {autoPlay: false}});
     });
 %ul.tabs
   %li= link_to "About", "#about"
@@ -43,16 +45,19 @@
         %h4 Spend less time entering and tracking data by hand: studies are pre-loaded from eIRB and subject identity verified via NU Enterprise Data Warehouse (EDW)
         
     #training.item
-      %h2 eNOTIS supports two methods of tracking subject accrual:
-      = image_tag 'coordinator_workflow.jpg'
-      %h3
-        Need support?
-        %br
-        = mail_to 'enotissupport@northwestern.edu'
-      %h3
-        Interested in a demo or training?
-        %br
-        = mail_to 'enotis@northwestern.edu'
+      .col3
+        %h2 Watch our 4 minute introduction to eNOTIS
+        %a{:href => "/media/enotis-tutorial-a.mov", :style => "display:block;width:550px;height:386px;", :id => "player"}
+        -# = image_tag 'coordinator_workflow.jpg'
+      .colx
+        %h3
+          Need support?
+          %br
+          = mail_to 'enotissupport@northwestern.edu'
+        %h3
+          Interested in a demo or training?
+          %br
+          = mail_to 'enotis@northwestern.edu'
     #questions.item
       = render :partial => 'partials/faq'
 
