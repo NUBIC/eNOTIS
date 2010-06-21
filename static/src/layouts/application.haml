@@ -3,13 +3,14 @@
   %head
     %title eNOTIS
     = stylesheets "static/application", "static/coming_soon"
-    = javascripts 'jquery.tools.min'
+    = javascripts 'jquery.tools.min', "flowplayer-3.2.2.min"
     :javascript
       $(document).ready(function(){
       // scrollable
       $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
       // overlay
       $("a[rel=#database-language]").overlay({expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}});
+      flowplayer("player", "/media/flowplayer-3.2.2.swf", {clip: {autoPlay: false}});
       });
       
   %body

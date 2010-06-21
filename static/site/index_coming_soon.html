@@ -3,7 +3,7 @@
   <head>
     <title>eNOTIS</title>
     <link href="stylesheets/static/application.css" media="all" rel="stylesheet" type="text/css"/><link href="stylesheets/static/coming_soon.css" media="all" rel="stylesheet" type="text/css"/>
-    <script language="javascript" src="javascripts/jquery.tools.min.js" type="text/javascript"></script>
+    <script language="javascript" src="javascripts/jquery.tools.min.js" type="text/javascript"></script><script language="javascript" src="javascripts/flowplayer-3.2.2.min.js" type="text/javascript"></script>
     <script type='text/javascript'>
       //<![CDATA[
         $(document).ready(function(){
@@ -11,6 +11,7 @@
         $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
         // overlay
         $("a[rel=#database-language]").overlay({expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}});
+        flowplayer("player", "/media/flowplayer-3.2.2.swf", {clip: {autoPlay: false}});
         });
       //]]>
     </script>
@@ -57,18 +58,22 @@
               </div>
             </div>
             <div class='item' id='training'>
-              <h2>eNOTIS supports two methods of tracking subject accrual:</h2>
-              <img alt="Coordinator workflow" src="images/coordinator_workflow.jpg"/>
-              <h3>
-                Need support?
-                <br />
-                <a href="mailto:enotissupport@northwestern.edu">enotissupport@northwestern.edu</a>
-              </h3>
-              <h3>
-                Need support?
-                <br />
-                <a href="mailto:enotis@northwestern.edu">enotis@northwestern.edu</a>
-              </h3>
+              <div class='col3'>
+                <h2>Watch our 4 minute introduction to eNOTIS</h2>
+                <a href='/media/enotis-tutorial-a.mov' id='player' style='display:block;width:550px;height:386px;'></a>
+              </div>
+              <div class='colx'>
+                <h3>
+                  Need support?
+                  <br />
+                  <a href="mailto:enotissupport@northwestern.edu">enotissupport@northwestern.edu</a>
+                </h3>
+                <h3>
+                  Interested in a demo or training?
+                  <br />
+                  <a href="mailto:enotis@northwestern.edu">enotis@northwestern.edu</a>
+                </h3>
+              </div>
             </div>
             <div class='item' id='questions'>
               <div class='col2'>

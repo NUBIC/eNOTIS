@@ -30,16 +30,19 @@
         %h4 Spend less time entering and tracking data by hand: studies are pre-loaded from eIRB and subject identity verified via NU Enterprise Data Warehouse (EDW)
 
     #training.item
-      %h2 eNOTIS supports two methods of tracking subject accrual:
-      = img 'coordinator_workflow.jpg'
-      %h3
-        Need support?
-        %br
-        = link 'enotissupport@northwestern.edu', 'mailto:enotissupport@northwestern.edu'
-      %h3
-        Need support?
-        %br
-        = link 'enotis@northwestern.edu', 'mailto:enotis@northwestern.edu'
+      .col3
+        %h2 Watch our 4 minute introduction to eNOTIS
+        %a{:href => "/media/enotis-tutorial-a.mov", :style => "display:block;width:550px;height:386px;", :id => "player"}
+        -# = img 'coordinator_workflow.jpg'
+      .colx
+        %h3
+          Need support?
+          %br
+          = link 'enotissupport@northwestern.edu', 'mailto:enotissupport@northwestern.edu'
+        %h3
+          Interested in a demo or training?
+          %br
+          = link 'enotis@northwestern.edu', 'mailto:enotis@northwestern.edu'
     #questions.item
       = partial 'faq'
 #database-language.overlay

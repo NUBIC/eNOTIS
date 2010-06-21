@@ -119,6 +119,13 @@ body {
           float: left;
           width: 48%;
           padding-right: 2%; }
+        #main div.panes div.items div.item div.col3 {
+          float: left;
+          width: 68%;
+          padding-right: 2%; }
+        #main div.panes div.items div.item div.colx {
+          float: left;
+          padding-right: 2%; }
         #main div.panes div.items div.item p.q {
           font-weight: bold;
           margin-bottom: 5px;
