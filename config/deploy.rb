@@ -80,7 +80,7 @@ namespace :resque do
   task :restart, :roles => :app do
     %w(people study).each do |worker_type|
       1.upto(2) do |num|
-        run "cd #{shared_path}/pids && kill -QUIT `cat resque_#{worker_type}_#{num}.pid`"
+        sudo "cd #{shared_path}/pids && kill -QUIT `cat resque_#{worker_type}_#{num}.pid`"
       end
     end
   end
@@ -88,7 +88,7 @@ namespace :resque do
   task :pause,:roles => :app  do
     %w(people study).each do |worker_type|
       1.upto(2) do |num|
-        run "cd #{shared_path}/pids && kill -USR2 `cat resque_#{worker_type}_#{num}.pid`"
+        sudo "cd #{shared_path}/pids && kill -USR2 `cat resque_#{worker_type}_#{num}.pid`"
       end
     end
   end
@@ -96,7 +96,7 @@ namespace :resque do
   task :resume, :roles => :app  do
     %w(people study).each do |worker_type|
       1.upto(2) do |num|
-        run "cd #{shared_path}/pids && kill -CONT `cat resque_#{worker_type}_#{num}.pid`"
+        sudo "cd #{shared_path}/pids && kill -CONT `cat resque_#{worker_type}_#{num}.pid`"
       end
     end
   end
@@ -104,7 +104,7 @@ namespace :resque do
   task :kill , :roles => :app do
     %w(people study).each do |worker_type|
       1.upto(2) do |num|
-        run "cd #{shared_path}/pids && kill -TERM `cat resque_#{worker_type}_#{num}.pid`"
+        sudo "cd #{shared_path}/pids && kill -TERM `cat resque_#{worker_type}_#{num}.pid`"
       end
     end
   end
