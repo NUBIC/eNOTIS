@@ -1,4 +1,4 @@
-BUNDLER_VERSION="0.9.25"
+BUNDLER_VERSION="0.9.26"
 
 namespace :bundle do
   desc "Build the bundler gem repo using the existing cache only"
