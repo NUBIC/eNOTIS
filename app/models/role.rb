@@ -7,7 +7,6 @@ class Role < ActiveRecord::Base
   
   validates_presence_of :user_id
   validates_presence_of :study_id
-  validates_uniqueness_of :study_id, :scope => :user_id
   
   attr_protected :consent_role #defines app permissions
 
