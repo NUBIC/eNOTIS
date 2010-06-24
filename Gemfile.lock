@@ -1,63 +1,63 @@
 --- 
 dependencies: 
-  fastercsv: 
-    group: 
-    - :default
-    version: ">= 1.5.0"
-  soap4r: 
-    group: 
-    - :default
-    version: ">= 1.5.8"
-  compass: 
-    group: 
-    - :default
-    version: ~> 0.8.0
-  acts_as_reportable: 
-    group: 
-    - :default
-    version: ">= 0"
   faker: 
     group: 
     - :default
     version: ">= 0.3.1"
+  acts_as_reportable: 
+    group: 
+    - :default
+    version: ">= 0"
+  compass: 
+    group: 
+    - :default
+    version: ~> 0.8.0
+  soap4r: 
+    group: 
+    - :default
+    version: ">= 1.5.8"
+  fastercsv: 
+    group: 
+    - :default
+    version: ">= 1.5.0"
   ruby-debug: 
     group: 
     - :development
     version: ">= 0.10.3"
-  pg: 
-    group: 
-    - :default
-    version: ~> 0.9.0
-  rails: 
-    group: 
-    - :default
-    version: = 2.3.5
-  fastthread: 
-    group: 
-    - :default
-    version: ">= 0"
-  libxml-ruby: 
-    group: 
-    - :default
-    version: ">= 1.1.3"
   view_trail: 
     group: 
     - :default
     version: ">= 0.3.1"
     require: 
     - view_trail
-  searchlogic: 
+  libxml-ruby: 
+    group: 
+    - :default
+    version: ">= 1.1.3"
+  fastthread: 
     group: 
     - :default
     version: ">= 0"
-  ruport: 
+  rails: 
     group: 
     - :default
-    version: ">= 0"
+    version: = 2.3.5
+  pg: 
+    group: 
+    - :default
+    version: ~> 0.9.0
   haml: 
     group: 
     - :default
     version: ~> 2.2.0
+  ruport: 
+    group: 
+    - :default
+    version: ">= 0"
+  searchlogic: 
+    group: 
+    - :default
+    version: ">= 0"
   couchrest: 
     group: 
     - :default
@@ -85,7 +85,7 @@ dependencies:
   resque: 
     group: 
     - :default
-    version: ~> 1.8.0
+    version: ~> 1.9.0
   database_cleaner: 
     group: 
     - :test
@@ -102,14 +102,18 @@ dependencies:
     group: 
     - :development
     version: ">= 0"
-  paperclip: 
+  will_paginate: 
     group: 
     - :default
-    version: = 2.1.2
+    version: ~> 2.3
   factory_girl: 
     group: 
     - :default
     version: ">= 1.2.1"
+  paperclip: 
+    group: 
+    - :default
+    version: = 2.1.2
   bcdatabase: 
     group: 
     - :default
@@ -128,22 +132,22 @@ dependencies:
     group: 
     - :hudson
     version: ~> 1.6.0
-  paper_trail: 
-    group: 
-    - :default
-    version: ">= 1.1.1"
-  chronic: 
-    group: 
-    - :default
-    version: ">= 0.2.3"
-  aasm: 
-    group: 
-    - :default
-    version: ">= 0"
   rdiscount: 
     group: 
     - :default
     version: ">= 0"
+  aasm: 
+    group: 
+    - :default
+    version: ">= 0"
+  chronic: 
+    group: 
+    - :default
+    version: ">= 0.2.3"
+  paper_trail: 
+    group: 
+    - :default
+    version: ">= 1.1.1"
   resque-jobs-per-fork: 
     group: 
     - :default
@@ -151,27 +155,27 @@ dependencies:
   redis: 
     group: 
     - :default
-    version: = 1.0.7
+    version: ~> 2.0.0
   ruby-debug-base: 
     group: 
     - :development
     version: ">= 0.10.3"
-  populator: 
-    group: 
-    - :default
-    version: ">= 0.2.5"
-  stomp: 
-    group: 
-    - :default
-    version: ">= 1.1"
-  capistrano: 
-    group: 
-    - :default
-    version: ~> 2.5.0
   activemessaging: 
     group: 
     - :default
     version: ">= 0"
+  capistrano: 
+    group: 
+    - :default
+    version: ~> 2.5.0
+  stomp: 
+    group: 
+    - :default
+    version: ">= 1.1"
+  populator: 
+    group: 
+    - :default
+    version: ">= 0.2.5"
 specs: 
 - rake: 
     version: 0.8.7
@@ -200,7 +204,7 @@ specs:
 - rubyforge: 
     version: 2.0.4
 - hoe: 
-    version: 2.6.0
+    version: 2.6.1
 - transaction-simple: 
     version: 1.4.0
 - pdf-writer: 
@@ -210,7 +214,7 @@ specs:
 - acts_as_reportable: 
     version: 1.1.1
 - awesome_print: 
-    version: 0.2.0
+    version: 0.2.1
 - highline: 
     version: 1.5.2
 - bcdatabase: 
@@ -230,7 +234,7 @@ specs:
 - builder: 
     version: 2.1.2
 - net-ssh: 
-    version: 2.0.22
+    version: 2.0.23
 - net-scp: 
     version: 1.0.2
 - net-sftp: 
@@ -238,7 +242,7 @@ specs:
 - net-ssh-gateway: 
     version: 1.0.1
 - capistrano: 
-    version: 2.5.18
+    version: 2.5.19
 - chronic: 
     version: 0.2.3
 - ci_reporter: 
@@ -260,17 +264,17 @@ specs:
 - trollop: 
     version: 1.16.2
 - gherkin: 
-    version: 1.0.30
+    version: 2.0.2
 - term-ansicolor: 
     version: 1.0.5
 - cucumber: 
-    version: 0.7.3
+    version: 0.8.3
 - cucumber-rails: 
-    version: 0.3.1
+    version: 0.3.2
 - database_cleaner: 
     version: 0.5.2
 - factory_girl: 
-    version: 1.2.4
+    version: 1.3.1
 - faker: 
     version: 0.3.1
 - fastthread: 
@@ -279,6 +283,8 @@ specs:
     version: 0.3.2
 - httpclient: 
     version: 2.1.5.2
+- json: 
+    version: 1.4.3
 - libxml-ruby: 
     version: 1.1.4
 - linecache: 
@@ -286,7 +292,7 @@ specs:
 - nokogiri: 
     version: 1.4.2
 - paper_trail: 
-    version: 1.5.0
+    version: 1.5.1
 - paperclip: 
     version: 2.1.2
 - pg: 
@@ -296,19 +302,19 @@ specs:
 - rails: 
     version: 2.3.5
 - rdiscount: 
-    version: 1.6.3.2
+    version: 1.6.5
 - redis: 
-    version: 1.0.7
+    version: 2.0.3
 - redis-namespace: 
-    version: 0.4.4
+    version: 0.5.1
 - sinatra: 
     version: "1.0"
 - vegas: 
     version: 0.1.7
 - resque: 
-    version: 1.8.5
+    version: 1.9.5
 - resque-jobs-per-fork: 
-    version: 0.3.1
+    version: 0.3.2
 - rspec: 
     version: 1.2.9
 - rspec-rails: 
@@ -322,14 +328,16 @@ specs:
 - soap4r: 
     version: 1.5.8
 - stomp: 
-    version: 1.1.5
+    version: 1.1.6
 - view_trail: 
     version: 0.3.1
 - webrat: 
     version: 0.6.0
+- will_paginate: 
+    version: 2.3.14
 - wirble: 
     version: 0.1.3
-hash: e7d5cd0586599e6b75b26b1d37a8ca76687e46c8
+hash: 0d00d2aae424d8f526de453c80fcae7252f15013
 sources: 
 - Rubygems: 
     uri: http://download.bioinformatics.northwestern.edu/gems/

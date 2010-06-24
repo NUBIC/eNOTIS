@@ -31,6 +31,7 @@ gem "view_trail", '>=0.3.1', :require => "view_trail"
 
 # Search
 gem "searchlogic"
+gem 'will_paginate', '~> 2.3'
 
 # Authentication
 gem "bcdatabase"#, '<1.0.0'
@@ -44,8 +45,8 @@ group :development do
 end
 
 # Resque
-gem 'redis' , '1.0.7'
-gem 'resque', '~> 1.8.0'
+gem 'redis' , '~> 2.0.0'
+gem 'resque', '~> 1.9.0'
 gem 'resque-jobs-per-fork', '~> 0.3.0'
 
 # Testing

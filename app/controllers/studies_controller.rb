@@ -13,30 +13,16 @@ class StudiesController < ApplicationController
     # raise "testing exception notifier - yoon" # http://weblog.jamisbuck.org/2007/3/7/raising-the-right-exception
     respond_to do |format|
       format.html do
-        @my_studies = current_user.studies
-        # @studies_count = Study.count
-        # @studies = []
+        @my_studies = current_user.studies.paginate(:page=>params[:page], :per_page=>params[:per_page])
       end
       # See http://datatables.net/forums/comments.php?DiscussionID=53 for json params
       format.json do
-        query_cols = %w(irb_number pi_last_name)
-        cols = %w(irb_number pi_last_name accrual)
-        q = "%#{params[:sSearch]}%"
-        order = (1..(params[:iSortingCols].to_i)).map{|i| [cols[(params["iSortCol_#{i-1}".to_sym].to_i || 0)], (params["iSortDir_#{i-1}"] || "ASC")].join(" ")}.join(",")
-        studies = Study.find( :all,
-                              :select => "*, (SELECT COUNT(*) FROM involvements WHERE study_id = studies.id) AS accrual",
-                              :offset => params[:iDisplayStart] || 0,
-                              :limit => params[:iDisplayLength] || 10,
-                              :order => order,
-                              :conditions => [query_cols.map{|x| "#{x} LIKE ?"}.join(" OR "), q,q])
-        results = studies.map do |study|
-          [ image_tag("/images/status-#{study.may_accrue? ? 'on' : 'off'}.png") + link_to(study_path(study), study.irb_number, :title => study.title),
-            study.name,
-            study.principal_investigator.last_name,
-            study.accrual,
-            study.accrual_goal]
-        end
-        render :json => {:aaData => results, :iTotalRecords => results.size, :iTotalDisplayRecords => Study.count}
+        colName  = ["irb_status" , "irb_number", 'name', 'last_name', 'accrual', 'accrual_goal']
+        order                 = colName[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0]
+        all_studies           = StudyTable.user_id_is(current_user.id).order(order)
+        @studies              = all_studies.paged(params[:iDisplayStart], params[:iDisplayLength])
+        @iTotalDisplayRecords = all_studies.size
+        @sEcho                = params[:sEcho].to_i
       end
     end
   end
@@ -66,5 +52,4 @@ class StudiesController < ApplicationController
       format.js {render :layout => false}
     end
   end
-
 end

@@ -1,3 +1,31 @@
+- if request.parameters[:controller]=='search'
+  :javascript
+    $(document).ready(function() {
+      $('.display').dataTable( {
+        "oLanguage": {
+          "sProcessing": '#{image_tag("spinner.gif")}'
+        },    
+        "bProcessing": true,
+        "bServerSide": true,
+        "bRetrieve": true,
+        "sPaginationType": "full_numbers",
+        "sAjaxSource": "#{search_path(:params=>params, :format=>:json)}"
+      });
+    });
+- else
+  :javascript
+    $(document).ready(function() {
+      $('#my_studies .display').dataTable( {
+        "oLanguage": {
+          "sProcessing": '#{image_tag("spinner.gif")}'
+        },      
+        "bProcessing": true,
+        "bServerSide": true,
+        "bRetrieve": true,
+        "sPaginationType": "full_numbers",
+        "sAjaxSource": "#{studies_path(:params=>params, :format=>:json)}"
+      });
+    });
 %table.display
   %thead
     %tr
@@ -7,7 +35,7 @@
       %th PI
       %th Accrual
       %th Goal
-  %tbody  
+  %tbody
     - studies.each do |study|
       %tr
         %td.status
