@@ -1,12 +1,12 @@
 #results
   - if @studies
     #study_results
-      .heading= "#{pluralize(@studies.size, "study")} found"
+      .heading= %Q{#{pluralize(@studies.total_entries, "study")} found for "#{params[:query]}" }
       = render :partial => 'partials/study_table', :locals => {:studies => @studies}
   - if @subjects
     #subject_results
-      .heading= "#{pluralize(@subjects.size, "subject")} found"
-      %table.display
+      .heading= "#{pluralize(@subjects.total_entries, "subject")} found"
+      %table.subject_display
         %thead
           %tr
             %th Name

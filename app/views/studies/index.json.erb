@@ -1,0 +1,19 @@
+<% results  = @studies.map{|study| [ 
+  pretty_status(study),  
+  if study.has_coordinator?(current_user)
+    link_to pretty_irb_number(study), study_path(study.irb_number), :title => "#{study.status}: #{study.title}", :class => 'study'
+  else
+    res = <<-STR
+    #{pretty_irb_number(study)}
+    #{link_to image_tag('/images/icons/information.png'), "#", :rel => "#study_information", :class => "study_information"}
+    #{content_tag(:div, (render :partial=>'partials/study_info', :locals => {:study=>study}), :class => "study_information")}
+    STR
+    res.squish
+  end,
+  study.name,
+  study.last_name,
+  study.accrual,
+  study.accrual_goal
+  ]}
+-%>
+{aaData: <%=results.to_json %>, iTotalRecords: <%= results.size.to_s %>, iTotalDisplayRecords: <%= @iTotalDisplayRecords.to_s %>}

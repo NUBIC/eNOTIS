@@ -2,7 +2,9 @@ require 'chronic'
 
 # Represents a Clinical Study/Trial.
 class Study < ActiveRecord::Base
-
+  named_scope :paged, lambda {|start, limit| { :offset => start ,:limit => limit}}
+  named_scope :order, lambda {|order| { :order => order}}
+  
   # Associations
   has_many :involvements
   has_many :roles

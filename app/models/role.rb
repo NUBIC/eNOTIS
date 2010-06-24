@@ -2,10 +2,12 @@ class Role < ActiveRecord::Base
   # Associations
   belongs_to :user
   belongs_to :study
+  belongs_to :study_table
   delegate :first_name, :last_name, :name, :netid, :to => :user
   
   validates_presence_of :user_id
   validates_presence_of :study_id
+  validates_uniqueness_of :study_id, :scope => :user_id
   
   attr_protected :consent_role #defines app permissions
 
@@ -39,6 +41,8 @@ class Role < ActiveRecord::Base
               redis.sadd('phantom_studies',study)
               study_keys = redis.keys "*#{study}*"
               study_keys.each{|k| redis.del k}
+            elsif role.errors.on(:study_id) =='has already been taken'
+              puts "Study User validation error - Principal Investigator : #{study} - #{netid} - #{project_role} - #{consent_role} "
             end
           end
         rescue Exception    => e
@@ -66,6 +70,14 @@ class Role < ActiveRecord::Base
               redis.sadd('phantom_studies',study)
               study_keys = redis.keys "*#{study}*"
               study_keys.each{|k| redis.del k}
+            elsif role.errors.on(:study_id) =='has already been taken'
+              puts "Study User validation error - Co Investigator : #{study} - #{netid} - #{project_role} - #{consent_role} "
+              begin
+                first_role = role.study.roles.detect{|r| r.user = role.user}
+                puts "Already listed as #{first_role.project_role} - #{first_role.consent_role}"
+              rescue Exception => e
+                puts "Exception Caught"
+              end
             end
           end
         rescue Exception    => e
@@ -92,7 +104,16 @@ class Role < ActiveRecord::Base
               redis.sadd('phantom_studies',study)
               study_keys = redis.keys "*#{study}*"
               study_keys.each{|k| redis.del k}
+            elsif role.errors.on(:study_id) == 'has already been taken'
+              puts "Study User validation error - Authorized Personnel : #{study} - #{netid} - #{project_role} - #{consent_role} "
+              begin
+                first_role = role.study.roles.detect{|r| r.user = role.user}
+                puts "Already listed as #{first_role.project_role} - #{first_role.consent_role}"
+              rescue Exception => e
+                puts "Exception Caught"
+              end
             end
+            
           end
         rescue Exception    => e
           puts "Failed to create Role

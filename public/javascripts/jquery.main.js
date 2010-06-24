@@ -1,24 +1,23 @@
-$(document).ready(function() {
-  // livesearch
-  $('input[name="query"]').liveSearch({url: '/search?format=js&query=', id: "livesearch-results"});
+$('#results a[rel=#study_information]').live('mouseover', function(event) {
+ jQuery('#results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#results').offset().top, -1*jQuery('#results').offset().left]});
+});
 
-	// flash messages
+$(document).ready(function() {
+
+ // flash messages
   $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
-	
-	// studies index
+ 
+ // studies index
   $("#my_studies a[rel=#study_information]").overlay({ 
     onBeforeLoad: function() { var wrap = $("#study_information .contentWrap"); wrap.html(this.getTrigger().next('.study_information').html()); },
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
   });
-  // datatables
-  $("#my_studies .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [null, { "sType": "html" }, null, null, null, null]});
-	
-	// search page
-	jQuery('#results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#results').offset().top, -1*jQuery('#results').offset().left]});
-  $("#study_results .display").dataTable({"sPaginationType": "full_numbers","aoColumns": [null, { "sType": "html" }, null, null, null, null]});
-  $("#subject_results .display").dataTable({"aoColumns": [{ "sType": "html" }]});
-	
-	// studies show
+ 
+ // search page
+ jQuery('#results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#results').offset().top, -1*jQuery('#results').offset().left]});
+  $("#subject_results .subject_display").dataTable({"aoColumns": [{ "sType": "html" }]});
+ 
+ // studies show
     // dataTable
     $("#accrual .display").dataTable({"iDisplayLength": 30, "sPaginationType": "full_numbers", "oLanguage": {"sZeroRecords": "No subjects yet - click 'Add' or 'Import' to get started."},"aoColumns": [null,null,null,null,null,null,null,{ "sType": "html" },{ "sType": "html" }]});
     $("#accrual .display td:empty, #import .display td:empty").html("--");
