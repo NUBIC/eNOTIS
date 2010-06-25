@@ -12,10 +12,18 @@ class InvolvementsController < ApplicationController
   
   # Public instance methods (actions)
   def index
-    # @subject = Subject.find(params[:id])
-    # return render :action => "confidential" unless params[:accept]
   end
-
+  
+  def show
+    @involvement = Involvement.find(params[:id], :include => [:study, {:subject => {:involvements => :study}}])
+    @studies = (@involvement.subject.involvements - [@involvement]).map(&:study)
+    return render :partial => "partials/other_studies_privacy" unless params[:accept]
+    respond_to do |format|
+      format.html
+      format.js {render :layout => false}
+    end
+  end
+  
   def new
     @involvement = Involvement.new
     @involvement.subject = Subject.new

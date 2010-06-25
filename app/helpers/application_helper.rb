@@ -19,11 +19,11 @@ module ApplicationHelper
   def pretty_irb_number(study)
     m = study.irb_number.match(/(STU0*)(\d*)/)
     if study.irb_number.blank?
-      content_tag("span", "(no IRB number)", :class => "irb_number")
+      content_tag("span", "(no IRB number)", :class => "irb_number", :title => study.title)
     elsif !m.blank? and !m[1].blank? and !m[2].blank?
-      content_tag("span", m[1] + content_tag("strong", m[2]), :class => "irb_number")
+      content_tag("span", m[1] + content_tag("strong", m[2]), :class => "irb_number", :title => study.title)
     else
-      content_tag("span", study.irb_number, :class => "irb_number")
+      content_tag("span", study.irb_number, :class => "irb_number", :title => study.title)
     end
   end
   
@@ -47,7 +47,7 @@ module ApplicationHelper
   
   def other_studies_flag(involvement)
     unless involvement.subject.involvements == [involvement]
-      link_to image_tag('/images/icons/flag_orange.png'), '#', :rel => '#other_studies'
+      link_to image_tag('/images/icons/flag_orange.png'), involvement_path(involvement), :rel => '#other_studies'
     end
   end
   
