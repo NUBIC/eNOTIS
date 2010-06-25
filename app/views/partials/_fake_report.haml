@@ -1,0 +1,14 @@
+%table.display
+  %thead
+    %tr
+      %th Date
+      %th Subject
+      %th PSA (ng/mL)
+    
+  %tbody
+    - subjects.each do |subject|
+      %tr
+        %td= Date.today
+        %td= subject.name
+        %td= rand
+      
