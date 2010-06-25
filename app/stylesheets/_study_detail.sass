@@ -71,18 +71,18 @@
       a
         :text-decoration none
         :margin-left 10px
+        :padding-left 20px
       a.charts
         :padding-left 25px
         :background transparent url('/images/icons/chart_pie.png') no-repeat center left    
       a.add
-        :padding-left 20px
         :background transparent url('/images/icons/add.png') no-repeat center left    
       a.import
-        :padding-left 20px
         :background transparent url('/images/icons/table_add.png') no-repeat center left
       a.export
-        :padding-left 20px
         :background transparent url('/images/icons/table_save.png') no-repeat center left        
+      a.report
+        :background transparent url('/images/icons/report.png') no-repeat center left        
     th dtr.withdrawn, td span.withdrawn
       :color #aaa  
   #import
@@ -97,9 +97,9 @@
         :padding 0 5px 0 0
     .uploads
       +column(48, true)
-  #involvement
+  #involvement, #report
     :width 909px
-  #export
+  #export, #other_studies
     :width 475px
 form#new_involvement, form.edit_involvement
   ol

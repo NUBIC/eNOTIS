@@ -45,6 +45,12 @@ module ApplicationHelper
     people.empty? ? nil : people.join("<br/>")
   end
   
+  def other_studies_flag(involvement)
+    unless involvement.subject.involvements == [involvement]
+      link_to image_tag('/images/icons/flag_orange.png'), '#', :rel => '#other_studies'
+    end
+  end
+  
   # Finds an involvement event given a parent involvement and event name
   # 
   # @param [Involvement] involvement parent of the involvement event

@@ -50,8 +50,18 @@ $(document).ready(function() {
 
     // export overlay
     $("a[rel=#export]").overlay({
-     onBeforeLoad: function(){ $("#export .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+      onBeforeLoad: function(){ $("#export .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+    });
+    
+    // report overlay
+    $("a[rel=#report]").overlay({
+      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+    });
+    
+    // other studies overlay
+    $("a[rel=#other_studies]").overlay({
+      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
     
     // study information
