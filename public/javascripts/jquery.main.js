@@ -61,9 +61,18 @@ $(document).ready(function() {
     
     // other studies overlay
     $("a[rel=#other_studies]").overlay({
-      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+      onBeforeLoad: function(){ $("#other_studies .wrap").load(this.getTrigger().attr("href"), "format=js", activateAccept) },
+      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
+      onClose: function(){$("#other_studies .wrap").html("");}
     });
-    
+    // bind an event onto the accept link that loads the other studies view into the same overlay
+    function activateAccept(){
+      $("#other_studies .wrap a.accept").click(function(e){
+        $("#other_studies .wrap").load($(e.target).attr("href"), "format=js");
+        e.preventDefault();
+      });
+    }
+        
     // study information
     $("#study a[rel=#study_information]").click(function(){
       $('#study_information').slideToggle();
