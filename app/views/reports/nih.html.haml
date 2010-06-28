@@ -26,7 +26,7 @@
       %th Males
       %th Sex/Gender Unknown or Not Reported
       %th Total
-    - ["Hispanic or Latino", "Not Hispanic or Latino", "Unknown (individuals not reporting ethnicity)"].each do |ethnicity|
+    - ["Hispanic or Latino", "Not Hispanic or Latino", "Unknown or Not Reported"].each do |ethnicity|
       %tr
         %td= ethnicity
         %td= @involvements.select{|i| i.ethnicity == ethnicity && i.gender == "Female"}.size

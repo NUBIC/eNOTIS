@@ -43,7 +43,7 @@
       = link_to("Add", new_involvement_path(:study => @study), :rel => '#involvement', :class => 'add')
       = link_to("Import", import_study_path, :rel => "#import", :class => 'import')
       = link_to("Export", new_report_path(:study => @study), :rel => '#export', :class => 'export') unless @involvements.empty?
-      = link_to("Reports", '#', :rel => '#report', :class => 'report') if @study.irb_number == "STU00010003"
+      = link_to("Reports", '#', :rel => '#report', :class => 'report')
     %table.display
       %thead
         %tr
@@ -82,4 +82,11 @@
     .wrap
   #report.overlay
     .wrap
-      = render :partial => 'partials/fake_report', :locals => {:subjects => @involvements.map(&:subject)}
+      %h2 Available reports
+      %ul
+        %li= link_to "NIH Inclusion Enrollment Report", nih_reports_path(:study => @study.irb_number)
+        - if @study.irb_number == "STU00010003"
+          %li= link_to "EDW PSA values", '#', :class => 'psa'
+    - if @study.irb_number == "STU00010003"    
+      .psa_table.hidden
+        = render :partial => 'partials/fake_report', :locals => {:subjects => @involvements.map(&:subject)}
