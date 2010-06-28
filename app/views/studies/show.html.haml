@@ -43,7 +43,7 @@
       = link_to("Add", new_involvement_path(:study => @study), :rel => '#involvement', :class => 'add')
       = link_to("Import", import_study_path, :rel => "#import", :class => 'import')
       = link_to("Export", new_report_path(:study => @study), :rel => '#export', :class => 'export') unless @involvements.empty?
-      = link_to("Reports", '#', :rel => '#report', :class => 'report')
+      = link_to("Reports", '#', :rel => '#report', :class => 'report') if @study.irb_number == "STU00010003"
     %table.display
       %thead
         %tr

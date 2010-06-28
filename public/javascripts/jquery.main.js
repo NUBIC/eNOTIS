@@ -59,6 +59,9 @@ $(document).ready(function() {
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
     
+    // report datatable
+    $("#report .display").dataTable( {"iDisplayLength": 20, "sPaginationType": "full_numbers"});
+    
     // other studies overlay
     $("a[rel=#other_studies]").overlay({
       onBeforeLoad: function(){ $("#other_studies .wrap").load(this.getTrigger().attr("href"), "format=js", activateAccept) },

@@ -6,9 +6,9 @@
       %th PSA (ng/mL)
     
   %tbody
-    - subjects.each do |subject|
+    - subjects[0,200].each do |subject|
       %tr
         %td= Date.today
         %td= subject.name
-        %td= rand
+        %td= '%.2f' % rand
       
