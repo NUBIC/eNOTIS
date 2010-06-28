@@ -127,7 +127,9 @@ class Involvement < ActiveRecord::Base
   def races_as_str
     races.join(", ")
   end
-
+  def race_for_nih_report
+    races.size == 1 ? races.first : "More Than One Race"
+  end
   alias :race_as_str :races_as_str
 
   # A setter for the race_is_unknown_or_not_reported attribute

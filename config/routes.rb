@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources   :studies, :member => {:import => :get}
   map.resources   :involvements, :collection => {:upload => :post, :sample => :get}
   map.resource    :search, :controller => :search
-  map.resources   :reports
+  map.resources   :reports, :collection => {:nih => :get}
   map.hub         '/hub', {:controller => "admin", :action => "index"}
   map.default     '', {:controller => "studies", :action => "index"}
 end

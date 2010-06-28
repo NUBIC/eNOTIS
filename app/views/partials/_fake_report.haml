@@ -4,11 +4,10 @@
       %th Date
       %th Subject
       %th PSA (ng/mL)
-    
   %tbody
     - subjects[0,200].each do |subject|
       %tr
         %td= Date.today
         %td= subject.name
-        %td= '%.2f' % rand
+        %td= '%.2f' % ((r = rand) > 0.2 ? (7*r)**(rand * 6) : 2*r)
       

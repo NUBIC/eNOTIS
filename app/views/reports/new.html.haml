@@ -1,4 +1,5 @@
 #report
+  = link_to "NIH Inclusion Enrollment Report", nih_reports_path(:study => params[:study])
   - form_tag(reports_path) do
     = hidden_field_tag 'study[irb_number]', params[:study]
     %h3= "Export subjects on #{link_to @study.irb_number, study_path(@study)}" unless request.format == "js"
