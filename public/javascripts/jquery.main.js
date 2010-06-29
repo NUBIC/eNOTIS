@@ -56,9 +56,9 @@ $(document).ready(function() {
     
     // report overlay
     $("a[rel=#report]").overlay({
-      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
     });
-    
+        
     // other studies overlay
     $("a[rel=#other_studies]").overlay({
       onBeforeLoad: function(){ $("#other_studies .wrap").load(this.getTrigger().attr("href"), "format=js", activateAccept) },

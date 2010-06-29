@@ -82,4 +82,6 @@
     .wrap
   #report.overlay
     .wrap
-      = render :partial => 'partials/fake_report', :locals => {:subjects => @involvements.map(&:subject)}
+      %h2 Available reports
+      %ul
+        %li= link_to "NIH Inclusion Enrollment Report", nih_reports_path(:study => @study.irb_number)

@@ -1,7 +1,9 @@
 #This is a class for exporting data
 
 class Report
-
+  def self.nih_accrual_report(irb_number)
+    study = Study.find_by_irb_number(irb_number)
+  end
   def self.export(params)
     study = Study.find_by_irb_number(params[:study][:irb_number])
     involvement = params[:involvement] || {}

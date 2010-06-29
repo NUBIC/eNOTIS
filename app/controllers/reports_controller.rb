@@ -7,6 +7,11 @@ class ReportsController < ApplicationController
   def index
     @study = Study.find_by_irb_number(params[:study])
   end
+  def nih
+    @study = Study.find_by_irb_number(params[:study])
+    @involvements = @study.involvements
+    render :layout => 'nih_report'
+  end
  
   def new
     @study = Study.find_by_irb_number(params[:study])
@@ -34,6 +39,5 @@ class ReportsController < ApplicationController
 
   def render_report(report)
   end
-
-
+  
 end
