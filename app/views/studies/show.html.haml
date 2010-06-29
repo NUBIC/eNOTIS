@@ -85,8 +85,3 @@
       %h2 Available reports
       %ul
         %li= link_to "NIH Inclusion Enrollment Report", nih_reports_path(:study => @study.irb_number)
-        - if @study.irb_number == "STU00010003"
-          %li= link_to "EDW PSA values", '#', :class => 'psa'
-    - if @study.irb_number == "STU00010003"    
-      .psa_table.hidden
-        = render :partial => 'partials/fake_report', :locals => {:subjects => @involvements.map(&:subject)}

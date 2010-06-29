@@ -57,22 +57,8 @@ $(document).ready(function() {
     // report overlay
     $("a[rel=#report]").overlay({
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
-      onClose: function(){
-        $("#report .wrap").removeClass("hidden");
-        $("#report .psa_table").addClass("hidden");
-      }
     });
-    
-
-    // report datatable
-    $("#report .display").dataTable( {"iDisplayLength": 20, "sPaginationType": "full_numbers"});
-    
-    $("#report .psa").click(function(){
-      $("#report .wrap").addClass("hidden");
-      $("#report .psa_table").removeClass("hidden");
-    });
-    
-    
+        
     // other studies overlay
     $("a[rel=#other_studies]").overlay({
       onBeforeLoad: function(){ $("#other_studies .wrap").load(this.getTrigger().attr("href"), "format=js", activateAccept) },
