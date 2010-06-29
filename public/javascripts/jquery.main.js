@@ -19,7 +19,7 @@ $(document).ready(function() {
  
  // studies show
     // dataTable
-    $("#accrual .display").dataTable({"iDisplayLength": 30, "sPaginationType": "full_numbers", "oLanguage": {"sZeroRecords": "No subjects yet - click 'Add' or 'Import' to get started."},"aoColumns": [null,null,null,null,null,null,null,{ "sType": "html" },{ "sType": "html" }]});
+    $("#accrual .display").dataTable({"iDisplayLength": 30, "sPaginationType": "full_numbers", "oLanguage": {"sZeroRecords": "<p><strong>No subjects yet - click 'Add' or 'Import' to get started. Or watch our 4 minute introduction to eNOTIS.</strong></p><p><a style='display: block; width: 550px; height: 386px; margin: 0 auto;' id='player' href='/media/enotis-tutorial-a.mov'></a></p>"},"aoColumns": [null,null,null,null,null,null,null,{ "sType": "html" },{ "sType": "html" }]});
     $("#accrual .display td:empty, #import .display td:empty").html("--");
 
     // import overlay
