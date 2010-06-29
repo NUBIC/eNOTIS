@@ -1,9 +1,11 @@
 - content_for :head do
   = stylesheet_link_tag 'jquery-ui-1.7.2.custom'
-  = javascript_include_tag 'highcharts/highcharts', 'highcharts/excanvas.compiled', 'jquery.charts', 'jquery-ui-1.7.2.custom-datepicker', 'raphael-min', 'g.raphael-min', 'g.dot-min', :cache => "cache/study"
+  = javascript_include_tag 'highcharts/highcharts', 'highcharts/excanvas.compiled', 'jquery.charts', 'jquery-ui-1.7.2.custom-datepicker', 'raphael-min', 'g.raphael-min', 'g.dot-min', 'flowplayer-3.2.2.min', :cache => "cache/study"
   %script{:type => "text/javascript"}
     $(document).ready(function(){
-    - unless @involvements.empty?
+    - if @involvements.empty?
+      flowplayer("player", "/media/flowplayer-3.2.2.swf", {clip: {autoPlay: false}});
+    - else
       = "pieChart('gender', 'Gender', #{@gender_stats.inspect});"
       = "pieChart('race', 'Race', #{@race_stats.inspect});"
       = "pieChart('ethnicity', 'Ethnicity', #{@ethnicity_stats.inspect});"
@@ -82,4 +84,6 @@
     .wrap
   #report.overlay
     .wrap
-      = render :partial => 'partials/fake_report', :locals => {:subjects => @involvements.map(&:subject)}
+      %h2 Available reports
+      %ul
+        %li= link_to "NIH Inclusion Enrollment Report", nih_reports_path(:study => @study.irb_number)

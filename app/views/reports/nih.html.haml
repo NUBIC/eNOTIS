@@ -1,0 +1,89 @@
+%p.pi= "Program Director/Principal Investigator (Last, First, Middle): #{@study.principal_investigator.last_name}, #{@study.principal_investigator.first_name}"
+%h1 Inclusion Enrollment Report
+%h2 This report format should NOT be used for data collection from study participants.
+%table.study
+  %tbody
+    %tr
+      %th Study Title:
+      %td{:colspan => 3}= @study.title
+    %tr
+      %th Total Enrollment:
+      %td= @study.involvements.size
+      %th Protocol Number:
+      %td &nbsp;
+    %tr
+      %th Grant Number:
+      %td &nbsp;
+      %th
+      %th
+%table.enrollment
+  %tbody
+    %tr
+      %th{:colspan => 5} PART A. TOTAL ENROLLMENT REPORT: Number of Subjects Enrolled to Date (Cumulative) by Ethnicity and Race
+    %tr.categories
+      %th Ethnic Category
+      %th Females
+      %th Males
+      %th Sex/Gender Unknown or Not Reported
+      %th Total
+    - ["Hispanic or Latino", "Not Hispanic or Latino", "Unknown or Not Reported"].each do |ethnicity|
+      %tr
+        %td= ethnicity
+        %td= @involvements.select{|i| i.ethnicity == ethnicity && i.gender == "Female"}.size
+        %td= @involvements.select{|i| i.ethnicity == ethnicity && i.gender == "Male"}.size
+        %td= @involvements.select{|i| i.ethnicity == ethnicity && i.gender == "Unknown or not reported"}.size
+        %td= ethnicity == "Hispanic or Latino" ? "#{@involvements.select{|i| i.ethnicity == ethnicity}.size}**" : @involvements.select{|i| i.ethnicity == ethnicity}.size
+    %tr.totals
+      %th Ethnic Category: Total of All Subjects*
+      %td= @involvements.select{|i| i.gender == "Female"}.size
+      %td= @involvements.select{|i| i.gender == "Male"}.size
+      %td= @involvements.select{|i| i.gender == "Unknown or not reported"}.size
+      %td= "#{@involvements.size}*"
+    %tr
+      %th{:colspan => 5} Racial Categories
+    - ["American Indian/Alaska Native", "Asian", "Native Hawaiian/Other Pacific Islander", "Black/African American", "White", "More Than One Race", "Unknown or Not Reported"].each do |race|
+      %tr
+        %td= race
+        %td= @involvements.select{|i| i.race_for_nih_report == race && i.gender == "Female"}.size
+        %td= @involvements.select{|i| i.race_for_nih_report == race && i.gender == "Male"}.size
+        %td= @involvements.select{|i| i.race_for_nih_report == race && i.gender == "Unknown or not reported"}.size
+        %td= @involvements.select{|i| i.race_for_nih_report == race }.size
+    %tr.totals
+      %th Racial Categories: Total of All Subjects*
+      %td= @involvements.select{|i| i.gender == "Female"}.size
+      %td= @involvements.select{|i| i.gender == "Male"}.size
+      %td= @involvements.select{|i| i.gender == "Unknown or not reported"}.size
+      %td= "#{@involvements.size}*"
+    %tr
+      %td.gray{:colspan => 5} &nbsp;
+    %tr
+      %th{:colspan => 5} PART B. HISPANIC ENROLLMENT REPORT: Number of Hispanics or Latinos Enrolled to Date (Cumulative)
+    %tr.categories
+      %th Racial Categories
+      %th Females
+      %th Males
+      %th Sex/Gender Unknown or Not Reported
+      %th Total
+    - ["American Indian/Alaska Native", "Asian", "Native Hawaiian/Other Pacific Islander", "Black/African American", "White", "More Than One Race", "Unknown or Not Reported"].each do |race|
+      %tr      
+        %td= race
+        %td= @involvements.select{|i| i.ethnicity == "Hispanic or Latino" && i.race_for_nih_report == race && i.gender == "Female"}.size
+        %td= @involvements.select{|i| i.ethnicity == "Hispanic or Latino" && i.race_for_nih_report == race && i.gender == "Male"}.size
+        %td= @involvements.select{|i| i.ethnicity == "Hispanic or Latino" && i.race_for_nih_report == race && i.gender == "Unknown or not reported"}.size
+        %td= @involvements.select{|i| i.ethnicity == "Hispanic or Latino" && i.race_for_nih_report == race }.size
+    %tr.totals
+      %th Racial Categories: Total of Hispanics or Latinos**
+      %td= @involvements.select{|i| i.ethnicity == "Hispanic or Latino" && i.gender == "Female"}.size
+      %td= @involvements.select{|i| i.ethnicity == "Hispanic or Latino" && i.gender == "Male"}.size
+      %td= @involvements.select{|i| i.ethnicity == "Hispanic or Latino" && i.gender == "Unknown or not reported"}.size
+      %td= "#{@involvements.select{|i| i.ethnicity == "Hispanic or Latino"}.size}**"
+%p.footnotes
+  * These totals must agree.
+  %br
+  ** These totals must agree.
+%table.footer
+  %tbody
+    %tr
+      %td PHS 398/2590 (Rev. 06/09)
+      %td.center Page
+      %td.right Inclusion Enrollment Report Format Page

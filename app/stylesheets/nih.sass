@@ -1,0 +1,55 @@
+@import base.sass
+
+html
+  +blueprint-typography
+  +blueprint-grid
+body
+#container
+  +container
+  // Debug import to show the grid
+  // +showgrid
+#main
+  +column(40,true)
+  +squeeze
+  :font-size 14px
+  p.pi
+    :margin-left 50px
+    :font-size 11px
+  h1
+    :text-align center
+    :font-size 22px
+    :font-weight bold
+  h2
+    :text-align center
+    :font-size 17px
+    :font-weight bold
+    :color red
+  table.study
+    th
+      :width 140px
+    td
+      :border-bottom 1px solid black
+  table.enrollment
+    :border 1px solid black
+    :border-collapse collapse
+    th, td
+      :border 1px solid black
+    td.gray
+      :background-color #bbb
+    tr.categories th
+      :text-align center
+    tr.totals
+      :border-top 2px solid black
+      :border-bottom 2px solid black
+  table.footer
+    :border-top 1px solid black
+    :font-size 12px
+    td.center
+      :text-align center
+    td.right
+      :text-align right
+      :font-weight bold
+  p.footnotes
+    :font-size 11px
+.clear
+  :clear both
