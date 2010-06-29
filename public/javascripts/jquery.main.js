@@ -1,9 +1,9 @@
-$('#results a[rel=#study_information]').live('mouseover', function(event) {
- jQuery('#results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#results').offset().top, -1*jQuery('#results').offset().left]});
-});
-
 $(document).ready(function() {
-
+  // Study Information Tooltips
+  $('#results a[rel=#study_information]').live('mouseover', function(event) {
+   jQuery('#results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#results').offset().top, -1*jQuery('#results').offset().left]});
+  });
+  
  // flash messages
   $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
  
