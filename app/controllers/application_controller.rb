@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   # local_addresses.clear
 
   # Application version
-  APP_VERSION = "1.4.0"
+  APP_VERSION = "1.5.0"
   
   # Possible application statuses. See http://en.wikipedia.org/wiki/Bob_Dylan
   SYSTEM_STATUSES = { :up => "Don't think twice, it's all right",

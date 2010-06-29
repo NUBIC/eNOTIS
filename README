@@ -42,6 +42,54 @@ eNOTIS depends on a few important gems:
   
 == Changes ==
 
+1.5.0
+
+* Study Tables have been converted from java+ruby to unobtrusive javascript. Closes #3164
+* add video to studies without accruals. closes #1352
+* removing fake report
+* merging demo work. closes #2775
+* removing fake psa report
+* moving tooltip hovers back inside document.ready #3164
+* fixing nih totals. placing nih report under Reports button. references #2775
+* nih report. references #2590
+* show fake edw report on nugene only, with a datatable, limited number of subjects
+* starting fake report
+* other studies. references #2775
+* starting fake report
+* other studies
+* other studies and reports for demo
+* warren is an admin
+* Ethnicity typo. Closes #3152
+* updating bundler for hudson
+* one small fix for cucumber
+* Completing ticket #1538. Searches are now paginated and sorted via ajax
+* embedding sudo in the deploy command works for me... it should work for other people too
+* use sudo to restart resque workers
+* video on static site
+* enotis tutorial video
+* unknown required date
+* renaming completed => completed\_or\_withdrawn for clarity
+* set timechart extreme to 1 to force 0 to bottom of chart
+* new highcharts
+* show last 12 months in time chart. closes #2776
+* logos at bottom of front page now link to sites. closes #2979
+* adjustments to admin layout
+* turn of session reset. fixes login redirect issue. closes #2772.
+* changed 'headers' to 'column headings' for clarity. closes #2777
+* tutorial video. closes #1231
+* Removed system status tracking... closes #2783
+* This should fix hudson, i hope
+* Locking resque to 1.8.2
+* Revert "Updating Gemfile"
+* Updating Gemfile
+* Various redis, resque and monit updates
+* Deployment: I've decreased the number of resque workers from 3 to 2 on production and staging since we don't need to do full imports at the moment
+* eIRB import: Update netid populator to check if the user hash actually has data in it
+* Full Import now uses the proper redis namespace and server on production
+* wrong hostname on production resque
+* Revert gems for hudson
+* Removing more couchdb code and also refining import process
+
 1.4.0
 
 * Everyone can see resque now under admin/jobs using the username and password enotis_jobs
