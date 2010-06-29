@@ -13,6 +13,30 @@ $(document).ready(function() {
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
   });
  
+ // My Studies
+ $('#my_studies .display').dataTable( {
+   "oLanguage": {
+     "sProcessing": '/images/spinner.gif'
+   },
+   "bProcessing": true,
+   "bServerSide": true,
+   "bRetrieve": true,
+   "sPaginationType": "full_numbers",
+   "sAjaxSource": "studies.json"
+ });
+
+ // Searching Studies
+ $('#study_results .display').dataTable( {
+   "oLanguage": {
+     "sProcessing": '/images/spinner.gif'
+   },
+   "bProcessing": true,
+   "bServerSide": true,
+   "bRetrieve": true,
+   "sPaginationType": "full_numbers",
+   "sAjaxSource": "search.json?" + $.param({query: $.getUrlVar('query')})
+  });
+
  // search page
  jQuery('#results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#results').offset().top, -1*jQuery('#results').offset().left]});
   $("#subject_results .subject_display").dataTable({"aoColumns": [{ "sType": "html" }]});
