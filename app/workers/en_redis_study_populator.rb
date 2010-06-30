@@ -1,4 +1,4 @@
- require 'webservices/eirb'
+require 'webservices/eirb'
 
 class ENRedisStudyPopulator
   @queue = :redis_study_populator
@@ -23,10 +23,13 @@ class ENRedisStudyPopulator
   
   def self.import(irb_number,redis,study_key)
     basic_start_time = Time.now
-    study_hash = Eirb.find_basics(:irb_number=>irb_number)[0]
+    study_hash = HashWithIndifferentAccess.new(Eirb.find_basics(:irb_number=>irb_number)[0])
     basic_end_time = Time.now
-    if study_hash
-      
+    if study_hash.blank?
+      puts "Study #{irb_number} not found in the IRB"
+    elsif !study_hash.blank? && study_hash[:irb_status] == 'Exempt Approved'
+      puts "Blocking Exempt Approved Study: #{irb_number}"
+    else
       puts "#{basic_end_time}: Imported #{study_key} study basics in #{basic_end_time - basic_start_time} seconds"
       study_hash.each do |k,v|
         redis.hset(study_key,k,v)
@@ -59,8 +62,6 @@ class ENRedisStudyPopulator
         end
       end
       
-    else
-      puts "Study #{irb_number} not found in the IRB"
     end
   
   end
