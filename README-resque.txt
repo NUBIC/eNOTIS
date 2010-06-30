@@ -15,8 +15,6 @@ To start redis
   cd RAILS_ROOT && redis-server config/redis.conf
 To start workers 
   cd RAILS_ROOT && JOBS_PER_WORKER=100 COUNT=4 QUEUES=<any queue> rake environment resque:workers
-To start the sinatra app locally
-  cd RAILS_ROOT && resque-web config/initializers/resque.rb
 
 To start the nightly importing process
 First, setup an SSH Tunnel (if your'e running this at your desk)
@@ -25,8 +23,8 @@ sudo ssh -f -N -L 636:directory.northwestern.edu:636 sjg304@enotis-staging.nubic
 For the mass importing running locally: 
 Then , open up 4 tabs in Terminal.app and type these commands (at RAILS_ROOT)
 rake eirb:redis_import:full
-RAILS_ENV=staging JOBS_PER_FORK=25 COUNT=3 QUEUES=redis_study_populator rake environment resque:workers
-RAILS_ENV=staging JOBS_PER_FORK=25 COUNT=3 QUEUES=redis_authorized_personnel_populator,redis_ldapper,redis_bogus_netid rake environment resque:workers
+JOBS_PER_FORK=25 COUNT=3 QUEUES=redis_study_populator rake environment resque:workers
+JOBS_PER_FORK=25 COUNT=3 QUEUES=redis_authorized_personnel_populator,redis_ldapper,redis_bogus_netid rake environment resque:workers
 
 For the Nightly Work
 rake eirb:redis_import:nightly

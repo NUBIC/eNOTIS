@@ -35,6 +35,18 @@ namespace :eirb do
         irb_number = numbers[:irb_number]
         puts "Priming queues for #{irb_number}"
         Resque.enqueue(ENRedisStudyPopulator, irb_number, true)
+      end
+      config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
+      redis  = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
+      %w(role missing_person).each do |cat|
+        keys = redis.keys "#{cat}:*"
+        keys.each{|k| redis.del k}
+      end
+      puts "#{Time.now}: Getting All Study IRB Numbers "
+      irb_numbers = Eirb.find_study_export
+      puts "#{Time.now}: Finished "
+      irb_numbers.each do |numbers|
+        irb_number = numbers[:irb_number]
         Resque.enqueue(ENRedisAuthorizedPersonnelPopulator, irb_number)
       end
     end
