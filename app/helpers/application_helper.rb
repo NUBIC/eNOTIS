@@ -51,6 +51,13 @@ module ApplicationHelper
     end
   end
   
+  def study_funding_source_info(study)
+    funding_sources = study.funding_sources
+    if funding_sources.size > 0
+      content_tag("span", "Funding Sources: <br/>" + funding_sources.map(&:name).uniq.join("<br/>"))
+    end
+  end
+  
   # Finds an involvement event given a parent involvement and event name
   # 
   # @param [Involvement] involvement parent of the involvement event
