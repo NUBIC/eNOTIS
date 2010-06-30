@@ -9,6 +9,7 @@ class Edw
     {:name => "eNOTISeIRBAuthorizedPersonnel", :ext => "authorized_personnel"},
     {:name => "eNOTISeIRBPrincipalInvestigators", :ext => "principal_investigators"},
     {:name => "eNOTISeIRBCoInvestigators", :ext => "co_investigators"},
+    {:name => "eNOTISNOTISstudysubjects", :ext => "subject_import_from_NOTIS"},
     {:name => "eNOTIS Test 3", :ext => "test"}
    ].freeze
 
