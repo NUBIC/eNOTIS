@@ -149,7 +149,7 @@ class Role < ActiveRecord::Base
   # Project role is way to long. This should go away
   # once the new irb intake form goes live
   def truncate_project_role
-    if self.project_role.length > 255
+    if self.project_role && self.project_role.length > 255
       self.project_role = self.project_role[0..250] + "..."
     end
   end

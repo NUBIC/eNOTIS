@@ -18,7 +18,9 @@ config.action_mailer.raise_delivery_errors = false
 
 require 'ruby-debug' if defined? Debugger # don't choke if we haven't the gem
 
-Bcsec.configure do
-  authenticator :mock
-  central '/etc/nubic/bcsec-local.yml'
+config.after_initialize do
+  Bcsec.configure do
+    authenticator :mock
+    central '/etc/nubic/bcsec-local.yml'
+  end
 end
