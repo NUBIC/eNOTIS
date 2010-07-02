@@ -10,6 +10,8 @@ class Role < ActiveRecord::Base
   
   attr_protected :consent_role #defines app permissions
 
+  before_save :truncate_project_role
+  
   def can_accrue?
     consent_role == "Obtaining"
   end
@@ -140,6 +142,15 @@ class Role < ActiveRecord::Base
       puts "Missing Netid = #{study} - #{netid} - #{project_role} - #{consent_role}"
       Resque.enqueue(ENRedisIncompleteRole, study, netid, project_role, consent_role)
       nil
+    end
+  end
+  
+  # Fix for authorized personnel entry for study STU00005280
+  # Project role is way to long. This should go away
+  # once the new irb intake form goes live
+  def truncate_project_role
+    if self.project_role.length > 255
+      self.project_role = self.project_role[0..250] + "..."
     end
   end
 end
