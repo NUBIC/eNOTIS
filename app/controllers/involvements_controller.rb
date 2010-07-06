@@ -14,7 +14,16 @@ class InvolvementsController < ApplicationController
   def index
   end
   
-  def show
+  def show 
+    @involvement = Involvement.find(params[:id])
+    params[:study] = @involvement.study.irb_number
+    respond_to do |format|
+      format.html {render :action => :show}
+      format.js {render :layout => false, :action => :show}
+    end
+  end
+
+  def other
     @involvement = Involvement.find(params[:id], :include => [:study, {:subject => {:involvements => :study}}])
     @studies = (@involvement.subject.involvements - [@involvement]).map(&:study)
     return render :partial => "partials/other_studies_privacy" unless params[:accept]

@@ -47,6 +47,8 @@ class Subject < ActiveRecord::Base
     return self
   end
   
+  # There is a subject_name_helper method that includes styles for the name...
+  # The helper method is generally better to use when writing out to the HTML UI
   def name
     if first_name.blank? and last_name.blank?
       "(no name)"

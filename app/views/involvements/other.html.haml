@@ -1,0 +1,21 @@
+%h4= "Other studies for #{@involvement.subject.name}"
+%table.display
+  %thead
+    %tr
+      %th Status
+      %th IRB number
+      %th Name
+      %th Personnel
+      %th Accrual
+      %th Goal
+  %tbody
+    - @studies.each do |study|
+      %tr
+        %td.status
+          = pretty_status study
+        %td.irb_number
+          = pretty_irb_number(study)
+        %td= study.name
+        %td= people_info(study.roles)
+        %td= study.accrual || 0
+        %td= study.accrual_goal
