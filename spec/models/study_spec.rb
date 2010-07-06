@@ -26,4 +26,23 @@ describe Study do
   it "should override the default to_param method" do
     @study.to_param.should == @study.irb_number
   end
+
+  describe "Changes to the edit status of a study" do
+
+    it "can be set to a read only" do
+      @study.read_only!
+      @study.read_only.should be_true
+    end
+
+    it "can have a read only message for the user" do
+      @study.read_only!("This study is managed in NOTIS")
+      @study.read_only_msg.should == "This study is managed in NOTIS"
+    end
+
+    it "can clear the read only status" do
+      @study.editable!
+      @study.read_only.should be_false
+      @study.read_only_msg.should be_nil
+    end
+  end
 end

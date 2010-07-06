@@ -67,6 +67,26 @@ class Study < ActiveRecord::Base
     end
   end
 
+  # This method is used to toggle the editable/non-editable state of 
+  # patients and patient data (ie involvments, involvment_events, subjects).
+  # Added to support the import of study subjects managed by NOTIS
+  def read_only!(msg = nil)
+    self.read_only = true
+    self.read_only_msg = msg
+  end
+
+  def editable!
+    self.read_only = false
+    self.read_only_msg = nil
+  end
+
+  def read_only?
+    self.read_only
+  end
+
+  def editable?
+    !self.read_only
+  end
   # We should probably try to phase this method out and just use irb_status -BLC
   def status
     irb_status

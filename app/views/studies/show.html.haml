@@ -4,7 +4,7 @@
   %script{:type => "text/javascript"}
     $(document).ready(function(){
     - if @involvements.empty?
-      flowplayer("player", "/media/flowplayer-3.2.2.swf", {clip: {autoPlay: false}});
+      flowplayer("player", "/media/flowplayer-3.2.2.swf", {clip: {autoPlay: false}, canvas: {backgroundColor: '#dddddd', backgroundGradient: 'medium'}});      
     - else
       = "pieChart('gender', 'Gender', #{@gender_stats.inspect});"
       = "pieChart('race', 'Race', #{@race_stats.inspect});"
@@ -14,6 +14,7 @@
     $('#study_information').hide(10); // need an arbitrary delay to have hide happen after pieChart
     });
 #study
+  .study_msg= "This study is managed by a different system. Please see #{@study.read_only_msg || "the source system"} to edit information in this study and any related records." if @study.read_only?
   .title
     = pretty_irb_number @study
     = pretty_status @study
@@ -42,8 +43,9 @@
   #accrual
     #actions
       = link_to("Details and Charts", '#', :rel => '#study_information', :class => 'charts')
-      = link_to("Add", new_involvement_path(:study => @study), :rel => '#involvement', :class => 'add')
-      = link_to("Import", import_study_path, :rel => "#import", :class => 'import')
+      -unless @study.read_only?
+        = link_to("Add", new_involvement_path(:study => @study), :rel => '#involvement', :class => 'add')
+        = link_to("Import", import_study_path, :rel => "#import", :class => 'import')
       = link_to("Export", new_report_path(:study => @study), :rel => '#export', :class => 'export') unless @involvements.empty?
       = link_to("Reports", '#', :rel => '#report', :class => 'report')
     %table.display
@@ -57,7 +59,10 @@
             %dtr{:title => InvolvementEvent.define_event("Withdrawn"), :class => "withdrawn"} Withdrawn
             %br
             %dtr{:title => InvolvementEvent.define_event("Completed")} Completed
-          %th Edit
+          -unless @study.read_only?
+            %th Edit
+          -else
+            %th View
       %tbody
         - @study.involvements.each do |involvement|
           %tr{:class => "subject_#{involvement.subject.id}"}
@@ -73,7 +78,10 @@
             %td<
               = event_info(involvement, "completed")
               = event_info(involvement, "withdrawn")
-            %td= link_to "Edit", edit_involvement_path(involvement), :rel => "#involvement"
+            -unless @study.read_only?
+              %td= link_to "Edit", edit_involvement_path(involvement), :rel => "#involvement"
+            -else
+              %td= link_to "View", involvement_path(involvement), :rel => "#involvement"
   #involvement.overlay
     .wrap
   #export.overlay

@@ -4,7 +4,7 @@ Feature: Manage studies
   I want find a study and view detailed information
 
   Background:
-    And a study "Vitamin C and concentration" with id "STU001248" and irb_status "Approved"
+    Given a study "Vitamin C and concentration" with id "STU001248" and irb_status "Approved"
     Given I log in as "pi" with password "secret" on study "STU001248"
   
   Scenario: A random user cannot view a study page
@@ -12,9 +12,6 @@ Feature: Manage studies
     When I go to the study page for id "STU001249"
     Then I should be redirected to the homepage
     And I should see "You don't have access to study STU001249"
-  
-  Scenario: A random user can view contact information for other coordinators
-  # Brian not interested in testing right now, not essential enough to put in db
 
   Scenario: A coordinator can view all subjects they have access to on a study
     Given the study "STU001248" has the following subjects
@@ -46,3 +43,5 @@ Feature: Manage studies
     When I go to the study page for id "STU001248"
     And I export a csv of subjects 
     Then I should see "Marge"
+
+

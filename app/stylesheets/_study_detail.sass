@@ -1,5 +1,13 @@
 #report
 #study
+  .study_msg
+    :padding 0.5em
+    :margin 0.5em
+    :background-color = !flash_background_color
+    :border 1px solid #333
+    :border-color = !flash_border_color
+    :color = !flash_color
+
   .title, .accrual_count, .accrual_goal, .name
     :font-size 17.5px
     :color #222
@@ -107,7 +115,7 @@
     :width 475px
   #other_studies
     :width 750px
-form#new_involvement, form.edit_involvement
+form#new_involvement, form.edit_involvement, #show_involvement
   ol
     :list-style none
     :margin 0
@@ -137,3 +145,10 @@ form#new_involvement, form.edit_involvement
   .submit
     :clear both
     :text-align right
+  .patient_msg
+    :padding 0.5em
+    :margin 0.5em
+    :background-color = !flash_background_color
+    :border 1px solid #333
+    :border-color = !flash_border_color
+    :color = !flash_color

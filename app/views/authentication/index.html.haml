@@ -11,7 +11,7 @@
     $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
     // flash (messages)
     $("#flash .close").click(function(){$("#flash").fadeOut(300);});
-    flowplayer("player", "/media/flowplayer-3.2.2.swf", {clip: {autoPlay: false}});
+    flowplayer("player", "/media/flowplayer-3.2.2.swf", {clip: {autoPlay: false}, canvas: {backgroundColor: '#dddddd', backgroundGradient: 'medium'}});
     });
 %ul.tabs
   %li= link_to "About", "#about"
