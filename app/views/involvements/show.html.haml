@@ -1,5 +1,6 @@
 #show_involvement
-  .patient_msg= "This patient record is part of a study that is managed in a different system. To edit this information you will need to go to the source system" if @involvement.study.read_only?
+  -if @involvement.study.read_only?
+    .patient_msg= "This patient record is part of a study that is managed in a different system. To edit this information you will need to go to the source system" 
   .subject
     %h4 Subject
     %span.hint Case number OR all other fields required

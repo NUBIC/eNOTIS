@@ -14,7 +14,8 @@
     $('#study_information').hide(10); // need an arbitrary delay to have hide happen after pieChart
     });
 #study
-  .study_msg= "This study is managed by a different system. Please see #{@study.read_only_msg || "the source system"} to edit information in this study and any related records." if @study.read_only?
+  -if @study.read_only?
+    .study_msg= "This study is managed by a different system. Please see #{@study.read_only_msg || "the source system"} to edit information in this study and any related records." 
   .title
     = pretty_irb_number @study
     = pretty_status @study
