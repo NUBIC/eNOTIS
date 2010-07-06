@@ -4,7 +4,7 @@
   %script{:type => "text/javascript"}
     $(document).ready(function(){
     - if @involvements.empty?
-      flowplayer("player", "/media/flowplayer-3.2.2.swf", {clip: {autoPlay: false}});
+      flowplayer("player", "/media/flowplayer-3.2.2.swf", {clip: {autoPlay: false}, canvas: {backgroundColor: '#dddddd', backgroundGradient: 'medium'}});      
     - else
       = "pieChart('gender', 'Gender', #{@gender_stats.inspect});"
       = "pieChart('race', 'Race', #{@race_stats.inspect});"
