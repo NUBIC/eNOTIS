@@ -1,6 +1,6 @@
 require 'webservices/eirb'
 
-class ENRedisStudyPopulator
+class StudyPopulator
   @queue = :redis_study_populator
   Resque.before_perform_jobs_per_fork do
     Eirb.connect

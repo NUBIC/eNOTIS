@@ -140,7 +140,7 @@ class Role < ActiveRecord::Base
       user4
     else
       puts "Missing Netid = #{study} - #{netid} - #{project_role} - #{consent_role}"
-      Resque.enqueue(ENRedisIncompleteRole, study, netid, project_role, consent_role)
+      Resque.enqueue(IncompleteRoleProcessor, study, netid, project_role, consent_role)
       nil
     end
   end

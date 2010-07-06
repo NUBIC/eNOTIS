@@ -1,6 +1,6 @@
 require 'webservices/edw'
 
-class ENRedisAuthorizedPersonnelPopulator
+class AuthorizedPersonnelPopulator
   @queue = :redis_authorized_personnel_populator
   Resque.before_perform_jobs_per_fork do
     Edw.connect
@@ -18,11 +18,11 @@ class ENRedisAuthorizedPersonnelPopulator
     principal_investigators.delete_if{|x| x.values.uniq==[""]}.each do |principal_investigator|
       netid = principal_investigator[:netid]
       if netid==""
-        Resque.enqueue(EnRedisMissingNetid, irb_number, 'Principal Investigator', 'Obtaining')
+        Resque.enqueue(MissingNetidProcessor, irb_number, 'Principal Investigator', 'Obtaining')
       else
         pi_key = "principal_investigators:#{irb_number}"
         redis.sadd(pi_key,netid)
-        Resque.enqueue(ENRedisLdapper, irb_number, netid, 'Principal Investigator', 'Obtaining', 'pi')
+        Resque.enqueue(Ldapper, irb_number, netid, 'Principal Investigator', 'Obtaining', 'pi')
       end
     end
     
@@ -31,11 +31,11 @@ class ENRedisAuthorizedPersonnelPopulator
     co_investigators.delete_if{|x| x.values.uniq==[""]}.each do |coi|
       netid = coi[:netid]
       if netid==""
-        Resque.enqueue(EnRedisMissingNetid, irb_number, 'Co-Investigator', 'Obtaining')
+        Resque.enqueue(MissingNetidProcessor, irb_number, 'Co-Investigator', 'Obtaining')
       else
         co_investigator_key = "co_investigators:#{irb_number}"
         redis.sadd(co_investigator_key,netid)
-        Resque.enqueue(ENRedisLdapper, irb_number, netid, 'Co-Investigator', 'Obtaining', 'coi')
+        Resque.enqueue(Ldapper, irb_number, netid, 'Co-Investigator', 'Obtaining', 'coi')
       end
     end
     
@@ -51,12 +51,12 @@ class ENRedisAuthorizedPersonnelPopulator
       
       # If someone doesnt have a netid... 
       if authorized_person[:netid].blank?   
-        Resque.enqueue(EnRedisMissingNetid, irb_number, 'Co-Investigator', 'Obtaining')
+        Resque.enqueue(MissingNetidProcessor, irb_number, 'Co-Investigator', 'Obtaining')
         puts "Missing NetID for #{irb_number} #{authorized_person[:project_role]}, #{authorized_person[:consent_role]}"
       else
         ap_key = "authorized_people:#{irb_number}"
         redis.sadd(ap_key,authorized_person[:netid])
-        Resque.enqueue(ENRedisLdapper, irb_number, authorized_person[:netid], authorized_person[:project_role], authorized_person[:consent_role], 'authorized_personnel')
+        Resque.enqueue(Ldapper, irb_number, authorized_person[:netid], authorized_person[:project_role], authorized_person[:consent_role], 'authorized_personnel')
       end
     end
     end_time = Time.now

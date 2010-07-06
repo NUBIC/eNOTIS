@@ -1,5 +1,5 @@
 require 'webservices/eirb'
-class ENRedisBogusNetidPopulator
+class BogusNetidProcessor
   @queue = :redis_bogus_netid
   Resque.before_perform_jobs_per_fork do
     Eirb.connect
@@ -51,7 +51,7 @@ class ENRedisBogusNetidPopulator
         not_in_ldap(eirb_user, source, redis, irb_number, project_role, consent_role)
       end
     else
-      Resque.enqueue(ENRedisMissingNetid, netid, irb_number, project_role, consent_role ,source)
+      Resque.enqueue(MissingNetidProcessor, netid, irb_number, project_role, consent_role ,source)
     end
   end
   
@@ -93,7 +93,7 @@ class ENRedisBogusNetidPopulator
     end
     redis.srem(key,old_netid)
     redis.sadd(key,new_netid)
-    Resque.enqueue(ENRedisLdapper, irb_number, new_netid, project_role, consent_role, source, true)
+    Resque.enqueue(Ldapper, irb_number, new_netid, project_role, consent_role, source, true)
   end
     
   def self.not_in_ldap(eirb_user, source, redis, irb_number, project_role, consent_role )

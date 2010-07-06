@@ -1,4 +1,4 @@
-class ENRedisLdapper
+class Ldapper
   @queue = :redis_ldapper
 
   def self.perform(irb_number, netid, project_role, consent_role, source, redo_netid=nil)
@@ -25,7 +25,7 @@ class ENRedisLdapper
           redis.hset(user_key,var.gsub("@",""),user.instance_variable_get(var))
         end
       else
-        Resque.enqueue(ENRedisBogusNetidPopulator, netid, irb_number, project_role, consent_role ,source)
+        Resque.enqueue(BogusNetidProcessor, netid, irb_number, project_role, consent_role ,source)
       end
     end
     if source == "authorized_personnel"

@@ -19,8 +19,8 @@ namespace :eirb do
       irb_numbers.each do |numbers|
         irb_number = numbers[:irb_number]
         puts "Priming queues for #{irb_number}"
-        Resque.enqueue(ENRedisStudyPopulator, irb_number, true)
-        Resque.enqueue(ENRedisAuthorizedPersonnelPopulator, irb_number)
+        Resque.enqueue(StudyPopulator, irb_number, true)
+        Resque.enqueue(AuthorizedPersonnelPopulator, irb_number)
       end
     end
     
@@ -34,7 +34,7 @@ namespace :eirb do
       irb_numbers.each do |numbers|
         irb_number = numbers[:irb_number]
         puts "Priming queues for #{irb_number}"
-        Resque.enqueue(ENRedisStudyPopulator, irb_number, true)
+        Resque.enqueue(StudyPopulator, irb_number, true)
       end
       config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
       redis  = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
@@ -47,7 +47,7 @@ namespace :eirb do
       puts "#{Time.now}: Finished "
       irb_numbers.each do |numbers|
         irb_number = numbers[:irb_number]
-        Resque.enqueue(ENRedisAuthorizedPersonnelPopulator, irb_number)
+        Resque.enqueue(AuthorizedPersonnelPopulator, irb_number)
       end
     end
   end
