@@ -18,21 +18,24 @@
     %span.hint Gender, ethnicity, race required for NIH reporting
     %ol
       %li
-        Gender: 
-        = @involvement.gender
+        Gender:
+        %span.gender.bold
+          = @involvement.gender
       %li
         Ethnicity:
-        = @involvement.ethnicity
+        %span.ethnicity.bold
+          = @involvement.ethnicity
       %li
         Race:
-        = @involvement.race
+        %span.race.bold
+          = @involvement.race
   .accrual
     %h4 Accrual
     %span.hint Clinical Events (consent, completed, withdrawn)
     Events:
     %ul
       - @involvement.involvement_events.each do |inv|
-        %li
+        %li.event.bold
           = inv.event
           &mdash;
           = inv.occurred_on
