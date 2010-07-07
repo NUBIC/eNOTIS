@@ -43,12 +43,9 @@ namespace :edw do
     task :enqueue => :environment do
       config   = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
       redis    = Redis::Namespace.new('eNOTIS:subject', :redis => Redis.new(config))
-      subject_keys = redis.keys "*:*:0"
+      subject_keys = redis.keys "*:*:*"
       subject_keys.each do |subject|
-        Resque.enqueue(EnRedisNotisImport,subject)
-        # irb_number  = subject.delete(:irb_number).try(:strip)
-        # patient_id  = subject.delete(:patient_id).try(:strip)
-        # subject_key = "#{irb_number}:#{patient_id}:0"
+        Resque.enqueue(SubjectInvolvementPopulator,subject)
       end
     end
     desc "Nuke"

@@ -11,12 +11,13 @@ class Involvement < ActiveRecord::Base
   # Constants
   # These correspond to the fields in the database for storing race
   RACE_ATTRIBUTES = {
-    :race_is_american_indian_or_alaska_native => "American Indian/Alaska Native",
-    :race_is_asian => "Asian",
-    :race_is_black_or_african_american => "Black/African American",
+    :race_is_american_indian_or_alaska_native          => "American Indian/Alaska Native",
+    :race_is_asian                                     => "Asian",
+    :race_is_black_or_african_american                 => "Black/African American",
     :race_is_native_hawaiian_or_other_pacific_islander => "Native Hawaiian/Other Pacific Islander",
-    :race_is_white => "White",
-    :race_is_unknown_or_not_reported => "Unknown or Not Reported"}.freeze
+    :race_is_white                                     => "White",
+    :race_is_unknown_or_not_reported                   => "Unknown or Not Reported"
+  }.freeze
 
   acts_as_reportable
 	
@@ -39,7 +40,7 @@ class Involvement < ActiveRecord::Base
   validates_presence_of :gender, :ethnicity
   # Custom validator for race
   validate do |inv|
-    logger.debug "CALLING THE VAILDATOR"
+    logger.debug "CALLING THE VALIDATOR"
     checked=false
     RACE_ATTRIBUTES.each_key do |k|
       t = inv.send(k)
