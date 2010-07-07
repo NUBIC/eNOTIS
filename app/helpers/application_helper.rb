@@ -92,29 +92,29 @@ module ApplicationHelper
 
   def mrn_and_type_helper(subject)
     unless subject.mrn.blank?
-      "<span class='mrn'>#{subject.mrn}<span class='mrn_type'> (#{subject.mrn_type}) </span>"
+      "<span class='mrn bold'>#{subject.mrn}<span class='mrn_type'> (#{subject.mrn_type}) </span>"
     else
-      "<span class='mrn'> Not entered/Unknown </span>"
+      "<span class='mrn bold'> Not entered/Unknown </span>"
     end
   end
 
   def case_number_helper(case_number)
     unless case_number.blank?
-      "<span class='case_number'>#{case_number}</span>" 
+      "<span class='case_number bold'>#{case_number}</span>" 
     else
-      "<span class='case_number'> None Given </span>"
+      "<span class='case_number bold'> None Given </span>"
     end
   end
 
   def subject_name_helper(subject, last_name_first=true)
     unless subject.first_name.blank? and subject.last_name.blank?
       if last_name_first
-        "<span class='last_name'>#{subject.last_name}</span>, <span class='first_name'>#{subject.first_name}</span> <span class='middle_name'>#{subject.middle_name}</span>"
+        "<span class='last_name bold'>#{subject.last_name}</span>, <span class='first_name bold'>#{subject.first_name}</span> <span class='middle_name bold'>#{subject.middle_name}</span>"
       else
-        "<span class='first_name'>#{subject.first_name}</span> <span class='middle_name'>#{subject.middle_name}</span> <span class='last_name'>#{subject.last_name}</span>"    
+        "<span class='first_name bold'>#{subject.first_name}</span> <span class='middle_name bold'>#{subject.middle_name}</span> <span class='last_name bold'>#{subject.last_name}</span>"    
       end
     else
-      "<span class='last_name'> Not entered/Unknown </span>"
+      "<span class='last_name bold'> Not entered/Unknown </span>"
     end
   end
 end
