@@ -2,20 +2,19 @@ require 'webservices/eirb'
 
 class StudyPopulator
   @queue = :redis_study_populator
+
   Resque.before_perform_jobs_per_fork do
     Eirb.connect
   end
   
   def self.perform(irb_number, force=false)
-    config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-    redis = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
     start_time = Time.now
     study_key  = "study:#{irb_number}"
     if force==true
       puts "Forced importing #{study_key}"
-      import(irb_number,redis,study_key)
+      import(irb_number,REDIS,study_key)
     else
-      import(irb_number,redis,study_key) unless redis.exists(study_key)
+      import(irb_number,REDIS,study_key) unless REDIS.exists(study_key)
     end
     end_time = Time.now
     puts "#{end_time}: Imported #{study_key} in #{end_time - start_time} seconds"

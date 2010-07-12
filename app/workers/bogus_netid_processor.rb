@@ -23,8 +23,6 @@ class BogusNetidProcessor
     end
 
     # Setup Redis
-    config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-    redis  = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
 
     # First, access the User information from the Review Board
     # If the user is not in the review board, then dump it in another resque queue
@@ -44,11 +42,11 @@ class BogusNetidProcessor
       end
       
       if found_by_email
-        email_lookup(found_by_email, redis, irb_number, netid, project_role, consent_role, email, source)
+        email_lookup(found_by_email, REDIS, irb_number, netid, project_role, consent_role, email, source)
       elsif found_by_name
-        name_lookup(found_by_name, redis, irb_number, netid, project_role, consent_role, email, source)
+        name_lookup(found_by_name, REDIS, irb_number, netid, project_role, consent_role, email, source)
       else
-        not_in_ldap(eirb_user, source, redis, irb_number, project_role, consent_role)
+        not_in_ldap(eirb_user, source, REDIS, irb_number, project_role, consent_role)
       end
     else
       Resque.enqueue(MissingNetidProcessor, netid, irb_number, project_role, consent_role ,source)

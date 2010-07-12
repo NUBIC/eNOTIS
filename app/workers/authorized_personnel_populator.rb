@@ -9,10 +9,6 @@ class AuthorizedPersonnelPopulator
   def self.perform(irb_number, force=false)
     start_time = Time.now
     
-    # Setup Redis
-    config     = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-    redis      = Redis::Namespace.new('eNOTIS:role', :redis => Redis.new(config))
-    
     # Find Principal Investigators
     principal_investigators = Edw.find_principal_investigators({:irb_number => irb_number})
     principal_investigators.delete_if{|x| x.values.uniq==[""]}.each do |principal_investigator|
@@ -20,8 +16,8 @@ class AuthorizedPersonnelPopulator
       if netid==""
         Resque.enqueue(MissingNetidProcessor, irb_number, 'Principal Investigator', 'Obtaining')
       else
-        pi_key = "principal_investigators:#{irb_number}"
-        redis.sadd(pi_key,netid)
+        pi_key = "role:principal_investigators:#{irb_number}"
+        REDIS.sadd(pi_key,netid)
         Resque.enqueue(Ldapper, irb_number, netid, 'Principal Investigator', 'Obtaining', 'pi')
       end
     end
@@ -33,8 +29,8 @@ class AuthorizedPersonnelPopulator
       if netid==""
         Resque.enqueue(MissingNetidProcessor, irb_number, 'Co-Investigator', 'Obtaining')
       else
-        co_investigator_key = "co_investigators:#{irb_number}"
-        redis.sadd(co_investigator_key,netid)
+        co_investigator_key = "role:co_investigators:#{irb_number}"
+        REDIS.sadd(co_investigator_key,netid)
         Resque.enqueue(Ldapper, irb_number, netid, 'Co-Investigator', 'Obtaining', 'coi')
       end
     end
@@ -54,8 +50,8 @@ class AuthorizedPersonnelPopulator
         Resque.enqueue(MissingNetidProcessor, irb_number, 'Co-Investigator', 'Obtaining')
         puts "Missing NetID for #{irb_number} #{authorized_person[:project_role]}, #{authorized_person[:consent_role]}"
       else
-        ap_key = "authorized_people:#{irb_number}"
-        redis.sadd(ap_key,authorized_person[:netid])
+        ap_key = "role:authorized_people:#{irb_number}"
+        REDIS.sadd(ap_key,authorized_person[:netid])
         Resque.enqueue(Ldapper, irb_number, authorized_person[:netid], authorized_person[:project_role], authorized_person[:consent_role], 'authorized_personnel')
       end
     end

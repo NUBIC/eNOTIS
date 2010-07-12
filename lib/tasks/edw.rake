@@ -2,60 +2,68 @@ require 'webservices/edw'
 require 'will_paginate/array'
 require 'ruby_debug'
 namespace :edw do
-  namespace :redis do
-    desc "Import EDW Data into Redis"
-    task :notis_import => :environment do
-      Edw.connect
-      puts "Starting to pull info from EDW"
-      res      = Edw.find_subject_import_from_NOTIS
-      puts "Finished pulling results from EDW"
-      PER_PAGE = 100
-      REGEX    = /^STU.*/
-      config   = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-      redis    = Redis::Namespace.new('eNOTIS:subject', :redis => Redis.new(config))
-      1.upto(res.paginate(:per_page=>PER_PAGE).total_pages) do |page|
-        puts "\nPage #{page}\n"
-        subject_array = res.paginate(:page => page, :per_page => PER_PAGE).select{|study| study[:irb_number] =~ REGEX}
-        unless subject_array.blank?
-          subject_array.each do |subject|
-            begin
-              irb_number  = subject.delete(:irb_number).try(:strip)
-              patient_id  = subject.delete(:patient_id).try(:strip)
-              subject_key = "#{irb_number}:#{patient_id}:0"
-              if redis.exists(subject_key)
-                puts "we have more than one subject for study on #{subject_key}"
-                nextincr    = subject_key.split(":")[2].to_i + 1
-                subject_key = "#{irb_number}:#{patient_id}:#{nextincr}"
+  namespace :subjects do
+    namespace :redis do
+      
+      desc "Import EDW Data into Redis"
+      task :import => :environment do
+        puts "#{Time.now}: Starting edw:subjects:redis:import"
+        Edw.connect
+        res      = Edw.find_subject_import_from_NOTIS
+        PER_PAGE = 100
+        REGEX    = /^STU.*/
+        date     = Time.new.strftime("%Y:%m:%d-%I:%M:%p")
+        date_key = "import:subject_extras:daily:#{date}"
+        1.upto(res.paginate(:per_page=>PER_PAGE).total_pages) do |page|
+          subject_array = res.paginate(:page => page, :per_page => PER_PAGE).select{|study| study[:irb_number] =~ REGEX}
+          unless subject_array.blank?
+            subject_array.each do |subject|
+              subject_hash = HashWithIndifferentAccess.new(subject)
+              begin
+                irb_number  = subject_hash.delete(:irb_number).try(:strip)
+                patient_id  = subject_hash.delete(:patient_id).try(:strip)
+                subject_key = "subject:#{irb_number}:#{patient_id}:0"
+                if REDIS.exists(subject_key)
+                  unless HashWithIndifferentAccess.new(REDIS.hgetall(subject_key)).diff(subject_hash).blank?
+                    old_subject_key = subject_key
+                    nextincr        = subject_key.split(":")[3].to_i + 1
+                    subject_key     = "subject:#{irb_number}:#{patient_id}:#{nextincr}"
+                    REDIS.sadd(date_key, subject_key)
+                  end
+                end
+                subject_hash.each do |k,v|
+                  REDIS.hset(subject_key,k,v)
+                end
+              rescue Exception => e
+                puts "Exception Caught: #{e.to_s}"
               end
-              puts "Importing subject for key #{subject_key}"
-              subject.each do |k,v|
-                redis.hset(subject_key,k,v)
-              end
-            rescue Exception => e
-              puts "Exception Caught: #{e.to_s}"
             end
-          end        
+          end
         end
+        puts "#{Time.now}: Finishing edw:subjects:redis:import"
       end
-    end
-    
-    desc "Resque Import"
-    task :enqueue => :environment do
-      config   = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-      redis    = Redis::Namespace.new('eNOTIS:subject', :redis => Redis.new(config))
-      subject_keys = redis.keys "*:*:*"
-      subject_keys.each do |subject|
-        Resque.enqueue(SubjectInvolvementPopulator,subject)
+
+      desc "Nuke"
+      task :nuke => :environment do
+        puts "#{Time.now}: Starting edw:subjects:redis:nuke"
+        keys   = REDIS.keys 'subject:*'
+        keys.each do |subject|
+          REDIS.del subject
+        end
+        puts "#{Time.now}: Finishing edw:subjects:redis:nuke"
       end
-    end
-    desc "Nuke"
-    task :nuke => :environment do
-      config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-      redis  = Redis::Namespace.new('eNOTIS:subject', :redis => Redis.new(config))
-      keys   = redis.keys '*'
-      keys.each do |key|
-        redis.del key
+
+      desc "Resque Import"
+      task :enqueue => :environment do
+        puts "#{Time.now}: Starting edw:subjects:redis:enqueue"
+        keys   = REDIS.keys "subject:*:*:*"
+        keys.each do |subject|
+          Resque.enqueue(SubjectInvolvementPopulator,subject)
+        end
+        puts "#{Time.now}: Finishing edw:subjects:redis:enqueue"
       end
+
     end
+
   end
 end

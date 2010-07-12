@@ -1,7 +1,5 @@
 class SubjectInvolvementPopulator
   @queue = :subject_involvement_populator
-  CONFIG = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-  REDIS  = Redis::Namespace.new('eNOTIS', :redis => Redis.new(CONFIG))
 
   def self.perform(redis_key)
     irb_number, patient_id = redis_key.split(":")[0..1]

@@ -5,35 +5,33 @@ namespace :redis do
   task :default => [:"redis:users", :"redis:studies", :'redis:roles']
   desc "Updates Users from Redis Cache"
   task :users => :environment do
-    puts "Users..."
+    puts "#{Time.now}: Users..."
     User.update_from_redis
-    puts "  Users Complete"
+    puts "#{Time.now}: Users complete"
   end
-  desc 'Updates studies from Redis Cache'
+  desc 'Updates studies from redis'
   task :studies => :environment do
-    puts "Studies..."
+    puts "#{Time.now}: Studies..."
     Study.update_from_redis
-    puts "  Studies complete"
+    puts "#{Time.now}: Studies complete"
   end
   
-  desc 'Updates roles'
+  desc 'Updates roles from redis'
   task :roles => :environment do
-    puts "Roles..."
+    puts "#{Time.now}: Roles..."
     Role.update_from_redis
-    puts "  Roles"
+    puts "#{Time.now}: Roles complete"
   end
   
   desc "Construct Missing Person Report"
   task :missing_person_report => :environment  do
-    config     = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-    redis      = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
-    keys = redis.keys 'role:missing_person:*'
+    keys = REDIS.keys 'role:missing_person:*'
     FasterCSV.open("tmp/report.csv", "w") do |csv|
       csv << ["IRB Number", "Netid", "First Name", "Last Name", "Email Address", "Title", "Project Role", "Consent Role"]
       keys.each do |key|
         study,netid    = key.split(':')[2],key.split(':')[3]
-        missing_study  = HashWithIndifferentAccess.new(redis.hgetall key)
-        missing_person = HashWithIndifferentAccess.new(redis.hgetall "missing_person:#{netid}")
+        missing_study  = HashWithIndifferentAccess.new(REDIS.hgetall key)
+        missing_person = HashWithIndifferentAccess.new(REDIS.hgetall "missing_person:#{netid}")
         csv << [study, netid, missing_person[:first_name], missing_person[:last_name], missing_person[:email], missing_person[:title], missing_study[:project_role], missing_study[:consent_role]]
       end
     end
@@ -41,21 +39,19 @@ namespace :redis do
   
   desc "Fix Aliases"
   task :fix_aliases => :environment do
-    config     = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-    redis      = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
-    aliases = redis.hgetall('role:user_aliases')
+    aliases = REDIS.hgetall('role:user_aliases')
     aliases.each do |old_netid,new_netid|
       user = User.find(:first, :conditions=>{:netid=>new_netid})
       irb_numbers = user.roles.map{|role| role.study}.map{|study| study.irb_number}
       puts "Old Netid: #{old_netid} - NETID = #{user.netid} : on studies #{irb_numbers.join(", ")}"
     end
   end
+  
   namespace :roles do
     desc "clear"
     task :clear=>:environment do
-      redis = Redis.new
-      keys =  redis.keys 'eNOTIS:role:*'
-      keys.each{|k| redis.del k}
+      keys  = REDIS.keys 'role:*'
+      keys.each{|k| REDIS.del k}
     end
   end
 

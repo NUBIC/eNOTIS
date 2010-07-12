@@ -1,0 +1,53 @@
+# .---------------- minute (0 - 59) 
+# |   .------------- hour (0 - 23)
+# |   |   .---------- day of month (1 - 31)
+# |   |   |   .------- month (1 - 12) OR jan,feb,mar,apr ... 
+# |   |   |   |  .----- day of week (0 - 7) (Sunday=0 or 7)  OR sun,mon,tue,wed,thu,fri,sat 
+# |   |   |   |  |
+# *   *   *   *  *  command to be executed
+# Entry Description Equivalent To
+# @yearly   Run once a year     0 0 1 1 *
+# @annually (same as @yearly)   0 0 1 1 *
+# @monthly  Run once a month    0 0 1 * *
+# @weekly   Run once a week     0 0 * * 0
+# @daily    Run once a day      0 0 * * *
+# @midnight (same as @daily)    0 0 * * *
+# @hourly   Run once an hour    0 * * * *
+
+# http://en.wikipedia.org/wiki/Cron
+edw_study_ap_pull:
+  cron: "0 0 * * *"
+  class: RakeWorker
+  queue: rake_worker
+  args: "eirb:redis_import:nightly"
+  description: "Import studies/personnel from eIRB/EDW to redis"
+import_studies_personnel:
+  cron: "0 2 * * *"
+  class: RakeWorker
+  queue: rake_worker
+  args: "redis"
+  description: "Import studies/personnel into postgres"
+clear_subjects:
+  cron: "0 3 * * *"
+  class: RakeWorker
+  queue: rake_worker
+  args: "edw:subjects:redis:nuke"
+  description: "Remove subjects and involvements from Redis"
+fetch_subjects:
+  cron: "10 3 * * *"
+  class: RakeWorker
+  queue: rake_worker
+  args: "edw:subjects:redis:import"
+  description: "Fetch subjects from EDW into Redis"
+import_subjects:
+  cron: "40 3 * * *"
+  class: RakeWorker
+  queue: rake_worker
+  args: "edw:subjects:redis:enqueue"
+  description: "Import Subjects and Involvements from Redis via Resque"
+nightly_failure_check:
+  cron: "0 6 * * *"
+  class: RakeWorker
+  queue: rake_worker
+  args: "redis:resque:failure_notify"
+  description: "Check if their are more than 100 failures"

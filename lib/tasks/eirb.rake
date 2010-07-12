@@ -1,3 +1,5 @@
+require 'webservices/eirb'
+
 namespace :eirb do
   desc "Sanity test for eIRB connection - Checks against test server"
   task :sanity_test do
@@ -7,18 +9,15 @@ namespace :eirb do
   namespace :redis_import do
     desc "Full Import"
     task :full => :environment do
-      require 'webservices/eirb'
       Eirb.connect
-      config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-      redis  = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
-      keys   = redis.keys '*'
-      keys.each{|k| redis.del k}
-      puts "#{Time.now}: Getting status for all studies "
+      date     = Time.new.strftime("%Y:%m:%d-%I:%M:%p")
+      date_key = "import:study:full:#{date}"
+      keys     = REDIS.keys '*'
+      keys.each{|k| REDIS.del k}
       irb_numbers = Eirb.find_study_export
-      puts "#{Time.now}: finishing getting status "
       irb_numbers.each do |numbers|
         irb_number = numbers[:irb_number]
-        puts "Priming queues for #{irb_number}"
+        REDIS.sadd(date_key, irb_number)
         Resque.enqueue(StudyPopulator, irb_number, true)
         Resque.enqueue(AuthorizedPersonnelPopulator, irb_number)
       end
@@ -26,29 +25,34 @@ namespace :eirb do
     
     desc "Nightly 1 day import"
     task :nightly => :environment do
-      require 'webservices/eirb'
       Eirb.connect
-      puts "#{Time.now}: getting status "
+      puts "#{Time.now}: Starting eirb:redis:import_nightly"
+      puts "#{Time.now}: Starting eirb:redis:import_nightly - nightly updated studies"
       irb_numbers = Eirb.find_recent_studies
-      puts "#{Time.now}: finishing getting status "
+      date        = Time.new.strftime("%Y:%m:%d-%I:%M:%p")
+      date_key    = "import:study:daily:#{date}"
       irb_numbers.each do |numbers|
         irb_number = numbers[:irb_number]
-        puts "Priming queues for #{irb_number}"
+        REDIS.sadd(date_key, irb_number)
         Resque.enqueue(StudyPopulator, irb_number, true)
       end
-      config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-      redis  = Redis::Namespace.new('eNOTIS', :redis => Redis.new(config))
-      %w(role missing_person).each do |cat|
-        keys = redis.keys "#{cat}:*"
-        keys.each{|k| redis.del k}
+      puts "#{Time.now}: Finishing eirb:redis:import_nightly - nightly updated studies"
+      %w(role missing_person ).each do |cat|
+        keys = REDIS.keys "#{cat}:*"
+        keys.each{|k| REDIS.del k}
       end
-      puts "#{Time.now}: Getting All Study IRB Numbers "
+      
+      REDIS.del 'phantom_studies'
+      REDIS.del 'missing:study'
+      
+      puts "#{Time.now}: Starting eirb:redis:import_nightly - all personnel fetch"
       irb_numbers = Eirb.find_study_export
-      puts "#{Time.now}: Finished "
       irb_numbers.each do |numbers|
         irb_number = numbers[:irb_number]
         Resque.enqueue(AuthorizedPersonnelPopulator, irb_number)
       end
+      puts "#{Time.now}: Finishing eirb:redis:import_nightly - all personnel fetch"
+      puts "#{Time.now}: Finishing eirb:redis:import_nightly"
     end
   end
 end

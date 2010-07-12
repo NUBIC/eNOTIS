@@ -16,12 +16,10 @@ class Study < ActiveRecord::Base
   validates_format_of :irb_number, :with => /^STU.+/, :message => "invalid study number format"
     
   def self.update_from_redis
-    config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-    redis = Redis::Namespace.new('eNOTIS:study',:redis => Redis.new(config))
-    study_list = redis.keys '*'
+    study_list = REDIS.keys 'study:*'
     study_list.reject! {|x| x =~ /funding_source/ }
     study_list.each do |redis_study|
-      study  = HashWithIndifferentAccess.new(redis.hgetall(redis_study))
+      study  = HashWithIndifferentAccess.new(REDIS.hgetall(redis_study))
       params = {
         :accrual_goal                      => study[:accrual_goal], 
         :approved_date                     => Chronic.parse(study[:approved_date]),
@@ -56,9 +54,9 @@ class Study < ActiveRecord::Base
 
       # Processing funding sources for the study (a child/parent relationship with the study)
       local_study.funding_sources.clear # TODO: Another alternative is to use the "unique" id from the eIRB query for each funding source to avoid having to drop all and re-add. -BLC
-      funding_srcs = redis.keys "#{params[:irb_number]}:funding_source:*"
+      funding_srcs = REDIS.keys "study:#{params[:irb_number]}:funding_source:*"
       funding_srcs.each do |redis_study_src|
-        src =  HashWithIndifferentAccess.new(redis.hgetall(redis_study_src))
+        src =  HashWithIndifferentAccess.new(REDIS.hgetall(redis_study_src))
         src_params = {:name => src[:funding_source_name],
           :code => src[:funding_source_id], 
           :category => src[:funding_source_category_name]}

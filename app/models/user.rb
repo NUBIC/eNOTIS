@@ -37,11 +37,9 @@ class User < ActiveRecord::Base
   
   # Fills in data in postgres from the redis copy of the ldap server
   def self.update_from_redis
-    config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/redis.yml'))[Rails.env]
-    redis = Redis::Namespace.new('eNOTIS:user',:redis => Redis.new(config))
-    users = redis.keys '*'
+    users = REDIS.keys 'user:*'
     users.each do |redis_user|
-      user_hash = HashWithIndifferentAccess.new(redis.hgetall(redis_user))
+      user_hash = HashWithIndifferentAccess.new(REDIS.hgetall(redis_user))
       ar_user = self.find_by_netid(redis_user.downcase) || self.new
       ar_user.email       = user_hash[:email]
       ar_user.first_name  = user_hash[:first_name]

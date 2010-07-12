@@ -1,4 +1,4 @@
-set daemon 30
+set daemon 10
 set httpd port 2812 address localhost
         allow localhost
         allow admin:monit
@@ -7,28 +7,47 @@ set mailserver ns.northwestern.edu
 set mail-format { from: enotissupport@northwestern.edu }
 set alert sam-granieri-jr@northwestern.edu
 
-set logfile /Users/samgranieri/Sites/enotis/log/monit.log
+set logfile /Users/samgranieri/Sites/northwestern/enotis/log/monit.log
 
-check process resque_study1 with pidfile "/Users/samgranieri/Sites/enotis/tmp/pids/resque_study1.pid"
-  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; JOBS_PER_FORK=25 QUEUE=redis_study_populator nohup rake resque:work > log/resque_study.log 2>&1 &  echo $! > tmp/pids/resque_study1.pid'"
-  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis && kill -s QUIT `cat tmp/pids/resque_study1.pid` && rm -f tmp/pids/resque_study1.pid; exit 0;'"
+check system localhost
+   if loadavg (1min) > 8 then alert
+   if loadavg (5min) > 4 then alert
+   if memory usage > 75% then alert
+   if cpu usage (user) > 70% for 8 cycles then alert
+   if cpu usage (system) > 30% for 8 cycles then alert
+   if cpu usage (wait) > 20% for 8 cycles then alert
+
+check process resque_scheduler 
+  with pidfile /Users/samgranieri/Sites/northwestern/enotis/tmp/pids/resque_scheduler.pid
+  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/northwestern/enotis; RAILS_ENV=development nohup /Users/samgranieri/.rvm/gems/ree-1.8.7-2010.02/bin/rake resque:scheduler  > log/resque_scheduler.log 2>&1 &  echo $! > tmp/pids/resque_scheduler.pid'"
+  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/northwestern/enotis && kill -s QUIT `cat tmp/pids/resque_scheduler.pid` && rm -f tmp/pids/resque_scheduler.pid; exit 0;'"
+  if 3 restarts within 5 cycles then alert  
+  group resque_workers
+
+check process resque_study1 
+  with pidfile /Users/samgranieri/Sites/northwestern/enotis/tmp/pids/resque_study1.pid
+  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/northwestern/enotis; JOBS_PER_FORK=25 QUEUE=redis_study_populator nohup /Users/samgranieri/.rvm/gems/ree-1.8.7-2010.02/bin/rake resque:work > log/resque_study.log 2>&1 &  echo $! > tmp/pids/resque_study1.pid'"
+  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/northwestern/enotis && kill -s QUIT `cat tmp/pids/resque_study1.pid` && rm -f tmp/pids/resque_study1.pid; exit 0;'"
   if 3 restarts within 5 cycles then alert  
   group resque_workers
   
-check process resque_study2 with pidfile "/Users/samgranieri/Sites/enotis/tmp/pids/resque_study2.pid"
-  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; JOBS_PER_FORK=25 QUEUE=redis_study_populator nohup rake resque:work > log/resque_study.log 2>&1 &  echo $! > tmp/pids/resque_study2.pid'"
-  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis && kill -s QUIT `cat tmp/pids/resque_study2.pid` && rm -f tmp/pids/resque_study2.pid; exit 0;'"
+check process resque_study2 
+  with pidfile /Users/samgranieri/Sites/northwestern/enotis/tmp/pids/resque_study2.pid
+  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/northwestern/enotis; JOBS_PER_FORK=25 QUEUE=redis_study_populator nohup /Users/samgranieri/.rvm/gems/ree-1.8.7-2010.02/bin/rake resque:work > log/resque_study.log 2>&1 &  echo $! > tmp/pids/resque_study2.pid'"
+  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/northwestern/enotis && kill -s QUIT `cat tmp/pids/resque_study2.pid` && rm -f tmp/pids/resque_study2.pid; exit 0;'"
   if 5 restarts within 5 cycles then alert
   group resque_workers
   
-check process resque_enotis_people_populator1 with pidfile "/Users/samgranieri/Sites/enotis/tmp/pids/resque_enotis_people_populator1.pid"
-  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; JOBS_PER_FORK=25 QUEUE=redis_authorized_personnel_populator,redis_ldapper,redis_bogus_netid nohup rake resque:work  > log/resque_people.log 2>&1 &  echo $! > tmp/pids/resque_enotis_people_populator1.pid'"
-  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; kill -s QUIT `cat tmp/pids/resque_enotis_people_populator1.pid` && rm -f tmp/pids/resque_enotis_people_populator1.pid; exit 0;'"
+check process resque_enotis_people_populator1 
+  with pidfile /Users/samgranieri/Sites/northwestern/enotis/tmp/pids/resque_enotis_people_populator1.pid
+  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/northwestern/enotis; JOBS_PER_FORK=25 QUEUE=rake_worker,redis_authorized_personnel_populator,redis_ldapper,redis_bogus_netid,subject_involvement_populator nohup /Users/samgranieri/.rvm/gems/ree-1.8.7-2010.02/bin/rake resque:work  > log/resque_people.log 2>&1 &  echo $! > tmp/pids/resque_enotis_people_populator1.pid'"
+  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/northwestern/enotis; kill -s QUIT `cat tmp/pids/resque_enotis_people_populator1.pid` && rm -f tmp/pids/resque_enotis_people_populator1.pid; exit 0;'"
   if 5 restarts within 5 cycles then alert  
   group resque_workers
   
-check process resque_enotis_people_populator2 with pidfile "/Users/samgranieri/Sites/enotis/tmp/pids/resque_enotis_people_populator2.pid"
-  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; JOBS_PER_FORK=25 QUEUE=redis_authorized_personnel_populator,redis_ldapper,redis_bogus_netid nohup rake resque:work  > log/resque_people.log 2>&1 &  echo $! > tmp/pids/resque_enotis_people_populator2.pid'"
-  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/enotis; kill -s QUIT `cat tmp/pids/resque_enotis_people_populator2.pid` && rm -f tmp/pids/resque_enotis_people_populator2.pid; exit 0;'"
+check process resque_enotis_people_populator2 
+  with pidfile /Users/samgranieri/Sites/northwestern/enotis/tmp/pids/resque_enotis_people_populator2.pid
+  start program = "/bin/sh -c 'cd /Users/samgranieri/Sites/northwestern/enotis; JOBS_PER_FORK=25 QUEUE=redis_authorized_personnel_populator,redis_ldapper,redis_bogus_netid,subject_involvement_populator nohup /Users/samgranieri/.rvm/gems/ree-1.8.7-2010.02/bin/rake resque:work  > log/resque_people.log 2>&1 &  echo $! > tmp/pids/resque_enotis_people_populator2.pid'"
+  stop program = "/bin/sh -c 'cd /Users/samgranieri/Sites/northwestern/enotis; kill -s QUIT `cat tmp/pids/resque_enotis_people_populator2.pid` && rm -f tmp/pids/resque_enotis_people_populator2.pid; exit 0;'"
   if 5 restarts within 5 cycles then alert
   group resque_workers

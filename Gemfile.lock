@@ -1,63 +1,63 @@
 --- 
 dependencies: 
-  faker: 
-    group: 
-    - :default
-    version: ">= 0.3.1"
-  acts_as_reportable: 
-    group: 
-    - :default
-    version: ">= 0"
-  compass: 
-    group: 
-    - :default
-    version: ~> 0.8.0
-  soap4r: 
-    group: 
-    - :default
-    version: ">= 1.5.8"
   fastercsv: 
     group: 
     - :default
     version: ">= 1.5.0"
+  soap4r: 
+    group: 
+    - :default
+    version: ">= 1.5.8"
+  compass: 
+    group: 
+    - :default
+    version: ~> 0.8.0
+  acts_as_reportable: 
+    group: 
+    - :default
+    version: ">= 0"
+  faker: 
+    group: 
+    - :default
+    version: ">= 0.3.1"
   ruby-debug: 
     group: 
     - :development
     version: ">= 0.10.3"
+  pg: 
+    group: 
+    - :default
+    version: ~> 0.9.0
+  rails: 
+    group: 
+    - :default
+    version: = 2.3.8
+  fastthread: 
+    group: 
+    - :default
+    version: ">= 0"
+  libxml-ruby: 
+    group: 
+    - :default
+    version: ">= 1.1.3"
   view_trail: 
     group: 
     - :default
     version: ">= 0.3.1"
     require: 
     - view_trail
-  libxml-ruby: 
-    group: 
-    - :default
-    version: ">= 1.1.3"
-  fastthread: 
-    group: 
-    - :default
-    version: ">= 0"
-  rails: 
-    group: 
-    - :default
-    version: = 2.3.8
-  pg: 
-    group: 
-    - :default
-    version: ~> 0.9.0
-  haml: 
-    group: 
-    - :default
-    version: ~> 2.2.0
-  ruport: 
-    group: 
-    - :default
-    version: ">= 0"
   searchlogic: 
     group: 
     - :default
     version: ">= 0"
+  ruport: 
+    group: 
+    - :default
+    version: ">= 0"
+  haml: 
+    group: 
+    - :default
+    version: ~> 2.2.0
   couchrest: 
     group: 
     - :default
@@ -74,18 +74,18 @@ dependencies:
     - :cucumber
     - :hudson
     version: ~> 1.2.0
-  bcsec: 
-    group: 
-    - :default
-    version: ">= 0"
-  wirble: 
-    group: 
-    - :development
-    version: ">= 0"
   resque: 
     group: 
     - :default
     version: ~> 1.9.0
+  wirble: 
+    group: 
+    - :development
+    version: ">= 0"
+  bcsec: 
+    group: 
+    - :default
+    version: ">= 0"
   database_cleaner: 
     group: 
     - :test
@@ -98,27 +98,27 @@ dependencies:
     - :cucumber
     - :hudson
     version: ~> 0.6.0
-  hirb: 
+  awesome_print: 
     group: 
     - :development
     version: ">= 0"
-  will_paginate: 
-    group: 
-    - :default
-    version: ~> 2.3
-  factory_girl: 
-    group: 
-    - :default
-    version: ">= 1.2.1"
-  paperclip: 
-    group: 
-    - :default
-    version: = 2.1.2
   bcdatabase: 
     group: 
     - :default
     version: ">= 0"
-  awesome_print: 
+  paperclip: 
+    group: 
+    - :default
+    version: = 2.1.2
+  factory_girl: 
+    group: 
+    - :default
+    version: ">= 1.2.1"
+  will_paginate: 
+    group: 
+    - :default
+    version: ~> 2.3
+  hirb: 
     group: 
     - :development
     version: ">= 0"
@@ -132,50 +132,54 @@ dependencies:
     group: 
     - :hudson
     version: ~> 1.6.0
-  rdiscount: 
+  resque-scheduler: 
     group: 
     - :default
-    version: ">= 0"
-  aasm: 
-    group: 
-    - :default
-    version: ">= 0"
-  chronic: 
-    group: 
-    - :default
-    version: ">= 0.2.3"
+    version: ~> 1.9.0
   paper_trail: 
     group: 
     - :default
     version: ">= 1.1.1"
-  resque-jobs-per-fork: 
+  chronic: 
     group: 
     - :default
-    version: ~> 0.3.0
+    version: ">= 0.2.3"
+  aasm: 
+    group: 
+    - :default
+    version: ">= 0"
+  rdiscount: 
+    group: 
+    - :default
+    version: ">= 0"
   redis: 
     group: 
     - :default
     version: ~> 2.0.0
+  resque-jobs-per-fork: 
+    group: 
+    - :default
+    version: ~> 0.3.0
   ruby-debug-base: 
     group: 
     - :development
     version: ">= 0.10.3"
-  activemessaging: 
-    group: 
-    - :default
-    version: ">= 0"
-  capistrano: 
-    group: 
-    - :default
-    version: ~> 2.5.0
-  stomp: 
-    group: 
-    - :default
-    version: ">= 1.1"
   populator: 
     group: 
     - :default
     version: ">= 0.2.5"
+  stomp: 
+    group: 
+    - :default
+    version: ">= 1.1"
+  capistrano: 
+    group: 
+    - :default
+    version: ~> 2.5.0
+  activemessaging: 
+    group: 
+    - :default
+    version: ">= 0"
 specs: 
 - rake: 
     version: 0.8.7
@@ -306,15 +310,19 @@ specs:
 - redis: 
     version: 2.0.3
 - redis-namespace: 
-    version: 0.5.1
+    version: 0.7.0
 - sinatra: 
     version: "1.0"
 - vegas: 
     version: 0.1.7
 - resque: 
-    version: 1.9.5
+    version: 1.9.7
 - resque-jobs-per-fork: 
     version: 0.3.2
+- rufus-scheduler: 
+    version: 2.0.6
+- resque-scheduler: 
+    version: 1.9.3
 - rspec: 
     version: 1.2.9
 - rspec-rails: 
@@ -337,7 +345,7 @@ specs:
     version: 2.3.14
 - wirble: 
     version: 0.1.3
-hash: f0b67b76e54307fbb2e32fd6325e9dd56b9de8b6
+hash: e9d93b8ac3cfedee16177032ee3f3329432cc75f
 sources: 
 - Rubygems: 
     uri: http://download.bioinformatics.northwestern.edu/gems/

@@ -78,6 +78,7 @@ namespace :resque do
   end
   desc "Restart workers"
   task :restart, :roles => :app do
+    run "cd #{shared_path}/pids && #{sudo} kill -QUIT `cat resque_#{worker_type}_#{num}.pid`" rescue nil
     %w(people study).each do |worker_type|
       1.upto(2) do |num|
         run "cd #{shared_path}/pids && #{sudo} kill -QUIT `cat resque_#{worker_type}_#{num}.pid`"
