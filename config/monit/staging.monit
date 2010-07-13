@@ -1,3 +1,10 @@
+check process resque_scheduler 
+  with pidfile /var/www/apps/enotis/current/tmp/pids/resque_scheduler.pid
+  start program = "/bin/sh -c 'cd /var/www/apps/enotis/current; RAILS_ENV=staging nohup /opt/ruby-enterprise/bin/rake resque:scheduler  > log/resque_scheduler.log 2>&1 &  echo $! > tmp/pids/resque_scheduler.pid'" as uid sjg304 and gid users
+  stop program = "/bin/sh -c 'cd /var/www/apps/enotis/current && kill -s QUIT `cat tmp/pids/resque_scheduler.pid` && rm -f tmp/pids/resque_scheduler.pid; exit 0;'"
+  if 3 restarts within 5 cycles then alert  
+  group resque_workers
+
 check process resque_study_1 with pidfile "/var/www/apps/enotis/current/tmp/pids/resque_study_1.pid"
   start program = "/bin/sh -c 'cd /var/www/apps/enotis/current; RAILS_ENV=staging JOBS_PER_FORK=25 QUEUE=redis_study_populator  nohup /opt/ruby-enterprise/bin/rake resque:work > log/resque_study.log 2>&1 & echo $! > tmp/pids/resque_study_1.pid'" as uid sjg304 and gid users
   stop program = "/bin/sh -c 'cd /var/www/apps/enotis/current && kill -s QUIT `cat tmp/pids/resque_study_1.pid` && rm -f tmp/pids/resque_study_1.pid; exit 0;'"
@@ -8,25 +15,15 @@ check process resque_study_2 with pidfile "/var/www/apps/enotis/current/tmp/pids
   start program = "/bin/sh -c 'cd /var/www/apps/enotis/current; RAILS_ENV=staging JOBS_PER_FORK=25 QUEUE=redis_study_populator  nohup /opt/ruby-enterprise/bin/rake resque:work > log/resque_study.log 2>&1 & echo $! > tmp/pids/resque_study_2.pid'" as uid sjg304 and gid users
   stop program = "/bin/sh -c 'cd /var/www/apps/enotis/current && kill -s QUIT `cat tmp/pids/resque_study_2.pid` && rm -f tmp/pids/resque_study_2.pid; exit 0;'"
   group resque_workers
-
-check process resque_study_3 with pidfile "/var/www/apps/enotis/current/tmp/pids/resque_study_3.pid"
-  start program = "/bin/sh -c 'cd /var/www/apps/enotis/current; RAILS_ENV=staging JOBS_PER_FORK=25 QUEUE=redis_study_populator  nohup /opt/ruby-enterprise/bin/rake resque:work > log/resque_study.log 2>&1 & echo $! > tmp/pids/resque_study_3.pid'" as uid sjg304 and gid users
-  stop program = "/bin/sh -c 'cd /var/www/apps/enotis/current && kill -s QUIT `cat tmp/pids/resque_study_3.pid` && rm -f tmp/pids/resque_study_3.pid; exit 0;'"
-  group resque_workers
     
 check process resque_people_1 with pidfile "/var/www/apps/enotis/current/tmp/pids/resque_people_1.pid"
-  start program = "/bin/sh -c 'cd /var/www/apps/enotis/current; RAILS_ENV=staging JOBS_PER_FORK=25 QUEUE=redis_authorized_personnel_populator,redis_ldapper,redis_bogus_netid  nohup /opt/ruby-enterprise/bin/rake resque:work > log/resque_people.log 2>&1 & echo $! > tmp/pids/resque_people_1.pid'" as uid sjg304 and gid users
+  start program = "/bin/sh -c 'cd /var/www/apps/enotis/current; RAILS_ENV=staging JOBS_PER_FORK=25 QUEUE=rake_worker,redis_authorized_personnel_populator,redis_ldapper,redis_bogus_netid,subject_involvement_populator  nohup /opt/ruby-enterprise/bin/rake resque:work > log/resque_people.log 2>&1 & echo $! > tmp/pids/resque_people_1.pid'" as uid sjg304 and gid users
   stop program = "/bin/sh -c 'cd /var/www/apps/enotis/current && kill -s QUIT `cat tmp/pids/resque_people_1.pid` && rm -f tmp/pids/resque_people_1.pid; exit 0;'"
   group resque_workers
 
 check process resque_people_2 with pidfile "/var/www/apps/enotis/current/tmp/pids/resque_people_2.pid"
-  start program = "/bin/sh -c 'cd /var/www/apps/enotis/current; RAILS_ENV=staging JOBS_PER_FORK=25 QUEUE=redis_authorized_personnel_populator,redis_ldapper,redis_bogus_netid  nohup /opt/ruby-enterprise/bin/rake resque:work > log/resque_people.log 2>&1 & echo $! > tmp/pids/resque_people_2.pid'" as uid sjg304 and gid users
+  start program = "/bin/sh -c 'cd /var/www/apps/enotis/current; RAILS_ENV=staging JOBS_PER_FORK=25 QUEUE=redis_authorized_personnel_populator,redis_ldapper,redis_bogus_netid,subject_involvement_populator  nohup /opt/ruby-enterprise/bin/rake resque:work > log/resque_people.log 2>&1 & echo $! > tmp/pids/resque_people_2.pid'" as uid sjg304 and gid users
   stop program = "/bin/sh -c 'cd /var/www/apps/enotis/current && kill -s QUIT `cat tmp/pids/resque_people_2.pid` && rm -f tmp/pids/resque_people_2.pid; exit 0;'"
-  group resque_workers
-
-check process resque_people_3 with pidfile "/var/www/apps/enotis/current/tmp/pids/resque_people_3.pid"
-  start program = "/bin/sh -c 'cd /var/www/apps/enotis/current; RAILS_ENV=staging JOBS_PER_FORK=25 QUEUE=redis_authorized_personnel_populator,redis_ldapper,redis_bogus_netid  nohup /opt/ruby-enterprise/bin/rake resque:work > log/resque_people.log 2>&1 & echo $! > tmp/pids/resque_people_3.pid'" as uid sjg304 and gid users
-  stop program = "/bin/sh -c 'cd /var/www/apps/enotis/current && kill -s QUIT `cat tmp/pids/resque_people_3.pid` && rm -f tmp/pids/resque_people_3.pid; exit 0;'"
   group resque_workers
   
 check host q-staging.nubic.northwestern.edu with address q-staging.nubic.northwestern.edu
