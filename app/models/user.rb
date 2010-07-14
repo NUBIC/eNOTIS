@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
     users = REDIS.keys 'user:*'
     users.each do |redis_user|
       user_hash = HashWithIndifferentAccess.new(REDIS.hgetall(redis_user))
-      ar_user = self.find_by_netid(redis_user.downcase) || self.new
+      ar_user = self.find_by_netid(redis_user.split(":")[1].downcase) || self.new
       ar_user.email       = user_hash[:email]
       ar_user.first_name  = user_hash[:first_name]
       ar_user.last_name   = user_hash[:last_name]

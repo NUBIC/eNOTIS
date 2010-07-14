@@ -24,8 +24,8 @@ JOBS_PER_FORK=25 COUNT=3 QUEUES=redis_authorized_personnel_populator,redis_ldapp
 For the Nightly Work
 rake eirb:redis_import:nightly
 QUEUES=* rake resque:work   
-JOBS_PER_FORK=25 COUNT=3 QUEUES=redis_study_populator rake environment resque:workers
-JOBS_PER_FORK=25 COUNT=3 QUEUES=redis_bogus_netid,redis_ldapper,redis_authorized_personnel_populator rake environment resque:workers
+JOBS_PER_FORK=25 COUNT=2 QUEUES=redis_study_populator rake environment resque:workers
+JOBS_PER_FORK=25 COUNT=2 QUEUES=redis_bogus_netid,redis_ldapper,redis_authorized_personnel_populator rake environment resque:workers
 
 For checking on resque progress on staging setup an SSH tunnel on staging and change the resque and redis config locally
 ssh -f -N -L 6380:q-staging.nubic.northwestern.edu:6379 sjg304@enotis-staging.nubic.northwestern.edu

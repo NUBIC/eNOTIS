@@ -2,8 +2,8 @@ class SubjectInvolvementPopulator
   @queue = :subject_involvement_populator
 
   def self.perform(redis_key)
-    irb_number, patient_id = redis_key.split(":")[0..1]
-    subject_hash = HashWithIndifferentAccess.new(REDIS.hgetall("subject:#{redis_key}"))
+    irb_number, patient_id = redis_key.split(":")[1..2]
+    subject_hash = HashWithIndifferentAccess.new(REDIS.hgetall(redis_key))
     params       = HashWithIndifferentAccess.new({
       :subject  => {
         :address_line1 => subject_hash[:address_1],

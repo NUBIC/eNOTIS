@@ -19,9 +19,7 @@ class Role < ActiveRecord::Base
   def self.update_from_redis
     ActiveRecord::Base.connection.execute('truncate roles')
     ActiveRecord::Base.connection.execute('alter sequence authorized_people_id_seq restart with 1')
-    # config = HashWithIndifferentAccess.new(YAML.load_file(Rails.root + 'config/REDIS.yml'))[Rails.env]
-    # REDIS  = Redis::Namespace.new('eNOTIS',:REDIS => Redis.new(config))
-    
+        
     puts "Principal Investigators"
     project_role = "Principal Investigator"
     consent_role = "Obtaining"
@@ -134,9 +132,9 @@ class Role < ActiveRecord::Base
       user
     elsif(user2=User.find_by_netid(netid.downcase))
       user2
-    elsif(user3 = User.find_by_netid(redis.hget("user_aliases", netid)))
+    elsif(user3 = User.find_by_netid(redis.hget("role:user_aliases", netid)))
       user3
-    elsif(user4 = User.find_by_netid(redis.hget("user_aliases", netid.downcase)))
+    elsif(user4 = User.find_by_netid(redis.hget("role:user_aliases", netid.downcase)))
       user4
     else
       puts "Missing Netid = #{study} - #{netid} - #{project_role} - #{consent_role}"

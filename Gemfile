@@ -37,6 +37,10 @@ gem 'will_paginate', '~> 2.3'
 gem "bcdatabase"#, '<1.0.0'
 gem "bcsec"
 
+# EMPI
+gem "savon", "0.7.9"
+gem "empi"
+
 # irb magic
 group :development do
   gem "wirble"
