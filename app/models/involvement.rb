@@ -184,12 +184,13 @@ class Involvement < ActiveRecord::Base
   def subject_name_or_case_number
     subject.name.blank? ? case_number : subject.name
   end
-
-  def after_save
-    unless self.study.read_only?
-      Resque.enqueue(EmpiWorker, self.id) 
-    end
-  end
+  
+  # TODO: learn how to mock this for testing
+  # def after_save
+  #   unless self.study.read_only?
+  #     Resque.enqueue(EmpiWorker, self.id) 
+  #   end
+  # end
   
   private
   def set_race_terms(rterms)
