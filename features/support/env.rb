@@ -58,6 +58,7 @@ Bundler.require RAILS_ENV
 require 'spec/stubs/cucumber'
 
 require "spec/mocks"
+require 'resque_spec'
 
 Before do
   $rspec_mocks ||= Spec::Mocks::Space.new

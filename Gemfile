@@ -37,7 +37,7 @@ gem 'will_paginate', '~> 2.3'
 gem "bcdatabase"#, '<1.0.0'
 gem "bcsec"
 
-# # EMPI
+# EMPI
 gem "savon", "0.7.9"
 gem "empi"
 
@@ -56,11 +56,10 @@ gem 'resque-scheduler', '~> 1.9.0'
 
 # Testing
 group :test, :cucumber, :hudson do
-  gem 'resque_spec'
-  
   gem 'cucumber', "0.8.3"
   gem "rspec", "~> 1.2.0"
   gem "rspec-rails", "~> 1.2.0"
+  gem "resque_spec", :require => nil
   gem "cucumber-rails", "~> 0.3.0"
   gem "webrat", "~> 0.6.0"
   gem "database_cleaner", "~> 0.0"

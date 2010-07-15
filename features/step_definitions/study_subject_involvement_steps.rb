@@ -35,11 +35,21 @@ Then /^I add edit subject "([^\"]*)" "([^\"]*)" with 2nd event "([^\"]*)" on "([
   click_button "Save"
 end
 
-
-Given /^the study "([^\"]*)" has the following subjects$/ do |id, table|
+Given /^the readonly study "([^\"]*)" has the following subjects$/ do |id, table|
+  ResqueSpec.reset!
   study = Study.find_by_irb_number(id)
   table.hashes.each do |hash|
-    Factory(:involvement, :study => study, :subject => Factory(:fake_subject, hash))
+    _involvement = Factory(:involvement, :study => study, :subject => Factory(:fake_subject, hash))
+    EmpiWorker.should_not have_queued(_involvement.id)
+  end
+end
+
+Given /^the study "([^\"]*)" has the following subjects$/ do |id, table|
+  ResqueSpec.reset!
+  study = Study.find_by_irb_number(id)
+  table.hashes.each do |hash|
+    _involvement = Factory(:involvement, :study => study, :subject => Factory(:fake_subject, hash))
+    EmpiWorker.should have_queued(_involvement.id)
   end
 end
 

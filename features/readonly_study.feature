@@ -8,7 +8,7 @@ Feature: View Readonly Studies
     Given I log in as "pi" with password "secret" on study "STU009248"
 
   Scenario: A study I manage is read-only because it's data is imported from NOTIS
-    Given the study "STU009248" has the following subjects
+    Given the readonly study "STU009248" has the following subjects
     | first_name | last_name |
     | Bob        | Jones     |
     | Nerd       | Poindexter|
