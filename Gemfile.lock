@@ -58,6 +58,10 @@ dependencies:
     group: 
     - :default
     version: ">= 0"
+  empi: 
+    group: 
+    - :default
+    version: ">= 0"
   couchrest: 
     group: 
     - :default
@@ -166,6 +170,10 @@ dependencies:
     group: 
     - :default
     version: ~> 2.0.0
+  savon: 
+    group: 
+    - :default
+    version: = 0.7.9
   ruby-debug-base: 
     group: 
     - :development
@@ -269,6 +277,8 @@ specs:
     version: 1.6.0
 - couchrest: 
     version: "0.37"
+- crack: 
+    version: 0.1.8
 - diff-lcs: 
     version: 1.1.2
 - trollop: 
@@ -283,6 +293,8 @@ specs:
     version: 0.3.2
 - database_cleaner: 
     version: 0.5.2
+- empi: 
+    version: 0.2.0
 - factory_girl: 
     version: 1.3.1
 - faker: 
@@ -337,6 +349,8 @@ specs:
     version: 0.10.3
 - ruby-debug: 
     version: 0.10.3
+- savon: 
+    version: 0.7.9
 - searchlogic: 
     version: 2.4.19
 - soap4r: 
@@ -351,7 +365,7 @@ specs:
     version: 2.3.14
 - wirble: 
     version: 0.1.3
-hash: d427280e0083b272f4accd2fd24f35ae3b0f9bd1
+hash: 0019303b7d5bb0567de3a7743894cec4b600de8c
 sources: 
 - Rubygems: 
     uri: http://download.bioinformatics.northwestern.edu/gems/
