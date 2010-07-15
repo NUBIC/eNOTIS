@@ -186,11 +186,11 @@ class Involvement < ActiveRecord::Base
   end
   
   # TODO: learn how to mock this for testing
-  # def after_save
-  #   unless self.study.read_only?
-  #     Resque.enqueue(EmpiWorker, self.id) 
-  #   end
-  # end
+  def after_save
+    unless self.study.read_only?
+      Resque.enqueue(EmpiWorker, self.id) 
+    end
+  end
   
   private
   def set_race_terms(rterms)

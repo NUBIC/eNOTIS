@@ -1,8 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Involvement do
+  before do
+    ResqueSpec.reset!
+  end
   before(:each) do
     @involvement = Factory(:involvement)
+    EmpiWorker.should have_queued(@involvement.id)
   end
 
   it "should create a new instance given valid attributes" do
