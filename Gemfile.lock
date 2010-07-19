@@ -4,14 +4,14 @@ dependencies:
     group: 
     - :default
     version: ">= 1.5.0"
-  soap4r: 
-    group: 
-    - :default
-    version: ">= 1.5.8"
   compass: 
     group: 
     - :default
     version: ~> 0.8.0
+  soap4r: 
+    group: 
+    - :default
+    version: ">= 1.5.8"
   acts_as_reportable: 
     group: 
     - :default
@@ -24,22 +24,22 @@ dependencies:
     group: 
     - :development
     version: ">= 0.10.3"
-  pg: 
-    group: 
-    - :default
-    version: ~> 0.9.0
-  rails: 
-    group: 
-    - :default
-    version: = 2.3.8
-  fastthread: 
-    group: 
-    - :default
-    version: ">= 0"
   libxml-ruby: 
     group: 
     - :default
     version: ">= 1.1.3"
+  fastthread: 
+    group: 
+    - :default
+    version: ">= 0"
+  rails: 
+    group: 
+    - :default
+    version: = 2.3.8
+  pg: 
+    group: 
+    - :default
+    version: ~> 0.9.0
   view_trail: 
     group: 
     - :default
@@ -164,6 +164,10 @@ dependencies:
     group: 
     - :default
     version: ">= 0"
+  daemons: 
+    group: 
+    - :default
+    version: ">= 0"
   cucumber: 
     group: 
     - :test
@@ -190,18 +194,18 @@ dependencies:
     group: 
     - :default
     version: ">= 0.2.5"
-  stomp: 
-    group: 
-    - :default
-    version: ">= 1.1"
-  capistrano: 
-    group: 
-    - :default
-    version: ~> 2.5.0
   activemessaging: 
     group: 
     - :default
     version: ">= 0"
+  capistrano: 
+    group: 
+    - :default
+    version: ~> 2.5.0
+  stomp: 
+    group: 
+    - :default
+    version: ">= 1.1"
 specs: 
 - rake: 
     version: 0.8.7
@@ -242,7 +246,7 @@ specs:
 - awesome_print: 
     version: 0.2.1
 - highline: 
-    version: 1.5.2
+    version: 1.6.1
 - bcdatabase: 
     version: 1.0.1
 - composite_primary_keys: 
@@ -299,6 +303,8 @@ specs:
     version: 0.8.3
 - cucumber-rails: 
     version: 0.3.2
+- daemons: 
+    version: 1.1.0
 - database_cleaner: 
     version: 0.5.2
 - empi: 
@@ -375,7 +381,7 @@ specs:
     version: 2.3.14
 - wirble: 
     version: 0.1.3
-hash: 4b958f65641f440e0ee4af3cafd279711231266b
+hash: 352aa66da8f097b127a521e4dbb975510d0fc9c0
 sources: 
 - Rubygems: 
     uri: http://download.bioinformatics.northwestern.edu/gems/
