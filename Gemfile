@@ -12,6 +12,7 @@ gem "soap4r", '>=1.5.8'
 gem "libxml-ruby", '>=1.1.3'
 gem "stomp", '>=1.1'
 gem "activemessaging"
+gem "daemons"
 gem "aasm"
 gem "couchrest"
 

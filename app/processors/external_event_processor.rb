@@ -4,6 +4,7 @@ class ExternalEventProcessor < ApplicationProcessor
   subscribes_to :external_event
   
   @message=''
+
   def on_message(message)
     logger.debug "ExternalEventProcessor received: " + message
     @message = message
