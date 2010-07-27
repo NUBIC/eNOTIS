@@ -61,7 +61,7 @@
             %br
             %dtr{:title => InvolvementEvent.define_event("Completed")} Completed
           -unless @study.read_only?
-            %th Edit
+            %th{:colspan=>2} Actions
           -else
             %th View
       %tbody
@@ -81,6 +81,7 @@
               = event_info(involvement, "withdrawn")
             -unless @study.read_only?
               %td= link_to "Edit", edit_involvement_path(involvement), :rel => "#involvement"
+              %td= link_to 'Destroy', involvement_path(involvement), :confirm => %Q{Are you sure you want to remove "#{involvement.subject.name}" from #{involvement.study.irb_number}?}, :method => :delete
             -else
               %td= link_to "View", involvement_path(involvement), :rel => "#involvement"
   #involvement.overlay

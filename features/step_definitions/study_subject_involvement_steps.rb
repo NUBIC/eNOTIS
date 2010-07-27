@@ -13,6 +13,20 @@ When /^I add a subject "([^\"]*)" "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do 
   click_button "Save"
 end
 
+When /^I add a subject "([^"]*)" "([^"]*)" with "([^"]*)" on "([^"]*)" and MRN "([^\"]*)"$/ do |first, last, event, date, mrn|
+  When %(I follow "Add")
+  fill_in "First name", :with => first
+  fill_in "Last name", :with => last
+  fill_in "Birth date", :with => "8/7/65"
+  fill_in "MRN", :with => mrn
+  select "Female", :from => "Gender"
+  select "Not Hispanic or Latino", :from => "Ethnicity"
+  check "Asian"#, :from => "Race"
+  select event, :from => "Activity"
+  fill_in "On", :with => date
+  click_button "Save"
+end
+
 When /^I add a case number "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do |case_number, event, date|
   When %(I follow "Add")
   fill_in "Case number", :with => case_number
@@ -33,6 +47,13 @@ Then /^I add edit subject "([^\"]*)" "([^\"]*)" with 2nd event "([^\"]*)" on "([
   select event, :from => :involvement_involvement_events_attributes_1_event
   fill_in :involvement_involvement_events_attributes_1_occurred_on, :with => date
   click_button "Save"
+end
+
+Then /^I remove subject "([^"]*)" "([^"]*)"$/ do |first, last|
+  sid = Subject.find_by_first_name_and_last_name(first, last).id
+  within ".subject_#{sid}" do |scope|
+    scope.click_link "Destroy"
+  end
 end
 
 Given /^the readonly study "([^\"]*)" has the following subjects$/ do |id, table|

@@ -35,3 +35,21 @@ Feature: Manage subjects
   
   Scenario: A coordinator can remove a subject by deleting all involvement events
     # Then subject "90210f" should not be involved with study "STU001248"
+
+  Scenario: A coordinator can remove a subject with one involvement from a study
+    When I add a subject "Jack" "Daripur" with "Consented" on "2009-07-01" and MRN "90210f"
+    Then I should be on the study page for id "STU001248"
+    And I should see "Created"
+    And subject "Jack" "Daripur" should have 1 events on study "STU001248"
+    Then I remove subject "Jack" "Daripur"
+    And subject "90210f" should not be involved with study "STU001248"
+
+  Scenario: A coordinator can remove a subject with two involvements from a study
+    When I add a subject "Jack" "Daripur" with "Consented" on "2009-07-01"
+    Then I should be on the study page for id "STU001248"
+    And I should see "Created"
+    And subject "Jack" "Daripur" should have 1 events on study "STU001248"
+    And I add edit subject "Jack" "Daripur" with 2nd event "Completed" on "2010-04-19"
+    And subject "Jack" "Daripur" should have 2 events on study "STU001248"
+    Then I remove subject "Jack" "Daripur"
+    And subject "90210f" should not be involved with study "STU001248"
