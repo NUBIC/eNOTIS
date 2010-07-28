@@ -64,9 +64,9 @@ gem 'resque-scheduler', '~> 1.9.0'
 # Testing
 group :test, :cucumber, :hudson do
   gem 'cucumber', "0.8.3"
-  gem "rspec", "~> 1.2.0"
-  gem "rspec-rails", "~> 1.2.0"
-  gem "resque_spec", :require => nil
+  gem "rspec", "~> 1.3.0"
+  gem "rspec-rails", "~> 1.3.0"
+  gem "resque_spec", '~> 0.2.0', :require => nil
   gem "cucumber-rails", "~> 0.3.0"
   gem "webrat", "~> 0.6.0"
   gem "database_cleaner", "~> 0.0"
