@@ -81,13 +81,15 @@ class InvolvementsController < ApplicationController
   # The delete action should remove the involvement and any child involvement events. 
   # The subject model should not be deleted.
   # This feature will leave subjects without involvements. 
-  # The mrn uniqueness constraint needs to be relaxed so that subjects with the same mrn can be re-added to a trial.
   def destroy
     @involvement = Involvement.find(params[:id])
     @study       = @involvement.study
     @involvement.involvement_events.destroy_all
-    @involvement.destroy
-    redirect_to @study
+    @involvement.destroy    
+    respond_to do |format|
+      format.html {redirect_to @study}
+      format.js {render :layout => false}
+    end
   end
   
   def upload

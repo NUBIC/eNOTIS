@@ -1,60 +1,52 @@
 --- 
 dependencies: 
-  faker: 
-    group: 
-    - :default
-    version: ">= 0.3.1"
-  acts_as_reportable: 
-    group: 
-    - :default
-    version: ">= 0"
-  soap4r: 
-    group: 
-    - :default
-    version: ">= 1.5.8"
-  compass: 
-    group: 
-    - :default
-    version: ~> 0.8.0
   fastercsv: 
     group: 
     - :default
     version: ">= 1.5.0"
+  compass: 
+    group: 
+    - :default
+    version: ~> 0.8.0
+  soap4r: 
+    group: 
+    - :default
+    version: ">= 1.5.8"
+  acts_as_reportable: 
+    group: 
+    - :default
+    version: ">= 0"
+  faker: 
+    group: 
+    - :default
+    version: ">= 0.3.1"
   ruby-debug: 
     group: 
     - :development
     version: ">= 0.10.3"
+  libxml-ruby: 
+    group: 
+    - :default
+    version: ">= 1.1.3"
+  fastthread: 
+    group: 
+    - :default
+    version: ">= 0"
+  rails: 
+    group: 
+    - :default
+    version: = 2.3.8
+  pg: 
+    group: 
+    - :default
+    version: ~> 0.9.0
   view_trail: 
     group: 
     - :default
     version: ">= 0.3.1"
     require: 
     - view_trail
-  pg: 
-    group: 
-    - :default
-    version: ~> 0.9.0
-  rails: 
-    group: 
-    - :default
-    version: = 2.3.8
-  fastthread: 
-    group: 
-    - :default
-    version: ">= 0"
-  libxml-ruby: 
-    group: 
-    - :default
-    version: ">= 1.1.3"
   SystemTimer: 
-    group: 
-    - :default
-    version: ">= 0"
-  haml: 
-    group: 
-    - :default
-    version: ~> 2.2.0
-  ruport: 
     group: 
     - :default
     version: ">= 0"
@@ -62,6 +54,14 @@ dependencies:
     group: 
     - :default
     version: ">= 0"
+  ruport: 
+    group: 
+    - :default
+    version: ">= 0"
+  haml: 
+    group: 
+    - :default
+    version: ~> 2.2.0
   empi: 
     group: 
     - :default
@@ -88,13 +88,13 @@ dependencies:
     group: 
     - :default
     version: ~> 1.9.0
-  bcsec: 
-    group: 
-    - :default
-    version: ">= 0"
   wirble: 
     group: 
     - :development
+    version: ">= 0"
+  bcsec: 
+    group: 
+    - :default
     version: ">= 0"
   rspec-rails: 
     group: 
@@ -114,27 +114,27 @@ dependencies:
     - :cucumber
     - :hudson
     version: ~> 0.6.0
-  hirb: 
+  awesome_print: 
     group: 
     - :development
     version: ">= 0"
-  will_paginate: 
-    group: 
-    - :default
-    version: ~> 2.3
-  factory_girl: 
-    group: 
-    - :default
-    version: ">= 1.2.1"
-  paperclip: 
-    group: 
-    - :default
-    version: = 2.1.2
   bcdatabase: 
     group: 
     - :default
     version: ">= 0"
-  awesome_print: 
+  paperclip: 
+    group: 
+    - :default
+    version: = 2.1.2
+  factory_girl: 
+    group: 
+    - :default
+    version: ">= 1.2.1"
+  will_paginate: 
+    group: 
+    - :default
+    version: ~> 2.3
+  hirb: 
     group: 
     - :development
     version: ">= 0"
@@ -152,7 +152,15 @@ dependencies:
     group: 
     - :default
     version: ~> 1.9.0
-  daemons: 
+  paper_trail: 
+    group: 
+    - :default
+    version: ">= 1.1.1"
+  chronic: 
+    group: 
+    - :default
+    version: ">= 0.2.3"
+  aasm: 
     group: 
     - :default
     version: ">= 0"
@@ -160,18 +168,10 @@ dependencies:
     group: 
     - :default
     version: ">= 0"
-  aasm: 
+  daemons: 
     group: 
     - :default
     version: ">= 0"
-  chronic: 
-    group: 
-    - :default
-    version: ">= 0.2.3"
-  paper_trail: 
-    group: 
-    - :default
-    version: ">= 1.1.1"
   cucumber: 
     group: 
     - :test
@@ -194,22 +194,22 @@ dependencies:
     group: 
     - :development
     version: ">= 0.10.3"
-  stomp: 
-    group: 
-    - :default
-    version: ">= 1.1"
-  capistrano: 
-    group: 
-    - :default
-    version: ~> 2.5.0
-  activemessaging: 
-    group: 
-    - :default
-    version: ">= 0"
   populator: 
     group: 
     - :default
     version: ">= 0.2.5"
+  activemessaging: 
+    group: 
+    - :default
+    version: ">= 0"
+  capistrano: 
+    group: 
+    - :default
+    version: ~> 2.5.0
+  stomp: 
+    group: 
+    - :default
+    version: ">= 1.1"
 specs: 
 - rake: 
     version: 0.8.7
@@ -385,7 +385,7 @@ specs:
     version: 2.3.14
 - wirble: 
     version: 0.1.3
-hash: 4ba6d7ed8d6dd59a9c4d3fb910bfa649b46dbd7b
+hash: a839c40a1d9c75cdf84e94c945ced93c4f118aa0
 sources: 
 - Rubygems: 
     uri: http://download.bioinformatics.northwestern.edu/gems/

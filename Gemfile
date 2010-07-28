@@ -49,6 +49,11 @@ group :development do
   gem 'awesome_print'
 end
 
+# Debugging
+group :development do
+  gem 'ruby-debug'
+end
+
 # Resque
 gem 'SystemTimer'
 gem 'redis' , '~> 2.0.0'

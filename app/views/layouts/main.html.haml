@@ -4,8 +4,12 @@
   %head
     %title= "eNOTIS :: #{@title}"
     = stylesheet_link_tag "compiled/main"
-    = javascript_include_tag "jquery.tools.min.js", "jquery.dataTables.min", "jquery.corner",'jquery.url.params', "jquery.main", "jquery.periodicalupdater", :cache => "cache/main"
+    = javascript_include_tag "jquery.tools.min.js", 'jquery.ajaxlinks', "jquery.dataTables.min", "jquery.corner",'jquery.url.params', "jquery.main", "jquery.periodicalupdater", :cache => "cache/main"
     = auto_session_timeout_js(:frequency => 60) if logged_in?
+    - if protect_against_forgery?
+      %script{:type => "text/javascript"}
+        window._auth_token_name = "#{request_forgery_protection_token}";
+        window._auth_token = "#{form_authenticity_token}";
     = yield :head
   %body
     #container
