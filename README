@@ -42,6 +42,37 @@ eNOTIS depends on a few important gems:
   
 == Changes ==
 
+1.6.0
+
+* we're only jumping one version
+* upgrading to version 1.7 and properly tagging it
+* upgrading one more version of cucumber
+* Removing more unneeded stuff from the rspec upgrade
+* Locking eNOTIS into rspec 1.3 and locking resque-spec into 0.2
+* Ajaxified the deletion of subjects from studies. Now, any link that has a class of get, post, put, or delete will be automatically unobtrusively ajaxified. Also, forms can be ajaxified if they have class ajaxForm.
+* Removing Involvments from studies in a non-ajax way. References #2749
+* added google analytics tracking code
+* changing a note in the readme
+* active mq changes
+* added webservice to return a users study roles given a netid
+* Cucumber now passes with resque-spec installed
+* involvement unit tests pass
+* bringing empi and savon gem back into gemfile, and silencing a deprecation warning
+* locking cucumber to 0.8.3 for now
+* disabling empi part II
+* Learn how to use mocking for a server
+* initial work on empi and a fix to subject importing
+* cleaning up deployment script and fixing staging resque worker
+* More work on NOTIS import process
+* Preliminary work on importing NOTIS patients into eNOTIS. references #3067
+* ui tweak for read only involvment view
+* small UI tweak for read only study messages
+* added read only study feature to eNOTIS. closes #3212
+* Renamed resque workers to cut down on verbosity and to have their class names better describe their function
+* lighter background for videos
+* Upgrade to rails 2.3.8. closes #3219
+* Importing EDW subjects into redis, and truncating overly long project roles
+
 1.5.0
 
 * Study Tables have been converted from java+ruby to unobtrusive javascript. Closes #3164
