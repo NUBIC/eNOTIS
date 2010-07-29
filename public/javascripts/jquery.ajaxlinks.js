@@ -65,12 +65,14 @@ jQuery.fn.putWithAjax = function() {
 jQuery.fn.deleteWithAjax = function() {
   this.removeAttr('onclick');
   this.unbind('click', false);
-  this.click(function() {
-    if (confirm("Are you sure ?")) {
+  this.click(function(e) {
+    if (confirm("Are you sure?")) {
       $.delete_($(this).attr("href"), $(this).serialize(), null, "script");
       return false;
+    }else{
+      e.preventDefault();
     };
-  })
+  });
   return this;
 };
 
