@@ -43,17 +43,42 @@ $(document).ready(function() {
  
  // studies show
     // dataTable
-    $("#accrual .display").dataTable({"iDisplayLength": 30, "sPaginationType": "full_numbers", "oLanguage": {"sZeroRecords": "<p><strong>No subjects yet - click 'Add' or 'Import' to get started. Or watch our 4 minute introduction to eNOTIS.</strong></p><p><a style='display: block; width: 550px; height: 386px; margin: 0 auto;' id='player' href='/media/enotis-tutorial-a.mov'></a></p>"},"aoColumns": [null,null,null,null,null,null,null,{ "sType": "html" },{ "sType": "html" }]});
-    $("#accrual .display td:empty, #import .display td:empty").html("--");
-
-    // import overlay
-    $("a[rel=#import]").overlay({
-      onBeforeLoad: function(){ $("#import .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    });
+    $("#accrual .display").dataTable({"fnDrawCallback": activateRows, "iDisplayLength": 30, "sPaginationType": "full_numbers", "oLanguage": {"sZeroRecords": "<p><strong>No subjects yet - click 'Add' or 'Import' to get started. Or watch our 4 minute introduction to eNOTIS.</strong></p><p><a style='display: block; width: 550px; height: 386px; margin: 0 auto;' id='player' href='/media/enotis-tutorial-a.mov'></a></p>"},"aoColumns": [null,null,null,null,null,null,null,{ "sType": "html" },{ "sType": "html" }]});    
     
-    // involvement overlay
-    $("a[rel=#involvement]").overlay({
+    // redraw dashes for empty cells, activate other studies and view/edit overlays
+    function activateRows(){
+      $("#accrual .display td:empty, #import .display td:empty").html("--");
+      
+      // other studies overlay
+      $("a[rel=#other_studies]").overlay({
+        onBeforeLoad: function(){ $("#other_studies .wrap").load(this.getTrigger().attr("href"), "format=js", activateAccept) },
+        expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
+        onClose: function(){$("#other_studies .wrap").html("");}
+      });
+      
+      // involvement overlay
+      $("table.display a[rel=#involvement]").overlay({
+        onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+        expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
+        onLoad: function(){ $("#involvement input.date").datepicker({changeMonth: true, changeYear: true});
+          $("#involvement input.dob").datepicker({
+            showButtonPanel: true,
+            changeMonth: true,
+            changeYear: true,
+            onSelect: function(dateText, inst){ inst.stayOpen = true; },
+            onChangeMonthYear: function(year, month, inst) {
+              inst.currentMonth = inst.selectedMonth = inst.drawMonth = month - 1;
+              inst.currentYear = inst.selectedYear = inst.drawYear = year;
+              inst.currentDay = inst.selectedDay = inst.selectedDay;
+            },
+            yearRange: '-120:+0'
+          });
+        }
+      });
+    }
+
+    // add involvement overlay
+    $("#actions a[rel=#involvement]").overlay({
       onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
       onLoad: function(){ $("#involvement input.date").datepicker({changeMonth: true, changeYear: true});
@@ -71,9 +96,15 @@ $(document).ready(function() {
         });
       }
     });
+    
+    // import overlay
+    $("#actions a[rel=#import]").overlay({
+      onBeforeLoad: function(){ $("#import .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+    });
 
     // export overlay
-    $("a[rel=#export]").overlay({
+    $("#actions a[rel=#export]").overlay({
       onBeforeLoad: function(){ $("#export .wrap").load(this.getTrigger().attr("href"), "format=js"); },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
@@ -83,12 +114,6 @@ $(document).ready(function() {
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
     });
         
-    // other studies overlay
-    $("a[rel=#other_studies]").overlay({
-      onBeforeLoad: function(){ $("#other_studies .wrap").load(this.getTrigger().attr("href"), "format=js", activateAccept) },
-      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
-      onClose: function(){$("#other_studies .wrap").html("");}
-    });
     // bind an event onto the accept link that loads the other studies view into the same overlay
     function activateAccept(){
       $("#other_studies .wrap a.accept").click(function(e){
