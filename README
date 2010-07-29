@@ -42,6 +42,13 @@ eNOTIS depends on a few important gems:
   
 == Changes ==
 
+1.6.1
+
+* links and dashes for later pages on datatables. closes #3495
+* clicking delete and then cancel results in a page redirect to the involvements page. fix to prevent following link if cancel is pressed. closes #3497
+* show other studies view from other studies flag. closes #3496
+* updating readme to reflect changes in 1.6.0
+
 1.6.0
 
 * we're only jumping one version
