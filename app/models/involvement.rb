@@ -188,7 +188,11 @@ class Involvement < ActiveRecord::Base
   # TODO: learn how to mock this for testing
   def after_save
     unless self.study.read_only?
-      Resque.enqueue(EmpiWorker, self.id) 
+      begin
+        Resque.enqueue(EmpiWorker, self.id) 
+      rescue Errno::ECONNREFUSED => e
+        logger.debug("the EMPI would process involvement #{self.id} if resque was running")
+      end
     end
   end
   
