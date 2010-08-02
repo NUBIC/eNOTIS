@@ -19,6 +19,8 @@ class SubjectInvolvementPopulator
         :mrn           => subject_hash[:mrn],
         :mrn_type      => subject_hash[:mrn_type],
         :phone_number  => subject_hash[:phone]
+        # :patient_id    => patient_id,
+        # :date_source   => "NOTIS" 
       }
     })
     subject = Subject.find_or_create(params)

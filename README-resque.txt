@@ -30,7 +30,7 @@ JOBS_PER_FORK=25 COUNT=2 QUEUES=redis_bogus_netid,redis_ldapper,redis_authorized
 For checking on resque progress on staging setup an SSH tunnel on staging and change the resque and redis config locally
 ssh -f -N -L 6380:q-staging.nubic.northwestern.edu:6379 sjg304@enotis-staging.nubic.northwestern.edu
 
-For checking on resque progress on staging setup an SSH tunnel on staging and change the resque and redis config locally
+For checking on resque progress on production setup an SSH tunnel on staging and change the resque and redis config locally
 ssh -f -N -L 6380:q-prod.nubic.northwestern.edu:6379 sjg304@enotis-staging.nubic.northwestern.edu
 
 To view resque jobs locally simply go to /admin/jobs and type in the username and password enotis_jobs
@@ -38,7 +38,9 @@ To view resque jobs locally simply go to /admin/jobs and type in the username an
 eNOTIS Redis Data Dictionary:
 All eNOTIS keys are start with eNOTIS
 All eNOTIS resque keys start with resque:eNOTIS
-
+500 Involvements
+500 Subjects
+500 Involvement Events
 USERS ====
 
 User - stored as Hash

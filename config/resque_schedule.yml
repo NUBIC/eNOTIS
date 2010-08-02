@@ -27,24 +27,24 @@ import_studies_personnel:
   queue: rake_worker
   args: "redis"
   description: "Import studies/personnel into postgres"
-clear_subjects:
-  cron: "0 3 * * *"
-  class: RakeWorker
-  queue: rake_worker
-  args: "edw:subjects:redis:nuke"
-  description: "Remove subjects and involvements from Redis"
-fetch_subjects:
-  cron: "10 3 * * *"
-  class: RakeWorker
-  queue: rake_worker
-  args: "edw:subjects:redis:import"
-  description: "Fetch subjects from EDW into Redis"
-import_subjects:
-  cron: "40 3 * * *"
-  class: RakeWorker
-  queue: rake_worker
-  args: "edw:subjects:redis:enqueue"
-  description: "Import Subjects and Involvements from Redis via Resque"
+# clear_subjects:
+#   cron: "0 3 * * *"
+#   class: RakeWorker
+#   queue: rake_worker
+#   args: "edw:subjects:redis:nuke"
+#   description: "Remove subjects and involvements from Redis"
+# fetch_subjects:
+#   cron: "10 3 * * *"
+#   class: RakeWorker
+#   queue: rake_worker
+#   args: "edw:subjects:redis:import"
+#   description: "Fetch subjects from EDW into Redis"
+# import_subjects:
+#   cron: "40 3 * * *"
+#   class: RakeWorker
+#   queue: rake_worker
+#   args: "edw:subjects:redis:enqueue"
+#   description: "Import Subjects and Involvements from Redis via Resque"
 nightly_failure_check:
   cron: "0 6 * * *"
   class: RakeWorker
