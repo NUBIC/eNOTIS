@@ -1,10 +1,5 @@
 class RemoveReadonlySubjectsAndInvolvements < ActiveRecord::Migration
   def self.up 
-    
-    execute 'ALTER TABLE involvement_events ADD CONSTRAINT fk_ie_involvements FOREIGN KEY (involvement_id) REFERENCES involvements(id) ON DELETE CASCADE'
-    execute 'ALTER TABLE involvements ADD CONSTRAINT fk_inv_subjects FOREIGN KEY (subject_id) REFERENCES subjects(id)'
-    execute 'ALTER TABLE involvements ADD CONSTRAINT fk_inv_studies FOREIGN KEY (study_id) REFERENCES studies(id)'
-    
     InvolvementEvent.paper_trail_off
     Involvement.paper_trail_off
     Subject.paper_trail_off
@@ -21,6 +16,10 @@ class RemoveReadonlySubjectsAndInvolvements < ActiveRecord::Migration
       :group  =>  "subjects.id", 
       :having =>  "count(involvements)=0").each { |subject| subject.destroy }
     end
+    
+    execute 'ALTER TABLE involvement_events ADD CONSTRAINT fk_ie_involvements FOREIGN KEY (involvement_id) REFERENCES involvements(id) ON DELETE CASCADE'
+    execute 'ALTER TABLE involvements ADD CONSTRAINT fk_inv_subjects FOREIGN KEY (subject_id) REFERENCES subjects(id)'
+    execute 'ALTER TABLE involvements ADD CONSTRAINT fk_inv_studies FOREIGN KEY (study_id) REFERENCES studies(id)'
     
     add_column :subjects, :external_patient_id, :integer
     add_column :subjects, :data_source, :string
