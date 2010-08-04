@@ -1,5 +1,9 @@
 --- 
 dependencies: 
+  ruby-debug: 
+    group: 
+    - :development
+    version: ">= 0"
   fastercsv: 
     group: 
     - :default
@@ -20,10 +24,6 @@ dependencies:
     group: 
     - :default
     version: ">= 0.3.1"
-  ruby-debug: 
-    group: 
-    - :development
-    version: ">= 0.10.3"
   libxml-ruby: 
     group: 
     - :default
@@ -46,10 +46,6 @@ dependencies:
     version: ">= 0.3.1"
     require: 
     - view_trail
-  SystemTimer: 
-    group: 
-    - :default
-    version: ">= 0"
   searchlogic: 
     group: 
     - :default
@@ -62,6 +58,10 @@ dependencies:
     group: 
     - :default
     version: ~> 2.2.0
+  SystemTimer: 
+    group: 
+    - :default
+    version: ">= 0"
   empi: 
     group: 
     - :default
@@ -84,10 +84,6 @@ dependencies:
     version: ~> 0.2.0
     require: []
 
-  resque: 
-    group: 
-    - :default
-    version: ~> 1.9.0
   wirble: 
     group: 
     - :development
@@ -96,6 +92,10 @@ dependencies:
     group: 
     - :default
     version: ">= 0"
+  resque: 
+    group: 
+    - :default
+    version: ~> 1.9.0
   rspec-rails: 
     group: 
     - :test
@@ -114,6 +114,12 @@ dependencies:
     - :cucumber
     - :hudson
     version: ~> 0.6.0
+  rcov: 
+    group: 
+    - :test
+    - :cucumber
+    - :hudson
+    version: ">= 0"
   awesome_print: 
     group: 
     - :development
@@ -148,10 +154,6 @@ dependencies:
     group: 
     - :hudson
     version: ~> 1.6.0
-  resque-scheduler: 
-    group: 
-    - :default
-    version: ~> 1.9.0
   paper_trail: 
     group: 
     - :default
@@ -172,28 +174,28 @@ dependencies:
     group: 
     - :default
     version: ">= 0"
+  resque-scheduler: 
+    group: 
+    - :default
+    version: ~> 1.9.0
   cucumber: 
     group: 
     - :test
     - :cucumber
     - :hudson
     version: = 0.8.4
-  savon: 
-    group: 
-    - :default
-    version: = 0.7.9
-  redis: 
-    group: 
-    - :default
-    version: ~> 2.0.0
   resque-jobs-per-fork: 
     group: 
     - :default
     version: ~> 0.3.0
-  ruby-debug-base: 
+  redis: 
     group: 
-    - :development
-    version: ">= 0.10.3"
+    - :default
+    version: ~> 2.0.0
+  savon: 
+    group: 
+    - :default
+    version: = 0.7.9
   populator: 
     group: 
     - :default
@@ -210,6 +212,10 @@ dependencies:
     group: 
     - :default
     version: ">= 1.1"
+  ruby-debug-base: 
+    group: 
+    - :development
+    version: ">= 0"
 specs: 
 - rake: 
     version: 0.8.7
@@ -289,12 +295,14 @@ specs:
     version: 2.2.24
 - compass: 
     version: 0.8.17
+- json: 
+    version: 1.2.4
 - mime-types: 
     version: "1.16"
 - rest-client: 
     version: 1.6.0
 - couchrest: 
-    version: "0.37"
+    version: 1.0.0
 - crack: 
     version: 0.1.8
 - diff-lcs: 
@@ -316,7 +324,7 @@ specs:
 - empi: 
     version: 0.2.0
 - factory_girl: 
-    version: 1.3.1
+    version: 1.3.2
 - faker: 
     version: 0.3.1
 - fastthread: 
@@ -330,7 +338,7 @@ specs:
 - linecache: 
     version: "0.43"
 - nokogiri: 
-    version: 1.4.2
+    version: 1.4.3.1
 - paper_trail: 
     version: 1.5.2
 - paperclip: 
@@ -341,10 +349,12 @@ specs:
     version: 0.2.5
 - rails: 
     version: 2.3.8
+- rcov: 
+    version: 0.9.8
 - rdiscount: 
     version: 1.6.5
 - redis: 
-    version: 2.0.4
+    version: 2.0.5
 - redis-namespace: 
     version: 0.8.0
 - sinatra: 
@@ -358,7 +368,7 @@ specs:
 - rufus-scheduler: 
     version: 2.0.6
 - resque-scheduler: 
-    version: 1.9.3
+    version: 1.9.4
 - resque_spec: 
     version: 0.2.0
 - rspec: 
@@ -385,7 +395,7 @@ specs:
     version: 2.3.14
 - wirble: 
     version: 0.1.3
-hash: 92f5ea749a7211d664a64a7f6f07f308a368289c
+hash: 1c04e6447b9d4c28ca6c65aeb48b43892702c0d0
 sources: 
 - Rubygems: 
     uri: http://download.bioinformatics.northwestern.edu/gems/

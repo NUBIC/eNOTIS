@@ -51,7 +51,8 @@ end
 
 # Debugging
 group :development do
-  gem 'ruby-debug'
+  gem "ruby-debug-base"
+  gem "ruby-debug"
 end
 
 # Resque
@@ -61,8 +62,10 @@ gem 'resque', '~> 1.9.0'
 gem 'resque-jobs-per-fork', '~> 0.3.0'
 gem 'resque-scheduler', '~> 1.9.0'
 
+
 # Testing
 group :test, :cucumber, :hudson do
+  gem 'rcov'
   gem 'cucumber', "0.8.4"
   gem "rspec", "~> 1.3.0"
   gem "rspec-rails", "~> 1.3.0"
@@ -72,8 +75,6 @@ group :test, :cucumber, :hudson do
   gem "database_cleaner", "~> 0.0"
 end
 
-gem "ruby-debug-base", '>=0.10.3', :group => [:development]
-gem "ruby-debug", '>=0.10.3',      :group => [:development]
 gem "ci_reporter", "~> 1.6.0", :group => [:hudson]
 
 source "http://download.bioinformatics.northwestern.edu/gems/"

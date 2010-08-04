@@ -28,7 +28,7 @@ namespace :rcov do
   task :all do |t|
     rm "coverage.data" if File.exist?("coverage.data")
     Rake::Task["rcov:cucumber"].invoke
-    Rake::Task["rcov:rspec"].invoke
+    Rake::Task["spec:rcov"].invoke
   end
 end
 
