@@ -17,7 +17,7 @@ class RemoveReadonlySubjectsAndInvolvements < ActiveRecord::Migration
       :having =>  "count(involvements)=0").each { |subject| subject.destroy }
     end
     
-    execute 'ALTER TABLE involvement_events ADD CONSTRAINT fk_ie_involvements FOREIGN KEY (involvement_id) REFERENCES involvements(id) ON DELETE CASCADE'
+    # execute 'ALTER TABLE involvement_events ADD CONSTRAINT fk_ie_involvements FOREIGN KEY (involvement_id) REFERENCES involvements(id) ON DELETE CASCADE'
     execute 'ALTER TABLE involvements ADD CONSTRAINT fk_inv_subjects FOREIGN KEY (subject_id) REFERENCES subjects(id)'
     execute 'ALTER TABLE involvements ADD CONSTRAINT fk_inv_studies FOREIGN KEY (study_id) REFERENCES studies(id)'
     
@@ -35,6 +35,6 @@ class RemoveReadonlySubjectsAndInvolvements < ActiveRecord::Migration
     remove_column :subjects, :external_patient_id
     execute 'ALTER TABLE involvements DROP CONSTRAINT fk_inv_studies'
     execute 'ALTER TABLE involvements DROP CONSTRAINT fk_inv_subjects'
-    execute 'ALTER TABLE involvement_events DROP CONSTRAINT fk_ie_involvements'
+    # execute 'ALTER TABLE involvement_events DROP CONSTRAINT fk_ie_involvements'
   end
 end
