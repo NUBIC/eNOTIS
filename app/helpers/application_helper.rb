@@ -46,9 +46,9 @@ module ApplicationHelper
   end
   
   def other_studies_flag(involvement)
-    # unless involvement.subject.involvements == [involvement]
-    #   link_to image_tag('/images/icons/flag_orange.png'), other_involvement_path(involvement), :rel => '#other_studies'
-    # end
+    unless involvement.subject.involvements == [involvement]
+      link_to image_tag('/images/icons/flag_orange.png'), other_involvement_path(involvement), :rel => '#other_studies'
+    end
   end
   
   def study_funding_source_info(study)

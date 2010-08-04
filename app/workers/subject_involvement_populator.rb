@@ -6,25 +6,30 @@ class SubjectInvolvementPopulator
     subject_hash = HashWithIndifferentAccess.new(REDIS.hgetall(redis_key))
     params       = HashWithIndifferentAccess.new({
       :subject  => {
-        :address_line1 => subject_hash[:address_1],
-        :address_line2 => subject_hash[:address_2],
-        :address_line3 => subject_hash[:address_3],
-        :city          => subject_hash[:city],
-        :state         => subject_hash[:state],
-        :zip           => subject_hash[:zip],
-        :birth_date    => subject_hash[:birth_date],
-        :death_date    => subject_hash[:death_date],
-        :first_name    => subject_hash[:first_name],
-        :last_name     => subject_hash[:last_name],
-        :mrn           => subject_hash[:mrn],
-        :mrn_type      => subject_hash[:mrn_type],
-        :phone_number  => subject_hash[:phone]
-        # :patient_id    => patient_id,
-        # :date_source   => "NOTIS" 
+        :address_line1       => subject_hash[:address_1],
+        :address_line2       => subject_hash[:address_2],
+        :address_line3       => subject_hash[:address_3],
+        :city                => subject_hash[:city],
+        :state               => subject_hash[:state],
+        :zip                 => subject_hash[:zip],
+        :birth_date          => subject_hash[:birth_date],
+        :death_date          => subject_hash[:death_date],
+        :first_name          => subject_hash[:first_name],
+        :last_name           => subject_hash[:last_name],
+        :mrn                 => subject_hash[:mrn],
+        :mrn_type            => subject_hash[:mrn_type],
+        :phone_number        => subject_hash[:phone],
+        :external_patient_id => patient_id,
+        :data_source         => "NOTIS" 
       }
     })
-    subject = Subject.find_or_create(params)
-    study   = Study.find_by_irb_number(irb_number)
+    subject = Subject.find_by_external_patient_id(patient_id)
+    if subject
+      subject.update_attributes(params[:subject])
+    else
+      subject = Subject.create(params[:subject])
+    end
+    study = Study.find_by_irb_number(irb_number)
 
     if study
       unless study.read_only?

@@ -151,9 +151,11 @@ ActiveRecord::Schema.define(:version => 20100729214707) do
     t.text     "no_contact_reason"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "external_patient_id"
+    t.integer  "external_patient_id"
     t.string   "data_source"
   end
+
+  add_index "subjects", ["external_patient_id"], :name => "index_subjects_on_external_patient_id"
 
   create_table "users", :force => true do |t|
     t.string   "netid"

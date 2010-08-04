@@ -57,7 +57,7 @@ namespace :redis do
 
   namespace :resque do
     desc "Deliver Failure count of the day"
-    task :failure_notify do
+    task :failure_notify => :environment do
       if Resque::Failure.count >= 100
         Notifier.deliver_daily_failed_jobs
       end

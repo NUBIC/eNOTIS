@@ -22,7 +22,7 @@ class Notifier < ActionMailer::Base
   def daily_failed_jobs
     from "enotissupport@northwestern.edu"
     recipients "enotissupport@northwestern.edu"
-    subject "[Resque] Daily Job Failure Count"
-    body "#{Resque::Failure.count} jobs failed today"
+    subject "[Resque] eNOTIS Daily Job Failure Count - #{Rails.env}"
+    body "#{Resque::Failure.count} jobs failed today on eNOTIS #{Rails.env}"
   end
 end

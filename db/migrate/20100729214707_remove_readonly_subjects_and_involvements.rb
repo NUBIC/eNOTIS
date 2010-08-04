@@ -22,15 +22,16 @@ class RemoveReadonlySubjectsAndInvolvements < ActiveRecord::Migration
       :having =>  "count(involvements)=0").each { |subject| subject.destroy }
     end
     
-    add_column :subjects, :external_patient_id, :string
+    add_column :subjects, :external_patient_id, :integer
     add_column :subjects, :data_source, :string
-    
+    add_index :subjects, :external_patient_id
     Subject.paper_trail_on
     Involvement.paper_trail_on
     InvolvementEvent.paper_trail_on
   end
 
   def self.down
+    remove_index :subjects, :external_patient_id
     remove_column :subjects, :data_source
     remove_column :subjects, :external_patient_id
     execute 'ALTER TABLE involvements DROP CONSTRAINT fk_inv_studies'
