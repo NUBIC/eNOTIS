@@ -86,7 +86,9 @@ class BogusNetidProcessor
       key = "role:authorized_people:#{irb_number}"
       old_ap_key = "role:authorized_personnel:#{irb_number}:#{old_netid}"
       new_ap_key = "role:authorized_personnel:#{irb_number}:#{new_netid}"
-      redis.rename(old_ap_key, new_ap_key)
+      if redis.exists(old_ap_key)
+        redis.rename(old_ap_key, new_ap_key)
+      end
       redis.hset(new_ap_key, 'email', new_email)
     end
     redis.srem(key,old_netid)
