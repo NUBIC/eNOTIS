@@ -70,7 +70,7 @@ development:
 staging:
     adapter: stomp
     reliable: true
-    host: q-staging.bioinformatics.northwestern.edu
+    host: q-staging
     port: 61613
     reliable: true
     reconnectDelay: 5
@@ -83,7 +83,7 @@ test:
 production:
     adapter: stomp
     reliable: true
-    host: q-prod.bioinformatics.northwestern.edu
+    host: q-prod
     port: 61613
     reliable: true
     reconnectDelay: 5
