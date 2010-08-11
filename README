@@ -41,6 +41,13 @@ eNOTIS depends on a few important gems:
     db: "eirb_prod"
   
 == Changes ==
+1.6.2
+* NOTIS patients/subjects and involvements are now imported into eNOTIS. They're deidentified everywhere but production
+* Cleanup Migration written to remove NOTIS subjects that were wrongly imported earlier and their involvements
+* Every night NOTIS studies will be removed and reimported from redis and eNOTIS.
+* Other Studies flag re-enabled
+* Authorized Personnel importing wont generate as many errors. References #3570
+* ActiveMQ configuration update
 
 1.6.1
 
