@@ -81,7 +81,7 @@
               = event_info(involvement, "withdrawn")
             -unless @study.read_only?
               %td= link_to "Edit", edit_involvement_path(involvement), :rel => "#involvement"
-              %td= link_to 'Destroy', involvement_path(involvement), :confirm => 'Are you sure?', :method => :delete, :class=>'delete'
+              %td= link_to 'Delete', involvement_path(involvement), :confirm_msg => "Deleting will completely remove all of the subject's information from the study", :method => :delete, :class=>'delete'
             -else
               %td= link_to "View", involvement_path(involvement), :rel => "#involvement"
   #involvement.overlay

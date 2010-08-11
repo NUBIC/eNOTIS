@@ -52,7 +52,7 @@ end
 Then /^I remove subject "([^"]*)" "([^"]*)"$/ do |first, last|
   sid = Subject.find_by_first_name_and_last_name(first, last).id
   within ".subject_#{sid}" do |scope|
-    scope.click_link "Destroy"
+    scope.click_link "Delete"
   end
 end
 

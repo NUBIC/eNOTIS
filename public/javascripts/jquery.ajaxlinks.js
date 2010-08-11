@@ -63,10 +63,15 @@ jQuery.fn.putWithAjax = function() {
 };
 
 jQuery.fn.deleteWithAjax = function() {
+  if (this.attr("confirm_msg")) {
+    var confirm_msg = this.attr("confirm_msg")
+  } else {
+    var confirm_msg = "Are you sure?"
+  };
   this.removeAttr('onclick');
   this.unbind('click', false);
   this.click(function(e) {
-    if (confirm("Are you sure?")) {
+    if (confirm(confirm_msg)) {
       $.delete_($(this).attr("href"), $(this).serialize(), null, "script");
       return false;
     }else{
