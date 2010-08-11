@@ -8,7 +8,7 @@ class AdminController < ApplicationController
   # Public instance methods (actions)
   def index
     @active_users = Activity.all(:include => :user, :order => "created_at DESC").group_by(&:user)
-    @active_studies = Involvement.all(:include => :study, :order => "updated_at DESC").group_by(&:study)
+    @active_studies = Involvement.all(:include => :study, :conditions => {:studies => {:read_only => nil}}, :order => "involvements.updated_at DESC").group_by(&:study)
   end
   
   protected
