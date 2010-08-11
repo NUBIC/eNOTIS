@@ -71,7 +71,7 @@ namespace :edw do
         end
       end
 
-      desc "Destroy Notis Studies"
+      desc "Destroy Notis Subjects"
       task :destroy => :environment do
         InvolvementEvent.paper_trail_off
         Involvement.paper_trail_off
