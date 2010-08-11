@@ -5,8 +5,13 @@ namespace :edw do
   namespace :subjects do
     namespace :redis do
       
-      desc "Import EDW Data into Redis"
+      desc "Import EDW Subjects and involvements into Redis"
       task :import => :environment do
+        if Rails.env.production?
+          DEIDENTIFY=false
+        else
+          DEIDENTIFY=true
+        end
         puts "#{Time.now}: Starting edw:subjects:redis:import"
         Edw.connect
         res      = Edw.find_subject_import_from_NOTIS
@@ -31,6 +36,17 @@ namespace :edw do
                     REDIS.sadd(date_key, subject_key)
                   end
                 end
+                if DEIDENTIFY==true
+                  subject_hash[:first_name] = patient_id
+                  subject_hash[:last_name]  = patient_id
+                  if !subject_hash[:birth_date].blank?
+                    subject_hash[:birth_date] = date_randomizer(subject_hash[:birth_date])
+                  end
+                  subject_hash[:address_1] = "123 Main Street"
+                  if !subject_hash[:death_date].blank?
+                    subject_hash[:death_date] = date_randomizer(subject_hash[:death_date])
+                  end
+                end
                 subject_hash.each do |k,v|
                   REDIS.hset(subject_key,k,v)
                 end
@@ -41,6 +57,38 @@ namespace :edw do
           end
         end
         puts "#{Time.now}: Finishing edw:subjects:redis:import"
+      end
+
+      def date_randomizer(date)
+        Chronic.parse(date).instance_eval("self #{offset_randomizer}").to_formatted_s(:db)
+      end
+
+      def offset_randomizer
+        "".tap do |str|
+          str << " #{%w(+ -).rand} #{rand(30)}.days"
+          str << " #{%w(+ -).rand} #{rand(11)}.months"
+          str << " #{%w(+ -).rand} #{rand(10)}.years"
+        end
+      end
+
+      desc "Destroy Notis Studies"
+      task :destroy => :environment do
+        InvolvementEvent.paper_trail_off
+        Involvement.paper_trail_off
+        Subject.paper_trail_off
+        Subject.on_notis_studies.find_each do |subject|
+          subject.involvements.each do |inv|
+            inv.involvement_events.destroy_all
+          end
+          subject.destroy
+        end
+        # For some reason, the earlier loop doesnt destroy all notis subjects.
+        Subject.on_notis_studies.find_each do |subject|
+          subject.destroy
+        end
+        Subject.paper_trail_on
+        Involvement.paper_trail_on
+        InvolvementEvent.paper_trail_on
       end
 
       desc "Nuke"
