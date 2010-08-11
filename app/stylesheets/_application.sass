@@ -95,3 +95,13 @@ body
   :clear both
 .bold
   +bold
+#environment
+  :position absolute
+  :background-color= !development_color
+  :font-size 18px
+  :padding 0 5px
+  :top 0
+  :left 0
+  :z-index 1
+  &.staging
+    +rounded_bottom_box(!flash_border_color)

@@ -9,8 +9,8 @@
   %body
     #container
       #header
-        - unless RAILS_ENV == "production"
-          #environment{:class => RAILS_ENV}= RAILS_ENV.upcase
+        - unless Rails.env.production?
+          #environment{:class => Rails.env}= Rails.env.upcase
         #app_name= link_to_unless_current image_tag("enotis-swoop-logo.png", :alt => "eNOTIS"), default_path, :title => "eNOTIS Home"
         #login
           - form_tag(auth_path, :method => 'post') do
