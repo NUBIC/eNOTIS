@@ -39,7 +39,7 @@ namespace :db do
     ENV['PGPASSWORD'] = nil
   end
   
-  desc "restore database"
+  desc "restore database. You need to use quotes - rake 'db:restore[20100813161954]'"
   task :restore, :timestamp, :needs => :br_setup do |t, args| 
     timestamp = args[:timestamp]
     raise 'You need to provide a timestamp' unless timestamp
