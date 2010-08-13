@@ -1,0 +1,6 @@
+<% appname = 'enotis' %>
+app_name: <%= appname %>
+backup_folder:
+  development: <%= File.join(Rails.root,"tmp","db_backups") %>
+  staging: "/var/www/apps/<%=appname%>/shared/db_backups"
+  production: "/var/www/apps/<%=appname%>/shared/db_backups"
