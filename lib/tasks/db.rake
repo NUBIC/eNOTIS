@@ -30,16 +30,15 @@ namespace :db do
     destination     = File.join(@backup_folder, compressed_file)
     puts "Compressed File = #{compressed_file}"
     # Unlike mysqldump, you cant enter in the password on the command line
-    # you can set an environment variable, so this shouldnt be a problem    
-    
-    ENV['PGPASSWORD'] = @password
-    # Check for directory permissions
-    `mkdir -p #{File.expand_path(@backup_folder)}`
-    `pg_dump -o #{@options} | gzip -f --best > #{destination}`
-    ENV['PGPASSWORD'] = nil
+    # you can set an environment variable, so this shouldnt be a problem        
+    pgpassword_wrapper(@password) do
+      # Check for directory permissions
+      `mkdir -p #{File.expand_path(@backup_folder)}`
+      `pg_dump -o #{@options} | gzip -f --best > #{destination}`
+    end
   end
   
-  desc "restore database. You need to use quotes - rake 'db:restore[20100813161954]'"
+  desc "restore database. You may need to use quotes - rake 'db:restore[20100813161954]'"
   task :restore, :timestamp, :needs => :br_setup do |t, args| 
     timestamp = args[:timestamp]
     raise 'You need to provide a timestamp' unless timestamp
@@ -47,10 +46,17 @@ namespace :db do
     puts "You need to drop and recreate the database, and make sure the owner is properly assigned"
     compressed_file = "#{@app_name}_#{Rails.env}-#{timestamp}.sql.gz"
     destination     = File.join(@backup_folder, compressed_file)
-    
-    # Check for file existence
-    ENV['PGPASSWORD'] = @password
-    `cat #{@backup_folder}/#{@app_name}_#{Rails.env}-#{timestamp}.sql.gz | gunzip | psql #{@options}`
+    pgpassword_wrapper(@password) do
+      # Check for file existence
+      `cat #{@backup_folder}/#{@app_name}_#{Rails.env}-#{timestamp}.sql.gz | gunzip | psql #{@options}`
+    end
+  end
+  
+  private
+  def pgpassword_wrapper(password)
+    raise 'You need to pass in a block' unless block_given?
+    ENV['PGPASSWORD'] = password
+    yield
     ENV['PGPASSWORD'] = nil
   end
 end
