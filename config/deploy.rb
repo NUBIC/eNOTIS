@@ -176,6 +176,13 @@ namespace :web do
   end
 end
 
+# Database
+namespace :db do
+  desc "Backup Database"
+  task :backup,  :roles => :app do
+    run "cd #{current_path} && rake RAILS_ENV=#{rails_env} db:backup"
+  end
+end
 # Inspiration
 # http://github.com/guides/deploying-with-capistrano
 # http://www.brynary.com/2008/8/3/our-git-deployment-workflow

@@ -79,11 +79,11 @@ namespace :edw do
         Subject.on_notis_studies.find_each do |subject|
           subject.involvements.each do |inv|
             inv.involvement_events.destroy_all
+            inv.destroy
           end
           subject.destroy
         end
-        # For some reason, the earlier loop doesnt destroy all notis subjects.
-        Subject.on_notis_studies.find_each do |subject|
+        Subject.find_each(:conditions => {:data_source => "NOTIS"}) do |subject|
           subject.destroy
         end
         Subject.paper_trail_on

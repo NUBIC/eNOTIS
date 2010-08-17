@@ -3,7 +3,6 @@ require 'erb'
 require 'yaml'
 
 namespace :db do
-  desc "setup"
   task :br_setup => :environment do
     # Shorter abbreviations work for me
     HWIA = HashWithIndifferentAccess
