@@ -34,21 +34,23 @@ namespace :db do
     pgpassword_wrapper(@password) do
       # Check for directory permissions
       `mkdir -p #{File.expand_path(@backup_folder)}`
-      `pg_dump -o #{@options} | gzip -f --best > #{destination}`
+      `pg_dump -O -o #{@options} | gzip -f --best > #{destination}`
     end
   end
   
   desc "restore database. You may need to use quotes - rake 'db:restore[20100813161954]'"
-  task :restore, :timestamp, :needs => :br_setup do |t, args| 
+  task :restore, :env, :timestamp, :needs => :br_setup do |t, args|
+    env = args[:env]
     timestamp = args[:timestamp]
     raise 'You need to provide a timestamp' unless timestamp
+    raise 'you need to provide an environment' unless env
     puts "You may need to have the db superuser do this command"
     puts "You need to drop and recreate the database, and make sure the owner is properly assigned"
-    compressed_file = "#{@app_name}_#{Rails.env}-#{timestamp}.sql.gz"
+    compressed_file = "#{@app_name}_#{env}-#{timestamp}.sql.gz"
     destination     = File.join(@backup_folder, compressed_file)
     pgpassword_wrapper(@password) do
       # Check for file existence
-      `cat #{@backup_folder}/#{@app_name}_#{Rails.env}-#{timestamp}.sql.gz | gunzip | psql #{@options}`
+      `cat #{@backup_folder}/#{@app_name}_#{env}-#{timestamp}.sql.gz | gunzip | psql #{@options}`
     end
   end
   
