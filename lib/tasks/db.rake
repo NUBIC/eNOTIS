@@ -33,11 +33,11 @@ namespace :db do
     pgpassword_wrapper(@password) do
       # Check for directory permissions
       `mkdir -p #{File.expand_path(@backup_folder)}`
-      `pg_dump -O -o -c #{@options} | gzip -f --best > #{destination}`
+      `pg_dump -O -o -c -x #{@options} | gzip -f --best > #{destination}`
     end
   end
   
-  desc "restore database. You may need to use quotes - rake 'db:restore[20100813161954]'"
+  desc "restore database. You may need to use quotes on zsh- rake 'db:restore[staging,20100813161954]'"
   task :restore, :env, :timestamp, :needs => :br_setup do |t, args|
     env = args[:env]
     timestamp = args[:timestamp]
