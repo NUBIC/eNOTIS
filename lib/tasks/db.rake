@@ -33,7 +33,7 @@ namespace :db do
     pgpassword_wrapper(@password) do
       # Check for directory permissions
       `mkdir -p #{File.expand_path(@backup_folder)}`
-      `pg_dump -O -o #{@options} | gzip -f --best > #{destination}`
+      `pg_dump -O -o -c #{@options} | gzip -f --best > #{destination}`
     end
   end
   
@@ -43,8 +43,6 @@ namespace :db do
     timestamp = args[:timestamp]
     raise 'You need to provide a timestamp' unless timestamp
     raise 'you need to provide an environment' unless env
-    puts "You may need to have the db superuser do this command"
-    puts "You need to drop and recreate the database, and make sure the owner is properly assigned"
     compressed_file = "#{@app_name}_#{env}-#{timestamp}.sql.gz"
     destination     = File.join(@backup_folder, compressed_file)
     pgpassword_wrapper(@password) do
