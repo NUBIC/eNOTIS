@@ -1,6 +1,7 @@
 # http://www.postgresql.org/docs/8.3/static/app-pgdump.html
 require 'erb'
 require 'yaml'
+require 'faker'
 
 namespace :db do
   task :br_setup => :environment do
@@ -50,6 +51,14 @@ namespace :db do
       `cat #{@backup_folder}/#{@app_name}_#{env}-#{timestamp}.sql.gz | gunzip | psql #{@options}`
     end
   end
+
+  desc "de-identify current database"
+  task :de_id => :environment do 
+    raise "I cannot in good conscience let you do this in production" if Rails.env.production?
+    Subject.all.each do |subject|
+      de_id_subject(subject)
+    end
+  end
   
   private
   def pgpassword_wrapper(password)
@@ -57,5 +66,19 @@ namespace :db do
     ENV['PGPASSWORD'] = password
     yield
     ENV['PGPASSWORD'] = nil
+  end
+
+  def de_id_subject(subject)
+    subject.first_name = Faker::Name.first_name unless subject.first_name.blank?
+    subject.middle_name = Faker::Name.first_name unless subject.middle_name.blank?
+    subject.last_name = Faker::Name.last_name unless subject.last_name.blank?
+    subject.birth_date =(rand(60.years).ago - 18.years).to_date unless subject.birth_date.blank?
+    subject.death_date = rand(5.years).ago.to_date unless subject.birth_date.blank?
+    subject.address_line1  =Faker::Address.street_address unless subject.address_line1.blank?
+    subject.address_line2 =Faker::Address.secondary_address unless subject.address_line2.blank?
+    subject.address_line3=Faker::Address.secondary_address unless subject.address_line3.blank?
+    subject.phone_number = Faker::PhoneNumber.phone_number.split(" x")[0] unless subject.phone_number.blank?
+    subject.email = Faker::Internet.email  unless subject.email.blank?
+    subject.save
   end
 end
