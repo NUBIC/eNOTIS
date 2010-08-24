@@ -95,7 +95,7 @@ dependencies:
   resque: 
     group: 
     - :default
-    version: ~> 1.9.0
+    version: ~> 1.10.0
   rspec-rails: 
     group: 
     - :test
@@ -187,7 +187,7 @@ dependencies:
   resque-jobs-per-fork: 
     group: 
     - :default
-    version: ~> 0.3.0
+    version: ~> 0.4.0
   redis: 
     group: 
     - :default
@@ -362,9 +362,9 @@ specs:
 - vegas: 
     version: 0.1.7
 - resque: 
-    version: 1.9.10
+    version: 1.10.0
 - resque-jobs-per-fork: 
-    version: 0.3.2
+    version: 0.4.0
 - rufus-scheduler: 
     version: 2.0.6
 - resque-scheduler: 
@@ -395,7 +395,7 @@ specs:
     version: 2.3.14
 - wirble: 
     version: 0.1.3
-hash: 81cd6af115ab6da444846d9373441af990e6cde6
+hash: 9de2a23ef19af50ef18acd3f830b61dcfc61d593
 sources: 
 - Rubygems: 
     uri: http://download.bioinformatics.northwestern.edu/gems/

@@ -58,8 +58,8 @@ end
 # Resque
 gem 'SystemTimer'
 gem 'redis' , '~> 2.0.0'
-gem 'resque', '~> 1.9.0'
-gem 'resque-jobs-per-fork', '~> 0.3.0'
+gem 'resque', '~> 1.10.0'
+gem 'resque-jobs-per-fork', '~> 0.4.0'
 gem 'resque-scheduler', '~> 1.9.0'
 
 
