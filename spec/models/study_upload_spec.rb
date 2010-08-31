@@ -5,8 +5,6 @@ def up(name)
 end
 
 describe StudyUpload do
-  before(:each) do
-  end
   
   it "should create a new instance given valid attributes" do
     Factory(:study_upload).should be_valid
@@ -47,12 +45,9 @@ describe StudyUpload do
   
   it "should be successful otherwise" do
     @up = Factory(:study_upload, :upload => up('good'))
-    #@up.legit?.should be_true
     @up.upload_exists?.should be_true
     @up.parse_upload.should be_true
     @up.create_subjects.should be_true
     @up.summary.should =~ /7 subjects/
-    Subject.all.map(&:birth_date).compact.size.should == 5
-    InvolvementEvent.count.should == 12
   end
 end

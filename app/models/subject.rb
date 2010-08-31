@@ -19,32 +19,20 @@ class Subject < ActiveRecord::Base
   has_paper_trail
   
   # Public class methods
+  # Only supports finding by mrn at this point. EMPI better suited for more 
+  # complex subject find queries
   def self.find_or_create(params)
     s = params[:subject]
     s.keys.each{|k| s[k] = nil if s[k].blank?}
     s.delete(:case_number)
-    Subject.find(:first, :conditions => s) || Subject.create(s)
+    subject = Subject.find(:first, :conditions => {:mrn => s[:mrn]}) if s[:mrn]
+    subject = Subject.create(s) if subject.nil?
+    return subject
   end
   
   # Public instance methods
   def mrn=(mrn)
     write_attribute :mrn, (mrn.blank? ? nil : mrn) # ignore blank mrns from add subject form
-  end
-  
-  def synced?
-    !self.synced_at.nil?
-  end
-
-  def stale?
-    synced? ? self.synced_at < 12.hours.ago : true 
-  end
-
-  def sync!(attrs)
-    self.attributes = attrs
-    # self.changes via http://ryandaigle.com/articles/2008/3/31/what-s-new-in-edge-rails-dirty-objects
-    self.pre_sync_data = self.changes.map{|key, array_value| "#{key} changed from #{array_value[0].to_s} to #{array_value[1].to_s}"}.join(",0") unless synced?
-    self.save
-    return self
   end
   
   # There is a subject_name_helper method that includes styles for the name...
