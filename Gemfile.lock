@@ -91,7 +91,7 @@ dependencies:
   bcsec: 
     group: 
     - :default
-    version: ">= 0"
+    version: ~> 1.6.0
   resque: 
     group: 
     - :default
@@ -222,7 +222,7 @@ specs:
 - SystemTimer: 
     version: "1.2"
 - aasm: 
-    version: 2.1.5
+    version: 2.1.7
 - activesupport: 
     version: 2.3.8
 - rack: 
@@ -242,7 +242,7 @@ specs:
 - color: 
     version: 1.4.1
 - json_pure: 
-    version: 1.4.3
+    version: 1.4.6
 - rubyforge: 
     version: 2.0.4
 - hoe: 
@@ -278,9 +278,9 @@ specs:
 - net-ssh: 
     version: 2.0.23
 - net-scp: 
-    version: 1.0.2
+    version: 1.0.3
 - net-sftp: 
-    version: 2.0.4
+    version: 2.0.5
 - net-ssh-gateway: 
     version: 1.0.1
 - capistrano: 
@@ -296,13 +296,13 @@ specs:
 - compass: 
     version: 0.8.17
 - json: 
-    version: 1.2.4
+    version: 1.4.6
 - mime-types: 
     version: "1.16"
 - rest-client: 
-    version: 1.6.0
+    version: 1.6.1
 - couchrest: 
-    version: 1.0.0
+    version: 1.0.1
 - crack: 
     version: 0.1.8
 - diff-lcs: 
@@ -330,7 +330,7 @@ specs:
 - fastthread: 
     version: 1.0.7
 - hirb: 
-    version: 0.3.2
+    version: 0.3.3
 - httpclient: 
     version: 2.1.5.2
 - libxml-ruby: 
@@ -362,7 +362,7 @@ specs:
 - vegas: 
     version: 0.1.7
 - resque: 
-    version: 1.9.9
+    version: 1.9.10
 - resque-jobs-per-fork: 
     version: 0.3.2
 - rufus-scheduler: 
@@ -382,7 +382,7 @@ specs:
 - savon: 
     version: 0.7.9
 - searchlogic: 
-    version: 2.4.21
+    version: 2.4.24
 - soap4r: 
     version: 1.5.8
 - stomp: 
@@ -395,7 +395,7 @@ specs:
     version: 2.3.14
 - wirble: 
     version: 0.1.3
-hash: 1c04e6447b9d4c28ca6c65aeb48b43892702c0d0
+hash: 81cd6af115ab6da444846d9373441af990e6cde6
 sources: 
 - Rubygems: 
     uri: http://download.bioinformatics.northwestern.edu/gems/

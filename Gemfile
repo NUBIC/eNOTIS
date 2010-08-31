@@ -35,8 +35,8 @@ gem "searchlogic"
 gem 'will_paginate', '~> 2.3'
 
 # Authentication
-gem "bcdatabase"#, '<1.0.0'
-gem "bcsec"
+gem "bcdatabase"
+gem "bcsec", '~>1.6.0'
 
 # EMPI
 gem "savon", "0.7.9"
