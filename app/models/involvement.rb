@@ -28,7 +28,7 @@ class Involvement < ActiveRecord::Base
   
   # Atrributes
   accepts_nested_attributes_for :involvement_events, :reject_if => lambda {|a| (a["occurred_on"].blank? or a["event"].blank?) }
-  accepts_nested_attributes_for :subject
+  accepts_nested_attributes_for :subject, :update_only=>true
 
   # Named scope
   named_scope :with_coordinator, lambda {|user_id| { :include => {:study => :coordinators}, :conditions => ['coordinators.user_id = ?', user_id ]}}
