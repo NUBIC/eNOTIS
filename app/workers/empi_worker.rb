@@ -1,17 +1,14 @@
-require 'webservices'
 class EmpiWorker
   @queue=:empi
   def self.perform(involvement_id)
-    # begin
-    # Find the involvement and the subject
     Empi.connect EMPI_SERVICE[:uri], EMPI_SERVICE[:credentials]
     involvement = Involvement.find(involvement_id)
     study = involvement.study
     if study.read_only?
-      LOG.info("[EMPI] #{Time.now} Not uploading read only study #{study.irb_number}")
+      puts "[EMPI] #{Time.now} Not uploading read only study #{study.irb_number}"
     else
       subject = involvement.subject
-      LOG.info("[EMPI] #{Time.now} I'd be uploading subject #{subject.id} on study #{study.irb_number}")
+      puts "[EMPI] #{Time.now} I'd be uploading subject #{subject.id} on study #{study.irb_number}"
       # Upload the subject and involvement info to the EMPI
       params = {
         :source                       => "eNOTIS", 
@@ -29,11 +26,8 @@ class EmpiWorker
         :record_creation_date         => subject.created_at.to_s
         }.merge(calculate_mrn(subject))
       Empi.put(params)
-      subject.update_attribute(:empi_updated_date,Time.now)
+      subject.update_attribute(:empi_updated_date, Time.now)
     end
-    # rescue Exception => e
-    #   LOG.info("[EMPI] #{Time.now} something went wrong when uploading involvement #{involvement.id}")
-    # end
   end
 
   def self.calculate_mrn(subject)
