@@ -3,13 +3,14 @@ http://github.com/defunkt/resque
 http://github.com/blog/542-introducing-resque
 
 To install redis
-  From source
-    git clone git://github.com/antirez/redis.git
-    cd redis
-    git checkout v1.3.12
-    make 32bit
+  brew install redis
+  edit /usr/local/etc/redis.conf 
+    set daemonize yes
+    set bind 127.0.0.1
+  
 To start redis
-    ./redis-server config/redis.conf
+    redis-server /usr/local/etc/redis.conf
+    
 To start workers 
   cd RAILS_ROOT && JOBS_PER_WORKER=100 COUNT=4 QUEUES=<any queue> rake environment resque:workers
 
