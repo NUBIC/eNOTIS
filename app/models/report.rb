@@ -8,7 +8,7 @@ class Report
     study       = Study.find_by_irb_number(params[:study][:irb_number])
     involvement = params[:involvement] || {}
     event       = params[:event] || {}
-    
+
     report_header = [].tap do |columns|
       if params[:subject]
         columns << "MRN" if params[:subject].include?("mrn")
@@ -28,14 +28,11 @@ class Report
         end
         if params[:involvement][:methods] 
           columns << "Races" if params[:involvement][:methods].include?("race_as_str")
+          columns << "Events" if params[:involvement][:methods].include?("single_line_ie_export")
         end
       end
-      if params[:event] && params[:event][:attributes]
-        columns << "Event Type" if params[:event][:attributes].include?("event")
-        columns << "Event Date" if params[:event][:attributes].include?("occurred_on")
-      end
     end
-    
+
     #create report
     report = Involvement.report_table(:all,
         :only => involvement[:attributes] || [],
@@ -46,24 +43,19 @@ class Report
         :include => {
           :subject => {
             :only => params[:subject] || []
-          }, 
-          :involvement_events => {
-            :only => event[:attributes] || [],
-            :methods => event[:methods] || []
           }
         }
     )
-    
+
     #properly name columns
     report.rename_columns(
-       "involvement_events.event"=>"Event Type",
-       "involvement_events.occurred_on"=>"Event Date",
        "case_number"=> "Case Number",
        "subject.mrn" =>"MRN",
            "subject.first_name"=>"First Name",
        "subject.last_name"=>"Last Name",
        "subject.birth_date"=>"Birth Date",
        "race_as_str"=>"Races",
+       "single_line_ie_export"=>"Events",
        "gender"=>"Gender",
        "ethnicity"=>"Ethnicity"
     )
@@ -71,6 +63,6 @@ class Report
     report.reorder(report_header)
     report.as(params[:format].to_sym)
   end
- 
+
 end
 

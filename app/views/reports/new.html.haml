@@ -15,11 +15,8 @@
       = check_box_tag "involvement[methods][]", :race_as_str, :checked => true
       = label_tag "involvement[methods][]", "Race"
       %br
-      = check_box_tag "event[attributes][]",'event', :checked => true
-      = label_tag "event[attributes][]","Event Type"
-      %br
-      = check_box_tag "event[attributes][]",'occurred_on', :checked => true
-      = label_tag "event[attributes][]","Event Date"
+      = check_box_tag "involvement[methods][]", :single_line_ie_export, :checked => true
+      = label_tag "involvement[methods][]", "Events"
     %p
       = label_tag "format","File Format"
       = select_tag('format',options_for_select([["PDF","pdf"],["CSV","csv"]]))

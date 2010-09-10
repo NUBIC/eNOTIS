@@ -24,11 +24,7 @@ class Involvement < ActiveRecord::Base
   # Associations
   belongs_to :subject
 	belongs_to :study
-  has_many :involvement_events do
-    def single_line_report_export
-      self.collect{ |ev| "#{ev.event} -- #{ev.occurred_on}" }.join("\n")
-    end
-  end
+  has_many :involvement_events
   
   # Atrributes
   accepts_nested_attributes_for :involvement_events, :reject_if => lambda {|a| (a["occurred_on"].blank? or a["event"].blank?) }
@@ -187,6 +183,10 @@ class Involvement < ActiveRecord::Base
  
   def subject_name_or_case_number
     subject.name.blank? ? case_number : subject.name
+  end
+
+  def single_line_ie_export
+    involvement_events.collect{ |ev| "#{ev.event} -- #{ev.occurred_on}" }.join("\n")
   end
   
   # TODO: learn how to mock this for testing
