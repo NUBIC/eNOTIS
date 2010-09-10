@@ -4,11 +4,14 @@
     %h3= "Export subjects on #{link_to @study.irb_number, study_path(@study)}" unless request.format == "js"
     %p Select Attributes
     %p 
+      = check_box_tag "involvement[attributes][]",:case_number, :checked => true
+      = label_tag "involvement[attributes][]", "Case Number"
+      %br
       - ['mrn','first_name','last_name','birth_date'].each do |val|
         = check_box_tag "subject[]",val, :checked => true
         = label_tag "subject[]",val.titleize
         %br
-      -['case_number','ethnicity','gender'].each do |attr|
+      -['gender','ethnicity'].each do |attr|
         = check_box_tag "involvement[attributes][]",attr, :checked => true
         = label_tag "involvement[attributes][]",attr.titleize
         %br
