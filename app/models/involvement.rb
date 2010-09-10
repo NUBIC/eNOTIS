@@ -173,14 +173,26 @@ class Involvement < ActiveRecord::Base
   end
   # END of methods used for graphs
 
+  def all_events
+  end
+
+  %w(consented withdrawn completed).each do |name|
+    class_eval  <<-RUBY, __FILE__, __LINE__ + 1
+    def #{name}_report
+      ev = involvement_events.detect{|e| e.event == "#{name.titleize}"}
+      ev.occurred_on if ev
+    end
+    RUBY
+  end
+
   def consented
     involvement_events.detect{|e| e.event == "Consented"}
-  end                                    
+  end
 
   def completed_or_withdrawn
     involvement_events.detect{|e| e.event == "Completed" or e.event == "Withdrawn"}
   end
- 
+
   def subject_name_or_case_number
     subject.name.blank? ? case_number : subject.name
   end
@@ -188,7 +200,7 @@ class Involvement < ActiveRecord::Base
   def single_line_ie_export
     involvement_events.collect{ |ev| "#{ev.event} -- #{ev.occurred_on}" }.join("\n")
   end
-  
+
   # TODO: learn how to mock this for testing
   def after_save
     unless self.study.read_only?

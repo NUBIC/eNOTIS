@@ -28,7 +28,14 @@ class Report
         end
         if params[:involvement][:methods] 
           columns << "Races" if params[:involvement][:methods].include?("race_as_str")
-          columns << "Events" if params[:involvement][:methods].include?("single_line_ie_export")
+          if params[:involvement][:methods].include?("all_events")
+            params[:involvement][:methods] << "consented_report"
+            params[:involvement][:methods] << "completed_report"
+            params[:involvement][:methods] << "withdrawn_report"
+            columns << "Consented"
+            columns << "Completed"
+            columns << "Withdrawn"
+           end
         end
       end
     end
@@ -51,11 +58,13 @@ class Report
     report.rename_columns(
        "case_number"=> "Case Number",
        "subject.mrn" =>"MRN",
-           "subject.first_name"=>"First Name",
+       "subject.first_name"=>"First Name",
        "subject.last_name"=>"Last Name",
        "subject.birth_date"=>"Birth Date",
        "race_as_str"=>"Races",
-       "single_line_ie_export"=>"Events",
+       "consented_report"=>"Consented",
+       "completed_report"=>"Completed",
+       "withdrawn_report"=>"Withdrawn",
        "gender"=>"Gender",
        "ethnicity"=>"Ethnicity"
     )
