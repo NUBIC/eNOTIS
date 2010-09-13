@@ -28,7 +28,7 @@ class Report
           columns << "Ethnicity" if params[:involvement][:attributes].include?("ethnicity")
         end
         if params[:involvement][:methods] 
-          columns << "Races" if params[:involvement][:methods].include?("race_as_str")
+          columns << "Race" if params[:involvement][:methods].include?("race_as_str")
           if params[:involvement][:methods].include?("all_events")
             %w(consented completed withdrawn).each do |method_name|
               params[:involvement][:methods] << "#{method_name}_report"
