@@ -19,7 +19,7 @@ class StudyUpload < ActiveRecord::Base
   # validates_attachment_content_type :upload, :content_type => ['text/csv', 'text/plain']
   # validates_attachment_content_type :result, :content_type => ['text/csv', 'text/plain']
   def self.required_columns
-    %w(case_number mrn first_name last_name birth_date gender race ethnicity consented_on consented_note withdrawn_on withdrawn_note completed_on completed_note)
+    %w(case_number mrn last_name first_name birth_date gender race ethnicity consented_on withdrawn_on completed_on)
   end
 
   def legit?

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100729214707) do
+ActiveRecord::Schema.define(:version => 20100823174930) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -55,12 +55,12 @@ ActiveRecord::Schema.define(:version => 20100729214707) do
     t.string   "case_number"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "race_is_native_hawaiian_or_other_pacific_islander", :default => false
     t.boolean  "race_is_white",                                     :default => false
     t.boolean  "race_is_unknown_or_not_reported",                   :default => false
     t.boolean  "race_is_american_indian_or_alaska_native",          :default => false
     t.boolean  "race_is_asian",                                     :default => false
     t.boolean  "race_is_black_or_african_american",                 :default => false
+    t.boolean  "race_is_native_hawaiian_or_other_pacific_islander", :default => false
   end
 
   add_index "involvements", ["subject_id", "study_id", "ethnicity", "gender"], :name => "involvements_attr_idx", :unique => true
@@ -153,6 +153,7 @@ ActiveRecord::Schema.define(:version => 20100729214707) do
     t.datetime "updated_at"
     t.integer  "external_patient_id"
     t.string   "data_source"
+    t.date     "empi_updated_date"
   end
 
   add_index "subjects", ["external_patient_id"], :name => "index_subjects_on_external_patient_id"

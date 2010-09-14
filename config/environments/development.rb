@@ -24,3 +24,5 @@ config.after_initialize do
     central '/etc/nubic/bcsec-local.yml'
   end
 end
+require 'empi' # include the symbolize! Hash extension
+EMPI_SERVICE = YAML::load(File.read("/etc/nubic/empi-#{Rails.env}.yml")).symbolize!

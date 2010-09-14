@@ -23,7 +23,7 @@ class Edw
 
     def service_test
       # get test mrnA
-      config = WebserviceConfig.new("/etc/nubic/edw-#{RAILS_ENV.downcase}.yml")
+      config = WebserviceConfig.new("/etc/nubic/edw-#{Rails.env.downcase}.yml")
       begin
         result = find_test({:mrn => config[:test_mrn]})
         status = (result.first ? result.first[:mrn] == config[:test_mrn] : false)

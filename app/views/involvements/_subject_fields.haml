@@ -1,15 +1,18 @@
-%li{:class => "mrn"}
+%li.mrn
   = f.label :mrn, "MRN"
   = f.text_field :mrn
-%li{:class => "last_name"}
+%li.mrn_type
+  = f.label :mrn_type, "MRN Source"
+  = f.select :mrn_type, %w(NMH NMFF), :include_blank=>true
+%li.last_name
   = f.label :last_name
   = f.text_field :last_name
-%li{:class => "first_name"}
+%li.first_name
   = f.label :first_name
   = f.text_field :first_name
-%li{:class => "middle_name"}
+%li.middle_name
   = f.label :middle_name, "Middle (optional)"
   = f.text_field :middle_name
-%li{:class => "birth_date"}
+%li.birth_date
   = f.label :birth_date
   = f.text_field :birth_date, :class => 'dob'

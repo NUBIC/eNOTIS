@@ -4,22 +4,22 @@
     %h3= "Export subjects on #{link_to @study.irb_number, study_path(@study)}" unless request.format == "js"
     %p Select Attributes
     %p 
+      = check_box_tag "involvement[attributes][]",:case_number, :checked => true
+      = label_tag "involvement[attributes][]", "Case Number"
+      %br
       - ['mrn','first_name','last_name','birth_date'].each do |val|
         = check_box_tag "subject[]",val, :checked => true
         = label_tag "subject[]",val.titleize
         %br
-      -['case_number','ethnicity','gender'].each do |attr|
+      -['gender','ethnicity'].each do |attr|
         = check_box_tag "involvement[attributes][]",attr, :checked => true
         = label_tag "involvement[attributes][]",attr.titleize
         %br
       = check_box_tag "involvement[methods][]", :race_as_str, :checked => true
       = label_tag "involvement[methods][]", "Race"
       %br
-      = check_box_tag "event[attributes][]",'event', :checked => true
-      = label_tag "event[attributes][]","Event Type"
-      %br
-      = check_box_tag "event[attributes][]",'occurred_on', :checked => true
-      = label_tag "event[attributes][]","Event Date"
+      = check_box_tag "involvement[methods][]", :all_events, :checked => true
+      = label_tag "involvement[methods][]", "Events"
     %p
       = label_tag "format","File Format"
       = select_tag('format',options_for_select([["PDF","pdf"],["CSV","csv"]]))

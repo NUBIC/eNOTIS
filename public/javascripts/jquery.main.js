@@ -43,7 +43,7 @@ $(document).ready(function() {
  
  // studies show
     // dataTable
-    $("#accrual .display").dataTable({"fnDrawCallback": activateRows, "iDisplayLength": 30, "sPaginationType": "full_numbers", "oLanguage": {"sZeroRecords": "<p><strong>No subjects yet - click 'Add' or 'Import' to get started. Or watch our 4 minute introduction to eNOTIS.</strong></p><p><a style='display: block; width: 550px; height: 386px; margin: 0 auto;' id='player' href='/media/enotis-tutorial-a.mov'></a></p>"},"aoColumns": [null,null,null,null,null,null,null,{ "sType": "html" },{ "sType": "html" }]});    
+    $("#accrual .display").dataTable({"fnDrawCallback": activateRows, "iDisplayLength": 30, "sPaginationType": "full_numbers", "oLanguage": {"sZeroRecords": "<p><strong>No subjects yet - click 'Add' or 'Import' to get started. Or watch our <a rel='#intro'>4 minute introduction to eNOTIS</a>.</strong></p>"},"aoColumns": [null,null,null,null,null,null,null,{ "sType": "html" },{ "sType": "html" }]});    
     
     // redraw dashes for empty cells, activate other studies and view/edit overlays
     function activateRows(){
@@ -95,6 +95,11 @@ $(document).ready(function() {
           yearRange: '-120:+0'
         });
       }
+    });
+    
+    // introduction overlay
+    $("a[rel=#intro]").overlay({
+      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
     });
     
     // import overlay

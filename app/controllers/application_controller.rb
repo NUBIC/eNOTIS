@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   
   # Security
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  filter_parameter_logging :password # Scrub sensitive parameters from your log
+  filter_parameter_logging :password, :involvement, :subject # Scrub sensitive parameters from your log
 
   # Authentication used for all but one (Authentication) controller, enables before_filter :user_must_be_logged_in
   include ControllerAuthentication
@@ -18,13 +18,12 @@ class ApplicationController < ActionController::Base
   include ExceptionNotifiable
   ExceptionNotifier.exception_recipients = %w(eNOTISsupport@northwestern.edu)
   ExceptionNotifier.sender_address = %("eNOTIS"<eNOTISsupport@northwestern.edu>)
-
   # Uncomment below to get exeception_notifier working in development, see comment at http://agilewebdevelopment.com/plugins/exception_notifier
   # alias :rescue_action_locally :rescue_action_in_public
   # local_addresses.clear
 
   # Application version
-  APP_VERSION = "1.6.2"
+  APP_VERSION = "1.7.0"
   
   # Possible application statuses. See http://en.wikipedia.org/wiki/Bob_Dylan
   SYSTEM_STATUSES = { :up => "Don't think twice, it's all right",
