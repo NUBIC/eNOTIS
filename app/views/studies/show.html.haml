@@ -1,6 +1,6 @@
 - content_for :head do
-  = stylesheet_link_tag 'jquery-ui-1.7.2.custom'
-  = javascript_include_tag 'highcharts/highcharts', 'highcharts/excanvas.compiled', 'jquery.charts', 'jquery-ui-1.7.2.custom-datepicker', 'raphael-min', 'g.raphael-min', 'g.dot-min', 'flowplayer-3.2.2.min', :cache => "cache/study"
+  = stylesheet_link_tag "dateinput"
+  = javascript_include_tag 'charts/highcharts', 'charts/excanvas.compiled', 'charts/raphael-min', 'charts/g.raphael-min', 'charts/g.dot-min', 'charts/jquery.charts', 'tools/flowplayer-3.2.4.min', :cache => "cache/study"
   %script{:type => "text/javascript"}
     $(document).ready(function(){
     - if @involvements.empty?

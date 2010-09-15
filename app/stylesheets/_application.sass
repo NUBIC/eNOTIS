@@ -63,7 +63,7 @@ body
 .tooltip, .overlay
   // must be initially hidden
   :display none
-  :z-index 999
+  :z-index 10
   :background-color= !page_background_color
   :border= 1px solid !border_color
   :padding 10px
@@ -71,7 +71,7 @@ body
   :-moz-box-shadow= 0 0 90px 5px !shadow_color
   :-webkit-box-shadow=  0 0 90px !shadow_color
 .overlay
-  :z-index 1000 
+  :z-index 11
 .overlay .close
   // close button positioned on upper right corner
   :background-image url(/images/jquery-tools/apple-close.png) 
