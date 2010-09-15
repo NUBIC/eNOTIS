@@ -60,11 +60,12 @@ $(document).ready(function() {
       $("table.display a[rel=#involvement]").overlay({
         onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
         expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
-        onLoad: function(){ $("#involvement input.date").datepicker({changeMonth: true, changeYear: true});
+        onLoad: function(){ $("#involvement input.date").datepicker({changeMonth: true, changeYear: true, dateFormat: 'yy-mm-dd'});
           $("#involvement input.dob").datepicker({
             showButtonPanel: true,
             changeMonth: true,
             changeYear: true,
+            dateFormat: 'yy-mm-dd',
             onSelect: function(dateText, inst){ inst.stayOpen = true; },
             onChangeMonthYear: function(year, month, inst) {
               inst.currentMonth = inst.selectedMonth = inst.drawMonth = month - 1;
@@ -81,11 +82,12 @@ $(document).ready(function() {
     $("#actions a[rel=#involvement]").overlay({
       onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
-      onLoad: function(){ $("#involvement input.date").datepicker({changeMonth: true, changeYear: true});
+      onLoad: function(){ $("#involvement input.date").datepicker({changeMonth: true, changeYear: true, dateFormat: 'yy-mm-dd'});
         $("#involvement input.dob").datepicker({
           showButtonPanel: true,
           changeMonth: true,
           changeYear: true,
+          dateFormat: 'yy-mm-dd',
           onSelect: function(dateText, inst){ inst.stayOpen = true; },
           onChangeMonthYear: function(year, month, inst) {
             inst.currentMonth = inst.selectedMonth = inst.drawMonth = month - 1;
