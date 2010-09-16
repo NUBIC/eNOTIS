@@ -41,6 +41,17 @@ eNOTIS depends on a few important gems:
     db: "eirb_prod"
   
 == Changes ==
+1.7.0
+* More Concise warnings on subject deletion
+* Notis study involvements removed from hub page
+* Flags for development and staging environments
+* Database backup, restore and de-identification tasks
+* Initial EMPI integration
+* Enhancements for study exporting
+* Updated google analytics code
+* Removed consented, completed, and withdrawn notes from study exporting
+* Cleanup and update of our javascript libraries
+
 1.6.2
 * NOTIS patients/subjects and involvements are now imported into eNOTIS. They're deidentified everywhere but production
 * Cleanup Migration written to remove NOTIS subjects that were wrongly imported earlier and their involvements
