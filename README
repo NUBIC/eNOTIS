@@ -42,15 +42,50 @@ eNOTIS depends on a few important gems:
   
 == Changes ==
 1.7.0
-* More Concise warnings on subject deletion
-* Notis study involvements removed from hub page
-* Flags for development and staging environments
-* Database backup, restore and de-identification tasks
-* Initial EMPI integration
-* Enhancements for study exporting
-* Updated google analytics code
-* Removed consented, completed, and withdrawn notes from study exporting
-* Cleanup and update of our javascript libraries
+* Update changelog
+* removing dateinput.js - not needed since it is part of jquery.tools.min.js. #3986
+* Commenting out lines in eirb adapter and ensuring that staging has the same log level as production. closes #3980
+* delegate funding source to study table. closes #3984
+* javascript syntax cleanup and fixes.
+* more cleanup. upgraded dataTables to 1.7.2. fixed invalid json being produced in show.json.erb and index.json.erb. checked javascript with ie8
+* more javascript cleanup, better javascript comments, cache public javascripts.
+* fix position of dateinput
+* cleaning and updating javascripts.
+* yyyy-mm-dd for involvement date fields. turning off autocomplete on those fields. closes #3613.
+* Merge branch 'master' of git+ssh://code.bioinformatics.northwestern.edu/git/enotis
+* added new google tracker code
+* filtering out PHI for exception notifications for involvements and subjects. closes #3700
+* Removing notes columns until later needed. references #3905
+* one more fix on #3926
+* DRY code, and pdf printing in landscape mode. closes #3926
+* DRY event reporting.
+* events are now combined into one column
+* we can selectively export columns now
+* put intro video into overlay on study page. closes #3911
+* simplifying redis installation and removing unnecessary config file
+* EMPI worker should send its output to STDOUT, in this case the resque-people log
+* resque should handle exceptions
+* Integrate EMPI into eNOTIS. closes #3234
+* Adding EMPI Updated date to subjects
+* Adding MRN Type to the subject partial. Subjects enrolled on an NMH study have a PRIMES MRN, while those on NMFF use an IDX NMFF. CERNER      - NMH EPIC      - NMFF
+* updating gemfile.lock after rebase
+* Updating resque
+* changes to find_or_create subject method to make it less dangerous. Now only finds by mrn number if that is included in the params
+* locking to bcsec 1.6.3 for now
+* added de_id rake task
+* one more note
+* adding schema clearing command
+* Added capistrano database backup task. references #3618
+* updating db backup task . references 3618
+* refactoring postgres password usage
+* reminder to use quotes on zsh
+* Initial commit on creating backup and restore postgres rake task. references #3618
+* We wont lose track of our environment when we're not on production. Closes #3615.
+* Filter out NOTIS study involvements from the hub page
+* updating the confirmation message on eNOTIS subject deletion. references #3616
+* updating an upload spreadsheet
+* Subject deletion text changed and also confirmation messages can be specified with :confirm_msg in forms. references #3616
+* updating readme for v1.6.2
 
 1.6.2
 * NOTIS patients/subjects and involvements are now imported into eNOTIS. They're deidentified everywhere but production
