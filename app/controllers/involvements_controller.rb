@@ -69,7 +69,6 @@ class InvolvementsController < ApplicationController
   def update
     @involvement = Involvement.find(params[:id])
     @involvement_events = @involvement.involvement_events
-    raise 'Temporary PHI email test'
     study = Study.find_by_irb_number(params[:study][:irb_number])
     if @involvement.update_attributes(params[:involvement])
       flash[:notice] = "Updated"
