@@ -51,7 +51,7 @@ class EirbAdapter
       params.merge!({:svcSessionToken => @session, :parameters => self.class.format_search_parameters(params[:parameters])})
       LOG.info("#{Time.now} [EirbAdapter] search:  #{params.inspect}")
       search_results = driver.performSearch(params) # method that actually calls the soap service
-      LOG.info("#{Time.now} [EirbAdapter] results: #{(search_results.performSearchResult.searchResults.respond_to?(:row) and search_results.performSearchResult.searchResults.row.is_a?(Array)) ? search_results.performSearchResult.searchResults.row.size : search_results.inspect}")
+      # LOG.debug("#{Time.now} [EirbAdapter] results: #{(search_results.performSearchResult.searchResults.respond_to?(:row) and search_results.performSearchResult.searchResults.row.is_a?(Array)) ? search_results.performSearchResult.searchResults.row.size : search_results.inspect}")
       # LOG.debug("#{Time.now} [EirbAdapter] results: #{search_results.inspect}")
       return self.class.format_search_results(search_results)
     rescue => bang
@@ -89,7 +89,7 @@ class EirbAdapter
         mapped << t_hash unless t_hash.empty?
       end
     end
-    LOG.info("#{Time.now} [EirbAdapter] mapped:  #{mapped.size}")
+    # LOG.info("#{Time.now} [EirbAdapter] mapped:  #{mapped.size}")
     # LOG.debug("#{Time.now} [EirbAdapter] mapped: #{mapped.inspect}")
     mapped
   end
