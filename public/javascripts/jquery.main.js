@@ -40,7 +40,7 @@ $(document).ready(function() {
     $("a[rel=#involvement]").overlay({
       onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
-      onLoad: function(){
+      onLoad: function(event){
         // dateinput
         $("#involvement input.occurred_on").dateinput({format: 'yyyy-mm-dd', selectors: true, yearRange: [-20, 1]});
         $("#involvement input.dob").dateinput({format: 'yyyy-mm-dd', selectors: true, yearRange: [-120, 1],
@@ -50,6 +50,8 @@ $(document).ready(function() {
             $("#calyear").unbind("change").change(function() { e.target.hide().setValue($(this).val(), $("#calmonth").val(), e.target.getValue('d')).show(); });
           }
         });
+        // cancel link
+        $("#involvement a.cancel").click(function(e){ e.preventDefault(); event.target.close();});
       }
     });
     
