@@ -16,4 +16,4 @@
   study.accrual_goal
   ]}
 -%>
-{aaData: <%=results.to_json %>, iTotalRecords: <%= results.size.to_s %>, iTotalDisplayRecords: <%= @display_records.to_s %>}
+{"aaData": <%=results.to_json %>, "iTotalRecords": <%= results.size.to_s %>, "iTotalDisplayRecords": <%= @display_records.to_s %>, "sEcho": <%= @sEcho %>}

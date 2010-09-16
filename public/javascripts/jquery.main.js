@@ -1,5 +1,4 @@
 $(document).ready(function() {
-  
   // flash messages
   $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
 
@@ -8,27 +7,25 @@ $(document).ready(function() {
    "oLanguage": { "sProcessing": '/images/spinner.gif' },
    "bProcessing": true,
    "bServerSide": true,
-   "bRetrieve": true,
    "sPaginationType": "full_numbers",
    "sAjaxSource": "studies.json"
   });
   
-  // show study: introduction (for studies without involvements) overlay
-  $("a[rel=#intro]").overlay({
-    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
-  });
-  
   // show study: datatable
   $("#accrual .display").dataTable({
-    "fnDrawCallback": activateRows, 
-    "iDisplayLength": 30, 
+    "fnDrawCallback": activateRows,
+    "iDisplayLength": 30,
     "sPaginationType": "full_numbers", 
-    "oLanguage": {"sZeroRecords": "<p><strong>No subjects yet - click 'Add' or 'Import' to get started. Or watch our <a rel='#intro'>4 minute introduction to eNOTIS</a>.</strong></p>"},
-    "aoColumns": [null,null,null,null,null,null,null,{ "sType": "html" },{ "sType": "html" }]
-  });    
-
+    "oLanguage": {"sZeroRecords": "<p><strong>No subjects yet - click 'Add' or 'Import' to get started. Or watch our <a rel='#intro'>4 minute introduction to eNOTIS</a>.</strong></p>"}
+  });
+  
   // show study: datatable paging - redraw dashes for empty cells, activate other studies and view/edit overlays
   function activateRows(){
+    // introduction (for empty datatable) overlay
+    $("a[rel=#intro]").overlay({
+      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
+    });
+  
     // dashes
     $("#accrual .display td:empty, #import .display td:empty").html("--");
     

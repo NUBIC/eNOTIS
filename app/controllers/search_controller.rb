@@ -25,8 +25,9 @@ class SearchController < ApplicationController
           all_studies     = StudyTable.title_or_name_or_irb_number_or_irb_status_like(params[:query]).project_role_is("Principal Investigator").order(order)
           @studies         = all_studies.paged(params[:iDisplayStart], params[:iDisplayLength])
           @display_records = all_studies.size
+          @sEcho = params[:sEcho].to_i
         else
-          render :json=> {:aaData => [], :iTotalRecords => 0, :iTotalDisplayRecords => 0}
+          render :json=> {"aaData" => [], "iTotalRecords" => 0, "iTotalDisplayRecords" => 0, "sEcho" => params[:sEcho]}
         end
       end
     end
