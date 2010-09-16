@@ -32,16 +32,16 @@ function dateChart(){
   var divid = "g1"; // change this to match your DIV ID
   var w = 500; // width
   var h = 120; // height
-  inetsoft.graph.importPackage(inetsoft.graph)
-  inetsoft.graph.importPackage(inetsoft.graph.aesthetic)
-  inetsoft.graph.importPackage(inetsoft.graph.coord)
-  inetsoft.graph.importPackage(inetsoft.graph.data)
-  inetsoft.graph.importPackage(inetsoft.graph.element)
-  inetsoft.graph.importPackage(inetsoft.graph.guide)
-  inetsoft.graph.importPackage(inetsoft.graph.guide.axis)
-  inetsoft.graph.importPackage(inetsoft.graph.guide.form)
-  inetsoft.graph.importPackage(inetsoft.graph.scale)
-  inetsoft.graph.importPackage(inetsoft.graph.schema)
+  inetsoft.graph.importPackage(inetsoft.graph);
+  inetsoft.graph.importPackage(inetsoft.graph.aesthetic);
+  inetsoft.graph.importPackage(inetsoft.graph.coord);
+  inetsoft.graph.importPackage(inetsoft.graph.data);
+  inetsoft.graph.importPackage(inetsoft.graph.element);
+  inetsoft.graph.importPackage(inetsoft.graph.guide);
+  inetsoft.graph.importPackage(inetsoft.graph.guide.axis);
+  inetsoft.graph.importPackage(inetsoft.graph.guide.form);
+  inetsoft.graph.importPackage(inetsoft.graph.scale);
+  inetsoft.graph.importPackage(inetsoft.graph.schema);
 
   // Your chart code
   var arr = [];
@@ -60,7 +60,7 @@ function dateChart(){
         var ozone = base * Math.random() * 0.8;
         var color = 0xff0000;
 
-        if(date.getDay() == 0) {
+        if(date.getDay() === 0) {
            week++;
         }
 
@@ -118,7 +118,7 @@ function dateChart(){
 
   graph.setCoordinate(coord);
   graph.addElement(elem);
-  graph.draw(divid,w,h,"http://chart.inetsoft.com/chart/gserver")
+  graph.draw(divid,w,h,"http://chart.inetsoft.com/chart/gserver");
 }
 
 function pieChart(location, title, data){

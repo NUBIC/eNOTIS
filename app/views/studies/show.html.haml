@@ -9,7 +9,7 @@
       = "pieChart('gender', 'Gender', #{@gender_stats.inspect});"
       = "pieChart('race', 'Race', #{@race_stats.inspect});"
       = "pieChart('ethnicity', 'Ethnicity', #{@ethnicity_stats.inspect});"
-      = "timeChart('timechart', 'Monthly and total accruals', 'last 12 months', #{@time_stats[0].inspect}, #{@time_stats[1].inspect}, #{@time_stats[2].inspect})"
+      = "timeChart('timechart', 'Monthly and total accruals', 'last 12 months', #{@time_stats[0].inspect}, #{@time_stats[1].inspect}, #{@time_stats[2].inspect});"
       = "dotChart(#{@dot_stats});"
     $('#study_information').hide(10); // need an arbitrary delay to have hide happen after pieChart
     });

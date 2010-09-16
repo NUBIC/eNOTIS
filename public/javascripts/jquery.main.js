@@ -23,7 +23,7 @@ $(document).ready(function() {
   function activateRows(){
     // introduction (for empty datatable) overlay
     $("a[rel=#intro]").overlay({
-      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
+      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
   
     // dashes
@@ -31,7 +31,7 @@ $(document).ready(function() {
     
     // other studies overlay
     $("a[rel=#other_studies]").overlay({
-      onBeforeLoad: function(){ $("#other_studies .wrap").load(this.getTrigger().attr("href"), "format=js", activateAccept) },
+      onBeforeLoad: function(){ $("#other_studies .wrap").load(this.getTrigger().attr("href"), "format=js", activateAccept); },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
       onClose: function(){$("#other_studies .wrap").html("");}
     });
@@ -79,7 +79,7 @@ $(document).ready(function() {
   
   // show study: report overlay
   $("a[rel=#report]").overlay({
-    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
+    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
   });
 
   // show study: study details and charts slider
@@ -93,7 +93,6 @@ $(document).ready(function() {
     "oLanguage": { "sProcessing": '/images/spinner.gif' },
     "bProcessing": true,
     "bServerSide": true,
-    "bRetrieve": true,
     "sPaginationType": "full_numbers",
     "sAjaxSource": "search.json?" + $.param({query: $.getUrlVar('query')})
    });
@@ -110,7 +109,7 @@ $(document).ready(function() {
 });
 
 // ajax for delete
-jQuery.ajaxSetup({ 'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")} });
+jQuery.ajaxSetup({ 'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript");} });
 
 function _ajax_request(url, data, callback, type, method) {
   if (jQuery.isFunction(data)) {
@@ -137,10 +136,10 @@ jQuery.extend({
 
 jQuery.fn.deleteWithAjax = function() {
   if (this.attr("confirm_msg")) {
-    var confirm_msg = this.attr("confirm_msg")
+    var confirm_msg = this.attr("confirm_msg");
   } else {
-    var confirm_msg = "Are you sure?"
-  };
+    var confirm_msg = "Are you sure?";
+  }
   this.removeAttr('onclick');
   this.unbind('click', false);
   this.click(function(e) {
@@ -149,7 +148,7 @@ jQuery.fn.deleteWithAjax = function() {
       return false;
     }else{
       e.preventDefault();
-    };
+    }
   });
   return this;
 };
