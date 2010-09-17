@@ -3,7 +3,8 @@
   %script{:type => 'text/javascript'}
     $(document).ready(function(){
     // show the Data Tables
-    $(".display").dataTable({"sPaginationType": "full_numbers"});
+    $("#active_users .display").dataTable({"sPaginationType": "full_numbers"});
+    $("#active_studies .display").dataTable({"sPaginationType": "full_numbers"});
     // easter egg
     $("img.hub").fadeIn(10000);
     // flash messages
