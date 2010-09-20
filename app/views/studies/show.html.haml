@@ -61,7 +61,7 @@
             %br
             %dtr{:title => InvolvementEvent.define_event("Completed")} Completed
           -unless @study.read_only?
-            %th{:colspan=>2} Actions
+            %th Actions
           -else
             %th View
       %tbody
@@ -79,10 +79,10 @@
             %td<
               = event_info(involvement, "completed")
               = event_info(involvement, "withdrawn")
-            -unless @study.read_only?
-              %td= link_to "Edit", edit_involvement_path(involvement), :rel => "#involvement"
-              %td= link_to 'Delete', involvement_path(involvement), :confirm_msg => "You are about to delete this subject. Deleting will completely remove all of the subject's information from the study.", :method => :delete, :class=>'delete'
-            -else
+            - unless @study.read_only?
+              %td<
+                = link_to("Edit", edit_involvement_path(involvement), :rel => "#involvement") + "&nbsp;&nbsp;".html_safe + link_to('Delete', involvement_path(involvement), :confirm_msg => "You are about to delete this subject. Deleting will completely remove all of the subject's information from the study.", :method => :delete, :class=>'delete')
+            - else
               %td= link_to "View", involvement_path(involvement), :rel => "#involvement"
   #involvement.overlay
     .wrap
