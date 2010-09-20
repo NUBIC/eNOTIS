@@ -52,6 +52,18 @@ $(document).ready(function() {
         });
         // cancel link
         $("#involvement a.cancel").click(function(e){ e.preventDefault(); event.target.close();});
+        
+        // race checkboxes should disble sibling checkboxes
+      	$('#involvement_unknown_or_not_reported_race:checked').parents('li.race').find(':checkbox').not('#involvement_unknown_or_not_reported_race').attr('checked', false).attr('disabled', true);
+      	$('#involvement_unknown_or_not_reported_race:checkbox').click(function(){
+          var e = $(this);
+          var others = e.parents('li.race').find(':checkbox').not('#involvement_unknown_or_not_reported_race');
+          if(e.is(':checked')){
+            others.attr('checked', false).attr('disabled', true);
+          }else{
+            others.attr('disabled', false);
+          }
+        });
       }
     });
     

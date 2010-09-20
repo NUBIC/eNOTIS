@@ -19,10 +19,10 @@
       %li
         = f.label  :ethnicity, "Ethnicity"
         = f.select :ethnicity, ethnicity_options(@involvement.ethnicity)
-      %li
+      %li.race
         = f.label  :race, "Race"
         - del_key = :race_is_unknown_or_not_reported
-        -race_options(del_key).each do |k|
+        - race_options(del_key).each do |k|
           %label{:for => "involvement_#{k}"}
             = f.check_box k
             = Involvement::RACE_ATTRIBUTES[k]
