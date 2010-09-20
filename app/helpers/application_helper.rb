@@ -8,9 +8,9 @@ module ApplicationHelper
   
   # Helper for displaying warning/notice/error flash messages
   def flash_messages(types)
-    types.map{|type| content_tag(:div, :class => type.to_s){ "#{flash[type]}" } }.join
+    types.map{|type| content_tag(:div, "#{flash[type]}", :class => type.to_s)}.join.html_safe
   end
-  
+
   def status_icon(study)
     # study.may_accrue? ? "O" : "X"
     study.may_accrue? ? image_tag('/images/status-on.png', :alt => "O", :title => study.irb_status) : image_tag('/images/status-off.png', :alt => "X", :title => study.irb_status)
@@ -21,7 +21,7 @@ module ApplicationHelper
     if study.irb_number.blank?
       content_tag("span", "(no IRB number)", :class => "irb_number", :title => study.title)
     elsif !m.blank? and !m[1].blank? and !m[2].blank?
-      content_tag("span", m[1] + content_tag("strong", m[2]), :class => "irb_number", :title => study.title)
+      content_tag("span", "#{m[1]}<strong>#{m[2]}</strong>".html_safe, :class => "irb_number", :title => study.title)
     else
       content_tag("span", study.irb_number, :class => "irb_number", :title => study.title)
     end
@@ -35,14 +35,14 @@ module ApplicationHelper
   def start_end_info(study)
     [ study.approved_date.blank? ? nil : study.approved_date.strftime("Approved: %b %d, %Y"),
       study.expiration_date.blank? ? nil : study.expiration_date.strftime("Expiration: %b %d, %Y"),
-      study.closed_or_completed_date.blank? ? nil : study.closed_or_completed_date.strftime("Closed/completed: %b %d, %Y") ].compact.join("<br/>")
+      study.closed_or_completed_date.blank? ? nil : study.closed_or_completed_date.strftime("Closed/completed: %b %d, %Y") ].compact.join("<br/>").html_safe
   end
   
   def people_info(arr)
     people = [*arr].compact.map do |p|
       (p.user["first_name"].blank? or p.user["last_name"].blank? or p.user["email"].blank?) ? nil : mail_to(p.user["email"], "#{p.user["first_name"]} #{p.user["last_name"]}", :title => "Project Role: #{p.project_role}")
     end.uniq.compact
-    people.empty? ? nil : people.join("<br/>")
+    (people.empty? ? nil : people.join("<br/>").html_safe)
   end
   
   def other_studies_flag(involvement)
@@ -65,7 +65,7 @@ module ApplicationHelper
   # @return [String, nil] an html span with the event date and note icon (if a note exists). nil if no involvement event found
   def event_info(involvement, event)
     if involvement_event = involvement.involvement_events.detect{|e| e.event.downcase == event.downcase}
-      content_tag("span", :class => event.downcase, :title => event){ "#{involvement_event.occurred_on}#{image_tag '/images/icons/note.png' unless involvement_event.note.blank?}" }
+      content_tag("span", "#{involvement_event.occurred_on} #{image_tag'/images/icons/note.png' unless involvement_event.note.blank?}".html_safe , :class => event.downcase, :title => event).html_safe
     end
   end
   
@@ -95,7 +95,7 @@ module ApplicationHelper
       "<span class='mrn bold'>#{subject.mrn}<span class='mrn_type'> (#{subject.mrn_type}) </span>"
     else
       "<span class='mrn bold'> Not entered/Unknown </span>"
-    end
+    end.html_safe
   end
 
   def case_number_helper(case_number)
@@ -103,7 +103,7 @@ module ApplicationHelper
       "<span class='case_number bold'>#{case_number}</span>" 
     else
       "<span class='case_number bold'> None Given </span>"
-    end
+    end.html_safe
   end
 
   def subject_name_helper(subject, last_name_first=true)
@@ -115,6 +115,6 @@ module ApplicationHelper
       end
     else
       "<span class='last_name bold'> Not entered/Unknown </span>"
-    end
+    end.html_safe
   end
 end

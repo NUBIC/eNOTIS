@@ -6,24 +6,24 @@
     - if @involvements.empty?
       if($('#player').length){ flowplayer("player", "/media/flowplayer-3.2.4.swf", {clip: {autoPlay: false}, canvas: {backgroundColor: '#dddddd', backgroundGradient: 'medium'}}); }
     - else
-      = "pieChart('gender', 'Gender', #{@gender_stats.inspect});"
-      = "pieChart('race', 'Race', #{@race_stats.inspect});"
-      = "pieChart('ethnicity', 'Ethnicity', #{@ethnicity_stats.inspect});"
-      = "timeChart('timechart', 'Monthly and total accruals', 'last 12 months', #{@time_stats[0].inspect}, #{@time_stats[1].inspect}, #{@time_stats[2].inspect});"
-      = "dotChart(#{@dot_stats});"
+      = "pieChart('gender', 'Gender', #{@gender_stats.inspect});".html_safe
+      = "pieChart('race', 'Race', #{@race_stats.inspect});".html_safe
+      = "pieChart('ethnicity', 'Ethnicity', #{@ethnicity_stats.inspect});".html_safe
+      = "timeChart('timechart', 'Monthly and total accruals', 'last 12 months', #{@time_stats[0].inspect}, #{@time_stats[1].inspect}, #{@time_stats[2].inspect});".html_safe
+      = "dotChart(#{@dot_stats});".html_safe
     $('#study_information').hide(10); // need an arbitrary delay to have hide happen after pieChart
     });
 #study
   -if @study.read_only?
     .study_msg= "This study is managed by a different system. Please see #{@study.read_only_msg || "the source system"} to edit information in this study and any related records." 
   .title
-    = pretty_irb_number @study
+    = pretty_irb_number@study
     = pretty_status @study
   .accrual_count
     = @involvements.size
     %label Subjects
   .accrual_goal
-    = @study.accrual_goal.blank? ? "&nbsp;" : @study.accrual_goal
+    = @study.accrual_goal.blank? ? "&nbsp;".html_safe : @study.accrual_goal
     %label Goal
   .name{:title => @study.title}
     = @study.title
@@ -76,7 +76,7 @@
             %td= involvement.ethnicity
             %td= involvement.race
             %td= event_info(involvement, "consented")
-            %td<
+            %td
               = event_info(involvement, "completed")
               = event_info(involvement, "withdrawn")
             - unless @study.read_only?
