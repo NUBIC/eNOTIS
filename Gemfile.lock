@@ -35,7 +35,7 @@ dependencies:
   rails: 
     group: 
     - :default
-    version: = 2.3.8
+    version: = 2.3.9
   pg: 
     group: 
     - :default
@@ -224,19 +224,19 @@ specs:
 - aasm: 
     version: 2.2.0
 - activesupport: 
-    version: 2.3.8
+    version: 2.3.9
 - rack: 
     version: 1.1.0
 - actionpack: 
-    version: 2.3.8
+    version: 2.3.9
 - actionmailer: 
-    version: 2.3.8
+    version: 2.3.9
 - activemessaging: 
     version: 0.7.1
 - activerecord: 
-    version: 2.3.8
+    version: 2.3.9
 - activeresource: 
-    version: 2.3.8
+    version: 2.3.9
 - fastercsv: 
     version: 1.5.3
 - color: 
@@ -278,7 +278,7 @@ specs:
 - net-ssh: 
     version: 2.0.23
 - net-scp: 
-    version: 1.0.3
+    version: 1.0.4
 - net-sftp: 
     version: 2.0.5
 - net-ssh-gateway: 
@@ -348,13 +348,13 @@ specs:
 - populator: 
     version: 0.2.5
 - rails: 
-    version: 2.3.8
+    version: 2.3.9
 - rcov: 
     version: 0.9.9
 - rdiscount: 
     version: 1.6.5
 - redis: 
-    version: 2.0.8
+    version: 2.0.10
 - redis-namespace: 
     version: 0.8.0
 - sinatra: 
@@ -395,7 +395,7 @@ specs:
     version: 2.3.15
 - wirble: 
     version: 0.1.3
-hash: 504a1830281814a5bbb8687eb0416fe485e887ca
+hash: 494045be992fd8cf713a4ca96e10ad561b1c9226
 sources: 
 - Rubygems: 
     uri: http://download.bioinformatics.northwestern.edu/gems/
