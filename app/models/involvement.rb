@@ -158,18 +158,18 @@ class Involvement < ActiveRecord::Base
   # Used for graphs
   def short_ethnicity
     return "" if ethnicity.blank?
-    (ethnicity[0..12].length == ethnicity.length) ? ethnicity : ethnicity[0..10] + "&#0133;"
+    (ethnicity[0..12].length == ethnicity.length) ? ethnicity : ethnicity[0..10] + "..."
   end
   
   def short_race
     return "" if race.blank?
     return "multiple" if races.size > 1
-    (races.first[0..12].length == races.first.length) ? races.first : races.first[0..10] + "&#0133;"
+    (races.first[0..12].length == races.first.length) ? races.first : races.first[0..10] + "..."
   end
   
   def short_gender
     return "" if gender.blank?
-    (gender[0..12].length == gender.length) ? gender : gender[0..10] + "&#0133;"
+    (gender[0..12].length == gender.length) ? gender : gender[0..10] + "..."
   end
   # END of methods used for graphs
 

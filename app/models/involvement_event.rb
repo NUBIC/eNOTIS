@@ -37,20 +37,25 @@ class InvolvementEvent < ActiveRecord::Base
       months = %w(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)
       monthly = Array.new(12, 0)
       totals = Array.new(12, 0)
-      (self.blank? ? [] : self).each{|e| monthly[e.occurred_on.month - 1] += 1 }
+
+      cutoff = 11.months.ago.at_beginning_of_month.to_datetime
+      lastyear, thisyear = (self.blank? ? [] : self).partition{|e| e.occurred_on < cutoff }
+      thisyear.each{|e| monthly[e.occurred_on.month - 1] += 1 }
+      pretotal = lastyear.count
+      
       months.rotate(Date.today.month)
       monthly.rotate(Date.today.month)
-      monthly.each_with_index{|obj, i| totals[i] = totals[i-1] + monthly[i] }
+      monthly.each_with_index{|obj, i| totals[i] = (i == 0 ? pretotal : totals[i-1]) + monthly[i] }
       [months, monthly, totals]
     end
     def to_dot_chart
       results = Array.new(12 * 7, 0)
       (self.blank? ? [] : self).each do |e|
         # pos is position in the bubble chart array
-        #   xs [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-        #   ys [7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-        #   basically, the chart from left to right, row by row from top to bottom
-        pos = 12*((7 - e.occurred_on.wday)%7) + (e.occurred_on.month - 1)
+        # the chart runs left (Jan) to right (Dec), bottom (Sun) to top (Sat)
+        # pos = 12*((7 - e.occurred_on.wday)%7) + (e.occurred_on.month - 1)
+        # results[pos] += 1
+        pos = 12*e.occurred_on.wday + (e.occurred_on.month - 1)
         results[pos] += 1
       end
       results

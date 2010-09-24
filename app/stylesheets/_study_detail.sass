@@ -42,6 +42,7 @@
       :color #222
   #study_information
     +column(48, true)
+    :display none
     .details
       +column(12)
       :margin-right 4px
@@ -50,19 +51,23 @@
         :display block
     .charts
       +column(36,true)
+      :margin-bottom 10px
       .chart
-        :width 225px
+        :margin-top 10px
+        :width 238px
         :height 150px
         :float left
-    #timechart
-      :float left
-      :clear left
-      :width 350px
-      :margin-top -10px
-      :height 275px
-    .dotchart
-      :float right
-      :width 360px
+      #timechart
+        :margin-top 10px
+        :float left
+        :clear left
+        :width 357px
+        :height 200px
+      #dotchart
+        :margin-top 10px
+        :float right
+        :width 357px
+        :height 200px
       h3
         :margin-left 40px
         :margin-bottom 0

@@ -1,17 +1,17 @@
 - content_for :head do
   = stylesheet_link_tag "dateinput"
-  = javascript_include_tag 'charts/highcharts', 'charts/excanvas.compiled', 'charts/raphael-min', 'charts/g.raphael-min', 'charts/g.dot-min', 'charts/jquery.charts', 'tools/flowplayer-3.2.4.min', :cache => "cache/study"
-  %script{:type => "text/javascript"}
+  = javascript_include_tag 'charts/protovis-r3.2', 'tools/flowplayer-3.2.4.min', :cache => "cache/study"
+  %script{:type => "text/javascript+protovis"}
     $(document).ready(function(){
     - if @involvements.empty?
       if($('#player').length){ flowplayer("player", "/media/flowplayer-3.2.4.swf", {clip: {autoPlay: false}, canvas: {backgroundColor: '#dddddd', backgroundGradient: 'medium'}}); }
     - else
-      = "pieChart('gender', 'Gender', #{@gender_stats.inspect});"
-      = "pieChart('race', 'Race', #{@race_stats.inspect});"
-      = "pieChart('ethnicity', 'Ethnicity', #{@ethnicity_stats.inspect});"
-      = "timeChart('timechart', 'Monthly and total accruals', 'last 12 months', #{@time_stats[0].inspect}, #{@time_stats[1].inspect}, #{@time_stats[2].inspect});"
-      = "dotChart(#{@dot_stats});"
-    $('#study_information').hide(10); // need an arbitrary delay to have hide happen after pieChart
+      = render :file => "public/javascripts/charts/protovis.charts.js" # must be rendered inline, unfortunately, because ie doesn't process scripts with type=text/javascript+protovis
+      = "months('timechart', 'Monthly and total accruals, last 12 months', #{@time_stats[0].inspect}, #{@time_stats[1].inspect}, #{@time_stats[2].inspect});"
+      = "donut('gender', #{@gender_stats.map(&:last).inspect}, #{@gender_stats.map(&:first).inspect});"
+      = "donut('race', #{@race_stats.map(&:last).inspect}, #{@race_stats.map(&:first).inspect});"
+      = "donut('ethnicity', #{@ethnicity_stats.map(&:last).inspect}, #{@ethnicity_stats.map(&:first).inspect});"
+      = "dots('dotchart', 'All accruals by month and weekday', #{@dot_stats});"
     });
 #study
   -if @study.read_only?
@@ -38,9 +38,8 @@
         #ethnicity.chart
         #race.chart
         #timechart
-        .dotchart
-          %h3 Accruals by month and weekday
-          #by_month_and_weekday  
+        #dotchart
+      %br.clear
   #accrual
     #actions
       = link_to("Details and Charts", '#', :rel => '#study_information', :class => 'charts')

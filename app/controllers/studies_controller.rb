@@ -37,7 +37,7 @@ class StudiesController < ApplicationController
         @ethnicity_stats = @involvements.count_all(:short_ethnicity)
         @gender_stats = @involvements.count_all(:short_gender)
         @race_stats = @involvements.count_all(:short_race)
-        @time_stats = InvolvementEvent.accruals.on_study(@study).in_last_12_months.to_time_chart
+        @time_stats = InvolvementEvent.accruals.on_study(@study).to_time_chart
         @dot_stats = InvolvementEvent.accruals.on_study(@study).to_dot_chart.inspect
       end
     else
