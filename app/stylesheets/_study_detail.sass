@@ -96,8 +96,10 @@
         :background transparent url('/images/icons/table_save.png') no-repeat center left        
       a.report
         :background transparent url('/images/icons/report.png') no-repeat center left        
-    th dtr.withdrawn, td span.withdrawn
-      :color #aaa  
+    table.display
+      :clear both
+      th dtr.withdrawn, td span.withdrawn
+        :color #aaa  
   #import
     +column(48)
     :display none

@@ -7,11 +7,11 @@
       if($('#player').length){ flowplayer("player", "/media/flowplayer-3.2.4.swf", {clip: {autoPlay: false}, canvas: {backgroundColor: '#dddddd', backgroundGradient: 'medium'}}); }
     - else
       = render :file => "public/javascripts/charts/protovis.charts.js" # must be rendered inline, unfortunately, because ie doesn't process scripts with type=text/javascript+protovis
-      = "months('timechart', 'Monthly and total accruals, last 12 months', #{@time_stats[0].inspect}, #{@time_stats[1].inspect}, #{@time_stats[2].inspect});"
-      = "donut('gender', #{@gender_stats.map(&:last).inspect}, #{@gender_stats.map(&:first).inspect});"
-      = "donut('race', #{@race_stats.map(&:last).inspect}, #{@race_stats.map(&:first).inspect});"
-      = "donut('ethnicity', #{@ethnicity_stats.map(&:last).inspect}, #{@ethnicity_stats.map(&:first).inspect});"
-      = "dots('dotchart', 'All accruals by month and weekday', #{@dot_stats});"
+      = "months('timechart', 'Monthly and total accruals, last 12 months', #{@time_stats[0].inspect}, #{@time_stats[1].inspect}, #{@time_stats[2].inspect});".html_safe
+      = "donut('gender', #{@gender_stats.map(&:last).inspect}, #{@gender_stats.map(&:first).inspect});".html_safe
+      = "donut('race', #{@race_stats.map(&:last).inspect}, #{@race_stats.map(&:first).inspect});".html_safe
+      = "donut('ethnicity', #{@ethnicity_stats.map(&:last).inspect}, #{@ethnicity_stats.map(&:first).inspect});".html_safe
+      = "dots('dotchart', 'All accruals by month and weekday', #{@dot_stats});".html_safe
     });
 #study
   -if @study.read_only?
