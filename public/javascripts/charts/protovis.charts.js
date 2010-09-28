@@ -126,7 +126,7 @@ function dots(fig, title, zvalues){
       h = 170, // 30px added by top and bottom margins
       x = pv.Scale.ordinal(months).split(0, w),
       y = pv.Scale.ordinal(days).split(0, h),
-      s = pv.Scale.linear(zvalues).range(5, 100),
+      s = pv.Scale.linear(zvalues).range(0, 100),
       c = pv.Scale.linear(zvalues).range("#1f77b4", "#ff7f0e");
 
   /* The root panel. */
