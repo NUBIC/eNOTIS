@@ -8,14 +8,14 @@
 
 .instructions
   %h3 Instructions
-  = "Your upload should: (#{link_to 'see our sample file', sample_involvements_path})"
+  = "Your upload should: (#{link_to 'see our sample file', sample_involvements_path})".html_safe
   %ol
     %li
       %strong Be a .csv file.
       In Excel save as "Comma Separated Values (.csv)"
     %li
       %strong= "Have all of the required column headings"
-      = "(#{link_to 'see our sample file', sample_involvements_path}), even if you don't have data for them."
+      = "(#{link_to 'see our sample file', sample_involvements_path}), even if you don't have data for them.".html_safe
     %li
       %strong Use exactly these NIH reporting values:
       %ul
