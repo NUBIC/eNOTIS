@@ -41,6 +41,25 @@ eNOTIS depends on a few important gems:
     db: "eirb_prod"
   
 == Changes ==
+1.8.0
+* mark visualizations as html safe. properly style table to align correctly before datatables script runs.
+* protovis visualizations
+ (3621)* NIH Inclusion reports now open in a new window. resolves #3621
+* new charts from protovis
+* Revert "upgraded to latest haml"
+* upgraded to latest haml
+* removing .html_safe and replacing it with haml's != escaping for strings in views
+* Most everything renders now with .html_safe sprinkled all over the place. http://github.com/rails/rails_xss Tomorrow, upgrade haml and see if I can remove the .html_safe from our haml files http://haml-lang.com/docs/yardoc/file.HAML_REFERENCE.html#unescaping_html references #3893
+* First Commit on rails 2.3.9 upgrade. ResqueWeb middleware is now disabled on test, cucumber, and hudson. Rails commit http://github.com/rails/rails/commit/85b6d79d8a17fdef667770e31b44ac6647f8b584 caused cucumber specs to blow up due to changes in cookie stores, and removing resque web from the rails process 
+ (origin/protovis)* fix column mismatch for datatables, which does not support colspan
+* unknown or not reported race checkbox should toggle others. closes #3612
+* involvements cancel link should not reload page. closes #3990
+
+1.7.1
+* Releasing v1.7.1. One quick UI fix for Laura on the hub page
+* I now have 2 datatables working on the hub page. I'm not sure why the existing code didnt work before. references #3992
+* The hub page should work again. references #3992
+
 1.7.0
 * Update changelog
 * removing dateinput.js - not needed since it is part of jquery.tools.min.js. #3986
