@@ -59,8 +59,7 @@ namespace :users do
     admins = [{:netid => "blc615", :first_name => "Brian",   :last_name => "Chamberlain",     :email => "b-chamberlain@northwestern.edu"}, 
               {:netid => "daw286", :first_name => "David",   :last_name => "Were",            :email => "d-were@northwestern.edu"},
               {:netid => "lmw351", :first_name => "Laura",   :last_name => "Wimbiscus Yoon",  :email => "laurawimbiscus2008@u.northwestern.edu"},
-              {:netid => "myo628", :first_name => "Mark",    :last_name => "Wimbiscus Yoon",  :email => "yoon@northwestern.edu"},
-              {:netid => "sjg304", :first_name => "Sam",     :last_name => "Granieri",        :email => "sam-granieri-jr@northwestern.edu"}]
+              {:netid => "myo628", :first_name => "Mark",    :last_name => "Wimbiscus Yoon",  :email => "yoon@northwestern.edu"}]
     admins.each do |hash|
       User.create(hash) unless (exists = User.find_by_netid(hash[:netid]))
       puts exists ? "#{hash[:netid]} already exists" : "Created #{hash[:netid]}"
@@ -72,8 +71,7 @@ namespace :users do
     nons = [{:netid => "brian", :first_name => "Brian",   :last_name => "Chamberlain",     :email => "b-chamberlain@northwestern.edu"}, 
               {:netid => "david", :first_name => "David",   :last_name => "Were",            :email => "d-were@northwestern.edu"},
               {:netid => "laura", :first_name => "Laura",   :last_name => "Wimbiscus Yoon",  :email => "laurawimbiscus2008@u.northwestern.edu"},
-              {:netid => "yoon", :first_name => "Mark",    :last_name => "Wimbiscus Yoon",  :email => "yoon@northwestern.edu"},
-              {:netid => "sam", :first_name => "Sam",     :last_name => "Granieri",        :email => "sam-granieri-jr@northwestern.edu"}]
+              {:netid => "yoon", :first_name => "Mark",    :last_name => "Wimbiscus Yoon",  :email => "yoon@northwestern.edu"}]
     nons.each do |hash|
       User.create(hash) unless (exists = User.find_by_netid(hash[:netid]))
       puts exists ? "#{hash[:netid]} already exists" : "Created #{hash[:netid]}"
