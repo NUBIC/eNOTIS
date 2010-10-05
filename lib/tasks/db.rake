@@ -34,7 +34,7 @@ namespace :db do
     pgpassword_wrapper(@password) do
       # Check for directory permissions
       `mkdir -p #{File.expand_path(@backup_folder)}`
-      `pg_dump -O -o -c -x #{@options} | gzip -f --best > #{destination}`
+      `pg_dump -O -o -c -x -i #{@options} | gzip -f --best > #{destination}`
     end
   end
   

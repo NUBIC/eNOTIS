@@ -3,7 +3,6 @@ require 'chronic'
 class StudyUpload < ActiveRecord::Base
 
   # Associations
-  belongs_to :user
   belongs_to :study
 
   # Mixins
@@ -118,7 +117,7 @@ class StudyUpload < ActiveRecord::Base
   end
   
   def params_from_row(r)
-    { :user => self.user.attributes.symbolize_keys,
+    { 
       :study => self.study.attributes.symbolize_keys,
       :subject => { :nmff_mrn => r[:nmff_mrn],
                     :nmh_mrn => r[:nmh_mrn],

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101117193255) do
+ActiveRecord::Schema.define(:version => 20100823174930) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -55,32 +55,15 @@ ActiveRecord::Schema.define(:version => 20101117193255) do
     t.string   "case_number"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "race_is_native_hawaiian_or_other_pacific_islander", :default => false
     t.boolean  "race_is_white",                                     :default => false
     t.boolean  "race_is_unknown_or_not_reported",                   :default => false
     t.boolean  "race_is_american_indian_or_alaska_native",          :default => false
     t.boolean  "race_is_asian",                                     :default => false
     t.boolean  "race_is_black_or_african_american",                 :default => false
-    t.string   "address_line1"
-    t.string   "address_line2"
-    t.string   "city"
-    t.string   "state"
-    t.string   "zip"
-    t.string   "email"
-    t.string   "home_phone"
-    t.string   "work_phone"
-    t.string   "cell_phone"
+    t.boolean  "race_is_native_hawaiian_or_other_pacific_islander", :default => false
   end
 
   add_index "involvements", ["subject_id", "study_id", "ethnicity", "gender"], :name => "involvements_attr_idx", :unique => true
-
-  create_table "resource_statuses", :force => true do |t|
-    t.string   "name",       :null => false
-    t.boolean  "status"
-    t.string   "message"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "roles", :force => true do |t|
     t.integer  "study_id"
@@ -171,9 +154,6 @@ ActiveRecord::Schema.define(:version => 20101117193255) do
     t.integer  "external_patient_id"
     t.string   "data_source"
     t.date     "empi_updated_date"
-    t.string   "nmff_mrn"
-    t.string   "nmh_mrn"
-    t.string   "ric_mrn"
   end
 
   add_index "subjects", ["external_patient_id"], :name => "index_subjects_on_external_patient_id"

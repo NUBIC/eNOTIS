@@ -3,9 +3,8 @@ class Role < ActiveRecord::Base
   belongs_to :user
   belongs_to :study
   belongs_to :study_table
-  delegate :first_name, :last_name, :name, :netid, :to => :user
   
-  validates_presence_of :user_id
+  validates_presence_of :netid
   validates_presence_of :study_id
   
   attr_protected :consent_role #defines app permissions
