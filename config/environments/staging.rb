@@ -29,7 +29,7 @@ config.log_level = :info
 
 config.after_initialize do
   Bcsec.configure do
-    authenticator :netid
+    authenticator :netid, :pers
     central '/etc/nubic/bcsec-staging.yml'
   end
 end

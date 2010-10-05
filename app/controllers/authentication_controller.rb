@@ -1,5 +1,6 @@
 class AuthenticationController < ApplicationController
-  layout "layouts/public"
+  layout :public
+  
   auto_session_timeout_actions
   
   skip_before_filter :auto_session_timeout_filter, :only => :index

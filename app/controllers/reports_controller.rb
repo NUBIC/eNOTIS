@@ -1,7 +1,10 @@
 class ReportsController < ApplicationController
-  layout "layouts/main"  
+  layout :main
 
-  before_filter :user_must_be_logged_in
+  # Authorization
+  include Bcsec::Rails::SecuredController
+  permit :user
+
   has_view_trail :except => :index
 
   def index

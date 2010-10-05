@@ -1,15 +1,16 @@
 class InvolvementsController < ApplicationController
-  layout "layouts/main"
-  
-  # Includes
-  include Chronic
-  
-  # Authentication
-  before_filter :user_must_be_logged_in
+  layout :main
+
+  # Authorization
+  include Bcsec::Rails::SecuredController
+  permit :user
   
   # Auditing
   has_view_trail :except => :index
   
+  # Includes
+  include Chronic
+    
   # Public instance methods (actions)
   def index
   end

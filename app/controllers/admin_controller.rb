@@ -1,7 +1,6 @@
 class AdminController < ApplicationController
-  # Authentication
-  before_filter :user_must_be_logged_in
-  before_filter :user_must_be_admin
+  include Bcsec::Rails::SecuredController
+  permit :admin
   
   require_dependency 'activity'
   
@@ -13,9 +12,4 @@ class AdminController < ApplicationController
     @recent_uploads = StudyUpload.all(:include => [:user, :study], :order => "created_at DESC")
   end
   
-  protected
-  
-  def user_must_be_admin
-    redirect_to default_path unless current_user.admin?
-  end
 end

@@ -1,7 +1,9 @@
 class SearchController < ApplicationController
-  layout "layouts/main"
-  # Authentication
-  before_filter :user_must_be_logged_in
+  layout :main
+
+  # Authorization
+  include Bcsec::Rails::SecuredController
+  permit :user
   
   # Auditing
   has_view_trail
