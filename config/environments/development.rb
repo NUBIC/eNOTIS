@@ -20,8 +20,15 @@ require 'ruby-debug' if defined? Debugger # don't choke if we haven't the gem
 
 config.after_initialize do
   Bcsec.configure do
-    authenticator :mock
-    central '/etc/nubic/bcsec-local.yml'
+    # The authorities to use.  See the bcsec API documentation
+    # for `Bcsec::Authorities` for options.
+    enotis = Enotis::Bcsec::Authority.new
+    static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
+    authorities static, enotis
+
+    # The server-central parameters file for cc_pers, NU LDAP,
+    # CAS, and policy parameters.
+    central 'config/static_auth.yml'
   end
 end
 require 'empi' # include the symbolize! Hash extension

@@ -29,7 +29,8 @@ config.action_view.cache_template_loading            = true
 
 config.after_initialize do
   Bcsec.configure do
-    authenticator :netid, :pers
+    enotis = Enotis::Bcsec::Authority.new
+    authenticator :cas, :pers, enotis
     central '/etc/nubic/bcsec-prod.yml'
   end
 end

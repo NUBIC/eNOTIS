@@ -29,7 +29,8 @@ config.log_level = :info
 
 config.after_initialize do
   Bcsec.configure do
-    authenticator :netid, :pers
+    enotis = Enotis::Bcsec::Authority.new
+    authenticator :cas, :pers, enotis
     central '/etc/nubic/bcsec-staging.yml'
   end
 end
