@@ -1,5 +1,5 @@
 class SearchController < ApplicationController
-  layout :main
+  layout "main"
 
   # Authorization
   include Bcsec::Rails::SecuredController

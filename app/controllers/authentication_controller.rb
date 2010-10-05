@@ -1,5 +1,5 @@
 class AuthenticationController < ApplicationController
-  layout :public
+  layout "public"
   
   auto_session_timeout_actions
   

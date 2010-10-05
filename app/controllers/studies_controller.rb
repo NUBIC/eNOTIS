@@ -1,5 +1,5 @@
 class StudiesController < ApplicationController
-  layout :main
+  layout "main"
   require 'array'
 
   # Authorization
