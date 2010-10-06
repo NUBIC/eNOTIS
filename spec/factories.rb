@@ -94,7 +94,8 @@ Factory.sequence :email do |n|
   "user#{"%03d" % n}@northwestern.edu"
 end
 
-Factory.define :user do |u|
+Factory.define :user, :class=>Bcsec::User  do |u|
+  u.username    'test'
   u.first_name  'Test'
   u.last_name   'User'
   u.email       {Factory.next :email}
@@ -126,7 +127,6 @@ Factory.define :involvement_event do |e|
 end
 
 Factory.define :role do |u|
-  u.association   :user
   u.association   :study
   u.project_role {["PI","Principal Investigator","Co-Investigator","Coordinator","Co-INV","Statistican"].rand}
   u.consent_role {["Obtaining","Obtaining","Obtaining","Oversight","None",""].rand}
@@ -134,7 +134,6 @@ end
 
 # This type of role will only be able to edit/view patients (ie accrue them)
 Factory.define :role_accrues, :parent => :role do |u|
-  u.association   :user
   u.association   :study
   u.project_role {["PI","Principal Investigator","Co-Investigator","Coordinator","Co-INV","Statistican"].rand}
   u.consent_role "Obtaining"
@@ -142,14 +141,12 @@ end
 
 # This type of role will only be able to view patients and not edit them (ie no accrual privs)
 Factory.define :role_views, :parent => :role do |u|
-  u.association   :user
   u.association   :study
   u.project_role {["PI","Principal Investigator","Co-Investigator","Coordinator","Co-INV","Statistican"].rand}
   u.consent_role {["Oversight","None",""].rand}
 end
 
 Factory.define :study_upload do |s|
-  s.association   :user
   s.association   :study
   s.upload        {File.open(File.dirname(__FILE__) + '/uploads/good.csv')}
   # s.upload_file_name        {"foo.csv"}

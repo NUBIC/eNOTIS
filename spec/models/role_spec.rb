@@ -7,9 +7,10 @@ describe Role do
 
   describe "Basic Role behavior" do
     before(:each) do 
-      @user = Factory(:user, :netid => "abc123")
+      #@user = Factory(:user, :netid => "abc123")
+      @netid='abc123'
       @study = Factory(:study, :irb_number => "STU0010101")
-      @role = Factory(:role, :user => @user, :study => @study)
+      @role = Factory(:role, :netid => @netid, :study => @study)
     end
 
     it "should create a new instance given valid attributes" do
@@ -23,10 +24,10 @@ describe Role do
     end
 
     it "can or cannot accrue patients" do
-      can_role = Factory(:role, :user => @user,
+      can_role = Factory(:role, :netid => @netid,
                          :study => @study, 
                          :consent_role => "Obtaining")
-      cannot_role = Factory(:role, :user => @user,
+      cannot_role = Factory(:role, :netid => @netid,
                          :study => @study, 
                          :consent_role => "None")
       can_role.can_accrue?.should be_true
@@ -34,8 +35,8 @@ describe Role do
     end
   end
 
-  it "should be invalid without user or study" do
-    Role.new(:user_id => 3).should have(1).error_on(:study_id)
-    Role.new(:study_id => 1).should have(1).error_on(:user_id)
+  it "should be invalid without netid or study" do
+    Role.new(:netid => 'test').should have(1).error_on(:study_id)
+    Role.new(:study_id => 1).should have(1).error_on(:netid)
   end
 end
