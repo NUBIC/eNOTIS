@@ -18,7 +18,7 @@ describe StudyUpload do
   end
   
   it "should fail if upload is blank" do
-    @up = StudyUpload.new(:user_id => 2, :study_id => 2, :upload => nil)
+    @up = StudyUpload.new(:netid => "abc234", :study_id => 2, :upload => nil)
     @up.legit?.should be_false
     @up.summary.should =~ /Please upload a file/
   end

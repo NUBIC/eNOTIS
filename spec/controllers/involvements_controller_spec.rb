@@ -7,11 +7,8 @@ end
 describe InvolvementsController do
   before(:each) do
     @study = Factory(:study, :irb_number => 'STU00002629')
-    StudyUpload.stub!(:create).and_return(@up = Factory(:study_upload, :study => @study))
-    controller.stub!(:user_must_be_logged_in)
-    @user=Bcsec::User.new("test")
-    @user.stub!(:authenticated?).and_return(true)
-    controller.stub!(:current_user).and_return(@user)
+    StudyUpload.stub!(:create).and_return(@up = Factory(:study_upload))
+    login_as "brian" 
   end
   
   it "should allow me to post the file to upload" do

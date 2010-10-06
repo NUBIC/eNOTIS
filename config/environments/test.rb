@@ -22,6 +22,21 @@ config.action_controller.allow_forgery_protection    = false
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
 
+
+config.after_initialize do
+  Bcsec.configure do
+    # The authorities to use.  See the bcsec API documentation
+    # for `Bcsec::Authorities` for options.
+    enotis = Enotis::Bcsec::Authority.new
+    static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
+    authorities static, enotis
+
+    # The server-central parameters file for cc_pers, NU LDAP,
+    # CAS, and policy parameters.
+    central 'config/static_auth.yml'
+  end
+end
+
 # Use SQL instead of Active Record's schema dumper when creating the test database.
 # This is necessary if your schema can't be completely dumped by the schema dumper,
 # like if you have constraints or database-specific column types

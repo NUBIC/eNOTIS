@@ -25,6 +25,18 @@ ActiveRecord::Schema.define(:version => 20100823174930) do
     t.text    "value"
   end
 
+  create_table "event_types", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "category"
+    t.integer  "seq",         :default => 0
+    t.integer  "study_id"
+    t.boolean  "editable",    :default => true
+    t.boolean  "repeatable",  :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "funding_sources", :force => true do |t|
     t.integer  "study_id"
     t.string   "name"
@@ -114,7 +126,6 @@ ActiveRecord::Schema.define(:version => 20100823174930) do
 
   create_table "study_uploads", :force => true do |t|
     t.integer  "study_id"
-    t.integer  "user_id"
     t.string   "state"
     t.string   "summary"
     t.string   "upload_file_name"

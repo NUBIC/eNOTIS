@@ -38,4 +38,16 @@ class ApplicationController < ActionController::Base
     flash[message_type] = message if !message.blank? and !message_type.blank?
     redirect_to path
   end
+
+  # Overriding the paper and view trail methods for the current_user method
+  def user_for_paper_trail
+    current_user.username
+  end
+
+  # current_user better be a bcsec user with a username attr or this will blow up
+  def set_whodiddit
+    @@whodiddit = lambda {
+      self.respond_to?(:current_user) ? self.current_user.username : nil
+    }
+  end
 end

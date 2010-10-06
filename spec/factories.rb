@@ -149,6 +149,7 @@ end
 Factory.define :study_upload do |s|
   s.association   :study
   s.upload        {File.open(File.dirname(__FILE__) + '/uploads/good.csv')}
+  s.netid         {"abc123"}
   # s.upload_file_name        {"foo.csv"}
   # s.upload_content_type     {"text/csv"}
   # s.upload_file_size        {1023}
