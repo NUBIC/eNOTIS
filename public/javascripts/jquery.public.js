@@ -1,9 +1,29 @@
+$.urlParam = function(name){
+  var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href) || [];
+  return results[1] || 0;
+}
 $(document).ready(function(){
   // flash (messages)
   $("#flash .close").click(function(){$("#flash").fadeOut(300);});
 
   // one less click for login
-  $("#netid").focus();
+  // $("#netid").focus();
+  // var shouldOpenLoginWindow = true;
+  var shouldOpenLoginWindow = ($.urlParam('logout') == "true") || ($.urlParam('return') != 0);
+  $("a[rel=#loginframe]").overlay({load: shouldOpenLoginWindow});
+  $("#loginframe iframe").load(function (){
+    // do something once the iframe is loaded
+    try{
+      $(this.contentDocument);
+      // console.log($(this.contentDocument).attr('location'));
+      $(window).attr('location', $(this.contentDocument).attr('location'));
+    }catch(err){
+      // console.log("different domain");
+    }
+
+    // console.log($(window).attr('location').hostname);
+  });
+  
 
   // login help overlay
   $("a[rel=#help]").overlay({

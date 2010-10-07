@@ -34,6 +34,7 @@ users:
     portals:            # portal & group auth info (optional)
       - ENOTIS:             # A portal with simple groups
         - Admin
+        - User
   yoon:
     password: secret          # password for :user auth (optional)
     portals:            # portal & group auth info (optional)

@@ -14,35 +14,12 @@ class AuthenticationController < ApplicationController
     @studies_count = Study.count
     @users_count = Activity.count(:whodiddit, :distinct => true) # :conditions => ["created_at >= ?", 1.month.ago])
     @accrual_count = Involvement.count # (:conditions => ["updated_at >= ?", 1.month.ago])
-    # @status = system_status
-  end
-  
-  def login
-    logout_keeping_session!
-    user = User.authenticate(params[:netid], params[:password])
-
-    if user
-      # Protects against session fixation attacks, causes request forgery protection 
-      # if user resubmits an earlier form using back button. Uncomment if you understand the tradeoffs.
-      # reset_session
-      self.current_user = user
-      redirect_back_or_default(default_path)
-      flash[:notice] = "Logged in successfully as #{current_user.netid}"
-    else
-      note_failed_signin(user)
-      @netid = params[:netid]
-      # @status = system_status
-      render :action => 'index'
-    end
-  end
-  
-  def logout
-    logout_killing_session!
-    flash[:notice] = "You have been logged out."
-    redirect_back_or_default(login_path) 
+    @cas_url = params[:logout] ? cas_logout_path : cas_login_path.to_s
   end
   
   def help
+    @cas_url = params[:logout] ? cas_logout_path : cas_login_path.to_s
+    
     respond_to do |format|
       format.html
       format.js {render :layout => false}
@@ -65,5 +42,14 @@ class AuthenticationController < ApplicationController
       logger.warn "Failed login, user doesn't exist for '#{params[:netid]}' from #{request.remote_ip} at #{Time.now.utc}"
     end
   end
-  
+  def cas_login_path
+    uri = URI.join(Bcsec.configuration.parameters_for(:cas)[:base_url], 'login')
+    uri.query = "service=#{request.scheme}://#{request.host}#{params[:return]}"
+    return uri.to_s
+  end
+  def cas_logout_path
+    uri = URI.join(Bcsec.configuration.parameters_for(:cas)[:base_url], 'logout')
+    uri.query = "service=#{request.scheme}://#{request.host}"
+    return uri.to_s
+  end
 end

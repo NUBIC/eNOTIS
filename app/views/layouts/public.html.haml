@@ -13,15 +13,8 @@
           #environment{:class => Rails.env}= Rails.env.upcase
         #app_name= link_to_unless_current image_tag("enotis-swoop-logo.png", :alt => "eNOTIS"), default_path, :title => "eNOTIS Home"
         #login
-          - form_tag(auth_path, :method => 'post') do
-            %label{:for => 'netid'} NetID
-            = text_field_tag('netid')
-            %br
-            %label{:for => 'password'} Password
-            = password_field_tag('password')
-            %br
-            = link_to "I cannot access my account", login_help_path, :rel => "#help"
-            = submit_tag('login')
+          = link_to "Login", "#", :rel => "#loginframe"
+          
         - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
           #flash
             = flash_messages(types)
@@ -34,6 +27,11 @@
         .nucatslogo= link_to image_tag("nucats_logo.gif"), "http://www.nucats.northwestern.edu"
         .nubiclogo= link_to image_tag("nubic_logo.gif"), "http://www.nucats.northwestern.edu/centers/nubic"
         %p.version!= "eNOTIS #{app_version_helper} &mdash; created by #{link_to("NUBIC", "http://www.nucats.northwestern.edu/centers/nubic")} for Northwestern University"
+      #loginframe.overlay
+        %iframe{:src => @cas_url}
+        %p.help_link
+          = link_to "I cannot access my account", login_help_path, :rel => "#help"
+        
       #help.overlay
         .contentWrap
     :plain

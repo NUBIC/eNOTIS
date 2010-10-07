@@ -1,3 +1,4 @@
+require 'uri'
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   
@@ -11,6 +12,12 @@ module ApplicationHelper
     types.map{|type| content_tag(:div, "#{flash[type]}".html_safe, :class => type.to_s)}.join.html_safe
   end
 
+  def cas_login_helper
+    path = URI.parse(Bcsec.configuration.parameters_for(:cas)[:base_url])
+    path.query = "service=#{request.scheme}://#{request.host}&gateway=true" #params[:return].blank? ? "service=#{request.scheme}://#{request.host}" : "service=#{request.scheme}://#{request.host}/#{URI.escape(params[:return])}"
+    return path.to_s
+    # request.env['bcsec'].configuration.parameters_for(:cas)[:base_url]
+  end
   def status_icon(study)
     # study.may_accrue? ? "O" : "X"
     study.may_accrue? ? image_tag('/images/status-on.png', :alt => "O", :title => study.irb_status) : image_tag('/images/status-off.png', :alt => "X", :title => study.irb_status)
