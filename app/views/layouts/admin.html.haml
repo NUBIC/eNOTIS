@@ -16,7 +16,7 @@
         #current_user_badge
           = "#{current_user.name} (#{current_user.netid})"
           |
-          = link_to('Logout', logout_path)
+          = link_to('Logout', "/logout")
         #search_box
           = link_to "&laquo; back to enotis".html_safe, default_path
         - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
