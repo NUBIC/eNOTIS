@@ -1,6 +1,4 @@
-class AuthenticationController < ApplicationController
-  layout "public"
-  
+class PublicController < ApplicationController
   auto_session_timeout_actions
   
   skip_before_filter :auto_session_timeout_filter, :only => :index
@@ -19,7 +17,6 @@ class AuthenticationController < ApplicationController
   
   def help
     @cas_url = params[:logout] ? cas_logout_path : cas_login_path.to_s
-    
     respond_to do |format|
       format.html
       format.js {render :layout => false}
@@ -32,16 +29,6 @@ class AuthenticationController < ApplicationController
 
   # Protected instance methods
   protected
-  # Track failed login attempts
-  def note_failed_signin(user)
-    if user.nil?
-      flash[:notice] = "Couldn't log you in as '#{params[:netid]}'<br/>Visit <a href='http://password.northwestern.edu'>password.northwestern.edu</a> for password help."
-      logger.warn "Failed login for '#{params[:netid]}' from #{request.remote_ip} at #{Time.now.utc}"
-    else
-      flash[:notice] = "You are not currently associated with any IRB-approved studies as a PI, Co-Investigator, or Coordinator."
-      logger.warn "Failed login, user doesn't exist for '#{params[:netid]}' from #{request.remote_ip} at #{Time.now.utc}"
-    end
-  end
   def cas_login_path
     uri = URI.join(Bcsec.configuration.parameters_for(:cas)[:base_url], 'login')
     uri.query = "service=#{request.scheme}://#{request.host}#{params[:return]}"

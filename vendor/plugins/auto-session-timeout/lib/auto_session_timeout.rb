@@ -28,7 +28,7 @@ module AutoSessionTimeout
   
   def render_session_status
     response.headers["Etag"] = ""  # clear etags to prevent caching
-    if logged_in?
+    if current_user?
       if session[:auto_session_expires_at] <= Time.now
         @status = 'expired'
       elsif session[:auto_session_warning_at] <= Time.now  
