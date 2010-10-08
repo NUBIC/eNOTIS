@@ -27,7 +27,7 @@ config.after_initialize do
   Bcsec.configure do
     # The authorities to use.  See the bcsec API documentation
     # for `Bcsec::Authorities` for options.
-    enotis = Enotis::Bcsec::Authority.new
+    enotis = Bcsec::Authorities::Enotis.new
     static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
     authorities static, enotis
 

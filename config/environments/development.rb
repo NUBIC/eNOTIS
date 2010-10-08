@@ -20,7 +20,7 @@ require 'ruby-debug' if defined? Debugger # don't choke if we haven't the gem
 
 config.after_initialize do
   Bcsec.configure do
-    enotis = Enotis::Bcsec::Authority.new
+    enotis = Bcsec::Authorities::Enotis.new
     static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
     authorities :cas, static, enotis
     central '/etc/nubic/bcsec-local.yml'

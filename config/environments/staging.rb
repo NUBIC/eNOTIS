@@ -29,7 +29,7 @@ config.log_level = :info
 
 config.after_initialize do
   Bcsec.configure do
-    enotis = Enotis::Bcsec::Authority.new
+    enotis = Bcsec::Authorities::Enotis.new
     authorities :cas, :netid, :pers, enotis
     central '/etc/nubic/bcsec-staging.yml'
   end

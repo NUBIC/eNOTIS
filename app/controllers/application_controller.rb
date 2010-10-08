@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
 
   # Overriding the paper and view trail methods for the current_user method
   def user_for_paper_trail
-    current_user.username
+    current_user.blank? ? nil : current_user.username
   end
 
   # current_user better be a bcsec user with a username attr or this will blow up
