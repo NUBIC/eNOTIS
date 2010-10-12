@@ -25,18 +25,6 @@ ActiveRecord::Schema.define(:version => 20100823174930) do
     t.text    "value"
   end
 
-  create_table "event_types", :force => true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.string   "category"
-    t.integer  "seq",         :default => 0
-    t.integer  "study_id"
-    t.boolean  "editable",    :default => true
-    t.boolean  "repeatable",  :default => true
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "funding_sources", :force => true do |t|
     t.integer  "study_id"
     t.string   "name"
@@ -67,12 +55,12 @@ ActiveRecord::Schema.define(:version => 20100823174930) do
     t.string   "case_number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "race_is_black_or_african_american",                 :default => false
+    t.boolean  "race_is_native_hawaiian_or_other_pacific_islander", :default => false
     t.boolean  "race_is_white",                                     :default => false
     t.boolean  "race_is_unknown_or_not_reported",                   :default => false
     t.boolean  "race_is_american_indian_or_alaska_native",          :default => false
     t.boolean  "race_is_asian",                                     :default => false
-    t.boolean  "race_is_black_or_african_american",                 :default => false
-    t.boolean  "race_is_native_hawaiian_or_other_pacific_islander", :default => false
   end
 
   add_index "involvements", ["subject_id", "study_id", "ethnicity", "gender"], :name => "involvements_attr_idx", :unique => true

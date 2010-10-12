@@ -18,6 +18,15 @@ class RemoveUsersTable < ActiveRecord::Migration
     end
     puts "Done with StudyUploads"
 
+    puts "Processing Activity data"
+    Activity.all.each do |a|
+      a.whodiddit = User.find(a.whodiddit).netid
+      result = a.save
+      puts "."
+      puts "save netid: #{a.netid} to activity #{a.inspect} 'failed'" unless result 
+    end
+    puts "Done with Activities"
+    
     execute('drop view study_tables') #removing views built on the user table
     execute('drop view pi_last_name')
     execute 'ALTER TABLE roles DROP CONSTRAINT fk_authorized_people_studies' #cleaning up a mistake
