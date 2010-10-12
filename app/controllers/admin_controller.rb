@@ -7,7 +7,7 @@ class AdminController < ApplicationController
   # Public instance methods (actions)
   def index
     @involvement_events = InvolvementEvent.all(:include => {:involvement => :study}, :conditions => {:studies => {:read_only => nil}}).group_by(&:event)
-    @active_users = Activity.all(:include => :user, :order => "created_at DESC").group_by(&:user)
+    @active_users = Activity.all(:order => "created_at DESC").group_by(&:whodiddit)
     @active_studies = Involvement.all(:include => :study, :conditions => {:studies => {:read_only => nil}}, :order => "involvements.updated_at DESC").group_by(&:study)
     @recent_uploads = StudyUpload.all(:include => [:user, :study], :order => "created_at DESC")
   end

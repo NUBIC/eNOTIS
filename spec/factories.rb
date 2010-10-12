@@ -94,21 +94,6 @@ Factory.sequence :email do |n|
   "user#{"%03d" % n}@northwestern.edu"
 end
 
-Factory.define :user, :class=>Bcsec::User  do |u|
-  u.username    'test'
-  u.first_name  'Test'
-  u.last_name   'User'
-  u.email       {Factory.next :email}
-  u.netid       {|me| me.email.split("@")[0]}
-end
-
-Factory.define :fake_user, :parent => :user do |u|
-  u.first_name  {Faker::Name.first_name}
-  u.last_name   {Faker::Name.last_name}
-  u.email       {|me| Factory.next(:email).gsub(/user/, "#{me.first_name.gsub(/[^a-zA-Z]/,'')[0,1]}#{me.last_name.gsub(/[^a-zA-Z]/,'')[0,2]}".downcase)}
-  u.netid       {|me| me.email.split("@")[0]}
-end
-
 # Join/accessory models
 Factory.define :involvement do |i|
   i.association   :subject

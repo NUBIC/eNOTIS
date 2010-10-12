@@ -50,6 +50,19 @@ users:
     portals:            # portal & group auth info (optional)
       - ENOTIS:             # A portal with simple groups
         - User
+        
+# for testing      
+  adminnie:               # username
+    password: secret          # password for :user auth (optional)
+    portals:            # portal & group auth info (optional)
+      - ENOTIS:             # A portal with simple groups
+        - Admin
+  usergey:
+    password: secret          # password for :user auth (optional)
+    portals:            # portal & group auth info (optional)
+      - ENOTIS:             # A portal with simple groups
+        - User      
+        
 groups:                  # groups for hierarchical portals
   ENOTIS:                 # (these aren't real NOTIS groups)
     - Admin:

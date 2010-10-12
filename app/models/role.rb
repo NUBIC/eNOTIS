@@ -11,6 +11,9 @@ class Role < ActiveRecord::Base
 
   before_save :truncate_project_role
   
+  def last_name
+    # TODO fill this in from Bcsec::User
+  end
   def can_accrue?
     consent_role == "Obtaining"
   end

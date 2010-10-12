@@ -15,13 +15,13 @@
   %table.display
     %thead
       %tr
-        - %w(name netid new create edit update import upload search last\ active).each do |header|
+        - %w(netid new create edit update import upload search last\ active).each do |header|
           %th= header
     %tbody
       - @active_users.each do |user, activities|
         %tr
-          %td= mail_to user.email, user.name
-          %td= user.netid
+          %td= user
+          -#%td= user.netid
           - %w(involvements new involvements create involvements edit involvements update studies import involvements upload search show).each_slice(2) do |controller, action|
             %td= activities.count{|a| a.controller == controller && a.action == action}
           %td= "#{activities.first.created_at.to_date.to_s(:db)} | #{time_ago_in_words(activities.first.created_at)} ago"
@@ -33,7 +33,6 @@
       %tr
         %th irb number
         %th accrual
-        %th names
         %th netids
         %th last accrual
     %tbody
@@ -42,8 +41,9 @@
         %tr
           %td= link_to study.irb_number, study_path(study)
           %td= involvements.size
-          %td!= users.map{|u| mail_to u.email, u.name}.join(", ")
-          %td= users.map(&:netid).join(", ")
+          %td= users.join(", ")
+          -# %td!= users.map{|u| mail_to u.email, u.name}.join(", ")
+          -# %td= users.map(&:netid).join(", ")
           %td= "#{involvements.first.updated_at.to_date.to_s(:db)} | #{time_ago_in_words(involvements.first.updated_at)} ago"
 
 #recent_uploads

@@ -18,7 +18,7 @@
           |
           = link_to('Logout', "/logout")
         #search_box
-          = link_to "&laquo; back to enotis".html_safe, default_path
+          = link_to "&laquo; back to eNOTIS".html_safe, default_path
         - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
           #flash
             = flash_messages(types)

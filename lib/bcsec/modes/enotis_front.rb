@@ -1,5 +1,4 @@
 require 'uri'
-require 'bcsec/modes/middleware/enotis_front/cas_login_ticket'
 module Bcsec
   module Modes
     class EnotisFront < Bcsec::Modes::Cas
@@ -33,10 +32,6 @@ module Bcsec
         # logout_uri = URI.parse(cas_logout_url)
         # logout_uri.query = "url=#{escape(return_uri)}"
         # ::Rack::Response.new { |resp| resp.redirect(logout_uri.to_s) }
-      end
-      
-      def self.append_middleware(builder)
-        builder.use(Middleware::EnotisFront::CasLoginTicket)
       end
     end
   end  
