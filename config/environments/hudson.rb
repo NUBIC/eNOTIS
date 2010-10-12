@@ -35,6 +35,5 @@ config.after_initialize do
     static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
     ui_mode :form
     authorities static, enotis
-    central '/etc/nubic/bcsec-local.yml'
   end
 end
