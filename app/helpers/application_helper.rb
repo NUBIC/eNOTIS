@@ -8,7 +8,7 @@ module ApplicationHelper
   
   # Helper for displaying warning/notice/error flash messages
   def flash_messages(types)
-    types.map{|type| content_tag(:div, "#{flash[type]}", :class => type.to_s)}.join.html_safe
+    types.map{|type| content_tag(:div, "#{flash[type]}".html_safe, :class => type.to_s)}.join.html_safe
   end
 
   def status_icon(study)
