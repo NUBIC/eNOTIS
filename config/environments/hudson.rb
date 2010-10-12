@@ -28,3 +28,13 @@ config.action_mailer.delivery_method = :test
 # config.active_record.schema_format = :sql
 EMPI_SERVICE = {:uri => nil, :credentials => nil}
 config.middleware.delete('ResqueWeb')
+
+config.after_initialize do
+  Bcsec.configure do
+    enotis = Bcsec::Authorities::Enotis.new
+    static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
+    ui_mode :form
+    authorities static, enotis
+    central '/etc/nubic/bcsec-local.yml'
+  end
+end
