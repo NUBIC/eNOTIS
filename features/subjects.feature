@@ -5,7 +5,7 @@ Feature: Manage subjects
   
   Background:
     Given a study "Vitamin D and delerium" with id "STU001248" and irb_status "Approved"
-    And I log in as "pi" with password "secret" on study "STU001248"
+    And I log in as "usergey" on study "STU001248"
     And I go to the study page for id "STU001248"
   
   Scenario: A coordinator can add a subject
