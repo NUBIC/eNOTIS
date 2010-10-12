@@ -107,7 +107,7 @@ Given /^the study "([^\"]*)" has the following subjects$/ do |id, table|
 end
 
 Given /^the study "([^\"]*)" has an upload by "([^\"]*)"$/ do |id, netid|
-  Factory.create(:study_upload, :study_id => Study.find_by_irb_number(id).id, :user_id => User.find_by_netid(netid).id)
+  Factory.create(:study_upload, :study_id => Study.find_by_irb_number(id).id, :netid => netid)
 end
 
 Given /^a subject with mrn "([^\"]*)"$/ do |mrn|

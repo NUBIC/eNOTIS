@@ -5,7 +5,7 @@ Feature: Manage studies
 
   Background:
     Given a study "Vitamin C and concentration" with id "STU001248" and irb_status "Approved"
-    Given I log in as "pi" with password "secret" on study "STU001248"
+    Given I log in as "usergey" on study "STU001248"
   
   Scenario: A random user cannot view a study page
     Given a study "Vitamin E and exertion" with id "STU001249" and irb_status "Approved"

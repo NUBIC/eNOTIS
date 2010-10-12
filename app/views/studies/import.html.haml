@@ -40,7 +40,7 @@
               %span{:title => u.created_at.to_s(:db)}
                 = time_ago_in_words(u.created_at)
                 ago
-            %td= u.user.netid
+            %td= u.netid
             %td= link_to "Original", u.upload.url
             %td= link_to("Result", u.result.url) unless u.result_file_name.nil?
             %td= u.summary
