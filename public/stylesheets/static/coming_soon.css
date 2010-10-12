@@ -41,7 +41,7 @@
 body {
   background-color: white;
   background-repeat: repeat-x;
-  background-image: url("/images/public-fade-bg.png"); }
+  background-image: url('/images/public-fade-bg.png'); }
 
 #main {
   display: inline;
@@ -56,7 +56,7 @@ body {
   -moz-border-radius: 0 0 7px 7px;
   background-position: 0 -35px;
   background-position: 0 0;
-  background-image: url("/images/pane-texture-bg.png"); }
+  background-image: url('/images/pane-texture-bg.png'); }
   #main ul.tabs {
     background-color: #51483d;
     margin: 0;
@@ -94,7 +94,7 @@ body {
     height: 450px;
     padding-top: 20px; }
     #main div.panes h4, #main div.panes h3 {
-      color: #333333; }
+      color: #333; }
     #main div.panes h2 {
       font-weight: bold; }
     #main div.panes h3 {
@@ -131,7 +131,7 @@ body {
           margin-bottom: 5px;
           font-size: 13px; }
       #main div.panes div.items div.current {
-        border: 1px inset #cccccc;
+        border: 1px inset #ccc;
         background-color: #cdcdcd; }
 
 #footer {
@@ -158,12 +158,12 @@ body {
 .tooltip, .overlay {
   display: none;
   z-index: 999;
-  background-color: white;
-  border: 1px solid #666666;
+  background-color: #fff;
+  border: 1px solid #666;
   padding: 10px;
-  color: #333333;
-  -moz-box-shadow: 0 0 90px 5px black;
-  -webkit-box-shadow: 0 0 90px black; }
+  color: #333;
+  -moz-box-shadow: 0 0 90px 5px #000;
+  -webkit-box-shadow: 0 0 90px #000; }
 
 .overlay {
   z-index: 1000; }
