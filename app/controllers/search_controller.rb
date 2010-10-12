@@ -11,8 +11,7 @@ class SearchController < ApplicationController
   # Public instance methods (actions)
   def show
     unless (q = params[:query]).blank?
-      subjects_scope = Subject.involvements_study_id_equals_any(current_user.studies)
-      @subjects = subjects_scope.first_name_or_last_name_like_any(q.split).paginate(:page => params[:page])
+      @subjects = current_user.subjects.first_name_or_last_name_like_any(q.split).paginate(:page => params[:page])
     end
     respond_to do |format|
       format.html do

@@ -15,7 +15,8 @@ Feature: Search
     And the study "STU001252" has the following subjects
       | first_name | last_name |
       | Buck       | Stoppsier |
-    And I log in as "joe" with password "secret" on study "STU001251"
+    And I log in as "usergey" on study "STU001251"
+    Then "usergey" should have 3 subjects
     And I go to the homepage
 
   Scenario: A user can search for studies (by id)

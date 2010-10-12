@@ -4,6 +4,7 @@ require 'chronic'
 class Study < ActiveRecord::Base
   named_scope :paged, lambda {|start, limit| { :offset => start ,:limit => limit}}
   named_scope :order, lambda {|order| { :order => order}}
+  named_scope :with_user, lambda{|netid| {:include => :roles, :conditions => ["roles.netid =?", netid]}}
   
   # Associations
   has_many :involvements

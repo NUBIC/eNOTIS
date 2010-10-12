@@ -1,7 +1,10 @@
 module Bcsec::EnotisUser
   # This module contains methods that will extend the Bcsec::User model
   def studies
-    Study.all(:limit => 10)
+    Study.with_user(username)
+  end
+  def subjects
+    Subject.with_user(username)
   end
   def admin?
     permit?(:admin)

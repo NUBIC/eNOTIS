@@ -6,7 +6,12 @@ describe Study do
     @study = Factory(:study)
     @study.irb_number = "STU0001031"
   end
-
+  it "should scope by user" do
+    @notmystudy = Factory(:study)
+    Factory(:role, :netid => "usergey", :study => @study)
+    Factory(:role, :netid => "adminnie", :study => @notmystudy)
+    Study.with_user("usergey").should == [@study]
+  end
   it "should not be valid with out an irb_number" do
     @study.irb_number = nil
     @study.valid?.should be_false

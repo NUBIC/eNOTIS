@@ -6,6 +6,7 @@ Given /^"([^\"]*)" is on study "([^\"]*)"$/ do |netid, irb_number|
   # coordinator
   coordinator = Factory(:role_accrues, :netid => netid, :study => study)
   coordinator.should be_valid
+  Study.with_user(netid).include?(study).should be_true
 end
 
 Given /^a study with id "([^\"]*)"$/ do |irb_number|
@@ -28,6 +29,11 @@ Given /^I log in as "([^\"]*)" on study "([^\"]*)"$/ do |netid, irb_number|
   fill_in :password, :with => "secret"
   click_button "Log in"
 end
+
+Then /^"([^"]*)" should have (\d+) subjects$/ do |netid, num|
+  Subject.with_user(netid).count.should == num.to_i
+end
+
 
 # Given /^I log in as admin "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|
 #   user = Factory.create(:user, {:netid => netid})

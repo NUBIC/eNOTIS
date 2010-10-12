@@ -1,6 +1,24 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ApplicationHelper do
+  it "should display mailto links for study staff" do
+    # assumptions about static authority
+    s = Bcsec.configuration.authorities.find { |a| Bcsec::Authorities::Static === a }
+    s.user('adminnie') do |u|
+      u.first_name = "Minnie"
+      u.last_name = "Admin"
+      u.email = "enotis@northwestern.edu"
+    end
+    s.user('usergey') do |u|
+      u.first_name = "Sergey"
+      u.last_name = "User"
+      u.email = "enotis@northwestern.edu"
+    end
+    study = Factory(:study)
+    Factory(:role_accrues, :netid => "adminnie", :study => study, :project_role => "PI")
+    Factory(:role_accrues, :netid => "usergey", :study => study, :project_role => "Coordinator")
+    helper.people_info(study.roles).should == "<a href=\"mailto:enotis@northwestern.edu\" title=\"Project Role: Coordinator\">Sergey User</a><br/><a href=\"mailto:enotis@northwestern.edu\" title=\"Project Role: PI\">Minnie Admin</a>"
+  end
   it "should find involvement events and format them" do
     @involvement = Factory(:involvement)
     @involvement_event = Factory(:involvement_event, :event => "Consented", :involvement => @involvement, :occurred_on => "1/1/10")

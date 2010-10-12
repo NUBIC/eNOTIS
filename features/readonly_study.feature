@@ -5,7 +5,7 @@ Feature: View Readonly Studies
 
   Background:
     Given a READONLY study "Vitamin C and concentration" with id "STU009248" and irb_status "Approved"
-    Given I log in as "pi" with password "secret" on study "STU009248"
+    Given I log in as "usergey" on study "STU009248"
 
   Scenario: A study I manage is read-only because it's data is imported from NOTIS
     Given the readonly study "STU009248" has the following subjects

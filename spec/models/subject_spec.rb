@@ -13,7 +13,6 @@ describe Subject do
     Subject.new("birth_date"=>"12/18/07").birth_date.should == Date.parse("2007-12-18")
   end
   
-    
   # Eliminating this method for now, in favor of simplifying - we just create for now, will do a find/create in the future with the EMPI - yoon
   
   # describe "finding and creating" do

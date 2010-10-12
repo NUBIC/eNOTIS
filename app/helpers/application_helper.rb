@@ -47,7 +47,9 @@ module ApplicationHelper
   
   def people_info(arr)
     people = [*arr].compact.map do |p|
-      person_info(p)
+      user = Bcsec.authority.find_user(p.netid)
+      user && user.email ? mail_to(user.email, user.full_name, :title => "Project Role: #{p.project_role}") : nil
+      # (p.user["first_name"].blank? or p.user["last_name"].blank? or p.user["email"].blank?) ? nil : mail_to(p.user["email"], "#{p.user["first_name"]} #{p.user["last_name"]}", :title => "Project Role: #{p.project_role}")
     end.uniq.compact
     (people.empty? ? nil : people.join(", ").html_safe)
   end
