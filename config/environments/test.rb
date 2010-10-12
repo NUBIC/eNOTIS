@@ -25,15 +25,11 @@ config.action_mailer.delivery_method = :test
 
 config.after_initialize do
   Bcsec.configure do
-    # The authorities to use.  See the bcsec API documentation
-    # for `Bcsec::Authorities` for options.
     enotis = Bcsec::Authorities::Enotis.new
     static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
+    ui_mode :form
     authorities static, enotis
-
-    # The server-central parameters file for cc_pers, NU LDAP,
-    # CAS, and policy parameters.
-    central 'config/static_auth.yml'
+    central '/etc/nubic/bcsec-local.yml'
   end
 end
 
