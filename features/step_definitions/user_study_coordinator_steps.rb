@@ -21,7 +21,7 @@ Given /^a READONLY study "([^\"]*)" with id "([^\"]*)" and irb_status "([^\"]*)"
   Factory.create(:fake_study, :title => title, :name => title, :irb_number => irb_number, :irb_status => irb_status, :read_only => true)
 end
 
-Given /^I log in and visit (.*) as "([^\"]*)" on study "([^\"]*)"$/ do |page_name, netid, irb_number|
+Given /^I log in as "([^\"]*)" on study "([^\"]*)"$/ do |netid, irb_number|
   Given %("#{netid}" is on study "#{irb_number}")
   visit "/login"
   fill_in :username, :with => netid
@@ -29,17 +29,6 @@ Given /^I log in and visit (.*) as "([^\"]*)" on study "([^\"]*)"$/ do |page_nam
   click_button "Log in"
 end
 
-
-# Given /^I log in as "([^\"]*)" on study "([^\"]*)"$/ do |netid, irb_number|
-#   Given %("#{netid}" is on study "#{irb_number}")
-#   get "/", {'bcsec' => Bcsec::Rack::Facade.new(Bcsec.configuration, Bcsec.authority.find_user(netid))}
-#   puts request.env..inspect
-# end
-# 
-# Given /^I log in as "([^\"]*)"$/ do |netid|
-#   get "/", {'bcsec' => Bcsec::Rack::Facade.new(Bcsec.configuration, Bcsec.authority.find_user(netid))}
-# end
-# 
 # Given /^I log in as admin "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|
 #   user = Factory.create(:user, {:netid => netid})
 #   user.should be_valid

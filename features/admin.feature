@@ -4,13 +4,13 @@ Feature: Developer admin access
   I want to be able see user activity
 
   Scenario: A normal user should not be able to visit the hub
-    Given I log in and visit the hub page as "usergey" on study "STU00144"
+    Given I log in as "usergey" on study "STU00144"
     And I go to the hub page
     Then I should not see "back to eNOTIS"
     Then I should be on the homepage
 
   Scenario: An admin user should be able to visit the hub
-    Given I log in and visit the hub page as "adminnie" on study "STU00144"
+    Given I log in as "adminnie" on study "STU00144"
     And I go to the hub page
     Then I should see "back to eNOTIS"    
 
