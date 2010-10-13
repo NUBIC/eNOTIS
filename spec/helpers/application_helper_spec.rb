@@ -17,7 +17,7 @@ describe ApplicationHelper do
     study = Factory(:study)
     Factory(:role_accrues, :netid => "adminnie", :study => study, :project_role => "PI")
     Factory(:role_accrues, :netid => "usergey", :study => study, :project_role => "Coordinator")
-    helper.people_info(study.roles).should == "<a href=\"mailto:enotis@northwestern.edu\" title=\"Project Role: Coordinator\">Sergey User</a><br/><a href=\"mailto:enotis@northwestern.edu\" title=\"Project Role: PI\">Minnie Admin</a>"
+    helper.people_info(study.roles).should == "<span title=\"Project Role: Coordinator\"><a href=\"mailto:enotis@northwestern.edu\">Sergey User</a></span><span title=\"Project Role: PI\"><a href=\"mailto:enotis@northwestern.edu\">Minnie Admin</a></span>"
   end
   it "should find involvement events and format them" do
     @involvement = Factory(:involvement)
