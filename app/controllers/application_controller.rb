@@ -18,8 +18,8 @@ class ApplicationController < ActionController::Base
       self.send :reset_session
     else
       unless self.send(:active_url) == self.url_for(self.params)
-        self.session[:auto_session_expires_at] = Time.now + 5.minutes
-        self.session[:auto_session_warning_at] = self.session[:auto_session_expires_at] - 4.minutes
+        self.session[:auto_session_expires_at] = Time.now + 30.minutes
+        self.session[:auto_session_warning_at] = self.session[:auto_session_expires_at] - 25.minutes
       end
     end      
   end
