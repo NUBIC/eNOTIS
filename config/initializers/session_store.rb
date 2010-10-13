@@ -7,6 +7,7 @@
 ActionController::Base.session = {
   :key         => '_subject_tracker_session',
   :secret      => '5ce08b00698f0119178e0d16f0d9cc73a7d2f9150f39a38bbe94414bdf838b27829e34273b1b622c3f923f4921ada8d867531cc1571f5793b7ccf763c2625adc',
+  :expire_after => 30.minutes
 }
 
 

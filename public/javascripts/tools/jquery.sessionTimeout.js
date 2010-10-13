@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  var frequency = 60 * 1000;
+  var frequency = 1 * 60 * 1000;
   $.PeriodicalUpdater(
     {
       url: '/active',
@@ -11,10 +11,13 @@ $(document).ready(function(){
     function(data)
     {
       if (data == 'expired')
-        window.location.href = '/logout';
+        // Send to studies page to ensure that PHI is not in the browser after 30 mins of idle time
+        if(window.location.pathname != "/studies"){ window.location.href = '/studies'; }
       if (data == 'warning')
-        $("#session-expire").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }, closeOnClick: false, api: true }).load();
-  });
+        // Show an overlay to ensure that PHI is not visible after 5 mins of idle time
+        $("#session-expire").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.93 }, closeOnClick: false, api: true }).load();
+    }
+  );
 });
 
 /**

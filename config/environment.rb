@@ -42,9 +42,9 @@ Rails::Initializer.run do |config|
   # Email setup
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-   :address => "ns.northwestern.edu",
-   :port => 25,
-   :domain => "northwestern.edu"
+    :address => "ns.northwestern.edu",
+    :port => 25,
+    :domain => "northwestern.edu"
   }
 
 end

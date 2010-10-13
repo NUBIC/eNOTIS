@@ -5,7 +5,6 @@
     %title= "eNOTIS :: #{@title}"
     = stylesheet_link_tag "compiled/admin"
     = javascript_include_tag "tools/jquery.tools.min.js", "tools/jquery.dataTables.min", "tools/jquery.sessionTimeout", "jquery.admin", :cache => "cache/admin"
-    = auto_session_timeout_js(:frequency => 60) if logged_in?
     = yield :head
   %body
     #container
@@ -29,4 +28,4 @@
       #footer
         %p!= "eNOTIS #{app_version_helper} &mdash; created by #{link_to("NUBIC", "http://www.nucats.northwestern.edu/centers/nubic")} for Northwestern University"
       #session-expire.overlay
-        %b your session is about to expire
+        %b You have been idle for over 5 minutes. After 30 mins, you will be redirected to the studies page. Please remember to log out when you are done.

@@ -1,8 +1,5 @@
 class PublicController < ApplicationController
-  auto_session_timeout_actions
-  
-  skip_before_filter :auto_session_timeout_filter, :only => :index
-  skip_before_filter :verify_authenticity_token, :only => :login
+  skip_before_filter :auto_session_timeout_filter
   
   # Public instance methods (actions)
   def index
@@ -22,9 +19,21 @@ class PublicController < ApplicationController
       format.js {render :layout => false}
     end
   end
-
+  
   def active
-    render_session_status
+    response.headers["Etag"] = ""  # clear etags to prevent caching
+    if current_user
+      if session[:auto_session_expires_at] <= Time.now
+        @status = 'expired'
+      elsif session[:auto_session_warning_at] <= Time.now  
+        @status = 'warning'
+      else
+        @status = 'active'
+      end
+    else
+      @status = 'expired'
+    end
+    render :text => @status, :status => 200
   end
 
   # Protected instance methods
