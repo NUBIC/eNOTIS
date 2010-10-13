@@ -11,13 +11,8 @@ module ApplicationHelper
   def flash_messages(types)
     types.map{|type| content_tag(:div, "#{flash[type]}".html_safe, :class => type.to_s)}.join.html_safe
   end
-
-  def status_icon(study)
-    # study.may_accrue? ? "O" : "X"
-    study.may_accrue? ? image_tag('/images/status-on.png', :alt => "O", :title => study.irb_status) : image_tag('/images/status-off.png', :alt => "X", :title => study.irb_status)
-  end
-
-  def pretty_irb_number(study)
+    
+  def irb_span(study)
     m = study.irb_number.match(/(STU0*)(\d*)/)
     if study.irb_number.blank?
       content_tag("span", "(no IRB number)", :class => "irb_number", :title => study.title)
@@ -28,9 +23,9 @@ module ApplicationHelper
     end
   end
   
-  def pretty_status(study)
+  def status_span(study)
     # the class name affects sorting within study tables
-    content_tag(:span, study.irb_status, :class => study.may_accrue? ? "sortabove status on" : "sortbelow status off")
+    content_tag(:span, study.irb_status, :class => study.may_accrue? ? "sortabove status on" : "sortbelow status off")  
   end
 
   def approved_date(study)

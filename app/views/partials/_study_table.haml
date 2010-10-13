@@ -4,23 +4,13 @@
       %th Status
       %th IRB number
       %th Name
-      %th PI
       %th Accrual
       %th Goal
   %tbody
     - studies.each do |study|
       %tr
-        %td.status
-          = pretty_status study
-        %td.irb_number
-          - if study.has_coordinator?(current_user)
-            = link_to pretty_irb_number(study), study_path(study.irb_number), :title => "#{study.status}: #{study.title}", :class => 'study'
-          - else
-            = pretty_irb_number(study)
-            = link_to image_tag('/images/icons/information.png'), "#", :rel => "#study_information", :class => 'study_information'
-            .study_information
-              = render :partial => 'partials/study_info', :locals => {:study => study}
+        %td.status= status_span study
+        %td.irb_number= link_to(irb_span(study), study_path(study.irb_number), :title => "#{study.status}: #{study.title}", :class => 'study')
         %td= study.name
-        %td= study.try(:principal_investigator).try(:last_name)
         %td= study.accrual || 0
         %td= study.accrual_goal

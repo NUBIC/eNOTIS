@@ -2,8 +2,7 @@ require 'chronic'
 
 # Represents a Clinical Study/Trial.
 class Study < ActiveRecord::Base
-  named_scope :paged, lambda {|start, limit| { :offset => start ,:limit => limit}}
-  named_scope :order, lambda {|order| { :order => order}}
+  named_scope :order_by, lambda {|order, direction| order == "accrual" ? {:include => :involvements, :select => "COUNT(involvements.*) as accrual", :order => "accrual #{direction.upcase}"} : {:order => "#{order} #{direction.upcase}"}}
   named_scope :with_user, lambda{|netid| {:include => :roles, :conditions => ["roles.netid =?", netid]}}
   
   # Associations
@@ -96,10 +95,6 @@ class Study < ActiveRecord::Base
     self.irb_number
   end
 
-  def has_role?(user)
-    user.admin? or roles.map(&:netid).include? user.netid
-  end
-  
   # Temporary for demo
   def principal_investigator
     roles.detect{|x| x.project_role =~ /P\.?I\.?|Principal Investigator/i}
@@ -109,7 +104,7 @@ class Study < ActiveRecord::Base
   # We need to phase out these named roles for a more binary authorization
   # for can_accrue ==true (ie view/edit patients) vs can_accrue ==false (can only view)
   def has_coordinator?(user)
-    has_role?(user)
+    roles.map(&:netid).include? user.netid
   end
 
   def accrual

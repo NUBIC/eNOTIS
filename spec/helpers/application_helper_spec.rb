@@ -31,14 +31,14 @@ describe ApplicationHelper do
     helper.event_info(@involvement, "CONsented").should =~ /2011-01-01/
   end
   it "should emphasize the juicy part of the irb_number" do
-    helper.pretty_irb_number(Study.new(:irb_number => "STU00019833")).should == '<span class="irb_number">STU000<strong>19833</strong></span>'
-    helper.pretty_irb_number(Study.new(:irb_number => "STU1234")).should == '<span class="irb_number">STU<strong>1234</strong></span>'
-    helper.pretty_irb_number(Study.new(:irb_number => "STUABC")).should == '<span class="irb_number">STUABC</span>'
-    helper.pretty_irb_number(Study.new(:irb_number => "")).should == '<span class="irb_number">(no IRB number)</span>'
+    helper.irb_span(Study.new(:irb_number => "STU00019833")).should == '<span class="irb_number">STU000<strong>19833</strong></span>'
+    helper.irb_span(Study.new(:irb_number => "STU1234")).should == '<span class="irb_number">STU<strong>1234</strong></span>'
+    helper.irb_span(Study.new(:irb_number => "STUABC")).should == '<span class="irb_number">STUABC</span>'
+    helper.irb_span(Study.new(:irb_number => "")).should == '<span class="irb_number">(no IRB number)</span>'
   end
   it "should emphasize study status" do
-    helper.pretty_status(Study.new(:irb_status => "Approved")).should == '<span class="sortabove status on">Approved</span>'
-    helper.pretty_status(Study.new(:irb_status => "Withdrawn")).should == '<span class="sortbelow status off">Withdrawn</span>'
-    helper.pretty_status(Study.new(:irb_status => "")).should == '<span class="sortbelow status off"></span>'
+    helper.status_span(Study.new(:irb_status => "Approved")).should == '<span class="sortabove status on">Approved</span>'
+    helper.status_span(Study.new(:irb_status => "Withdrawn")).should == '<span class="sortbelow status off">Withdrawn</span>'
+    helper.status_span(Study.new(:irb_status => "")).should == '<span class="sortbelow status off"></span>'
   end
 end

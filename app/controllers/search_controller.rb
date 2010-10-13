@@ -20,16 +20,10 @@ class SearchController < ApplicationController
         end
       end
       format.json do
-        colName  = ["irb_status" , "irb_number", 'name', 'last_name', 'accrual', 'accrual_goal']
-        order    = colName[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0]#
-        if params[:query] && !params[:query].blank?
-          all_studies     = StudyTable.title_or_name_or_irb_number_or_irb_status_like(params[:query])#.project_role_is("Principal Investigator")
-          @studies         = all_studies.paged(params[:iDisplayStart], params[:iDisplayLength])
-          @display_records = all_studies.size
-          @sEcho = params[:sEcho].to_i
-        else
-          render :json=> {"aaData" => [], "iTotalRecords" => 0, "iTotalDisplayRecords" => 0, "sEcho" => params[:sEcho]}
-        end
+        return render :json=> {"aaData" => [], "iTotalRecords" => 0, "iTotalDisplayRecords" => 0, "sEcho" => params[:sEcho]} if params[:query].blank?
+        columns = %w(irb_status irb_number name accrual accrual_goal)
+        @studies = Study.title_or_name_or_irb_number_or_irb_status_like(params[:query]).order_by(columns[params[:iSortCol_0].to_i], params[:sSortDir_0]).paginate(:page => params[:iDisplayStart].to_i/params[:iDisplayLength].to_i + 1, :per_page => params[:iDisplayLength])
+        render :template => "studies/index"
       end
     end
   end

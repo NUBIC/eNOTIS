@@ -15,16 +15,12 @@ class StudiesController < ApplicationController
     # raise "testing exception notifier - yoon" # http://weblog.jamisbuck.org/2007/3/7/raising-the-right-exception
     respond_to do |format|
       format.html do
-        @my_studies = current_user.studies.paginate(:page=>params[:page], :per_page=>params[:per_page])
+        @my_studies = current_user.studies.paginate(:page => params[:page], :per_page => params[:per_page])
       end
       # See http://datatables.net/forums/comments.php?DiscussionID=53 for json params
       format.json do
-        colName  = ["irb_status" , "irb_number", 'name', 'last_name', 'accrual', 'accrual_goal']
-        order                 = colName[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0]
-        all_studies           = StudyTable.user_id_is(current_user.id).order(order)
-        @studies              = all_studies.paged(params[:iDisplayStart], params[:iDisplayLength])
-        @iTotalDisplayRecords = all_studies.size
-        @sEcho                = params[:sEcho].to_i
+        columns = %w(irb_status irb_number name accrual accrual_goal)
+        @studies = Study.with_user(current_user.netid).order_by(columns[params[:iSortCol_0].to_i], params[:sSortDir_0]).paginate(:page => params[:iDisplayStart].to_i/params[:iDisplayLength].to_i + 1, :per_page => params[:iDisplayLength])
       end
     end
   end
@@ -35,7 +31,7 @@ class StudiesController < ApplicationController
       return redirect_with_message(default_path, :notice, "You don't have access to study #{@study.irb_number}") unless @study.has_coordinator?(current_user)
       @title = @study.irb_number
       @involvements = @study.involvements
-      unless @involvements.empty?        
+      unless @involvements.empty?       
         @ethnicity_stats = @involvements.count_all(:short_ethnicity)
         @gender_stats = @involvements.count_all(:short_gender)
         @race_stats = @involvements.count_all(:short_race)

@@ -12,9 +12,9 @@
     - @studies.each do |study|
       %tr
         %td.status
-          = pretty_status study
+          = status_span study
         %td.irb_number
-          = pretty_irb_number(study)
+          = irb_span(study)
         %td= study.name
         %td= people_info(study.roles)
         %td= study.accrual || 0
