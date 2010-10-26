@@ -28,7 +28,7 @@ Feature: Manage studies
     Given the study "STU001248" has an upload by "pi"
     When I go to the study page for id "STU001248"
     And I follow "Import"
-    Then I should see "Importer"
+    Then I should see "By"
     And I should see "Original"
 
   Scenario: A user will be gracefully redirected to the studies page when accessing a bogus study
