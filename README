@@ -41,6 +41,26 @@ eNOTIS depends on a few important gems:
     db: "eirb_prod"
   
 == Changes ==
+
+1.10.0
+* fix issue with destroying involvements. better tests. close #4268
+* fix for commented out webservice calls
+* moving involvement overlay javascripts to use 'live'. changing date pickers to re-select date when month/year is changed. changing overlay to not close unless 'cancel' or 'x' is selected (to prevent accidental dismissals of modal when datepickers are dismissed). closes #4255. closes #4257.
+* link back to my studies on study detail page. closes #4258
+* fixing populate description
+* update to faq regarding continuing review, historical subjects. Closes #4270
+
+1.9.0
+* mandatory date, static pages
+* enotis number on front page. closes #4163
+* fixing faq on front page. closes #4162
+* commented out eirb queries we don't use
+* removed sam from monit config script
+* marking flash messages as html safe. closes #4120
+
+1.8.1
+* app cleanup to remove Sam
+ 
 1.8.0
 * mark visualizations as html safe. properly style table to align correctly before datatables script runs.
 * protovis visualizations
