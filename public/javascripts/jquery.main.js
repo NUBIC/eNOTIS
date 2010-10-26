@@ -110,7 +110,14 @@ $(document).ready(function() {
   // show study: import overlay
   $("#actions a[rel=#import], #flash a[rel=#import]").overlay({
     onBeforeLoad: function(){ $("#import .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
+    onLoad: function(){
+      $("#import .display").dataTable({
+        "iDisplayLength": 10,
+        "sPaginationType": "full_numbers",
+        "aoColumns": [{ "sType": "string", "asSorting": [ "desc", "asc" ] }, null, null, null, null]
+      });
+    }
   });
 
   // show study: export overlay

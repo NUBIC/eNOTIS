@@ -47,6 +47,7 @@ class StudiesController < ApplicationController
   
   def import
     @study = Study.find_by_irb_number(params[:id])
+    @uploads = @study.study_uploads
     respond_to do |format|
       format.html
       format.js {render :layout => false}

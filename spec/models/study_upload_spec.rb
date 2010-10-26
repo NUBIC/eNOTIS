@@ -10,6 +10,13 @@ describe StudyUpload do
     Factory(:study_upload).should be_valid
   end
   
+  it "should sort descending by created at" do
+    study = Factory(:study)
+    su1 = Factory(:study_upload, :study => study)
+    su2 = Factory(:study_upload, :study => study)
+    study.study_uploads.should == [su2, su1]
+  end
+  
   it "should fail if upload is blank" do
     @up = StudyUpload.new(:user_id => 2, :study_id => 2, :upload => nil)
     @up.legit?.should be_false
