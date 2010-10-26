@@ -108,7 +108,7 @@ $(document).ready(function() {
   }
   
   // show study: import overlay
-  $("#actions a[rel=#import]").overlay({
+  $("#actions a[rel=#import], #flash a[rel=#import]").overlay({
     onBeforeLoad: function(){ $("#import .wrap").load(this.getTrigger().attr("href"), "format=js"); },
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
   });
