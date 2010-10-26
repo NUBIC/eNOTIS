@@ -31,18 +31,24 @@ module ApplicationHelper
     # the class name affects sorting within study tables
     content_tag(:span, study.irb_status, :class => study.may_accrue? ? "sortabove status on" : "sortbelow status off")
   end
+
+  def approved_date(study)
+    study.approved_date.blank? ? nil : study.approved_date.strftime("%b %d, %Y")
+  end
   
-  def start_end_info(study)
-    [ study.approved_date.blank? ? nil : study.approved_date.strftime("Approved: %b %d, %Y"),
-      study.expiration_date.blank? ? nil : study.expiration_date.strftime("Expiration: %b %d, %Y"),
-      study.closed_or_completed_date.blank? ? nil : study.closed_or_completed_date.strftime("Closed/completed: %b %d, %Y") ].compact.join("<br/>").html_safe
+  def expiration_date(study)
+    study.expiration_date.blank? ? nil : study.expiration_date.strftime("%b %d, %Y")
+  end
+
+  def closed_completed_date(study)
+    study.closed_or_completed_date.blank? ? "N/A" : study.closed_or_completed_date.strftime("%b %d, %Y") 
   end
   
   def people_info(arr)
     people = [*arr].compact.map do |p|
       (p.user["first_name"].blank? or p.user["last_name"].blank? or p.user["email"].blank?) ? nil : mail_to(p.user["email"], "#{p.user["first_name"]} #{p.user["last_name"]}", :title => "Project Role: #{p.project_role}")
     end.uniq.compact
-    (people.empty? ? nil : people.join("<br/>").html_safe)
+    (people.empty? ? nil : people.join(", ").html_safe)
   end
   
   def other_studies_flag(involvement)
@@ -54,7 +60,9 @@ module ApplicationHelper
   def study_funding_source_info(study)
     funding_sources = study.funding_sources
     if funding_sources.size > 0
-      content_tag("span", "Funding Sources: <br/>" + funding_sources.map(&:name).uniq.join("<br/>"))
+      funding_sources.map(&:name).uniq.join(",  ").html_safe
+    else
+      "N/A"
     end
   end
   

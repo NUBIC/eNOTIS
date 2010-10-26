@@ -1,5 +1,22 @@
-= start_end_info(study)
-%span.research_type= "Research Type: #{study.research_type}" unless study.research_type.blank?
-= study_funding_source_info(study)
-= people_info(study.roles)
+%br
+.approved_date.irb_data
+  %em Approved date:
+  =approved_date(study)
+.expriation_date.irb_data
+  %em Expiration date:
+  =expiration_date(study)
+.closed_completed_date.irb_data
+  %em Closed/completed:
+  =closed_completed_date(study)
+.research_type.irb_data
+  %em Research Type:
+  =study.research_type
+.funding_sources.irb_data
+  %em Funding Source(s):
+  = study_funding_source_info(study)
+%br
+.study_team
+  %em Study Team:
+  %br
+  = people_info(study.roles)
 
