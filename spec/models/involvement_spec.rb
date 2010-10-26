@@ -19,6 +19,15 @@ describe Involvement do
     Involvement.new(:ethnicity => "HiSpAnIc Or LaTiNo").ethnicity.should == "Hispanic or Latino"
     Involvement.new(:races => "asian").races.include?("Asian").should be_true
   end
+  it "should destroy child involvement events" do
+    i = Factory(:involvement)
+    e1 = Factory(:involvement_event, :involvement => i)
+    e2 = Factory(:involvement_event, :involvement => i)
+    i.involvement_events.should have(2).children
+    i.destroy
+    InvolvementEvent.find_by_id(e1.id).should be_nil
+    InvolvementEvent.find_by_id(e2.id).should be_nil
+  end
 
   describe "NIH Race requirements" do
     before(:each) do

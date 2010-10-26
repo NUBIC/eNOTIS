@@ -24,7 +24,7 @@ class Involvement < ActiveRecord::Base
   # Associations
   belongs_to :subject
 	belongs_to :study
-  has_many :involvement_events
+  has_many :involvement_events, :dependent => :destroy
   
   # Atrributes
   accepts_nested_attributes_for :involvement_events, :reject_if => lambda {|a| (a["occurred_on"].blank? or a["event"].blank?) }

@@ -68,7 +68,7 @@ class InvolvementEvent < ActiveRecord::Base
   has_paper_trail
   
   # Callbacks
-  before_destroy :destroy_childless_parent
+  after_destroy :destroy_childless_parent
 
   # Public instance methods
   def occurred_on=(date)
@@ -133,8 +133,6 @@ class InvolvementEvent < ActiveRecord::Base
   
   # Private instance methods
   def destroy_childless_parent
-    if involvement.involvement_events == [self]
-      involvement.destroy
-    end
+    involvement.destroy if involvement && involvement.involvement_events == []
   end
 end

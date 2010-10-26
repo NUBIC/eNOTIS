@@ -67,6 +67,10 @@ describe InvolvementEvent do
     event.destroy
     Involvement.find_by_id(involvement_id).should_not == nil
   end
+  it "should not choke on removing childless parent if parent is nil" do
+    event = Factory(:involvement_event, :involvement => nil)
+    event.destroy
+  end
   
   it "should let me know how many accruals (unique by involvement) were completed to date" do
     InvolvementEvent.count_accruals.should == 0

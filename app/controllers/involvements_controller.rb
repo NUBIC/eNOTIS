@@ -84,8 +84,7 @@ class InvolvementsController < ApplicationController
   def destroy
     @involvement = Involvement.find(params[:id])
     @study       = @involvement.study
-    @involvement.involvement_events.destroy_all
-    @involvement.destroy    
+    @involvement.destroy # :dependent => :destroy takes care of removing involvement events # @involvement.involvement_events.destroy_all
     respond_to do |format|
       format.html {redirect_to @study}
       format.js {render :layout => false}
