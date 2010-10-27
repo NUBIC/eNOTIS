@@ -13,7 +13,7 @@
       = "donut('ethnicity', #{@ethnicity_stats.map(&:last).inspect}, #{@ethnicity_stats.map(&:first).inspect});".html_safe
       = "dots('dotchart', 'All accruals by month and weekday', #{@dot_stats});".html_safe
     });
-#back.heading= link_to "&laquo; My Studies".html_safe, studies_path
+#back.heading= link_to "My Studies".html_safe, studies_path
 #study
   -if @study.read_only?
     .study_msg= "This study is managed by a different system. Please see #{@study.read_only_msg || "the source system"} to edit information in this study and any related records." 
