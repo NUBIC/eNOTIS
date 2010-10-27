@@ -21,8 +21,8 @@ describe Involvement do
   end
   it "should destroy child involvement events" do
     i = Factory(:involvement)
-    e1 = Factory(:involvement_event, :involvement => i)
-    e2 = Factory(:involvement_event, :involvement => i)
+    e1 = Factory(:involvement_event, :involvement => i, :occurred_on => 1.day.ago)
+    e2 = Factory(:involvement_event, :involvement => i, :occurred_on => 2.days.ago)
     i.involvement_events.should have(2).children
     i.destroy
     InvolvementEvent.find_by_id(e1.id).should be_nil
