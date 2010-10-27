@@ -84,6 +84,8 @@ body {
       #main ul.tabs li a.current {
         border-bottom: 7px solid #5eab4f;
         color: #fdfbe9; }
+  #main div.policy {
+    margin-top: 55px; }
   #main div.panes {
     position: relative;
     overflow: hidden;
