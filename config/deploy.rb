@@ -27,8 +27,13 @@ default_environment['PATH'] = "/opt/ruby-enterprise/bin:/usr/kerberos/bin:/usr/l
 
 set :scm, "git"
 set :repository, "ssh://code.bioinformatics.northwestern.edu/git/enotis.git"
-
-set :branch, "master"
+set :branch do
+  # http://nathanhoad.net/deploy-from-a-git-tag-with-capistrano
+  puts
+  puts "Tags: " + `git tag`.split("\n").join(", ")
+  ref = Capistrano::CLI.ui.ask "Tag, branch, or commit to deploy (push first: git push origin --tags) [master]: "
+  ref.empty? ? "master" : ref
+end
 set :deploy_to, "/var/www/apps/enotis"
 set :deploy_via, :remote_cache
 
