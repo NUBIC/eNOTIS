@@ -1,15 +1,4 @@
 - @title = "Admin Hub"
-- content_for :head do
-  %script{:type => 'text/javascript'}
-    $(document).ready(function(){
-    // show the Data Tables
-    $("#active_users .display").dataTable({"sPaginationType": "full_numbers"});
-    $("#active_studies .display").dataTable({"sPaginationType": "full_numbers"});
-    // easter egg
-    $("img.hub").fadeIn(10000);
-    // flash messages
-    $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
-    });
 #active_users
   %span.heading= pluralize @active_users.size, "active user"
   %table.display
@@ -45,6 +34,30 @@
           %td!= users.map{|u| mail_to u.email, u.name}.join(", ")
           %td= users.map(&:netid).join(", ")
           %td= "#{involvements.first.updated_at.to_date.to_s(:db)} | #{time_ago_in_words(involvements.first.updated_at)} ago"
+
+#recent_uploads
+  %span.heading= pluralize @recent_uploads.size, "recent uploads"
+  %table.display
+    %thead
+      %tr
+        %th Uploaded
+        %th By
+        %th Study
+        %th Original
+        %th Result
+        %th Status
+    %tbody
+      - @recent_uploads.each do |u|
+        %tr
+          %td
+            %span{:title => u.created_at.to_s(:db)}
+              = time_ago_in_words(u.created_at)
+              ago
+          %td= u.user.netid
+          %td= link_to u.study.irb_number, study_path(u.study)
+          %td= link_to "Original", u.upload.url
+          %td= link_to("Result", u.result.url) unless u.result_file_name.nil?
+          %td= u.summary
 
 %img{:class => 'hub', :src => '/images/hub.jpg', :style => "display:none;"}
 

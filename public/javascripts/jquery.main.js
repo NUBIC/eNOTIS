@@ -1,3 +1,4 @@
+var importTable; // global variable to keep track of import data table, preventing reinitialization
 $(document).ready(function() {
   // flash messages
   $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
@@ -109,14 +110,17 @@ $(document).ready(function() {
   
   // show study: import overlay
   $("#actions a[rel=#import], #flash a[rel=#import]").overlay({
-    onBeforeLoad: function(){ $("#import .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+    // only load this once (using wrap:empty selector) since uploads trigger a reload of the page
+    onBeforeLoad: function(){ $("#import .wrap:empty").load(this.getTrigger().attr("href"), "format=js"); },
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
     onLoad: function(){
-      $("#import .display").dataTable({
-        "iDisplayLength": 10,
-        "sPaginationType": "full_numbers",
-        "aoColumns": [{ "sType": "string", "asSorting": [ "desc", "asc" ] }, null, null, null, null]
-      });
+      if (typeof importTable == 'undefined') {
+        importTable = $("#import .display").dataTable({
+          "iDisplayLength": 10,
+          "sPaginationType": "full_numbers",
+          "aoColumns": [{ "sType": "string", "asSorting": [ "desc", "asc" ] }, null, null, null, null]
+        });
+      }
     }
   });
 
