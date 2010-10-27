@@ -31,7 +31,8 @@ set :branch do
   # http://nathanhoad.net/deploy-from-a-git-tag-with-capistrano
   puts
   puts "Tags: " + `git tag`.split("\n").join(", ")
-  ref = Capistrano::CLI.ui.ask "Tag, branch, or commit to deploy (push first: git push origin --tags) [master]: "
+  puts "Remember to push tags first: git push origin --tags"
+  ref = Capistrano::CLI.ui.ask "Tag, branch, or commit to deploy [master]: "
   ref.empty? ? "master" : ref
 end
 set :deploy_to, "/var/www/apps/enotis"
