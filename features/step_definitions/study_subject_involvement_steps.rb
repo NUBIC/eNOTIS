@@ -106,24 +106,11 @@ Then /^subject "([^\"]*)" should not be involved with study "([^\"]*)"$/ do |mrn
   Involvement.find_by_subject_id_and_study_id(Subject.find_by_mrn(mrn), Study.find_by_irb_number(irb_number)).should be_blank
 end
 
-When /^I upload a file with valid data for 7 subjects$/ do
+When /^I upload the "([^"]*)" file$/ do |name|
   click_link("Import")
-  attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', 'good.csv'))  
-  click_button "Upload"  
+  attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', name))  
+  click_button "Upload"
 end
-
-When /^I upload an xls file$/ do
-  click_link("Import")
-  attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', 'excel.xls'))  
-  click_button "Upload"  
-end
-
-When /^I upload an xlsx file$/ do
-  click_link("Import")
-  attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', 'excel.xls'))  
-  click_button "Upload"  
-end
-
 
 When /^I export a csv of subjects$/ do
   click_link("Export")
