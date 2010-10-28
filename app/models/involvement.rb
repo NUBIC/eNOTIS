@@ -41,7 +41,7 @@ class Involvement < ActiveRecord::Base
   # Custom validator for race
   validate do |inv|
     logger.debug "CALLING THE VALIDATOR"
-    checked=false
+    checked = false
     RACE_ATTRIBUTES.each_key do |k|
       t = inv.send(k)
       logger.debug "KEY #{k} is #{t}"      
@@ -56,31 +56,50 @@ class Involvement < ActiveRecord::Base
   # Public class methods 
   class << self 
     def gender_definitions 
-      [ ["Male",                     "A person identifying with the male sex or gender"],
-        ["Female",                   "A person identifying with the female sex or gender"],
-        ["Unknown or Not Reported",  "A person not wishing to identify their gender or this person's gender is unknown"] ]
+      { "Male"                    => "A person identifying with the male sex or gender",
+        "Female"                  => "A person identifying with the female sex or gender",
+        "Unknown or Not Reported" => "A person not wishing to identify their gender or this person's gender is unknown" }
     end
 
-    def ethnicity_definitions
-      [ ["Hispanic or Latino",      "A person of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race. The term \"Spanish origin\" can also be used in addition to \"Hispanic or Latino.\""],
-        ["Not Hispanic or Latino",  "A person NOT of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race."],
-        ["Unknown or Not Reported",                 "Individuals not reporting ethnicity"] ]
-    end
-  
-    def race_definitions
-      [ ["American Indian/Alaska Native",          "A person having origins in any of the original peoples of North, Central, or South America, and who maintains tribal affiliations or community attachment."],
-        ["Asian",                                  "A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam."],
-        ["Black/African American",                 "A person having origins in any of the black racial groups of Africa."],
-        ["Native Hawaiian/Other Pacific Islander", "A person having origins in any of the original peoples of Hawaii, Guam, Samoa, or other Pacific Islands."],
-        ["White",                                  "A person having origins in any of the original peoples of Europe, the Middle East, or North Africa."],
-        ["Unknown or Not Reported",                "A person not wishing to identify their race or this person's race is unknown"] ]
+    def translate_gender(val)
+      [ /^M(ale)?$/i, "Male",
+        /^F(emale)?$/i, "Female",
+        /Unknown|Not Reported|^U$|^NR$/i, "Unknown or Not Reported" ].each_slice(2){|rx, term| return term if val.to_s.match(rx)}
     end
     
+    def ethnicity_definitions
+      { "Hispanic or Latino"      => "A person of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race. The term \"Spanish origin\" can also be used in addition to \"Hispanic or Latino.\"",
+        "Not Hispanic or Latino"  => "A person NOT of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race.",
+        "Unknown or Not Reported" => "Individuals not reporting ethnicity" }
+    end
+
+    def translate_ethnicity(val)
+      [ /^Hispanic|^Latino/i, "Hispanic or Latino",
+        /^Not (Hispanic|Latino)/i, "Not Hispanic or Latino",
+        /Unknown|Not Reported|^U$|^NR$/i, "Unknown or Not Reported" ].each_slice(2){|rx, term| return term if val.to_s.match(rx)}
+    end
+
+    def race_definitions
+      { "American Indian/Alaska Native"          => "A person having origins in any of the original peoples of North, Central, or South America, and who maintains tribal affiliations or community attachment.",
+        "Asian"                                  => "A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam.",
+        "Black/African American"                 => "A person having origins in any of the black racial groups of Africa.",
+        "Native Hawaiian/Other Pacific Islander" => "A person having origins in any of the original peoples of Hawaii, Guam, Samoa, or other Pacific Islands.",
+        "White"                                  => "A person having origins in any of the original peoples of Europe, the Middle East, or North Africa.",
+        "Unknown or Not Reported"                => "A person not wishing to identify their race or this person's race is unknown" }
+    end
+    
+    def translate_race(val)
+      [ /^American Indian|^Alaskan?|^Native American/i, "American Indian/Alaska Native",
+        /^Asian?$/i, "Asian",
+        /^Black|^African/i, "Black/African American",
+        /^(Native )?Hawaiian|Pacific Islander/i, "Native Hawaiian/Other Pacific Islander",
+        /^White|^Caucasian/i, "White",
+        /^Unknown|^Not Reported|^U$|^NR$/i, "Unknown or Not Reported" ].each_slice(2){|rx, term| return term if val.to_s.match(rx)}
+    end
+    
+    # genders, ethnicities, races
     %w(gender ethnicity race).each do |category|
-      # genders, ethnicities, race
-      define_method("#{category.pluralize}".to_sym){ self.send("#{category}_definitions").transpose[0] }
-      # define_gender, define_ethnicity, define_race
-      define_method("define_#{category}".to_sym){|term| (self.send("#{category}_definitions").detect{|t,d| t == term} || [])[1] }
+      define_method("#{category.pluralize}".to_sym){ self.send("#{category}_definitions").keys }
     end
 
     def update_or_create(params)
@@ -91,8 +110,7 @@ class Involvement < ActiveRecord::Base
         Involvement.create(params)
       end
     end
-
-  end # end of << class
+  end # end of class << self
   
   %w(gender ethnicity).each do |category|
     # gender=, ethnicity= (make case insensitive)

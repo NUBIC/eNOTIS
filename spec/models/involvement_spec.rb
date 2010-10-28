@@ -19,6 +19,93 @@ describe Involvement do
     Involvement.new(:ethnicity => "HiSpAnIc Or LaTiNo").ethnicity.should == "Hispanic or Latino"
     Involvement.new(:races => "asian").races.include?("Asian").should be_true
   end
+  it "should tranlsate (for more forgiving uploads) gender terms" do
+    Involvement.translate_gender("male").should == "Male"
+    Involvement.translate_gender("M").should == "Male"
+    Involvement.translate_gender("Not Male").should == nil
+
+    Involvement.translate_gender("Female").should == "Female"
+    Involvement.translate_gender("f").should == "Female"
+    Involvement.translate_gender("girl").should == nil
+    
+    Involvement.translate_gender("Unknown or Not Reported").should == "Unknown or Not Reported"  
+    Involvement.translate_gender("U").should == "Unknown or Not Reported"  
+    Involvement.translate_gender("NR").should == "Unknown or Not Reported"  
+    Involvement.translate_gender("UNKNOWN").should == "Unknown or Not Reported"  
+    Involvement.translate_gender("Not Reported").should == "Unknown or Not Reported"  
+    Involvement.translate_gender(nil).should == nil
+    Involvement.translate_gender("Not known").should == nil
+    Involvement.translate_gender("Unreported").should == nil
+    Involvement.translate_gender("reported").should == nil
+  end
+  it "should tranlsate (for more forgiving uploads) ethnicity terms" do
+    Involvement.translate_ethnicity("hispanic or latino").should == "Hispanic or Latino"
+    Involvement.translate_ethnicity("hispanic").should == "Hispanic or Latino"
+    Involvement.translate_ethnicity("latino").should == "Hispanic or Latino"
+    Involvement.translate_ethnicity("latino or hispanic").should == "Hispanic or Latino"
+    
+    Involvement.translate_ethnicity("not hispanic or latino").should == "Not Hispanic or Latino"
+    Involvement.translate_ethnicity("not hispanic").should == "Not Hispanic or Latino"
+    Involvement.translate_ethnicity("not latino").should == "Not Hispanic or Latino"
+    Involvement.translate_ethnicity("not latino or hispanic").should == "Not Hispanic or Latino"
+
+    Involvement.translate_ethnicity("Unknown or Not Reported").should == "Unknown or Not Reported"  
+    Involvement.translate_ethnicity("U").should == "Unknown or Not Reported"  
+    Involvement.translate_ethnicity("NR").should == "Unknown or Not Reported"  
+    Involvement.translate_ethnicity("UNKNOWN").should == "Unknown or Not Reported"  
+    Involvement.translate_ethnicity("Not Reported").should == "Unknown or Not Reported"  
+    Involvement.translate_ethnicity(nil).should == nil
+    Involvement.translate_ethnicity("Not known").should == nil
+    Involvement.translate_ethnicity("Unreported").should == nil
+    Involvement.translate_ethnicity("reported").should == nil
+  end
+  it "should tranlsate (for more forgiving uploads) race terms" do
+    Involvement.translate_race("American Indian/Alaska Native").should == "American Indian/Alaska Native"    
+    Involvement.translate_race("american indian").should == "American Indian/Alaska Native"
+    Involvement.translate_race("alaskan").should == "American Indian/Alaska Native"
+    Involvement.translate_race("alaska native").should == "American Indian/Alaska Native"
+    Involvement.translate_race("Native american").should == "American Indian/Alaska Native"
+    Involvement.translate_race("not alaska native").should == nil    
+    Involvement.translate_race("native").should == nil
+    Involvement.translate_race("indian").should == nil
+
+    Involvement.translate_race("Asian").should == "Asian"
+    Involvement.translate_race("asia").should == "Asian"
+    Involvement.translate_race("Asian American").should == nil
+    Involvement.translate_race("Not Asian").should == nil
+
+    Involvement.translate_race("Black/African American").should == "Black/African American"
+    Involvement.translate_race("black").should == "Black/African American"
+    Involvement.translate_race("africaN").should == "Black/African American"
+    Involvement.translate_race("African American").should == "Black/African American"
+    Involvement.translate_race("a Black").should == nil
+    Involvement.translate_race("american").should == nil
+    
+    Involvement.translate_race("Native Hawaiian/Other Pacific Islander").should == "Native Hawaiian/Other Pacific Islander"
+    Involvement.translate_race("Hawaiian").should == "Native Hawaiian/Other Pacific Islander"
+    Involvement.translate_race("Pacific islander").should == "Native Hawaiian/Other Pacific Islander"
+    Involvement.translate_race("other pacific islander").should == "Native Hawaiian/Other Pacific Islander"
+    Involvement.translate_race("native pacific islander").should == "Native Hawaiian/Other Pacific Islander"
+    Involvement.translate_race("native islander").should == nil
+    Involvement.translate_race("not Hawaiian").should == nil
+    Involvement.translate_race("pacific").should == nil
+
+    Involvement.translate_race("White").should == "White"
+    Involvement.translate_race("Caucasian").should == "White"
+    Involvement.translate_race("White/Caucasian").should == "White"    
+    Involvement.translate_race("not White").should == nil
+    Involvement.translate_race("w").should == nil
+
+    Involvement.translate_race("Unknown or Not Reported").should == "Unknown or Not Reported"  
+    Involvement.translate_race("U").should == "Unknown or Not Reported"  
+    Involvement.translate_race("NR").should == "Unknown or Not Reported"  
+    Involvement.translate_race("UNKNOWN").should == "Unknown or Not Reported"  
+    Involvement.translate_race("Not Reported").should == "Unknown or Not Reported"  
+    Involvement.translate_race(nil).should == nil
+    Involvement.translate_race("Not known").should == nil
+    Involvement.translate_race("Unreported").should == nil
+    Involvement.translate_race("reported").should == nil
+  end
   it "should destroy child involvement events" do
     i = Factory(:involvement)
     e1 = Factory(:involvement_event, :involvement => i, :occurred_on => 1.day.ago)
