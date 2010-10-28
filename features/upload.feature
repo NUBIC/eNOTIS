@@ -31,3 +31,8 @@ Feature: Upload subjects
     When I go to the study page for id "STU001248"
     And I upload the "forgiving_terms.csv" file
     Then I should see "5 subjects created"
+
+  Scenario: A coordinator can upload a file an overzealous "unknown" file and get a real error message
+    When I go to the study page for id "STU001248"
+    And I upload the "overzealous_unknowns.csv" file
+    Then I should see "subjects created"
