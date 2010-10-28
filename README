@@ -42,6 +42,9 @@ eNOTIS depends on a few important gems:
   
 == Changes ==
 
+1.10.1
+* hardcoding search back to 30, for now
+
 1.10.0
 * typo with search controller. adding order
 * make search and ajax search consistent. closes #4301.
