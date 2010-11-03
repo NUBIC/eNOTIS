@@ -24,6 +24,7 @@ $(document).ready(function() {
   function activateRows(){
     // introduction (for empty datatable) overlay
     $("a[rel=#intro]").overlay({
+      fixed: false, // allows user to scroll if overlay extends beyond viewport
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
   
@@ -32,6 +33,7 @@ $(document).ready(function() {
     
     // other studies overlay
     $("a[rel=#other_studies]").overlay({
+      fixed: false, // allows user to scroll if overlay extends beyond viewport
       onBeforeLoad: function(){ $("#other_studies .wrap").load(this.getTrigger().attr("href"), "format=js", activateAccept); },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
       onClose: function(){$("#other_studies .wrap").html("");}
@@ -39,6 +41,7 @@ $(document).ready(function() {
     
     // involvement overlay
     $("a[rel=#involvement]").overlay({
+      fixed: false, // allows user to scroll if overlay extends beyond viewport
       closeOnClick: false, // to prevent closing accidentally when dismissing datepickers
       onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
@@ -110,6 +113,7 @@ $(document).ready(function() {
   
   // show study: import overlay
   $("#actions a[rel=#import], #flash a[rel=#import]").overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
     // only load this once (using wrap:empty selector) since uploads trigger a reload of the page
     onBeforeLoad: function(){ $("#import .wrap:empty").load(this.getTrigger().attr("href"), "format=js"); },
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
@@ -126,12 +130,14 @@ $(document).ready(function() {
 
   // show study: export overlay
   $("#actions a[rel=#export]").overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
     onBeforeLoad: function(){ $("#export .wrap").load(this.getTrigger().attr("href"), "format=js"); },
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
   });
   
   // show study: report overlay
   $("a[rel=#report]").overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
   });
 
