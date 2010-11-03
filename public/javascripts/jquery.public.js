@@ -7,6 +7,7 @@ $(document).ready(function(){
 
   // login help overlay
   $("a[rel=#help]").overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
     onBeforeLoad: function(){ $("#help .contentWrap").load(this.getTrigger().attr("href"), "format=js"); },
     expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}
   });
@@ -15,7 +16,10 @@ $(document).ready(function(){
   $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
   
   // db language overlay
-  $("a[rel=#database-language]").overlay({expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}});
+  $("a[rel=#database-language]").overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
+    expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}
+  });
       
   // video
   if($('#player').length){
