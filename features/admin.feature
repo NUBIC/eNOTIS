@@ -13,7 +13,7 @@ Feature: Developer admin access
     And I go to the hub page
     Then I should be on the hub page
     And I should see "active users"
-    And I should see "active studies"
+    And I should see "active (non NOTIS) studies"
   
   Scenario: An admin user should be able to see study uploads
     Given I log in as admin "admin" with password "secret"
@@ -23,5 +23,6 @@ Feature: Developer admin access
     And I go to the hub page
     Then I should be on the hub page
     And I should see "1 recent upload"
+    And I should see "Consented: 7, Completed: 3, Withdrawn: 2"
     
   
