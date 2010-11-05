@@ -99,11 +99,8 @@ module ApplicationHelper
   end
 
   def mrn_and_type_helper(subject)
-    unless subject.mrn.blank?
-      "<span class='mrn bold'>#{subject.mrn}<span class='mrn_type'> (#{subject.mrn_type}) </span>"
-    else
-      "<span class='mrn bold'> Not entered/Unknown </span>"
-    end.html_safe
+    mrns = [subject.nmff_mrn.blank? ? nil : "NMFF #{subject.nmff_mrn}", subject.nmh_mrn.blank? ? nil : "NMH #{subject.nmh_mrn}"].compact
+    "<span class='mrn bold'>#{mrns.blank? ? 'Not entered/Unknown' : mrns.join(', ')}</span>".html_safe
   end
 
   def case_number_helper(case_number)

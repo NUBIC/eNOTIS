@@ -19,20 +19,26 @@ class Subject < ActiveRecord::Base
   has_paper_trail
   
   # Public class methods
+  
+  # Eliminating this method for now, in favor of simplifying - we just create for now, will do a find/create in the future with the EMPI - yoon
+  
   # Only supports finding by mrn at this point. EMPI better suited for more 
   # complex subject find queries
-  def self.find_or_create(params)
-    s = params[:subject]
-    s.keys.each{|k| s[k] = nil if s[k].blank?}
-    s.delete(:case_number)
-    subject = Subject.find(:first, :conditions => {:mrn => s[:mrn]}) if s[:mrn]
-    subject = Subject.create(s) if subject.nil?
-    return subject
-  end
+  # def self.find_or_create(params)
+  #   s = params[:subject]
+  #   s.keys.each{|k| s[k] = nil if s[k].blank?}
+  #   s.delete(:case_number)
+  #   subject = Subject.find(:first, :conditions => {:mrn => s[:mrn]}) if s[:mrn]
+  #   subject = Subject.create(s) if subject.nil?
+  #   return subject
+  # end
   
   # Public instance methods
-  def mrn=(mrn)
-    write_attribute :mrn, (mrn.blank? ? nil : mrn) # ignore blank mrns from add subject form
+  def nmff_mrn=(mrn)
+    write_attribute :nmff_mrn, (mrn.blank? ? nil : mrn) # ignore blank mrns from add subject form
+  end
+  def nmh_mrn=(mrn)
+    write_attribute :nmh_mrn, (mrn.blank? ? nil : mrn) # ignore blank mrns from add subject form
   end
   
   # There is a subject_name_helper method that includes styles for the name...

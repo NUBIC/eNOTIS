@@ -22,7 +22,7 @@ class StudyUpload < ActiveRecord::Base
   # validates_attachment_content_type :upload, :content_type => ['text/csv', 'text/plain']
   # validates_attachment_content_type :result, :content_type => ['text/csv', 'text/plain']
   def self.required_columns
-    %w(case_number mrn last_name first_name birth_date gender ethnicity race consented_on withdrawn_on completed_on)
+    %w(case_number nmff_mrn nmh_mrn last_name first_name birth_date gender ethnicity race consented_on withdrawn_on completed_on)
   end
 
   def legit?
@@ -96,8 +96,8 @@ class StudyUpload < ActiveRecord::Base
   def create_subject(r)
     Study.transaction do # read http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
       params = params_from_row(r)
-      # Subject - find or create a subject
-      subject = Subject.find_or_create(params)
+      # Subject - create a subject
+      subject = Subject.create(params[:subject])
       raise ActiveRecord::Rollback if study.nil? or subject.nil?
       params[:involvement].merge!({:subject_id => subject.id, :study_id => self.study.id})
       
@@ -120,7 +120,8 @@ class StudyUpload < ActiveRecord::Base
   def params_from_row(r)
     { :user => self.user.attributes.symbolize_keys,
       :study => self.study.attributes.symbolize_keys,
-      :subject => { :mrn => r[:mrn], 
+      :subject => { :nmff_mrn => r[:nmff_mrn],
+                    :nmh_mrn => r[:nmh_mrn],
                     :first_name => r[:first_name], 
                     :last_name => r[:last_name], 
                     :birth_date => r[:birth_date]},
@@ -157,7 +158,7 @@ class StudyUpload < ActiveRecord::Base
   end
   
   def check_identity(hash)
-    "Either MRN, first name/last name/birth date (with four digit year), or case number are required" if (hash[:mrn].blank? and (hash[:first_name].blank? or hash[:last_name].blank? or Chronic.parse(hash[:birth_date]).nil?) and hash[:case_number].blank?)
+    "Either MRN, first name/last name/birth date (with four digit year), or case number are required" if (hash[:nmff_mrn].blank? and hash[:nmh_mrn].blank? and (hash[:first_name].blank? or hash[:last_name].blank? or Chronic.parse(hash[:birth_date]).nil?) and hash[:case_number].blank?)
   end
   
   def check_terms(hash)

@@ -17,8 +17,7 @@ class Report
         columns << "Case Number" if params[:involvement][:attributes].include?("case_number")
       end
       if params[:subject]
-        columns << "MRN" if params[:subject].include?("mrn")
-        %w(last_name first_name birth_date).each do |method_name|
+        %w(nmff_mrn nmh_mrn last_name first_name birth_date).each do |method_name|
           columns << method_name.humanize.titleize if params[:subject].include?(method_name)
         end
       end
@@ -56,7 +55,8 @@ class Report
     #properly name columns
     report.rename_columns(
        "case_number"        =>  "Case Number",
-       "subject.mrn"        =>  "MRN",
+       "subject.nmff_mrn"    =>  "NMFF MRN",
+       "subject.nmh_mrn" =>  "NMH MRN",
        "subject.first_name" =>  "First Name",
        "subject.last_name"  =>  "Last Name",
        "subject.birth_date" =>  "Birth Date",

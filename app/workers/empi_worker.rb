@@ -23,26 +23,12 @@ class EmpiWorker
         :primary_zip_code             => subject.zip.to_s,
         :gender                       => involvement.gender, 
         :date_of_birth                => subject.birth_date.to_s,
-        :record_creation_date         => subject.created_at.to_s
-        }.merge(calculate_mrn(subject))
+        :record_creation_date         => subject.created_at.to_s,
+        :primes_medical_record_number => subject.nmh_mrn.to_s,
+        :idx_medical_record_number    => subject.nmff_mrn.to_s
+        }
       Empi.put(params)
       subject.update_attribute(:empi_updated_date, Time.now)
-    end
-  end
-
-  def self.calculate_mrn(subject)
-    if subject.mrn.present?
-      case subject.mrn_type
-      when "NMH"
-        {:primes_medical_record_number => subject.mrn }
-      when "NMFF"
-        {:idx_medical_record_number  => subject.mrn }
-      else
-         # if it's blank, since we're doing a hash merge, return an empty hash
-        {}
-      end
-    else
-      {} # same as above
     end
   end
 end

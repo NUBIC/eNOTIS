@@ -11,8 +11,10 @@
       = label_tag 'last_name' 
       = text_field_tag( :last_name, subject.last_name)
       %br
-      = label_tag 'mrn',"MRN"
-      = text_field_tag(:mrn,subject.mrn)
+      = label_tag 'nmff_mrn',"NMFF MRN"
+      = text_field_tag(:nmff_mrn,subject.nmff_mrn)
+      = label_tag 'nmh_mrn',"NMH MRN"
+      = text_field_tag(:nmh_mrn,subject.nmh_mrn)
       = label_tag 'birth_date', "Date of Birth" 
       = text_field_tag( :birth_date , subject.birth_date)
       %br
