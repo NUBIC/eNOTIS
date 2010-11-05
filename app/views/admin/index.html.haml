@@ -1,7 +1,15 @@
 - @title = "Admin Hub"
-#involvement_evens
+#involvement_events
   %span.heading Accruals (non NOTIS)
   %p= @involvement_events.map{|event, involvements| "#{event}: #{involvements.size}"}.join(", ").html_safe
+#netid_lookup
+  %span.heading Roles
+  %p
+    = label_tag :netid, "netID"
+    = text_field_tag "netid"
+    = link_to "look up", "#", :rel => "#roles"
+#roles.overlay
+  .wrap
 #active_users
   %span.heading= pluralize @active_users.size, "active user"
   %table.display

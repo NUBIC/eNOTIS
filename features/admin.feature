@@ -24,5 +24,12 @@ Feature: Developer admin access
     Then I should be on the hub page
     And I should see "1 recent upload"
     And I should see "Consented: 7, Completed: 3, Withdrawn: 2"
-    
   
+  Scenario: An admin user should be able to see active users and studies
+    Given I log in as admin "admin" with password "secret"
+    And a user "bob" named "Bob" "Loblaw"
+    And "bob" is on study "STU00031415"
+    When I visit the roles page for "bob"
+    Then I should see "STU00031415"
+    When I visit the roles page for "nan"
+    Then I should see "not found"

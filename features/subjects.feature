@@ -18,7 +18,6 @@ Feature: Manage subjects
     Then I should be on the study page for id "STU001248"
     And I should see "Created"
   
-  @focus
   Scenario: A coordinator can add a subject with full information
     When I add full information on "Jack" "Endabocks" with "Consented" on "2009-11-01"
     Then I should be on the study page for id "STU001248"
