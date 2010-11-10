@@ -1,3 +1,4 @@
+var importTable; // global variable to keep track of import data table, preventing reinitialization
 $(document).ready(function() {
   // flash messages
   $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
@@ -23,6 +24,7 @@ $(document).ready(function() {
   function activateRows(){
     // introduction (for empty datatable) overlay
     $("a[rel=#intro]").overlay({
+      fixed: false, // allows user to scroll if overlay extends beyond viewport
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
   
@@ -31,6 +33,7 @@ $(document).ready(function() {
     
     // other studies overlay
     $("a[rel=#other_studies]").overlay({
+      fixed: false, // allows user to scroll if overlay extends beyond viewport
       onBeforeLoad: function(){ $("#other_studies .wrap").load(this.getTrigger().attr("href"), "format=js", activateAccept); },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
       onClose: function(){$("#other_studies .wrap").html("");}
@@ -38,6 +41,7 @@ $(document).ready(function() {
     
     // involvement overlay
     $("a[rel=#involvement]").overlay({
+      fixed: false, // allows user to scroll if overlay extends beyond viewport
       closeOnClick: false, // to prevent closing accidentally when dismissing datepickers
       onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
@@ -109,25 +113,31 @@ $(document).ready(function() {
   
   // show study: import overlay
   $("#actions a[rel=#import], #flash a[rel=#import]").overlay({
-    onBeforeLoad: function(){ $("#import .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
+    // only load this once (using wrap:empty selector) since uploads trigger a reload of the page
+    onBeforeLoad: function(){ $("#import .wrap:empty").load(this.getTrigger().attr("href"), "format=js"); },
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
     onLoad: function(){
-      $("#import .display").dataTable({
-        "iDisplayLength": 10,
-        "sPaginationType": "full_numbers",
-        "aoColumns": [{ "sType": "string", "asSorting": [ "desc", "asc" ] }, null, null, null, null]
-      });
+      if (typeof importTable == 'undefined') {
+        importTable = $("#import .display").dataTable({
+          "iDisplayLength": 10,
+          "sPaginationType": "full_numbers",
+          "aoColumns": [{ "sType": "string", "asSorting": [ "desc", "asc" ] }, null, null, null, null]
+        });
+      }
     }
   });
 
   // show study: export overlay
   $("#actions a[rel=#export]").overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
     onBeforeLoad: function(){ $("#export .wrap").load(this.getTrigger().attr("href"), "format=js"); },
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
   });
   
   // show study: report overlay
   $("a[rel=#report]").overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
   });
 
@@ -138,13 +148,13 @@ $(document).ready(function() {
   });
 
   // search
-  $('#study_results .display').dataTable( {
-    "oLanguage": { "sProcessing": '/images/spinner.gif' },
-    "bProcessing": true,
-    "bServerSide": true,
-    "sPaginationType": "full_numbers",
-    "sAjaxSource": "search.json?" + $.param({query: $.getUrlVar('query')})
-   });
+  // $('#study_results .display').dataTable( {
+  //   "oLanguage": { "sProcessing": '/images/spinner.gif' },
+  //   "bProcessing": true,
+  //   "bServerSide": true,
+  //   "sPaginationType": "full_numbers",
+  //   "sAjaxSource": "search.json?" + $.param({query: $.getUrlVar('query')})
+  //  });
 
   // search: study information tooltips
   $('#results a[rel=#study_information]').live('mouseover', function(event) {

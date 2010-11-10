@@ -7,7 +7,7 @@
       = check_box_tag "involvement[attributes][]",:case_number, :checked => true
       = label_tag "involvement[attributes][]", "Case Number"
       %br
-      - ['mrn','first_name','last_name','birth_date'].each do |val|
+      - ['nmff_mrn', 'nmh_mrn','first_name','last_name','birth_date'].each do |val|
         = check_box_tag "subject[]",val, :checked => true
         = label_tag "subject[]",val.titleize
         %br

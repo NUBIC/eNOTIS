@@ -9,6 +9,8 @@ class AdminController < ApplicationController
   def index
     @active_users = Activity.all(:include => :user, :order => "created_at DESC").group_by(&:user)
     @active_studies = Involvement.all(:include => :study, :conditions => {:studies => {:read_only => nil}}, :order => "involvements.updated_at DESC").group_by(&:study)
+    @involvement_events = InvolvementEvent.all(:include => {:involvement => :study}, :conditions => {:studies => {:read_only => nil}}).group_by(&:event)
+    @recent_uploads = StudyUpload.all(:include => :user, :order => "created_at DESC")
   end
   
   protected

@@ -17,4 +17,15 @@ describe TwoDigitYear do
   it "should handle blanks" do
     TwoDigitYear.compensate_for_two_digit_year("").should be_nil
   end
+  it "should deal with four digit years more than 100 years old" do
+    TwoDigitYear.compensate_for_two_digit_year("1/2/1902", 34).should == Date.parse("1/2/1902")
+  end
+  it "should deal with any four digit year" do
+    TwoDigitYear.compensate_for_two_digit_year("1/2/1822").should == Date.parse("1/2/1822")
+    TwoDigitYear.compensate_for_two_digit_year("1/2/1982").should == Date.parse("1/2/1982")
+    TwoDigitYear.compensate_for_two_digit_year("1/2/2882").should == Date.parse("1/2/2882")  
+  end
+  it "should not choke on bad dates" do
+    TwoDigitYear.compensate_for_two_digit_year("Unknown or not reported").should == nil
+  end
 end

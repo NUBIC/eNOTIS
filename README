@@ -42,7 +42,31 @@ eNOTIS depends on a few important gems:
   
 == Changes ==
 
+1.10.1
+* hardcoding search back to 30, for now
+
 1.10.0
+* typo with search controller. adding order
+* make search and ajax search consistent. closes #4301.
+* fixing issue with non-date values in date column. closes #4254
+* fixing an upload step in admin feature.
+* more forgiving uploads. see spec/uploads/forgiving\_terms.csv and spec/models/involvement\_spec.rb for more details. closes #4067
+* translate gender, ethnicity, race terms. for #4067
+* minor change to deployment script - describe how to push tags on a separate line
+* policy link
+* static policy page
+* deploy change to specify refs, tags, branches.
+* spec was occasionally failing due to random clashes of dates. fixed so that won't happen again
+* fixed front page training tab for safari. closes #4204
+* study uploads on admin page. close #4294
+* back icon for my studies. closes #4258
+* Bundle locked, right version of bundler this time
+* broke the build thanks to bundler version issue
+* closes #4260
+* changed column header in Import
+* sort most recent import first. closes #4280
+* flash message for failed imports. closes #4279
+* app version update, changelog
 * fix issue with destroying involvements. better tests. close #4268
 * fix for commented out webservice calls
 * moving involvement overlay javascripts to use 'live'. changing date pickers to re-select date when month/year is changed. changing overlay to not close unless 'cancel' or 'x' is selected (to prevent accidental dismissals of modal when datepickers are dismissed). closes #4255. closes #4257.

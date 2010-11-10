@@ -16,8 +16,8 @@ class SubjectInvolvementPopulator
         :death_date          => subject_hash[:death_date],
         :first_name          => subject_hash[:first_name],
         :last_name           => subject_hash[:last_name],
-        :mrn                 => subject_hash[:mrn],
-        :mrn_type            => subject_hash[:mrn_type],
+        :nmff_mrn             => /NMFF/ =~ subject_hash[:mrn_type] ? subject_hash[:mrn] : nil,
+        :nmh_mrn          => /NMH/ =~ subject_hash[:mrn_type] ? subject_hash[:mrn] : nil,
         :phone_number        => subject_hash[:phone],
         :external_patient_id => patient_id,
         :data_source         => "NOTIS" 

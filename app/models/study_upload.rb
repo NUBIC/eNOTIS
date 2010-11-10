@@ -22,7 +22,7 @@ class StudyUpload < ActiveRecord::Base
   # validates_attachment_content_type :upload, :content_type => ['text/csv', 'text/plain']
   # validates_attachment_content_type :result, :content_type => ['text/csv', 'text/plain']
   def self.required_columns
-    %w(case_number mrn last_name first_name birth_date gender ethnicity race consented_on withdrawn_on completed_on)
+    %w(case_number nmff_mrn nmh_mrn last_name first_name birth_date gender ethnicity race consented_on withdrawn_on completed_on)
   end
 
   def legit?
@@ -43,10 +43,7 @@ class StudyUpload < ActiveRecord::Base
       FasterCSV.open(temp_file.path, "r+") do |temp_stream|
         FasterCSV.parse(self.upload.to_io, :headers => :first_row, :return_headers => true, :header_converters => :symbol) do |r|
           if r.header_row? # check header row
-            if missing_columns?(r)
-              csv_is_valid = false
-              return false
-            end
+            return csv_is_valid = false if missing_columns?(r)
             temp_stream << r.fields + ["Result"]
           else # check non-header rows
             if (e = errors_for_row(r)).compact.empty?
@@ -60,7 +57,7 @@ class StudyUpload < ActiveRecord::Base
         end
       end
       self.result = temp_file if !csv_is_valid
-      self.result_file_name = self.upload_file_name.gsub(/(\.csv)?$/, '-result.csv')
+      self.result_file_name = self.upload_file_name.gsub(/\.csv$/, '-result.csv')
     rescue #FasterCSV::MalformedCSVError
       csv_is_valid = false
       self.summary = "Oops. Your upload is not a valid CSV file."
@@ -80,25 +77,27 @@ class StudyUpload < ActiveRecord::Base
         if r.header_row?
           temp_stream << r.fields + ["Result"]
         else
-          s = create_subject(r)
-          temp_stream << r.fields + [s ? "Created" : "Failed"]
-          subjects_created += 1 if s
+          if inv = create_subject(r)
+            # output translated gender, ethnicity, race
+            temp_stream << r.headers.map{|h| [:gender, :ethnicity, :race].include?(h) ? inv.send(h) : r[h]} + ["Created"]
+            subjects_created += 1
+          else
+            temp_stream << r.fields + ["Failed"]
+          end
+
         end
       end
     end
-    self.summary = "#{subjects_created} subjects created."
-    self.result = temp_file
-    self.result_file_name = self.upload_file_name.gsub(/(\.csv)?$/, '-result.csv')
-    self.save
+    self.update_attributes(:summary => "#{subjects_created} subjects created.", :result => temp_file, :result_file_name => upload_file_name.gsub(/\.csv$/, '-result.csv'))
     temp_file.close!
-    return subjects_created == 0 ? false : true
+    return subjects_created > 0
   end
   
   def create_subject(r)
     Study.transaction do # read http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
       params = params_from_row(r)
-      # Subject - find or create a subject
-      subject = Subject.find_or_create(params)
+      # Subject - create a subject
+      subject = Subject.create(params[:subject])
       raise ActiveRecord::Rollback if study.nil? or subject.nil?
       params[:involvement].merge!({:subject_id => subject.id, :study_id => self.study.id})
       
@@ -114,20 +113,22 @@ class StudyUpload < ActiveRecord::Base
       params[:involvement_events].each do |event|
         InvolvementEvent.find_or_create(event)
       end
+      involvement
     end
   end
   
   def params_from_row(r)
     { :user => self.user.attributes.symbolize_keys,
       :study => self.study.attributes.symbolize_keys,
-      :subject => { :mrn => r[:mrn], 
+      :subject => { :nmff_mrn => r[:nmff_mrn],
+                    :nmh_mrn => r[:nmh_mrn],
                     :first_name => r[:first_name], 
                     :last_name => r[:last_name], 
                     :birth_date => r[:birth_date]},
       :involvement => { :case_number => r[:case_number], 
-                       :gender => r[:gender],
-                       :ethnicity => r[:ethnicity],
-                       :race => r[:race]},
+                       :gender => Involvement.translate_gender(r[:gender]),
+                       :ethnicity => Involvement.translate_ethnicity(r[:ethnicity]),
+                       :race => Involvement.translate_race(r[:race])},
       :involvement_events => %w(consented withdrawn completed).map do |category|
         if (event_date = Chronic.parse(r["#{category}_on".to_sym])).blank?
           nil
@@ -157,12 +158,12 @@ class StudyUpload < ActiveRecord::Base
   end
   
   def check_identity(hash)
-    "Either MRN, first name/last name/birth date (with four digit year), or case number are required" if (hash[:mrn].blank? and (hash[:first_name].blank? or hash[:last_name].blank? or Chronic.parse(hash[:birth_date]).nil?) and hash[:case_number].blank?)
+    "Either MRN, first name/last name/birth date (with four digit year), or case number are required" if (hash[:nmff_mrn].blank? and hash[:nmh_mrn].blank? and (hash[:first_name].blank? or hash[:last_name].blank? or Chronic.parse(hash[:birth_date]).nil?) and hash[:case_number].blank?)
   end
   
   def check_terms(hash)
     %w(gender ethnicity race).map do |category|
-      "#{hash[category.to_sym].blank? ? "Blank #{category.capitalize}" : "Unknown #{category.capitalize}: #{hash[category.to_sym]}"}" unless Involvement.send(category.pluralize).map(&:downcase).include?(hash[category.to_sym].to_s.downcase)
+      "#{hash[category.to_sym].blank? ? "Blank #{category.capitalize}" : "Unknown #{category.capitalize}: #{hash[category.to_sym]}"}" unless Involvement.send("translate_#{category}", hash[category.to_sym].to_s)
     end
   end
   

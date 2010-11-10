@@ -1,6 +1,8 @@
 #back
-  a, a:hover, a:visited
+  a, a:hover, a:visited, a:active
     :text-decoration none
+    :padding-left 20px
+    :background transparent url('/images/icons/resultset_previous.png') no-repeat center left
 #report
 #study
   .study_msg
@@ -123,7 +125,7 @@
     .uploads
       +column(48, true)
   #involvement
-    :width 909px
+    :width 900px
   #report
     :width 750px
     .hidden
@@ -145,7 +147,7 @@ form#new_involvement, form.edit_involvement, #show_involvement
         :display inline
   .subject, .demographics, .accrual
     :float left
-    :width 303px
+    :width 300px
     h4
       :margin-bottom 0
     span.hint
@@ -154,13 +156,21 @@ form#new_involvement, form.edit_involvement, #show_involvement
       :color #999
       :font-style italic      
   .subject
-    li.case_number, li.mrn, li.mrn_type, li.first_name, li.middle_name
+    li
       :float left
-      :width 100px
+      :width 95px
       input
-        :width 90px
-    li.last_name, li.first_name, li.birth_date, li.mrn
-      :clear left 
+        :width 85px
+    li.address_line_1, li.last_name, li.first_name, li.email
+      :width 190px
+      input
+        :width 180px
+    li.state
+      :width 65px
+      input
+        :width 55px
+    li.last_name, li.first_name, li.birth_date, li.address_line_1, li.city, li.email, li.home_phone
+      :clear left
   .submit
     :clear both
     :text-align right

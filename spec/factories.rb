@@ -15,9 +15,10 @@ Factory.sequence :mrn do |n|
 end
 
 Factory.define :subject do |p|
-  p.mrn                       {Factory.next :mrn}
-  p.mrn_type                  {"Cerner"}
-  p.source_system             {}
+  p.nmff_mrn                {Factory.next :mrn}
+  # p.nmh_mrn
+  # p.source_system
+  # p.pre_sync_data
   p.synced_at                 {3.minutes.ago}
   p.pre_sync_data             {nil}
   p.first_name                {"Pi"}
@@ -33,13 +34,13 @@ Factory.define :subject do |p|
   p.zip                       {"31415"}
   p.phone_number              {"110 010 0100"}
   p.email                     {"pi@yatelp.com"}
-  p.no_contact                {}
-  p.no_contact_reason         {}
+  # p.no_contact                {}
+  # p.no_contact_reason         {}
 end
 
 Factory.define :fake_subject, :parent => :subject do |p|
-  # p.mrn
-  p.mrn_type                  {["Epic", "Cerner"].rand}
+  # p.nmff_mrn
+  # p.nmh_mrn
   # p.source_system
   # p.pre_sync_data
   p.synced_at                 {Populator.value_in_range(2.days.ago..2.minutes.ago)}
