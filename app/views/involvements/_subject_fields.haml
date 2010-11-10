@@ -1,18 +1,24 @@
-%li.mrn
-  = f.label :mrn, "MRN"
-  = f.text_field :mrn
-%li.mrn_type
-  = f.label :mrn_type, "MRN Source"
-  = f.select :mrn_type, %w(NMH NMFF), :include_blank=>true
+%li.nmff_mrn
+  = f.label :nmff_mrn, "NMFF MRN"
+  = f.text_field :nmff_mrn
+%li.nmh_mrn
+  = f.label :nmh_mrn, "NMH MRN"
+  = f.text_field :nmh_mrn
 %li.last_name
-  = f.label :last_name
+  = f.label :last_name, "Last name"
   = f.text_field :last_name
+%li.suffix
+  = f.label :suffix, "Suffix"
+  = f.text_field :suffix
 %li.first_name
-  = f.label :first_name
+  = f.label :first_name, "First name"
   = f.text_field :first_name
 %li.middle_name
-  = f.label :middle_name, "Middle (optional)"
+  = f.label :middle_name, "Middle"
   = f.text_field :middle_name
 %li.birth_date
   = f.label :birth_date
   = f.text_field :birth_date, :class => 'dob', :autocomplete => "off"
+%li.death_date
+  = f.label :death_date
+  = f.text_field :death_date, :class => 'dob', :autocomplete => "off"

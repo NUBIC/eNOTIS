@@ -1,9 +1,8 @@
 #show_involvement
-  -if @involvement.study.read_only?
+  - if @involvement.study.read_only?
     .patient_msg= "This patient record is part of a study that is managed in a different system. To edit this information you will need to go to the source system" 
   .subject
     %h4 Subject
-    %span.hint Case number OR all other fields required
     .case_number
       Case Number:
       = case_number_helper(@involvement.case_number)
@@ -15,7 +14,6 @@
       = subject_name_helper(@involvement.subject)
   .demographics
     %h4 Demographics
-    %span.hint Gender, ethnicity, race required for NIH reporting
     %ol
       %li
         Gender:
@@ -31,7 +29,6 @@
           = @involvement.race
   .accrual
     %h4 Accrual
-    %span.hint Clinical Events (consent, completed, withdrawn)
     Events:
     %ul
       - @involvement.involvement_events.each do |inv|
