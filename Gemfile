@@ -47,7 +47,7 @@ gem "empi"
 group :development do
   gem "wirble"
   gem "hirb"
-  gem 'awesome_print'
+  gem 'awesome_print', '0.2.1' # I tried the 0.3.0 version and it broke all the rake tasks (a stack level too deep error)
 end
 
 # Debugging
