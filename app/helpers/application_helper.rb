@@ -46,11 +46,15 @@ module ApplicationHelper
   
   def people_info(arr)
     people = [*arr].compact.map do |p|
-      (p.user["first_name"].blank? or p.user["last_name"].blank? or p.user["email"].blank?) ? nil : mail_to(p.user["email"], "#{p.user["first_name"]} #{p.user["last_name"]}", :title => "Project Role: #{p.project_role}")
+      person_info(p)
     end.uniq.compact
     (people.empty? ? nil : people.join(", ").html_safe)
   end
-  
+ 
+  def person_info(p)
+    (p.user["first_name"].blank? or p.user["last_name"].blank? or p.user["email"].blank?) ? nil : mail_to(p.user["email"], "#{p.user["first_name"]} #{p.user["last_name"]}", :title => "Project Role: #{p.project_role}")
+  end
+
   def other_studies_flag(involvement)
     unless involvement.subject.involvements == [involvement]
       link_to image_tag('/images/icons/flag_orange.png'), other_involvement_path(involvement), :rel => '#other_studies'
