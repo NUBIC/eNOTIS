@@ -42,6 +42,22 @@ eNOTIS depends on a few important gems:
   
 == Changes ==
 
+1.11.0
+* separate out selectors for add and edit overlays. closes #4426.
+* removed awesome print because no one was using it
+* locked Gemfile. Stupid bundler 0.9"
+* updated Gemfile to use specific awesome_print gem for dev. Current version breaks our rake db tasks wih a (stack level too deep error)
+* forgot to lock the stupid bundle
+* commiting proper bundle and updated schema
+* Fixed a typo.
+* refactoring person info to separate method
+* admin role lookup. closes #4352
+* trimming old subject controller view
+* count non-notis accruals on admin hub page. closes #4351
+* underline about on front page to show current link. closes #4343
+* allow overlays to scroll with page. closes #4321
+* adding extra fields to involvement - address, phone, etc. for empi and registar compatibility. closes #3989. closes #3988.
+
 1.10.1
 * hardcoding search back to 30, for now
 
