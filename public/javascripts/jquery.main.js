@@ -20,6 +20,9 @@ $(document).ready(function() {
     "oLanguage": {"sZeroRecords": "<p><strong>No subjects yet - click 'Add' or 'Import' to get started. Or watch our <a rel='#intro'>4 minute introduction to eNOTIS</a>.</strong></p>"}
   });
   
+  // add link involvement overlay
+  activateInvolvementOverlay("a[rel=#involvement].add");
+  
   // show study: datatable paging - redraw dashes for empty cells, activate other studies and view/edit overlays
   function activateRows(){
     // introduction (for empty datatable) overlay
@@ -40,7 +43,15 @@ $(document).ready(function() {
     });
     
     // involvement overlay
-    $("a[rel=#involvement]").overlay({
+    activateInvolvementOverlay(".display a[rel=#involvement]");
+
+    // 'delete' links
+    $('#accrual a.delete').deleteWithAjax();
+  }
+
+  // involvement overlay
+  function activateInvolvementOverlay(selector){
+    $(selector).overlay({
       fixed: false, // allows user to scroll if overlay extends beyond viewport
       closeOnClick: false, // to prevent closing accidentally when dismissing datepickers
       onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
@@ -98,9 +109,6 @@ $(document).ready(function() {
         });
       }
     });
-
-    // 'delete' links
-    $('#accrual a.delete').deleteWithAjax();
   }
   
   // show study: other studies overlay - bind an event onto the accept link that loads the other studies view into the same overlay
