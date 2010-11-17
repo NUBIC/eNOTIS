@@ -192,23 +192,39 @@ class Involvement < ActiveRecord::Base
   # END of methods used for graphs
 
   def all_events
+    # A placeholder method to get an easy checkbox? 
+    # Not sure why this is here but it's "method" 
+    # used when generating reports. Basically used as
+    # a flag, this method is never actually called
+    # as far as I can tell. - BLC
   end
 
-  %w(consented withdrawn completed).each do |name|
-    class_eval  <<-RUBY, __FILE__, __LINE__ + 1
-    def #{name}_report
-      ev = involvement_events.detect{|e| e.event == "#{name.titleize}"}
-      ev.occurred_on if ev
+#  %w(consented withdrawn completed).each do |name|
+#    class_eval  <<-RUBY, __FILE__, __LINE__ + 1
+#    def #{name}_report
+#      ev = involvement_events.detect{|e| e.event == "#{name.titleize}"}
+#      ev.occurred_on if ev
+#    end
+#    RUBY
+#  end
+
+  %w(consented withdrawn completed).each  do |name|
+    define_method("#{name}_report".to_sym) do
+       ev = self.send(:event_detect, name)
+       ev.occurred_on if ev
     end
-    RUBY
   end
 
   def consented
-    involvement_events.detect{|e| e.event == "Consented"}
+    event_detect "Consented"
   end
 
   def completed_or_withdrawn
-    involvement_events.detect{|e| e.event == "Completed" or e.event == "Withdrawn"}
+    event_detect("Completed") || event_detect("Withdrawn")
+  end
+
+  def event_detect(ev_name)
+    involvement_events.detect{|e| e.event == ev_name.titleize }
   end
 
   def subject_name_or_case_number

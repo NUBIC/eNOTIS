@@ -12,6 +12,10 @@ describe "Report generation from study data" do
                            :study => @study, 
                            :subject => @subject, 
                            :case_number => "123abc123")
+    # Adding all the events for testing purposes
+    %w(Consented Completed Withdrawn).each do |n|
+      Factory(:involvement_event, :involvement => @involvement, :event => n) 
+    end
 
     # Full params for export
     params = HashWithIndifferentAccess.new({
@@ -47,13 +51,22 @@ describe "Report generation from study data" do
     end
   end
 
+  Report::HEADERS[:event].each do |col_name, attr_name|
+    it "should have the '#{col_name}' event in the csv " do
+      FasterCSV.parse(@csv_data, :headers => true) do |row|
+        row[col_name].should_not be_nil
+        row[col_name].should == @involvement.send(attr_name.to_sym).to_s
+      end
+    end
+  end
+
   it "converts the defined headers to Ruport column name change hash" do
     proper_format = {"case_number"=>"Case Number",
       "ethnicity"=>"Ethnicity",
       "subject.nmff_mrn"=>"Nmff Mrn",
+       "gender"=>"Gender", 
+      "subject.first_name"=>"First Name",     
       "consented_report"=>"Consented",
-      "gender"=>"Gender", 
-      "subject.first_name"=>"First Name",
       "withdrawn_report"=>"Withdrawn", 
       "completed_report"=>"Completed", 
       "race_as_str"=>"Races",
@@ -61,7 +74,11 @@ describe "Report generation from study data" do
       "subject.last_name"=>"Last Name",
       "subject.nmh_mrn"=>"Nmh Mrn"}
 
-     Report.name_changes.should == proper_format
+     nc = Report.name_changes
+     proper_format.each_pair do |k,v|
+       nc.should have_key(k)
+       nc[k].should == v
+     end
   end
 
   describe "determining output based on parameters" do
@@ -112,5 +129,21 @@ describe "Report generation from study data" do
 
  end
 
+ it "should expand the methods from 'all_events' to the defined events" do
+   evnt_params = HashWithIndifferentAccess.new({
+    "involvement" => {"methods" => ["all_events"]}
+    })
+    exp_m = Report.expand_events(evnt_params)
+    evnt_reps = ["consented_report", "withdrawn_report","completed_report"]
+    evnt_reps.each {|r| exp_m.include?(r)}
+ end
+
+ it "should not expand methods when 'all_events' is not present" do
+   evnt_params = HashWithIndifferentAccess.new({
+     "involvement" => {"methods" => []}
+   })
+   exp_m = Report.expand_events(evnt_params)
+   exp_m.should be_empty
+ end
 end
 

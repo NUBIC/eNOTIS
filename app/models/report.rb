@@ -36,14 +36,18 @@ class Report
 
   def self.export(params)
     # Setup the data
-    study       = Study.find_by_irb_number(params[:study][:irb_number])
+    study = Study.find_by_irb_number(params[:study][:irb_number])
     involvement = params[:involvement] || {}
-    event       = params[:event] || {}
-   
+    involvement[:methods] = [] unless involvement[:methods]
+    involvement[:attributes] = [] unless involvement[:attributes]
+    event = params[:event] || {}
+ 
+    # Converting 'all_events' into the event report methods
+    involvement[:methods].concat self.expand_events(params)
     # Create report
     report = Involvement.report_table(:all,
-        :only => involvement[:attributes] || [],
-        :methods => involvement[:methods] || [],
+        :only => involvement[:attributes],
+        :methods => involvement[:methods],
         :conditions => {
           :study_id => study.id
         },
@@ -54,7 +58,7 @@ class Report
         })
 
     # Correcting column names
-    report.rename_columns( self.name_changes )
+    report.rename_columns(self.name_changes)
 
     # From form params adjusting data based on user selection 
     cols_req = self.filter_columns(params)
@@ -85,9 +89,8 @@ class Report
         HEADERS[:involvement].each do |k,v|
           columns[ORDER.index(k)] = k if pm.include?(v)
         end
-        if params[:involvement][:methods].include?("all_events")
-          %w(consented completed withdrawn).each do |method_name|
-            k = method_name.titleize
+        if pm.include?("all_events")
+          HEADERS[:event].keys.each do |k|
             columns[ORDER.index(k)] = k
           end
         end
@@ -113,13 +116,18 @@ class Report
     changes.invert
   end
 
-  def self.collapse_headers()
-    headers = {}
-    HEADERS.each_value do |v|
-      headers.merge! v
+  def self.expand_events(params)
+    # If "all_events" was chosen we need to put the *_report methods
+    # in the involvement[:methods] array
+    [].tap do |m|
+      if params[:involvement] && params[:involvement][:methods] && params[:involvement][:methods].include?("all_events")
+        HEADERS[:event].values.each do |e_report|
+          m << e_report
+        end
+      end
     end
-    headers
-  end
 
+
+  end
 end
 
