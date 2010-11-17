@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(:version => 20101104191456) do
     t.text    "value"
   end
 
+  create_table "event_types", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "time_span",   :default => "point"
+    t.integer  "seq",         :default => 0
+    t.integer  "study_id"
+    t.boolean  "editable",    :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "funding_sources", :force => true do |t|
     t.integer  "study_id"
     t.string   "name"
@@ -73,6 +84,14 @@ ActiveRecord::Schema.define(:version => 20101104191456) do
   end
 
   add_index "involvements", ["subject_id", "study_id", "ethnicity", "gender"], :name => "involvements_attr_idx", :unique => true
+
+  create_table "resource_statuses", :force => true do |t|
+    t.string   "name",       :null => false
+    t.boolean  "status"
+    t.string   "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "roles", :force => true do |t|
     t.integer  "study_id"

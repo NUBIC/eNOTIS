@@ -7,6 +7,7 @@ class ReportsController < ApplicationController
   def index
     @study = Study.find_by_irb_number(params[:study])
   end
+
   def nih
     @study = Study.find_by_irb_number(params[:study])
     @involvements = @study.involvements
@@ -18,12 +19,10 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html
       format.js {render :layout => false}
-      
     end
   end
 
-  def show
-  end
+  def show;  end
 
   def create
     result = Report.export(params)
@@ -38,7 +37,6 @@ class ReportsController < ApplicationController
     end
   end
 
-  def render_report(report)
-  end
+  def render_report(report);  end
   
 end
