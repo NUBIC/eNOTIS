@@ -73,7 +73,7 @@ namespace :deploy do
   end
   desc "Fix permissions"
   task :permissions do
-    sudo "chmod -R g+w #{shared_path} #{current_path}"
+    sudo "chmod -R g+w #{shared_path} #{current_path} #{release_path}"
   end
 end
 
