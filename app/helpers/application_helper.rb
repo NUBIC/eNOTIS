@@ -103,7 +103,10 @@ module ApplicationHelper
   end
 
   def mrn_and_type_helper(subject)
-    mrns = [subject.nmff_mrn.blank? ? nil : "NMFF #{subject.nmff_mrn}", subject.nmh_mrn.blank? ? nil : "NMH #{subject.nmh_mrn}"].compact
+    mrns = [
+      subject.nmff_mrn.blank? ? nil : "NMFF #{subject.nmff_mrn}",
+      subject.nmh_mrn.blank? ? nil : "NMH #{subject.nmh_mrn}", 
+      subject.ric_mrn.blank? ? nil : "RIC #{subject.ric_mrn}"].compact
     "<span class='mrn bold'>#{mrns.blank? ? 'Not entered/Unknown' : mrns.join(', ')}</span>".html_safe
   end
 

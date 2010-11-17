@@ -21,7 +21,7 @@ describe "Report generation from study data" do
     params = HashWithIndifferentAccess.new({
       "format"=>"csv",
       "study"=>{"irb_number"=>@study.irb_number},
-      "subject"=>["nmff_mrn","nmh_mrn","first_name","last_name","birth_date"],
+      "subject"=>["ric_mrn", "nmff_mrn","nmh_mrn","first_name","last_name","birth_date"],
       "involvement"=>{
         "methods"=>["race_as_str","all_events"],
         "attributes"=>["case_number","gender", "ethnicity"]
@@ -64,15 +64,16 @@ describe "Report generation from study data" do
     proper_format = {"case_number"=>"Case Number",
       "ethnicity"=>"Ethnicity",
       "subject.nmff_mrn"=>"Nmff Mrn",
-       "gender"=>"Gender", 
+      "subject.ric_mrn" => "Ric Mrn",
+      "subject.nmh_mrn"=>"Nmh Mrn",
+      "gender"=>"Gender", 
       "subject.first_name"=>"First Name",     
       "consented_report"=>"Consented",
       "withdrawn_report"=>"Withdrawn", 
       "completed_report"=>"Completed", 
       "race_as_str"=>"Races",
       "subject.birth_date"=>"Birth Date",
-      "subject.last_name"=>"Last Name",
-      "subject.nmh_mrn"=>"Nmh Mrn"}
+      "subject.last_name"=>"Last Name"}
 
      nc = Report.name_changes
      proper_format.each_pair do |k,v|
@@ -88,7 +89,7 @@ describe "Report generation from study data" do
 
     it "should output all the columns"  do
        all_params = HashWithIndifferentAccess.new({
-         "subject"=>["nmff_mrn","nmh_mrn","first_name","last_name","birth_date"],
+         "subject"=>["nmff_mrn","nmh_mrn","ric_mrn", "first_name","last_name","birth_date"],
          "involvement"=>{
            "methods"=>["race_as_str","all_events"],
            "attributes"=>["case_number","gender", "ethnicity"]

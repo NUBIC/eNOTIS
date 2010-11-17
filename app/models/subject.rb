@@ -20,13 +20,17 @@ class Subject < ActiveRecord::Base
   
   # Public instance methods
   def nmff_mrn=(mrn)
-    write_attribute :nmff_mrn, (mrn.blank? ? nil : mrn) # ignore blank mrns from add subject form
+    write_unless_blank(:nmff_mrn, mrn) # ignore blank mrns from add subject form
   end
   
   def nmh_mrn=(mrn)
-    write_attribute :nmh_mrn, (mrn.blank? ? nil : mrn) # ignore blank mrns from add subject form
+    write_unless_blank(:nmh_mrn, mrn) # ignore blank mrns from add subject form
   end
-  
+ 
+  def ric_mrn=(mrn)
+    write_unless_blank(:ric_mrn, mrn)
+  end
+
   # There is a subject_name_helper method that includes styles for the name...
   # The helper method is generally better to use when writing out to the HTML UI
   def name
@@ -53,4 +57,8 @@ class Subject < ActiveRecord::Base
     study.blank? ? studies : studies - [study]
   end
   
+  private
+  def write_unless_blank(att, val)
+    write_attribute att, (val.blank? ? nil: val)
+  end
 end

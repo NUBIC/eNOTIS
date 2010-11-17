@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101104191456) do
+ActiveRecord::Schema.define(:version => 20101117193255) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -23,17 +23,6 @@ ActiveRecord::Schema.define(:version => 20101104191456) do
     t.integer "activity_id"
     t.string  "key"
     t.text    "value"
-  end
-
-  create_table "event_types", :force => true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.string   "time_span",   :default => "point"
-    t.integer  "seq",         :default => 0
-    t.integer  "study_id"
-    t.boolean  "editable",    :default => true
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "funding_sources", :force => true do |t|
@@ -184,6 +173,7 @@ ActiveRecord::Schema.define(:version => 20101104191456) do
     t.date     "empi_updated_date"
     t.string   "nmff_mrn"
     t.string   "nmh_mrn"
+    t.string   "ric_mrn"
   end
 
   add_index "subjects", ["external_patient_id"], :name => "index_subjects_on_external_patient_id"

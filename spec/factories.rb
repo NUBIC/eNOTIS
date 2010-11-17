@@ -17,6 +17,7 @@ end
 Factory.define :subject do |p|
   p.nmff_mrn                {Factory.next :mrn}
   p.nmh_mrn                 {Factory.next :mrn}
+  p.ric_mrn                 {Factory.next :mrn}
   # p.source_system
   # p.pre_sync_data
   p.synced_at                 {3.minutes.ago}
