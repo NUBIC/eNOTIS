@@ -147,7 +147,7 @@ namespace :bundler do
   desc "Create, clear, symlink the shared bundler_gems path and install Bundler cached gems"
   task :install, :roles => :app do
     run "mkdir -p #{shared_path}/bundle"
-    run "cd #{release_path} && bundle install #{shared_path}/bundle"
+    run "cd #{release_path} && rake -f init.rakefile bundle:ensure_bundler_available && bundle install #{shared_path}/bundle"
   end
 end
 
