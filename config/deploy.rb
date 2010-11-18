@@ -11,6 +11,9 @@
 # Hostname code.bioinformatics.northwestern.edu
 # User xyz123
 
+# for bundler
+require 'bundler/capistrano'
+
 set :application, "enotis"
 
 # User
@@ -138,20 +141,7 @@ namespace :bcdatabase do
   end
 end
 
-# Bundler
-namespace :bundler do
-  desc "check_paths"
-  task :check_paths, :roles => :app do
-    run "echo $PATH"
-  end
-  desc "Create, clear, symlink the shared bundler_gems path and install Bundler cached gems"
-  task :install, :roles => :app do
-    run "mkdir -p #{shared_path}/bundle"
-    run "cd #{release_path} && rake -f init.rakefile bundle:ensure_bundler_available && bundle install #{shared_path}/bundle"
-  end
-end
-
-after 'deploy:update_code', 'bundler:install', 'web:static', 'web:uploads_and_results', 'deploy:cleanup', 'deploy:permissions', 'resque:restart'
+after 'deploy:update_code', 'web:static', 'web:uploads_and_results', 'deploy:cleanup', 'deploy:permissions', 'resque:restart'
 
 before 'web:disable', 'web:static'
 after 'web:enable', 'deploy:restart'
