@@ -4,12 +4,24 @@
 #
 # Use it by sourcing it:
 #
-#  . ci-rvm.sh
+#  . ci-env.sh
 #
 # Assumes that the create-on-use settings are set in your ~/.rvmrc:
 #
 #  rvm_install_on_use_flag=1
 #  rvm_gemset_create_on_use_flag=1
+#
+# Hudson Build Execute Shell Commands:
+#
+# # RVM uses bash from the path
+# PATH="/opt/local/bin:$PATH"
+# source ci-env.sh
+# export RAILS_ENV="hudson"
+# rake -f init.rakefile --trace
+# bundle exec rake log:clear
+# bundle exec rake db:migrate --trace
+# rake hudson:all --trace
+#
 
 set +x
 echo ". ~/.rvm/scripts/rvm"
