@@ -73,7 +73,7 @@ namespace :deploy do
   end
   desc "Fix permissions"
   task :permissions do
-    sudo "chmod -R g+w #{shared_path} #{current_path}"
+    sudo "chmod -R g+w #{shared_path} #{current_path} #{release_path}"
   end
 end
 
@@ -147,7 +147,7 @@ namespace :bundler do
   desc "Create, clear, symlink the shared bundler_gems path and install Bundler cached gems"
   task :install, :roles => :app do
     run "mkdir -p #{shared_path}/bundle"
-    run "cd #{release_path} && bundle install #{shared_path}/bundle"
+    run "cd #{release_path} && rake -f init.rakefile bundle:ensure_bundler_available && bundle install #{shared_path}/bundle"
   end
 end
 
