@@ -18,9 +18,7 @@
 # source ci-env.sh
 # export RAILS_ENV="hudson"
 # rake -f init.rakefile --trace
-# bundle exec rake log:clear
-# bundle exec rake db:migrate --trace
-# rake hudson:all --trace
+# bundle exec rake hudson:all --trace
 #
 
 set +x
