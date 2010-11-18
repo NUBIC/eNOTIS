@@ -90,4 +90,46 @@ describe InvolvementEvent do
     InvolvementEvent.count_accruals.should == 10
   end
   
-end
+
+# NOTE: Change to event system required that this behavior be removed. -BLC  
+#  it "should remove parent involvement on destroy if it has no siblings" do
+#    involvement = Factory(:involvement)
+#    involvement_id = involvement.id
+#    event = Factory(:involvement_event, :involvement => involvement)
+#    event.destroy
+#    Involvement.find_by_id(involvement_id).should == nil
+#  end
+#
+# NOTE: Same with this one... as noted above - BLC
+#  it "should not remove parent involvement on destroy if it has siblings" do
+#    involvement = Factory(:involvement)
+#    involvement_id = involvement.id
+#    event = Factory(:involvement_event, :involvement => involvement, :event => "Consented")
+#    sibling = Factory(:involvement_event, :involvement => involvement, :event => "Withdrawn")
+#    event.destroy
+#    Involvement.find_by_id(involvement_id).should_not == nil
+#  end
+#  
+ describe "class methods" do
+
+    it "should let me know how many accruals were completed to date" do
+       
+       InvolvementEvent.count_accruals.should == 0
+       10.times do |i|
+         involvement = Factory.create( :involvement, :study => Factory.create(:fake_study), 
+                                      :subject => Factory.create(:fake_subject),
+                                       :gender => Involvement.genders.rand, 
+                                       :ethnicity => Involvement.ethnicities.rand,
+                                       :races => Involvement.races.rand)
+         Factory.create( :involvement_event, :event_type => et,:occurred_on=>(i+10).days.ago,:involvement => involvement )
+       end
+       involvement_ids = Involvement.all.map(&:id)
+       5.times do |i|
+         Factory.create( :involvement_event, :event => "Consented",:occurred_on=> i.days.ago, 
+                        :involvement => Involvement.find(involvement_ids.rand) )
+       end
+       InvolvementEvent.count_accruals.should == 10
+    end
+  end
+end 
+

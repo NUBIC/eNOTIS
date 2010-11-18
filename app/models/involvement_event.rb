@@ -7,7 +7,8 @@ class InvolvementEvent < ActiveRecord::Base
   acts_as_reportable
   # Associations
   belongs_to :involvement
-  
+  belongs_to :event_type
+   
   # Validations
   validates_uniqueness_of :event, :scope => [:involvement_id, :occurred_on], :message => "This activity and date has already been entered"
   validates_inclusion_of :event, :in => %w(Consented Completed Withdrawn)
@@ -19,7 +20,10 @@ class InvolvementEvent < ActiveRecord::Base
 
   # Named scopes
   default_scope :order => "occurred_on"
-  named_scope :accruals, {:conditions => {:event => "Consented"}}
+  named_scope :accruals, {
+    :joins => :event_type,
+    :conditions => "event_types.name = 'Consented'"}
+  
   named_scope :in_last_12_months, { :conditions => { :occurred_on => 12.months.ago..Date.today }}
   named_scope :on_study, lambda {|study_id| { :include => :involvement, :conditions => ['involvements.study_id=?', study_id], :order => 'involvement_events.occurred_on DESC' } } do
     def to_graph

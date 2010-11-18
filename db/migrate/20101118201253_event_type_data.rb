@@ -1,4 +1,4 @@
-class EventTypeDataMigration < ActiveRecord::Migration
+class EventTypeData < ActiveRecord::Migration
   def self.up
     # Add the column to the involvment events for clinical_event parent
     add_column(:involvement_events, :event_type_id, :integer)
