@@ -19,93 +19,86 @@ describe Involvement do
     Involvement.new(:ethnicity => "HiSpAnIc Or LaTiNo").ethnicity.should == "Hispanic or Latino"
     Involvement.new(:races => "asian").races.include?("Asian").should be_true
   end
-  it "should tranlsate (for more forgiving uploads) gender terms" do
-    Involvement.translate_gender("male").should == "Male"
-    Involvement.translate_gender("M").should == "Male"
-    Involvement.translate_gender("Not Male").should == nil
 
-    Involvement.translate_gender("Female").should == "Female"
-    Involvement.translate_gender("f").should == "Female"
-    Involvement.translate_gender("girl").should == nil
+  describe "how it should tranlsate (for more forgiving uploads) gender terms" do
+    #positive matches
+    p_match = {
+      "Male" => %w(male M m MALE), 
+      "Female" => %w(female F f FEMALE),
+      "Unknown or Not Reported" => %w(u NR U nr UNKNOWN unknown not\ reported)}
+
+    p_match.each do |output, str2test|
+      it "should translate '#{str2test}' to '#{output}'" do
+        str2test.each{|s| Involvement.translate_gender(s).should == output}
+      end
+    end
     
-    Involvement.translate_gender("Unknown or Not Reported").should == "Unknown or Not Reported"  
-    Involvement.translate_gender("U").should == "Unknown or Not Reported"  
-    Involvement.translate_gender("NR").should == "Unknown or Not Reported"  
-    Involvement.translate_gender("UNKNOWN").should == "Unknown or Not Reported"  
-    Involvement.translate_gender("Not Reported").should == "Unknown or Not Reported"  
+    #negative matches
+    n_match = %w(not\ male girl null not\ known reported) 
+    n_match.each do | str2test|
+      it "should NOT match '#{str2test}'. Should be nil" do
+        str2test.each{|s| Involvement.translate_gender(s).should be_nil}
+      end
+    end
+
     Involvement.translate_gender(nil).should == nil
-    Involvement.translate_gender("Not known").should == nil
-    Involvement.translate_gender("Unreported").should == nil
-    Involvement.translate_gender("reported").should == nil
   end
-  it "should tranlsate (for more forgiving uploads) ethnicity terms" do
-    Involvement.translate_ethnicity("hispanic or latino").should == "Hispanic or Latino"
-    Involvement.translate_ethnicity("hispanic").should == "Hispanic or Latino"
-    Involvement.translate_ethnicity("latino").should == "Hispanic or Latino"
-    Involvement.translate_ethnicity("latino or hispanic").should == "Hispanic or Latino"
+
+  describe "how it should tranlsate (for more forgiving uploads) ethnicity terms" do
+    #positive matches
+    p_match = {
+      "Hispanic or Latino" => %w(hispanic\ or\ latino hispanic latino latino\ or\ hispanic),
+      "Not Hispanic or Latino" => ["not hispanic", "not hispanic or latino", "not latino", "not latino or hispanic"],
+      "Unknown or Not Reported" => %w(u NR U nr UNKNOWN unknown not\ reported)}
+      
+    p_match.each do |output, str2test|
+      it "should translate '#{str2test}' to '#{output}'" do
+        str2test.each{|s| Involvement.translate_ethnicity(s).should == output}
+      end
+    end
     
-    Involvement.translate_ethnicity("not hispanic or latino").should == "Not Hispanic or Latino"
-    Involvement.translate_ethnicity("not hispanic").should == "Not Hispanic or Latino"
-    Involvement.translate_ethnicity("not latino").should == "Not Hispanic or Latino"
-    Involvement.translate_ethnicity("not latino or hispanic").should == "Not Hispanic or Latino"
+    #negative matches
+    n_match = %w(not null not\ known reported) 
+    n_match.each do | str2test|
+      it "should NOT match '#{str2test}'. Should be nil" do
+        str2test.each{|s| Involvement.translate_ethnicity(s).should be_nil}
+      end
+    end
 
-    Involvement.translate_ethnicity("Unknown or Not Reported").should == "Unknown or Not Reported"  
-    Involvement.translate_ethnicity("U").should == "Unknown or Not Reported"  
-    Involvement.translate_ethnicity("NR").should == "Unknown or Not Reported"  
-    Involvement.translate_ethnicity("UNKNOWN").should == "Unknown or Not Reported"  
-    Involvement.translate_ethnicity("Not Reported").should == "Unknown or Not Reported"  
-    Involvement.translate_ethnicity(nil).should == nil
-    Involvement.translate_ethnicity("Not known").should == nil
-    Involvement.translate_ethnicity("Unreported").should == nil
-    Involvement.translate_ethnicity("reported").should == nil
+    it "should return nil for nil" do
+      Involvement.translate_ethnicity(nil).should be_nil
+    end
   end
-  it "should tranlsate (for more forgiving uploads) race terms" do
-    Involvement.translate_race("American Indian/Alaska Native").should == "American Indian/Alaska Native"    
-    Involvement.translate_race("american indian").should == "American Indian/Alaska Native"
-    Involvement.translate_race("alaskan").should == "American Indian/Alaska Native"
-    Involvement.translate_race("alaska native").should == "American Indian/Alaska Native"
-    Involvement.translate_race("Native american").should == "American Indian/Alaska Native"
-    Involvement.translate_race("not alaska native").should == nil    
-    Involvement.translate_race("native").should == nil
-    Involvement.translate_race("indian").should == nil
 
-    Involvement.translate_race("Asian").should == "Asian"
-    Involvement.translate_race("asia").should == "Asian"
-    Involvement.translate_race("Asian American").should == nil
-    Involvement.translate_race("Not Asian").should == nil
+  describe "how it should tranlsate (for more forgiving uploads) race terms" do
+    p_match = {
+       "American Indian/Alaska Native" => ["American Indian/Alaska Native", "american indian", "alaskan", "alaska native", "native american"],
+       "Asian" => %w(asian Asian),
+       "Black/African American" => ["Black/African American", "black", "africaN", "African American"],
+       "Native Hawaiian/Other Pacific Islander" => ["Native Hawaiian/Other Pacific Islander", "Hawaiian", "Pacific islander", "other pacific islander", "native pacific islander"],
+       "White" => ["White", "Caucasian", "White/Caucasian"],
+       "Unknown or Not Reported" => %w(u NR U nr UNKNOWN unknown not\ reported)}
 
-    Involvement.translate_race("Black/African American").should == "Black/African American"
-    Involvement.translate_race("black").should == "Black/African American"
-    Involvement.translate_race("africaN").should == "Black/African American"
-    Involvement.translate_race("African American").should == "Black/African American"
-    Involvement.translate_race("a Black").should == nil
-    Involvement.translate_race("american").should == nil
+    p_match.each do |output, str2test|
+      it "should translate '#{str2test}' to '#{output}'" do
+        str2test.each{|s| Involvement.translate_race(s).should == output}
+      end
+    end
     
-    Involvement.translate_race("Native Hawaiian/Other Pacific Islander").should == "Native Hawaiian/Other Pacific Islander"
-    Involvement.translate_race("Hawaiian").should == "Native Hawaiian/Other Pacific Islander"
-    Involvement.translate_race("Pacific islander").should == "Native Hawaiian/Other Pacific Islander"
-    Involvement.translate_race("other pacific islander").should == "Native Hawaiian/Other Pacific Islander"
-    Involvement.translate_race("native pacific islander").should == "Native Hawaiian/Other Pacific Islander"
-    Involvement.translate_race("native islander").should == nil
-    Involvement.translate_race("not Hawaiian").should == nil
-    Involvement.translate_race("pacific").should == nil
+    #negative matches
+    n_match = ["null", "not known", "reported", "not alaska native", "native", "indian", "Asian American", "NOt Asian", "a Black", "american",
+      "not Hawaiian", "pacific", "not white", "w"]
+    n_match.each do | str2test|
+      it "should NOT match '#{str2test}'. Should be nill" do
+        str2test.each{|s| Involvement.translate_race(s).should be_nil}
+      end
+    end
 
-    Involvement.translate_race("White").should == "White"
-    Involvement.translate_race("Caucasian").should == "White"
-    Involvement.translate_race("White/Caucasian").should == "White"    
-    Involvement.translate_race("not White").should == nil
-    Involvement.translate_race("w").should == nil
+    it "should be nil for nil" do
+      Involvement.translate_race(nil).should == nil
+    end 
+ end
 
-    Involvement.translate_race("Unknown or Not Reported").should == "Unknown or Not Reported"  
-    Involvement.translate_race("U").should == "Unknown or Not Reported"  
-    Involvement.translate_race("NR").should == "Unknown or Not Reported"  
-    Involvement.translate_race("UNKNOWN").should == "Unknown or Not Reported"  
-    Involvement.translate_race("Not Reported").should == "Unknown or Not Reported"  
-    Involvement.translate_race(nil).should == nil
-    Involvement.translate_race("Not known").should == nil
-    Involvement.translate_race("Unreported").should == nil
-    Involvement.translate_race("reported").should == nil
-  end
   it "should destroy child involvement events" do
     i = Factory(:involvement)
     e1 = Factory(:involvement_event, :involvement => i, :occurred_on => 1.day.ago)
@@ -205,9 +198,7 @@ describe Involvement do
       @i.race_is_black_or_african_american.should be_true
       @i.race_is_asian.should be_true
       @i.race.first.should == "Asian"
-    
     end
-    
   end
 
   it "should handle two digit years in dates" do

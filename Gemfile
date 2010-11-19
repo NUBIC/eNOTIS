@@ -47,14 +47,13 @@ gem "empi"
 group :development do
   gem "wirble"
   gem "hirb"
-  gem 'awesome_print'
 end
 
-# Debugging
-group :development do
-  gem "ruby-debug-base"
-  gem "ruby-debug"
-end
+# # Debugging
+# group :development do
+#   gem "ruby-debug-base"
+#   gem "ruby-debug"
+# end
 
 # Resque
 gem 'SystemTimer'

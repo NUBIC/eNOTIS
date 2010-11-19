@@ -22,7 +22,7 @@ class StudyUpload < ActiveRecord::Base
   # validates_attachment_content_type :upload, :content_type => ['text/csv', 'text/plain']
   # validates_attachment_content_type :result, :content_type => ['text/csv', 'text/plain']
   def self.required_columns
-    %w(case_number nmff_mrn nmh_mrn last_name first_name birth_date gender ethnicity race consented_on withdrawn_on completed_on)
+    %w(case_number nmff_mrn nmh_mrn ric_mrn last_name first_name birth_date gender ethnicity race consented_on withdrawn_on completed_on)
   end
 
   def legit?
@@ -122,6 +122,7 @@ class StudyUpload < ActiveRecord::Base
       :study => self.study.attributes.symbolize_keys,
       :subject => { :nmff_mrn => r[:nmff_mrn],
                     :nmh_mrn => r[:nmh_mrn],
+                    :ric_mrn => r[:ric_mrn],
                     :first_name => r[:first_name], 
                     :last_name => r[:last_name], 
                     :birth_date => r[:birth_date]},
@@ -158,7 +159,7 @@ class StudyUpload < ActiveRecord::Base
   end
   
   def check_identity(hash)
-    "Either MRN, first name/last name/birth date (with four digit year), or case number are required" if (hash[:nmff_mrn].blank? and hash[:nmh_mrn].blank? and (hash[:first_name].blank? or hash[:last_name].blank? or Chronic.parse(hash[:birth_date]).nil?) and hash[:case_number].blank?)
+    "Either MRN, first name/last name/birth date (with four digit year), or case number are required" if (hash[:nmff_mrn].blank? and hash[:nmh_mrn].blank? and hash[:ric_mrn].blank? and (hash[:first_name].blank? or hash[:last_name].blank? or Chronic.parse(hash[:birth_date]).nil?) and hash[:case_number].blank?)
   end
   
   def check_terms(hash)

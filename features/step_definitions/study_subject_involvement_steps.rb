@@ -42,6 +42,8 @@ end
 When /^I add full information on "([^"]*)" "([^"]*)" with "([^"]*)" on "([^"]*)"$/ do |first, last, event, date|
   When %(I follow "Add")
   fill_in "NMH MRN", :with => "G10203040"
+  fill_in "NMFF MRN", :with => "Q0293u2"
+  fill_in "RIC MRN", :with => "J23023a"
   fill_in "First name", :with => first
   fill_in "Middle", :with => "Q"
   fill_in "Last name", :with => last
@@ -62,6 +64,7 @@ When /^I add full information on "([^"]*)" "([^"]*)" with "([^"]*)" on "([^"]*)"
   select "Male", :from => "Gender"
   select "Not Hispanic or Latino", :from => "Ethnicity"
   check "Asian"#, :from => "Race"
+  check "White"
   select event, :from => "Activity"
   fill_in "On", :with => date
   click_button "Save"

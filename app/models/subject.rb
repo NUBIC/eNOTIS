@@ -18,29 +18,19 @@ class Subject < ActiveRecord::Base
   acts_as_reportable
   has_paper_trail
   
-  # Public class methods
-  
-  # Eliminating this method for now, in favor of simplifying - we just create for now, will do a find/create in the future with the EMPI - yoon
-  
-  # Only supports finding by mrn at this point. EMPI better suited for more 
-  # complex subject find queries
-  # def self.find_or_create(params)
-  #   s = params[:subject]
-  #   s.keys.each{|k| s[k] = nil if s[k].blank?}
-  #   s.delete(:case_number)
-  #   subject = Subject.find(:first, :conditions => {:mrn => s[:mrn]}) if s[:mrn]
-  #   subject = Subject.create(s) if subject.nil?
-  #   return subject
-  # end
-  
   # Public instance methods
   def nmff_mrn=(mrn)
-    write_attribute :nmff_mrn, (mrn.blank? ? nil : mrn) # ignore blank mrns from add subject form
-  end
-  def nmh_mrn=(mrn)
-    write_attribute :nmh_mrn, (mrn.blank? ? nil : mrn) # ignore blank mrns from add subject form
+    write_unless_blank(:nmff_mrn, mrn) # ignore blank mrns from add subject form
   end
   
+  def nmh_mrn=(mrn)
+    write_unless_blank(:nmh_mrn, mrn) # ignore blank mrns from add subject form
+  end
+ 
+  def ric_mrn=(mrn)
+    write_unless_blank(:ric_mrn, mrn)
+  end
+
   # There is a subject_name_helper method that includes styles for the name...
   # The helper method is generally better to use when writing out to the HTML UI
   def name
@@ -67,4 +57,8 @@ class Subject < ActiveRecord::Base
     study.blank? ? studies : studies - [study]
   end
   
+  private
+  def write_unless_blank(att, val)
+    write_attribute att, (val.blank? ? nil: val)
+  end
 end

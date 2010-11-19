@@ -13,6 +13,8 @@ public/stylesheets/compiled/*.css
 rerun.txt
 coverage.data
 coverage/*
+# to get passenger working in development http://markmail.org/message/b77hluatbr7hb3zu
+config/setup_load_paths.rb
 # Bundler
 .bundle/*
 config.ru

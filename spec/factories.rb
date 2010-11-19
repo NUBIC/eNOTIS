@@ -16,7 +16,8 @@ end
 
 Factory.define :subject do |p|
   p.nmff_mrn                {Factory.next :mrn}
-  # p.nmh_mrn
+  p.nmh_mrn                 {Factory.next :mrn}
+  p.ric_mrn                 {Factory.next :mrn}
   # p.source_system
   # p.pre_sync_data
   p.synced_at                 {3.minutes.ago}
@@ -24,7 +25,6 @@ Factory.define :subject do |p|
   p.first_name                {"Pi"}
   p.middle_name               {"A"}
   p.last_name                 {"Patel"}
-  p.birth_date                {Date.parse('1941-03-01')} # 3/1/41
   p.death_date                {nil}
   p.address_line1             {"314 Circle Dr."}
   p.address_line2             {"Suite 159"}
@@ -36,6 +36,10 @@ Factory.define :subject do |p|
   p.email                     {"pi@yatelp.com"}
   # p.no_contact                {}
   # p.no_contact_reason         {}
+  
+  # Actually setting the birth_date! Above method does not work
+  #p.after_create { |u| u.birth_date = "1941-03-01"}
+  #p.after_build { |u| u.birth_date = "1941-03-01"}
 end
 
 Factory.define :fake_subject, :parent => :subject do |p|
@@ -47,7 +51,8 @@ Factory.define :fake_subject, :parent => :subject do |p|
   p.first_name                {Faker::Name.first_name}
   p.middle_name               {Faker::Name.first_name}
   p.last_name                 {Faker::Name.last_name}
-  p.birth_date                {Populator.value_in_range(70.years.ago..12.years.ago).to_date}
+  p.birth_date                '02/19/1930'
+#  p.birth_date                {Populator.value_in_range(70.years.ago..12.years.ago).to_date} 
   p.death_date                {|me| DEATH_RATE.rand ? Populator.value_in_range((((me.birth_date || 12.years.ago)+5.years).to_date)..(2.years.ago.to_date)) : nil}
   p.address_line1             {Faker::Address.street_address}
   p.address_line2             {Faker::Address.secondary_address}
@@ -59,6 +64,8 @@ Factory.define :fake_subject, :parent => :subject do |p|
   p.email                     {Faker::Internet.email}
   # p.no_contact                
   # p.no_contact_reason         
+ 
+ 
 end
 
 Factory.sequence :irb_number do |n|

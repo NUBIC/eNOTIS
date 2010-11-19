@@ -1,6 +1,6 @@
 require 'webservices/edw'
 require 'will_paginate/array'
-require 'ruby_debug'
+# require 'ruby_debug'
 namespace :edw do
   namespace :subjects do
     namespace :redis do
