@@ -27,8 +27,23 @@ class ExternalEventProcessor < ApplicationProcessor
   end  
 
 
+  def encrypt(value)
+    pub_key  = Crypto::Key.from_file("#{RAILS_ROOT}/lib/rsa_key.pub")
+    if value.is_a?Hash
+      value.each_pair do |k,v|
+          value[k] = encrypt(v)
+      end
+    elsif value.is_a?Array
+      value.each do |val|
+         encrypt(val)
+      end
+    else
+      return pub_key.encrypt(value.to_s)
+    end
+    return value
+  end
 
-  private
+
   def decrypt(value)
     private_key = Crypto::Key.from_file("#{RAILS_ROOT}/lib/rsa_key")
     if value.is_a?Hash
