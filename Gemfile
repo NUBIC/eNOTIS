@@ -49,11 +49,11 @@ group :development do
   gem "hirb"
 end
 
-# Debugging
-group :development do
-  gem "ruby-debug-base"
-  gem "ruby-debug"
-end
+# # Debugging
+# group :development do
+#   gem "ruby-debug-base"
+#   gem "ruby-debug"
+# end
 
 # Resque
 gem 'SystemTimer'
