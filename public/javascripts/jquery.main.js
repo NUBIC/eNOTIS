@@ -14,6 +14,7 @@ $(document).ready(function() {
   
   // show study: datatable
   $("#accrual .display").dataTable({
+    "aoColumns": [null,null,null,null,null,null,{"sType":"date"},null,null,null,{"sType":"date"},{"sType":"date"},null],
     "fnDrawCallback": activateRows,
     "iDisplayLength": 30,
     "sPaginationType": "full_numbers", 
