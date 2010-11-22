@@ -104,7 +104,7 @@ class Study < ActiveRecord::Base
   # We need to phase out these named roles for a more binary authorization
   # for can_accrue ==true (ie view/edit patients) vs can_accrue ==false (can only view)
   def has_coordinator?(user)
-    roles.map(&:netid).include? user.netid
+    roles.map(&:netid).include? user.netid or user.permit?(:admin)
   end
 
   def accrual
