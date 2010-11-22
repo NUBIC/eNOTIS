@@ -21,6 +21,7 @@ module UsersToPers
         login.save
       end
       Pers::GroupMembership.create(:username => netid, :group_name => "Admin", :portal => PORTAL) unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(netid, PORTAL, "Admin")
+      Pers::GroupMembership.create(:username => netid, :group_name => "User", :portal => PORTAL) unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(netid, PORTAL, "User")
     end
   end
 
