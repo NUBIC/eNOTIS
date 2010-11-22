@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100823174930) do
+ActiveRecord::Schema.define(:version => 20101005195605) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -67,17 +67,17 @@ ActiveRecord::Schema.define(:version => 20100823174930) do
 
   create_table "roles", :force => true do |t|
     t.integer  "study_id"
-    t.integer  "user_id"
     t.string   "project_role"
     t.string   "consent_role"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "netid"
   end
 
   add_index "roles", ["consent_role"], :name => "index_authorized_people_on_consent_role"
+  add_index "roles", ["netid"], :name => "roles_netid_idx"
   add_index "roles", ["project_role"], :name => "index_authorized_people_on_project_role"
   add_index "roles", ["study_id"], :name => "index_authorized_people_on_study_id"
-  add_index "roles", ["user_id"], :name => "index_authorized_people_on_user_id"
 
   create_table "studies", :force => true do |t|
     t.string   "irb_number"
@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(:version => 20100823174930) do
     t.integer  "result_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "netid"
   end
 
   create_table "subjects", :force => true do |t|
@@ -156,27 +157,6 @@ ActiveRecord::Schema.define(:version => 20100823174930) do
   end
 
   add_index "subjects", ["external_patient_id"], :name => "index_subjects_on_external_patient_id"
-
-  create_table "users", :force => true do |t|
-    t.string   "netid"
-    t.string   "email"
-    t.string   "title"
-    t.string   "first_name"
-    t.string   "middle_name"
-    t.string   "last_name"
-    t.string   "address_line1"
-    t.string   "address_line2"
-    t.string   "address_line3"
-    t.string   "city"
-    t.string   "state"
-    t.string   "zip"
-    t.string   "country"
-    t.string   "phone_number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "users", ["netid"], :name => "users_netid_idx", :unique => true
 
   create_table "versions", :force => true do |t|
     t.string   "item_type",  :null => false
