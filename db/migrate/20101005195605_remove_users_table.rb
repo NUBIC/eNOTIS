@@ -13,7 +13,7 @@ class RemoveUsersTable < ActiveRecord::Migration
     StudyUpload.all.each do |su|
       su.netid = User.find(su.user_id).netid
       result = su.save
-      puts "."
+      print "."
       puts "save netid: #{su.netid} to study #{su.study.irb_number} 'failed'" unless result 
     end
     puts "Done with StudyUploads"
@@ -22,7 +22,7 @@ class RemoveUsersTable < ActiveRecord::Migration
     Activity.all.each do |a|
       a.whodiddit = User.find(a.whodiddit).netid
       result = a.save
-      puts "."
+      print "."
       puts "save netid: #{a.netid} to activity #{a.inspect} 'failed'" unless result 
     end
     puts "Done with Activities"
