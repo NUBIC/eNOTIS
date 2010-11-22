@@ -9,5 +9,5 @@ Bcsec.configure do
   api_mode :http_basic
 
   # The portal to which this application belongs.  Optional.
-  portal :ENOTIS
+  portal :eNOTIS # should match PORTAL in lib/users_to_pers.rb
 end
