@@ -13,11 +13,15 @@ public/stylesheets/compiled/*.css
 rerun.txt
 coverage.data
 coverage/*
+
 # to get passenger working in development http://markmail.org/message/b77hluatbr7hb3zu
 config/setup_load_paths.rb
+
 # Bundler
 .bundle/*
+lock/
 config.ru
+
 # db/schema.rb
 # if schema.rb isn't included in source control, it is generated on the fly on the server without group write permissions, preventing other developers from running migrations on the same deployment
 # see also:
