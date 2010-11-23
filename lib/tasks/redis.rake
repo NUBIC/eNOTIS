@@ -6,7 +6,7 @@ namespace :redis do
   desc "Updates Users from Redis Cache"
   task :users => :environment do
     puts "#{Time.now}: Users..."
-    User.update_from_redis
+    UsersToPers.update_from_redis # User.update_from_redis
     puts "#{Time.now}: Users complete"
   end
   desc 'Updates studies from redis'
@@ -41,9 +41,10 @@ namespace :redis do
   task :fix_aliases => :environment do
     aliases = REDIS.hgetall('role:user_aliases')
     aliases.each do |old_netid,new_netid|
-      user = User.find(:first, :conditions=>{:netid=>new_netid})
-      irb_numbers = user.roles.map{|role| role.study}.map{|study| study.irb_number}
-      puts "Old Netid: #{old_netid} - NETID = #{user.netid} : on studies #{irb_numbers.join(", ")}"
+      # user = User.find(:first, :conditions=>{:netid=>new_netid})
+      # irb_numbers = user.roles.map{|role| role.study}.map{|study| study.irb_number}
+      irb_numbers = Role.find_all_by_netid(new_netid).map(&:study).map(&:irb_number)
+      puts "Old Netid: #{old_netid} - NETID = #{new_netid} : on studies #{irb_numbers.join(", ")}"
     end
   end
   

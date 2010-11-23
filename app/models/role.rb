@@ -36,7 +36,7 @@ class Role < ActiveRecord::Base
         begin
           role              = Role.new
           role.study        = Study.find_by_irb_number(study)
-          role.user         = user_lookup(REDIS, study, netid, project_role, consent_role)
+          role.netid        = UsersToPers.user_lookup(REDIS, study, netid, project_role, consent_role)
           role.project_role = project_role
           role.consent_role = consent_role
           unless role.save
@@ -66,7 +66,7 @@ class Role < ActiveRecord::Base
         begin
           role              = Role.new
           role.study        = Study.find_by_irb_number(study)
-          role.user         = user_lookup(REDIS, study, netid, project_role, consent_role)
+          role.netid        = UsersToPers.user_lookup(REDIS, study, netid, project_role, consent_role)
           role.project_role = project_role
           role.consent_role = consent_role
           unless role.save
@@ -77,7 +77,7 @@ class Role < ActiveRecord::Base
             elsif role.errors.on(:study_id) =='has already been taken'
               puts "Study User validation error - Co Investigator : #{study} - #{netid} - #{project_role} - #{consent_role} "
               begin
-                first_role = role.study.roles.detect{|r| r.user = role.user}
+                first_role = role.study.roles.detect{|r| r.netid = role.netid}
                 puts "Already listed as #{first_role.project_role} - #{first_role.consent_role}"
               rescue Exception => e
                 puts "Exception Caught"
@@ -100,7 +100,7 @@ class Role < ActiveRecord::Base
         begin
           role              = Role.new
           role.study        = Study.find_by_irb_number(study)
-          role.user         = user_lookup(REDIS, study, netid, project_role, consent_role)
+          role.netid        = UsersToPers.user_lookup(REDIS, study, netid, project_role, consent_role)
           role.project_role = project_role
           role.consent_role = consent_role
           unless role.save
@@ -111,7 +111,7 @@ class Role < ActiveRecord::Base
             elsif role.errors.on(:study_id) == 'has already been taken'
               puts "Study User validation error - Authorized Personnel : #{study} - #{netid} - #{project_role} - #{consent_role} "
               begin
-                first_role = role.study.roles.detect{|r| r.user = role.user}
+                first_role = role.study.roles.detect{|r| r.netid = role.netid}
                 puts "Already listed as #{first_role.project_role} - #{first_role.consent_role}"
               rescue Exception => e
                 puts "Exception Caught"
@@ -133,19 +133,21 @@ class Role < ActiveRecord::Base
 
   private
   def self.user_lookup(redis, study, netid, project_role, consent_role)
-    if (user= User.find_by_netid(netid))
-      user
-    elsif(user2=User.find_by_netid(netid.downcase))
-      user2
-    elsif(user3 = User.find_by_netid(redis.hget("role:user_aliases", netid)))
-      user3
-    elsif(user4 = User.find_by_netid(redis.hget("role:user_aliases", netid.downcase)))
-      user4
-    else
-      puts "Missing Netid = #{study} - #{netid} - #{project_role} - #{consent_role}"
-      Resque.enqueue(IncompleteRoleProcessor, study, netid, project_role, consent_role)
-      nil
-    end
+    logger.warn "user_lookup deprecated!"
+    UsersToPers.user_lookup(redis, study, netid, project_role, consent_role)
+    # if (user= User.find_by_netid(netid))
+    #   user
+    # elsif(user2=User.find_by_netid(netid.downcase))
+    #   user2
+    # elsif(user3 = User.find_by_netid(redis.hget("role:user_aliases", netid)))
+    #   user3
+    # elsif(user4 = User.find_by_netid(redis.hget("role:user_aliases", netid.downcase)))
+    #   user4
+    # else
+    #   puts "Missing Netid = #{study} - #{netid} - #{project_role} - #{consent_role}"
+    #   Resque.enqueue(IncompleteRoleProcessor, study, netid, project_role, consent_role)
+    #   nil
+    # end
   end
   
   # Fix for authorized personnel entry for study STU00005280

@@ -52,7 +52,8 @@ namespace :db do
       puts "creating extra accrual role for #{ENV['NETID']}..."
       10.times do |i| 
         begin
-          blip && Factory.create(:role_accrues, :study => random(Study), :user => User.find_by_netid(ENV['NETID']))
+          # blip && Factory.create(:role_accrues, :study => random(Study), :user => User.find_by_netid(ENV['NETID']))
+          blip && Factory.create(:role_accrues, :study => random(Study), :netid => ENV['NETID'])
         rescue
         end
       end
@@ -96,7 +97,8 @@ namespace :db do
     task :vip => :environment do
       while !(pair = ask("netid, irb_number: ")).blank? do
         netid, irb_number = pair.split(",", 2).map(&:strip)
-        coord = Role.create(:user => User.find_by_netid(netid), :study => Study.find_by_irb_number(irb_number))
+        # coord = Role.create(:user => User.find_by_netid(netid), :study => Study.find_by_irb_number(irb_number))
+        coord = Role.create(:netid => netid, :study => Study.find_by_irb_number(irb_number))
         puts coord.save ? coord.inspect : coord.all_errors
       end
     end
