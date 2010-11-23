@@ -55,18 +55,28 @@ ActiveRecord::Schema.define(:version => 20101005195605) do
     t.string   "case_number"
     t.datetime "created_at"
     t.datetime "updated_at"
+<<<<<<< HEAD
     t.boolean  "race_is_black_or_african_american",                 :default => false
     t.boolean  "race_is_native_hawaiian_or_other_pacific_islander", :default => false
     t.boolean  "race_is_white",                                     :default => false
     t.boolean  "race_is_unknown_or_not_reported",                   :default => false
     t.boolean  "race_is_american_indian_or_alaska_native",          :default => false
     t.boolean  "race_is_asian",                                     :default => false
+=======
+    t.boolean  "race_is_unknown_or_not_reported",                   :default => false
+    t.boolean  "race_is_american_indian_or_alaska_native",          :default => false
+    t.boolean  "race_is_asian",                                     :default => false
+    t.boolean  "race_is_black_or_african_american",                 :default => false
+    t.boolean  "race_is_native_hawaiian_or_other_pacific_islander", :default => false
+    t.boolean  "race_is_white",                                     :default => false
+>>>>>>> changing user migration to only add, not trim (yet)
   end
 
   add_index "involvements", ["subject_id", "study_id", "ethnicity", "gender"], :name => "involvements_attr_idx", :unique => true
 
   create_table "roles", :force => true do |t|
     t.integer  "study_id"
+    t.integer  "user_id"
     t.string   "project_role"
     t.string   "consent_role"
     t.datetime "created_at"
@@ -74,10 +84,18 @@ ActiveRecord::Schema.define(:version => 20101005195605) do
     t.string   "netid"
   end
 
+<<<<<<< HEAD
   add_index "roles", ["consent_role"], :name => "index_authorized_people_on_consent_role"
   add_index "roles", ["netid"], :name => "roles_netid_idx"
   add_index "roles", ["project_role"], :name => "index_authorized_people_on_project_role"
   add_index "roles", ["study_id"], :name => "index_authorized_people_on_study_id"
+=======
+  # unrecognized index "index_authorized_people_on_consent_role" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  # unrecognized index "index_authorized_people_on_project_role" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  # unrecognized index "index_authorized_people_on_study_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  # unrecognized index "index_authorized_people_on_user_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  # unrecognized index "roles_netid_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+>>>>>>> changing user migration to only add, not trim (yet)
 
   create_table "studies", :force => true do |t|
     t.string   "irb_number"
@@ -114,6 +132,7 @@ ActiveRecord::Schema.define(:version => 20101005195605) do
 
   create_table "study_uploads", :force => true do |t|
     t.integer  "study_id"
+    t.integer  "user_id"
     t.string   "state"
     t.string   "summary"
     t.string   "upload_file_name"
@@ -157,6 +176,27 @@ ActiveRecord::Schema.define(:version => 20101005195605) do
   end
 
   add_index "subjects", ["external_patient_id"], :name => "index_subjects_on_external_patient_id"
+
+  create_table "users", :force => true do |t|
+    t.string   "netid"
+    t.string   "email"
+    t.string   "title"
+    t.string   "first_name"
+    t.string   "middle_name"
+    t.string   "last_name"
+    t.string   "address_line1"
+    t.string   "address_line2"
+    t.string   "address_line3"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "country"
+    t.string   "phone_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  # unrecognized index "users_netid_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
   create_table "versions", :force => true do |t|
     t.string   "item_type",  :null => false
