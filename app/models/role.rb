@@ -11,6 +11,9 @@ class Role < ActiveRecord::Base
 
   before_save :truncate_project_role
   
+  # Named scopes
+  default_scope :order => "project_role"
+  
   def last_name
     # TODO fill this in from Bcsec::User
   end
