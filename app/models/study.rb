@@ -9,11 +9,15 @@ class Study < ActiveRecord::Base
   has_many :involvements
   has_many :roles
   has_many :subjects, :through => :involvements
-  has_many :event_types, :order => "seq asc"
   has_many :involvement_events, :through => :involvements
   has_many :study_uploads
   has_many :funding_sources, :dependent => :delete_all
-
+  has_many :event_types, :order => "seq asc" do 
+    def find_by_name(e_name)
+      find(:first, :conditions => {:name =>EventType.event_name_formatter(e_name)})
+    end
+  end
+  
   # Validators
   validates_format_of :irb_number, :with => /^STU.+/, :message => "invalid study number format"
     
@@ -122,26 +126,46 @@ class Study < ActiveRecord::Base
     end
   end  
 
+  def may_accrue?
+    can_accrue?
+  end
+
+  def can_accrue?
+    # For possible eIRB statuses, see doc/terms.csv
+    ["Approved", "Exempt Approved", "Not Under IRB Purview",
+      "Revision Closed", "Revision Open"].include? self.status
+  end
+
   def define_event(event_name)
     et = event_types.find_by_name(event_name)
     (et.nil?) ? "Undefined event" : et.description
   end
 
- # Creates new event types for the study
-   # These event types are used by involvement events to 
-   # indicate what type of event they belong to
-   # this method is run. Note: The event name is formatted by the EventType class!
-   def create_default_events
-     EventType::DEFAULT_EVENTS.each_value do |e|
-     event = self.event_types.find_by_name(e[:name])
+  # Creates new event types for the study
+  # These event types are used by involvement events to 
+  # indicate what type of event they belong to
+  def create_event_type(opts)
+    if opts.is_a?(String)
+      opts = {:name => opts}
+    end
+    self.event_types.create(opts)
+  end
+
+  # There are some default events we create for every study
+  # This method creates those for the current study. 
+  # It does not create duplicates if the events exist when 
+  # this method is run. Note: The event name is formatted by the EventType class!
+  def create_default_events
+    EventType::DEFAULT_EVENTS.each_value do |e|
+      event = self.event_types.find_by_name(e[:name])
       unless event
         self.event_types.create(e) do |et|
           et.editable = e[:editable] if e.has_key?(:editable)
-         end
-       end
-     end
-   end
- 
+        end
+      end
+    end
+  end
+
   def update_default_events
     EventType::DEFAULT_EVENTS.each_value do |e|
       event = self.event_types.find_by_name(e[:name])
@@ -153,15 +177,4 @@ class Study < ActiveRecord::Base
     end
   end
 
-  
-
-  def may_accrue?
-    can_accrue?
-  end
-
-  def can_accrue?
-    # For possible eIRB statuses, see doc/terms.csv
-    ["Approved", "Exempt Approved", "Not Under IRB Purview",
-      "Revision Closed", "Revision Open"].include? self.status
-  end
 end

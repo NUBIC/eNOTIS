@@ -5,7 +5,8 @@ describe "Report generation from study data" do
 
   before(:each) do
 
-    @study = Factory(:study) 
+    @study = Factory(:study)
+    @study.create_default_events
     @subject = Factory(:subject) 
     @involvement = Factory(:involvement, 
                            :races => ["White", "Asian"],
@@ -14,7 +15,8 @@ describe "Report generation from study data" do
                            :case_number => "123abc123")
     # Adding all the events for testing purposes
     %w(Consented Completed Withdrawn).each do |n|
-      Factory(:involvement_event, :involvement => @involvement, :event => n) 
+      ev = @study.event_types.find_by_name(n)
+      Factory(:involvement_event, :involvement => @involvement, :event_type => ev) 
     end
 
     # Full params for export

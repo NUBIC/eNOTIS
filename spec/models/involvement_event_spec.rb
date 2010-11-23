@@ -1,36 +1,28 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe InvolvementEvent do
-  before(:each) do
-  end
 
   it "should create a new instance given valid attributes" do
     Factory(:involvement_event).should be_valid
   end
-  
-  it "should be invalid if not unique on involvement, event, date" do
-    event = "Consented"
-    occurred_on = "2010-04-19"
+
+  it "should be valid if the event being added is repeatable" do 
+    event = Factory(:event_type)
+    occurred_on = "04/10/2010"
     involvement = Factory(:involvement)
-    a = Factory(:involvement_event, :event => event, :occurred_on => occurred_on, :involvement => involvement)
+    a = Factory(:involvement_event, :event_type => event, :occurred_on => occurred_on, :involvement => involvement)
     a.should be_valid
-    b = Factory.build(:involvement_event, :event => event, :occurred_on => occurred_on, :involvement => involvement)
-    b.should_not be_valid
+    b = Factory.build(:involvement_event, :event_type => event, :occurred_on => occurred_on, :involvement => involvement)
+    b.should be_valid
+
   end
+
   it "should be invalid without a involvement and date" do
     a = Factory.build(:involvement_event, :occurred_on => nil)
     a.should_not be_valid
     a.should have(1).error_on(:occurred_on)
-    # this validation will work in Rails 2.3.6
-    # b = Factory.build(:involvement_event, :involvement_id => nil)
-    # b.should_not be_valid
-    # b.should have(1).error_on(:involvement_id)
   end
-  it "should accept events (case insensitive) and set the right case" do
-    InvolvementEvent.new(:event => "cOnSeNtEd").event.should == "Consented"
-    InvolvementEvent.new(:event => "completed").event.should == "Completed"
-    InvolvementEvent.new(:event => "WITHDRAWN").event.should == "Withdrawn"
-  end
+
   it "should return all involvement events on a given study" do
     @study = Factory(:fake_study)
     @not_my_study = Factory(:fake_study)
@@ -39,6 +31,7 @@ describe InvolvementEvent do
     3.times{Factory(:involvement_event, :involvement => Factory(:involvement, :study => @not_my_study))}
     InvolvementEvent.on_study(@study).should have(3).involvement_events
   end
+
   it "should return all involvement events on a given study as x/y values" do
     @study = Factory(:fake_study)
     @not_my_study = Factory(:fake_study)
@@ -47,6 +40,7 @@ describe InvolvementEvent do
     3.times{Factory(:involvement_event, :involvement => Factory(:involvement, :study => @not_my_study))}
     InvolvementEvent.on_study(@study).to_graph.last[1].should == 3
   end
+  
   it "should remove parent involvement on destroy if it has no siblings" do
     involvement = Factory(:involvement)
     involvement_id = involvement.id
@@ -54,6 +48,7 @@ describe InvolvementEvent do
     event.destroy
     Involvement.find_by_id(involvement_id).should == nil
   end
+
   it "should not remove parent involvement on destroy if it has siblings" do
     involvement = Factory(:involvement)
     involvement_id = involvement.id
@@ -67,69 +62,49 @@ describe InvolvementEvent do
     event.destroy
     Involvement.find_by_id(involvement_id).should_not == nil
   end
-  it "should not choke on removing childless parent if parent is nil" do
-    event = Factory(:involvement_event, :involvement => nil)
-    event.destroy
-  end
-  
+
   it "should let me know how many accruals (unique by involvement) were completed to date" do
+    study = Factory(:fake_study)
+    study.create_default_events
     InvolvementEvent.count_accruals.should == 0
+    event_type = study.event_types.find_by_name("Consented")
+
     10.times do |i|
-      involvement = Factory.create( :involvement, :study => Factory.create(:fake_study), 
+      involvement = Factory.create( :involvement, :study => study, 
                                    :subject => Factory.create(:fake_subject),
                                     :gender => Involvement.genders.rand, 
                                     :ethnicity => Involvement.ethnicities.rand,
                                     :races => Involvement.races.rand)
-      Factory.create( :involvement_event, :event => "Consented",:occurred_on=>(i+10).days.ago,:involvement => involvement )
+      Factory.create( :involvement_event, :event_type => event_type, :occurred_on=>(i+10).days.ago, :involvement => involvement )
     end
     involvement_ids = Involvement.all.map(&:id)
+    event_type = Factory(:event_type)
     5.times do |i|
-      Factory.create( :involvement_event, :event => "Consented",:occurred_on=> i.days.ago, 
+      Factory.create( :involvement_event, :event_type => event_type ,:occurred_on=> i.days.ago, 
                      :involvement => Involvement.find(involvement_ids.rand) )
     end
     InvolvementEvent.count_accruals.should == 10
   end
   
-
-# NOTE: Change to event system required that this behavior be removed. -BLC  
-#  it "should remove parent involvement on destroy if it has no siblings" do
-#    involvement = Factory(:involvement)
-#    involvement_id = involvement.id
-#    event = Factory(:involvement_event, :involvement => involvement)
-#    event.destroy
-#    Involvement.find_by_id(involvement_id).should == nil
-#  end
-#
-# NOTE: Same with this one... as noted above - BLC
-#  it "should not remove parent involvement on destroy if it has siblings" do
-#    involvement = Factory(:involvement)
-#    involvement_id = involvement.id
-#    event = Factory(:involvement_event, :involvement => involvement, :event => "Consented")
-#    sibling = Factory(:involvement_event, :involvement => involvement, :event => "Withdrawn")
-#    event.destroy
-#    Involvement.find_by_id(involvement_id).should_not == nil
-#  end
-#  
  describe "class methods" do
 
     it "should let me know how many accruals were completed to date" do
        
-       InvolvementEvent.count_accruals.should == 0
+       InvolvementEvent.accruals.count.should == 0
        10.times do |i|
-         involvement = Factory.create( :involvement, :study => Factory.create(:fake_study), 
-                                      :subject => Factory.create(:fake_subject),
-                                       :gender => Involvement.genders.rand, 
+         study = Factory(:fake_study)
+         study.create_default_events
+         et = study.event_types.find_by_name("Consented")
+         involvement = Factory.create( :involvement, :study => study,
+                                       :subject => Factory.create(:fake_subject),
+                                       :gender => Involvement.genders.rand,
                                        :ethnicity => Involvement.ethnicities.rand,
                                        :races => Involvement.races.rand)
-         Factory.create( :involvement_event, :event_type => et,:occurred_on=>(i+10).days.ago,:involvement => involvement )
+         Factory(:involvement_event, :event_type => et, :occurred_on=>(i+10).days.ago, :involvement => involvement)
        end
-       involvement_ids = Involvement.all.map(&:id)
-       5.times do |i|
-         Factory.create( :involvement_event, :event => "Consented",:occurred_on=> i.days.ago, 
-                        :involvement => Involvement.find(involvement_ids.rand) )
-       end
-       InvolvementEvent.count_accruals.should == 10
+       InvolvementEvent.accruals.count.should == 10
     end
   end
-end 
+ 
+end
 

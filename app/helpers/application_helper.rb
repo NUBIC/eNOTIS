@@ -70,15 +70,10 @@ module ApplicationHelper
     end
   end
   
-  # Finds an involvement event given a parent involvement and event name
-  # 
-  # @param [Involvement] involvement parent of the involvement event
-  # @param [String] event name of the event to find, case insensitive
-  # @return [String, nil] an html span with the event date and note icon (if a note exists). nil if no involvement event found
-  def event_info(involvement, event)
-    if involvement_event = involvement.involvement_events.detect{|e| e.event.downcase == event.downcase}
-      content_tag("span", "#{involvement_event.occurred_on} #{image_tag'/images/icons/note.png' unless involvement_event.note.blank?}".html_safe , :class => event.downcase, :title => event).html_safe
-    end
+  def event_info(inv_event)
+    content_tag("span", "#{inv_event.occurred_on.strftime("%m/%d/%Y")} #{image_tag'/images/icons/note.png' unless inv_event.note.blank?}".html_safe ,
+                :class => inv_event.event_type.name.downcase,
+                :title => inv_event.event_type.name).html_safe
   end
   
   def gender_options(selected = nil)

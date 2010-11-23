@@ -110,8 +110,11 @@ class StudyUpload < ActiveRecord::Base
       # logger.info params.inspect
       
       # InvolvementEvent - create the event
-      params[:involvement_events].each do |event|
-        InvolvementEvent.find_or_create(event)
+      params[:involvement_events].each do |event_params|
+        #looking up event by name in the params
+        ev_type = involvement.study.event_types.find_by_name(event_params[:event])
+        event_params[:event_type_id] = ev_type.id if ev_type
+        InvolvementEvent.create(event_params)
       end
       involvement
     end

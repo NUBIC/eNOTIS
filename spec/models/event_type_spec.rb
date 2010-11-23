@@ -29,11 +29,6 @@ describe EventType do
       e.editable?.should be_false
     end
 
-    it "knows if it's repeatable" do
-      e = Factory(:event_type, :repeatable => false)
-      e.repeatable?.should be_false
-    end
-
     it "writes the event name using the class event_name_formatter" do
       EventType.should_receive(:event_name_formatter).with(" my event")
       e_type = EventType.create( :name => " my event")

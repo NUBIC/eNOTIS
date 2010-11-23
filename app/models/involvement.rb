@@ -19,6 +19,8 @@ class Involvement < ActiveRecord::Base
     :race_is_unknown_or_not_reported                   => "Unknown or Not Reported"
   }.freeze
 
+  # Mixins
+  has_paper_trail
   acts_as_reportable
 	
   # Associations
@@ -27,14 +29,19 @@ class Involvement < ActiveRecord::Base
   has_many :involvement_events, :dependent => :destroy
   
   # Atrributes
+  # TODO: This will not work anymore with the new event system
   accepts_nested_attributes_for :involvement_events, :reject_if => lambda {|a| (a["occurred_on"].blank? or a["event"].blank?) }
   accepts_nested_attributes_for :subject, :update_only=>true
 
   # Named scope
-  named_scope :with_coordinator, lambda {|user_id| { :include => {:study => :coordinators}, :conditions => ['coordinators.user_id = ?', user_id ]}}
-
-  # Mixins
-  has_paper_trail
+  named_scope :with_coordinator, lambda {|user_id| { 
+    :include => {:study => :coordinators}, 
+    :conditions => ['coordinators.user_id = ?', user_id ]}}
+    
+  named_scope :with_event_type, lambda {|event_type| { 
+    :include => :involvement_events,
+    :conditions => ['involvement_events.event_type_id = ?',event_type]}}
+  
   
   # Validations
   validates_presence_of :gender, :ethnicity
@@ -216,7 +223,7 @@ class Involvement < ActiveRecord::Base
   end
 
   def consented
-    event_detect "Consented"
+    event_detect("Consented")
   end
 
   def completed_or_withdrawn
@@ -224,7 +231,8 @@ class Involvement < ActiveRecord::Base
   end
 
   def event_detect(ev_name)
-    involvement_events.detect{|e| e.event == ev_name.titleize }
+    ev_type = self.study.event_types.find_by_name(ev_name)
+    involvement_events.find(:first, :conditions => {:event_type_id => ev_type.id}) if ev_type
   end
 
   def subject_name_or_case_number
@@ -232,7 +240,7 @@ class Involvement < ActiveRecord::Base
   end
 
   def single_line_ie_export
-    involvement_events.collect{ |ev| "#{ev.event} -- #{ev.occurred_on}" }.join("\n")
+    involvement_events.collect{ |ev| "#{ev.event_type.name} -- #{ev.occurred_on}" }.join("\n")
   end
 
   # TODO: learn how to mock this for testing

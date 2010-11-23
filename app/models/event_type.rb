@@ -87,9 +87,7 @@ class EventType < ActiveRecord::Base
        :description => "The participant has died. Please indicate reason in notes. Common reasons: Protocol Disease, Protocol Treatment, Unrelated to Protocol (elaborate in notes), Unknown",
        :seq => 12,
        :editable => false}
-
  }
-
   
   # Determine which events we want to use to add to or remove from 
   # current enrollment totals
@@ -105,6 +103,10 @@ class EventType < ActiveRecord::Base
     s_str = str.split(' ') # spliting on ws
     s_str.each{|w| w.capitalize!}
     s_str.join(' ')
+  end
+
+  def self.find_by_name(ename)
+    find(:all, :conditions => {:name => event_name_formatter(ename)})
   end
 
   # Forcing all assignment of the name attribute through our formatter 

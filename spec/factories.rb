@@ -117,10 +117,15 @@ Factory.define :involvement do |i|
   i.races          {Involvement.races.rand}
 
 end
+Factory.define :event_type do |et|
+  et.association :study
+  et.name        {["Consented", "Withdrawn", "Screened", "Completed"].rand}
+  et.editable    {[true, false, true].rand}
+end
 
 Factory.define :involvement_event do |e|
   e.association   :involvement
-  e.event         {InvolvementEvent.events.rand}
+  e.association   :event_type
   e.note          {}
   e.occurred_on    {["today","yesterday"].rand}
 end
