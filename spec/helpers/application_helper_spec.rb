@@ -4,7 +4,7 @@ describe ApplicationHelper do
 
   it "should format involvement events" do
     @involvement = Factory(:involvement)
-    @involvement_event = Factory(:involvement_event, :event_type => Factory(:event_type, :name => "Consented"), :involvement => @involvement, :occurred_on => "1/1/10")
+    @involvement_event = Factory(:involvement_event, :event_type => Factory(:event_type, :name => "Consented#{rand(100)}"), :involvement => @involvement, :occurred_on => "1/1/10")
     helper.event_info(@involvement_event).should =~ /01\/01\/2010/
   end
 

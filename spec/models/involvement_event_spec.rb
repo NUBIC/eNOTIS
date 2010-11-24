@@ -16,11 +16,33 @@ describe InvolvementEvent do
     b.should be_valid
 
   end
+   
+  describe "setting event type" do
+    before(:each) do 
+      @study = Factory(:study)
+      inv = Factory(:involvement, :study => @study)
+      @evn = Factory(:involvement_event, :involvement => inv)
+    end
 
-  it "should be invalid without a involvement and date" do
-    a = Factory.build(:involvement_event, :occurred_on => nil)
+    it "can be set by passing the event name to a custom method" do
+      @evn.event = "Consented"
+      @evn.event_type.name.should  == "Consented"
+      @evn.event_type_id.should == @study.event_types.find_by_name("Consented").id
+    end
+    
+    it "can get the event name using a custom method" do
+      @evn.event_type = @study.event_types.find_by_name("Completed")
+      @evn.event.should == "Completed"
+    end
+  end
+
+  it "should be invalid without a involvement and date or type" do
+    a = Factory.build(:involvement_event, :occurred_on => nil, :event_type_id => nil, :involvement_id => nil)
     a.should_not be_valid
     a.should have(1).error_on(:occurred_on)
+    a.should have(1).error_on(:event_type_id)
+    a.should have(1).error_on(:involvement_id)
+
   end
 
   it "should return all involvement events on a given study" do
@@ -42,7 +64,7 @@ describe InvolvementEvent do
   end
   
   it "should remove parent involvement on destroy if it has no siblings" do
-    involvement = Factory(:involvement)
+    involvement = Factory(:involvement, :study => Factory(:study))
     involvement_id = involvement.id
     event = Factory(:involvement_event, :involvement => involvement)
     event.destroy
@@ -50,24 +72,19 @@ describe InvolvementEvent do
   end
 
   it "should not remove parent involvement on destroy if it has siblings" do
-    involvement = Factory(:involvement)
+    study = Factory(:study)
+    involvement = Factory(:involvement, :study => study)
     involvement_id = involvement.id
-    # Added :event => "Consented", and :event => "Widthdrawn" to prevent duplicate key errors in test
-    # the index:
-    #   ["involvement_id", "event", "occurred_on"], :name => "inv_events_attr_idx", :unique => true
-    # is violated when two factory generated involvement events have the same date and event
-    # this happens quite often. Since there are 3 events, and two possible days, the probability is 1/6.  
-    event = Factory(:involvement_event, :involvement => involvement, :event => "Consented")
-    sibling = Factory(:involvement_event, :involvement => involvement, :event => "Withdrawn")
+    event = Factory(:involvement_event, :involvement => involvement, :event_type => study.event_types.find_by_name("Consented"))
+    sibling = Factory(:involvement_event, :involvement => involvement, :event_type => study.event_types.find_by_name("Withdrawn"))
     event.destroy
     Involvement.find_by_id(involvement_id).should_not == nil
   end
 
   it "should let me know how many accruals (unique by involvement) were completed to date" do
     study = Factory(:fake_study)
-    study.create_default_events
     InvolvementEvent.count_accruals.should == 0
-    event_type = study.event_types.find_by_name("Consented")
+    ev_type = study.event_types.find_by_name("Consented")
 
     10.times do |i|
       involvement = Factory.create( :involvement, :study => study, 
@@ -75,10 +92,10 @@ describe InvolvementEvent do
                                     :gender => Involvement.genders.rand, 
                                     :ethnicity => Involvement.ethnicities.rand,
                                     :races => Involvement.races.rand)
-      Factory.create( :involvement_event, :event_type => event_type, :occurred_on=>(i+10).days.ago, :involvement => involvement )
+      Factory.create( :involvement_event, :event_type => ev_type, :occurred_on=>(i+10).days.ago, :involvement => involvement )
     end
     involvement_ids = Involvement.all.map(&:id)
-    event_type = Factory(:event_type)
+    event_type = study.event_types.first
     5.times do |i|
       Factory.create( :involvement_event, :event_type => event_type ,:occurred_on=> i.days.ago, 
                      :involvement => Involvement.find(involvement_ids.rand) )

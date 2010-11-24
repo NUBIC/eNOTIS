@@ -16,6 +16,11 @@ class Study < ActiveRecord::Base
     def find_by_name(e_name)
       find(:first, :conditions => {:name =>EventType.event_name_formatter(e_name)})
     end
+
+    def define(e_name)
+      ev = find_by_name(e_name)
+      (ev.nil?) ? nil : ev.description
+    end
   end
   
   # Validators

@@ -51,6 +51,7 @@ describe StudyUpload do
   end
   
   it "should be successful otherwise" do
+    study = Factory.create(:study)
     @up = Factory(:study_upload, :upload => up('good'))
     @up.upload_exists?.should be_true
     @up.parse_upload.should be_true

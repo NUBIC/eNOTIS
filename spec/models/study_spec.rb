@@ -65,9 +65,10 @@ describe Study do
  describe "custom study events" do
 
     it "adds events" do
+      base_count = @study.event_types.count
       @study.create_event_type("Surgery 1")
       @study.event_types.first.name.should == "Surgery 1"
-      @study.event_types.size.should == 1
+      @study.event_types.size.should == base_count + 1
     end
 
     it "makes sure event names are unique" do
@@ -104,8 +105,8 @@ describe Study do
     end
 
     it "creates all the events from the default event list for a particular study" do
-      @fs.event_types.should be_empty
-      @fs.create_default_events
+      #@fs.event_types.should be_empty
+      #@fs.create_default_events # event creation is triggered after create now -BLC
       @fs.event_types.should_not be_empty
       EventType::DEFAULT_EVENTS.each do |k,v|
         # NOTE: I realized this test would pass if the finder was changed to return :all instead of :first

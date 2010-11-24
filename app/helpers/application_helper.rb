@@ -71,9 +71,13 @@ module ApplicationHelper
   end
   
   def event_info(inv_event)
-    content_tag("span", "#{inv_event.occurred_on.strftime("%m/%d/%Y")} #{image_tag'/images/icons/note.png' unless inv_event.note.blank?}".html_safe ,
+    if inv_event
+      content_tag("span", "#{inv_event.occurred_on.strftime("%m/%d/%Y")} #{image_tag'/images/icons/note.png' unless inv_event.note.blank?}".html_safe ,
                 :class => inv_event.event_type.name.downcase,
                 :title => inv_event.event_type.name).html_safe
+    else
+      content_tag("span", "").html_safe
+    end
   end
   
   def gender_options(selected = nil)
@@ -93,8 +97,9 @@ module ApplicationHelper
     keys  
   end
   
-  def event_options(selected = nil)
-    options_for_select(InvolvementEvent.events, selected)
+  def event_options(study_events, selected = nil)
+    culled_events = study_events.select{|e| %w(Consented Completed Withdrawn).include?(e.name)} # Just temporary until the UI is updated
+    options_for_select(culled_events.map{|s| [s.name, s.id]}, selected)
   end
 
   def mrn_and_type_helper(subject)

@@ -29,8 +29,7 @@ class Involvement < ActiveRecord::Base
   has_many :involvement_events, :dependent => :destroy
   
   # Atrributes
-  # TODO: This will not work anymore with the new event system
-  accepts_nested_attributes_for :involvement_events, :reject_if => lambda {|a| (a["occurred_on"].blank? or a["event"].blank?) }
+  accepts_nested_attributes_for :involvement_events, :reject_if => lambda {|a| (a["occurred_on"].blank?) }
   accepts_nested_attributes_for :subject, :update_only=>true
 
   # Named scope
@@ -42,22 +41,18 @@ class Involvement < ActiveRecord::Base
     :include => :involvement_events,
     :conditions => ['involvement_events.event_type_id = ?',event_type]}}
   
-  
   # Validations
   validates_presence_of :gender, :ethnicity
   # Custom validator for race
   validate do |inv|
-    logger.debug "CALLING THE VALIDATOR"
     checked = false
     RACE_ATTRIBUTES.each_key do |k|
       t = inv.send(k)
-      logger.debug "KEY #{k} is #{t}"      
       checked ||= inv.send(k)
     end
     unless checked
       inv.errors.add_to_base("One of the race categories must be selected. If you do not know the race choose 'Unknown or Not Reported'") 
     end
-    logger.debug "CHECKED #{checked}"
   end
    
   # Public class methods 
@@ -206,28 +201,18 @@ class Involvement < ActiveRecord::Base
     # as far as I can tell. - BLC
   end
 
-#  %w(consented withdrawn completed).each do |name|
-#    class_eval  <<-RUBY, __FILE__, __LINE__ + 1
-#    def #{name}_report
-#      ev = involvement_events.detect{|e| e.event == "#{name.titleize}"}
-#      ev.occurred_on if ev
-#    end
-#    RUBY
-#  end
-
   %w(consented withdrawn completed).each  do |name|
     define_method("#{name}_report".to_sym) do
        ev = self.send(:event_detect, name)
        ev.occurred_on if ev
     end
-  end
-
-  def consented
-    event_detect("Consented")
+    define_method(name.to_sym) do
+      self.send(:event_detect, name)
+    end
   end
 
   def completed_or_withdrawn
-    event_detect("Completed") || event_detect("Withdrawn")
+    completed || withdrawn
   end
 
   def event_detect(ev_name)

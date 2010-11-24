@@ -22,13 +22,15 @@ describe InvolvementsController do
   end
 
   it "should create a new StudyUpload with the file attached" do
-    StudyUpload.should_receive(:create).and_return(Factory(:study_upload))
+    StudyUpload.should_receive(:create).and_return(Factory(:study_upload, :study => @study))
     post :upload, {:file => @file, :study_id => 'STU00002629'}
   end
+
   it "should check the study upload" do
     @up.should_receive(:legit?)
     post :upload, {:file => @file, :study_id => 'STU00002629'}
   end
+
   it "should should redirect with flash linking to import" do
     @up.should_receive(:legit?).and_return(false)
     post :upload, {:file => @file, :study_id => 'STU00002629'}

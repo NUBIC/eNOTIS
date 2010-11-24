@@ -13,7 +13,7 @@ class InvolvementEvent < ActiveRecord::Base
   belongs_to :event_type
    
   # Validations
-  validates_presence_of :occurred_on, :event_type_id, :involvement_id
+  validates_presence_of :involvement_id, :occurred_on, :event_type_id
   
   # Named scopes
   default_scope :order => "occurred_on"
@@ -51,6 +51,7 @@ class InvolvementEvent < ActiveRecord::Base
       monthly.each_with_index{|obj, i| totals[i] = (i == 0 ? pretotal : totals[i-1]) + monthly[i] }
       [months, monthly, totals]
     end
+
     def to_dot_chart
       results = Array.new(12 * 7, 0)
       (self.blank? ? [] : self).each do |e|
@@ -76,24 +77,14 @@ class InvolvementEvent < ActiveRecord::Base
   end
 
   def event=(e)
-    write_attribute :event, self.class.events.detect{|x| x.downcase == e.to_s.downcase}
+    # This assignment will fail without the involvement and study context because the event names are now stored on the study level -BLC
+    raise "Involvement event instance must be saved before making this call. Requires study context" if self.involvement.nil? or self.involvement.study.nil?
+    ev_type = self.involvement.study.event_types.find_by_name(e)
+    self.event_type = ev_type if ev_type
   end
-
-  # Public class methods
-  class << self 
-    def event_definitions 
-      [ ["Consented", "Subject has signed informed consent forms."],
-        ["Completed", "Subject has completed study and is no longer receiving treatment/s or services."],
-        ["Withdrawn", "Subject has been removed from study (include notes field for reason/description)."] ]
-    end
-
-    def events
-      self.event_definitions.transpose[0]
-    end
-
-    def define_event(term)
-      (self.event_definitions.detect{|t,d| t == term} || [])[1]
-    end
+  
+  def event
+    self.event_type.name
   end
 
   # for study_uploads
