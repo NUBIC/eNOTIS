@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   
   # Security
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  filter_parameter_logging :password, :involvement, :subject # Scrub sensitive parameters from your log
+  filter_parameter_logging :password, :involvement, :subject unless Rails.env == "development" # Scrub sensitive parameters from your log
 
   # Authentication used for all but one (Authentication) controller, enables before_filter :user_must_be_logged_in
   include ControllerAuthentication

@@ -13,7 +13,13 @@ class InvolvementEvent < ActiveRecord::Base
   belongs_to :event_type
    
   # Validations
-  validates_presence_of :involvement_id, :occurred_on, :event_type_id
+  # validates_presence_of :involvement
+  # this validation will work in possibly a new version on Rails. Curently broke.
+  # https://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/2815-nested-models-build-should-directly-assign-the-parent
+
+  validates_presence_of :occurred_on
+  validates_presence_of :event_type_id
+  validates_uniqueness_of :event_type_id, :scope => [:involvement_id, :occurred_on], :message => "This activity on this date has already been entered"
   
   # Named scopes
   default_scope :order => "occurred_on"
@@ -84,7 +90,7 @@ class InvolvementEvent < ActiveRecord::Base
   end
   
   def event
-    self.event_type.name
+     (self.event_type) ? self.event_type.name : nil 
   end
 
   # for study_uploads

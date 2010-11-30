@@ -50,12 +50,37 @@ describe StudyUpload do
     @up.summary.should =~ /and fix/
   end
   
-  it "should be successful otherwise" do
-    study = Factory.create(:study)
-    @up = Factory(:study_upload, :upload => up('good'))
-    @up.upload_exists?.should be_true
-    @up.parse_upload.should be_true
-    @up.create_subjects.should be_true
-    @up.summary.should =~ /7 subjects/
+  describe "should be successful with a good csv" do
+
+    before(:all) do
+      @study = Factory.create(:study)
+      @up = Factory(:study_upload, :upload => up('good'))
+    end
+
+    it "should actually upload the file" do
+      @up.upload_exists?.should be_true
+    end
+
+    it "parses the upload" do
+      @up.parse_upload.should be_true
+    end
+
+    it "creates the subjects" do
+      @up.create_subjects.should be_true
+      @up.summary.should =~ /7 subjects/
+    end
+
+    it "has the correct subject data" do
+      pending
+    end
+
+    it "has the correct race, gender, etc" do
+      pending
+    end
+
+    it "has the correct events" do
+      pending
+    end
+
   end
 end

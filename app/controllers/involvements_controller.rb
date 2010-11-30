@@ -62,11 +62,15 @@ class InvolvementsController < ApplicationController
   def create
     study = Study.find_by_irb_number(params[:study][:irb_number])
     authorize! :import, study
-    @involvement = Involvement.new(params[:involvement].merge(:study => study))
+    pr = params[:involvement].merge(:study => study)
+    @involvement = Involvement.new(pr)
+
     if @involvement.save
       flash[:notice] = "Created"
     else
-      flash[:error] = "Error: #{@involvement.errors.full_messages}"
+      logger.debug "#{@involvement.inspect}"
+      logger.debug "ERRORS123:#{@involvement.errors.full_messages.inspect}"
+      flash[:error] = "Error: #{@involvement.errors.full_messages} #{@involvement.inspect}"
     end
     redirect_to study_path(study)
   end
