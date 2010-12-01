@@ -22,6 +22,12 @@ class ApplicationController < ActionController::Base
   # alias :rescue_action_locally :rescue_action_in_public
   # local_addresses.clear
 
+  #can can redirect for unauthorized error
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice]="Access Denied"
+    return redirect_to studies_path
+  end 
+
   # Application version
 
   APP_VERSION = "1.11.3"

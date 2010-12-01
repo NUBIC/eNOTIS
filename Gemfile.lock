@@ -31,6 +31,7 @@ GEM
       schema_qualified_tables (~> 1.0)
       wddx (>= 0.4.1)
     builder (2.1.2)
+    cancan (1.4.1)
     capistrano (2.5.19)
       highline
       net-scp (>= 1.0.0)
@@ -179,6 +180,7 @@ DEPENDENCIES
   acts_as_reportable
   bcdatabase
   bcsec (~> 1.6.0)
+  cancan
   capistrano (~> 2.5.0)
   chronic (>= 0.2.3)
   ci_reporter (~> 1.6.0)
@@ -220,3 +222,6 @@ DEPENDENCIES
   webrat (~> 0.6.0)
   will_paginate (~> 2.3)
   wirble
+
+METADATA
+  version: 1.0.6

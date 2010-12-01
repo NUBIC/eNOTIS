@@ -6,16 +6,19 @@ class ReportsController < ApplicationController
 
   def index
     @study = Study.find_by_irb_number(params[:study])
+    authorize! :show, @study
   end
 
   def nih
     @study = Study.find_by_irb_number(params[:study])
+    authorize! :show,@study
     @involvements = @study.involvements
     render :layout => 'nih_report'
   end
  
   def new
     @study = Study.find_by_irb_number(params[:study])
+    authorize! :show, @study
     respond_to do |format|
       format.html
       format.js {render :layout => false}
@@ -25,6 +28,8 @@ class ReportsController < ApplicationController
   def show;  end
 
   def create
+    study = Study.find_by_irb_number(params[:study])
+    authorize! :show, study
     result = Report.export(params)
     if params[:format]=="pdf"
       send_data(result,

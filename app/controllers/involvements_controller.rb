@@ -16,6 +16,7 @@ class InvolvementsController < ApplicationController
   
   def show 
     @involvement = Involvement.find(params[:id])
+    authorize! :show, @involvement
     params[:study] = @involvement.study.irb_number
     respond_to do |format|
       format.html {render :action => :show}
@@ -46,6 +47,7 @@ class InvolvementsController < ApplicationController
   
   def edit
     @involvement = Involvement.find(params[:id])
+    authorize! :edit, @involvement
     params[:study] = @involvement.study.irb_number
     @involvement.involvement_events.build(:event => "Consented") unless @involvement.consented
     @involvement.involvement_events.build(:event => "Completed") unless @involvement.completed_or_withdrawn
@@ -57,6 +59,7 @@ class InvolvementsController < ApplicationController
   
   def create
     study = Study.find_by_irb_number(params[:study][:irb_number])
+    authorize! :import, study
     @involvement = Involvement.new(params[:involvement].merge(:study => study))
     if @involvement.save
       flash[:notice] = "Created"
@@ -68,6 +71,7 @@ class InvolvementsController < ApplicationController
   
   def update
     @involvement = Involvement.find(params[:id])
+    authorize! :update, @involvement
     @involvement_events = @involvement.involvement_events
     study = Study.find_by_irb_number(params[:study][:irb_number])
     if @involvement.update_attributes(params[:involvement])
@@ -83,6 +87,7 @@ class InvolvementsController < ApplicationController
   # This feature will leave subjects without involvements. 
   def destroy
     @involvement = Involvement.find(params[:id])
+    authorize! :destroy, @involvement
     @study       = @involvement.study
     @involvement.destroy # :dependent => :destroy takes care of removing involvement events # @involvement.involvement_events.destroy_all
     respond_to do |format|
@@ -94,6 +99,7 @@ class InvolvementsController < ApplicationController
   def upload
     # Subjects are created via uploads
     @study = Study.find_by_irb_number(params[:study_id]) || Study.new
+    authorize! :import, @study
     @up = StudyUpload.create(:user => current_user, :study_id => @study.id, :upload => params[:file])
     success = @up.legit?
     redirect_to_studies_or_study(params[:study_id], success ? :notice : :error, success ? @up.summary : "Oops. Your upload had some issues.<br/>Please click <a href='#{@study.irb_number ? import_study_path(@study) : '#'}' rel='#import'>Import</a> to see the result.")

@@ -39,6 +39,9 @@ gem 'will_paginate', '~> 2.3'
 gem "bcdatabase"
 gem "bcsec", '~>1.6.0'
 
+#Authorization
+gem "cancan"
+
 # EMPI
 gem "savon", "0.7.9"
 gem "empi"
