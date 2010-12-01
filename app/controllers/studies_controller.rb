@@ -18,7 +18,7 @@ class StudiesController < ApplicationController
       # See http://datatables.net/forums/comments.php?DiscussionID=53 for json params
       format.json do
         colName  = ["irb_status" , "irb_number", 'name', 'last_name', 'accrual', 'accrual_goal']
-        order                 = colName[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0]
+        order                 = "#{colName[params[:iSortCol_0].to_i]} #{params[:sSortDir_0]}"
         all_studies           = StudyTable.user_id_is(current_user.id).order(order)
         @studies              = all_studies.paged(params[:iDisplayStart], params[:iDisplayLength])
         @iTotalDisplayRecords = all_studies.size
