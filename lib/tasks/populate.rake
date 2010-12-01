@@ -9,29 +9,23 @@ namespace :db do
 
   namespace :populate do
 
-    task :default => [:environment, :clear_db, :admins, :users, :roles_and_studies, :roles, :involvements_and_subjects, :involvements, :sample_netids]
+    task :default => [:environment, :clear_db, :admins, :roles_and_studies, :roles, :involvements_and_subjects, :involvements, :sample_netids]
       
-    desc 'Clear models: User,Roles, Study, Involvement, Subject, InvolvementEvent'
+    desc 'Clear models: Roles, Study, Involvement, Subject, InvolvementEvent'
     task :clear_db => :environment do
       puts
       puts "clearing db..."
-      [Role, InvolvementEvent, Involvement, Study, Subject, User].each(&:delete_all)
+      [Role, InvolvementEvent, Involvement, Study, Subject].each(&:delete_all)
     end
 
-    desc 'Populate admins(Brian, David, Mark, Laura)'
+    desc 'Populate admins'
+    puts "creating admins..."
     task :admins => [:environment, :"users:create_admins"]
-
-    desc 'Populate users(fake)'
-    task :users => :environment do  
-      puts "creating users..."
-      20.times { |i| blip && Factory.create(:fake_user)}
-      puts
-    end
-
+    
     desc 'Populate roles: joins users(random) and studies(fake)'
     task :roles_and_studies => :environment do      
       puts "creating roles and studies..."
-      80.times { |i| blip && Factory.create(:role_accrues, :study => Factory.create(:fake_study), :user => random(User))}
+      80.times { |i| blip && Factory.create(:role_accrues, :study => Factory.create(:fake_study), :netid => random_netid)}
       puts
     end
 
@@ -40,7 +34,7 @@ namespace :db do
       puts "creating extra roles..."
       50.times do |i| 
         begin
-          blip && Factory.create(:role_accrues, :study => random(Study), :user => random(User))
+          blip && Factory.create(:role_accrues, :study => random(Study), :netid => random_netid)
         rescue
         end
       end
@@ -89,7 +83,7 @@ namespace :db do
     desc 'Spit out random netids'
     task :sample_netids => :environment do      
       puts "here are some netids..."
-      10.times { |i| puts random(User).netid}
+      10.times { |i| puts random_netid}
       puts
     end 
     
@@ -110,6 +104,15 @@ def random(model)#, options={})
   #ids = model.find(:all, :select => "id", :conditions => options[:conditions])
   ids = ActiveRecord::Base.connection.select_all("SELECT id FROM #{model.to_s.tableize}")
   model.find(ids[rand(ids.length)]["id"].to_i) unless ids.blank?
+end
+def random_netid
+  @netids ||= []
+  if @netids.empty?
+    l = ('a'..'z').to_a
+    n = (0..9).to_a
+    @netids = 20.times.map{|x| "#{l[rand(26)]}#{l[rand(26)]}#{l[rand(26)]}#{n[rand(9)]}#{n[rand(9)]}#{n[rand(9)]}" } + %w(blc615 daw286 lmw351 myo628 wakibbe)
+  end
+  @netids[rand(20)]
 end
 def blip
   print %w(\\ /).rand # print %w(! @ # $ % ^ & * ( ) _ + - = { } [ ] \\ | ; : ' " " ' < > , . / ?).rand  # print (%w(a b c d e f g h i j k l m n o p q r s t u v w x y z) + Array.new(10, " ")).rand
