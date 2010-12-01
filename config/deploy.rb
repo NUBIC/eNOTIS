@@ -27,6 +27,9 @@ default_run_options[:pty]   = true # to get the passphrase prompt from git
 # System Path -- ensure that any capistrano command knows about Ruby Enterprise Edition. 
 # Caveat: Assumes we're using CENTOS with Kerberos
 default_environment['PATH'] = "/opt/ruby-enterprise/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin"
+# ensure that oci8 gem can be built
+default_environment['ORACLE_HOME'] = '/usr/lib/oracle/10.2.0.4/client64'
+default_environment['LD_LIBRARY_PATH'] = '/usr/lib/oracle/10.2.0.4/client64/lib:/lib:/usr/lib:/usr/local/lib'
 
 set :scm, "git"
 set :repository, "ssh://code.bioinformatics.northwestern.edu/git/enotis.git"
