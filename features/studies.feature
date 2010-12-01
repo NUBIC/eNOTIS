@@ -10,8 +10,8 @@ Feature: Manage studies
   Scenario: A random user cannot view a study page
     Given a study "Vitamin E and exertion" with id "STU001249" and irb_status "Approved"
     When I go to the study page for id "STU001249"
-    Then I should be redirected to the homepage
-    And I should see "You don't have access to study STU001249"
+    Then I should be redirected to the studies page
+    And I should see "Access Denied"
 
   Scenario: A coordinator can view all subjects they have access to on a study
     Given the study "STU001248" has the following subjects

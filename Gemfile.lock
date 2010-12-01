@@ -222,6 +222,3 @@ DEPENDENCIES
   webrat (~> 0.6.0)
   will_paginate (~> 2.3)
   wirble
-
-METADATA
-  version: 1.0.6

@@ -28,7 +28,7 @@ class ReportsController < ApplicationController
   def show;  end
 
   def create
-    study = Study.find_by_irb_number(params[:study])
+    study = Study.find_by_irb_number(params[:study][:irb_number])
     authorize! :show, study
     result = Report.export(params)
     if params[:format]=="pdf"

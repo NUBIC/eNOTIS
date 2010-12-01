@@ -20,13 +20,13 @@ describe ReportsController do
   it "should deny access to an attempt to view nih report for unauthorized user" do
     subject = Factory(:fake_subject)
     involvement = Factory(:involvement)
-    get :nih, {:study=>'STU00002630'}
+    get :nih,  {:study=>'STU00002630'}
     response.should redirect_to(studies_path)
     flash[:notice].should == "Access Denied"
   end
   it "should deny access to an attempt to view new report for unauthorized user" do
     involvement = Factory(:involvement)
-    get :new, {:study=>'STU00002630'}
+    get :new,  {:study=>'STU00002630'}
     response.should redirect_to(studies_path)
     flash[:notice].should == "Access Denied"
   end
@@ -34,7 +34,7 @@ describe ReportsController do
   it "should deny access to an attempt to create report for unauthorized user" do
     subject = Factory(:fake_subject)
     involvement = Factory(:involvement)
-    post :create,{:study=>'STU00002630'}
+    post :create,{:study=>{:irb_number=>'STU00002630'}}
     response.should redirect_to(studies_path)
     flash[:notice].should == "Access Denied"
   end
