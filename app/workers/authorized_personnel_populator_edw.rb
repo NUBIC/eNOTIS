@@ -1,16 +1,16 @@
-require 'webservices/eirb'
+require 'webservices/edw'
 
-class AuthorizedPersonnelPopulator
+class AuthorizedPersonnelPopulatorEdw
   @queue = :redis_authorized_personnel_populator
   Resque.before_perform_jobs_per_fork do
-    Eirb.connect
+    Edw.connect
   end
 
   def self.perform(irb_number, force=false)
     start_time = Time.now
     
     # Find Principal Investigators
-    principal_investigators = Eirb.find_principal_investigators({:irb_number => irb_number})
+    principal_investigators = Edw.find_principal_investigators({:irb_number => irb_number})
     principal_investigators.delete_if{|x| x.values.uniq==[""]}.each do |principal_investigator|
       netid = principal_investigator[:netid]
       if netid==""
@@ -23,7 +23,7 @@ class AuthorizedPersonnelPopulator
     end
     
     # Find CoInvestigators
-    co_investigators =  Eirb.find_co_investigators({:irb_number => irb_number})
+    co_investigators =  Edw.find_co_investigators({:irb_number => irb_number})
     co_investigators.delete_if{|x| x.values.uniq==[""]}.each do |coi|
       netid = coi[:netid]
       if netid==""
@@ -36,7 +36,7 @@ class AuthorizedPersonnelPopulator
     end
     
     # Find Authorized Personnel
-    authorized_people = Eirb.find_authorized_personnel({:irb_number => irb_number})
+    authorized_people = Edw.find_authorized_personnel({:irb_number => irb_number})
     
     # Cut out duplication by removing the netids of the principal investigators and the co investigators
     priveleged_netids =  principal_investigators.map{|x| x[:netid]}.compact + co_investigators.map{|x| x[:netid]}.compact
