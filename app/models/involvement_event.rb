@@ -93,7 +93,7 @@ class InvolvementEvent < ActiveRecord::Base
      (self.event_type) ? self.event_type.name : nil 
   end
 
-  # for study_uploads
+  # for study_uploads, and external event processor
   def self.add(params)
     Study.transaction do # read http://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html
       # Study - find the study using the hidden field
@@ -108,12 +108,27 @@ class InvolvementEvent < ActiveRecord::Base
         involvement = Involvement.update_or_create(params[:involvement].merge({:subject_id => subject.id, :study_id => study.id}))
       end
       raise ActiveRecord::Rollback if involvement.nil? or involvement.id.nil?
+      involvement.save
       # InvolvementEvent - create the event
       params[:involvement_events].each do |event|
         InvolvementEvent.find_or_create(event.merge({:involvement_id=>involvement.id}))
       end
     end
   end
+
+  def self.find_or_create(params)
+     # logger.debug "find_or_create all inv_evnt: #{InvolvementEvent.find(:all).inspect}"
+     inv = Involvement.find(params[:involvement_id])
+     return nil if inv.nil? || params[:occurred_on].blank?
+     etype = inv.study.event_types.find_by_name(params[:event])
+     params.delete(:event)
+     params[:event_type_id] = etype.id
+     InvolvementEvent.find(:first, :conditions => { 
+       :involvement_id => inv.id, 
+       :occurred_on    => Chronic.parse(params[:occurred_on]), 
+       :event_type_id          => etype.id }
+     ) || InvolvementEvent.create(params)
+   end            
 
  
   def self.count_accruals(accrual_event = "Consented")
