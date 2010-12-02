@@ -104,12 +104,8 @@ class InvolvementsController < ApplicationController
   
   def upload
     # Subjects are created via uploads
-<<<<<<< HEAD
-    @study = Study.find_by_irb_number(params[:study_id]) || Study.new
+    @study = Study.find_by_irb_number(params[:study_id]) || Study.new # <= Why are we calling Study.new here? -BLC
     authorize! :import, @study
-=======
-    @study = Study.find_by_irb_number(params[:study_id]) || Study.new # <=== Why are we creating a new study object here? -BLC
->>>>>>> specs passing, features still failing
     @up = StudyUpload.create(:user => current_user, :study_id => @study.id, :upload => params[:file])
     success = @up.legit?
     redirect_to_studies_or_study(params[:study_id], success ? :notice : :error, success ? @up.summary : "Oops. Your upload had some issues.<br/>Please click <a href='#{@study.irb_number ? import_study_path(@study) : '#'}' rel='#import'>Import</a> to see the result.")
