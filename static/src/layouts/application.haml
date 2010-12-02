@@ -3,7 +3,7 @@
   %head
     %title eNOTIS
     = stylesheets "static/application", "static/coming_soon"
-    = javascripts 'jquery.tools.min', "flowplayer-3.2.2.min"
+    = javascripts 'tools/jquery.tools.min', 'tools/flowplayer-3.2.4.min', 'jquery.public'
     :javascript
       $(document).ready(function(){
       // scrollable
@@ -17,6 +17,7 @@
     #container
       #header
         #app_name= link img("enotis-swoop-logo.png", :alt => "eNOTIS"), "/"
+        #login eNOTIS is temporarily closed
       #main
         =yield
       #footer
