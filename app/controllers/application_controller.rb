@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
 
   # Application version
 
-  APP_VERSION = "1.11.3"
+  APP_VERSION = "1.11.4"
  
   # Possible application statuses. See http://en.wikipedia.org/wiki/Bob_Dylan
   SYSTEM_STATUSES = { :up => "Don't think twice, it's all right",
