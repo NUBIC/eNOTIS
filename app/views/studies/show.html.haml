@@ -55,11 +55,11 @@
           - %w(Case# Other\ Studies NMFF\ MRN NMH\ MRN RIC\ MRN Name Birth\ date Gender Ethnicity Race).each do |header|
             %th= header
           %th
-            %dtr{:title => @study.event_types.define("Consented")} Consented
+            %dtr{:title => @study.event_types.define_event("Consented")} Consented
           %th
-            %dtr{:title => @study.event_types.define("Withdrawn"), :class => "withdrawn"} Withdrawn
+            %dtr{:title => @study.event_types.define_event("Withdrawn"), :class => "withdrawn"} Withdrawn
             %br
-            %dtr{:title => @study.event_types.define("Completed")} Completed
+            %dtr{:title => @study.event_types.define_event("Completed")} Completed
           -unless @study.read_only?
             %th Actions
           -else

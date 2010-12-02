@@ -1,6 +1,6 @@
 class DataMigrationEventChange < ActiveRecord::Migration
   def self.up
-     
+
     # Migrate over the current events to point to the new
     # global events (they are stored as string names)
     puts "=========== Migrating InvolvementEvents ============="      
@@ -11,6 +11,7 @@ class DataMigrationEventChange < ActiveRecord::Migration
       s.involvements.each do |inv|
         inv.involvement_events.each do |inv_e|
           print "."
+          STDOUT.flush
           inv_e.event_type = s.event_types.find_by_name(inv_e.name_of_event.titleize)
           if inv_e.event_type_id.nil?
             raise "Could not find event for #{inv_e.name_of_event} out of #{s.clinical_events.map(&:name).join(',')}" 
@@ -25,6 +26,7 @@ class DataMigrationEventChange < ActiveRecord::Migration
     puts "Verifiying InvolvementEvents:"
     InvolvementEvent.find(:all).each do |ie|
       print "."
+      STDOUT.flush
       unless ie.event_type.name == ie.name_of_event
         raise "Migration verification error on #{ie.inspect}\n #{ie.clinical_event.name} should == #{ie.name_of_event}"
       end
@@ -43,24 +45,25 @@ class DataMigrationEventChange < ActiveRecord::Migration
     puts "Getting every study removing links to their study events, then cleaning up the clinical_events"
     
     Study.find(:all).each do |s|
-      print "Study: #{s.irb_number}"
       s.involvements.each do |inv|
         inv.involvement_events.each do |inv_e|
           print "."
-          inv_e.event = inv_e.event_type.name
+          STDOUT.flush
+          inv_e.name_of_event = inv_e.event_type.name
           if inv_e.event.empty?
             raise "Could not find clinical event for #{inv_e.inspect}"
           end
           inv_e.save! 
         end
       end
-      puts " "
     end
+    puts " "
 
     # Verify the reverting 
     puts "Verifiying Reversal of InvolvementEvents:"
     InvolvementEvent.find(:all).each do |ie|
       print "."
+      STDOUT.flush
       unless ie.name_of_event == ie.event_type.name
         raise "Reverse migration verification error on #{ie.inspect}"
       end

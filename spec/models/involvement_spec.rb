@@ -4,13 +4,9 @@ describe Involvement do
   before do
     ResqueSpec.reset!
   end
-  before(:each) do
-    @involvement = Factory(:involvement)
-    EmpiWorker.should have_queued(@involvement.id)
-  end
-
-  it "should create a new instance given valid attributes" do
-    @involvement.should be_valid
+  it "enques the involvement" do
+    involvement = Factory(:involvement)
+    EmpiWorker.should have_queued(involvement.id)
   end
 
   it "should accept gender, ethnicity, and race (case insensitive) and set the right case" do
@@ -108,6 +104,35 @@ describe Involvement do
     InvolvementEvent.find_by_id(e1.id).should be_nil
     InvolvementEvent.find_by_id(e2.id).should be_nil
   end
+ 
+
+  describe "working with custom event_type methods" do
+    before(:each) do
+      @study = Factory(:study)
+      @study.create_default_events
+      @subject = Factory(:subject) 
+      @involvement = Factory(:involvement, 
+                           :races => ["White", "Asian"],
+                           :study => @study, 
+                           :subject => @subject, 
+                           :case_number => "123abc123")
+      # Adding all the events for testing purposes
+      @event_date = "01/13/2010"
+      %w(Consented Completed Withdrawn).each do |n|
+        ev = @study.event_types.find_by_name(n)
+        Factory(:involvement_event, :involvement => @involvement, :occurred_on => @event_date, :event_type => ev) 
+      end
+      @involvement.involvement_events.should have(3).events
+    end
+
+    it "should help find involvement event by name" do
+      @involvement.involvement_events.should have(3).events
+      %w(Consented Completed Withdrawn).each do |n|
+        @involvement.event_detect(n).should_not be_nil
+        @involvement.event_detect(n).occurred_on.strftime("%m/%d/%Y").should == @event_date
+      end
+    end
+  end
 
   describe "NIH Race requirements" do
     before(:each) do
@@ -202,10 +227,11 @@ describe Involvement do
   end
 
   it "should handle two digit years in dates" do
-    @involvement.update_attributes("subject_attributes"=> {"birth_date"=>"12/18/34"})
-    @involvement.subject.birth_date.should == Date.parse("1934-12-18")
+    inv = Factory(:involvement)
+    inv.update_attributes("subject_attributes"=> {"birth_date"=>"12/18/34"})
+    inv.subject.birth_date.should == Date.parse("1934-12-18")
 
-    @involvement.update_attributes("subject_attributes"=> {"birth_date"=>"12/18/07"})
-    @involvement.subject.birth_date.should == Date.parse("2007-12-18")
+    inv.update_attributes("subject_attributes"=> {"birth_date"=>"12/18/07"})
+    inv.subject.birth_date.should == Date.parse("2007-12-18")
   end
 end

@@ -104,6 +104,19 @@ describe Study do
       @fs = Factory(:study)
     end
 
+    it "creates new defaults for a new study" do
+      s = Study.create(:irb_number => "STU01010101")
+      s.event_types.should_not be_empty
+      s.event_types.should have(EventType::DEFAULT_EVENTS.keys.count).event_types
+    end
+
+    it "help with event definition" do
+      @fs.define_event("consented").should_not be_empty
+      @fs.define_event("CONSENTED").should =~ /informed consent/
+      @fs.define_event("Completed").should_not be_empty
+      @fs.define_event("ComPLETED").should =~ /completed/
+    end
+
     it "creates all the events from the default event list for a particular study" do
       #@fs.event_types.should be_empty
       #@fs.create_default_events # event creation is triggered after create now -BLC

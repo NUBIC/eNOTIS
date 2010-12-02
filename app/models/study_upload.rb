@@ -135,7 +135,7 @@ class StudyUpload < ActiveRecord::Base
           nil
         else
           { :occurred_on => event_date.to_date,
-            :event_type_id => self.study.event_types.find_by_name(category),
+            :event_type_id => self.study.event_types.find_by_name(category).id,
             :note => r["#{category}_note".to_sym]
           }
         end

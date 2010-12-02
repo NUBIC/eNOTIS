@@ -17,12 +17,14 @@ class Study < ActiveRecord::Base
       find(:first, :conditions => {:name =>EventType.event_name_formatter(e_name)})
     end
 
-    def define(e_name)
+    def define_event(e_name)
       ev = find_by_name(e_name)
       (ev.nil?) ? nil : ev.description
     end
   end
-  
+   
+  after_create :create_default_events
+
   # Validators
   validates_format_of :irb_number, :with => /^STU.+/, :message => "invalid study number format"
     

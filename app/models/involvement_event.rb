@@ -84,7 +84,7 @@ class InvolvementEvent < ActiveRecord::Base
 
   def event=(e)
     # This assignment will fail without the involvement and study context because the event names are now stored on the study level -BLC
-    raise "Involvement event instance must be saved before making this call. Requires study context" if self.involvement.nil? or self.involvement.study.nil?
+    raise "Involvement event= assignment this way requires study context: involvement=#{self.involvement.inspect}" if self.involvement.nil? or self.involvement.study.nil?
     ev_type = self.involvement.study.event_types.find_by_name(e)
     self.event_type = ev_type if ev_type
   end
