@@ -34,7 +34,7 @@ module UsersToPers
     users.each do |redis_user|
       netid = redis_user.split(":")[1].downcase
       user_hash = HashWithIndifferentAccess.new(REDIS.hgetall(redis_user))
-      unless Pers::Person.find_by_user_name(netid)
+      unless Pers::Person.find_by_username_or_id(netid)
         u = Pers::Person.new(
               :username => user_hash[:username], 
               :first_name => user_hash[:first_name],
