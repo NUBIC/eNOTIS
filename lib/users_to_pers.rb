@@ -42,7 +42,7 @@ module UsersToPers
               :middle_name => user_hash[:middle_name],
               :title => user_hash[:title],
               :email => user_hash[:email],
-              :phone_number => user_hash[:phone_number],
+              :business_phone => user_hash[:phone_number],
               :address1 => user_hash[:address].split("\n")[1],
               :address2 => user_hash[:address].split("\n")[2],
               :city => user_hash[:city],
