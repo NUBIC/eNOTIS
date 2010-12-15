@@ -14,8 +14,8 @@ module UsersToPers
   end
   # Creates eNOTIS developers and admins in cc_pers
   def self.create_admins
-    %w(blc615 Brian Chamberlain daw286 David Were lmw351 Laura Wimbiscus\ Yoon myo628 Mark Wimbiscus\ Yoon wakibbe Warren Kibbe).each_slice(3) do |netid, first_name, last_name|
-      Pers::Person.create(:username => netid, :first_name => first_name, :last_name => last_name) unless Pers::Person.find_by_username(netid)
+    %w(blc615 Brian Chamberlain daw286 David Were lmw351 Laura Wimbiscus\ Yoon myo628 Mark Wimbiscus\ Yoon wakibbe Warren Kibbe enotis-application Enotis Application).each_slice(3) do |netid, first_name, last_name|
+      Pers::Person.create(:username => netid, :first_name => first_name, :last_name => last_name, :entered_by => "myo628") unless Pers::Person.find_by_username(netid)
       unless Pers::Login.find_by_username_and_portal(netid, PORTAL)
         login = Pers::Login.new
         login.username = netid
@@ -42,13 +42,14 @@ module UsersToPers
               :middle_name => user_hash[:middle_name],
               :title => user_hash[:title],
               :email => user_hash[:email],
-              :business_phone => user_hash[:phone_number],
+              :business_phonew => user_hash[:phone_number],
               :address1 => user_hash[:address].split("\n")[1],
               :address2 => user_hash[:address].split("\n")[2],
               :city => user_hash[:city],
               :state => user_hash[:state],
               :postal_code => user_hash[:zip],
-              :country => user_hash[:country])
+              :country => user_hash[:country],
+              :entered_by => "enotis-application")
         unless u.save
           puts "cant save #{user_hash[:username]}"
         end
