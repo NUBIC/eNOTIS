@@ -36,20 +36,21 @@ module UsersToPers
       user_hash = HashWithIndifferentAccess.new(REDIS.hgetall(redis_user))
       unless Pers::Person.find_by_username_or_id(netid)
         u = Pers::Person.new(
-              :username => user_hash[:username], 
-              :first_name => user_hash[:first_name],
-              :last_name => user_hash[:last_name],
-              :middle_name => user_hash[:middle_name],
-              :title => user_hash[:title],
-              :email => user_hash[:email],
-              :business_phonew => user_hash[:phone_number],
-              :address1 => user_hash[:address].split("\n")[1],
-              :address2 => user_hash[:address].split("\n")[2],
-              :city => user_hash[:city],
-              :state => user_hash[:state],
-              :postal_code => user_hash[:zip],
-              :country => user_hash[:country],
-              :entered_by => "enotis-application")
+              :username       => (user_hash[:username].blank ? nil : user_hash[:username][0,64]),
+              :first_name     => (user_hash[:first_name].blank ? nil : user_hash[:first_name][0,40]),
+              :last_name      => (user_hash[:last_name].blank ? nil : user_hash[:last_name][0,40]),
+              :middle_name    => (user_hash[:middle_name].blank ? nil : user_hash[:middle_name][0,40]),
+              :title          => (user_hash[:title].blank ? nil : user_hash[:title][0,64]),
+              :email          => (user_hash[:email].blank ? nil : user_hash[:email][0,255]),
+              :business_phone => (user_hash[:phone_number].blank ? nil : user_hash[:phone_number][0,40]),
+              :address1       => (user_hash[:address].split("\n")[1].blank ? nil : user_hash[:address].split("\n")[1][0,500]),
+              :address2       => (user_hash[:address].split("\n")[2].blank ? nil : user_hash[:address].split("\n")[2][0,80]),
+              :city           => (user_hash[:city].blank ? nil : user_hash[:city][0,80]),
+              :state          => (user_hash[:state].blank ? nil : user_hash[:state][0,40]),
+              :postal_code    => (user_hash[:zip].blank ? nil : user_hash[:zip][0,15]),
+              :country        => (user_hash[:country].blank ? nil : user_hash[:country][0,80]),
+              :entered_by     => "enotis-application")
+
         unless u.save
           puts "cant save #{user_hash[:username]}"
         end
