@@ -6,6 +6,7 @@ namespace :redis do
   desc "Updates Users from Redis Cache"
   task :users => :environment do
     puts "#{Time.now}: Users..."
+    Bcaudit::AuditInfo.current_user = Bcsec::User.new('eNOTIS-rake-redis')
     UsersToPers.update_from_redis # User.update_from_redis
     puts "#{Time.now}: Users complete"
   end
