@@ -50,24 +50,12 @@ module UsersToPers
               :postal_code    => (user_hash[:zip].blank? ? nil : user_hash[:zip][0,15]),
               :country        => (user_hash[:country].blank? ? nil : user_hash[:country][0,80]),
               :entered_by     => "enotis-application")
-
-        unless u.save
-          puts "cant save #{user_hash[:username]}"
+        if u.save
+          print "saved #{user_hash[:username]} "
+        else
+          print "skipped #{user_hash[:username]} (#{u.errors.full_messages}) "
         end
       end
-      # u = self.find_by_netid(netid) || self.new
-      # u.email       = user_hash[:email]
-      # u.first_name  = user_hash[:first_name]
-      # u.last_name   = user_hash[:last_name]
-      # u.middle_name = user_hash[:middle_name]
-      # u.title       = user_hash[:title] 
-      # u.address_line1, u.address_line2, u.address_line3 = user_hash[:address].split("\n")
-      # u.city         = user_hash[:city]
-      # u.state        = user_hash[:state]
-      # u.zip          = user_hash[:zip]
-      # u.country      = user_hash[:country]
-      # u.phone_number = user_hash[:phone_number]
-      # u.netid        = user_hash[:username]
     end
   end
   # Find users in cc_pers
@@ -83,19 +71,5 @@ module UsersToPers
     else
       return user.username
     end
-    # if (user= User.find_by_netid(netid))
-    #   user
-    # elsif(user2=User.find_by_netid(netid.downcase))
-    #   user2
-    # elsif(user3 = User.find_by_netid(redis.hget("role:user_aliases", netid)))
-    #   user3
-    # elsif(user4 = User.find_by_netid(redis.hget("role:user_aliases", netid.downcase)))
-    #   user4
-    # else
-    #   puts "Missing Netid = #{study} - #{netid} - #{project_role} - #{consent_role}"
-    #   Resque.enqueue(IncompleteRoleProcessor, study, netid, project_role, consent_role)
-    #   nil
-    # end
-  
   end
 end
