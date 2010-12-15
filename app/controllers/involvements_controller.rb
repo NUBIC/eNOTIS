@@ -17,6 +17,7 @@ class InvolvementsController < ApplicationController
   
   def show 
     @involvement = Involvement.find(params[:id])
+    authorize! :show, @involvement
     params[:study] = @involvement.study.irb_number
     respond_to do |format|
       format.html {render :action => :show}
@@ -35,10 +36,11 @@ class InvolvementsController < ApplicationController
   end
   
   def new
+    @study = Study.find_by_irb_number(params[:study])
     @involvement = Involvement.new
     @involvement.subject = Subject.new
-    @involvement.involvement_events.build(:event => "Consented")
-    @involvement.involvement_events.build(:event => "Completed")
+    @involvement.involvement_events.build(:event_type => @study.event_types.find_by_name("Consented"))
+    @involvement.involvement_events.build(:event_type => @study.event_types.find_by_name("Completed"))
     respond_to do |format|
       format.html
       format.js {render :layout => false}
@@ -47,9 +49,11 @@ class InvolvementsController < ApplicationController
   
   def edit
     @involvement = Involvement.find(params[:id])
-    params[:study] = @involvement.study.irb_number
-    @involvement.involvement_events.build(:event => "Consented") unless @involvement.consented
-    @involvement.involvement_events.build(:event => "Completed") unless @involvement.completed_or_withdrawn
+    authorize! :edit, @involvement
+    @study = @involvement.study
+    params[:study] = @study.irb_number
+    @involvement.involvement_events.build(:event_type => @study.event_types.find_by_name("Consented")) unless @involvement.consented
+    @involvement.involvement_events.build(:event_type => @study.event_types.find_by_name("Completed")) unless @involvement.completed_or_withdrawn
     respond_to do |format|
       format.html {render :action => :new}
       format.js {render :layout => false, :action => :new}
@@ -58,17 +62,23 @@ class InvolvementsController < ApplicationController
   
   def create
     study = Study.find_by_irb_number(params[:study][:irb_number])
-    @involvement = Involvement.new(params[:involvement].merge(:study => study))
+    authorize! :import, study
+    pr = params[:involvement].merge(:study => study)
+    @involvement = Involvement.new(pr)
+
     if @involvement.save
       flash[:notice] = "Created"
     else
-      flash[:error] = "Error: #{@involvement.errors.full_messages}"
+      logger.debug "#{@involvement.inspect}"
+      logger.debug "ERRORS123:#{@involvement.errors.full_messages.inspect}"
+      flash[:error] = "Error: #{@involvement.errors.full_messages} #{@involvement.inspect}"
     end
     redirect_to study_path(study)
   end
   
   def update
     @involvement = Involvement.find(params[:id])
+    authorize! :update, @involvement
     @involvement_events = @involvement.involvement_events
     study = Study.find_by_irb_number(params[:study][:irb_number])
     if @involvement.update_attributes(params[:involvement])
@@ -84,6 +94,7 @@ class InvolvementsController < ApplicationController
   # This feature will leave subjects without involvements. 
   def destroy
     @involvement = Involvement.find(params[:id])
+    authorize! :destroy, @involvement
     @study       = @involvement.study
     @involvement.destroy # :dependent => :destroy takes care of removing involvement events # @involvement.involvement_events.destroy_all
     respond_to do |format|
@@ -94,7 +105,8 @@ class InvolvementsController < ApplicationController
   
   def upload
     # Subjects are created via uploads
-    @study = Study.find_by_irb_number(params[:study_id]) || Study.new
+    @study = Study.find_by_irb_number(params[:study_id]) # || Study.new # <= Why are we calling Study.new here? -BLC
+    authorize! :import, @study
     @up = StudyUpload.create(:netid => current_user.netid, :study_id => @study.id, :upload => params[:file])
     success = @up.legit?
     redirect_to_studies_or_study(params[:study_id], success ? :notice : :error, success ? @up.summary : "Oops. Your upload had some issues.<br/>Please click <a href='#{@study.irb_number ? import_study_path(@study) : '#'}' rel='#import'>Import</a> to see the result.")

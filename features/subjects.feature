@@ -7,7 +7,7 @@ Feature: Manage subjects
     Given a study "Vitamin D and delerium" with id "STU001248" and irb_status "Approved"
     And I log in as "usergey" on study "STU001248"
     And I go to the study page for id "STU001248"
-  
+
   Scenario: A coordinator can add a subject
     When I add a subject "Jack" "Daripur" with "Consented" on "2009-07-01"
     Then I should be on the study page for id "STU001248"

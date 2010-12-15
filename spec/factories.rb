@@ -74,19 +74,18 @@ end
 
 Factory.define :study do |p|
   p.irb_number            {Factory.next :irb_number}
-  p.name                  {"Randomized Evaluation of Sinusitis With Vitamin A"}
-  p.title                 {"Randomized Evaluation of Sinusitis With Vitamin A"}
-  p.research_type         {}
-  #p.description           {"Rem fugit culpa unde facilis earum. Quas et vitae ut cumque nihil quidem aperiam architecto. Et asperiores inventore non nisi libero architecto quibusdam.\r\n\r\nVeniam fugiat voluptas laudantium in assumenda. Blanditiis recusandae illum necessitatibus. Quia nesciunt esse officia neque doloribus vel explicabo provident. Non sit vero iusto quibusdam explicabo. Nobis in architecto quam pariatur sit autem optio."}
-  p.irb_status            {"Approved"}
+  p.name                  "Randomized Evaluation of Sinusitis With Vitamin A"
+  p.title                 "Randomized Evaluation of Sinusitis With Vitamin A"
+  p.research_type         "Bio-medical"
+  p.irb_status            "Approved"
+  p.after_create {|s| s.create_default_events}
 end
 
 Factory.define :fake_study, :parent => :study do |p|
   p.title                 {Faker::Study.title}
   p.irb_number            {Factory.next :irb_number}
   p.name                  {|me| s = me.title.split; "#{s.first} #{s.last}";}
-  p.research_type         {["Bio-medical","Bio-medical","Bio-medical","Social/Behavioral",""].rand}
-  #p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
+  p.description           {Faker::Lorem.paragraphs(3).join("\r\n")}
   p.irb_status            {Faker::Study.eirb_status}
 end
 
@@ -104,9 +103,15 @@ Factory.define :involvement do |i|
 
 end
 
+Factory.define :event_type do |et|
+  et.association :study
+  et.name        {["Consented", "Withdrawn", "Screened", "Completed"].rand + self.object_id.to_s}
+  et.editable    {[true, false, true].rand}
+end
+
 Factory.define :involvement_event do |e|
   e.association   :involvement
-  e.event         {InvolvementEvent.events.rand}
+  e.association   :event_type
   e.note          {}
   e.occurred_on    {["today","yesterday"].rand}
 end

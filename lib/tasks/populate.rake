@@ -58,7 +58,7 @@ namespace :db do
     task :involvements_and_subjects => :environment do
       puts "creating involvements and subjects..."
       events = InvolvementEvent.events.concat(Array.new(20, "Consented")) # weight this more heavily towards consent event types
-      300.times do |i|
+      3000.times do |i|
         involvement = Factory.create( :involvement, :study => random(Study), :subject => Factory.create(:fake_subject),
                                       :gender => Involvement.genders.rand, :ethnicity => Involvement.ethnicities.rand,
                                       :race => Involvement.races.rand)

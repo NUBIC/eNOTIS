@@ -41,6 +41,7 @@ GEM
       bcsec (>= 2.0.0)
       rails (~> 2.3.5)
     builder (2.1.2)
+    cancan (1.4.1)
     capistrano (2.5.19)
       highline
       net-scp (>= 1.0.0)
@@ -100,7 +101,7 @@ GEM
     net-ssh-gateway (1.0.1)
       net-ssh (>= 1.99.1)
     nokogiri (1.4.4)
-    paper_trail (1.6.4)
+    paper_trail (1.6.3)
       actionpack (>= 2.3)
       activerecord (>= 2.3)
     paperclip (2.1.2)
@@ -195,6 +196,7 @@ DEPENDENCIES
   bcdatabase
   bcsec (~> 2.0)
   bcsec-rails (~> 2.0)
+  cancan
   capistrano (~> 2.5.0)
   chronic (>= 0.2.3)
   ci_reporter (~> 1.6.0)

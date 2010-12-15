@@ -28,7 +28,7 @@ class StudiesController < ApplicationController
   def show
     @study = Study.find_by_irb_number(params[:id], :include => [{:involvements => [{:subject => :involvements}, :involvement_events]}, :roles])
     if @study
-      return redirect_with_message(default_path, :notice, "You don't have access to study #{@study.irb_number}") unless @study.has_coordinator?(current_user)
+      authorize! :show, @study
       @title = @study.irb_number
       @involvements = @study.involvements
       unless @involvements.empty?       
@@ -45,6 +45,7 @@ class StudiesController < ApplicationController
   
   def import
     @study = Study.find_by_irb_number(params[:id])
+    authorize! :import, @study
     @uploads = @study.study_uploads
     respond_to do |format|
       format.html

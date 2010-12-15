@@ -7,6 +7,7 @@ db/*.sqlite3-journal
 tmp/*
 public/uploads/*
 public/results/*
+vendor/bundle/*
 app/stylesheets/.sass-cache/*
 public/javascripts/cache/*.js
 public/stylesheets/compiled/*.css

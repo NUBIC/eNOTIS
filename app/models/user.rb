@@ -97,7 +97,7 @@ class User < ActiveRecord::Base
   
   # TODO set up a more robust role authorization system -yoon
   def admin?
-    %w(blc615 daw286 myo628 lmw351 wakibbe).include? self.netid
+    %w(blc615 daw286 myo628 lmw351 wakibbe pny668).include? self.netid
   end
   
   def name

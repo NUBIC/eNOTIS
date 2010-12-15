@@ -22,7 +22,19 @@ namespace :eirb do
         Resque.enqueue(AuthorizedPersonnelPopulator, irb_number)
       end
     end
-    
+     
+    desc "Emergency roles import"
+    task :just_roles => :environment do
+      Eirb.connect
+      puts "#{Time.now}: Starting eirb:redis:just_roles"
+      irb_numbers = Eirb.find_study_export
+      irb_numbers.each do |numbers|
+        irb_number = numbers[:irb_number]
+        Resque.enqueue(AuthorizedPersonnelPopulator, irb_number)
+      end
+      puts "#{Time.now}: Finishing eirb:redis:just_roles"
+    end
+   
     desc "Nightly 1 day import"
     task :nightly => :environment do
       Eirb.connect

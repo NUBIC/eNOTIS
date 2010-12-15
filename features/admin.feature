@@ -21,6 +21,7 @@ Feature: Developer admin access
     And I should see "active users"
     And I should see "active (non NOTIS) studies"
   
+  @wip
   Scenario: An admin user should be able to see study uploads
     Given I log in as admin "admin" with password "secret"
     And a study "Vitamin C and concentration" with id "STU001248" and irb_status "Approved"

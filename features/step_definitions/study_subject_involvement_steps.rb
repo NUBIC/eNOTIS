@@ -76,7 +76,7 @@ Then /^I add edit subject "([^\"]*)" "([^\"]*)" with 2nd event "([^\"]*)" on "([
   within ".subject_#{sid}" do |scope|
     scope.click_link "Edit"
   end
-  select event, :from => :involvement_involvement_events_attributes_1_event
+  select event, :from => :involvement_involvement_events_attributes_1_event_type_id
   fill_in :involvement_involvement_events_attributes_1_occurred_on, :with => date
   click_button "Save"
 end
@@ -115,8 +115,9 @@ Given /^a subject with mrn "([^\"]*)"$/ do |mrn|
 end
 
 Given /^subject "([^\"]*)" has event "([^\"]*)" on study "([^\"]*)"$/ do |mrn, term, irb_number|
-  unless involvement = Involvement.find_by_subject_id_and_study_id(Subject.find_by_nmff_mrn(mrn), Study.find_by_irb_number(irb_number))
-    involvement = Factory(:involvement, :subject => Subject.find_by_nmff_mrn(mrn), :study => Study.find_by_irb_number(irb_number))
+  study = Study.find_by_irb_number(irb_number)
+  unless involvement = Involvement.find_by_subject_id_and_study_id(Subject.find_by_nmff_mrn(mrn), study)
+    involvement = Factory(:involvement, :subject => Subject.find_by_nmff_mrn(mrn), :study => study)
   end
   Factory(:involvement_event, :involvement => involvement, :event => term)
 end

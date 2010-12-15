@@ -109,8 +109,8 @@ class StudyUpload < ActiveRecord::Base
       # logger.info params.inspect
       
       # InvolvementEvent - create the event
-      params[:involvement_events].each do |event|
-        InvolvementEvent.find_or_create(event)
+      params[:involvement_events].each do |event_params|
+        InvolvementEvent.create(event_params)
       end
       involvement
     end
@@ -134,7 +134,7 @@ class StudyUpload < ActiveRecord::Base
           nil
         else
           { :occurred_on => event_date.to_date,
-            :event => category,
+            :event_type_id => self.study.event_types.find_by_name(category).id,
             :note => r["#{category}_note".to_sym]
           }
         end

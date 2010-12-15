@@ -64,7 +64,7 @@
     %span.hint One activity required
     %ol
       - f.fields_for :involvement_events do |builder|
-        = render 'involvement_event_fields', :f => builder
+        = render 'involvement_event_fields', :f => builder, :study => @study
   .submit
     = f.submit "Save"
     or

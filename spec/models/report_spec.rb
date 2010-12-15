@@ -5,7 +5,8 @@ describe "Report generation from study data" do
 
   before(:each) do
 
-    @study = Factory(:study) 
+    @study = Factory(:study)
+    @study.create_default_events
     @subject = Factory(:subject) 
     @involvement = Factory(:involvement, 
                            :races => ["White", "Asian"],
@@ -14,7 +15,8 @@ describe "Report generation from study data" do
                            :case_number => "123abc123")
     # Adding all the events for testing purposes
     %w(Consented Completed Withdrawn).each do |n|
-      Factory(:involvement_event, :involvement => @involvement, :event => n) 
+      ev = @study.event_types.find_by_name(n)
+      Factory(:involvement_event, :involvement => @involvement, :occurred_on => 1.day.ago, :event_type => ev) 
     end
 
     # Full params for export
@@ -56,6 +58,7 @@ describe "Report generation from study data" do
       FasterCSV.parse(@csv_data, :headers => true) do |row|
         row[col_name].should_not be_nil
         row[col_name].should == @involvement.send(attr_name.to_sym).to_s
+        @involvement.send(attr_name.to_sym).should_not be_nil
       end
     end
   end
@@ -97,7 +100,6 @@ describe "Report generation from study data" do
        }) 
        cols = Report.filter_columns(all_params)
        cols.should == Report::ORDER
-       
     end
 
     it "should only output first and last name" do

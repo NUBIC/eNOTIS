@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   
   # Security
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  filter_parameter_logging :password, :involvement, :subject # Scrub sensitive parameters from your log
+  filter_parameter_logging :password, :involvement, :subject unless Rails.env == "development" # Scrub sensitive parameters from your log
 
   # Rails basic session timeout is set in config/initializers/session_store.rb to 30 mins, shorter than the CAS 6 hour (for single sign-on) timeout  
   # This code (along with jquery.sessionTimeout.js) automatically shows an overlay after 5 minutes of inactivity, and gets "/" after 30 mins
@@ -32,8 +32,14 @@ class ApplicationController < ActionController::Base
   # alias :rescue_action_locally :rescue_action_in_public
   # local_addresses.clear
 
+  #can can redirect for unauthorized error
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice]="Access Denied"
+    return redirect_to studies_path
+  end 
+
   # Application version
-  APP_VERSION = "1.11.3"
+  APP_VERSION = "1.12.0"
 
   def redirect_with_message(path, message_type, message)
     flash[message_type] = message if !message.blank? and !message_type.blank?

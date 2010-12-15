@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101117193255) do
+ActiveRecord::Schema.define(:version => 20101130173649) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(:version => 20101117193255) do
     t.text    "value"
   end
 
+  create_table "event_types", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "time_span",   :default => "point"
+    t.integer  "seq",         :default => 0
+    t.integer  "study_id"
+    t.boolean  "editable",    :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "funding_sources", :force => true do |t|
     t.integer  "study_id"
     t.string   "name"
@@ -36,16 +47,15 @@ ActiveRecord::Schema.define(:version => 20101117193255) do
 
   create_table "involvement_events", :force => true do |t|
     t.integer  "involvement_id"
-    t.string   "event"
     t.date     "occurred_on"
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "event_type_id"
   end
 
-  # unrecognized index "inv_events_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
-  # unrecognized index "inv_events_event_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
-  # unrecognized index "inv_events_occurred_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  add_index "involvement_events", ["event_type_id"], :name => "index_involvement_events_on_event_type_id"
+  add_index "involvement_events", ["occurred_on"], :name => "inv_events_occurred_idx"
 
   create_table "involvements", :force => true do |t|
     t.integer  "subject_id"

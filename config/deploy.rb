@@ -159,12 +159,27 @@ namespace :web do
   desc "Display static maintenance page"
   task :disable, :roles => :web, :except => { :no_release => true } do
     on_rollback { run "rm -f #{current_path}/public/index.html" }
-    run "mv #{current_path}/public/index_coming_soon.html #{current_path}/public/index.html"
+    run "mv #{current_path}/public/index_coming_soon.html #{current_path}/public/maintenance.html"
+
+    # More Info: http://www.shiftcommathree.com/articles/make-your-rails-maintenance-page-respond-with-a-503
+    # Add the following to the enotis apache configuration:
+    
+    # ErrorDocument 503 /maintenance.html
+    # RewriteEngine On
+    # 
+    # # rewrites nearly everything to /maintenance, forcing redirect
+    # RewriteCond %{REQUEST_URI} !\.(js|css|gif|jpg|png|mov|swf)$
+    # RewriteCond %{DOCUMENT_ROOT}/maintenance.html -f
+    # RewriteCond %{SCRIPT_FILENAME} !maintenance.html|policy.html|maintenance$
+    # RewriteRule ^.*$  /maintenance [R]
+    # 
+    # # rewrites /maintenance to error 503, maintenance.html, no redirect
+    # RewriteRule ^/maintenance$ - [R=503,L]
   end
   
   desc "Hide static maintenance page"
   task :enable, :roles => :web, :except => { :no_release => true } do
-    run "rm -f #{current_path}/public/index.html"
+    run "rm -f #{current_path}/public/maintenance.html"
   end
   
   desc "Link upload/result files"
