@@ -56,10 +56,16 @@ namespace :users do
     # puts user_hash.inspect
   end
   
+  desc "creates the enotis-application user"
+  task :create_appuser => :environment do
+    Bcaudit::AuditInfo.current_user = Bcsec::User.new('myo628')
+    Pers::Person.create!(:username => "enotis-application", :first_name => "enotis", :last_name => "application", :entered_by => "myo628")
+  end
+  
   # rake db:populate:admins depends on this rake task
   desc "creates the admin users"
   task :create_admins => :environment do
-    Bcaudit::AuditInfo.current_user = Bcsec::User.new('eNOTIS-rake')
+    Bcaudit::AuditInfo.current_user = Bcsec::User.new('enotis-application')
     UsersToPers.setup
     UsersToPers.create_admins
   end
