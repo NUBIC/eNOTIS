@@ -19,8 +19,9 @@ namespace :db do
     end
 
     desc 'Populate admins'
-    puts "creating admins..."
-    task :admins => [:environment, :"users:create_admins"]
+    task :admins => [:environment, :"users:create_admins"] do
+      puts "creating admins..."
+    end
     
     desc 'Populate roles: joins users(random) and studies(fake)'
     task :roles_and_studies => :environment do      
