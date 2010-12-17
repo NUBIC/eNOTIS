@@ -25,6 +25,18 @@ ActiveRecord::Schema.define(:version => 20101130173649) do
     t.text    "value"
   end
 
+  create_table "dictionary_terms", :force => true do |t|
+    t.string   "term"
+    t.string   "code"
+    t.string   "category"
+    t.string   "source"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  # unrecognized index "dictionary_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+
   create_table "event_types", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -54,8 +66,8 @@ ActiveRecord::Schema.define(:version => 20101130173649) do
     t.integer  "event_type_id"
   end
 
-  add_index "involvement_events", ["event_type_id"], :name => "index_involvement_events_on_event_type_id"
-  add_index "involvement_events", ["occurred_on"], :name => "inv_events_occurred_idx"
+  # unrecognized index "index_involvement_events_on_event_type_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  # unrecognized index "inv_events_occurred_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
   create_table "involvements", :force => true do |t|
     t.integer  "subject_id"
@@ -65,12 +77,12 @@ ActiveRecord::Schema.define(:version => 20101130173649) do
     t.string   "case_number"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "race_is_black_or_african_american",                 :default => false
     t.boolean  "race_is_native_hawaiian_or_other_pacific_islander", :default => false
     t.boolean  "race_is_white",                                     :default => false
     t.boolean  "race_is_unknown_or_not_reported",                   :default => false
     t.boolean  "race_is_american_indian_or_alaska_native",          :default => false
     t.boolean  "race_is_asian",                                     :default => false
+    t.boolean  "race_is_black_or_african_american",                 :default => false
     t.string   "address_line1"
     t.string   "address_line2"
     t.string   "city"
@@ -83,6 +95,15 @@ ActiveRecord::Schema.define(:version => 20101130173649) do
   end
 
   # unrecognized index "involvements_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+
+  create_table "races", :force => true do |t|
+    t.integer  "involvement_id"
+    t.integer  "race_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  # unrecognized index "races_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
   create_table "roles", :force => true do |t|
     t.integer  "study_id"
