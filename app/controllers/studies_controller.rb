@@ -15,7 +15,7 @@ class StudiesController < ApplicationController
     # raise "testing exception notifier - yoon" # http://weblog.jamisbuck.org/2007/3/7/raising-the-right-exception
     respond_to do |format|
       format.html do
-        @my_studies = current_user.studies
+        @my_studies = Study.with_user(current_user.netid)
       end
       format.json do
 	render :json => Study.with_user(current_user.netid).to_json
