@@ -8,6 +8,7 @@ describe InvolvementsController do
   before(:each) do
     @study = Factory(:study, :irb_number => 'STU00002629')
     StudyUpload.stub!(:create).and_return(@up = Factory(:study_upload))
+    @role = Factory(:role, :study => @study, :netid => 'brian') 
     login_as("brian")
     controller.current_user.should == Bcsec.authority.find_user("brian")
   end

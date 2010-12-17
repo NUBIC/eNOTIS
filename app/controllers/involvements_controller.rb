@@ -115,8 +115,13 @@ class InvolvementsController < ApplicationController
     @study = Study.find_by_irb_number(params[:study_id]) # || Study.new # <= Why are we calling Study.new here? -BLC
     authorize! :import, @study
     @up = StudyUpload.create(:netid => current_user.netid, :study_id => @study.id, :upload => params[:file])
-    success = @up.legit?
-    redirect_to_studies_or_study(params[:study_id], success ? :notice : :error, success ? @up.summary : "Oops. Your upload had some issues.<br/>Please click <a href='#{@study.irb_number ? import_study_path(@study) : '#'}' rel='#import'>Import</a> to see the result.")
+    if @up.legit?
+      flash[:notice] = @up.summary
+    else
+      flash[:error] = "Oops. Your upload had some issues.<br/>Please click <a href='#{@study.irb_number ? import_study_path(@study) : '#'}' rel='#import'>Import</a> to see the result."
+    end
+    redirect_to study_path(@study)
+    # redirect_to_studies_or_study(params[:study_id], success ? :notice : :error, success ? @up.summary : "Oops. Your upload had some issues.<br/>Please click <a href='#{@study.irb_number ? import_study_path(@study) : '#'}' rel='#import'>Import</a> to see the result.")
   end
   
   def merge

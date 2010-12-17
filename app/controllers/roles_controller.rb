@@ -1,9 +1,10 @@
 class RolesController < ApplicationController
   def show
-    @user = User.find_by_netid(params[:id], :include => {:roles => :study})
+    # @user = User.find_by_netid(params[:id], :include => {:roles => :study})
+    @roles = Role.find_all_by_netid(params[:id], :include => :study)
     respond_to do |format|
       format.json do
-        render :json => @user.roles.map{|r| {:consent_role => r.consent_role, :project_role => r.project_role, :irb_number => r.study.irb_number, :study_name => r.study.name} }
+        render :json => @roles.map{|r| {:consent_role => r.consent_role, :project_role => r.project_role, :irb_number => r.study.irb_number, :study_name => r.study.name} }
       end
       format.html
     end

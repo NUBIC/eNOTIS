@@ -34,16 +34,10 @@ Then /^"([^"]*)" should have (\d+) subjects$/ do |netid, num|
   Subject.with_user(netid).count.should == num.to_i
 end
 
-
-# Given /^I log in as admin "([^\"]*)" with password "([^\"]*)"$/ do |netid, password|
-#   user = Factory.create(:user, {:netid => netid})
-#   user.should be_valid
-#   User.stub!(:find_by_id).and_return(user)
-#   User.stub!(:authenticate).and_return{|n,p| p == password ? user : nil }
-#   user.stub!(:admin?).and_return(true)
-#   Given %(I log in as "#{name}" with password "#{password}")
-# end
-
 Given /^"([^\"]*)" is not authorized on any studies$/ do |netid|
   Role.find_all_by_netid(netid).should == []
+end
+
+Given /^"([^"]*)" is not an admin$/ do |netid|
+  Bcsec.authority.find_user(netid).permit?(:admin).should be_false
 end

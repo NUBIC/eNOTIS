@@ -5,7 +5,7 @@ Feature: User access to study reports
   
   Background:
     Given a study "Vitamin C and concentration" with id "STU001248" and irb_status "Approved"
-    Given I log in as "pi" with password "secret" on study "STU001248"
+    Given I log in as "usergey" on study "STU001248"
 
   Scenario: A coordinator can download all subjects on a study
     Given the study "STU001248" has the following subjects
