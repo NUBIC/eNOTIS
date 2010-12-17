@@ -9,7 +9,6 @@ $(document).ready(function() {
    "bProcessing": true,
    "bServerSide": true,
    "sPaginationType": "full_numbers",
-   "sAjaxSource": "studies.json"
   });
   
   // show study: datatable

@@ -1,5 +1,5 @@
 #my_studies
-  .heading= "My Studies (#{@my_studies.total_entries} in total)"
+  .heading= "My Studies (#{@my_studies.size} in total)"
   = render :partial => 'partials/study_table', :locals => {:studies => @my_studies}
   #study_information.overlay
     .contentWrap

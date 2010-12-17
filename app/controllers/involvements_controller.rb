@@ -13,6 +13,13 @@ class InvolvementsController < ApplicationController
     
   # Public instance methods (actions)
   def index
+    @study = Study.find_by_irb_number(params[:irb_number])
+    @involvements = @study.involvements
+    respond_to do |format|
+      format.json do 
+        render :json => @involvements.to_json
+      end
+    end
   end
   
   def show 

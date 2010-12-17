@@ -6,7 +6,7 @@ Bcsec.configure do
 
   # The authentication protocol(s) to use for non-interactive
   # access.  There is no default.
-  api_mode :http_basic
+  api_mode :cas_proxy
 
   # The portal to which this application belongs.  Optional.
   portal :eNOTIS # should match PORTAL in lib/users_to_pers.rb

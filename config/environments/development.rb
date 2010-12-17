@@ -22,7 +22,7 @@ config.after_initialize do
   Bcsec.configure do
     enotis = Bcsec::Authorities::Enotis.new
     static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
-    authorities static, :cas, :pers, enotis
+    authorities static, :cas,  enotis
     central '/etc/nubic/bcsec-local.yml'
   end
 end
