@@ -3,7 +3,7 @@ class PublicController < ApplicationController
   
   # Public instance methods (actions)
   def index
-    redirect_to default_path if current_user
+    redirect_to params[:return] || default_path if current_user
     # TODO System status check
     @filters = self.class.filter_chain
     @title = "measure, see, and improve your research"

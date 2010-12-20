@@ -12,5 +12,10 @@ describe PublicController do
     get :index
     response.should_not be_redirect
   end
+  it "should redirect to return path if already logged in" do
+    login_as("brian")
+    get :index, :return => "/hub"
+    response.should redirect_to("/hub")
+  end
 
 end
