@@ -9,7 +9,7 @@ $(document).ready(function(){
       var v = this.getTrigger().prev("input").val();
       var s = this.getTrigger().attr("href");
       if(v){ $("#roles .wrap").load("/roles/" + v); }
-      else if(s){ $("#roles .wrap").load(s); }
+      else if(s && s != "#"){ $("#roles .wrap").load(s); }
       else{ $("#roles .wrap").html("Please enter a netid.");}
     },
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },

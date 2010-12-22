@@ -35,6 +35,7 @@ Feature: Developer admin access
     Given I log in as "adminnie" on study "STU00144"
     And "usergey" is on study "STU00031415"
     When I visit the roles page for "usergey"
+    Then I should see "Sergey Uservich"
     Then I should see "STU00031415"
     When I visit the roles page for "nan"
     Then I should see "No roles found"

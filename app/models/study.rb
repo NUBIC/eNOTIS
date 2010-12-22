@@ -121,9 +121,8 @@ class Study < ActiveRecord::Base
   end
 
   def accrual
-    et = event_types.find_by_name("Consented")
-    if et
-      involvement_events.count(:conditions => {:event_type_id => et.id})
+    if et = event_types.detect{|et| et.name == "Consented"}
+      involvement_events.select{|ie| ie.event_type_id == et.id}.size
     else
       0
     end

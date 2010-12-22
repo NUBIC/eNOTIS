@@ -1,10 +1,21 @@
 - if @roles.blank?
   %p.center= "No roles found for netID \"#{params[:id]}\""
 - else
-  %p= "Roles for #{params[:id]}"
-  %p
-    - @roles.each do |role|
-      = link_to role.study.irb_number, study_path(role.study)
-      = [role.project_role, role.consent_role].compact.join(", ")
-      %br
-  
+  %p= "Roles for " + (@user ? "#{@user.full_name} (#{params[:id]})" : params[:id])
+  #roles_for
+    %table.display
+      %thead
+        %tr
+          %th Study
+          %th Accrual
+          %th Goal
+          %th Project role
+          %th Consent role
+      %tbody
+        - @roles.each do |role|
+          %tr
+            %td= link_to role.study.irb_number, study_path(role.study)
+            %td= role.study.accrual || 0
+            %td= role.study.accrual_goal
+            %td= role.project_role
+            %td= role.consent_role
