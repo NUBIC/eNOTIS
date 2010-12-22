@@ -37,7 +37,7 @@ config.after_initialize do
     static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
     enotis = Bcsec::Authorities::Enotis.new
     authorities static, :pers, enotis
-    cas_parameters :base_url => "fake.cas.example.org"
+    cas_parameters :base_url => "http://fake.cas.example.org"
   end
   # this has to come after Bcsec.configure, which strangely wipes this connection
   Pers::Base.establish_connection :cc_pers_hudson
