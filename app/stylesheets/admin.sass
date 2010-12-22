@@ -3,21 +3,26 @@
 @import search.sass
 @import datatables.sass
 
-#active_users div.dataTables_wrapper, #active_studies div.dataTables_wrapper
-  :min-height 50px
-  :margin-bottom 30px
+#recent_handers, #deadbeats, #recent_uploads
+  div.dataTables_wrapper
+    :min-height 50px
+    :margin-bottom 30px
+#recent_handers, #deadbeats
+  :width 49%
+  :float left
+#recent_handers
+  :margin-right 1%
+#deadbeats
+  :margin-left 1%
+#recent_uploads
+  :clear left
 #main
   :padding-top 20px
   :padding-bottom 20px
-#involvement_events, #netid_lookup
-  :width 50%
-  :float left
 #roles
   :width 450px
   .center
     :text-align center
-#active_users
-  :clear left
 .dataTables_length
   :display inline
   :width 40%

@@ -1,53 +1,53 @@
 - @title = "Admin Hub"
-#involvement_events
-  %span.heading Accruals (non NOTIS)
-  %p= @involvement_events.map{|event, involvements| "#{event}: #{involvements.size}"}.join(", ").html_safe
 #netid_lookup
   %span.heading Roles
   %p
     = label_tag :netid, "netID"
     = text_field_tag "netid"
     = link_to "look up", "#", :rel => "#roles"
-#roles.overlay
-  .wrap
-#active_users
-  %span.heading= pluralize @active_users.size, "active user"
+
+#recent_handers
+  %span.heading= pluralize(@recent_handers.size, 'active user') + " in the last #{@days_ago} days"
   %table.display
     %thead
       %tr
-        - %w(netid new create edit update import upload search last\ active).each do |header|
-          %th= header
+        %th Last activity
+        %th netID
+        - %w(create update upload).each do |action|
+          %th= action
     %tbody
-      - @active_users.each do |user, activities|
+      - @recent_handers.each_pair do |netid, activities|
         %tr
-          %td= user
-          -#%td= user.netid
-          - %w(involvements new involvements create involvements edit involvements update studies import involvements upload search show).each_slice(2) do |controller, action|
-            %td= activities.count{|a| a.controller == controller && a.action == action}
-          %td= "#{activities.first.created_at.to_date.to_s(:db)} | #{time_ago_in_words(activities.first.created_at)} ago"
-          
-#active_studies
-  %span.heading= pluralize @active_studies.size, "active (non NOTIS) studies"
+          %td
+            %span{:title => activities.sort_by(&:created_at).last.created_at.to_s(:db)}
+              = time_ago_in_words(activities.sort_by(&:created_at).last.created_at)
+              ago
+          %td= link_to netid, role_path(netid), :rel => '#roles'
+          - %w(create update upload).each do |action|
+            %td= activities.select{|a| a.action == action}.size
+
+#deadbeats
+  %span.heading= pluralize(@deadbeats.size, 'passive user')
   %table.display
     %thead
       %tr
-        %th irb number
-        %th accrual
-        %th netids
-        %th last accrual
+        %th Last activity
+        %th netID
+        - %w(add edit import search).each do |action|
+          %th= action
     %tbody
-      - @active_studies.each do |study, involvements|
-        - users = @active_users.select{|user, activities| activities.any?{|a| a.action != "show" && a.params.to_s =~ /#{study.irb_number}/ }}.map(&:first).uniq
+      - @deadbeats.each_pair do |netid, activities|
         %tr
-          %td= link_to study.irb_number, study_path(study)
-          %td= involvements.size
-          %td= users.join(", ")
-          -# %td!= users.map{|u| mail_to u.email, u.name}.join(", ")
-          -# %td= users.map(&:netid).join(", ")
-          %td= "#{involvements.first.updated_at.to_date.to_s(:db)} | #{time_ago_in_words(involvements.first.updated_at)} ago"
+          %td
+            %span{:title => activities.sort_by(&:created_at).last.created_at.to_s(:db)}
+              = time_ago_in_words(activities.sort_by(&:created_at).last.created_at)
+              ago
+          %td= link_to netid, role_path(netid), :rel => '#roles'
+          - %w(add edit import search).each do |action|
+            %td= activities.select{|a| a.action == action}.size
 
 #recent_uploads
-  %span.heading= pluralize @recent_uploads.size, "recent uploads"
+  %span.heading= pluralize(@recent_uploads.size, 'upload') + " in the last #{@days_ago} days"
   %table.display
     %thead
       %tr
@@ -64,12 +64,11 @@
             %span{:title => u.created_at.to_s(:db)}
               = time_ago_in_words(u.created_at)
               ago
-          %td= u.netid
+          %td= link_to u.netid, role_path(u.netid), :rel => '#roles'
           %td= link_to u.study.irb_number, study_path(u.study)
           %td= link_to "Original", u.upload.url
           %td= link_to("Result", u.result.url) unless u.result_file_name.nil?
           %td= u.summary
 
-%img{:class => 'hub', :src => '/images/hub.jpg', :style => "display:none;"}
-
-   
+#roles.overlay
+  .wrap
