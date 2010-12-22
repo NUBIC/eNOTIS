@@ -32,6 +32,7 @@ config.middleware.delete('ResqueWeb')
 config.after_initialize do
   require 'pers'
   Pers::Base.establish_connection :cc_pers_hudson
+  ActiveRecord::Base.schemas = {:cc_pers => :cc_pers_hudson_enotis}
   
   Bcsec.configure do
     static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
