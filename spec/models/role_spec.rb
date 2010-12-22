@@ -35,7 +35,7 @@ describe Role do
     end
     
     it "should return roles in alpha older by project role" do
-      @study = Factory(:study, :irb_number => "STU0010101")
+      @study = Factory(:study, :irb_number => "STU0010102")
       @r1 = Factory(:role, :netid => "111yyy", :study => @study, :project_role => "PI")
       @r2 = Factory(:role, :netid => "222zzz", :study => @study, :project_role => "Coordinator")
       @study.roles.should == [@r2, @r1]
