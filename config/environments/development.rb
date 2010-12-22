@@ -20,9 +20,9 @@ require 'ruby-debug' if defined? Debugger # don't choke if we haven't the gem
 
 config.after_initialize do
   Bcsec.configure do
+    require 'pers'
     enotis = Bcsec::Authorities::Enotis.new
-    static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
-    authorities static, :cas,  enotis
+    authorities :cas, :pers, enotis
     central '/etc/nubic/bcsec-local.yml'
   end
 end

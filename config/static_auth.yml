@@ -1,63 +1,19 @@
+# for testing
 users:
-  blc615:               # username
-    password: secret          # password for :user auth (optional)
-    portals:            # portal & group auth info (optional)
-      - eNOTIS:             # A portal with simple groups
-        - Admin
   brian:
     password: secret          # password for :user auth (optional)
     portals:            # portal & group auth info (optional)
       - eNOTIS:             # A portal with simple groups
         - User
-  daw286:               # username
-    password: secret          # password for :user auth (optional)
-    portals:            # portal & group auth info (optional)
-      - eNOTIS:             # A portal with simple groups
-        - Admin
-  david:
-    password: secret          # password for :user auth (optional)
-    portals:            # portal & group auth info (optional)
-      - eNOTIS:             # A portal with simple groups
-        - User
-  lmw351:               # username
-    password: secret       # password for :user auth (optional)
-    portals:            # portal & group auth info (optional)
-      - eNOTIS:             # A portal with simple groups
-        - Admin
-  laura:
-    password: secret          # password for :user auth (optional)
-    portals:            # portal & group auth info (optional)
-      - eNOTIS:             # A portal with simple groups
-        - User
-  myo628:               # username
-    password: secret           # password for :user auth (optional)
-    portals:            # portal & group auth info (optional)
-      - eNOTIS:             # A portal with simple groups
-        - Admin
-        - User
-  yoon:
-    password: secret          # password for :user auth (optional)
-    portals:            # portal & group auth info (optional)
-      - eNOTIS:             # A portal with simple groups
-        - User
-  wakibbe:               # username
-    password: secret          # password for :user auth (optional)
-    portals:            # portal & group auth info (optional)
-      - eNOTIS:             # A portal with simple groups
-        - Admin
-  warren:
-    password: secret          # password for :user auth (optional)
-    portals:            # portal & group auth info (optional)
-      - eNOTIS:             # A portal with simple groups
-        - User
-        
-# for testing      
+                
   adminnie:               # username
     password: secret          # password for :user auth (optional)
     portals:            # portal & group auth info (optional)
       - eNOTIS:             # A portal with simple groups
         - Admin
   usergey:
+    first_name: Sergey
+    last_name: Uservich
     password: secret          # password for :user auth (optional)
     portals:            # portal & group auth info (optional)
       - eNOTIS:             # A portal with simple groups

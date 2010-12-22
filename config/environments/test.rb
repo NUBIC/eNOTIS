@@ -27,10 +27,8 @@ config.after_initialize do
   require 'pers'
   ActiveRecord::Base.schemas = {:cc_pers => :cc_pers_test}
   Bcsec.configure do
-    enotis = Bcsec::Authorities::Enotis.new
     static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
-    # ui_mode :form # default
-    # authorities static, enotis
+    enotis = Bcsec::Authorities::Enotis.new
     authorities static, :pers, enotis
     central '/etc/nubic/bcsec-test.yml'
   end
