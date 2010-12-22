@@ -33,3 +33,5 @@ cucumber:
 <%= bcdb.production :pprod, :enotis %>
 
 <%= bcdb.cc_pers_test :local_oracle, :cc_pers_test %> # necessary for database cleaner to work with cc_pers_test
+
+<%= bcdb.cc_pers_hudson :bcdev, :cc_pers_hudson_enotis %>

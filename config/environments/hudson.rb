@@ -30,10 +30,12 @@ EMPI_SERVICE = {:uri => nil, :credentials => nil}
 config.middleware.delete('ResqueWeb')
 
 config.after_initialize do
+  Pers::Base.establish_connection :cc_pers_hudson
+  
   Bcsec.configure do
     enotis = Bcsec::Authorities::Enotis.new
     static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
-    ui_mode :form
-    authorities static, enotis
+    # ui_mode :form
+    authorities static, :pers, enotis
   end
 end
