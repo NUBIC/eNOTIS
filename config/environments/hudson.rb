@@ -30,6 +30,7 @@ EMPI_SERVICE = {:uri => nil, :credentials => nil}
 config.middleware.delete('ResqueWeb')
 
 config.after_initialize do
+  require 'pers'
   Pers::Base.establish_connection :cc_pers_hudson
   
   Bcsec.configure do
