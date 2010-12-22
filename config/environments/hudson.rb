@@ -31,7 +31,6 @@ config.middleware.delete('ResqueWeb')
 
 config.after_initialize do
   require 'pers'
-  Pers::Base.establish_connection :cc_pers_hudson
   ActiveRecord::Base.schemas = {:cc_pers => :cc_pers_hudson_enotis}
   
   Bcsec.configure do
@@ -39,4 +38,6 @@ config.after_initialize do
     enotis = Bcsec::Authorities::Enotis.new
     authorities static, :pers, enotis
   end
+  # this has to come after Bcsec.configure, which strangely wipes this connection
+  Pers::Base.establish_connection :cc_pers_hudson
 end

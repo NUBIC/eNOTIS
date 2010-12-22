@@ -1,4 +1,5 @@
 require 'lib/bcsec/modes/enotis_front'
+require 'bcaudit'
 Bcsec.configure do
   # The authentication protocol to use for interactive access.
   # `:form` is the default.
@@ -11,3 +12,5 @@ Bcsec.configure do
   # The portal to which this application belongs.  Optional.
   portal :eNOTIS # should match PORTAL in lib/users_to_pers.rb
 end
+# to prevent lots of logging by bcaudit. bcaudit is neede, though, to log who is creating objects in cc_pers
+Bcaudit::Configuration.add_audit_logger(lambda{|x|})

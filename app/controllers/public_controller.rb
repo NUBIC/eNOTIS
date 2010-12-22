@@ -39,13 +39,18 @@ class PublicController < ApplicationController
 
   # Protected instance methods
   protected
+  def cas_base_url
+    # make agnostic to cas_base_url or base_url. base_url is preferred
+    config = Bcsec.configuration.parameters_for(:cas)
+    config[:base_url] || config[:cas_base_url]
+  end
   def cas_login_path
-    uri = URI.join(Bcsec.configuration.parameters_for(:cas)[:cas_base_url], 'login')
+    uri = URI.join(cas_base_url, 'login')
     uri.query = "service=#{request.scheme}://#{request.host}#{params[:return]}"
     return uri.to_s
   end
   def cas_logout_path
-    uri = URI.join(Bcsec.configuration.parameters_for(:cas)[:cas_base_url], 'logout')
+    uri = URI.join(cas_base_url, 'logout')
     uri.query = "service=#{request.scheme}://#{request.host}"
     return uri.to_s
   end
