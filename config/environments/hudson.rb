@@ -36,6 +36,7 @@ config.after_initialize do
   Bcsec.configure do
     static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
     enotis = Bcsec::Authorities::Enotis.new
+    ui_mode :form
     authorities static, :pers, enotis
     cas_parameters :base_url => "http://fake.cas.example.org"
   end
