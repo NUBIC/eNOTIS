@@ -21,7 +21,10 @@ describe ApplicationHelper do
   end
   it "should find involvement events and format them" do
     @involvement = Factory(:involvement)
-    @involvement_event = Factory(:involvement_event, :event => "Consented", :involvement => @involvement, :occurred_on => "1/1/10")
+    # this spec fails when run as part of the entire suite, but not when run alone
+    # @involvement_event = Factory(:involvement_event, :event => "Consented", :involvement => @involvement, :occurred_on => "1/1/10")
+    @involvement_event = Factory(:involvement_event, :involvement => @involvement, :occurred_on => "1/1/10")
+    @involvement_event.event = "Consented"
     helper.event_info(@involvement_event).should =~ /01\/01\/2010/
   end
   it "should find involvement events in mixed case" do
