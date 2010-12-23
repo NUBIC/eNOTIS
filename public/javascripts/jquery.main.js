@@ -4,12 +4,7 @@ $(document).ready(function() {
   $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
 
   // index (my studies) datatable
-  $('#my_studies .display').dataTable( {
-   "oLanguage": { "sProcessing": '/images/spinner.gif' },
-   "bProcessing": true,
-   "bServerSide": true,
-   "sPaginationType": "full_numbers",
-  });
+  $('#my_studies .display').dataTable( { "sPaginationType": "full_numbers" });
   
   // show study: datatable
   $("#accrual .display").dataTable({
@@ -156,13 +151,13 @@ $(document).ready(function() {
   });
 
   // search
-  // $('#study_results .display').dataTable( {
-  //   "oLanguage": { "sProcessing": '/images/spinner.gif' },
-  //   "bProcessing": true,
-  //   "bServerSide": true,
-  //   "sPaginationType": "full_numbers",
-  //   "sAjaxSource": "search.json?" + $.param({query: $.getUrlVar('query')})
-  //  });
+  $('#study_results .display').dataTable( {
+    "oLanguage": { "sProcessing": '/images/spinner.gif' },
+    "bProcessing": true,
+    "bServerSide": true,
+    "sPaginationType": "full_numbers",
+    "sAjaxSource": "search.json?" + $.param({query: $.getUrlVar('query')})
+   });
 
   // search: study information tooltips
   $('#results a[rel=#study_information]').live('mouseover', function(event) {

@@ -1,8 +1,16 @@
 require 'chronic'
 
+
+
 # Represents a Clinical Study/Trial.
 class Study < ActiveRecord::Base
-  named_scope :order_by, lambda {|order, direction| order == "accrual" ? {:include => :involvements, :select => "COUNT(involvements.*) as accrual", :order => "accrual #{direction.upcase}"} : {:order => "#{order} #{direction.upcase}"}}
+  # this named scope allows sorting by "accrual", which is a count of involvements.
+  # %w(id irb_status irb_number name title accrual_goal) can be replaced with Study.column_names if needed, but it is slow
+  named_scope :order_by, lambda {|order, direction| order != "accrual" ? {:order => "#{order} #{direction.upcase}"} : 
+    { :joins => :involvements, 
+      :select => %w(id irb_status irb_number name title accrual_goal).map{|c| "studies.#{c}"}.join(", ") + ", COUNT(*) as accrual", 
+      :group => %w(id irb_status irb_number name title accrual_goal).map{|c| "studies.#{c}"}.join(", "), 
+      :order => "accrual #{direction.upcase}"}}
   named_scope :with_user, lambda{|netid| {:include => :roles, :conditions => ["roles.netid =?", netid]}}
   
   # Associations
