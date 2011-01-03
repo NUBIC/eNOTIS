@@ -229,6 +229,23 @@ class Involvement < ActiveRecord::Base
     involvement_events.collect{ |ev| "#{ev.event_type.name} -- #{ev.occurred_on}" }.join("\n")
   end
 
+  def subject_name
+    subject.name
+  end
+
+  def nmff_mrn
+    subject.nmff_mrn
+  end
+
+  def nmh_mrn
+    subject.nmh_mrn
+  end
+
+  def ric_mrn
+    subject.ric_mrn
+  end
+
+
   # TODO: learn how to mock this for testing
   def after_save
     unless self.study.read_only?

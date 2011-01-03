@@ -17,7 +17,7 @@ class InvolvementsController < ApplicationController
     @involvements = @study.involvements
     respond_to do |format|
       format.json do 
-        render :json => @involvements.to_json
+        render :json => @involvements.to_json(:methods => [:subject_name,:nmff_mrn, :nmh_mrn, :ric_mrn])
       end
     end
   end
