@@ -2,22 +2,22 @@ class Ldapper
   @queue = :redis_ldapper
   
   def self.perform(irb_number, netid, project_role, consent_role, source, redo_netid=nil)
-    if Rails.env.production?
-      conf_data = YAML::load(File.read("/etc/nubic/bcsec-prod.yml"))
-    else
-      # puts "if you havent already start the ssh tunnel: sudo ssh -f -N -L 636:directory.northwestern.edu:636 <<YourNetID>>@enotis-staging.nubic.northwestern.edu" unless Rails.env.staging?
-      conf_data = YAML::load(File.read("/etc/nubic/bcsec-staging.yml"))
-    end
-    Bcsec.configure do
-      authenticators  :netid
-      ldap_user       conf_data["netid"]["user"]
-      ldap_password   conf_data["netid"]["password"]
-      ldap_server     "directory.northwestern.edu"
-    end
+    # if Rails.env.production?
+    #   conf_data = YAML::load(File.read("/etc/nubic/bcsec-prod.yml"))
+    # else
+    #   # puts "if you havent already start the ssh tunnel: sudo ssh -f -N -L 636:directory.northwestern.edu:636 <<YourNetID>>@enotis-staging.nubic.northwestern.edu" unless Rails.env.staging?
+    #   conf_data = YAML::load(File.read("/etc/nubic/bcsec-staging.yml"))
+    # end
+    # Bcsec.configure do
+    #   authenticators  :netid
+    #   ldap_user       conf_data["netid"]["user"]
+    #   ldap_password   conf_data["netid"]["password"]
+    #   ldap_server     "directory.northwestern.edu"
+    # end
 
     user_key = "user:#{netid}"
     unless REDIS.exists(user_key) || redo_netid
-      user = Bcsec::NetidAuthenticator.find_user(netid)
+      user = Bcsec.authority.find_user(netid)
       if user
         user.instance_variables.each do |var|
           REDIS.hset(user_key,var.gsub("@",""),user.instance_variable_get(var))
