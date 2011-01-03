@@ -42,7 +42,7 @@ Then /^there should be (\d+) activit(?:y|ies) with$/ do |num, table|
 end
 
 Then /^there should be (\d+) versions with$/ do |num, table|
-  puts Version.all.map(&:inspect).join("\n")
+  # puts Version.all.map(&:inspect).join("\n")
   Version.count.should == num.to_i
   table.hashes.each do |hash|
     Version.first(:conditions => hash).should_not be_nil
