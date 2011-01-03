@@ -33,3 +33,18 @@ When /^I export a PI study report for "([^"]*)"$/ do |year|
   select year, :from => "Year"
   click_button("Export PI Study Report")
 end
+
+Then /^there should be (\d+) activit(?:y|ies) with$/ do |num, table|
+  Activity.count.should == num.to_i
+  table.hashes.each do |hash|
+    Activity.first(:conditions => hash).should_not be_nil
+  end
+end
+
+Then /^there should be (\d+) versions with$/ do |num, table|
+  puts Version.all.map(&:inspect).join("\n")
+  Version.count.should == num.to_i
+  table.hashes.each do |hash|
+    Version.first(:conditions => hash).should_not be_nil
+  end
+end
