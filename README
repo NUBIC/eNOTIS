@@ -42,6 +42,45 @@ eNOTIS depends on a few important gems:
   
 == Changes ==
 
+v1.13.0
+
+* tests for auditing. closes #4724
+* adding pi report for clearcats
+* capistrano - backup db before migrating. closes #4484
+* fixing search. closes #4606
+* fixed failing feature, due to upload spec with nested describes with before(:all)
+* form mode for hudson cucumber tests
+* fake cas url for hudson needs to start with http
+* fake cas url for hudson
+* increment study number to prevent duplicate key issues
+* various fixes to make hudson tests pass. turn of bcaudit logging. accept base\_url or cas\_base\_url.
+* hudson cc_pers schema name
+* better role lookup
+* environment adjustments, remove overlapping static auth
+* fixing spec that fails when run with suite
+* tuned hub page. closes #4698
+* requiring pers for hudson config
+* hudson bcsec setup
+* redirect to return path if already logged in
+* redirect login to default path if already logged in. closes #4626
+* fixed @mystudies query
+* schema updates
+* fixing specs and features
+* fixing 'creating admins...' message to run only when admins are being created
+* added a few changes to enable cas webservice calls
+* cleanup and better output
+* typo blank => blank?
+* limit lengths of attributes
+* adding task to create enotis application user
+* enotis-application user for entered_by
+* adding bcaudit to redis task
+* phone number typo in Pers::Person
+* typo in redis user import
+* tweaking paths in deploy env
+* deploy environment for oracle
+* redirect all traffic to maintenance.html with 503 error code when cap web:disable is run. requires sysadmin to make some apache config changes. #4611
+* don't use central auth in development for now.
+
 v1.12.0
 
 * made peter an admin, at his request
