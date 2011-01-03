@@ -42,7 +42,78 @@ eNOTIS depends on a few important gems:
   
 == Changes ==
 
+v1.12.0
+
+* made peter an admin, at his request
+* less dots in migration
+* hudson fix with weird cucumber failing test due to too many studies showing up in the search
+* version bump, merged in study_events branch, closes #3066
+* fix to use eirb instead of edw for roles
+* emergency rake task to just import roles from eirb/edw
+* tweaks and a fix to specs and inv_event to get specs to pass
+* merge mistake fixed
+* specs and features pass, added more testing to upload process. fixed bugs
+* reconfigured the migrations to rename the column for the events to avoid a name collision on the transition methods on the involvement_event model, also broke up migration into three parts for clarity and fault tolerance
+* working on specs, re-ran db migrations and found a name clash. committing to branch a spike to try out one approach to this problem
+* specs passing, features still failing
+* specs pass for integration of study events feature
+* migrations working
+* model and data migration setup
+* added data migration and model migration changes
+* added event type generated code
+* upped the population count to make more fake subjects
+
+v1.11.6
+
+* reverted fix, trying again
+* Revert "merged in to emergency rack branch, davids init.Revertakefile fix typo"
+
+v1.11.5
+
+* merged in to emergency rack branch, davids init.Rakefile fix typo
+* fix to use eirb instead of edw for roles
+* fixes and 'temporarily closed' message for static page
+
+v1.11.4
+
+* emergency rake task to just import roles from eirb/edw
+* fixed authorization in tests
+* fix typo
+* references #4338
+* use string interpolation instead of concatenation. closes #4267
+* fixed date sorting
+* added test to external event processor
+* remove ruby-debug from edw rakefile
+* removing ruby-debug for now, causing issues on staging
+* rake hudson:all clears logs, migrates. not needed in hudson build command
+* adding hudson commands in comments of ci-env.sh
+* correcting init.rakefile. using built in bundler/capistrano support. closes #3896
+* added migration for ric field
+
+v1.11.3
+
+* closes 4460
+* latest bundler
+* fix permissions on release path as well
+* call init.rakefile to make sure bundler is available during deploy.
+* bundler 1.0 Gemfile
+* bundler 1.0 on ci. closes #3896
+* gitignore for setup_load_paths, better notification when switching gemsets
+
+v1.11.2
+ 
+* closes 4463
+
+v1.11.1
+
+* bundler gemfile.lock problem. version differences
+
 1.11.0
+
+* fixed report data problem, refactored model, added tests
+* include study in study upload query for admin page. closes #4457.
+* refactored inv spec testing to make it more DRY
+* updating readme and views to v1.11.0
 * separate out selectors for add and edit overlays. closes #4426.
 * removed awesome print because no one was using it
 * locked Gemfile. Stupid bundler 0.9"
@@ -59,9 +130,11 @@ eNOTIS depends on a few important gems:
 * adding extra fields to involvement - address, phone, etc. for empi and registar compatibility. closes #3989. closes #3988.
 
 1.10.1
+
 * hardcoding search back to 30, for now
 
 1.10.0
+
 * typo with search controller. adding order
 * make search and ajax search consistent. closes #4301.
 * fixing issue with non-date values in date column. closes #4254
@@ -91,6 +164,7 @@ eNOTIS depends on a few important gems:
 * update to faq regarding continuing review, historical subjects. Closes #4270
 
 1.9.0
+
 * mandatory date, static pages
 * enotis number on front page. closes #4163
 * fixing faq on front page. closes #4162
@@ -99,9 +173,11 @@ eNOTIS depends on a few important gems:
 * marking flash messages as html safe. closes #4120
 
 1.8.1
+
 * app cleanup to remove Sam
  
 1.8.0
+
 * mark visualizations as html safe. properly style table to align correctly before datatables script runs.
 * protovis visualizations
  (3621)* NIH Inclusion reports now open in a new window. resolves #3621
@@ -116,11 +192,13 @@ eNOTIS depends on a few important gems:
 * involvements cancel link should not reload page. closes #3990
 
 1.7.1
+
 * Releasing v1.7.1. One quick UI fix for Laura on the hub page
 * I now have 2 datatables working on the hub page. I'm not sure why the existing code didnt work before. references #3992
 * The hub page should work again. references #3992
 
 1.7.0
+
 * Update changelog
 * removing dateinput.js - not needed since it is part of jquery.tools.min.js. #3986
 * Commenting out lines in eirb adapter and ensuring that staging has the same log level as production. closes #3980
@@ -167,6 +245,7 @@ eNOTIS depends on a few important gems:
 * updating readme for v1.6.2
 
 1.6.2
+
 * NOTIS patients/subjects and involvements are now imported into eNOTIS. They're deidentified everywhere but production
 * Cleanup Migration written to remove NOTIS subjects that were wrongly imported earlier and their involvements
 * Every night NOTIS studies will be removed and reimported from redis and eNOTIS.
