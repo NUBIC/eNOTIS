@@ -41,3 +41,9 @@ end
 Given /^"([^"]*)" is not an admin$/ do |netid|
   Bcsec.authority.find_user(netid).permit?(:admin).should be_false
 end
+
+Given /^"([^"]*)" is PI on study "([^"]*)"$/ do |netid, irb_number|
+  study = Study.find_by_irb_number(irb_number) || Factory.create(:fake_study, :irb_number => irb_number, :irb_status => "Not Under IRB Purview")
+  Factory(:role_accrues, :netid => netid, :study => study, :project_role => "PI")
+end
+

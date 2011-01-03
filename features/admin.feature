@@ -39,3 +39,16 @@ Feature: Developer admin access
     Then I should see "STU00031415"
     When I visit the roles page for "nan"
     Then I should see "No roles found"
+  
+  Scenario: An admin user should be able to see active users and studies
+    Given I log in as "adminnie" on study "STU00144"
+    And "usergey" is PI on study "STU00031416"
+    And the study "STU00031416" has a subject accrued on "12/1/2010"
+    And the study "STU00031417" has a subject accrued on "2/3/2008"
+    When I export a PI study report for "2010"
+    Then I should see "Sergey"
+    Then I should see "Uservich"
+    Then I should see "STU00031416"
+    And I should not see "STU00031417"
+    
+    

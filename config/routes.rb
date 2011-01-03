@@ -10,6 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources   :reports, :collection => {:nih => :get}, :except => %w(update destroy)
   map.resources   :roles, :only => :show
   map.hub         '/hub', {:controller => "admin", :action => "index"}
+  map.pi_report   '/hub/pi_report', {:controller => "admin", :action => "pi_report"}
   map.default     '', {:controller => "studies", :action => "index"}
 end
 

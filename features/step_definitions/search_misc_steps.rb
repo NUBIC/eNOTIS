@@ -27,3 +27,9 @@ end
 When /^I visit the roles page for "([^"]*)"$/ do |netid|
   visit "/roles/#{netid}"
 end
+
+When /^I export a PI study report for "([^"]*)"$/ do |year|
+  When "I go to the hub page"
+  select year, :from => "Year"
+  click_button("Export PI Study Report")
+end

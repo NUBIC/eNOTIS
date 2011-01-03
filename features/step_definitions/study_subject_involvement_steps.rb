@@ -151,5 +151,13 @@ When /^I export a csv of subjects$/ do
   click_button("Export Data")
 end
 
+Given /^the study "([^"]*)" has a subject accrued on "([^"]*)"$/ do |irb_number, date|
+  study = Study.find_by_irb_number(irb_number) || Factory.create(:fake_study, :irb_number => irb_number, :irb_status => "Not Under IRB Purview")
+  involvement = Factory(:involvement, :study => study)
+  ie = Factory(:involvement_event, :occurred_on => date, :involvement => involvement)
+  ie.event = "Consented"
+  ie.save
+end
+
 
 

@@ -5,6 +5,13 @@
     = text_field_tag "netid"
     = link_to "look up", "#", :rel => "#roles"
 
+#pi_report
+  %span.heading Export PI Study Report
+  - form_tag :pi_report, :method => :get do
+    = label_tag :year, "Year"
+    = select_tag :year, options_for_select((2010..Date.today.year).to_a)
+    = submit_tag "Export PI Study Report"
+
 #recent_handers
   %span.heading= pluralize(@recent_handers.size, 'active user') + " in the last #{@days_ago} days"
   %table.display
