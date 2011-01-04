@@ -13,7 +13,7 @@
           #environment{:class => Rails.env}= Rails.env.upcase
         #app_name= link_to_unless_current image_tag("enotis-swoop-logo.png", :alt => "eNOTIS"), default_path, :title => "eNOTIS Home"
         #login
-          = link_to "Login", "#", :rel => "#loginframe"
+          = link_to "Login", @cas_url, :rel => "#loginframe"
           
         - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
           #flash
