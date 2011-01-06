@@ -15,6 +15,7 @@ class InvolvementsController < ApplicationController
   def index
     @study = Study.find_by_irb_number(params[:irb_number])
     @involvements = @study.involvements
+    authorize! :show, @study
     respond_to do |format|
       format.json do 
         render :json => @involvements.to_json(:methods => [:subject_name,:nmff_mrn, :nmh_mrn, :ric_mrn])
