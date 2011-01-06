@@ -13,7 +13,7 @@
           #environment{:class => Rails.env}= Rails.env.upcase
         #app_name= link_to_unless_current image_tag("enotis-swoop-logo.png", :alt => "eNOTIS"), default_path, :title => "eNOTIS Home"
         #login
-          = link_to "Login", @cas_url, :rel => "#loginframe"
+          = link_to "Login", @cas_login_url, :rel => "#loginframe"
           
         - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
           #flash
@@ -28,7 +28,7 @@
         .nubiclogo= link_to image_tag("nubic_logo.gif"), "http://www.nucats.northwestern.edu/clinical-research-resources/data-collection-biomedical-informatics-and-nubic"
         %p.version!= "eNOTIS #{app_version_helper} &mdash; created by #{link_to("NUBIC", "http://www.nucats.northwestern.edu/clinical-research-resources/data-collection-biomedical-informatics-and-nubic")} for Northwestern University"
       #loginframe.overlay
-        %iframe{:src => @cas_url}
+        %iframe
         %p.help_link
           = link_to "I cannot access my account", login_help_path, :rel => "#help"
         

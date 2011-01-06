@@ -5,25 +5,29 @@ $.urlParam = function(name){
 $(document).ready(function(){
   // flash (messages)
   $("#flash .close").click(function(){$("#flash").fadeOut(300);});
-
-  // one less click for login
-  // $("#netid").focus();
-  // var shouldOpenLoginWindow = true;
-  var shouldOpenLoginWindow = ($.urlParam('logout') == "true") || ($.urlParam('return') != 0);
-  $("a[rel=#loginframe]").overlay({load: shouldOpenLoginWindow});
-  $("#loginframe iframe").load(function (){
-    // do something once the iframe is loaded
-    try{
-      $(this.contentDocument);
-      // console.log($(this.contentDocument).attr('location'));
-      $(window).attr('location', $(this.contentDocument).attr('location'));
-    }catch(err){
-      // console.log("different domain");
-    }
-
-    // console.log($(window).attr('location').hostname);
-  });
   
+  // cas login iframe
+  if ($.browser.msie) {
+    // ie does not properly handle the iframe load event. after login, it doesn't reload to the proper page.
+    // ie also has a weird cas logout issue, fixed by including any P3P header in the cas post response
+    // alert( $.browser.version );
+  } else {
+    var shouldOpenLoginWindow = ($.urlParam('logout') == "true") || ($.urlParam('return') != 0);
+    // ie has a js error from the cas focus event inside the hidden iframe, load iframe content here instead of on the page itself
+    $("#loginframe iframe").attr('src', $('#login a[rel=#loginframe]').attr('href'));
+    $("a[rel=#loginframe]").overlay({ load: shouldOpenLoginWindow }); 
+    $("#loginframe iframe").load(function (){
+      // do something once the iframe is loaded
+      try{
+        $(this.contentDocument);
+        // console.log($(this.contentDocument).attr('location'));
+        $(window).attr('location', $(this.contentDocument).attr('location'));
+      }catch(err){
+        // console.log("different domain");
+      }
+      // console.log($(window).attr('location').hostname);
+    });
+  }
 
   // login help overlay
   $("a[rel=#help]").overlay({
