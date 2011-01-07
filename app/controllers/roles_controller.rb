@@ -9,7 +9,7 @@ class RolesController < ApplicationController
           :project_role => r.project_role,
           :irb_number => r.study.irb_number,
           :study_name => r.study.name,
-          :study_approved_date => r.study.approved_date.strftime('%Y-%m-%d')
+          :study_approved_date => (r.study.approved_date.nil?) ? r.study.approved_date : r.study.approved_date.strftime('%Y-%m-%d')
         } }
       end
       format.html
