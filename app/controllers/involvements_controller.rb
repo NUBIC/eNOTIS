@@ -30,6 +30,7 @@ class InvolvementsController < ApplicationController
     respond_to do |format|
       format.html {render :action => :show}
       format.js {render :layout => false, :action => :show}
+      format.json {render :json=>@involvement.to_json(:methods=>[:subject_name,:nmff_mrn,:nmh_mrn, :ric_mrn])}
     end
   end
 
