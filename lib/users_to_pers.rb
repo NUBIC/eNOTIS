@@ -62,7 +62,7 @@ module UsersToPers
   # Find users in cc_pers
   # TODO: untested!
   def self.user_lookup(redis, study, netid, project_role, consent_role)
-    user_alias = redis.hget("role:user_aliases", netid).downcase
+    user_alias = redis.hget("role:user_aliases", netid).to_s.downcase
     user = Pers::Person.find_by_username_or_id(netid.downcase)
     user = Pers::Person.find_by_username_or_id(user_alias) if user.blank?
     if user.blank?
