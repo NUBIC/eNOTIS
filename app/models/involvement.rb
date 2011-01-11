@@ -234,6 +234,14 @@ class Involvement < ActiveRecord::Base
     subject.name
   end
 
+  def first_name
+    subject.first_name
+  end
+
+  def last_name
+    subject.last_name
+  end
+
   def nmff_mrn
     subject.nmff_mrn
   end

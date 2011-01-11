@@ -18,7 +18,7 @@ class InvolvementsController < ApplicationController
     authorize! :show, @study
     respond_to do |format|
       format.json do 
-        render :json => @involvements.to_json(:methods => [:subject_name,:nmff_mrn, :nmh_mrn, :ric_mrn])
+        render :json => @involvements.to_json(:methods => [:first_name,:last_name,:nmff_mrn, :nmh_mrn, :ric_mrn])
       end
     end
   end
@@ -30,7 +30,7 @@ class InvolvementsController < ApplicationController
     respond_to do |format|
       format.html {render :action => :show}
       format.js {render :layout => false, :action => :show}
-      format.json {render :json=>@involvement.to_json(:methods=>[:subject_name,:nmff_mrn,:nmh_mrn, :ric_mrn])}
+      format.json {render :json=>@involvement.to_json(:methods=>[:first_name,:last_name,:nmff_mrn,:nmh_mrn, :ric_mrn])}
     end
   end
 
