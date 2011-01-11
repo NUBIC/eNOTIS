@@ -1,5 +1,6 @@
 var importTable; // global variable to keep track of import data table, preventing reinitialization
 $(document).ready(function() {
+
   // flash messages
   $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
 
@@ -16,12 +17,12 @@ $(document).ready(function() {
   });
   
   // add link involvement overlay
-  activateInvolvementOverlay("a[rel=#involvement].add");
+  activateInvolvementOverlay("#actions a[rel=#involvement].add");
   
   // show study: datatable paging - redraw dashes for empty cells, activate other studies and view/edit overlays
   function activateRows(){
     // introduction (for empty datatable) overlay
-    $("a[rel=#intro]").overlay({
+    $("#accrual a[rel=#intro]").overlay({
       fixed: false, // allows user to scroll if overlay extends beyond viewport
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
@@ -30,7 +31,7 @@ $(document).ready(function() {
     $("#accrual .display td:empty, #import .display td:empty").html("--");
     
     // other studies overlay
-    $("a[rel=#other_studies]").overlay({
+    $("#accrual a[rel=#other_studies]").overlay({
       fixed: false, // allows user to scroll if overlay extends beyond viewport
       onBeforeLoad: function(){ $("#other_studies .wrap").load(this.getTrigger().attr("href"), "format=js", activateAccept); },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
@@ -139,7 +140,7 @@ $(document).ready(function() {
   });
   
   // show study: report overlay
-  $("a[rel=#report]").overlay({
+  $("#actions a[rel=#report]").overlay({
     fixed: false, // allows user to scroll if overlay extends beyond viewport
     expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
   });
@@ -161,12 +162,8 @@ $(document).ready(function() {
 
   // search: study information tooltips
   $('#results a[rel=#study_information]').live('mouseover', function(event) {
-   jQuery('#results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#results').offset().top, -1*jQuery('#results').offset().left]});
+    jQuery('#results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#results').offset().top, -1*jQuery('#results').offset().left]});
   });
-
-  // search page
-  // jQuery('#results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#results').offset().top, -1*jQuery('#results').offset().left]});
-  //  $("#subject_results .subject_display").dataTable({"aoColumns": [{ "sType": "html" }]});
 
 });
 
@@ -231,3 +228,4 @@ $.extend({
     return $.getUrlVars()[name];
   }
 });
+
