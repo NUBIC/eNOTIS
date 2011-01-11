@@ -234,4 +234,10 @@ describe Involvement do
     inv.update_attributes("subject_attributes"=> {"birth_date"=>"12/18/07"})
     inv.subject.birth_date.should == Date.parse("2007-12-18")
   end
+  it "should sort involvements by case number by default" do
+    s = Factory(:study)
+    i1 = Factory(:involvement, :study => s, :case_number => "99")
+    i2 = Factory(:involvement, :study => s, :case_number => "2")
+    s.involvements.should == [i2, i1]
+  end
 end

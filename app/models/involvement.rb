@@ -34,6 +34,7 @@ class Involvement < ActiveRecord::Base
   accepts_nested_attributes_for :subject, :update_only=>true
 
   # Named scope
+  default_scope :order => "case_number"
   named_scope :with_coordinator, lambda {|user_id| { 
     :include => {:study => :coordinators}, 
     :conditions => ['coordinators.user_id = ?', user_id ]}}
