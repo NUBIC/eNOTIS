@@ -3,7 +3,7 @@ require 'webservices'
 namespace :users do
   
   desc "Loads users in roles table by netID to CC_pers"
-  task :update_cc_pers do
+  task :update_cc_pers => :environment do
     Role.find(:first).each do |role|
       user = Bcsec.authority.find_user(role.netid)
       if user
