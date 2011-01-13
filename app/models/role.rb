@@ -25,8 +25,8 @@ class Role < ActiveRecord::Base
     counters = {:pi_keys => 0, :pi_netids => 0, :pi_roles_created => 0, :pi_errors => 0, :pi_exceptions => 0,
                 :co_keys => 0, :co_netids => 0, :co_roles_created => 0, :co_errors => 0, :co_exceptions => 0,
                 :ap_keys => 0, :ap_netids => 0, :ap_roles_created => 0, :ap_errors => 0, :ap_exceptions => 0}
-    ActiveRecord::Base.connection.execute('truncate roles')
-    ActiveRecord::Base.connection.execute('alter sequence authorized_people_id_seq restart with 1')
+    #ActiveRecord::Base.connection.execute('truncate roles')
+    #ActiveRecord::Base.connection.execute('alter sequence authorized_people_id_seq restart with 1')
         
     puts "Principal Investigators"
     project_role = "Principal Investigator"
