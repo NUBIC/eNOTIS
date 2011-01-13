@@ -4,7 +4,7 @@ namespace :users do
   
   desc "Loads users in roles table by netID to CC_pers"
   task :update_cc_pers do
-    Roles.find(:first).each do |role|
+    Role.find(:first).each do |role|
       user = Bcsec.authority.find_user(role.netid)
       if user
         UsersToPers.insert_user_into_cc_pers(role.netid, {:first_name => user.first_name, :last_name => user.last_name, :email => user.email})
