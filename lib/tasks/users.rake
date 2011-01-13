@@ -1,6 +1,20 @@
 require 'webservices'
 
 namespace :users do
+  
+  desc "Loads users in roles table by netID to CC_pers"
+  task :update_cc_pers do
+    Roles.find(:first).each do |role|
+      user = Bcsec.authority.find_user(role.netid)
+      if user
+        UsersToPers.insert_user_into_cc_pers(role.netid, {:first_name => user.first_name, :last_name => user.last_name, :email => user.email})
+        puts "Added/updated #{role.netid}"
+      else
+        puts "Did not find user #{role.netid} in Bcsec authority lookup. This could be a bad netid"
+      end
+    end
+  end
+
   desc "Loads in all users from eIRB, creates them if they don't exist, updates them if they do"
   task :update_from_eirb => :environment do
     raise "update_from_eirb deprecated"

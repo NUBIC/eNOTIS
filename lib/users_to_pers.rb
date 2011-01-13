@@ -50,6 +50,7 @@ module UsersToPers
         :country        => (user_hash[:country].blank? ? nil : user_hash[:country][0,80])})
     end
   end
+
   def self.insert_user_into_cc_pers(netid, attrs)
     unless Pers::Person.find_by_username_or_id(netid)
       u = Pers::Person.new(attrs.merge({:username => netid, :entered_by => "enotis-application"}))
