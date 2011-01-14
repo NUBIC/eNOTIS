@@ -38,6 +38,7 @@ class ApplicationController < ActionController::Base
     return redirect_to studies_path
   end 
 
+  #
   # Application version
   APP_VERSION = "1.13.0"
 
