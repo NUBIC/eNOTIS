@@ -11,7 +11,7 @@
       #header
         - unless Rails.env.production?
           #environment{:class => Rails.env}= Rails.env.upcase
-        #app_name= image_tag("enotis-swoop-logo.png",:alt => "eNOTIS")
+        #app_name= image_tag("enotis-safe.png",:alt => "eNOTIS")
         #current_user_badge
           = "#{current_user.name} (#{current_user.netid})"
           |
