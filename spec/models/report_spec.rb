@@ -66,9 +66,9 @@ describe "Report generation from study data" do
   it "converts the defined headers to Ruport column name change hash" do
     proper_format = {"case_number"=>"Case Number",
       "ethnicity"=>"Ethnicity",
-      "subject.nmff_mrn"=>"Nmff Mrn",
-      "subject.ric_mrn" => "Ric Mrn",
-      "subject.nmh_mrn"=>"Nmh Mrn",
+      "subject.nmff_mrn"=>"NMFF MRN",
+      "subject.ric_mrn" => "RIC MRN",
+      "subject.nmh_mrn"=>"NMH MRN",
       "gender"=>"Gender", 
       "subject.first_name"=>"First Name",     
       "consented_report"=>"Consented",
@@ -127,7 +127,7 @@ describe "Report generation from study data" do
         }
       })
       cols = Report.filter_columns(mrn_params)
-      cols.should == ["Nmff Mrn", "Gender", "Races"]
+      cols.should == ["NMFF MRN", "Gender", "Races"]
     end
 
  end
