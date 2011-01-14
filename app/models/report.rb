@@ -14,9 +14,9 @@ class Report
   :subject => {
     "First Name" => "first_name",
     "Last Name" => "last_name",
-    "Nmff Mrn" => "nmff_mrn",
-    "Nmh Mrn" => "nmh_mrn",
-    "Ric Mrn" => "ric_mrn",
+    "NMFF MRN" => "nmff_mrn",
+    "NMH MRN" => "nmh_mrn",
+    "RIC MRN" => "ric_mrn",
     "Birth Date" => "birth_date"
   },
   :involvement => {
@@ -32,7 +32,7 @@ class Report
   }}
 
   # The explicit ording for the columns we want to show in the output
-  ORDER = ["Case Number", "Nmff Mrn", "Nmh Mrn", "Ric Mrn", "Last Name", "First Name",
+  ORDER = ["Case Number", "NMFF MRN", "NMH MRN", "RIC MRN", "Last Name", "First Name",
     "Birth Date", "Gender", "Ethnicity", "Races", "Consented", "Completed", "Withdrawn"]
 
   def self.export(params)

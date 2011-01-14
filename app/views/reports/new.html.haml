@@ -1,15 +1,15 @@
 #report
   - form_tag(reports_path) do
     = hidden_field_tag 'study[irb_number]', params[:study]
-    %h3= "Export subjects on #{link_to @study.irb_number, study_path(@study)}" unless request.format == "js"
-    %p Select Attributes
+    %h3= "Export data from #{@study.irb_number}"
+    %p Select what to export:
     %p 
       = check_box_tag "involvement[attributes][]",:case_number, :checked => true
       = label_tag "involvement[attributes][]", "Case Number"
       %br
       - ['nmff_mrn', 'nmh_mrn','ric_mrn', 'first_name','last_name','birth_date'].each do |val|
         = check_box_tag "subject[]",val, :checked => true
-        = label_tag "subject[]",val.titleize
+        = label_tag "subject[]", val.split("_")[1] == "mrn" ? val.titleize.upcase : val.titleize
         %br
       -['gender','ethnicity'].each do |attr|
         = check_box_tag "involvement[attributes][]",attr, :checked => true
@@ -21,7 +21,7 @@
       = check_box_tag "involvement[methods][]", :all_events, :checked => true
       = label_tag "involvement[methods][]", "Events"
     %p
-      = label_tag "format","File Format"
+      = label_tag "format","Choose the type of file to export:"
       = select_tag('format',options_for_select([["PDF","pdf"],["CSV","csv"]]))
     %p= submit_tag("Export Data")
 
