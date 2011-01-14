@@ -55,8 +55,9 @@ namespace :db do
   desc "de-identify current database"
   task :de_id => :environment do 
     raise "I cannot in good conscience let you do this in production" if Rails.env.production?
-    Subject.all.each do |subject|
-      de_id_subject(subject)
+    without_versioning do
+      Version.delete_all(:item_type => "Subject")
+      Subject.all.each{|subject| de_id_subject(subject)}
     end
   end
   
@@ -67,7 +68,17 @@ namespace :db do
     yield
     ENV['PGPASSWORD'] = nil
   end
-
+  
+  def without_versioning
+    was_enabled = PaperTrail.enabled?
+    PaperTrail.enabled = false
+    begin
+      yield
+    ensure
+      PaperTrail.enabled = was_enabled
+    end
+  end
+  
   def de_id_subject(subject)
     subject.first_name = Faker::Name.first_name unless subject.first_name.blank?
     subject.middle_name = Faker::Name.first_name unless subject.middle_name.blank?
