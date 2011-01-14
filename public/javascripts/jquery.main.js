@@ -44,7 +44,7 @@ $(document).ready(function() {
     // 'delete' links
     $('#accrual a.delete').deleteWithAjax();
   }
-
+  
   // involvement overlay
   function activateInvolvementOverlay(selector){
     $(selector).overlay({
@@ -164,6 +164,12 @@ $(document).ready(function() {
   $('#results a[rel=#study_information]').live('mouseover', function(event) {
     jQuery('#results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#results').offset().top, -1*jQuery('#results').offset().left]});
   });
+  
+  // session timeouts
+  function timeOutWarning(){ $("#session-expire").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.93 }, closeOnClick: false, api: true }).load(); }
+  function timeOutExpired(){ if(window.location.pathname != "/studies"){ window.location.href = '/studies'; } }
+  setTimeout(timeOutWarning, 5*60*1000); // 5 minutes
+  setTimeout(timeOutExpired, 30*60*1000); // 30 minutes
 
 });
 

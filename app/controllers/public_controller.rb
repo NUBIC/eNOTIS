@@ -1,6 +1,5 @@
 class PublicController < ApplicationController
-  skip_before_filter :auto_session_timeout_filter
-  
+
   # Public instance methods (actions)
   def index
     redirect_to params[:return] || default_path if current_user
@@ -21,22 +20,6 @@ class PublicController < ApplicationController
     end
   end
   
-  def active
-    response.headers["Etag"] = ""  # clear etags to prevent caching
-    if current_user
-      if session[:auto_session_expires_at] <= Time.now
-        @status = 'expired'
-      elsif session[:auto_session_warning_at] <= Time.now  
-        @status = 'warning'
-      else
-        @status = 'active'
-      end
-    else
-      @status = 'expired'
-    end
-    render :text => @status, :status => 200
-  end
-
   # Protected instance methods
   protected
   def cas_base_url
