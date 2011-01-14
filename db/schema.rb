@@ -25,18 +25,6 @@ ActiveRecord::Schema.define(:version => 20101130173649) do
     t.text    "value"
   end
 
-  create_table "dictionary_terms", :force => true do |t|
-    t.string   "term"
-    t.string   "code"
-    t.string   "category"
-    t.string   "source"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  # unrecognized index "dictionary_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
-
   create_table "event_types", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -96,14 +84,13 @@ ActiveRecord::Schema.define(:version => 20101130173649) do
 
   # unrecognized index "involvements_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
-  create_table "races", :force => true do |t|
-    t.integer  "involvement_id"
-    t.integer  "race_type_id"
+  create_table "resource_statuses", :force => true do |t|
+    t.string   "name",       :null => false
+    t.boolean  "status"
+    t.string   "message"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  # unrecognized index "races_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
   create_table "roles", :force => true do |t|
     t.integer  "study_id"
