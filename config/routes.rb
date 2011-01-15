@@ -1,7 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.login       '/login', :conditions => {:method => :get}, :controller => 'public', :action => 'index'
   map.login_help  '/login_help', :conditions => {:method => :get}, :controller => 'public', :action => 'help'
-  map.active      '/active', :controller => 'public', :action => 'active'
   map.study_involvements 'studies/:irb_number/involvements',{:controller => 'involvements',:action=>'index'}
   
   map.resources   :studies, :member => {:import => :get}, :except => %w(delete destroy edit update)

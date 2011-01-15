@@ -149,8 +149,8 @@ before 'deploy:migrate', 'db:backup'
 
 before 'deploy:update_code', 'admin:poller:stop'
 
-# after deploying, generate static pages, copy over uploads and results, cleanup old deploys, aggressively set permissions, and restart resque
-after 'deploy:update_code', 'web:static', 'web:uploads_and_results', 'deploy:cleanup', 'deploy:permissions', 'resque:restart'
+# after deploying, generate static pages, copy over uploads and results, cleanup old deploys, aggressively set permissions
+after 'deploy:update_code', 'web:static', 'web:uploads_and_results', 'deploy:cleanup', 'deploy:permissions'
 
 # the static maintenance page has to be generated before it can be displayed
 before 'web:disable', 'web:static'

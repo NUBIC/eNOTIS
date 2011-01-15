@@ -13,22 +13,25 @@ class StudiesController < ApplicationController
   def index
     @title = "Studies"
     # raise "testing exception notifier - yoon" # http://weblog.jamisbuck.org/2007/3/7/raising-the-right-exception
+    
+    # json datatables is causing issues with IE in some cases, and optimizes a problem that we don't really have (slow "my studies" page).
+    
     respond_to do |format|
       format.html do
         @my_studies = Study.with_user(current_user.netid)
       end
       format.json do
-	render :json => Study.with_user(current_user.netid).to_json
+        render :json => Study.with_user(current_user.netid).to_json
       end
     end
   end
 
   def show
-    @study = Study.find_by_irb_number(params[:id], :include => [{:involvements => [{:subject => :involvements}, :involvement_events]}, :roles])
+    @study = Study.find_by_irb_number(params[:id])#, :include => [{:involvements => [{:subject => :involvements}, :involvement_events]}, :roles])
     if @study
       authorize! :show, @study
       @title = @study.irb_number
-      @involvements = @study.involvements
+      @involvements = @study.involvements(:order => "case_number")
       unless @involvements.empty?       
         @ethnicity_stats = @involvements.count_all(:short_ethnicity)
         @gender_stats = @involvements.count_all(:short_gender)

@@ -147,7 +147,7 @@ end
 
 When /^I export a csv of subjects$/ do
   click_link("Export")
-  select "CSV", :from=>"File Format"  
+  select "CSV", :from=> :format
   click_button("Export Data")
 end
 

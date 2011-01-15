@@ -31,10 +31,12 @@
     %h4 Accrual
     Events:
     %ul
-      - @involvement.involvement_events.each do |inv|
+      - @involvement.involvement_events.each do |ie|
         %li.event.bold
-          = inv.event
+          = ie.event
           &mdash;
-          = inv.occurred_on
+          = ie.occurred_on
+          &mdash;
+          = ie.note
 
 

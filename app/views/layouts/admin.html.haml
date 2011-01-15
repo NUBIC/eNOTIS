@@ -4,14 +4,14 @@
   %head
     %title= "eNOTIS :: #{@title}"
     = stylesheet_link_tag "compiled/admin"
-    = javascript_include_tag "tools/jquery.tools.min.js", "tools/jquery.dataTables.min", "tools/jquery.sessionTimeout", "jquery.admin", :cache => "cache/admin"
+    = javascript_include_tag "tools/jquery.tools.min.js", "tools/jquery.dataTables.min", "jquery.admin", :cache => "cache/admin"
     = yield :head
   %body
     #container
       #header
         - unless Rails.env.production?
           #environment{:class => Rails.env}= Rails.env.upcase
-        #app_name= image_tag("enotis-swoop-logo.png",:alt => "eNOTIS")
+        #app_name= image_tag("enotis-safe.png",:alt => "eNOTIS")
         #current_user_badge
           = "#{current_user.name} (#{current_user.netid})"
           |

@@ -65,7 +65,7 @@
           -else
             %th View
       %tbody
-        - @study.involvements.each do |involvement|
+        - @involvements.each do |involvement|
           %tr{:class => "subject_#{involvement.subject.id}"}
             %td= involvement.case_number
             %td= other_studies_flag(involvement)
