@@ -16,13 +16,24 @@ body
   +column(50,true)
   :height 75px
   :position relative
-#app_name
-  +column(15)
-  :font-size 3em
-  :font-weight bold
-  :color = !nu_purple
-  img
-    :margin-top 10px
+  #header_top
+    +column(50,true)
+    :margin-top 5px
+    +bold
+    #inter_app_navigation
+      :float left
+      a
+        :text-decoration none
+    #current_user_badge
+      :float right
+
+  #app_name
+    +column(15)
+    :font-size 3em
+    :font-weight bold
+    :color = !nu_purple
+    img
+      :margin-top 2px
 #flash
   :position absolute
   :top 13px
@@ -45,10 +56,6 @@ body
   &:hover .close
     :display inline
 
-#current_user_badge
-  :margin-top 10px
-  :float right
-  +bold
 #main
   +column(48,true)
   +squeeze
@@ -102,7 +109,7 @@ body
   :font-size 18px
   :padding 0 5px
   :top 0
-  :left 0
+  :left 400px
   :z-index 1
   &.staging
     +rounded_bottom_box(!flash_border_color)

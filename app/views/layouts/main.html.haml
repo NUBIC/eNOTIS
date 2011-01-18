@@ -9,13 +9,18 @@
   %body
     #container
       #header
+        #header_top
+          #inter_app_navigation
+            ="eNOTIS"
+            |
+            =link_to("eCapture",@study.nil? ? ECAPTURE_CONFIG['studies_uri']: "#{ECAPTURE_CONFIG['studies_uri']}/#{@study.irb_number}/forms" )
+          #current_user_badge
+            = "#{current_user.name} (#{current_user.netid})"
+            |
+            = link_to('Logout', "/logout")
         - unless Rails.env.production?
           #environment{:class => Rails.env}= Rails.env.upcase
-        #app_name= link_to_unless_current image_tag("enotis-safe.png", :alt => "eNOTIS"), default_path, :title => "eNOTIS Home"
-        #current_user_badge
-          = "#{current_user.name} (#{current_user.netid})"
-          |
-          = link_to('Logout', "/logout")
+        #app_name= link_to_unless_current image_tag("enotis-safe_small.png", :alt => "eNOTIS"), default_path, :title => "eNOTIS Home"
         %br{:style => "clear: right"}
         #search_box
           - form_tag(search_path, :method => :get) do 
