@@ -60,7 +60,15 @@ module UsersToPers
         print "skipped #{netid} (#{u.errors.full_messages}) "
       end
     end
-    Pers::GroupMembership.create(:username => netid, :group_name => "User", :portal => PORTAL) unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(netid, PORTAL, "User")
+    unless Pers::Login.find_by_username_and_portal(netid, PORTAL)
+        login = Pers::Login.new
+        login.username = netid
+        login.portal_name = PORTAL # can't be bulk set
+        login.save
+    end
+    unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(netid, PORTAL, "User")
+      Pers::GroupMembership.create(:username => netid, :group_name => "User", :portal => PORTAL)
+    end
   end
   
   # Find users in cc_pers
