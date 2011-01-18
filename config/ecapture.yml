@@ -1,0 +1,21 @@
+development:
+  base_uri: http://ecapture.local
+  studies_uri: http://ecapture.local/studies
+
+test:
+  base_uri: http://ecapture.local
+  studies_uri: http://ecapture.local/studies
+
+cucumber:
+  base_uri: http://capture.local
+  studies_uri: http://ecapture.local/studies
+hudson:
+  base_uri: http://ecapture.local
+  studies_uri: http://ecapture.local/studies
+staging:
+  base_uri: "https://clinical-rails-stg.bioinformatics.northwestern.edu/ecapture"
+  stuies_uri: "https://clinical-rails-stg.bioinformatics.northwestern.edu/ecapture/studies"
+production:
+  base_uri: "https://ecapture.nubic.northwestern.edu"
+  studies_uri: "https://ecapture.nubic.northwestern.edu/studies" 
+
