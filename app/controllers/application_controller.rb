@@ -10,19 +10,7 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password, :involvement, :subject unless Rails.env == "development" # Scrub sensitive parameters from your log
 
   # Rails basic session timeout is set in config/initializers/session_store.rb to 30 mins, shorter than the CAS 6 hour (for single sign-on) timeout  
-  # This code (along with jquery.sessionTimeout.js) automatically shows an overlay after 5 minutes of inactivity, and gets "/" after 30 mins
-  before_filter :auto_session_timeout_filter
-  
-  def auto_session_timeout_filter
-    if self.session[:auto_session_expires_at] && self.session[:auto_session_expires_at] < Time.now
-      self.send :reset_session
-    else
-      unless self.send(:active_url) == self.url_for(self.params)
-        self.session[:auto_session_expires_at] = Time.now + 30.minutes
-        self.session[:auto_session_warning_at] = self.session[:auto_session_expires_at] - 25.minutes
-      end
-    end      
-  end
+  # Client-side javascript shows an overlay after 5 minutes of inactivity, and gets "/studies" after 30 mins
   
   # Exception Notifier
   include ExceptionNotifiable
