@@ -159,5 +159,8 @@ Given /^the study "([^"]*)" has a subject accrued on "([^"]*)"$/ do |irb_number,
   ie.save
 end
 
+When /^I export the NIH report$/ do
+  click_link("NIH Inclusion Enrollment Report")
+end
 
 

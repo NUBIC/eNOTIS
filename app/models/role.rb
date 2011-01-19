@@ -15,7 +15,18 @@ class Role < ActiveRecord::Base
   default_scope :order => "project_role"
   
   def last_name
-    # TODO fill this in from Bcsec::User
+    if p = Pers::Person.find_by_username(netid)
+      p.last_name
+    else
+      netid
+    end
+  end
+  def last_first_middle
+    if p = Pers::Person.find_by_username(netid)
+      "#{p.last_name}, #{p.first_name} #{p.middle_name}"
+    else
+      netid
+    end
   end
   def can_accrue?
     consent_role == "Obtaining"
