@@ -18,3 +18,12 @@ Feature: User access to study reports
     And I should see "abh3131"
     And I should see "bbd2121"
     And I should see "1930-02-19"
+  
+  Scenario: A coordinator can see the NIH report
+    Given the study "STU001248" has the following subjects
+    | first_name | last_name | nmff_mrn | nmh_mrn | birth_date |
+    | Bob        | Cransit  | abh3131  | bbd2121 | 02/19/1930 |
+    When I go to the study page for id "STU001248"
+    And I export the NIH report
+    Then I should see "1*"
+    And I should see "PHS 398/2590 (Rev. 06/09)"

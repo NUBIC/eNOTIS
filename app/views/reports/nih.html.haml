@@ -1,4 +1,4 @@
-%p.pi= "Program Director/Principal Investigator (Last, First, Middle): #{@study.principal_investigator.last_name}, #{@study.principal_investigator.first_name}"
+%p.pi= "Program Director/Principal Investigator (Last, First, Middle): #{@study.principal_investigator ? @study.principal_investigator.last_first_middle : ''}"
 %h1 Inclusion Enrollment Report
 %h2 This report format should NOT be used for data collection from study participants.
 %table.study
