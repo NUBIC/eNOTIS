@@ -1,5 +1,8 @@
 class ServicesController < ApplicationController
-  # No login required for this controller
+  # Authorization
+  include Bcsec::Rails::SecuredController
+  permit :user
+  
   def index
     @studies = current_user ? current_user.studies : []
   end
