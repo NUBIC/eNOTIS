@@ -9,5 +9,6 @@ class ServicesController < ApplicationController
   def edit
     @study = Study.find_by_irb_number(params[:id])
     return redirect_to services_path unless @study
+    @service_report = @study.service_reports.last || @study.service_reports.build
   end
 end

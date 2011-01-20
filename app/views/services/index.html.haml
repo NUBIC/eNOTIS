@@ -16,4 +16,4 @@
     - @studies.each do |study|
       %li
         = study.irb_number
-        = button_to "Edit services", edit_service_path(study.irb_number), :method => :get
+        = button_to "Edit services", edit_service_path(study), :method => :get
