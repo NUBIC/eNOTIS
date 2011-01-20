@@ -13,9 +13,9 @@ hudson:
   base_uri: http://ecapture.local
   studies_uri: http://ecapture.local/studies
 staging:
-  base_uri: "https://clinical-rails-stg.bioinformatics.northwestern.edu/ecapture"
-  stuies_uri: "https://clinical-rails-stg.bioinformatics.northwestern.edu/ecapture/studies"
+  base_uri: https://clinical-rails-stg.bioinformatics.northwestern.edu/ecapture
+  stuies_uri: https://clinical-rails-stg.bioinformatics.northwestern.edu/ecapture/studies
 production:
-  base_uri: "https://ecapture.nubic.northwestern.edu"
-  studies_uri: "https://ecapture.nubic.northwestern.edu/studies" 
+  base_uri: https://ecapture.nubic.northwestern.edu
+  studies_uri: https://ecapture.nubic.northwestern.edu/studies
 
