@@ -1,0 +1,40 @@
+%p
+  = link_to "My studies", services_path
+  >
+  = @study.irb_number
+= link_to "(?)"
+%h3= @study.irb_number
+- form_for @study do |form|
+  %ul
+    %li
+      How many participants are currently enrolled (not completed) in the study?
+    %li
+      How many additional participant will you enroll in the study in the next 12 months?
+    %li
+      How many participants do you anticipate will require clinical services as part of the study during the next 12 months?
+    %li
+      Does the study require bedded outpatient services?
+    %li
+      Does the study require inpatient beds?
+    %li.hidden
+      How many days are covered by research?
+    %li.hidden
+      How many days are standard of care?
+    %li
+      Does the study involve pharmacy?
+    %li
+      Does the study involve lab/pathology?
+    %li
+      Does the study involve imaging?
+
+  %h4 Screening procedures
+  %p For a typical participant in this study, select the service, the number of participants that will use each reimbursement method for that service, and the location the service will be performed.
+  %frameset
+
+  %h4 On-study procedures
+  %p For a typical participant in this study, select the service, the number of participants that will use each reimbursement method for that service, and the location the service will be performed.
+
+  %frameset 
+
+  %h4 Study contact for questions
+  %p Please enter a person/office to contact for further questions about the information you have provided in this form. Follow-up may be necessary.
