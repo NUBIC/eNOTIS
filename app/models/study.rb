@@ -1,9 +1,11 @@
 require 'chronic'
-
-
-
 # Represents a Clinical Study/Trial.
 class Study < ActiveRecord::Base
+  # Temporary Attributes
+  attr_accessor :uses_nmh_services
+  attr_accessor :nmh_services_updated_at
+  
+  # Named scopes
   # this named scope allows sorting by "accrual", which is a count of involvements.
   # %w(id irb_status irb_number name title accrual_goal) can be replaced with Study.column_names if needed, but it is slow
   named_scope :order_by, lambda {|order, direction| order != "accrual" ? {:order => "#{order} #{direction.upcase}"} : 
@@ -30,12 +32,14 @@ class Study < ActiveRecord::Base
       (ev.nil?) ? nil : ev.description
     end
   end
-   
+  
+  # Callbacks
   after_create :create_default_events
 
   # Validators
   validates_format_of :irb_number, :with => /^STU.+/, :message => "invalid study number format"
-    
+  
+  # Class methods
   def self.update_from_redis
     study_list = REDIS.keys 'study:*'
     study_list.reject! {|x| x =~ /funding_source/ }

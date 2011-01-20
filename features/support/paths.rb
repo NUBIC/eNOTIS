@@ -25,6 +25,11 @@ module NavigationHelpers
     
     when /the studies page/
       studies_path
+    
+    when /^the services page$/
+      services_path
+    when /^the services page for "([^\"]*)"$/
+      edit_service_path($1)
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

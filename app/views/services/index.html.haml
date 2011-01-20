@@ -1,0 +1,19 @@
+%p This web form...
+
+%p For each of your studies listed below answer the question: "Does this study use NMH medical services, pharmacy, lab, pathology, imaging, hospitalization, outpatient, or any other service?"
+
+%fieldset
+  %legend Your IRB Approved Studies
+  %ul
+    - @studies.each do |study|
+      %li= study.irb_number
+
+%p Click 'Report Services' to record the services your study uses/will use at NMH in the next 12 months. You must report services for each of the studies listed below
+
+%fieldset
+  %legend Your Studies Using NMH Services
+  %ul
+    - @studies.each do |study|
+      %li
+        = study.irb_number
+        = button_to "Edit services", edit_service_path(study.irb_number), :method => :get
