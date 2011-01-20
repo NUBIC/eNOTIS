@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101130173649) do
+ActiveRecord::Schema.define(:version => 20110120214511) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -24,6 +24,18 @@ ActiveRecord::Schema.define(:version => 20101130173649) do
     t.string  "key"
     t.text    "value"
   end
+
+  create_table "dictionary_terms", :force => true do |t|
+    t.string   "term"
+    t.string   "code"
+    t.string   "category"
+    t.string   "source"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  # unrecognized index "dictionary_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
   create_table "event_types", :force => true do |t|
     t.string   "name"
@@ -84,13 +96,14 @@ ActiveRecord::Schema.define(:version => 20101130173649) do
 
   # unrecognized index "involvements_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
-  create_table "resource_statuses", :force => true do |t|
-    t.string   "name",       :null => false
-    t.boolean  "status"
-    t.string   "message"
+  create_table "races", :force => true do |t|
+    t.integer  "involvement_id"
+    t.integer  "race_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  # unrecognized index "races_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
   create_table "roles", :force => true do |t|
     t.integer  "study_id"
@@ -107,6 +120,32 @@ ActiveRecord::Schema.define(:version => 20101130173649) do
   # unrecognized index "index_authorized_people_on_study_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
   # unrecognized index "index_authorized_people_on_user_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
   # unrecognized index "roles_netid_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+
+  create_table "service_procedures", :force => true do |t|
+    t.integer "service_report_id"
+    t.string  "name"
+    t.integer "times"
+    t.string  "location"
+    t.string  "bill_to"
+  end
+
+  create_table "service_reports", :force => true do |t|
+    t.integer "study_id"
+    t.boolean "uses_medical_services"
+    t.integer "current_enrollment"
+    t.integer "expected_enrollment"
+    t.integer "expected_services"
+    t.boolean "requires_outpatient"
+    t.boolean "requires_inpatient"
+    t.integer "inpatient_days_research"
+    t.integer "inpatient_days_standard"
+    t.boolean "involves_pharmacy"
+    t.boolean "involves_labs"
+    t.boolean "involves_imaging"
+    t.string  "contact_name"
+    t.string  "contact_email"
+    t.string  "contact_phone"
+  end
 
   create_table "studies", :force => true do |t|
     t.string   "irb_number"
@@ -137,6 +176,8 @@ ActiveRecord::Schema.define(:version => 20101130173649) do
     t.text     "description"
     t.boolean  "read_only"
     t.string   "read_only_msg"
+    t.boolean  "uses_medical_services"
+    t.datetime "medical_services_update_at"
   end
 
   # unrecognized index "studies_irb_number_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
