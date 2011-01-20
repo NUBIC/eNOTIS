@@ -10,7 +10,7 @@
     - studies.each do |study|
       %tr
         %td.status= status_span study
-        %td.irb_number= link_to(irb_span(study), study_path(study.irb_number), :title => "#{study.status}: #{study.title}", :class => 'study')
+        %td.irb_number= link_to(irb_span(study), study_path(study.irb_number), :title => "#{study.irb_status}: #{study.title}", :class => 'study')
         %td= study.name
         %td= study.accrual || 0
         %td= study.accrual_goal
