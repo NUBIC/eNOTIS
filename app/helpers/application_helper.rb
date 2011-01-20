@@ -41,7 +41,8 @@ module ApplicationHelper
   
   def people_info(arr)
     people = [*arr].compact.map do |p|
-      user = Bcsec.authority.find_user(p.netid)
+      user = Pers::Person.find_by_username(p.netid)
+      #user = Bcsec.authority.find_user(p.netid)
       content_tag(:span, (user ? user.email ? mail_to(user.email, user.full_name) : user.full_name : p.netid), :title => "Project Role: #{p.project_role}")
     end.uniq.compact
     (people.empty? ? nil : people.join.html_safe)
