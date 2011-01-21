@@ -25,18 +25,6 @@ ActiveRecord::Schema.define(:version => 20110120214511) do
     t.text    "value"
   end
 
-  create_table "dictionary_terms", :force => true do |t|
-    t.string   "term"
-    t.string   "code"
-    t.string   "category"
-    t.string   "source"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  # unrecognized index "dictionary_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
-
   create_table "event_types", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -96,14 +84,13 @@ ActiveRecord::Schema.define(:version => 20110120214511) do
 
   # unrecognized index "involvements_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
-  create_table "races", :force => true do |t|
-    t.integer  "involvement_id"
-    t.integer  "race_type_id"
+  create_table "resource_statuses", :force => true do |t|
+    t.string   "name",       :null => false
+    t.boolean  "status"
+    t.string   "message"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  # unrecognized index "races_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
   create_table "roles", :force => true do |t|
     t.integer  "study_id"
@@ -121,15 +108,7 @@ ActiveRecord::Schema.define(:version => 20110120214511) do
   # unrecognized index "index_authorized_people_on_user_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
   # unrecognized index "roles_netid_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
-  create_table "service_procedures", :force => true do |t|
-    t.integer "service_report_id"
-    t.string  "name"
-    t.integer "times"
-    t.string  "location"
-    t.string  "bill_to"
-  end
-
-  create_table "service_reports", :force => true do |t|
+  create_table "service_forms", :force => true do |t|
     t.integer "study_id"
     t.boolean "uses_medical_services"
     t.integer "current_enrollment"
@@ -145,6 +124,13 @@ ActiveRecord::Schema.define(:version => 20110120214511) do
     t.string  "contact_name"
     t.string  "contact_email"
     t.string  "contact_phone"
+  end
+
+  create_table "service_procedures", :force => true do |t|
+    t.integer "service_form_id"
+    t.integer "service_item_id"
+    t.string  "location"
+    t.string  "bill_to"
   end
 
   create_table "studies", :force => true do |t|
