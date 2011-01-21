@@ -1,8 +1,8 @@
 class CreateServiceProcedures < ActiveRecord::Migration
   def self.up
     	create_table :service_procedures do |t|
-    	  t.integer :service_report_id
-        t.string  :name
+    	  t.integer :service_form_id
+        t.integer :service_item_id
         t.string  :location
         t.string  :bill_to
       end
