@@ -3,7 +3,6 @@ class CreateServiceProcedures < ActiveRecord::Migration
     	create_table :service_procedures do |t|
     	  t.integer :service_report_id
         t.string  :name
-        t.integer :times
         t.string  :location
         t.string  :bill_to
       end
