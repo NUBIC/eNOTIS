@@ -1,9 +1,11 @@
 require 'chronic'
-
-
-
 # Represents a Clinical Study/Trial.
 class Study < ActiveRecord::Base
+  # Temporary Attributes
+  attr_accessor :uses_nmh_services
+  attr_accessor :nmh_services_updated_at
+  
+  # Named scopes
   # this named scope allows sorting by "accrual", which is a count of involvements.
   # %w(id irb_status irb_number name title accrual_goal) can be replaced with Study.column_names if needed, but it is slow
   named_scope :order_by, lambda {|order, direction| order != "accrual" ? {:order => "#{order} #{direction.upcase}"} : 
@@ -30,12 +32,15 @@ class Study < ActiveRecord::Base
       (ev.nil?) ? nil : ev.description
     end
   end
-   
+  has_many :service_reports
+  
+  # Callbacks
   after_create :create_default_events
 
   # Validators
   validates_format_of :irb_number, :with => /^STU.+/, :message => "invalid study number format"
-    
+  
+  # Class methods
   def self.update_from_redis
     study_list = REDIS.keys 'study:*'
     study_list.reject! {|x| x =~ /funding_source/ }
@@ -106,11 +111,7 @@ class Study < ActiveRecord::Base
   def editable?
     !self.read_only
   end
-  # We should probably try to phase this method out and just use irb_status -BLC
-  def status
-    irb_status
-  end
-
+  
   # irb_number instead of id in urls
   def to_param
     self.irb_number
@@ -136,14 +137,10 @@ class Study < ActiveRecord::Base
     end
   end  
 
-  def may_accrue?
-    can_accrue?
-  end
-
   def can_accrue?
     # For possible eIRB statuses, see doc/terms.csv
     ["Approved", "Exempt Approved", "Not Under IRB Purview",
-      "Revision Closed", "Revision Open"].include? self.status
+      "Revision Closed", "Revision Open"].include? self.irb_status
   end
 
   def define_event(event_name)

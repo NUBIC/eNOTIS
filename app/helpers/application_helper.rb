@@ -24,7 +24,7 @@ module ApplicationHelper
   
   def status_span(study)
     # the class name affects sorting within study tables
-    content_tag(:span, study.irb_status, :class => study.may_accrue? ? "sortabove status on" : "sortbelow status off")  
+    content_tag(:span, study.irb_status, :class => study.can_accrue? ? "sortabove status on" : "sortbelow status off")  
   end
 
   def approved_date(study)
