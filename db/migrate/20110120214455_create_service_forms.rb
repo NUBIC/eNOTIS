@@ -1,6 +1,6 @@
-class CreateServiceReports < ActiveRecord::Migration
+class CreateServiceForms < ActiveRecord::Migration
   def self.up
-  	create_table :service_reports do |t|
+  	create_table :service_forms do |t|
   	  t.integer :study_id
       t.boolean :uses_medical_services
       t.integer :current_enrollment
@@ -19,6 +19,6 @@ class CreateServiceReports < ActiveRecord::Migration
     end
   end
   def self.down
-    drop_table :service_reports
+    drop_table :service_forms
   end
 end

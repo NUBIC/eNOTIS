@@ -1,9 +1,6 @@
 require 'chronic'
 # Represents a Clinical Study/Trial.
 class Study < ActiveRecord::Base
-  # Temporary Attributes
-  attr_accessor :uses_nmh_services
-  attr_accessor :nmh_services_updated_at
   
   # Named scopes
   # this named scope allows sorting by "accrual", which is a count of involvements.
@@ -22,6 +19,7 @@ class Study < ActiveRecord::Base
   has_many :involvement_events, :through => :involvements
   has_many :study_uploads
   has_many :funding_sources, :dependent => :delete_all
+  has_one  :service_form
   has_many :event_types, :order => "seq asc" do 
     def find_by_name(e_name)
       find(:first, :conditions => {:name =>EventType.event_name_formatter(e_name)})
