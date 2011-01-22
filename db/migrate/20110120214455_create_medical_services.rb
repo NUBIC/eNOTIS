@@ -6,8 +6,8 @@ class CreateMedicalServices < ActiveRecord::Migration
       t.integer :current_enrollment
       t.integer :expected_enrollment
       t.integer :expected_clinical_services
-      t.boolean :requires_bedded_outpatient
-      t.boolean :requires_bedded_inpatient
+      t.boolean :expects_bedded_outpatients
+      t.boolean :expects_bedded_inpatients
       t.integer :bedded_inpatient_days_research
       t.integer :bedded_inpatient_days_standard_care
       t.boolean :involves_pharmacy
