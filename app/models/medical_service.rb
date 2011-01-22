@@ -1,8 +1,16 @@
 class MedicalService < ActiveRecord::Base
   belongs_to :study
 
+  before_save :set_date_if_complete
+  
+  def set_date_if_complete
+    if self.completed?
+      self.completed_at = Time.now
+    end
+  end
+
+  # Logic for completed-ness
   def completed? 
-    # Logic for completed-ness
 
     #checking for nils
     base_nils = self.current_enrollment.nil? and 
@@ -40,7 +48,6 @@ class MedicalService < ActiveRecord::Base
           self.bedded_inpatient_days_standard_care >= 0
           return true
         end
-
       end
     end
     return false

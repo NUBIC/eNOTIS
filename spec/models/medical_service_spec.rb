@@ -54,5 +54,17 @@ describe MedicalService do
       c3.completed?.should be_true
     end
   end
+
+  it "should set the completed date on save if the form is completed" do
+      c1 = MedicalService.create
+      c1.current_enrollment = 0
+      c1.expected_enrollment = 0
+      c1.expected_clinical_services = 0
+      c1.uses_services_before_completed = false
+      c1.completed?.should be_true
+      c1.completed_at.should be_nil
+      c1.save!
+      c1.completed_at.should_not be_nil
+  end
 end
 
