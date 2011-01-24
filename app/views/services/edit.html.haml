@@ -9,26 +9,26 @@
     &gt; 
     = @study.irb_number
   %h3 
-    For Study,
+    = "Please, answer the following questions for:"
     %span.studyname
       = @study.irb_number
       &mdash;
       = @study.name
-    %br
-    Please, answer the following questions:
+    
   - semantic_form_for :medical_service, @medical_service do |f|
     -# github.com/justinfrench/formtastic
     = f.input :current_enrollment, :label => "How many participants are currently enrolled in this study?"
     = f.input :expected_enrollment, :label => "How many participants do you think you will enroll before the completion of the study?"
     = f.input :expected_clinical_services, :label => "How many participants do you think you will require clinical services as part of this study?"
-    = f.input :uses_services_before_completed, :as => :radio, :label => "Will you use medical services, pharmacy, lab, pathology, imaging, hospitalization, outpatient services, or other servicess before the completion of this study?"
-    = f.input :expects_bedded_outpatients, :as => :radio, :label => "Does this study expect bedded OUTpatient services?"
-    = f.input :expects_bedded_inpatients, :as => :radio, :label => "Does this study expect bedded INpatient services?"
-    = f.input :bedded_inpatient_days_research, :label => "How many bedded inpatient days are covered by research?"
-    = f.input :bedded_inpatient_days_standard_care, :label => "How many bedded inpatient days are standard of care?"
-    = f.input :involves_pharmacy, :as => :radio, :label => "Does this study involve pharmacy?"
-    = f.input :involves_labs_pathology, :as => :radio, :label => "Does this study involve lab/pathology?"
-    = f.input :involves_imaging, :as => :radio, :label => "Does this study involve imaging?"
+    = f.input :uses_services_before_completed, :as => :radio, :label => "Will you use medical services, pharmacy, lab, pathology, imaging, hospitalization, outpatient services, or others before completing this study?"
+    .dependent
+      = f.input :expects_bedded_outpatients, :as => :radio, :label => "Does this study expect bedded OUTpatient services?"
+      = f.input :expects_bedded_inpatients, :as => :radio, :label => "Does this study expect bedded INpatient services?"
+      = f.input :bedded_inpatient_days_research, :label => "How many bedded inpatient days are covered by research?"
+      = f.input :bedded_inpatient_days_standard_care, :label => "How many bedded inpatient days are standard of care?"
+      = f.input :involves_pharmacy, :as => :radio, :label => "Does this study involve pharmacy?"
+      = f.input :involves_labs_pathology, :as => :radio, :label => "Does this study involve lab/pathology?"
+      = f.input :involves_imaging, :as => :radio, :label => "Does this study involve imaging?"
     
     %h4 Study contact for questions
     %p 
@@ -37,5 +37,5 @@
       = f.input :contact_email, :label => "E-mail"
       = f.input :contact_phone, :label => "Phone number"
 
-    %h5 For service form help:
-    = service_help_person
+  %h4 For service form help:
+  = service_help_person.html_safe
