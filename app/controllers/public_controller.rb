@@ -12,7 +12,7 @@ class PublicController < ApplicationController
     @cas_login_url = cas_login_path.to_s
   end
   
-  def help
+  def login_help
     @cas_url = params[:logout] ? cas_logout_path : cas_login_path.to_s
     respond_to do |format|
       format.html

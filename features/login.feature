@@ -23,6 +23,13 @@ Feature: User access to system
   #   And "pi" is not authorized on any studies
   #   When I log in as "pi" with password "314159"
   #   Then I should see "not currently associated"
+  
+  @focus
+  Scenario: A logged in user can access help and faq
+    Given I log in as "usergey" on study "STU0001234"
+    When I follow "Help"
+    Then I should see "Need support?"
+    And I should see "FAQ"
 
   Scenario: A logged in user can logout
     Given I log in as "usergey" on study "STU0001234"

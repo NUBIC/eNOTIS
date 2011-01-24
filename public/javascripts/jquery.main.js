@@ -19,6 +19,13 @@ $(document).ready(function() {
     "oLanguage": {"sZeroRecords": "<p><strong>No subjects yet - click 'Add' or 'Import' to get started. Or watch our <a rel='#intro'>4 minute introduction to eNOTIS</a>.</strong></p>"}
   });
   
+  // help
+  // db language overlay
+  $("a[rel=#database-language]").overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
+    expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}
+  });
+  
   // add link involvement overlay
   activateInvolvementOverlay("#actions a[rel=#involvement].add");
   

@@ -17,6 +17,8 @@
           #current_user_badge
             = "#{current_user.name} (#{current_user.netid})"
             |
+            = link_to "Help", help_path
+            |
             = link_to('Logout', "/logout")
         - unless Rails.env.production?
           #environment{:class => Rails.env}= Rails.env.upcase
