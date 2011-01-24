@@ -1,6 +1,9 @@
+// Globals
+var timeoutWarningTimer;
+var timeoutExpiredTimer;
 var importTable; // global variable to keep track of import data table, preventing reinitialization
-$(document).ready(function() {
 
+$(document).ready(function() {
   // flash messages
   $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
 
@@ -166,11 +169,16 @@ $(document).ready(function() {
   });
   
   // session timeouts
-  function timeOutWarning(){ $("#session-expire").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.93 }, closeOnClick: false, api: true }).load(); }
-  function timeOutExpired(){ if(window.location.pathname != "/studies"){ window.location.href = '/studies'; } }
-  setTimeout(timeOutWarning, 5*60*1000); // 5 minutes
-  setTimeout(timeOutExpired, 30*60*1000); // 30 minutes
-
+  function timeoutWarning(){ $("#session-expire").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.93 }, closeOnClick: false, api: true }).load(); }
+  function timeoutExpired(){ if(window.location.pathname != "/studies"){ window.location.href = '/studies'; } }
+  function resetTimeouts(){
+    clearTimeout(timeoutWarningTimer);
+    clearTimeout(timeoutExpiredTimer);
+    timeoutWarningTimer = setTimeout(timeoutWarning, 5*60*1000); // 5 minutes
+    timeoutExpiredTimer = setTimeout(timeoutExpired, 30*60*1000); // 30 minutes
+  }
+  resetTimeouts();
+  $(document).click( resetTimeouts ).keyup( resetTimeouts );
 });
 
 // ajax for delete
