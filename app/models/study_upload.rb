@@ -1,5 +1,6 @@
 require 'fastercsv'
 require 'chronic'
+require 'string'
 class StudyUpload < ActiveRecord::Base
   
   # Constants
@@ -120,7 +121,9 @@ class StudyUpload < ActiveRecord::Base
     end
   end
   
-  def params_from_row(r)
+  def params_from_row(raw)
+    r = {}
+    raw.headers.each{|h| r[h] = raw[h].blank? ? raw[h] : raw[h].force_utf8}
     { 
       :study => self.study.attributes.symbolize_keys,
       :subject => { :nmff_mrn => r[:nmff_mrn],

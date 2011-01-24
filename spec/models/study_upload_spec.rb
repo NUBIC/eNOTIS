@@ -41,6 +41,13 @@ describe StudyUpload do
     @up.summary.should =~ /a valid CSV file/
   end
 
+  it "should succeed even if upload has weird encodings" do
+    @up = Factory(:study_upload, :upload => up('encoding'))
+    @up.create_subjects.should be_true
+    @up.summary.should =~ /1 subjects/
+    @up.study.involvements.should have(1).subjects
+  end
+
   it "should have errors if upload has blank or invalid race, ethnicity, or gender values" do
     @up = Factory(:study_upload, :upload => up('blank_terms'))
     @up.legit?.should be_false
