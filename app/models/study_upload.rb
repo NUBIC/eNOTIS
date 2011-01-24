@@ -1,6 +1,9 @@
 require 'fastercsv'
 require 'chronic'
 class StudyUpload < ActiveRecord::Base
+  
+  # Constants
+  EXCEL_FILE_MAGIC_NUMBER = ['d0cf11e0a1b1'].pack('H*')
 
   # Associations
   belongs_to :study
@@ -39,6 +42,7 @@ class StudyUpload < ActiveRecord::Base
       # logger.info "parse_upload"
       csv_is_valid = true
       temp_file = Paperclip::Tempfile.new("results.csv")
+      raise FasterCSV::MalformedCSVError if self.upload.to_io.read(6) == EXCEL_FILE_MAGIC_NUMBER
       FasterCSV.open(temp_file.path, "r+") do |temp_stream|
         FasterCSV.parse(self.upload.to_io, :headers => :first_row, :return_headers => true, :header_converters => :symbol) do |r|
           if r.header_row? # check header row
@@ -57,7 +61,7 @@ class StudyUpload < ActiveRecord::Base
       end
       self.result = temp_file if !csv_is_valid
       self.result_file_name = self.upload_file_name.gsub(/\.csv$/, '-result.csv')
-    rescue #FasterCSV::MalformedCSVError
+    rescue # FasterCSV::MalformedCSVError
       csv_is_valid = false
       self.summary = "Oops. Your upload is not a valid CSV file."
     ensure

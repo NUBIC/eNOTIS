@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require 'fastercsv'
 
-def up(name)
-  File.open(File.dirname(__FILE__) + "/../uploads/#{name}.csv")
+def up(name, extension = 'csv')
+  File.open(File.dirname(__FILE__) + "/../uploads/#{name}.#{extension}")
 end
 
 describe StudyUpload do
@@ -29,6 +29,18 @@ describe StudyUpload do
     @up.summary.should =~ /missing required columns/
   end
   
+  it "should fail if upload is in excel format" do
+    @up = Factory(:study_upload, :upload => up('excel', 'xls'))
+    @up.legit?.should be_false
+    @up.summary.should =~ /a valid CSV file/
+  end
+  
+  it "should fail if upload is in xlsx format" do
+    @up = Factory(:study_upload, :upload => up('excel', 'xlsx'))
+    @up.legit?.should be_false
+    @up.summary.should =~ /a valid CSV file/
+  end
+
   it "should have errors if upload has blank or invalid race, ethnicity, or gender values" do
     @up = Factory(:study_upload, :upload => up('blank_terms'))
     @up.legit?.should be_false
