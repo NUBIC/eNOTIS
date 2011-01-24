@@ -1,19 +1,26 @@
+/* line 1 */
 #container {
   width: 995px;
   margin: 0 auto;
   display: inline-block;
-  display: block; }
+  display: block;
+}
 
+/* line 7 */
 #header {
   display: inline;
   float: left;
   margin-right: 0;
   width: 995px;
-  height: 75px; }
+  height: 75px;
+}
 
+/* line 13 */
 * html #header {
-  overflow-x: hidden; }
+  overflow-x: hidden;
+}
 
+/* line 15 */
 #app_name {
   display: inline;
   float: left;
@@ -21,17 +28,23 @@
   width: 295px;
   font-size: 3em;
   font-weight: bold;
-  color: #520063; }
+  color: #520063;
+}
 
+/* line 23 */
 #app_name img {
-  margin-top: 10px; }
+  margin-top: 10px;
+}
 
+/* line 25 */
 #login {
   margin-top: 5px;
   float: right;
   text-align: right;
-  font-size: 15px; }
+  font-size: 15px;
+}
 
+/* line 30 */
 #footer {
   margin-top: 20px;
   padding-top: 10px;
@@ -42,13 +55,17 @@
   margin-right: 0;
   width: 955px;
   padding-left: 20px;
-  padding-right: 20px; }
+  padding-right: 20px;
+}
 
+/* line 41 */
 body {
   background-color: white;
   background-repeat: repeat-x;
-  background-image: url('/images/public-fade-bg.png'); }
+  background-image: url("/images/public-fade-bg.png");
+}
 
+/* line 45 */
 #main {
   display: inline;
   float: left;
@@ -62,86 +79,126 @@ body {
   -moz-border-radius: 0 0 7px 7px;
   background-position: 0 -35px;
   background-position: 0 0;
-  background-image: url('/images/pane-texture-bg.png'); }
-  #main ul.tabs {
-    background-color: #51483d;
-    margin: 0;
-    display: block;
-    height: 35px;
-    display: inline;
-    float: left;
-    margin-right: 0;
-    width: 995px; }
-    #main ul.tabs li {
-      background: transparent;
-      list-style: none;
-      display: block;
-      float: left;
-      width: 278px;
-      padding: 0 40px 0 0; }
-      #main ul.tabs li a {
-        color: #b3b3b3;
-        font-size: 18px;
-        height: 30px;
-        line-height: 35px;
-        text-decoration: none; }
-      #main ul.tabs li a:hover {
-        color: #dadada; }
-      #main ul.tabs li a.current {
-        border-bottom: 7px solid #5eab4f;
-        color: #fdfbe9; }
-  #main div.policy {
-    margin-top: 55px; }
-  #main div.panes {
-    position: relative;
-    overflow: hidden;
-    display: inline;
-    float: left;
-    margin-right: 0;
-    width: 955px;
-    height: 450px;
-    padding-top: 20px; }
-    #main div.panes h4, #main div.panes h3 {
-      color: #333; }
-    #main div.panes h2 {
-      font-weight: bold; }
-    #main div.panes h3 {
-      line-height: 120%; }
-    #main div.panes div.items {
-      width: 20000em;
-      position: absolute; }
-      #main div.panes div.items div.item {
-        float: left;
-        display: inline;
-        float: left;
-        margin-right: 0;
-        width: 955px; }
-        #main div.panes div.items div.item img {
-          float: left;
-          padding-right: 20px; }
-        #main div.panes div.items div.item div.col {
-          float: left;
-          width: 303px;
-          padding-right: 15px; }
-        #main div.panes div.items div.item div.col2 {
-          float: left;
-          width: 48%;
-          padding-right: 2%; }
-        #main div.panes div.items div.item div.col3 {
-          float: left;
-          width: 68%;
-          padding-right: 2%; }
-        #main div.panes div.items div.item div.colx {
-          float: left;
-          padding-right: 2%; }
-        #main div.panes div.items div.item p.q {
-          font-weight: bold;
-          margin-bottom: 5px;
-          font-size: 13px; }
-      #main div.panes div.items div.current {
-        border: 1px inset #ccc;
-        background-color: #cdcdcd; }
+  background-image: url("/images/pane-texture-bg.png");
+}
+/* line 59 */
+#main ul.tabs {
+  background-color: #51483d;
+  margin: 0;
+  display: block;
+  height: 35px;
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 995px;
+}
+/* line 68 */
+#main ul.tabs li {
+  background: transparent;
+  list-style: none;
+  display: block;
+  float: left;
+  width: 278px;
+  padding: 0 40px 0 0;
+}
+/* line 75 */
+#main ul.tabs li a {
+  color: #b3b3b3;
+  font-size: 18px;
+  height: 30px;
+  line-height: 35px;
+  text-decoration: none;
+}
+/* line 81 */
+#main ul.tabs li a:hover {
+  color: #dadada;
+}
+/* line 83 */
+#main ul.tabs li a.current {
+  border-bottom: 7px solid #5eab4f;
+  color: #fdfbe9;
+}
+/* line 86 */
+#main div.policy {
+  margin-top: 55px;
+}
+/* line 89 */
+#main div.panes {
+  position: relative;
+  overflow: hidden;
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 955px;
+  height: 450px;
+  padding-top: 20px;
+}
+/* line 100 */
+#main div.panes h4, #main div.panes h3 {
+  color: #333333;
+}
+/* line 102 */
+#main div.panes h2 {
+  font-weight: bold;
+}
+/* line 104 */
+#main div.panes h3 {
+  line-height: 120%;
+}
+/* line 107 */
+#main div.panes div.items {
+  width: 20000em;
+  position: absolute;
+}
+/* line 112 */
+#main div.panes div.items div.item {
+  float: left;
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 955px;
+}
+/* line 122 */
+#main div.panes div.items div.item img {
+  float: left;
+  padding-right: 20px;
+}
+/* line 125 */
+#main div.panes div.items div.item div.col {
+  float: left;
+  width: 303px;
+  padding-right: 15px;
+}
+/* line 129 */
+#main div.panes div.items div.item div.col2 {
+  float: left;
+  width: 48%;
+  padding-right: 2%;
+}
+/* line 133 */
+#main div.panes div.items div.item div.col3 {
+  float: left;
+  width: 68%;
+  padding-right: 2%;
+}
+/* line 137 */
+#main div.panes div.items div.item div.colx {
+  float: left;
+  padding-right: 2%;
+}
+/* line 140 */
+#main div.panes div.items div.item p.q {
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+/* line 146 */
+#main div.panes div.items div.current {
+  border: 1px inset #cccccc;
+  background-color: #cdcdcd;
+}
 
+/* line 150 */
 #footer {
   margin-top: 20px;
   padding-top: 10px;
@@ -150,32 +207,46 @@ body {
   margin-right: 0;
   width: 955px;
   padding-left: 20px;
-  padding-right: 20px; }
-  #footer p {
-    margin-top: 10px; }
+  padding-right: 20px;
+}
+/* line 159 */
+#footer p {
+  margin-top: 10px;
+}
 
+/* line 162 */
 #footer .nulogo, #footer .fsmlogo, #footer .nucatslogo, #footer .nubiclogo, #footer .nmhlogo, #footer .nmfflogo {
   float: left;
-  margin: 3px; }
+  margin: 3px;
+}
+/* line 165 */
 #footer .nmhlogo {
-  clear: left; }
+  clear: left;
+}
+/* line 167 */
 #footer p.version {
   clear: left;
-  padding-top: 10px; }
+  padding-top: 10px;
+}
 
+/* line 170 */
 .tooltip, .overlay {
   display: none;
   z-index: 999;
-  background-color: #fff;
-  border: 1px solid #666;
+  background-color: white;
+  border: 1px solid #666666;
   padding: 10px;
-  color: #333;
-  -moz-box-shadow: 0 0 90px 5px #000;
-  -webkit-box-shadow: 0 0 90px #000; }
+  color: #333333;
+  -moz-box-shadow: 0 0 90px 5px black;
+  -webkit-box-shadow: 0 0 90px black;
+}
 
+/* line 180 */
 .overlay {
-  z-index: 1000; }
+  z-index: 1000;
+}
 
+/* line 182 */
 .overlay .close {
   background-image: url(/images/apple-close.png);
   cursor: pointer;
@@ -183,8 +254,11 @@ body {
   right: -12px;
   top: -12px;
   height: 28px;
-  width: 28px; }
+  width: 28px;
+}
 
+/* line 191 */
 #database-language {
   margin-top: 250px;
-  width: 675px; }
+  width: 675px;
+}

@@ -42,6 +42,31 @@ eNOTIS depends on a few important gems:
   
 == Changes ==
 
+v1.14.0
+
+* faq, training, email support when logged in. closes #4291. closes #3906
+* fixing weird encodings in uploads. closes #3907
+* fixing specs
+* reset timeouts on keyup or mouse click. closes #4819
+* better errors for excel file format upload. closes #4522
+* fixed typo
+* modified eccapture configuration file
+* fixing pi name in nih report. closes #4815
+* ecapture/enotis navigation
+* closes #4816
+* fixing pi name in nih report. closes #4815
+* ecapture/enotis navigation
+* added to users\_to\_pers code the logic to add users to T\_SECURITY\_LOGINS
+* version bump
+* merging ecapture integration
+* fixing export wording in studies feature
+* remove versioning for subjects in de\_id script. closes #4723
+* fixing report spec for capitalization
+* show and edit involvement event notes. closes #3749
+* wording in export dialog box and capitalization of MRN, NMFF, NMH, RIC. closes #4480. closes #4474
+* removing auto session timeout. handled via client side js. closes #4725
+* new enotis logo. closes #4527
+
 v1.13.0
 
 * tests for auditing. closes #4724
