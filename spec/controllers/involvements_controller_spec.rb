@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-def up(name)
-  File.open(File.dirname(__FILE__) + "/../uploads/#{name}.csv")
+def up(name, extension = 'csv')
+  File.open(File.dirname(__FILE__) + "/../uploads/#{name}.#{extension}")
 end
 
 describe InvolvementsController do
