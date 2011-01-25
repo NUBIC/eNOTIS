@@ -9,14 +9,18 @@
     &gt; 
     = @study.irb_number
   %h3 
-    = "Please, answer the following questions for:"
+    For the Study:
     %span.studyname
       = @study.irb_number
       &mdash;
       = @study.name
     
-  - semantic_form_for :medical_service, @medical_service do |f|
+  %h3 Please answer the questions below:
+    
+  - semantic_form_for :medical_service, @medical_service, :url => services_path + "/#{@study.irb_number}", :html => { :method => :put } do |f|
     -# github.com/justinfrench/formtastic
+    = f.input :id, :as => :hidden
+    = f.input :study_id, :as => :hidden
     = f.input :current_enrollment, :label => "How many participants are currently enrolled in this study?"
     = f.input :expected_enrollment, :label => "How many participants do you think you will enroll before the completion of the study?"
     = f.input :expected_clinical_services, :label => "How many participants do you think you will require clinical services as part of this study?"
@@ -24,8 +28,9 @@
     .dependent
       = f.input :expects_bedded_outpatients, :as => :radio, :label => "Does this study expect bedded OUTpatient services?"
       = f.input :expects_bedded_inpatients, :as => :radio, :label => "Does this study expect bedded INpatient services?"
-      = f.input :bedded_inpatient_days_research, :label => "How many bedded inpatient days are covered by research?"
-      = f.input :bedded_inpatient_days_standard_care, :label => "How many bedded inpatient days are standard of care?"
+      .dependent
+        = f.input :bedded_inpatient_days_research, :label => "How many bedded inpatient days are covered by research?"
+        = f.input :bedded_inpatient_days_standard_care, :label => "How many bedded inpatient days are standard of care?"
       = f.input :involves_pharmacy, :as => :radio, :label => "Does this study involve pharmacy?"
       = f.input :involves_labs_pathology, :as => :radio, :label => "Does this study involve lab/pathology?"
       = f.input :involves_imaging, :as => :radio, :label => "Does this study involve imaging?"
@@ -37,5 +42,12 @@
       = f.input :contact_email, :label => "E-mail"
       = f.input :contact_phone, :label => "Phone number"
 
-  %h4 For service form help:
-  = service_help_person.html_safe
+    %h4.save
+      = f.submit "Save form"
+
+    .help
+      For service form help:
+      = service_help_person.html_safe
+
+
+    

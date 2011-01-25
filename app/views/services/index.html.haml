@@ -1,12 +1,28 @@
-%p This web form...
+%p TODO: ADD custom message to PI indicating the nature of this form 
 
-%p For each of your studies listed below answer the question: "Does this study use NMH medical services, pharmacy, lab, pathology, imaging, hospitalization, outpatient, or any other service?"
+%p 
+  For each of your studies listed below answer the question: 
+  Does this study use medical services? 
+  %em 
+    Medical Services are pharmacy, lab, pathology, imaging, hospitalization, outpatient services, or any other serive
 
 %fieldset
   %legend Your IRB Approved Studies
+  Uses Medical Services?
   %ul
     - @studies.each do |study|
-      %li= study.irb_number
+      %li
+        = radio_button_tag "#{study.irb_number}:medical_services", "true", study.uses_medical_services 
+        = label_tag "#{study.irb_number}:medical_services_true", "Yes"
+        = radio_button_tag "#{study.irb_number}:medical_services", "false", !study.uses_medical_services
+        = label_tag "#{study.irb_number}:medical_services_false", "No"
+        = study.irb_number
+        &mdash;
+        = study.name
+        &nbsp;
+        = study.irb_status
+        = study.approved_date.strftime("%m/%d/%Y")
+       
 
 %p Click 'Report Services' to record the services your study uses/will use at NMH in the next 12 months. You must report services for each of the studies listed below
 

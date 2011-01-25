@@ -1,7 +1,7 @@
 class MedicalService < ActiveRecord::Base
   belongs_to :study
 
-  before_save :set_date_if_complete
+#  before_save :set_date_if_complete
   
   def set_date_if_complete
     if self.completed?
