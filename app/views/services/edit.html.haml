@@ -1,16 +1,11 @@
-- content_for :head do
-  -#= formtastic_stylesheet_link_tag
-  -# There is a _services.sass file for the formstyles in app/stylesheets
-
-
-#servicesForm
+#services_form
   %p
     = link_to "My studies", services_path
     &gt; 
     = @study.irb_number
   %h3 
     For the Study:
-    %span.studyname
+    %span.study_name
       = @study.irb_number
       &mdash;
       = @study.name

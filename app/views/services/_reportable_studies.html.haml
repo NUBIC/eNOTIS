@@ -1,0 +1,18 @@
+- if studies.empty?
+  Based on your answers above there are no studies you need to report on.
+- else  
+  Based on your answers above you need to report services on the following studies:
+  %fieldset
+    %legend Reporting List
+    %ul
+      - studies.each do |study|
+        %li
+          .study_name
+            = study.irb_number
+            &mdash;
+            = study.name
+          .study_button
+            - unless study.medical_service
+              = button_to "Report Services", edit_service_path(study), :method => :get
+            - else
+              = button_to "Update Service Form", edit_service_path(study), :method => :get

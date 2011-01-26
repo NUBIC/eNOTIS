@@ -1,12 +1,12 @@
-#servicesForm
-  .studyname
+#services_form
+  .study_name
     :color #666
   h3, h4, h5
     :margin-top 20px
   form.formtastic
     :font-size 1.2em
     li
-      :list-style none
+      :list-style-type none
       :padding-bottom 5px
       input[type=text]
         :margin-left 10px
@@ -31,3 +31,53 @@
   .help
     :padding-top 2em
     :clear right
+
+#study_report_list
+  :font-size 1.2em
+  :padding-bottom 2em 
+  fieldset
+    :border 1px solid #ccc
+    :padding 0.5em 0.7em
+    legend
+      :font-weight bold
+  
+  em
+    :font-size 0.8em
+    :color #666
+  ul
+    :list-style-type none
+    
+    li
+      :padding 0.3em
+
+  .radios
+    :padding 0 0.3em 0 0
+    :float left
+  .study_name
+    :margin-left 10em
+
+  .study_status
+    :display inline
+    :font-size 0.8em
+    :color #666
+    :font-weight bold
+
+#reportable_studies
+  :font-size 1.2em
+  fieldset
+    :padding 0.5em
+    :background-color #f0f0f0
+    :border 1px solid #ccc
+    legend 
+      :font-weight bold
+  ul
+    :list-style-type none
+
+    li
+      :padding 0.3em
+      :border-bottom 1px dotted #333
+      .study_name
+        :float left
+        :width 40em
+      .study_button
+        :margin-left 51em

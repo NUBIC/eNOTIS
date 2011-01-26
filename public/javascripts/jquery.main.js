@@ -1,5 +1,10 @@
 var importTable; // global variable to keep track of import data table, preventing reinitialization
 $(document).ready(function() {
+ 
+  //Services Form 
+  //$("#service_studies :input").click(function(){
+  //  var f= $("#service_studies").serialize();
+  //});
 
   // flash messages
   $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});

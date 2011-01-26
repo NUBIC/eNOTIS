@@ -1,4 +1,5 @@
 class ServicesController < ApplicationController
+  layout "main"
 
   # Authorization
   include Bcsec::Rails::SecuredController
@@ -7,8 +8,14 @@ class ServicesController < ApplicationController
   def index
     @title = "Medical Services"
     @studies = current_user ? current_user.studies : []
+    if @studies.select{|s| s.uses_medical_services.nil?}.empty?
+      @not_reported_yet = false
+    else
+      @not_reported_yet = true
+    end
     @service_studies = @studies.select{|s| s.uses_medical_services == true }
   end
+
 
   def edit
     @title = "Medical Services Form"
@@ -20,11 +27,23 @@ class ServicesController < ApplicationController
   def update
     if params[:medical_service][:id]
       MedicalService.update(params[:medical_service][:id],params[:medical_service])
+      flash[:notice] = "Updated Study Medical Services Forms"
+    else
+      flash[:notice] = "Missing Service form ID"
     end
+    redirect_to services_path
   end
 
   def services_update
-
+    params[:study].each do |k,v|
+      study = Study.find(k)
+      if study 
+        study.uses_medical_services = v[:uses_medical_services]
+        study.save!
+      end
+    end
+    flash[:notice] = "Study services updated"
+    redirect_to services_path
   end
 
 end
