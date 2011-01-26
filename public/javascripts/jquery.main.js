@@ -17,6 +17,12 @@ $(document).ready(function() {
   //});
   // Also, if checked is teh saved state
 
+  //update button activation
+  $("#service_studies input[type=submit]").attr('disabled', true);
+  $(".radios :input").click(function(){
+    $("#service_studies input[type=submit]").attr('disabled', false);
+  });
+
   // flash messages
   $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
 

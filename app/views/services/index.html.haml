@@ -7,6 +7,7 @@
   - form_tag services_update_services_path, :id => "service_studies" do
     %fieldset
       %legend Does this study use medical services? 
+
       %ul
         - @studies.each do |study|
           %li
@@ -25,13 +26,13 @@
                 = study.irb_status
                 &nbsp;
                 = study.approved_date.strftime("%m/%d/%Y")
-      %em 
-        Medical Services are pharmacy, lab, pathology, imaging, hospitalization, outpatient services, or any other service.
+      %em  
+        NOTE: Medical Services are pharmacy, lab, pathology, imaging, hospitalization, outpatient services, or any other service.      
       -if @not_reported_yet
         =submit_tag("Submit Form")
       -else
         =submit_tag("Update Form and Reporting List")
- 
+       
 #reportable_studies
   - if @not_reported_yet
     Based on your answers above you may have to fill out additional reports. Click on &quot;Submit Form&quot; above to check.

@@ -8,6 +8,10 @@
       - studies.each do |study|
         %li
           .study_name
+            - if study.medical_service
+              = study.medical_service.completed? ? "[Completed]" : "[Incomplete - Please Finish]"
+            - else
+              [Please Report Services]
             = study.irb_number
             &mdash;
             = study.name
@@ -15,4 +19,5 @@
             - unless study.medical_service
               = button_to "Report Services", edit_service_path(study), :method => :get
             - else
-              = button_to "Update Service Form", edit_service_path(study), :method => :get
+              - stat = study.medical_service.completed? ? "Update Form" : "Click Here to Finish"
+              = button_to "#{stat}", edit_service_path(study), :method => :get

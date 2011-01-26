@@ -17,11 +17,13 @@
     = f.hidden_field :study_id
     = f.label :current_enrollment, "How many participants are currently enrolled in this study?"
     = f.text_field :current_enrollment, :size => 5, :maxlength => 10
+    (Current enrollment)
     %br
-    = f.label :expected_enrollment, "How many participants do you think you will enroll before the completion of the study?"
+    = f.label :expected_enrollment, "In the future, how many participants do you think you will enroll before the completion of the study?"
     = f.text_field :expected_enrollment, :size => 5, :maxlength => 10
+    (Total enrollment at completion)
     %br
-    = f.label :expected_clinical_services, "How many participants do you think you will require clinical services as part of this study?"
+    = f.label :expected_clinical_services, "In the future, how many participants do you think you will require clinical services as part of this study?"
     = f.text_field :expected_clinical_services, :size => 5, :maxlength => 10
     %br
     = f.label :uses_services_before_completed, "Will you use medical services, pharmacy, lab, pathology, imaging, hospitalization, outpatient services, or others before completing this study?"
@@ -37,11 +39,16 @@
       = f.radio_button :expects_bedded_outpatients, false, :checked => @medical_service.expects_bedded_outpatients == false
       = f.label :expects_bedded_outpatients_false, "No"      
       %br
+      %em Bedded outpatients are patients requiring the use of a hospital bed for less than 24 hours, typically in the CRU
+      %br
       = f.label :expects_bedded_inpatients, "Does this study expect bedded INpatient services?"
       = f.radio_button :expects_bedded_inpatients, true, :checked => @medical_service.expects_bedded_inpatients == true
       = f.label :expects_bedded_inpatients_true, "Yes"
       = f.radio_button :expects_bedded_inpatients, false, :checked => @medical_service.expects_bedded_inpatients == false
       = f.label :expects_bedded_inpatients_false, "No"   
+      %br
+      %em Bedded inpatients are patients with a standard inpatient admit
+
       #d2.dependent
         = f.label :bedded_inpatient_days_research, "How many bedded inpatient days are covered by research?"
         = f.text_field :bedded_inpatient_days_research, :size => 5, :maxlength => 10
@@ -69,7 +76,7 @@
 
     %h4 Study contact for questions
     %p 
-      Please enter a person/office to contact for further questions about the information you have provided in this form. Follow-up may be necessary.
+      Please enter a person/office to contact for further questions about the information you have provided in this form.
     = f.label :contact_name, "Name of person/office"
     = f.text_field :contact_name, :size => 20 
     &nbsp;
