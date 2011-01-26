@@ -8,7 +8,7 @@
       - studies.each do |study|
         %li
           .study_name
-            - if study.medical_service
+            - unless study.medical_service.nil?
               = study.medical_service.completed? ? "[Completed]" : "[Incomplete - Please Finish]"
             - else
               [Please Report Services]
