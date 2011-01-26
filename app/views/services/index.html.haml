@@ -12,9 +12,9 @@
           %li
             - @f_tag = "study[#{study.id}][uses_medical_services]"
             .radios
-              = radio_button_tag @f_tag, "true", study.uses_medical_services 
+              = radio_button_tag @f_tag, "true", study.uses_medical_services == true
               = label_tag "#{@f_tag}_true", "Yes"
-              = radio_button_tag @f_tag, "false", !study.uses_medical_services
+              = radio_button_tag @f_tag, "false", study.uses_medical_services == false
               = label_tag "#{@f_tag}_false", "No"
             .study_name
               = study.irb_number

@@ -25,22 +25,22 @@
     = f.text_field :expected_clinical_services, :size => 5, :maxlength => 10
     %br
     = f.label :uses_services_before_completed, "Will you use medical services, pharmacy, lab, pathology, imaging, hospitalization, outpatient services, or others before completing this study?"
-    = f.radio_button :uses_services_before_completed, true, :checked => @medical_service.uses_services_before_completed 
+    = f.radio_button :uses_services_before_completed, true, :checked => @medical_service.uses_services_before_completed == true
     = f.label :uses_services_before_completed_true, "Yes"
-    = f.radio_button :uses_services_before_completed, false, :checked => !@medical_service.uses_services_before_completed
+    = f.radio_button :uses_services_before_completed, false, :checked => @medical_service.uses_services_before_completed == false
     = f.label :uses_services_before_completed_false, "No"
     %br
     #d1.dependent
       = f.label :expects_bedded_outpatients, "Does this study expect bedded OUTpatient services?" 
-      = f.radio_button :expects_bedded_outpatients, true, :checked => @medical_service.expects_bedded_outpatients 
+      = f.radio_button :expects_bedded_outpatients, true, :checked => @medical_service.expects_bedded_outpatients == true
       = f.label :expects_bedded_outpatients_true, "Yes"
-      = f.radio_button :expects_bedded_outpatients, false, :checked => !@medical_service.expects_bedded_outpatients
+      = f.radio_button :expects_bedded_outpatients, false, :checked => @medical_service.expects_bedded_outpatients == false
       = f.label :expects_bedded_outpatients_false, "No"      
       %br
       = f.label :expects_bedded_inpatients, "Does this study expect bedded INpatient services?"
-      = f.radio_button :expects_bedded_inpatients, true, :checked => @medical_service.expects_bedded_inpatients 
+      = f.radio_button :expects_bedded_inpatients, true, :checked => @medical_service.expects_bedded_inpatients == true
       = f.label :expects_bedded_inpatients_true, "Yes"
-      = f.radio_button :expects_bedded_inpatients, false, :checked => !@medical_service.expects_bedded_inpatients
+      = f.radio_button :expects_bedded_inpatients, false, :checked => @medical_service.expects_bedded_inpatients == false
       = f.label :expects_bedded_inpatients_false, "No"   
       #d2.dependent
         = f.label :bedded_inpatient_days_research, "How many bedded inpatient days are covered by research?"
