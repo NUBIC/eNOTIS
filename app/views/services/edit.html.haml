@@ -33,7 +33,7 @@
     = f.label :uses_services_before_completed_false, "No"
     %br
     #d1.dependent
-      = f.label :expects_bedded_outpatients, "Does this study expect bedded OUTpatient services?" 
+      = f.label :expects_bedded_outpatients, "Does this study expect outpatient services?" 
       = f.radio_button :expects_bedded_outpatients, true, :checked => @medical_service.expects_bedded_outpatients == true
       = f.label :expects_bedded_outpatients_true, "Yes"
       = f.radio_button :expects_bedded_outpatients, false, :checked => @medical_service.expects_bedded_outpatients == false
@@ -41,7 +41,7 @@
       %br
       %em Bedded outpatients are patients requiring the use of a hospital bed for less than 24 hours, typically in the CRU
       %br
-      = f.label :expects_bedded_inpatients, "Does this study expect bedded INpatient services?"
+      = f.label :expects_bedded_inpatients, "Does this study expect bedded inpatient services?"
       = f.radio_button :expects_bedded_inpatients, true, :checked => @medical_service.expects_bedded_inpatients == true
       = f.label :expects_bedded_inpatients_true, "Yes"
       = f.radio_button :expects_bedded_inpatients, false, :checked => @medical_service.expects_bedded_inpatients == false
