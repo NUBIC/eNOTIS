@@ -12,37 +12,76 @@
     
   %h3 Please answer the questions below:
     
-  - semantic_form_for :medical_service, @medical_service, :url => services_path + "/#{@study.irb_number}", :html => { :method => :put } do |f|
-    -# github.com/justinfrench/formtastic
-    = f.input :id, :as => :hidden
-    = f.input :study_id, :as => :hidden
-    = f.input :current_enrollment, :label => "How many participants are currently enrolled in this study?"
-    = f.input :expected_enrollment, :label => "How many participants do you think you will enroll before the completion of the study?"
-    = f.input :expected_clinical_services, :label => "How many participants do you think you will require clinical services as part of this study?"
-    = f.input :uses_services_before_completed, :as => :radio, :label => "Will you use medical services, pharmacy, lab, pathology, imaging, hospitalization, outpatient services, or others before completing this study?"
-    .dependent
-      = f.input :expects_bedded_outpatients, :as => :radio, :label => "Does this study expect bedded OUTpatient services?"
-      = f.input :expects_bedded_inpatients, :as => :radio, :label => "Does this study expect bedded INpatient services?"
-      .dependent
-        = f.input :bedded_inpatient_days_research, :label => "How many bedded inpatient days are covered by research?"
-        = f.input :bedded_inpatient_days_standard_care, :label => "How many bedded inpatient days are standard of care?"
-      = f.input :involves_pharmacy, :as => :radio, :label => "Does this study involve pharmacy?"
-      = f.input :involves_labs_pathology, :as => :radio, :label => "Does this study involve lab/pathology?"
-      = f.input :involves_imaging, :as => :radio, :label => "Does this study involve imaging?"
-    
+  - form_for @medical_service, :url => services_path + "/#{@study.irb_number}", :html => { :method => :put } do |f|
+    = f.hidden_field :id
+    = f.hidden_field :study_id
+    = f.label :current_enrollment, "How many participants are currently enrolled in this study?"
+    = f.text_field :current_enrollment, :size => 5, :maxlength => 10
+    %br
+    = f.label :expected_enrollment, "How many participants do you think you will enroll before the completion of the study?"
+    = f.text_field :expected_enrollment, :size => 5, :maxlength => 10
+    %br
+    = f.label :expected_clinical_services, "How many participants do you think you will require clinical services as part of this study?"
+    = f.text_field :expected_clinical_services, :size => 5, :maxlength => 10
+    %br
+    = f.label :uses_services_before_completed, "Will you use medical services, pharmacy, lab, pathology, imaging, hospitalization, outpatient services, or others before completing this study?"
+    = f.radio_button :uses_services_before_completed, true, :checked => @medical_service.uses_services_before_completed 
+    = f.label :uses_services_before_completed_true, "Yes"
+    = f.radio_button :uses_services_before_completed, false, :checked => !@medical_service.uses_services_before_completed
+    = f.label :uses_services_before_completed_false, "No"
+    %br
+    #d1.dependent
+      = f.label :expects_bedded_outpatients, "Does this study expect bedded OUTpatient services?" 
+      = f.radio_button :expects_bedded_outpatients, true, :checked => @medical_service.expects_bedded_outpatients 
+      = f.label :expects_bedded_outpatients_true, "Yes"
+      = f.radio_button :expects_bedded_outpatients, false, :checked => !@medical_service.expects_bedded_outpatients
+      = f.label :expects_bedded_outpatients_false, "No"      
+      %br
+      = f.label :expects_bedded_inpatients, "Does this study expect bedded INpatient services?"
+      = f.radio_button :expects_bedded_inpatients, true, :checked => @medical_service.expects_bedded_inpatients 
+      = f.label :expects_bedded_inpatients_true, "Yes"
+      = f.radio_button :expects_bedded_inpatients, false, :checked => !@medical_service.expects_bedded_inpatients
+      = f.label :expects_bedded_inpatients_false, "No"   
+      #d2.dependent
+        = f.label :bedded_inpatient_days_research, "How many bedded inpatient days are covered by research?"
+        = f.text_field :bedded_inpatient_days_research, :size => 5, :maxlength => 10
+        %br 
+        = f.label :bedded_inpatient_days_standard_care, "How many bedded inpatient days are covered by standard of care?"
+        = f.text_field :bedded_inpatient_days_standard_care, :size => 5, :maxlength => 10
+        
+    = f.label :involves_pharmacy, "Does this study involve pharmacy?"
+    = f.radio_button :involves_pharmacy, true, :checked => @medical_service.involves_pharmacy 
+    = f.label :involves_pharmacy_true, "Yes"
+    = f.radio_button :involves_pharmacy, false, :checked => !@medical_service.involves_pharmacy
+    = f.label :involves_pharmacy_false, "No" 
+    %br
+    = f.label :involves_labs_pathology, "Does this study involve labs/pathology?"
+    = f.radio_button :involves_labs_pathology, true, :checked => @medical_service.involves_labs_pathology 
+    = f.label :involves_labs_pathology_true, "Yes"
+    = f.radio_button :involves_labs_pathology, false, :checked => !@medical_service.involves_labs_pathology
+    = f.label :involves_labs_pathology_false, "No" 
+    %br
+    = f.label :involves_imaging, "Does this study involve imaging?"
+    = f.radio_button :involves_imaging, true, :checked => @medical_service.involves_imaging 
+    = f.label :involves_imaging_true, "Yes"
+    = f.radio_button :involves_imaging, false, :checked => !@medical_service.involves_imaging
+    = f.label :involves_imaging_false, "No" 
+
     %h4 Study contact for questions
     %p 
       Please enter a person/office to contact for further questions about the information you have provided in this form. Follow-up may be necessary.
-      = f.input :contact_name, :label => "First and last name"
-      = f.input :contact_email, :label => "E-mail"
-      = f.input :contact_phone, :label => "Phone number"
+    = f.label :contact_name, "Name of person/office"
+    = f.text_field :contact_name, :size => 20 
+    &nbsp;
+    = f.label :contact_email, "Email"
+    = f.text_field :contact_email, :size => 30
+    &nbsp;
+    = f.label :contact_phone, "Phone"
+    = f.text_field :contact_phone, :size => 10
 
     %h4.save
       = f.submit "Save form"
 
-    .help
-      For service form help:
-      = service_help_person.html_safe
-
-
-    
+  .help
+    For service form help:
+    = service_help_person.html_safe

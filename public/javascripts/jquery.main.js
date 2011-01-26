@@ -6,6 +6,17 @@ $(document).ready(function() {
   //  var f= $("#service_studies").serialize();
   //});
 
+  //Study service forms
+  //$("#medical_service_uses_services_before_completed_true").click(function(){
+  //  $("#d1").fadeIn('slow');
+  //});
+  // Also, if checked is the saved state
+
+  //$("#medical_service_expects_bedded_inpatients_true").click(function(){
+  //  $("#d2").fadeIn('slow');
+  //});
+  // Also, if checked is teh saved state
+
   // flash messages
   $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
 

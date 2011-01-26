@@ -7,7 +7,6 @@ gem "compass", '~> 0.8.0'
 gem "capistrano", '~> 2.5.0'
 gem "fastthread"
 gem 'erubis'
-gem "formtastic"
 
 # External services
 gem "soap4r", '>=1.5.8'
