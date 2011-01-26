@@ -67,8 +67,7 @@ describe MedicalService do
       c1.completed_at.should_not be_nil
   end
 
-  it "should work for both these test cases (pulled from real expamles which caused crash)" do
-  #{"medical_service":{"completed_at":null,"bedded_inpatient_days_research":null,"current_enrollment":2,"created_at":"2011-01-26T07:48:32Z","contact_name":null,"expected_enrollment":null,"updated_at":"2011-01-26T07:54:53Z","expected_clinical_services":null,"expects_bedded_outpatients":null,"expects_bedded_inpatients":null,"id":1,"study_id":4631,"involves_pharmacy":null,"involves_labs_pathology":null,"involves_imaging":null,"contact_phone":null,"uses_services_before_completed":null,"contact_email":null,"bedded_inpatient_days_standard_care":null}}
+  it "should work for this test case (pulled from real expamles which caused crash)" do
   #{"medical_service":{"completed_at":null,
     #"bedded_inpatient_days_research":null,
     #"current_enrollment":2000,
