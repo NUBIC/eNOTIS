@@ -50,21 +50,21 @@
         = f.text_field :bedded_inpatient_days_standard_care, :size => 5, :maxlength => 10
         
     = f.label :involves_pharmacy, "Does this study involve pharmacy?"
-    = f.radio_button :involves_pharmacy, true, :checked => @medical_service.involves_pharmacy 
+    = f.radio_button :involves_pharmacy, true, :checked => @medical_service.involves_pharmacy == true
     = f.label :involves_pharmacy_true, "Yes"
-    = f.radio_button :involves_pharmacy, false, :checked => !@medical_service.involves_pharmacy
+    = f.radio_button :involves_pharmacy, false, :checked => @medical_service.involves_pharmacy == false
     = f.label :involves_pharmacy_false, "No" 
     %br
     = f.label :involves_labs_pathology, "Does this study involve labs/pathology?"
-    = f.radio_button :involves_labs_pathology, true, :checked => @medical_service.involves_labs_pathology 
+    = f.radio_button :involves_labs_pathology, true, :checked => @medical_service.involves_labs_pathology == true
     = f.label :involves_labs_pathology_true, "Yes"
-    = f.radio_button :involves_labs_pathology, false, :checked => !@medical_service.involves_labs_pathology
+    = f.radio_button :involves_labs_pathology, false, :checked => @medical_service.involves_labs_pathology == false
     = f.label :involves_labs_pathology_false, "No" 
     %br
     = f.label :involves_imaging, "Does this study involve imaging?"
-    = f.radio_button :involves_imaging, true, :checked => @medical_service.involves_imaging 
+    = f.radio_button :involves_imaging, true, :checked => @medical_service.involves_imaging == true
     = f.label :involves_imaging_true, "Yes"
-    = f.radio_button :involves_imaging, false, :checked => !@medical_service.involves_imaging
+    = f.radio_button :involves_imaging, false, :checked => @medical_service.involves_imaging == false
     = f.label :involves_imaging_false, "No" 
 
     %h4 Study contact for questions
