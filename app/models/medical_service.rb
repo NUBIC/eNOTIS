@@ -1,7 +1,7 @@
 class MedicalService < ActiveRecord::Base
   belongs_to :study
 
-#  before_save :set_date_if_complete
+  before_save :set_date_if_complete
   
   def set_date_if_complete
     if self.completed?
@@ -13,16 +13,17 @@ class MedicalService < ActiveRecord::Base
   def completed? 
 
     #checking for nils
-    base_nils = self.current_enrollment.nil? and 
-    self.expected_enrollment.nil? and 
-    self.expected_clinical_services.nil? and 
+    # True if any nils
+    base_nils = self.current_enrollment.nil? ||
+    self.expected_enrollment.nil? ||
+    self.expected_clinical_services.nil? || 
     self.uses_services_before_completed.nil?
-    
+
     #cheking for positive ints
-    top_nums = self.current_enrollment >= 0 and 
-      self.expected_enrollment >= 0 and 
-      self.expected_clinical_services >= 0 unless base_nils
- 
+    top_nums = (self.current_enrollment >= 0 && 
+      self.expected_enrollment >= 0 && 
+      self.expected_clinical_services >= 0) unless base_nils 
+
     if !base_nils and top_nums and 
       self.uses_services_before_completed == false
       return true
@@ -30,21 +31,21 @@ class MedicalService < ActiveRecord::Base
       self.uses_services_before_completed == true
       
       #checking for nils
-      sub_nils = self.expects_bedded_outpatients.nil? and
-      self.expects_bedded_inpatients.nil? and 
-      self.involves_pharmacy.nil? and
-      self.involves_labs_pathology.nil? and
+      sub_nils = self.expects_bedded_outpatients.nil? ||
+      self.expects_bedded_inpatients.nil? || 
+      self.involves_pharmacy.nil? ||
+      self.involves_labs_pathology.nil? ||
       self.involves_imaging.nil?
 
-      if !sub_nils and 
+      if !sub_nils && 
         self.expects_bedded_inpatients == false
         return true
-      elsif !sub_nils and
+      elsif !sub_nils &&
         self.expects_bedded_inpatients == true
         
-        if !self.bedded_inpatient_days_research.nil? and
-          self.bedded_inpatient_days_research >= 0 and
-          !self.bedded_inpatient_days_standard_care.nil? and 
+        if !self.bedded_inpatient_days_research.nil? &&
+          self.bedded_inpatient_days_research >= 0 &&
+          !self.bedded_inpatient_days_standard_care.nil? && 
           self.bedded_inpatient_days_standard_care >= 0
           return true
         end
