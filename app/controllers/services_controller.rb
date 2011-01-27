@@ -4,6 +4,9 @@ class ServicesController < ApplicationController
   # Authorization
   include Bcsec::Rails::SecuredController
   permit :user
+   
+  # Auditing
+  has_view_trail  
   
   def index
     @title = "Medical Services"

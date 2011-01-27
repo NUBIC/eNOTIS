@@ -2,7 +2,10 @@ class MedicalService < ActiveRecord::Base
   belongs_to :study
 
   before_save :set_date_if_complete
-  
+ 
+  # Mixins
+  has_paper_trail
+
   def set_date_if_complete
     if self.completed?
       self.completed_at = Time.now
