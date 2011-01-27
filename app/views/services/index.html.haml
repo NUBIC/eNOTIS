@@ -2,13 +2,21 @@
 %h3
   Dear Clinical Research Investigator
 %p
-  Having an accurate account of all studies using clinical services and information about those services is critical for the university as well as our clinical partners. To identify those studies and build up the necessary data to notify our clinical partners of research-related services in a timely and compliant manner, we ask that you please complete the accompanying survey for each of your current studies. To reduce the burden on any one individual and streamline the process of answering the survey, you may delegate some or all of this activity by sharing the URLs for a study with your study personnel and/or financial staff. Taking the survey will require a valid Northwestern netid, and the survey can be saved at any point and reviewed or continued by anyone using the URL. The identity of each individual viewing and answering the survey will be tracked, but please do safeguard the URL. No patient identifiers are requested as part of the survey.
+  Having an accurate account of all studies using clinical services and information about those services is
+  critical for the university as well as our clinical partners. To identify those studies and build up the necessary 
+  data to notify our clinical partners of research-related services in a timely and compliant manner, we ask that you
+  please complete the accompanying form for each of your current studies. To reduce the burden on any one individual and
+  streamline the process of answering the survey, you may delegate some or all of this activity by sharing the URLs for
+  a study with your study personnel and/or financial staff. Filling out the form will require a valid Northwestern netid, 
+  and the form can be saved at any point and reviewed or continued by anyone using the URL. The identity of each individual
+  viewing and answering the form will be tracked, but please do safeguard the URL. No patient identifiers are requested as 
+  part of the form.
 %p
-  Please note that the link to the study-specific survey is NOT the URL of this page. A specific survey looks like:
+  Please note that the link to the study-specific form is NOT the URL of this page. A specific form looks like:
   <a href="#">https://enotis.northwestern.edu/services/STU00XXXXXX/edit</a>
-  where STU00XXXXXX is the IRB study number for the study. You will be able to copy and share the link to the survey page once you 
-  have answered the following questions and submitted. 
-  You will be able to copy the URL for each study survey from the link list below. 
+  where STU00XXXXXX is the IRB study number for the study. You will be able to copy and share the link to the form page once you 
+  have answered the following questions and clicked &quot;Submit Answers&quot;. 
+  You will be able to copy the URL for each study form from the link list below. 
   All of your staff and co-investigators with access to your study can use the 
   <a href="https://enotis.northwestern.edu/services/">https://enotis.northwestern.edu/services/</a> link to find the study as well.
 %h3 
@@ -44,20 +52,21 @@
       -if @not_reported_yet
         =submit_tag("Submit Answers")
       -else
-        =submit_tag("Update Answers and Study Survey List")
+        =submit_tag("Update Answers and Study List")
 
 #reportable_studies
   - if @not_reported_yet
-    Please answer all the questions above and click on &quot;Submit Answers&quot;. The studies which require additional information will appear below.
+    Please answer all the questions above and click on &quot;Submit Answers&quot;. The studies which
+    require additional information will appear below.
   - else  
     = render(:partial => "reportable_studies", :locals => {:studies => @service_studies})
   %br
   %h3
     -if @done
-      Thanks for finishing your study service surveys! You are all done.
+      Thanks for finishing your study service forms! You are all done.
 
 #shared_links
-  Shareable survey links:
+  Shareable form links:
   %br
   %em (You can copy and paste these links into an email)
   %br

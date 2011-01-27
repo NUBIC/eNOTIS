@@ -41,6 +41,7 @@ Rails::Initializer.run do |config|
 
   # Email setup
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_content_type = "text/html"
   config.action_mailer.smtp_settings = {
     :address => "ns.northwestern.edu",
     :port => 25,

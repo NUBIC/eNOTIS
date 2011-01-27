@@ -6,7 +6,7 @@ class ServicesController < ApplicationController
   permit :user
   
   def index
-    @title = "Medical Services Surveys"
+    @title = "Medical Services"
     all_studies = current_user ? current_user.studies : []
     @studies = all_studies.reject{|s| !s.closed_or_completed_date.nil? }
     @not_reported_yet = !@studies.select{|s| s.uses_medical_services.nil?}.empty?
@@ -21,16 +21,16 @@ class ServicesController < ApplicationController
   def edit
     @study = Study.find_by_irb_number(params[:id])
     return redirect_to services_path unless @study
-    @title = "Medical Services Survey for #{@study}"
+    @title = "Medical Services Form :: #{@study}"
     @medical_service = @study.medical_service || @study.create_medical_service
   end
 
   def update
     if params[:medical_service][:id]
       MedicalService.update(params[:medical_service][:id],params[:medical_service])
-      flash[:notice] = "Updated Medical Services Survey"
+      flash[:notice] = "Updated Medical Services Form"
     else
-      flash[:notice] = "Missing Service form ID"
+      flash[:notice] = "Missing Service Form ID"
     end
     redirect_to services_path
   end
