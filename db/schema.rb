@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101130173649) do
+ActiveRecord::Schema.define(:version => 20110120214455) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -84,6 +84,27 @@ ActiveRecord::Schema.define(:version => 20101130173649) do
 
   # unrecognized index "involvements_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
+  create_table "medical_services", :force => true do |t|
+    t.integer  "study_id"
+    t.boolean  "uses_services_before_completed"
+    t.integer  "current_enrollment"
+    t.integer  "expected_enrollment"
+    t.integer  "expected_clinical_services"
+    t.boolean  "expects_bedded_outpatients"
+    t.boolean  "expects_bedded_inpatients"
+    t.integer  "bedded_inpatient_days_research"
+    t.integer  "bedded_inpatient_days_standard_care"
+    t.boolean  "involves_pharmacy"
+    t.boolean  "involves_labs_pathology"
+    t.boolean  "involves_imaging"
+    t.string   "contact_name"
+    t.string   "contact_email"
+    t.string   "contact_phone"
+    t.datetime "completed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "resource_statuses", :force => true do |t|
     t.string   "name",       :null => false
     t.boolean  "status"
@@ -137,6 +158,7 @@ ActiveRecord::Schema.define(:version => 20101130173649) do
     t.text     "description"
     t.boolean  "read_only"
     t.string   "read_only_msg"
+    t.boolean  "uses_medical_services"
   end
 
   # unrecognized index "studies_irb_number_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition

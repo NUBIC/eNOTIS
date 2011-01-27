@@ -1,0 +1,23 @@
+- if studies.empty?
+  Based on your answers above you do not need to report services on any studies. If you make changes to the answers above click on the &quot;Update Form and Reporting List&quot; button to refresh your study reporting list.
+- else  
+  Based on your answers above you need to report services on the following studies:
+  %fieldset
+    %legend Reporting List
+    %ul
+      - studies.each do |study|
+        %li
+          .study_name
+            - unless study.medical_service.nil?
+              = study.medical_service.completed? ? "[Completed]" : "[Incomplete - Please Finish]"
+            - else
+              [Please Report Services]
+            = study.irb_number
+            &mdash;
+            = study.name
+          .study_button
+            - unless study.medical_service
+              = button_to "Report Services", edit_service_path(study), :method => :get
+            - else
+              - stat = study.medical_service.completed? ? "Update Form" : "Click Here to Finish"
+              = button_to "#{stat}", edit_service_path(study), :method => :get

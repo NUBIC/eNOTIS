@@ -4,6 +4,43 @@ var timeoutExpiredTimer;
 var importTable; // global variable to keep track of import data table, preventing reinitialization
 
 $(document).ready(function() {
+ 
+  //Study service forms
+  $("#medical_service_uses_services_before_completed_true").click(function(){
+    $("#d1").fadeIn('slow');
+  });
+  $("#medical_service_uses_services_before_completed_false").click(function(){
+    $("#d1").fadeOut('slow');
+  });
+   //Also, if checked is the saved state
+  var d1 = $("#medical_service_uses_services_before_completed_true").attr("checked");
+  if (d1 === true){
+    $("#d1").fadeIn('slow');
+  }
+
+  $("#medical_service_expects_bedded_inpatients_true").click(function(){
+    $("#d2").fadeIn('slow');
+  });
+  $("#medical_service_expects_bedded_inpatients_false").click(function(){
+    $("#d2").fadeOut('slow');
+  });  
+  // Also, if checked is teh saved state
+  var d2 = $("#medical_service_expects_bedded_inpatients_true").attr("checked");
+  if (d2 === true){
+    $("#d2").fadeIn('slow');
+  }
+
+  // The service bedding description overlay
+  $("#bedded_helper_link").click(function(){
+    $("#bedded_description").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }, api: true }).load(); 
+  });
+
+  //update button activation
+  $("#service_studies input[type=submit]").attr('disabled', true);
+  $(".radios :input").click(function(){
+    $("#service_studies input[type=submit]").attr('disabled', false);
+  });
+
   // flash messages
   $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
 

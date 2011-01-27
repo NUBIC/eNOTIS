@@ -40,7 +40,7 @@ gem "bcdatabase"
 gem "bcsec", '~>2.0'
 gem "bcsec-rails", '~> 2.0'
 
-#Authorization
+# Authorization
 gem "cancan"
 
 # EMPI
