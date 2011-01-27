@@ -46,9 +46,19 @@
         =submit_tag("Submit Form")
       -else
         =submit_tag("Update Form and Reporting List")
-       
+
 #reportable_studies
   - if @not_reported_yet
-    Based on your answers above you may have to fill out additional reports. Click on &quot;Submit Form&quot; above to check.
+    Please answer all the questions above and click on &quot;Submit Form&quot;. The studies which need additional information will appear below.
   - else  
     = render(:partial => "reportable_studies", :locals => {:studies => @service_studies})
+  %br
+  %h3
+    -if @done
+      Thanks for finishing your study service reports! You are all done.
+
+.help
+  For help wih filling out this form or related questions:
+  %br
+  = service_help_person.html_safe
+
