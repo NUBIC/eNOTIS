@@ -3,10 +3,6 @@
     = link_to "My studies", services_path
     &gt; 
     = @study.irb_number
-  #direct_link
-    Shareable link to this form:
-    %br
-    = link_to(edit_service_url(@study),edit_service_url(@study))
   %h3 
     For the Study:
     %span.study_name
@@ -98,7 +94,12 @@
     
       %li.save
         = f.submit "Save form"
-    
+  
+  #direct_link
+    Shareable link to this form:
+    %br
+    = link_to(edit_service_url(@study),edit_service_url(@study))
+
   .help
     For help with filling out this form or questions:
     %br
