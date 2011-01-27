@@ -29,7 +29,7 @@ class Notifier < ActionMailer::Base
   def pi_service_form(pi_email, sent_by)
     from sent_by
     recipients pi_email
-    subject "Deadline Feb. 4th - Medical Services Form for Clinical Research"
+    subject "Identification of Research Studies making use of medical services"
     body 
   end
 
