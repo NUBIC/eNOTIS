@@ -26,6 +26,10 @@ $(document).ready(function() {
     $("#d2").fadeIn('slow');
   }
 
+  // The service bedding description overlay
+  $("#bedded_helper_link").click(function(){
+    $("#bedded_description").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }, api: true }).load(); 
+  });
 
   //update button activation
   $("#service_studies input[type=submit]").attr('disabled', true);

@@ -4,22 +4,21 @@
   h3, h4, h5
     :margin-top 20px
   form
-    :font-size 1.1em
-    input[type=text]
-      :margin-left 10px
+    :font-size 1.2em
+
+    ul
+      :list-style-type none
+
+    li
+      :padding 0.4em 0.2em
+
+    em
+      :display block
+      :font-size 0.8em
+      :color #666
+
     .dependent
       :margin-left 20px
-    #medical_service_current_enrollment, #medical_service_expected_enrollment, #medical_service_expected_clinical_services, #medical_service_bedded_inpatient_days_research, #medical_service_bedded_inpatient_days_standard_care
-      :width 40px
-    fieldset
-      :clear both
-      legend, ol
-        :float left
-      ol, ol li
-        :display inline
-    #medical_service_contact_name_input, #medical_service_contact_email_input, #medical_service_contact_phone_input
-      :display inline
-      :margin-right 10px
 
     input[type=submit]
       :float right
@@ -42,9 +41,8 @@
   em
     :display block
     :font-size 0.8em
-    :text-align right
     :padding-bottom 1em
-    :float right
+    :color #666
   ul
     :list-style-type none
     
@@ -85,4 +83,7 @@
 
 .dependent
   :display none
-  
+
+#bedded_description
+  table
+    :width 60em
