@@ -25,4 +25,9 @@ class Notifier < ActionMailer::Base
     subject "[Resque] eNOTIS Daily Job Failure Count - #{Rails.env}"
     body "#{Resque::Failure.count} jobs failed today on eNOTIS #{Rails.env}"
   end
+
+  def pi_service_forms(pi_name, pi_email, studies)
+
+  end
+
 end
