@@ -15,6 +15,7 @@
             = study.irb_number
             &mdash;
             = study.name
+
           .study_button
             - unless study.medical_service
               = button_to "Report Services", edit_service_path(study), :method => :get

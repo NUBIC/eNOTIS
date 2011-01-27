@@ -1,15 +1,19 @@
 #services_form
-  %p
+  #crumbs
     = link_to "My studies", services_path
     &gt; 
     = @study.irb_number
+  #direct_link
+    Shareable link to this form:
+    %br
+    = link_to(edit_service_url(@study),edit_service_url(@study))
   %h3 
     For the Study:
     %span.study_name
       = @study.irb_number
       &mdash;
       = @study.name
-    
+
   %h3 Please answer the questions below:
     
   - form_for @medical_service, :url => services_path + "/#{@study.irb_number}", :html => { :method => :put } do |f|
