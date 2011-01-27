@@ -7,7 +7,8 @@ class ServicesController < ApplicationController
   
   def index
     @title = "Medical Services"
-    @studies = current_user ? current_user.studies : []
+    all_studies = current_user ? current_user.studies : []
+    @studies = all_studies.reject{|s| !s.closed_or_completed_date.nil? }
     @not_reported_yet = !@studies.select{|s| s.uses_medical_services.nil?}.empty?
     @service_studies = @studies.select{|s| s.uses_medical_services == true }
     # Done when all @service_studies have completed medical_services forms

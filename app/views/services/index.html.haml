@@ -40,7 +40,10 @@
               .study_status
                 = study.irb_status
                 &nbsp;
-                = study.approved_date.strftime("%m/%d/%Y")
+                - if study.approved_date
+                  = study.approved_date.strftime("%m/%d/%Y")
+                - else
+                  "??/??/????"
       %em * NOTE: Medical Services are pharmacy, lab, pathology, imaging, hospitalization, outpatient services, or any other service.      
       -if @not_reported_yet
         =submit_tag("Submit Form")

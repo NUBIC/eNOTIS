@@ -1,4 +1,4 @@
-Feature: Upload subjects
+Feature: Report services 
   In order to update NMH services
   As a PI
   I want to add services to a study
