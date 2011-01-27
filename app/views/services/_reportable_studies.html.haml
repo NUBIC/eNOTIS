@@ -1,7 +1,7 @@
 - if studies.empty?
-  Based on your answers above you do not need to report services on any studies. If you make changes to the answers above click on the &quot;Update Form and Reporting List&quot; button to refresh your study reporting list.
+  Based on your answers above you do not need fill out any study service surveys. If you make changes to the answers above click on the &quot;Update Form and Reporting List&quot; button to refresh your study reporting list.
 - else  
-  Based on your answers above you need to report services on the following studies:
+  Based on your answers above you need to fill out service surveys on the following studies:
   %fieldset
     %legend Reporting List
     %ul
@@ -20,5 +20,5 @@
             - unless study.medical_service
               = button_to "Report Services", edit_service_path(study), :method => :get
             - else
-              - stat = study.medical_service.completed? ? "Update Form" : "Click Here to Finish"
+              - stat = study.medical_service.completed? ? "Update Survey" : "Click Here to Finish"
               = button_to "#{stat}", edit_service_path(study), :method => :get

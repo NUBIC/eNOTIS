@@ -42,22 +42,22 @@
                   "??/??/????"
       %em * NOTE: Medical Services are pharmacy, lab, pathology, imaging, hospitalization, outpatient services, or any other service.      
       -if @not_reported_yet
-        =submit_tag("Submit Form")
+        =submit_tag("Submit Answers")
       -else
-        =submit_tag("Update Form and Reporting List")
+        =submit_tag("Update Answers and Study Survey List")
 
 #reportable_studies
   - if @not_reported_yet
-    Please answer all the questions above and click on &quot;Submit Form&quot;. The studies which need additional information will appear below.
+    Please answer all the questions above and click on &quot;Submit Answers&quot;. The studies which require additional information will appear below.
   - else  
     = render(:partial => "reportable_studies", :locals => {:studies => @service_studies})
   %br
   %h3
     -if @done
-      Thanks for finishing your study service reports! You are all done.
+      Thanks for finishing your study service surveys! You are all done.
 
 #shared_links
-  Shareable form links:
+  Shareable survey links:
   %br
   %em (You can copy and paste these links into an email)
   %br
@@ -68,7 +68,7 @@
 
 
 .help
-  For help wih filling out this form or related questions:
+  For help with this page or related questions:
   %br
   = service_help_person.html_safe
 

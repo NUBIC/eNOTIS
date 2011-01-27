@@ -81,7 +81,7 @@
         = f.label :involves_imaging_false, "No" 
 
       %li
-        Please enter a person/office to contact for further questions about the information you have provided in this form.
+        Please enter a person/office to contact for further questions about the information you have provided in this survey.
         %br
         = f.label :contact_name, "Name of person/office"
         = f.text_field :contact_name, :size => 20 
@@ -93,15 +93,15 @@
         = f.text_field :contact_phone, :size => 10
     
       %li.save
-        = f.submit "Save form"
+        = f.submit "Save Survey"
   
   #direct_link
-    Shareable link to this form:
+    Shareable link to this survey:
     %br
     = link_to(edit_service_url(@study),edit_service_url(@study))
 
   .help
-    For help with filling out this form or questions:
+    For help with filling out this survey or questions:
     %br
     = service_help_person.html_safe
 

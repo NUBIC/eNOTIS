@@ -26,7 +26,7 @@ class Notifier < ActionMailer::Base
     body "#{Resque::Failure.count} jobs failed today on eNOTIS #{Rails.env}"
   end
 
-  def pi_service_forms(pi_email, sent_by)
+  def pi_service_form(pi_email, sent_by)
     from sent_by
     recipients pi_email
     subject "Deadline Feb. 4th - Medical Services Report for Clinical Research"
