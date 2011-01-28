@@ -54,14 +54,14 @@ namespace :emailer do
       pi = User.find_by_netid(netid)
       if pi.email.nil? or pi.email.empty?
         puts "#{pi.netid} HAS NO EMAIL!!!!"
-        not_sent_list << "#{pi.netid} has no email"
+        not_sent_list << "#{pi.netid} has no email\n"
       else
         if Rails.env.production?
           Notifier.deliver_pi_service_form(pi.email)
         else
           puts "Would have sent email to #{pi.email} if this was prod"
         end
-        sent_list << "Sent to #{pi.email} on #{Time.now}"
+        sent_list << "Sent to #{pi.email} on #{Time.now}\n"
       end
     end
 
