@@ -40,7 +40,6 @@
               = study.irb_number
               &mdash;
               = study.name
-              &nbsp;
               .study_status
                 = study.irb_status
                 &nbsp;
@@ -48,6 +47,11 @@
                   = study.approved_date.strftime("%m/%d/%Y")
                 - else
                   "??/??/????"
+              &nbsp;
+              %em.users_role
+                Your Role:
+                = study.user_roles(current_user.netid).map(&:project_role).join(",")
+              &nbsp;
       %em * NOTE: Medical Services are pharmacy, lab, pathology, imaging, hospitalization, outpatient services, or any other service.      
       -if @not_reported_yet
         =submit_tag("Submit Answers")
@@ -55,22 +59,17 @@
         =submit_tag("Update Answers and Study List")
 
 #reportable_studies
-  - if @not_reported_yet
-    Please answer all the questions above and click on &quot;Submit Answers&quot;. The studies which
-    require additional information will appear below.
-  - else  
-    = render(:partial => "reportable_studies", :locals => {:studies => @service_studies})
+  = render(:partial => "reportable_studies", :locals => {:studies => @service_studies})
   %br
   %h3
     -if @done
       Thanks for finishing your study service forms! You are all done.
-
-#shared_links
-  Shareable form links:
-  %br
-  %em (You can copy and paste these links into an email)
-  %br
-  - unless @not_reported_yet
+- unless @service_studies.empty?
+  #shared_links
+    Shareable form links:
+    %br
+    %em (You can copy and paste these links into an email)
+    %br
     - @service_studies.each do |s|
       = link_to(edit_service_url(s),edit_service_url(s))
       %br

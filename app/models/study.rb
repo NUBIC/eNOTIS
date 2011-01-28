@@ -119,7 +119,11 @@ class Study < ActiveRecord::Base
   def principal_investigator
     roles.detect{|x| x.project_role =~ /P\.?I\.?|Principal Investigator/i}
   end
-  
+ 
+  def user_roles(netid)
+    roles.select{|x| x.netid == netid}
+  end
+
   #TODO: This is a temporary fix -BLC
   # We need to phase out these named roles for a more binary authorization
   # for can_accrue ==true (ie view/edit patients) vs can_accrue ==false (can only view)
