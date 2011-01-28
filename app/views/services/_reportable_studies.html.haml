@@ -10,7 +10,12 @@
         %li
           .study_name
             - unless study.medical_service.nil?
-              = study.medical_service.completed? ? "[Completed]" : "[Incomplete - Please Finish]"
+              - if study.medical_service.completed?
+                .completed_status
+                  [Completed] 
+              - else
+                .incomplete_status
+                  [Incomplete - Please Finish]
             - else
               [Please Report Services]
             = study.irb_number
