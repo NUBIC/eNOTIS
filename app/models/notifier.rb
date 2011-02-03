@@ -34,4 +34,11 @@ class Notifier < ActionMailer::Base
     body 
   end
 
+  def proxy_service_form(to_emails, email_data)
+    from "enotis@northwestern.edu"
+    reply_to "enotis@northwestern.edu"
+    recipients to_emails
+    subject "Identification of Research Studies making use of medical servcies"
+    body :email_data => email_data
+  end
 end

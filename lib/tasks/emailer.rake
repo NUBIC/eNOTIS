@@ -20,14 +20,7 @@ namespace :emailer do
     proxies = load_proxy_file 
     
     # Collect netids of people who have proxies
-    prox_nets = []
-    proxies.each do |group|
-      group["user_list"].each do |u_str|
-        prox_nets << u_str.split(", ")[1]
-      end
-    end
-    
-    prox_nets.uniq! # There might be overlap
+    prox_nets = get_proxy_netids(proxies)
 
     puts "Removing proxied PIs"
     # Flag the PI's who have email proxys 
@@ -65,18 +58,40 @@ namespace :emailer do
 
   desc 'email proxy people the serivce form'
   task :proxy_email => :environment do
-
-    # Get our studies
-    # Get our pi_netids 
+    manifest_list = [] 
+    # Get studies from our custom list
+    studies = get_studies
     # load proxies
-    # for each proxy netid
-    # look up this net in our studies list
-    # if found, 
-    # grab all their studies
-    # build email body
-    # send email
-    # report sending and copy of email body sent in manifest
+    proxies = load_proxy_file
+    # for each proxy group
+    proxies.each do |proxy|
 
+      email_data = {} # collection of PIs and their studies for these proxy peoples
+      proxy["user_list"].each do |pi_str|
+        netid = pi_str.split(", ")[1]
+        # grab all their studies
+        pi_studies = studies.select{ |s| s.principal_investigator && s.principal_investigator.netid == netid}
+        # build email data
+        email_data[netid] = {
+          :name => pi_str 
+          :studies => pi_studies.map(&:irb_number)
+        }
+      end
+
+      # send email
+      if Rails.env.production?
+        Notifier.deliver_proxy_service_form(proxy["to"],email_data)
+      elsif Rails.env.staging?
+        Notifier.deliver_proxy_service_form("b-chamberlain@northwestern.edu",email_data)
+      else
+        puts "Would have sent email to #{proxy["to"]} if this was prod"
+      end
+      #recording the results
+      manifest_list << {:to => proxy["to"], :payload => email_data}
+    end #proxies.each
+
+    # report sending and copy of email body sent in manifest 
+    manifest_file("proxy_processing_results"){|f| f << YAML::dump(manifest_list)}
   end
 
   # HELPER METHODS ##################################################
@@ -95,6 +110,16 @@ namespace :emailer do
     pis.reject!{|p| p.nil?} #not sure why we have nils in there!!!!!
     uniq_pi_nets = pis.map(&:netid).uniq
     return uniq_pi_nets
+  end
+
+  def get_proxy_netids(proxies)
+    prox_nets = []
+    proxies.each do |group|
+      group["user_list"].each do |u_str|
+        prox_nets << u_str.split(", ")[1]
+      end
+    end
+    prox_nets.uniq! # There might be overlap
   end
 
   def get_studies
