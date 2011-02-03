@@ -51,7 +51,7 @@ module UsersToPers
     end
   end
 
-  def self.insert_user_into_cc_pers(netid, attrs)
+  def self.insert_user_into_cc_pers(netid, attrs, role = "User")
     unless Pers::Person.find_by_username_or_id(netid)
       u = Pers::Person.new(attrs.merge({:username => netid, :entered_by => "enotis-application"}))
       if u.save
@@ -66,8 +66,8 @@ module UsersToPers
         login.portal_name = PORTAL # can't be bulk set
         login.save
     end
-    unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(netid, PORTAL, "User")
-      Pers::GroupMembership.create(:username => netid, :group_name => "User", :portal => PORTAL)
+    unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(netid, PORTAL, role)
+      Pers::GroupMembership.create(:username => netid, :group_name => role, :portal => PORTAL)
     end
   end
   
