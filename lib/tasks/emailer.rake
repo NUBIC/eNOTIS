@@ -65,7 +65,7 @@ namespace :emailer do
     proxies = load_proxy_file
     # for each proxy group
     proxies.each do |proxy|
-
+      puts "Processing PIs and studies for #{proxy["to"]}... #{proxy["user_list"].count} of them"
       email_data = {} # collection of PIs and their studies for these proxy peoples
       proxy["user_list"].each do |pi_str|
         netid = pi_str.split(", ")[1]
@@ -73,7 +73,7 @@ namespace :emailer do
         pi_studies = studies.select{ |s| s.principal_investigator && s.principal_investigator.netid == netid}
         # build email data
         email_data[netid] = {
-          :name => pi_str 
+          :name => pi_str,
           :studies => pi_studies.map(&:irb_number)
         }
       end
@@ -86,6 +86,7 @@ namespace :emailer do
       else
         puts "Would have sent email to #{proxy["to"]} if this was prod"
       end
+      puts "Recording results..."
       #recording the results
       manifest_list << {:to => proxy["to"], :payload => email_data}
     end #proxies.each
@@ -131,9 +132,10 @@ namespace :emailer do
 
   def manifest_file(name, &block)
     ts = Time.now.strftime("%Y%m%d%H%M") 
-    file = File.open("#{name}-#{ts}.csv",'w') 
+    file = File.open("log/#{name}-#{ts}.csv",'w') 
     yield file
     file.close
+    puts "We wrote #{name}-#{ts}.csv"
   end
 
 end

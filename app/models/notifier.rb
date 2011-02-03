@@ -1,8 +1,7 @@
 class Notifier < ActionMailer::Base
     
   def support_email
-    # %w(eNOTISsupport@northwestern.edu)
-    "d-were@northwestern.edu"
+    %w(eNOTISsupport@northwestern.edu)
   end
 
   def service_status_notification(service)
