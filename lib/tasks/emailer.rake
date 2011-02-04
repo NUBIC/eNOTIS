@@ -56,43 +56,33 @@ namespace :emailer do
     # Done!
   end
 
-  desc 'email proxy people the serivce form'
-  task :proxy_email => :environment do
+  desc 'generate proxy lookup file'
+  task :proxy_lookup => :environment do
     manifest_list = [] 
     # Get studies from our custom list
     studies = get_studies
     # load proxies
     proxies = load_proxy_file
     # for each proxy group
+    proxy_lookup_data = [] # collection of PIs and their studies for these proxy peoples
+
     proxies.each do |proxy|
       puts "Processing PIs and studies for #{proxy["to"]}... #{proxy["user_list"].count} of them"
-      email_data = {} # collection of PIs and their studies for these proxy peoples
+      study_proxies = {}
+      study_proxies[:proxies] = proxy["netids"]
+      study_proxies[:studies] = []
       proxy["user_list"].each do |pi_str|
         netid = pi_str.split(", ")[1]
         # grab all their studies
         pi_studies = studies.select{ |s| s.principal_investigator && s.principal_investigator.netid == netid}
-        # build email data
-        email_data[netid] = {
-          :name => pi_str,
-          :studies => pi_studies.map(&:irb_number)
-        }
+        study_proxies[:studies] << pi_studies.map(&:irb_number)
       end
-
-      # send email
-      if Rails.env.production?
-        Notifier.deliver_proxy_service_form(proxy["to"],email_data)
-      elsif Rails.env.staging?
-        Notifier.deliver_proxy_service_form("b-chamberlain@northwestern.edu",email_data)
-      else
-        puts "Would have sent email to #{proxy["to"]} if this was prod"
-      end
-      puts "Recording results..."
-      #recording the results
-      manifest_list << {:to => proxy["to"], :payload => email_data}
+      study_proxies[:studies].flatten!
+      proxy_lookup_data << study_proxies 
     end #proxies.each
-
-    # report sending and copy of email body sent in manifest 
-    manifest_file("proxy_processing_results"){|f| f << YAML::dump(manifest_list)}
+    File.open(File.join(File.dirname(__FILE__),"../","proxy_study_list.yaml"),"w") do |f|
+       f << YAML.dump(proxy_lookup_data) 
+    end
   end
 
   desc 'add proxy email people as OVERSIGHT role in cc_pers'
@@ -147,8 +137,7 @@ namespace :emailer do
   def get_studies
     # Get studies based on our critera
     puts "Getting studies based on our critera"
-    studies = Study.find(:all, :conditions => "irb_status not in ('Closed/Terminated', 'Rejected','Exempt Review: Awaiting Correspondence', 'Exempt Approved', 'Exempt Review: Changes Requested', 'In Expedited Review')")
-    studies.reject{|s| !s.closed_or_completed_date.nil? }
+    studies = Study.find(:all, :conditions => "closed_or_completed_date is null and irb_status not in ('Closed/Terminated', 'Rejected','Exempt Review: Awaiting Correspondence', 'Exempt Approved', 'Exempt Review: Changes Requested', 'In Expedited Review')")
   end
 
   def manifest_file(name, &block)

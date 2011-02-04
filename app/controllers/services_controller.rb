@@ -11,6 +11,10 @@ class ServicesController < ApplicationController
   def index
     @title = "Medical Services"
     all_studies = current_user ? current_user.studies : []
+    if current_user.permit?(:oversight)
+      # Look up user in oversight list
+      
+    end
     @studies = all_studies.reject{|s| !s.closed_or_completed_date.nil? }
     @service_studies = @studies.select{|s| s.uses_medical_services == true } || []
     # Done when all @service_studies have completed medical_services forms

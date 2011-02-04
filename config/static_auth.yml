@@ -5,7 +5,13 @@ users:
     portals:            # portal & group auth info (optional)
       - eNOTIS:             # A portal with simple groups
         - User
-                
+  
+  bigbro:
+    password: eyes0nU
+    portals:
+      - eNOTIS:
+        - Oversight
+
   adminnie:               # username
     password: secret          # password for :user auth (optional)
     portals:            # portal & group auth info (optional)
