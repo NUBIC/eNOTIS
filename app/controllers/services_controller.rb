@@ -3,7 +3,7 @@ class ServicesController < ApplicationController
 
   # Authorization
   include Bcsec::Rails::SecuredController
-  permit :user
+  permit :user, :oversight
    
   # Auditing
   has_view_trail  
