@@ -8,6 +8,8 @@ Click on the links below to directly access the study service form for each stud
 - @email_data.each_value do |pi_data|
   %p
     %strong
+      PI:
+      &nbsp;
       = pi_data[:name].split(", ")[2]
       &nbsp;
       = pi_data[:name].split(", ")[0]
