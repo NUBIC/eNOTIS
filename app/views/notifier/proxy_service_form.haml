@@ -2,11 +2,12 @@ Hello,
 %br
 You have been designated to fill out the Medical Service forms for the following studies:
 
-- email_data.each_value do |pi_data|
+- @email_data.each_value do |pi_data|
   %p
     %strong
       = pi_data[:name]
   %ul
     - pi_data[:studies].each do |s|
-      = link_to(edit_service_url(s),edit_service_url(s))
+      %a{:href => "https://enotis.northwestern.edu/services/#{s}/edit"}
+        ="enotis.northwestern.edu/services/#{s}/edit"
 
