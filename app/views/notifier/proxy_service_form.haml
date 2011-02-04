@@ -1,13 +1,17 @@
 Hello,
 %br
-You have been designated to fill out the Medical Service forms for the following studies:
-
+You have been designated to fill out the Medical Service forms 
+for the following studies:
+%br
+Click on the links below to directly access the study service form for each study. 
+%br
 - @email_data.each_value do |pi_data|
   %p
     %strong
-      = pi_data[:name]
+      = pi_data[:name].split(", ")[2]
   %ul
     - pi_data[:studies].each do |s|
       %a{:href => "https://enotis.northwestern.edu/services/#{s}/edit"}
-        ="enotis.northwestern.edu/services/#{s}/edit"
+        ="https://enotis.northwestern.edu/services/#{s}/edit"
+      %br
 
