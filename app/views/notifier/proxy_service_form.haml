@@ -6,16 +6,17 @@ for the following studies:
 Click on the links below to directly access the study service form for each study. 
 %br
 - @email_data.each_value do |pi_data|
-  %p
-    %strong
-      PI:
-      &nbsp;
-      = pi_data[:name].split(", ")[2]
-      &nbsp;
-      = pi_data[:name].split(", ")[0]
-  %ul
-    - pi_data[:studies].each do |s|
-      %a{:href => "https://enotis.northwestern.edu/services/#{s}/edit"}
-        ="https://enotis.northwestern.edu/services/#{s}/edit"
-      %br
+  - unless pi_data[:studies].empty?
+    %p
+      %strong
+        PI:
+        &nbsp;
+        = pi_data[:name].split(", ")[2]
+        &nbsp;
+        = pi_data[:name].split(", ")[0]
+    %ul
+      - pi_data[:studies].each do |s|
+        %a{:href => "https://enotis.northwestern.edu/services/#{s}/edit"}
+          ="https://enotis.northwestern.edu/services/#{s}/edit"
+        %br
 
