@@ -95,6 +95,27 @@ namespace :emailer do
     manifest_file("proxy_processing_results"){|f| f << YAML::dump(manifest_list)}
   end
 
+  desc 'add proxy email people as OVERSIGHT role in cc_pers'
+  task :add_proxy_roles => :environment do
+    proxies = load_proxy_file
+    proxies.each do |proxy|
+      proxy["netids"].each do |netid|
+        #look up netid by email
+        found = Bcsec.authority.find_user(netid)
+        # if found, add this person to cc_pers in designated role
+        if found
+          UsersToPers.insert_user_into_cc_pers(found.username, {
+            :first_name => found.first_name,
+            :last_name => found.last_name
+          }, "Oversight")
+          puts "Updated/added #{found.first_name} #{found.last_name}"
+        else
+          puts "Could not find #{netid} by netid lookup in bcsec/ldap"
+        end
+      end
+    end
+  end
+
   # HELPER METHODS ##################################################
 
   def load_proxy_file

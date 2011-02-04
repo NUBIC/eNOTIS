@@ -1,5 +1,6 @@
 -
   to: [monalee-shah@northwestern.edu]
+  netids: [msh227]
   user_list:
     - m-abecassis@northwestern.edu, mabecass, Michael Messod Abecassis
     - t-spanier@md.northwestern.edu, tsp166, Talia Baker
@@ -33,6 +34,7 @@
 
 - 
   to: [l-esker@northwestern.edu, r-riphenburg@northwestern.edu]
+  netids: [lex790, rlr259] 
   user_list:
     - w-small@northwestern.edu, radman, William Small Jr
     - j-altman@md.northwestern.edu, jal286, Jessica Altman
@@ -123,6 +125,7 @@
 
 -
   to: [ahuskin@nmh.org, ssokalsk@nmh.org]
+  netids: []
   user_list:
     - r-arora@northwestern.edu, rka784, Rishi Arora
     - k-benzuly@northwestern.edu, khb653, Keith Benzuly
@@ -160,6 +163,7 @@
 
 -
   to: [dwest@northwestern.edu, m-urbanich@northwestern.edu ]
+  netids: [dwe543, mur631]
   user_list: 
     - apaller@northwestern.edu, apaller, Amy Paller
     - dwest@northwestern.edu, dwe543, Dennis West
