@@ -9,6 +9,8 @@ Click on the links below to directly access the study service form for each stud
   %p
     %strong
       = pi_data[:name].split(", ")[2]
+      &nbsp;
+      = pi_data[:name].split(", ")[0]
   %ul
     - pi_data[:studies].each do |s|
       %a{:href => "https://enotis.northwestern.edu/services/#{s}/edit"}
