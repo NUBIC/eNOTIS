@@ -50,7 +50,11 @@
               &nbsp;
               %em.users_role
                 Your Role:
-                = study.user_roles(current_user.netid).map(&:project_role).join(",")
+                - u_roles = study.user_roles(current_user.netid).map(&:project_role)
+                - if current_user.permit?(:oversight)
+                  - u_roles << "Oversight"
+                = u_roles.join(", ")
+
               &nbsp;
       %em * NOTE: Medical Services are pharmacy, lab, pathology, imaging, hospitalization, outpatient services, or any other service.      
       -if @not_reported_yet

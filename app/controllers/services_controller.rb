@@ -11,11 +11,20 @@ class ServicesController < ApplicationController
   def index
     @title = "Medical Services"
     all_studies = current_user ? current_user.studies : []
+    @studies = all_studies.reject{|s| !s.closed_or_completed_date.nil? }
+    # HACK - added to handle the rush-request to give people not on IRB roles access to fill out this stupid medical services form
     if current_user.permit?(:oversight)
       # Look up user in oversight list
-      
+      proxy_file = File.open(RAILS_ROOT + "/lib/proxy_study_list.yaml")
+      proxies = YAML.load(proxy_file)
+      proxies.each do |proxy|
+        if proxy[:proxies] && proxy[:proxies].include?(current_user.username)
+          proxy[:studies].each do |irb_number|
+            @studies << Study.find_by_irb_number(irb_number) 
+          end
+        end
+      end
     end
-    @studies = all_studies.reject{|s| !s.closed_or_completed_date.nil? }
     @service_studies = @studies.select{|s| s.uses_medical_services == true } || []
     # Done when all @service_studies have completed medical_services forms
     unless @service_studies.empty?

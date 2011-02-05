@@ -98,7 +98,9 @@ namespace :emailer do
             :first_name => found.first_name,
             :last_name => found.last_name
           }, "Oversight")
-          puts "Updated/added #{found.first_name} #{found.last_name}"
+          #puts Pers::Person.find_by_username(found.username)
+          #puts Pers::Login.find_by_username_and_portal(found.username, 'eNOTIS')
+          #puts Pers::GroupMembership.find_by_username_and_portal_and_group_name(found.username, 'eNOTIS', 'Oversight')
         else
           puts "Could not find #{netid} by netid lookup in bcsec/ldap"
         end

@@ -52,22 +52,32 @@ module UsersToPers
   end
 
   def self.insert_user_into_cc_pers(netid, attrs, role = "User")
+    Bcaudit::AuditInfo.current_user = Bcsec.authority.find_user('blc615')
     unless Pers::Person.find_by_username_or_id(netid)
       u = Pers::Person.new(attrs.merge({:username => netid, :entered_by => "enotis-application"}))
       if u.save
-        print "saved #{netid} "
+        puts "person saved - #{netid} "
       else
-        print "skipped #{netid} (#{u.errors.full_messages}) "
+        puts "person not saved - #{netid} (#{u.errors.full_messages}) "
       end
     end
     unless Pers::Login.find_by_username_and_portal(netid, PORTAL)
         login = Pers::Login.new
         login.username = netid
         login.portal_name = PORTAL # can't be bulk set
-        login.save
+        if login.save
+          puts "login saved - #{netid} eNOTIS"
+        else 
+          puts "login not saved - #{netid} eNOTIS (#{login.errors.full_messages})"
+        end
     end
     unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(netid, PORTAL, role)
-      Pers::GroupMembership.create(:username => netid, :group_name => role, :portal => PORTAL)
+      gm = Pers::GroupMembership.create(:username => netid, :group_name => role, :portal => PORTAL)
+      if gm.save
+        puts "group membership saved - #{netid} eNOTIS #{role}"
+      else
+        puts "group membership not savedd - #{netid} eNOTIS #{role} (#{gm.errors.full_messages})"
+      end
     end
   end
   

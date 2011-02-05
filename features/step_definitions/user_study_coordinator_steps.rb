@@ -30,6 +30,13 @@ Given /^I log in as "([^\"]*)" on study "([^\"]*)"$/ do |netid, irb_number|
   click_button "Log in"
 end
 
+Given /^I log in as "([^"]*)"$/ do |netid|
+  visit "/login"
+  fill_in :username, :with => netid
+  fill_in :password, :with => "secret"
+  click_button "Log in"
+end
+
 Then /^"([^"]*)" should have (\d+) subjects$/ do |netid, num|
   Subject.with_user(netid).count.should == num.to_i
 end
