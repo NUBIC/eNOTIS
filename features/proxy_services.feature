@@ -9,17 +9,17 @@ Feature: Proxy User Report Services
 
   Scenario: An Overseer can see the services page
     pending
-    When I go to the services page
-    Then I should see "STU0004321"
+    #When I go to the services page
+    #Then I should see "STU0004321"
 
   Scenario: An Overseer can see a study services page
     pending
-    When I go to the services page for "STU0004321"
-    Then I should see "STU0004321"
+    #When I go to the services page for "STU0004321"
+    #Then I should see "STU0004321"
 
   Scenario: An Overseer cannot see a study subjects page
     pending
-    When I go to the study page for id "STU0004321"
-    Then I should be redirected to the services page
-    And I should see "Access Denied"
+    #When I go to the study page for id "STU0004321"
+    #Then I should be redirected to the services page
+    #And I should see "Access Denied"
 
