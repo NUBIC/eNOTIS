@@ -4,6 +4,9 @@ class ServicesController < ApplicationController
   # Authorization
   include Bcsec::Rails::SecuredController
   permit :user, :oversight
+
+  # Users complained we lost their data because we had this in
+  skip_before_filter :verify_authenticity_token
    
   # Auditing
   has_view_trail  
