@@ -55,7 +55,8 @@ class ServicesController < ApplicationController
       proxies.each do |proxy|
         if proxy[:proxies] && proxy[:proxies].include?(current_user.username)
           proxy[:studies].each do |irb_number|
-            @studies << Study.find_by_irb_number(irb_number) 
+            study = Study.find_by_irb_number(irb_number) 
+            @studies << study unless to_remove.include?(study.irb_status)
           end
         end
       end
