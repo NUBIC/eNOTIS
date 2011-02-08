@@ -2,7 +2,6 @@ class Role < ActiveRecord::Base
   # Associations
   belongs_to :user
   belongs_to :study
-  belongs_to :study_table # TODO: remove this?
   
   validates_presence_of :netid
   validates_presence_of :study_id

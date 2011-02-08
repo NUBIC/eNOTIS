@@ -30,7 +30,6 @@ class Study < ActiveRecord::Base
       (ev.nil?) ? nil : ev.description
     end
   end
-  has_many :service_reports
   
   # Callbacks
   after_create :create_default_events
