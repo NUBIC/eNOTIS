@@ -11,7 +11,42 @@ class ServicesController < ApplicationController
   def index
     @title = "Medical Services"
     all_studies = current_user ? current_user.studies : []
-    @studies = all_studies.reject{|s| !s.closed_or_completed_date.nil? }
+
+    # Study status
+    # Approved
+    # Assigned to Meeting
+    # Assigned To Meeting: Changes Requested
+    # Awaiting Approval Correspondence
+    # Awaiting Coordinator Assignment
+    # Awaiting Expedited Reviewer Assignment
+    # Changes Requested by Dept Reviewer
+    # Changes Requested By OPRS Staff
+    # Changes Required by IRB
+    # x Closed/Terminated
+    # Completed
+    # Conditional Approval
+    # Dept Site Anc Review
+    # Designated Reviewer Conditions Review
+    # x Exempt Approved
+    # x Exempt Review: Changes Requested
+    # x Expedited Review: Awaiting Correspondence
+    # x Expedited Review: Changes Requested
+    # x Expired
+    # Expired: Periodic Review In Progress
+    # x In Expedited Review
+    # OPRS Staff Conditions Review
+    # OPRS Staff Review
+    # x Original Version
+    # Pre Submission
+    # x Rejected
+    # Suspended
+    # x Withdrawn
+    to_remove = [ "Withdrawn", "Rejected", "Exempt Review: Changes Requested",
+      "Original Version", "In Expedited Review", "Expired", "Expedited Review: Changes Requested",
+      "Expedited Review: Awaiting Correspondence", "Exempt Review: Changes Requested",
+      "Exempt Approved","Closed/Terminated"]
+
+    @studies = all_studies.reject{ |s|  !s.closed_or_completed_date.nil? or to_remove.include?(s.irb_status)  }
     # HACK - added to handle the rush-request to give people not on IRB roles access to fill out this stupid medical services form
     if current_user.permit?(:oversight)
       # Look up user in oversight list
