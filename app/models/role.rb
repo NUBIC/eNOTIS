@@ -2,13 +2,12 @@ class Role < ActiveRecord::Base
   # Associations
   belongs_to :user
   belongs_to :study
-  belongs_to :study_table
+  belongs_to :study_table # TODO: remove this?
   
   validates_presence_of :netid
   validates_presence_of :study_id
+  validates_presence_of :project_role
   
-  attr_protected :consent_role #defines app permissions
-
   before_save :truncate_project_role
   
   # Named scopes
@@ -21,6 +20,7 @@ class Role < ActiveRecord::Base
       netid
     end
   end
+
   def last_first_middle
     if p = Pers::Person.find_by_username(netid)
       "#{p.last_name}, #{p.first_name} #{p.middle_name}"
@@ -28,10 +28,36 @@ class Role < ActiveRecord::Base
       netid
     end
   end
+
   def can_accrue?
     consent_role == "Obtaining"
   end
-  
+ 
+  # Used for updating from external source
+  def self.bulk_update(study_id, roles_data)
+    # Add any new roles for this study
+    roles_data.each do |role_hash|
+      unless Role.find(:first, :conditions => role_hash.merge({:study_id => study_id}))
+        Role.create(role_hash.merge({:study_id => study_id}))
+      end
+    end
+    current_roles = find_all_by_study_id(study_id)
+    # For the current roles, remove the ones not in the roles data bulk list
+    current_roles.each do |c_role|
+      found_in_roles_data = false
+      roles_data.each do |n_role|
+        # Being very explicit about what data we care about
+        if n_role[:netid] == c_role[:netid] and 
+          n_role[:project_role] == c_role[:project_role] and
+          n_role[:consent_role] == c_role[:consent_role]
+          
+          found_in_roles_data = true
+        end
+      end
+      Role.delete(c_role) unless found_in_roles_data   
+    end
+  end
+
   def self.update_from_redis
     counters = {:pi_keys => 0, :pi_netids => 0, :pi_roles_created => 0, :pi_errors => 0, :pi_exceptions => 0,
                 :co_keys => 0, :co_netids => 0, :co_roles_created => 0, :co_errors => 0, :co_exceptions => 0,
