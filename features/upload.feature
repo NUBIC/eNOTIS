@@ -36,3 +36,8 @@ Feature: Upload subjects
     When I go to the study page for id "STU001248"
     And I upload the "overzealous_unknowns.csv" file
     Then I should see "subjects created"
+
+  Scenario: A coordinator can upload blank or too big file and get a real error message
+    When I go to the study page for id "STU001248"
+    And I upload a blank file
+    Then I should see "Oops. Please upload a CSV"

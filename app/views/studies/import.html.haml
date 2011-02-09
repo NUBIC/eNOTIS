@@ -1,14 +1,6 @@
-.upload
-  %h3 Import subjects
-  - form_tag(upload_involvements_path, :multipart => true) do
-    = hidden_field_tag("study_id", @study.irb_number.to_s)
-    = file_field_tag(:file)
-    = submit_tag( "Upload" )
-  %br
-
 .instructions
   %h3 Instructions
-  = "Your upload should: (#{link_to 'see our sample file', sample_involvements_path})".html_safe
+  = "Your upload <strong>must</strong>: (#{link_to 'see our sample file', sample_involvements_path})".html_safe
   %ol
     %li
       %strong Be a .csv file.
@@ -22,6 +14,14 @@
         %li= "Gender: #{Involvement.genders.join(', ')}"
         %li= "Ethnicity: #{Involvement.ethnicities.join(', ')}"
         %li= "Race: #{Involvement.races.join(', ')}"
+
+.upload
+  %h3 Import subjects
+  - form_tag(upload_involvements_path, :multipart => true) do
+    = hidden_field_tag("study_id", @study.irb_number.to_s)
+    = file_field_tag(:file)
+    = submit_tag( "Upload" )
+  %br
 
 - unless @uploads.blank?
   .uploads

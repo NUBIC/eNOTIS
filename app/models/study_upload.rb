@@ -34,7 +34,7 @@ class StudyUpload < ActiveRecord::Base
   
   def upload_exists?
     # logger.info "upload exists?"
-    self.summary = "Oops. Please upload a file." unless self.upload.valid?
+    self.summary = "Oops. Please upload a CSV<br/>file (under 5MB in size)." unless self.upload.valid?
     return self.upload.valid?
   end
   

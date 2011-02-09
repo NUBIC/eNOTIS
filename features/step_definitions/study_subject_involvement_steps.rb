@@ -145,6 +145,12 @@ When /^I upload the "([^"]*)" file$/ do |name|
   click_button "Upload"
 end
 
+When /^I upload a blank file$/ do
+  click_link("Import")
+  click_button "Upload"
+end
+
+
 When /^I export a csv of subjects$/ do
   click_link("Export")
   select "CSV", :from=> :format
