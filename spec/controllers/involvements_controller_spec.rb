@@ -22,19 +22,19 @@ describe InvolvementsController do
 
   it "should create a new StudyUpload with the file attached" do
     StudyUpload.should_receive(:create).and_return(Factory(:study_upload, :study => @study))
-    post :upload, {:file => @file, :study_id => 'STU00002629'}
+    post :upload, {:file => up('good'), :study_id => 'STU00002629'}
   end
 
   it "should check the study upload" do
     @up.should_receive(:legit?)
-    post :upload, {:file => @file, :study_id => 'STU00002629'}
+    post :upload, {:file => up('good'), :study_id => 'STU00002629'}
   end
 
   it "should should redirect with flash linking to import" do
     @up.should_receive(:legit?).and_return(false)
-    post :upload, {:file => @file, :study_id => 'STU00002629'}
+    post :upload, {:file => up('good'), :study_id => 'STU00002629'}
     response.should redirect_to(study_path(:id => 'STU00002629'))
-    flash[:error].should == "Oops. Your upload had some issues.<br/>Please click <a href='/studies/STU00002629/import' rel='#import'>Import</a> to see the result."
+    flash[:notice].should == "Oops. Your upload had some issues.<br/>Please click <a href='/studies/STU00002629/import' rel='#import'>Import</a> to see the result."
   end
 
   it "should deny access to an attempt to create an involvement on an unauthorized study" do

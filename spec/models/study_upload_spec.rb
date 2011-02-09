@@ -20,7 +20,7 @@ describe StudyUpload do
   it "should fail if upload is blank" do
     @up = StudyUpload.new(:netid => "abc234", :study_id => 2, :upload => nil)
     @up.legit?.should be_false
-    @up.summary.should =~ /Please upload a file/
+    @up.summary.should =~ /Please upload a CSV/
   end
   
   it "should fail if upload doesn't have valid columns" do
