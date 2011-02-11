@@ -6,6 +6,7 @@ module Webservices
   require 'webservices/eirb_adapter'
   require 'webservices/eirb'
   require 'webservices/eirb_translations'
+  require 'webservices/importer'
   
   def self.convert(values, converter, symbolized = true)
     results = []

@@ -73,7 +73,7 @@ describe Role do
     no_role_role.should have(1).error_on(:project_role)
   end
 
-  describe "importing from bulk data" do
+  describe "importing from update data - bulk methods" do
    
     before(:each) do
       @study = Factory(:study)
@@ -82,7 +82,7 @@ describe Role do
         {:netid => "bct555", :project_role => "Coord", :consent_role => "Obtaining" },
         {:netid => "hhh123", :project_role => "Co-Inv", :consent_role => "None" },
       ]
-      Role.bulk_update(@study.id, @roles_data)
+      Role.import_update(@study.id, @roles_data)
       @study.roles.count.should == 3
     end
 
@@ -93,7 +93,7 @@ describe Role do
     end
 
     it "should not create duplicate roles given the same hash twice" do
-      Role.bulk_update(@study.id, @roles_data)
+      Role.import_update(@study.id, @roles_data)
       @study.roles.count.should == 3
     end
 
@@ -102,7 +102,7 @@ describe Role do
       @roles_data[0][:consent_role].should == "None"
       @roles_data[0] = {:netid => "abc123", :project_role => "PI", :consent_role => "Obtaining"}
       @roles_data[0][:consent_role].should == "Obtaining"
-      Role.bulk_update(@study.id, @roles_data)
+      Role.import_update(@study.id, @roles_data)
       @study.roles.find_by_netid("abc123").consent_role.should == "Obtaining"
     end
 
@@ -112,7 +112,7 @@ describe Role do
         {:netid => "abc123", :project_role => "Co-Inv", :consent_role => "None"}
       ]
 
-      Role.bulk_update(@study.id, new_data)
+      Role.import_update(@study.id, new_data)
       old_pi = @study.roles.find_all_by_netid("abc123")
       old_pi.count.should == 1
       old_pi.first.project_role.should == "Co-Inv"
@@ -126,16 +126,15 @@ describe Role do
         {:netid => "aoe123", :project_role => "PI", :consent_role => "None"},
         {:netid => "aoe123", :project_role => "Data Manager", :consent_role => "Obtaining"}
       ]
-      Role.bulk_update(@study.id, new_data)
+      Role.import_update(@study.id, new_data)
       @study.roles.count.should == 2
       @study.roles.find_all_by_netid("aoe123").count.should == 2
     end
 
     it "should wipe the data if given none" do
-      Role.bulk_update(@study.id, [{}])
+      Role.import_update(@study.id, [{}])
       @study.roles.count.should == 0
     end
 
   end
-
 end

@@ -11,6 +11,8 @@ class AuthorizedPersonnelPopulator
     
     # Find Principal Investigators
     principal_investigators = Eirb.find_principal_investigators({:irb_number => irb_number})
+    
+    
     principal_investigators.delete_if{|x| x.values.uniq==[""]}.each do |principal_investigator|
       netid = principal_investigator[:netid]
       if netid==""
@@ -24,6 +26,10 @@ class AuthorizedPersonnelPopulator
     
     # Find CoInvestigators
     co_investigators =  Eirb.find_co_investigators({:irb_number => irb_number})
+    
+    
+    
+    
     co_investigators.delete_if{|x| x.values.uniq==[""]}.each do |coi|
       netid = coi[:netid]
       if netid==""

@@ -25,8 +25,8 @@ class Eirb
     {:name => "eNOTIS Study Subject Populations", :ext => "populations"},
     {:name => "eNOTIS Study Description", :ext => "description"},
     {:name => "eNOTIS Study Inclusion Exclusion", :ext => "inc_excl"},
-    {:name => "eNOTIS Study Export", :ext => "study_export" },
-    {:name => "eNOTIS Recently Updated Studies", :ext => "recent_studies"}
+    {:name => "eNOTIS Study Export", :ext => "study_export" } #,
+    # DO NOT USE! Not reliable 'updated' list {:name => "eNOTIS Recently Updated Studies", :ext => "recent_studies"}
    ].freeze
 
   cattr_accessor :eirb_adapter

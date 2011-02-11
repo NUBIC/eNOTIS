@@ -32,8 +32,10 @@ class Role < ActiveRecord::Base
     consent_role == "Obtaining"
   end
  
-  # Used for updating from external source
-  def self.bulk_update(study_id, roles_data)
+  # When importing from a webservice or other external source
+  # use this method to ensure proper setting of the data 
+  # and associated variables
+  def self.import_update(study_id, roles_data)
     # Add any new roles for this study
     roles_data.each do |role_hash|
       unless Role.find(:first, :conditions => role_hash.merge({:study_id => study_id}))

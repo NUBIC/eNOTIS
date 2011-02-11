@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110120214455) do
+ActiveRecord::Schema.define(:version => 20110208233619) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -159,6 +159,8 @@ ActiveRecord::Schema.define(:version => 20110120214455) do
     t.boolean  "read_only"
     t.string   "read_only_msg"
     t.boolean  "uses_medical_services"
+    t.datetime "imported_at"
+    t.text     "import_cache"
   end
 
   # unrecognized index "studies_irb_number_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition

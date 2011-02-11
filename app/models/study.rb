@@ -1,7 +1,9 @@
 require 'chronic'
 # Represents a Clinical Study/Trial.
 class Study < ActiveRecord::Base
-  
+ 
+  include Webservices::ImporterSupport
+
   # Named scopes
   # this named scope allows sorting by "accrual", which is a count of involvements.
   # %w(id irb_status irb_number name title accrual_goal) can be replaced with Study.column_names if needed, but it is slow
@@ -36,8 +38,33 @@ class Study < ActiveRecord::Base
 
   # Validators
   validates_format_of :irb_number, :with => /^STU.+/, :message => "invalid study number format"
-  
+ 
   # Class methods
+
+  # This method should be called 
+  # when importing from a webservice or other external source
+  def self.import_update(study, bulk_data)
+    if bulk_data[:funding_sources]
+      bulk_data[:funding_sources].each do |fs| 
+        unless study.funding_sources.find(:first, :conditions => fs)
+          study.funding_sources.create(fs)
+        end
+      end
+      to_delete = []
+      study.funding_sources.each do |fs|
+        # must be an exact matach of the elements... There are some funding sources with no code, and each of those sources is different 
+        unless bulk_data[:funding_sources].include?({:name => fs.name, :code => fs.code, :category => fs.category})
+          to_delete << fs
+        end
+      end
+      #deleting ones not in the new hash 
+      study.funding_sources.delete(to_delete)
+
+      bulk_data.delete(:funding_sources)
+    end
+    study.update_attributes(bulk_data)
+  end
+
   def self.update_from_redis
     study_list = REDIS.keys 'study:*'
     study_list.reject! {|x| x =~ /funding_source/ }
