@@ -108,7 +108,12 @@ module Webservices
         return clean_set
       end
 
-      def sanitize_study(study)
+      def sanitize_study(study_set)
+         study = {}
+         # pulling out the data from the hash structure where the hash 
+         # results are under the name of the query
+         study_set.each_value{|v| study.merge!(v)}
+
          return {
            :accrual_goal                      => study[:accrual_goal], 
            :approved_date                     => Chronic.parse(study[:approved_date]),
@@ -135,7 +140,17 @@ module Webservices
         } 
       end
 
-      def sanitize_roles(roles)
+      def sanitize_roles(roles_set)
+        roles = []
+        roles_set[:find_principal_investigators].each do |pi|
+          roles << {:netid => pi[:netid], :project_role => "Principal Investigator", :consent_role => "Obtaining"}
+        end
+        roles_set[:find_co_investigators].each do |ci|
+          roles << {:netid => ci[:netid], :project_role => "Co-Investigator", :consent_role => "Obtaining"}
+        end
+        roles_set[:find_authorized_personnel].each do |ap|
+          roles << {:netid => ap[:netid], :project_role => ap[:project_role], :consent_role => ap[:consent_role]}
+        end
         roles.reject! do |r|
           r[:netid].blank? or r[:project_role].blank? or r[:consent_role].blank?
         end
