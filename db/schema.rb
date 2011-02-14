@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(:version => 20110208233619) do
     t.string   "read_only_msg"
     t.boolean  "uses_medical_services"
     t.datetime "imported_at"
+    t.boolean  "import_errors"
     t.text     "import_cache"
   end
 

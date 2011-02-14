@@ -2,8 +2,9 @@ require 'chronic'
 # Represents a Clinical Study/Trial.
 class Study < ActiveRecord::Base
  
+  serialize :import_cache
   include Webservices::ImporterSupport
-
+  
   # Named scopes
   # this named scope allows sorting by "accrual", which is a count of involvements.
   # %w(id irb_status irb_number name title accrual_goal) can be replaced with Study.column_names if needed, but it is slow
@@ -52,67 +53,17 @@ class Study < ActiveRecord::Base
       end
       to_delete = []
       study.funding_sources.each do |fs|
-        # must be an exact matach of the elements... There are some funding sources with no code, and each of those sources is different 
+        # must be an exact matach of the elements... 
+        # There are some funding sources with no code, and each of those source names are different. YAY eIRB!!
         unless bulk_data[:funding_sources].include?({:name => fs.name, :code => fs.code, :category => fs.category})
           to_delete << fs
         end
       end
       #deleting ones not in the new hash 
       study.funding_sources.delete(to_delete)
-
       bulk_data.delete(:funding_sources)
     end
     study.update_attributes(bulk_data)
-  end
-
-  def self.update_from_redis
-    study_list = REDIS.keys 'study:*'
-    study_list.reject! {|x| x =~ /funding_source/ }
-    study_list.each do |redis_study|
-      study  = HashWithIndifferentAccess.new(REDIS.hgetall(redis_study))
-      params = {
-        :accrual_goal                      => study[:accrual_goal], 
-        :approved_date                     => Chronic.parse(study[:approved_date]),
-        :clinical_trial_submitter          => study[:clinical_trial_submitter], 
-        :closed_or_completed_date          => Chronic.parse(study[:closed_or_completed_date]),
-        :created_date                      => Chronic.parse(study[:created_date]),
-        :description                       => study[:description],
-        :exclusion_criteria                => study[:exclusion_criteria],
-        :expiration_date                   => Chronic.parse(study[:expiration_date]),
-        :expired_date                      => Chronic.parse(study[:expired_date]), 
-        :fda_offlabel_agent                => study[:fda_offlabel_agent],
-        :fda_unapproved_agent              => study[:fda_unapproved_agent],
-        :inclusion_criteria                => study[:inclusion_criteria],
-        :irb_number                        => study[:irb_number],
-        :irb_status                        => study[:irb_status],
-        :is_a_clinical_investigation       => study[:is_a_clinical_investigation],
-        :modified_date                     => Chronic.parse(study[:modified_date]),
-        :name                              => study[:name],
-        :periodic_review_open              => study[:periodic_review_open],
-        :research_type                     => study[:research_type],
-        :review_type_requested             => study[:review_type_requested],
-        :subject_expected_completion_count => study[:subject_expected_completion_count],
-        :title                             => study[:title],
-        :total_subjects_at_all_ctrs        => study[:total_subjects_at_all_ctrs]
-      }
-      local_study = find_by_irb_number(params[:irb_number])
-      if local_study.nil?
-        local_study = create(params)
-      else
-        local_study.update_attributes!(params)
-      end
-
-      # Processing funding sources for the study (a child/parent relationship with the study)
-      local_study.funding_sources.clear # TODO: Another alternative is to use the "unique" id from the eIRB query for each funding source to avoid having to drop all and re-add. -BLC
-      funding_srcs = REDIS.keys "study:#{params[:irb_number]}:funding_source:*"
-      funding_srcs.each do |redis_study_src|
-        src =  HashWithIndifferentAccess.new(REDIS.hgetall(redis_study_src))
-        src_params = {:name => src[:funding_source_name],
-          :code => src[:funding_source_id], 
-          :category => src[:funding_source_category_name]}
-        local_study.funding_sources.create(src_params) unless src[:funding_source_name].blank?
-      end
-    end
   end
 
   # This method is used to toggle the editable/non-editable state of 

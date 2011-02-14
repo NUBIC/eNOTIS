@@ -244,6 +244,5 @@ describe Study do
       end
 
     end
-
   end
 end
