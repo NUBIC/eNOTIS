@@ -75,7 +75,7 @@ module Webservices
 
         # Cleaning the results 
         study_set[:clean] = sanitize(study_set[:raw])
-
+        
         # Doing teh imports
         unless study_set[:clean][:study].nil? or study_set[:clean][:study].empty?
           Study.import_update(study, study_set[:clean][:study])
@@ -149,7 +149,9 @@ module Webservices
 
         study_set[:find_funding_sources].each do |fs|
           study[:funding_sources] ||= []
-          study[:funding_sources] << {:name => fs[:funding_source_name], :code => fs[:funding_source_id], :category => fs[:funding_source_category_name]}
+          unless fs[:funding_source_name].blank? or fs[:funding_source_id].blank? or fs[:funding_source_category_name].blank?
+            study[:funding_sources] << {:name => fs[:funding_source_name], :code => fs[:funding_source_id], :category => fs[:funding_source_category_name]}
+          end
         end
 
         return study

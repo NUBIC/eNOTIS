@@ -35,14 +35,14 @@ class Role < ActiveRecord::Base
   # When importing from a webservice or other external source
   # use this method to ensure proper setting of the data 
   # and associated variables
-  def self.import_update(study_id, roles_data)
+  def self.import_update(study, roles_data)
     # Add any new roles for this study
     roles_data.each do |role_hash|
-      unless Role.find(:first, :conditions => role_hash.merge({:study_id => study_id}))
-        Role.create(role_hash.merge({:study_id => study_id}))
+      unless Role.find(:first, :conditions => role_hash.merge({:study_id => study.id}))
+        Role.create(role_hash.merge({:study_id => study.id}))
       end
     end
-    current_roles = find_all_by_study_id(study_id)
+    current_roles = find_all_by_study_id(study.id)
     # For the current roles, remove the ones not in the roles data bulk list
     current_roles.each do |c_role|
       found_in_roles_data = false
