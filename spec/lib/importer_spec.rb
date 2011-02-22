@@ -13,7 +13,7 @@ describe Webservices::Importer do
         ts = Time.now
         @study.imported_since?(ts).should be_false
         Webservices::Importer.should_receive(:query_study_source).and_return({:name => "The study"})
-        Webservices::Importer.should_receive(:query_roles_source).and_return([{:netid => "abc154", :project_role => "PI", :consent_role => "None"}])
+        Webservices::Importer.should_receive(:query_roles_source).and_return({:find_principal_investigators => {:netid => "abc154", :project_role => "PI", :consent_role => "None"}})
         Webservices::Importer.import_external_study_data(@study)
         @study.imported_since?(ts).should be_true
       end
