@@ -171,8 +171,8 @@ module Webservices
         study_raw[:study] = query_study_source(irb_number)
         study_raw[:roles] = query_roles_source(irb_number)
         # collecting our errors
-        study_raw[:errors] << study_raw[:study][:errors]
-        study_raw[:errors] << study_raw[:roles][:errors]
+        study_raw[:errors].concat(study_raw[:study][:errors])
+        study_raw[:errors].concat(study_raw[:roles][:errors])
         return study_raw
       end
 
