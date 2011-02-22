@@ -28,17 +28,11 @@ module Webservices
     end
 
     def import_results=(val)
-      init_import_cache
-      self.import_cache.merge!(val)
+      self.import_cache= val
     end
 
     def import_results
-      init_import_cache
       self.import_cache
-    end
-
-    def init_import_cache
-      self.import_cache ||= {}
     end
 
     # This is the default structure of the import cache
@@ -50,44 +44,35 @@ module Webservices
   class Importer
 
     class << self
-
-      # Somehow represent:
+  
+      # Importing...
       # Part of some StudyInfo => eIRB
-      # -Update in study class handles setting the study data 
-      # to what is passed in
       # Part of some RoleInfo => EDW
-      # -Roles might need a source field real soon
-      # this would let us have local roles which were 
-      # updated and managed by eNOTIS
-
+      # -NOTE: Roles might need a source field real soon this would let us have local roles which were updated and managed by eNOTIS
       # Participants for some studies => NOTIS via EDW
       # Participants for some studies => ANES via EDW
       # Studies with participants elsewhere should 
       # be locked to prevent editing in eNOTIS
 
       def import_external_study_data(study)
-        study_set = {:raw =>{:errors => []}, :clean => {:errors => []}} # setting our temporary data hold
+        # NOTE: There are some assumptions here about the structure of the hash we
+        # use to temporarily store our import data. The clean and raw data sets should all have
+        # the following keys, :study, :roles, :subjects, :errors
 
-        # Querying the sources
-        study_set[:raw][:study] = query_study_source(study.irb_number)
-        study_set[:raw][:roles] = query_roles_source(study.irb_number)
-        #study_set[:subjects] = query_subjects_source(study.irb_number)
-
+        # Querying the sources 
+        study_raw = query_sources(study.irb_number) 
         # Cleaning the results 
-        study_set[:clean] = sanitize(study_set[:raw])
+        study_clean = sanitize(study_raw)
         
-        # Doing teh imports
-        unless study_set[:clean][:study].nil? or study_set[:clean][:study].empty?
-          Study.import_update(study, study_set[:clean][:study])
-        end
-        unless study_set[:clean][:study].nil? or study_set[:clean][:roles].empty?
-          Role.import_update(study, study_set[:clean][:roles])
-        end
-        #Involvement.import_update(study, study_set[:clean][:subjects]
+        # Actally loading data into our data models
+        Study.import_update(study, study_clean[:study]) unless study_clean[:study].blank?
+        Role.import_update(study, study_clean[:roles]) unless study_clean[:roles].blank?
 
         # Setting some import process data
-        study.import_results = study_set
-        study.import_errors = !(study_set[:raw][:errors].empty? and study_set[:clean][:errors].empty?)
+        if study_raw[:errors].empty? or study_clean[:errors].empty?
+          study.import_results = {:ws_errors =>study_raw[:errors], :sanitize_errors => study_clean[:errors]}
+          study.import_errors = true
+        end
         study.imported_at = Time.now
         study.save
       end      
@@ -165,22 +150,36 @@ module Webservices
             roles << {:netid => pi[:netid], :project_role => "Principal Investigator", :consent_role => "Obtaining"}
           end
         end
+
         if roles_set[:find_co_investigators]
           roles_set[:find_co_investigators].each do |ci|
             # note: we set the roles here, so all that's really needed is the netid
             roles << {:netid => ci[:netid], :project_role => "Co-Investigator", :consent_role => "Obtaining"}
           end
         end
+
         if roles_set[:find_authorized_personnel]
           roles_set[:find_authorized_personnel].each do |ap|
             # We need more than just netid here
             roles << {:netid => ap[:netid], :project_role => ap[:project_role], :consent_role => ap[:consent_role]}
           end
         end
+
         roles.reject! do |r|
           r[:netid].blank? or r[:project_role].blank? or r[:consent_role].blank?
         end
         roles
+      end
+
+      # Queries the sources and sets up our temporary data hash 
+      def query_sources(irb_number)
+        study_raw = {:errors => []}
+        study_raw[:study] = query_study_source(irb_number)
+        study_raw[:roles] = query_roles_source(irb_number)
+        # collecting our errors
+        study_raw[:errors] << study_raw[:study]
+        study_raw[:errors] << study_raw[:roles]
+        return study_raw
       end
 
       # These are the setup methods for a target

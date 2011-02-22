@@ -3,6 +3,7 @@ require 'chronic'
 class Study < ActiveRecord::Base
  
   serialize :import_cache
+
   include Webservices::ImporterSupport
   
   # Named scopes
