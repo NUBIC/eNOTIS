@@ -27,17 +27,10 @@ module Webservices
       self.import_errors
     end
 
-    def import_results=(val)
-      self.import_cache= val
-    end
-
-    def import_results
-      self.import_cache
-    end
-
     # This is the default structure of the import cache
     def clear_import_cache
       self.import_cache = {}
+      self.import_errors = false
     end
   end
 
@@ -69,8 +62,9 @@ module Webservices
         Role.import_update(study, study_clean[:roles]) unless study_clean[:roles].blank?
 
         # Setting some import process data
+        study.clear_import_cache
         if study_raw[:errors].empty? or study_clean[:errors].empty?
-          study.import_results = {:ws_errors =>study_raw[:errors], :sanitize_errors => study_clean[:errors]}
+          study.import_cache = {:ws_errors =>study_raw[:errors], :sanitize_errors => study_clean[:errors]}
           study.import_errors = true
         end
         study.imported_at = Time.now

@@ -18,19 +18,21 @@ describe Webservices::Importer do
         @study.imported_since?(ts).should be_true
       end
      
-      it "should clear the import cache" do
-        @study.import_results = {:foo => "HELP"}
-        @study.import_results[:foo].should == "HELP"
+      it "should clear the import cache and reset error flag" do
+        @study.import_cache = {:foo => "HELP"}
+        @study.import_cache[:foo].should == "HELP"
+        @study.import_errors = true
         @study.clear_import_cache
-        @study.import_results[:foo].should be_nil
+        @study.import_cache[:foo].should be_nil
+        @study.import_errors.should be_false
       end
 
       it "should have a place to store import data" do
-        @study.import_results = {:raw => {
+        @study.import_cache = {:raw => {
           :find_basics => {:study_number => "ABC000123"}, 
           :find_description => {:irb_number => "ABC000123"}
         }}
-        @study.import_results[:raw][:find_basics][:study_number].should == "ABC000123"
+        @study.import_cache[:raw][:find_basics][:study_number].should == "ABC000123"
       end
     end
     
@@ -172,7 +174,8 @@ describe Webservices::Importer do
 
         it "should write the error to the data hash if a query fails" do
           Edw.should_receive(:fake_query).and_raise(Exception)
-          Webservices::Importer.do_import_queries(Edw,"STU000123",[:fake_query])
+          dval = Webservices::Importer.do_import_queries(Edw,"STU000123",[:fake_query])
+          dval[:errors].should_not be_empty
         end
       end
     end
