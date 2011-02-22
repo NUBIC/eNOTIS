@@ -63,7 +63,7 @@ module Webservices
 
         # Setting some import process data
         study.clear_import_cache
-        if study_raw[:errors].empty? or study_clean[:errors].empty?
+        if !study_raw[:errors].empty? or !study_clean[:errors].empty?
           study.import_cache = {:ws_errors =>study_raw[:errors], :sanitize_errors => study_clean[:errors]}
           study.import_errors = true
         end
@@ -171,8 +171,8 @@ module Webservices
         study_raw[:study] = query_study_source(irb_number)
         study_raw[:roles] = query_roles_source(irb_number)
         # collecting our errors
-        study_raw[:errors] << study_raw[:study]
-        study_raw[:errors] << study_raw[:roles]
+        study_raw[:errors] << study_raw[:study][:errors]
+        study_raw[:errors] << study_raw[:roles][:errors]
         return study_raw
       end
 
@@ -222,12 +222,11 @@ module Webservices
       #   :find_funding_sources => <return hash from query>
       #   }
       def do_import_queries(source_system, irb_number, query_list)
-        dset = {}
+        dset = {:errors] =[]}
         query_list.each do |query|
           begin
             dset[query] = source_system.send(query, {:irb_number => irb_number})
           rescue Exception => err
-            dset[:errors] ||=[]
             dset[:errors] << {
               :error => err.to_s, 
               :at => Time.now,
