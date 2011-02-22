@@ -222,7 +222,7 @@ module Webservices
       #   :find_funding_sources => <return hash from query>
       #   }
       def do_import_queries(source_system, irb_number, query_list)
-        dset = {:errors] =[]}
+        dset = {:errors => []}
         query_list.each do |query|
           begin
             dset[query] = source_system.send(query, {:irb_number => irb_number})
