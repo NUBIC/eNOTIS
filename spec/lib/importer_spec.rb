@@ -12,8 +12,8 @@ describe Webservices::Importer do
       it "should know when it has been updated by import" do
         ts = Time.now
         @study.imported_since?(ts).should be_false
-        Webservices::Importer.should_receive(:query_study_source).and_return({:name => "The study"})
-        Webservices::Importer.should_receive(:query_roles_source).and_return({:find_principal_investigators => {:netid => "abc154", :project_role => "PI", :consent_role => "None"}})
+        Webservices::Importer.should_receive(:query_study_source).and_return({:errors => [], :find_basics =>{:name => "The study"}})
+        Webservices::Importer.should_receive(:query_roles_source).and_return({:errors => [], :find_principal_investigators => {:netid => "abc154", :project_role => "PI", :consent_role => "None"}})
         Webservices::Importer.import_external_study_data(@study)
         @study.imported_since?(ts).should be_true
       end
@@ -45,19 +45,20 @@ describe Webservices::Importer do
       it "should import study information" do
         # webservices interfaces should get requests 
         # for data on this study        
-        Eirb.should_receive(:find_basics)
-        Eirb.should_receive(:find_description)
-        Eirb.should_receive(:find_inc_excl)
-        Eirb.should_receive(:find_funding_sources)
-        Webservices::Importer.query_study_source(@study.irb_number)
+        calls = [:find_basics, :find_description, :find_inc_excl, :find_funding_sources]
+        calls.each {|k| Eirb.should_receive(k)}
+        val = Webservices::Importer.query_study_source(@study.irb_number)
+        val[:errors].should == []  
+        calls.each {|k| val.keys.include?(k).should be_true}
       end
 
       it "should import roles information" do
         # ws should get role requests
-        Edw.should_receive(:find_principal_investigators)
-        Edw.should_receive(:find_co_investigators)
-        Edw.should_receive(:find_authorized_personnel)
-        Webservices::Importer.query_roles_source(@study.irb_number)
+        calls = [:find_principal_investigators, :find_co_investigators, :find_authorized_personnel] 
+        calls.each {|k| Edw.should_receive(k)}
+        val = Webservices::Importer.query_roles_source(@study.irb_number)
+        val[:errors].should == [] 
+        calls.each {|k| val.keys.include?(k).should be_true}
       end
 
       it "should import subjects information" do
