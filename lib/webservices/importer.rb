@@ -5,7 +5,6 @@
 module Webservices
   module ImporterSupport
 
-
     # The importer process sets imported time
     # this is a simple wrapper to give us a
     # boolean answer
@@ -24,7 +23,7 @@ module Webservices
     # purposes
 
     def import_errors?
-      self.import_errors
+      self.import_errors == true
     end
 
     # This is the default structure of the import cache
