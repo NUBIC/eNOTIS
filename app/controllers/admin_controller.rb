@@ -27,7 +27,12 @@ class AdminController < ApplicationController
     end
     send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => "enotis_pi_#{params[:year]}.csv")
   end
-  
+
+
+  def imports
+    render(:text => "imports")
+  end
+
   private
   
   def require_admin
