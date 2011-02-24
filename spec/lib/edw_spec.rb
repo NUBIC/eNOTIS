@@ -25,18 +25,13 @@ describe Edw do
       it "should ignore any attribute that doesn't exist in the translator" do
          @converter = {"attribute1"=>"attribute1_converted","attribute2"=>"attribute2_converted"}
          Webservices.convert([{"attribut"=>"test1","attribute2"=>"test2"}],@converter).should == [{:attribute2_converted=>"test2"}]
-      
       end 
    end 
   
     it "always connects" do
       Edw.should_receive(:connect)
-      Edw.find_test(:mrn => "314")
-
+      Edw.find_principal_investigators(:irb_number => "STU0000314")
     end
   
-    it "gives a meaningful error when it can't connect" do
-      pending
-    end
   end
 end
