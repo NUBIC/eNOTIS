@@ -76,7 +76,7 @@ module Webservices
 
         # Setting some import process data
         study.clear_import_cache
-        if !study_raw[:errors].empty? or !study_clean[:errors].empty?
+        if !study_raw[:errors].blank? or !study_clean[:errors].blank?
           study.import_cache = {:ws_errors =>study_raw[:errors], :sanitize_errors => study_clean[:errors]}
           study.import_errors = true
         end
@@ -104,7 +104,7 @@ module Webservices
         study = {}
         # pulling out the data from the hash structure where the hash 
         # results are under the name of the query
-        unless study_set[:find_basics].empty?  
+        unless study_set[:find_basics].blank?  
           bh = study_set[:find_basics].first
           study[:approved_date] = Chronic.parse(bh[:approved_date])
           study[:expired_date] = Chronic.parse(bh[:expired_date])
@@ -129,11 +129,11 @@ module Webservices
           study[:total_subjects_at_all_ctrs] = bh[:total_subjects_at_all_ctrs]
         end
 
-        if !study_set[:find_description].empty? and study_set[:find_description].first[:description]
+        if !study_set[:find_description].blank? and study_set[:find_description].first[:description]
           study[:description] = study_set[:find_description].first[:description]
         end
 
-        if !study_set[:find_inc_excl].empty?
+        if !study_set[:find_inc_excl].blank?
           incl = study_set[:find_inc_excl].first
           study[:exclusion_criteria] = incl[:exclusion_criteria]
           study[:inclusion_criteria] = incl[:inclusion_criteria]
