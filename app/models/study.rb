@@ -2,10 +2,9 @@ require 'chronic'
 # Represents a Clinical Study/Trial.
 class Study < ActiveRecord::Base
  
-  serialize :import_cache
-
   include Webservices::ImporterSupport
-  
+  before_save :flatten_import_cache
+   
   # Named scopes
   # this named scope allows sorting by "accrual", which is a count of involvements.
   # %w(id irb_status irb_number name title accrual_goal) can be replaced with Study.column_names if needed, but it is slow

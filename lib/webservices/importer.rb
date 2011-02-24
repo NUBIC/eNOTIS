@@ -5,6 +5,7 @@
 module Webservices
   module ImporterSupport
 
+
     # The importer process sets imported time
     # this is a simple wrapper to give us a
     # boolean answer
@@ -24,6 +25,19 @@ module Webservices
 
     def import_errors?
       self.import_errors == true
+    end
+
+    def flatten_import_cache
+      val = self.import_cache
+      if val.respond_to?(:keys)
+        results = ""
+        val.keys.each do |k|
+          results << "#{k} => #{val[k].inspect}\n"
+        end
+      else
+        results = val.to_s
+      end
+      write_attribute :import_cache, results
     end
 
     # This is the default structure of the import cache

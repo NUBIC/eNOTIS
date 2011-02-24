@@ -34,6 +34,15 @@ describe Webservices::Importer do
         }}
         @study.import_cache[:raw][:find_basics][:study_number].should == "ABC000123"
       end
+
+      it "should write out the import data as a string" do
+        @study.import_cache = {:errors => {:this => "that"}}
+        @study.save
+        @study.reload
+        r = @study.import_cache
+        r.is_a?(String).should be_true
+        r.should == "errors => {:this=>\"that\"}\n"
+      end
     end
     
     describe "importer class" do
