@@ -28,6 +28,7 @@ EDW_TO_NOTIS = {
   "patient_created"         => :patient_created,
   "patient_id"              => :patient_id,
   "patient_updated"         => :patient_updated, 
+  "protocol_id"             => :protocol_id,
   "project_role"            => :project_role,
   "protocol_stop_date"      => :completed_date,
   "protocol_stop_reason"    => :completed_note, 
@@ -44,7 +45,14 @@ EDW_TO_NOTIS = {
   "withdrawl_comment"       => :withdrawn_note,
   "withdrawl_date"          => :withdrawn_date, 
   "withdrawl_reason"        => :withdrawn_reason,
-  "zip_code"                => :zip
+  "zip_code"                => :zip,
+  "eirb_number"              => :irb_number, #all below are unique to the ANES report
+  "consented_on"             => :consented_on,
+  "case_number"              => :case_number,
+  "withdrawn_on"             => :withdrawn_on,
+  "gender"                   => :gender,
+  "completed_on"             => :completed_on,
+  "studysubject_id"          => :patient_id
 }
 
 NOTIS_TO_EDW = {
