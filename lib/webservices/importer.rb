@@ -212,14 +212,6 @@ module Webservices
         do_import_queries(Edw, irb_number, query_list)
       end
 
-      def query_subjects_source(irb_number)
-        query_list = [
-          :subject_import_from_NOTIS,
-          :subject_import_from_ANES
-        ]
-        do_import_queries(Edw, irb_number, query_list)
-      end
-
       # This is where we actually make the queries,
       # record their results, and catch any errors.
       # Returns: a hash containing a key corresponding to the

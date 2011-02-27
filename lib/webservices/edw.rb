@@ -5,7 +5,7 @@ class Edw
   # SEARCH_DEFAULTS = { 
   #                    }.freeze
 
-  STORED_SEARCHES = [# {:name => "eNOTIS Person Details", :ext => "user"}, # not used currently
+  STORED_SEARCHES = [
     {:name => "eNOTISeIRBAuthorizedPersonnel", :ext => "authorized_personnel"},
     {:name => "eNOTISeIRBPrincipalInvestigators", :ext => "principal_investigators"},
     {:name => "eNOTISeIRBCoInvestigators", :ext => "co_investigators"},

@@ -4,16 +4,22 @@ namespace :importer do
 
   desc "Queries the eirb for a full list of studies and imports all these studies"
   task :full_update => :environment do
+    irb_numbers = Eirb.find_study_export
+    import_study_list(irb_numbers)
+  end
+
+  desc "Queries the DB for a list of active studies and updates data for those"
+  task :priority_update => :environment do
+    irb_numbers = Involvement.find(:all).map{|i| i.study.irb_number}.uniq
+    import_study_list(irb_numbers)
+  end
+
+  def import_study_list(irb_numbers)
     t= Time.now
     puts "Starting at #{t}"
     tr = []
-    # Get list of studies from eIRB
-    Eirb.connect
-    puts "Connected, now getting the full list of studies from eIRB"
-    irb_numbers = Eirb.find_study_export
-    #irb_numbers = [{:irb_number => "STU00019833"}]
     puts "#{irb_numbers.count} studies to import"
-    puts "This might take a while, you should probably take a walk or find a nice book to read" if irb_numbers.count > 500
+    puts "This might take a while (~#{(irb_numbers.count*10)/60} minutes), you should probably take a walk or find a nice book to read" if irb_numbers.count > 500
     irb_numbers.each do |number|
       # Iterate over this list
       irb_num = number[:irb_number]
@@ -21,7 +27,7 @@ namespace :importer do
       study = Study.find_by_irb_number(irb_num)
       if study.nil?
         print "#{irb_num} not found, creating it"
-        study = Study.create(:irb_number => irb_number)
+        study = Study.create(:irb_number => irb_num)
       end
       t1 = Time.now
       print " Importing #{irb_num}"

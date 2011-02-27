@@ -71,7 +71,13 @@ describe Webservices::Importer do
       end
 
       it "should import subjects information" do
-        pending
+        # Subject information is split accross multiple import sources.
+        # Currently two sources, 
+        # Also, only certain studies nave study subject data.
+        # The import subjects query should take a study number, and 
+        # a source ID to query. The source ID is related to the EDW 
+        # query not the source (eg not EDW/eIRB as in the study/roles data)
+        #
       end
 
       it "should sanitize roles to remove bad data" do
