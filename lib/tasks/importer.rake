@@ -5,14 +5,14 @@ namespace :importer do
   desc "Queries the eirb for a full list of studies and imports all these studies"
   task :full_update => :environment do
     puts "Querying eIRB, it's slow, give us a minute..."
-    irb_numbers = Eirb.find_study_export
+    irb_numbers = Eirb.find_study_export.map{|i| i[:irb_number]}.uniq
     import_study_list(irb_numbers)
   end
 
   desc "Queries the DB for a list of active studies and updates data for those"
   task :priority_update => :environment do
     puts "Querying eNOTIS DB for active studies..."
-    irb_numbers = Involvement.find(:all).map{|i| i.study.irb_number}.uniq
+    irb_numbers = Involvement.find(:all, :include => :study).map{|i| i.study.irb_number}.uniq
     import_study_list(irb_numbers)
   end
 
@@ -23,9 +23,7 @@ namespace :importer do
     puts "#{irb_numbers.count} studies to import"
     puts "This might take a while (~#{(irb_numbers.count*10)/60} minutes), you should probably take a walk or find a nice book to read" if irb_numbers.count > 500
     STDOUT.flush
-    irb_numbers.each do |number|
-      # Iterate over this list
-      irb_num = number[:irb_number]
+    irb_numbers.each do |irb_num|
       # Import the data for the study
       study = Study.find_by_irb_number(irb_num)
       if study.nil?
