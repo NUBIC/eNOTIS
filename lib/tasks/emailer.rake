@@ -108,12 +108,61 @@ namespace :emailer do
     end
   end
 
+
+
+  desc 'email reminders for service forms'
+  task :service_email_reminder => :environment do
+    #- Identify the studies that are currently active.
+    studies = get_studies
+    puts "Studies: #{studies.count}"
+    #- Remove the studies that have already responded to the survey. Any level of response. We will deal with partial responses separately
+    studies.reject!{|s| !s.uses_medical_services.nil?}
+    puts "Minus ones responded #{studies.count}"
+    #- Identify the PIs and study personnel for those studies
+    pi_nets = get_pi_nets_from_studies(studies)
+    #- for each PI, collect their studies and personnel for those studies
+    pi_nets.each do |pi_net|
+      puts "======== \nWorking on pi: #{pi_net}"
+      pi_studies = studies.select do |x| 
+        pi = x.principal_investigator
+        if pi && pi.netid == pi_net
+          true
+        else
+          false
+        end
+      end
+      #- send the PI an email with a list of their studies and cc:all the personnel listed on one or more of those studies.
+      all_personnel = []
+      pi_studies.each do |study|
+        all_personnel.concat( study.roles.map(&:netid) )
+      end
+      all_personnel.uniq!
+      to_pi = convert_to_emails([pi_net]).first
+      to_cc = convert_to_emails(all_personnel)
+      puts "Would have sent email to #{to_pi}: and cc'd #{to_cc.join(',')}\n"
+    end
+    puts "Done!"
+  end
+
   # HELPER METHODS ##################################################
 
   def load_proxy_file
     puts "Loading proxy email list"
     # Load PI proxy list
     YAML.load(File.open(File.dirname(__FILE__) + '/proxies.yaml','r'))
+  end
+
+  def convert_to_emails(net_arr)
+    emails = []
+    net_arr.each do |net|
+      u = User.find_by_netid(net)
+      if u
+        emails << u.email
+      else
+        puts "ERROR not finding an email for :#{net}"
+      end
+    end
+    emails
   end
 
   def get_pi_nets_from_studies(studies)
