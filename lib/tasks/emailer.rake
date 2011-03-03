@@ -141,6 +141,7 @@ namespace :emailer do
       # remove the PI from all pers
       all_personnel.reject!{|n| n == pi_net}
       to_cc = convert_to_emails(all_personnel)
+      # to_cc might be blank
       puts "Would have sent email to #{to_pi}: and cc'd #{to_cc.join(',')}\n"
     end
     puts "Done!"

@@ -2,11 +2,17 @@ require 'webservices'
 
 namespace :importer do
 
+ # TODO: add update to bcsec enotis roles!!!!
+
   desc "Queries the eirb for a full list of studies and imports all these studies"
   task :full_update => :environment do
     puts "Querying eIRB, it's slow, give us a minute..."
     irb_numbers = Eirb.find_study_export.map{|i| i[:irb_number]}.uniq
     import_study_list(irb_numbers)
+    # Query externals and flag study as 'externally managed'
+    # Get all externall managed studies, flag with source
+    # Query these against the sources system, use the source key
+    # to drive the query interface.
   end
 
   desc "Queries the DB for a list of active studies and updates data for those"
