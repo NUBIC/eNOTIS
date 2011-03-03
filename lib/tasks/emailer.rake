@@ -138,6 +138,8 @@ namespace :emailer do
       end
       all_personnel.uniq!
       to_pi = convert_to_emails([pi_net]).first
+      # remove the PI from all pers
+      all_personnel.reject!{|n| n == pi_net}
       to_cc = convert_to_emails(all_personnel)
       puts "Would have sent email to #{to_pi}: and cc'd #{to_cc.join(',')}\n"
     end
@@ -155,7 +157,7 @@ namespace :emailer do
   def convert_to_emails(net_arr)
     emails = []
     net_arr.each do |net|
-      u = User.find_by_netid(net)
+      u = User.find_by_netid(net.downcase)
       if u
         emails << u.email
       else
