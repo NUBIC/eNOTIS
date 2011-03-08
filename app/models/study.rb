@@ -1,4 +1,5 @@
 require 'chronic'
+require 'webservices/importer'
 # Represents a Clinical Study/Trial.
 class Study < ActiveRecord::Base
  
