@@ -93,7 +93,6 @@ class Study < ActiveRecord::Base
     self.irb_number
   end
 
-  # Temporary for demo
   def principal_investigator
     roles.detect{|x| x.project_role =~ /P\.?I\.?|Principal Investigator/i}
   end

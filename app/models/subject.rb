@@ -13,7 +13,7 @@ class Subject < ActiveRecord::Base
 
   # Named scopes
   named_scope :on_studies, lambda {|study_ids| { :include => :involvements, :conditions => ['involvements.study_id in (?)', study_ids], :order => 'subjects.last_name, subjects.first_name ASC' } }
-  named_scope :on_notis_studies, :conditions => {:data_source => "NOTIS"}, :joins => :involvements
+ #TODO: DELETE named_scope :on_notis_studies, :conditions => {:data_source => "NOTIS"}, :joins => :involvements
   named_scope :with_user, lambda{|netid| {:include => {:studies => :roles}, :conditions => ["roles.netid =?", netid]}}
   
   # Mixins

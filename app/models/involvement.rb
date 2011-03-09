@@ -27,7 +27,6 @@ class Involvement < ActiveRecord::Base
   belongs_to :subject
 	belongs_to :study
   has_many :involvement_events, :dependent => :destroy
-
   
   # Atrributes
   accepts_nested_attributes_for :involvement_events, :reject_if => lambda {|a| (a["occurred_on"].blank?) }
@@ -114,6 +113,12 @@ class Involvement < ActiveRecord::Base
         Involvement.create(params)
       end
     end
+
+    def import_update(involvement, bulk_data)
+
+    end
+
+
   end # end of class << self
   
   %w(gender ethnicity).each do |category|
