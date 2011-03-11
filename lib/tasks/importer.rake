@@ -5,12 +5,12 @@ namespace :importer do
  # TODO: add update to bcsec enotis roles!!!!
 
   desc "Does our full (weekender) update process - Don't wait up for this one! It likes to party all night"
-  task :full_mutha_trucking_update => [:environment, :all_studies, :update_managed_studies, :managed_subjects] do
+  task :full_mutha_trucking_update => [:environment, :all_studies, :update_managed_studies] do
     puts "Full updating..."
   end
 
   desc "Does our priority update process, active studies and studies with managed participants - Takes about 2-3 hours to run"
-  task :priority_update => [:environment, :active_studies, :managed_subjects] do
+  task :priority_update => [:environment, :active_studies] do
     puts "Priority updating..."
   end
 
@@ -26,7 +26,7 @@ namespace :importer do
   task :active_studies => :environment do
     puts "Querying eNOTIS DB for active studies..."
     irb_numbers = Involvement.find(:all, :include => :study).map{|i| i.study.irb_number}.uniq
-    puts "Importing active studies"
+    puts "Importing active studies (managed by eNOTIS or managed externall)"
     import_studies(irb_numbers)
   end
 
@@ -38,14 +38,6 @@ namespace :importer do
       study_list = Webservices::Edw.send(query)
       irb_numbers = study_list.map{|i| i[:irb_number]} # just need the irb_numbers 
       set_managed_studies(irb_numbers, source)
-    end
-  end
-
-  desc "Updates the subject lists for managed studies based on the managed system name in the study object"
-  task :managed_subjects => :environment do
-    studies = Study.find(:all, :conditions => "managing_system is not null") # not null means NOT eNOTIS managed
-    studies.each do |study|
-      Webservices::Importer.import_external_subject_data(study)
     end
   end
 

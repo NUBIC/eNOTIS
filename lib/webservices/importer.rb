@@ -58,32 +58,22 @@ module Webservices
       # Participants for some studies => NOTIS via EDW
       # Participants for some studies => ANES via EDW
       
-      def import_external_subject_data(study)
-        raise "Study not externally managed" if study.managing_system.nil?
-        query = "find_#{study.managing_system}_study_subjects".to_sym
-        
-        subjects_raw = do_import_queries(Edw,study.irb_number,[query])
-        subjects_clean = case study.managing_system
-                         when 'NOTIS' then sanitize_NOTIS_subjects(subjects_raw) 
-                         when 'ANES' then sanitize_ANES_subjects(subjects_raw)
-                         else {}
-                         end
-
-      end
-
       def import_external_study_data(study)
         # NOTE: There are some assumptions here about the structure of the hash we
         # use to temporarily store our import data. The clean and raw data sets should all have
         # the following keys, :study, :roles, :subjects, :errors
 
         # Querying the sources 
-        study_raw = query_sources(study.irb_number) 
+        study_raw = query_sources(study) 
         # Cleaning the results 
         study_clean = sanitize(study_raw)
         
         # Actally loading data into our data models
         Study.import_update(study, study_clean[:study]) unless study_clean[:study].blank?
         Role.import_update(study, study_clean[:roles]) unless study_clean[:roles].blank?
+        if study.is_managed? and !study_clean[:involvements].blank?
+          Involvement.import_update(study, study_clean[:involvements]) 
+        end
 
         # Setting some import process data
         study.clear_import_cache
@@ -105,6 +95,11 @@ module Webservices
         begin
           clean_set[:roles] = sanitize_roles(study_set[:roles])
         rescue Exception => err 
+          clean_set[:errors] << err.to_s
+        end
+        begin
+          clean_set[:involvements] = sanitize_involvements(study_set[:involvements])
+        rescue Exception => err
           clean_set[:errors] << err.to_s
         end
         return clean_set
@@ -155,7 +150,6 @@ module Webservices
             study[:funding_sources] << {:name => fs[:funding_source_name], :code => fs[:funding_source_id], :category => fs[:funding_source_category_name]}
           end
         end
-
         return study
       end
 
@@ -185,17 +179,31 @@ module Webservices
         roles.reject! do |r|
           r[:netid].blank? or r[:project_role].blank? or r[:consent_role].blank?
         end
-        roles
+        return roles
+      end
+      
+      def sanitize_involvements(involvements_set)
+        # the involvements_set format is :query_name => <data_hash>
+        # We will use the query name to identify the source system (eg NOTIS)
+        # and then procede to sanitize the data based on that. We have to use
+        # different sanitation for different sources.
+        return {}
       end
 
       # Queries the sources and sets up our temporary data hash 
-      def query_sources(irb_number)
+      def query_sources(study)
         study_raw = {:errors => []}
-        study_raw[:study] = query_study_source(irb_number)
-        study_raw[:roles] = query_roles_source(irb_number)
+        study_raw[:study] = query_study_source(study.irb_number)
+        study_raw[:roles] = query_roles_source(study.irb_number)
+        study_raw[:involvements] = []
+        if study.is_managed?
+          study_raw[:involvements] = query_involvements_source(study.irb_number, study.managing_system)
+        end
+
         # collecting our errors
         study_raw[:errors].concat(study_raw[:study][:errors])
         study_raw[:errors].concat(study_raw[:roles][:errors])
+        study_raw[:errors].concat(study_raw[:involvements][:errors]) if study.is_managed?
         return study_raw
       end
 
@@ -220,6 +228,11 @@ module Webservices
           :find_authorized_personnel
         ]
         do_import_queries(Edw, irb_number, query_list)
+      end
+
+      def query_involvements_source(irb_number, source)
+        query = "find_#{source}_study_subjects".to_sym
+        do_import_queries(Edw,irb_number,[query])
       end
 
       # This is where we actually make the queries,
