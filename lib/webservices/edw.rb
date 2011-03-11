@@ -2,9 +2,8 @@ require 'webservices'
 
 class Edw
   
-  # SEARCH_DEFAULTS = { 
-  #                    }.freeze
-
+  # the master list of search names and our mapping to internal functions
+  # the :ext option is used to generate a method with the name "find_#{ext}"
   STORED_SEARCHES = [
     {:name => "eNOTISeIRBAuthorizedPersonnel", :ext => "authorized_personnel"},
     {:name => "eNOTISeIRBPrincipalInvestigators", :ext => "principal_investigators"},

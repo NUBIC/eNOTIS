@@ -2,6 +2,13 @@ require 'chronic'
 require 'webservices/importer'
 # Represents a Clinical Study/Trial.
 class Study < ActiveRecord::Base
+
+  # Some semi-static data about the external systems we get data from
+  EXT_DATA = {
+    'NOTIS' => {:name => "NOTIS", :contact => "Peter Nyberg <p-nyberg@northwestern.edu>", :url => "https://notis.nubic.northwestern.edu"},
+    'EIRB' => {:name => "eIRB", :contact => "Brenda L. Bryant <b-bryant@northwestern.edu>", :url => "http://www.eirb.northwestern.edu"},
+    'ANES' => {:name => "Anesthesiology", :contact => "Thomas Rogers <trogers@northwestern.edu>", :url => ""}
+  }
  
   include Webservices::ImporterSupport
   before_save :flatten_import_cache
@@ -66,28 +73,58 @@ class Study < ActiveRecord::Base
     end
     study.update_attributes(bulk_data)
   end
+  
+
+  # ======= study data management notes ========
+  # All key study data comes from eIRB!
+  # BUT! we make a distinction for the study subjects/paraticipants.
+  # These can come from different systems (and are pull throught the EDW)
+  # When an other system feeds participant data to a study in eNOTIS
+  # we consider this study to be externally managed. Managed studies
+  # need additional webservice calls to import data (ie the subjects).
 
   # This method is used to toggle the editable/non-editable state of 
   # patients and patient data (ie involvments, involvment_events, subjects).
-  # Added to support the import of study subjects managed by NOTIS
   def read_only!(msg = nil)
     self.read_only = true
     self.read_only_msg = msg
   end
 
+  # This method reverts a study to read/editable
   def editable!
     self.read_only = false
     self.read_only_msg = nil
   end
 
+  # Returns the read status of the study
   def read_only?
     self.read_only
   end
 
+  # Returns the edit status of the study
   def editable?
     !self.read_only
   end
-  
+
+  # This method sets the system name (it can only be one) and 
+  # sets the study to read-only so users cannot add/edit subjects through 
+  # the eNOTIS UI.
+  def managed_by(sys_name)
+    sys_hash = EXT_DATA[sys_name]
+    if sys_hash
+      msg = "This study's participants are managed by #{sys_hash[:name]}. You cannot edit them in eNOTIS. See the source system at #{sys_hash[:url]} or contact #{sys_hash[:contact]} for details."
+      self.read_only!(msg)
+      self.managing_system = sys_name
+    end
+  end
+
+  def is_managed?
+    !managing_system.nil?
+  end
+
+  # ------- end of study management methods --------
+
+
   # irb_number instead of id in urls
   def to_param
     self.irb_number

@@ -4,25 +4,69 @@ namespace :importer do
 
  # TODO: add update to bcsec enotis roles!!!!
 
+  desc "Does our full (weekender) update process - Don't wait up for this one! It likes to party all night"
+  task :full_mutha_trucking_update => [:environment, :all_studies, :update_managed_studies, :managed_subjects] do
+    puts "Full updating..."
+  end
+
+  desc "Does our priority update process, active studies and studies with managed participants - Takes about 2-3 hours to run"
+  task :priority_update => [:environment, :active_studies, :managed_subjects] do
+    puts "Priority updating..."
+  end
+
   desc "Queries the eirb for a full list of studies and imports all these studies"
-  task :full_update => :environment do
+  task :all_studies => :environment do
     puts "Querying eIRB, it's slow, give us a minute..."
     irb_numbers = Eirb.find_study_export.map{|i| i[:irb_number]}.uniq
-    import_study_list(irb_numbers)
-    # Query externals and flag study as 'externally managed'
-    # Get all externall managed studies, flag with source
-    # Query these against the sources system, use the source key
-    # to drive the query interface.
+    puts "Importing ALL studies" 
+    import_studies(irb_numbers)
   end
 
-  desc "Queries the DB for a list of active studies and updates data for those"
-  task :priority_update => :environment do
+  desc "Updates study data for studies active in eNOTIS (will not query the eIRB for a study list so no new studies are added with this task)"
+  task :active_studies => :environment do
     puts "Querying eNOTIS DB for active studies..."
     irb_numbers = Involvement.find(:all, :include => :study).map{|i| i.study.irb_number}.uniq
-    import_study_list(irb_numbers)
+    puts "Importing active studies"
+    import_studies(irb_numbers)
   end
 
-  def import_study_list(irb_numbers)
+  desc "Queries the known subject/participant external sources and flags the appropriate eNOTIS study with the source which has subject/participants"
+  task :update_managed_studies => :environment do
+    source_list = ['NOTIS', 'ANES'] #and soon Registar! The source name needs to match how it's written in the webservices/edw.rb file. See the stored searches hash.
+    source_list.each do |source|
+      query = "find_#{source}_study_list".to_sym # building the query name we're gonna call based on our naming convention in edw.rb
+      study_list = Webservices::Edw.send(query)
+      irb_numbers = study_list.map{|i| i[:irb_number]} # just need the irb_numbers 
+      set_managed_studies(irb_numbers, source)
+    end
+  end
+
+  desc "Updates the subject lists for managed studies based on the managed system name in the study object"
+  task :managed_subjects => :environment do
+    studies = Study.find(:all, :conditions => "managing_system is not null") # not null means NOT eNOTIS managed
+    studies.each do |study|
+      Webservices::Importer.import_external_subject_data(study)
+    end
+  end
+
+  # ------ end of tasks - helper methods below --------
+  
+  # Gets as study, sets it to being managed by a source
+  def set_managed_studies(irb_numbers, source)
+    irb_numbers.each do |irb_num|
+      study = Study.find_by_irb_number(irb_num)
+      if study
+        study.managed_by(source)
+        study.save!
+      else
+        raise "Study not found"
+      end
+    end
+  end
+
+  # This looks long but most of it is printing stuff to STDOUT or calculating 
+  # import time for those running the rake command manually.
+  def import_studies(irb_numbers)
     t= Time.now
     puts "Starting at #{t}"
     tr = []

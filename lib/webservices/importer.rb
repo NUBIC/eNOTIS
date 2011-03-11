@@ -57,8 +57,19 @@ module Webservices
       # -NOTE: Roles might need a source field real soon this would let us have local roles which were updated and managed by eNOTIS
       # Participants for some studies => NOTIS via EDW
       # Participants for some studies => ANES via EDW
-      # Studies with participants elsewhere should 
-      # be locked to prevent editing in eNOTIS
+      
+      def import_external_subject_data(study)
+        raise "Study not externally managed" if study.managing_system.nil?
+        query = "find_#{study.managing_system}_study_subjects".to_sym
+        
+        subjects_raw = do_import_queries(Edw,study.irb_number,[query])
+        subjects_clean = case study.managing_system
+                         when 'NOTIS' then sanitize_NOTIS_subjects(subjects_raw) 
+                         when 'ANES' then sanitize_ANES_subjects(subjects_raw)
+                         else {}
+                         end
+
+      end
 
       def import_external_study_data(study)
         # NOTE: There are some assumptions here about the structure of the hash we
@@ -96,7 +107,6 @@ module Webservices
         rescue Exception => err 
           clean_set[:errors] << err.to_s
         end
-        # TODO: Sanitize involvements
         return clean_set
       end
 

@@ -55,9 +55,21 @@ describe Study do
     @study.read_only.should be_true
   end
 
+  it "can have it's participants managed by an external system" do
+    @study.managed_by('NOTIS')
+    @study.read_only?.should be_true
+    @study.managing_system.should == 'NOTIS'
+  end
+
+  it "can only be managed by a system we know about" do
+    @study.managed_by('FAUXTIS')
+    @study.read_only?.should be_false
+    @study.managing_system.should be_nil
+  end
+
   it "can have a read only message for the user" do
-    @study.read_only!("This study is managed in NOTIS")
-    @study.read_only_msg.should == "This study is managed in NOTIS"
+    @study.read_only!("This study is set to read only")
+    @study.read_only_msg.should == "This study is set to read only"
   end
 
   it "can clear the read only status" do
@@ -190,7 +202,7 @@ describe Study do
       }
     end
 
-    it "updates the current study data with hash data" do
+    it "updates a study with data from a hash" do
       Study.import_update(@study, @study_data)
       @study.name.should == @study_data[:name]
       @study.irb_number.should == @study_data[:irb_number]
@@ -215,7 +227,7 @@ describe Study do
         @study.funding_sources.should have(3).sources
       end
 
-      it "does not create duplicates" do
+      it "does not create duplicate funding sources" do
         copy_data = Marshal.load(Marshal.dump(@study_data))
         Study.import_update(@study, @study_data)
         @study.funding_sources.should have(3).sources
@@ -223,7 +235,7 @@ describe Study do
         @study.funding_sources.should have(3).sources
       end
 
-      it "updates existing ones if they change" do
+      it "updates existing funding sources if they change" do
         copy_data = Marshal.load(Marshal.dump(@study_data)) #cloning the hash
         Study.import_update(@study,@study_data)
         copy_data[:funding_sources].first[:code] = "MEDITECH"
@@ -234,7 +246,7 @@ describe Study do
         fs.should be_nil
       end
 
-      it "removes ones no longer present" do
+      it "removes funding sources no longer present" do
         Study.import_update(@study,@study_data)
         @study.funding_sources.should have(3).sources
         @study_data[:funding_sources].should be_nil

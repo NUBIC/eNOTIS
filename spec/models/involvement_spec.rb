@@ -4,6 +4,7 @@ describe Involvement do
   before do
     ResqueSpec.reset!
   end
+
   it "enques the involvement" do
     involvement = Factory(:involvement)
     EmpiWorker.should have_queued(involvement.id)
@@ -16,6 +17,62 @@ describe Involvement do
     Involvement.new(:races => "asian").races.include?("Asian").should be_true
   end
 
+  describe "the bulk importing process for involments managed on other studies" do
+
+    before(:each) do
+      @study = Factory(:study, :irb_number => "STU000123")
+      #Copied from prod but de-id'd
+      @dhash = [{:protocol_id=>"1746", 
+        :mrd_pt_id=>"244444444", :ethnicity=>"Non-Hispanic",
+        :sex=>"F", :completed_date=>"1/10/2011", :mrn=>"123321",
+        :mrn_type=>"NMFF G#", :last_name=>"Smith", :birth_date=>"1/11/1955",
+        :address_1=>"50 W. Street", :zip=>"10642", :death_date=>"", :withdrawn_date=>"",
+        :patient_created=>"2010-1-10T13:55:23", :irb_number=>"STU000123", 
+        :case_number=>"1106", :address_2=>"Apt 106", :patient_id=>"5587555", :race=>"White",
+        :affiliate_id=>"1918", :first_name=>"Traci", :race_ethnicity_created=>"2010-1-10T13:55:23",
+        :phone=>"3215551233", :state=>"IL", :city=>"Chicago", :consented_date=>"1/12/2010"}]
+    end
+
+    it "adds involvement for study given the involvement/subject data" do
+      @study.involvements.count.should == 0
+      Involvement.import_update(@study, @dhash, 'NOTIS')
+      @study.involvements.count.should == 1
+    end
+
+    it "sets the proper management info" do
+      @study.is_managed?.should be_false
+      @study.read_only?.should be_false
+      Involvement.import_update(@study, @dhash, 'NOTIS')
+      @study.is_managed?.should be_true
+      @study.read_only?.should be_true
+    end
+
+    it "does not create duplicate involvements for the same study/subject" do
+      pending
+    end
+
+    describe "updates data on existing study/subject involvements" do
+      it "adds withdrawl date" do
+        pending
+      end
+
+      it "edits consent date" do
+        pending
+      end
+
+      it "deletes withdrawl date" do
+        pending
+      end
+
+    end
+
+    it "deletes subjects who are no longer on the study (but not withdrawn or completed)" do
+      # Deleted subjects we are assuming were added in error and it's therfore, okay to delete them.
+      pending
+    end
+
+  end
+  
   describe "how it should tranlsate (for more forgiving uploads) gender terms" do
     #positive matches
     p_match = {
@@ -230,10 +287,10 @@ describe Involvement do
     inv = Factory(:involvement)
     inv.update_attributes("subject_attributes"=> {"birth_date"=>"12/18/34"})
     inv.subject.birth_date.should == Date.parse("1934-12-18")
-
     inv.update_attributes("subject_attributes"=> {"birth_date"=>"12/18/07"})
     inv.subject.birth_date.should == Date.parse("2007-12-18")
   end
+  
   it "should sort involvements by case number by default" do
     s = Factory(:study)
     i1 = Factory(:involvement, :study => s, :case_number => "99")

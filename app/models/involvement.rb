@@ -114,8 +114,12 @@ class Involvement < ActiveRecord::Base
       end
     end
 
-    def import_update(involvement, bulk_data)
+    # Takes a study and the bulk update data which contains an array of hashes.
+    # The hashes contain study participant/subject info 
+    def import_update(study, bulk_data)
+       
 
+      study.save!
     end
 
 
@@ -123,7 +127,9 @@ class Involvement < ActiveRecord::Base
   
   %w(gender ethnicity).each do |category|
     # gender=, ethnicity= (make case insensitive)
-    define_method("#{category}="){|term| write_attribute(category.to_sym, self.class.send(category.pluralize).detect{|x| x.downcase == term.to_s.downcase})}
+    define_method("#{category}=") do |term| 
+      write_attribute(category.to_sym, self.class.send(category.pluralize).detect{|x| x.downcase == term.to_s.downcase})
+    end
   end
 
   # Sets the races by accepting an array or string of race terms
@@ -202,12 +208,13 @@ class Involvement < ActiveRecord::Base
 
   def all_events
     # A placeholder method to get an easy checkbox? 
-    # Not sure why this is here but it's "method" 
-    # used when generating reports. Basically used as
+    # Not sure why this is here but it's "method" is 
+    # used when generating reports. Basically it's used as
     # a flag, this method is never actually called
     # as far as I can tell. - BLC
   end
 
+  # Generating some methods for the reporting plugin
   %w(consented withdrawn completed).each  do |name|
     define_method("#{name}_report".to_sym) do
        ev = self.send(:event_detect, name)

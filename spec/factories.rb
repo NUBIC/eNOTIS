@@ -18,10 +18,6 @@ Factory.define :subject do |p|
   p.nmff_mrn                {Factory.next :mrn}
   p.nmh_mrn                 {Factory.next :mrn}
   p.ric_mrn                 {Factory.next :mrn}
-  # p.source_system
-  # p.pre_sync_data
-  p.synced_at                 {3.minutes.ago}
-  p.pre_sync_data             {nil}
   p.first_name                {"Pi"}
   p.middle_name               {"A"}
   p.last_name                 {"Patel"}
@@ -34,8 +30,6 @@ Factory.define :subject do |p|
   p.zip                       {"31415"}
   p.phone_number              {"110 010 0100"}
   p.email                     {"pi@yatelp.com"}
-  # p.no_contact                {}
-  # p.no_contact_reason         {}
   
   # Actually setting the birth_date! Above method does not work
   #p.after_create { |u| u.birth_date = "1941-03-01"}
@@ -45,9 +39,6 @@ end
 Factory.define :fake_subject, :parent => :subject do |p|
   # p.nmff_mrn
   # p.nmh_mrn
-  # p.source_system
-  # p.pre_sync_data
-  p.synced_at                 {Populator.value_in_range(2.days.ago..2.minutes.ago)}
   p.first_name                {Faker::Name.first_name}
   p.middle_name               {Faker::Name.first_name}
   p.last_name                 {Faker::Name.last_name}

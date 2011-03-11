@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110208233619) do
+ActiveRecord::Schema.define(:version => 20110310170322) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -105,14 +105,6 @@ ActiveRecord::Schema.define(:version => 20110208233619) do
     t.datetime "updated_at"
   end
 
-  create_table "resource_statuses", :force => true do |t|
-    t.string   "name",       :null => false
-    t.boolean  "status"
-    t.string   "message"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "roles", :force => true do |t|
     t.integer  "study_id"
     t.integer  "user_id"
@@ -149,7 +141,6 @@ ActiveRecord::Schema.define(:version => 20110208233619) do
     t.string   "created_date"
     t.boolean  "is_a_clinical_investigation"
     t.datetime "modified_date"
-    t.boolean  "multi_inst_study"
     t.boolean  "periodic_review_open"
     t.integer  "subject_expected_completion_count"
     t.integer  "total_subjects_at_all_ctrs"
@@ -162,6 +153,7 @@ ActiveRecord::Schema.define(:version => 20110208233619) do
     t.datetime "imported_at"
     t.boolean  "import_errors"
     t.text     "import_cache"
+    t.string   "managing_system"
   end
 
   # unrecognized index "studies_irb_number_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
@@ -185,7 +177,6 @@ ActiveRecord::Schema.define(:version => 20110208233619) do
   create_table "subjects", :force => true do |t|
     t.string   "mrn"
     t.string   "mrn_type"
-    t.string   "source_system"
     t.string   "first_name"
     t.string   "middle_name"
     t.string   "last_name"
@@ -200,14 +191,11 @@ ActiveRecord::Schema.define(:version => 20110208233619) do
     t.string   "zip"
     t.string   "phone_number"
     t.string   "email"
-    t.datetime "synced_at"
-    t.text     "pre_sync_data"
-    t.boolean  "no_contact"
-    t.text     "no_contact_reason"
+    t.datetime "imported_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "external_patient_id"
-    t.string   "data_source"
+    t.string   "import_source"
     t.date     "empi_updated_date"
     t.string   "nmff_mrn"
     t.string   "nmh_mrn"
