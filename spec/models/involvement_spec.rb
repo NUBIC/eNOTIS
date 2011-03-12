@@ -72,26 +72,40 @@ describe Involvement do
         @study.involvements.first.event_detect("Completed").should be_nil
         ie = @study.involvements.first.event_detect("Withdrawn")
         ie.should_not be_nil
-        ie.occurred_on.should == Chronic.parse("2-9-2007")
+        (Chronic.parse(ie.occurred_on.to_s)).should == Chronic.parse("2-9-2007")
       end
 
       it "edits consent date" do
-        pending
-      end
+        Involvement.import_update(@study, @dhash)
+        ie = @study.involvements.first.event_detect("Completed")
+        (Chronic.parse(ie.occurred_on)).should == Chronic.parse("3/10/2009")
+        
+        @dhash.first[:involvement][:involvement_events][:completed_date] = "4/10/2010"
 
-      it "does not create duplicate events with same name and date" do
-        pending
+        Involvement.import_update(@study, @dhash)
+        ie = @study.involvements.first.event_detect("Completed")
+        (Chronic.parse(ie.occurred_on)).should == Chronic.parse("4/10/2010")
       end
 
       it "deletes completed date" do
-        pending
+        Involvement.import_update(@study, @dhash)
+        ie = @study.involvements.first.event_detect("Completed")
+        (Chronic.parse(ie.occurred_on)).should == Chronic.parse("3/10/2009")
+        @dhash.first[:involvement][:involvement_events].delete(:completed_date)
+        # reloading with changes
+        Involvement.import_update(@study, @dhash)
+        ie = @study.involvements.first.event_detect("Completed")
+        ie.should be_nil
       end
 
     end
 
-    it "deletes subjects who are no longer on the study (but not withdrawn or completed)" do
+    it "deletes involvements who are no longer on the study (but not withdrawn or completed)" do
       # Deleted subjects we are assuming were added in error and it's therfore, okay to delete them.
-      pending
+      Involvement.import_update(@study, @dhash)
+      @study.involvements.count.should == 1
+      Involvement.import_update(@study, [])
+      @study.involvements.count.should == 0
     end
 
   end

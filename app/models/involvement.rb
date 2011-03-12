@@ -117,35 +117,53 @@ class Involvement < ActiveRecord::Base
     # Takes a study and the bulk update data which contains an array of hashes.
     # The hashes contain study participant/subject info 
     def import_update(study, bulk_data)
-      bulk_data.each do |inv_hash|
+      bulk_data.each do |inv_hash| # iterating over each involvement hash
         s = inv_hash[:subject]
         subject = Subject.find_by_external_patient_id(s[:external_patient_id]) if s[:external_patient_id]
         if subject.nil?
           subject = Subject.create(s)
         end
-        inv_data = inv_hash[:involvement].merge(:subject => subject)
-        inv_data.delete(:involvement_events) # removing this set of data to add manually (vs using accepts nested attrs for)
+
+        #look for study/subject involvements already existing
         inv = Involvement.find(:first, :conditions => {:study_id => study.id, :subject_id => subject.id})
-        if inv.nil?
+        if inv.nil? # create it 
+          inv_data = inv_hash[:involvement].merge({:study_id => study.id, :subject_id => subject.id})
+          inv_data.delete(:involvement_events) # removing this set of data to add manually (vs using accepts nested attrs for)
           inv = study.involvements.create(inv_data)
         end
+
         # creating new events
-        inv_hash[:involvement][:involvement_events].each do |event_name,event_date|
-          ie = InvolvementEvent.new
-          ie.involvement = inv
-          ie.event       = event_name.to_s.split('_')[0].capitalize 
-          ie.occurred_on = event_date.split("T").join(" ")
-          ie.save
-        end
-        # cleaning up the inv events no longer in the inv_hash
-        ["Consented", "Completed", "Withdrawn"].each do |e_name|
-          e_key = "#{e_name.downcase}_date".to_sym
-          e = inv.event_detect(e_name)
-          if e && inv_hash[:involvement][:involvement_events].has_key?(e_key)
-            InvolvementEvent.delete(e)
+        inv_hash[:involvement][:involvement_events].each do |event_sym,event_date|
+          event_name = event_sym.to_s.split('_')[0].capitalize  
+          event_type = study.event_types.find_by_name(event_name)
+          occurred = event_date.split("T").join(" ")
+          ie = inv.involvement_events.find(:first, :conditions => {:event_type_id => event_type.id})
+          unless ie
+            InvolvementEvent.create(:involvement => inv, :event_type => event_type, :occurred_on => occurred)
+          else
+            ie.occurred_on = occurred # updating teh date
+            ie.save
           end
         end
-      end 
+
+        # cleaning up the inv events no longer in the inv_hash
+        inv.involvement_events.each do |ie|
+          e_key = "#{ie.event.downcase}_date".to_sym
+          unless inv_hash[:involvement][:involvement_events].has_key?(e_key)
+            InvolvementEvent.delete(ie)
+          end
+        end
+
+
+      end #end bulk data loop
+      
+      # cleaning up involvements no longer in the inv_hash
+      subject_ids = bulk_data.map{|x| x[:subject][:external_patient_id]}
+        study.involvements.each do |current_inv|
+         unless subject_ids.include?(current_inv.subject.external_patient_id)
+           Involvement.delete(current_inv)
+         end
+      end
     end
 
 
