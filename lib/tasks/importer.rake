@@ -35,7 +35,7 @@ namespace :importer do
     source_list = ['NOTIS', 'ANES'] #and soon Registar! The source name needs to match how it's written in the webservices/edw.rb file. See the stored searches hash.
     source_list.each do |source|
       query = "find_#{source}_study_list".to_sym # building the query name we're gonna call based on our naming convention in edw.rb
-      study_list = Webservices::Edw.send(query)
+      study_list = Edw.send(query)
       irb_numbers = study_list.map{|i| i[:irb_number]} # just need the irb_numbers 
       set_managed_studies(irb_numbers, source)
     end
@@ -50,8 +50,9 @@ namespace :importer do
       if study
         study.managed_by(source)
         study.save!
+        puts "Found: #{irb_num} - Now managed by :#{source}"
       else
-        raise "Study not found"
+        puts "!!! Study not found: #{irb_num}"
       end
     end
   end

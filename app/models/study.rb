@@ -112,7 +112,7 @@ class Study < ActiveRecord::Base
   def managed_by(sys_name)
     sys_hash = EXT_DATA[sys_name]
     if sys_hash
-      msg = "This study's participants are managed by #{sys_hash[:name]}. You cannot edit them in eNOTIS."
+      msg = "This study is managed by the #{sys_hash[:name]} system."
       self.read_only!(msg)
       self.managing_system = sys_name
     end
