@@ -182,12 +182,110 @@ module Webservices
         return roles
       end
       
-      def sanitize_involvements(involvements_set)
+      def sanitize_involvements(inv_set)
         # the involvements_set format is :query_name => <data_hash>
-        # We will use the query name to identify the source system (eg NOTIS)
+        # We will use the query name to identify the source system (eg NOTIS or ANES)
         # and then procede to sanitize the data based on that. We have to use
         # different sanitation for different sources.
-        return []
+        if inv_set.has_key?(:find_NOTIS_study_subjects)
+          return sanitize_NOTIS_involvements(inv_set[:find_NOTIS_study_subjects])
+        elsif inv_set.has_key?(:find_ANES_study_subjects)
+          return sanitize_ANES_involvements(inv_set[:find_ANES_study_subjects])
+        else
+          return []
+        end
+      end
+
+      def sanitize_NOTIS_involvements(notis_set)
+        # Example data set from NOTIS
+        # :find_NOTIS_study_subjects => [{:protocol_id=>"1746", 
+        # :mrd_pt_id=>"244444444", :ethnicity=>"Non-Hispanic",
+        # :sex=>"F", :completed_date=>"1/10/2011", :mrn=>"123321",
+        # :mrn_type=>"NMFF G#", :last_name=>"Smith", :birth_date=>"1/11/1955",
+        # :address_1=>"50 W. Street", :zip=>"10642", :death_date=>"", :withdrawn_date=>"",
+        # :patient_created=>"2010-1-10T13:55:23", :irb_number=>"STU00019833", 
+        # :case_number=>"1106", :address_2=>"Apt 106", :patient_id=>"5587555", :race=>"White",
+        # :affiliate_id=>"1918", :first_name=>"Traci", :race_ethnicity_created=>"2010-1-10T13:55:23",
+        # :phone=>"3215551233", :state=>"IL", :city=>"Chicago", :consented_date=>"1/12/2010"}]
+        invs_set = []
+        notis_set.each do |subject_hash| 
+          invs = {}
+          subject_hash.reject!{|k,v| v.blank?}
+          invs[:subject] = {
+
+            :birth_date          => subject_hash[:birth_date],
+            :death_date          => subject_hash[:death_date],
+            :first_name          => subject_hash[:first_name],
+            :last_name           => subject_hash[:last_name],
+            :nmff_mrn            => /NMFF/ =~ subject_hash[:mrn_type] ? subject_hash[:mrn] : nil,
+            :nmh_mrn             => /NMH/ =~ subject_hash[:mrn_type] ? subject_hash[:mrn] : nil,
+            :external_patient_id => subject_hash[:patient_id],
+            :import_source => 'NOTIS'
+          }
+
+          invs[:involvement] = {
+            :address_line1       => subject_hash[:address_1],
+            :address_line2       => subject_hash[:address_2],
+            :city                => subject_hash[:city],
+            :state               => subject_hash[:state],
+            :zip                 => subject_hash[:zip],
+            :home_phone          => subject_hash[:phone],
+            :gender      => NOTIS_gender(subject_hash[:sex]),
+            :case_number => subject_hash[:case_number],
+            :ethnicity   => NOTIS_ethnicity(subject_hash[:ethnicity])
+            }.merge(NOTIS_race(subject_hash[:race]))
+
+          invs[:involvement][:involvement_events] = {
+            :consented_date => subject_hash[:consented_date],
+            :withdrawn_date => subject_hash[:withdrawn_date],
+            :completed_date => subject_hash[:completed_date]
+          }
+          #removing blank/nil events from above assignments
+           invs[:involvement][:involvement_events].reject!{|k,v| v.blank?}
+           invs[:involvement].reject!{|k,v| v.blank?}
+           invs[:subject].reject!{|k,v| v.blank?}
+           invs_set << invs
+        end
+        return invs_set
+      end
+
+      def sanitize_ANES_involvements(anes_set)
+        # Example data set from ANES
+        # :find_ANES_study_subjects => [{:withdrawn_on=>"", :ethnicity=>"Not Hispanic or Latino",
+        #  :completed_on=>"2011-02-10", :mrn=>"091823888", :last_name=>"MIAOS", :birth_date=>"2/26/1982",
+        #  :gender=>"Female", :case_number=>"105", :race=>"White", :patient_id=>"3672", 
+        #  :first_name=>"LORI", :consented_on=>"2011-02-10"}]
+        invs_set = []
+        anes_set.each do |subject_hash| 
+          invs = {}
+          subject_hash.reject!{|k,v| v.blank?}
+          invs[:subject] = {
+            :birth_date          => subject_hash[:birth_date],
+            :first_name          => subject_hash[:first_name],
+            :last_name           => subject_hash[:last_name],
+            :nmff_mrn            => subject_hash[:mrn],
+            :external_patient_id => subject_hash[:patient_id],
+            :import_source => 'ANES'
+          }
+
+          invs[:involvement] = {
+            :gender      => subject_hash[:gender],
+            :case_number => subject_hash[:case_number],
+            :ethnicity   => subject_hash[:ethnicity]
+            }.merge(NOTIS_race(subject_hash[:race])) #sharing the notis race setting method
+
+          invs[:involvement][:involvement_events] = {
+            :consented_date => subject_hash[:consented_on],
+            :withdrawn_date => subject_hash[:withdrawn_on],
+            :completed_date => subject_hash[:completed_on]
+          }
+          #removing blank/nil events from above assignments
+           invs[:involvement][:involvement_events].reject!{|k,v| v.blank?}
+           invs[:involvement].reject!{|k,v| v.blank?}
+           invs[:subject].reject!{|k,v| v.blank?}
+           invs_set << invs
+        end
+        return invs_set
       end
 
       # Queries the sources and sets up our temporary data hash 

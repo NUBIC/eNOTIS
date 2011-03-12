@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Webservices::Importer do
 
-  describe "Importing a study" do
+  describe "Importing a study," do
 
     describe "the instance" do
       before(:each) do
@@ -14,6 +14,7 @@ describe Webservices::Importer do
         @study.imported_since?(ts).should be_false
         Webservices::Importer.should_receive(:query_study_source).and_return({:errors => [], :find_basics =>{:name => "The study"}})
         Webservices::Importer.should_receive(:query_roles_source).and_return({:errors => [], :find_principal_investigators => {:netid => "abc154", :project_role => "PI", :consent_role => "None"}})
+        Webservices::Importer.import_external_study_data(@study)
         @study.imported_since?(ts).should be_true
       end
     
@@ -77,16 +78,113 @@ describe Webservices::Importer do
         calls.each {|k| val.keys.include?(k).should be_true}
       end
 
-      it "should import subjects information" do
-           @dhash = [{:protocol_id=>"1746", 
-        :mrd_pt_id=>"244444444", :ethnicity=>"Non-Hispanic",
-        :sex=>"F", :completed_date=>"1/10/2011", :mrn=>"123321",
-        :mrn_type=>"NMFF G#", :last_name=>"Smith", :birth_date=>"1/11/1955",
-        :address_1=>"50 W. Street", :zip=>"10642", :death_date=>"", :withdrawn_date=>"",
-        :patient_created=>"2010-1-10T13:55:23", :irb_number=>"STU000123", 
-        :case_number=>"1106", :address_2=>"Apt 106", :patient_id=>"5587555", :race=>"White",
-        :affiliate_id=>"1918", :first_name=>"Traci", :race_ethnicity_created=>"2010-1-10T13:55:23",
-        :phone=>"3215551233", :state=>"IL", :city=>"Chicago", :consented_date=>"1/12/2010"}] 
+      it "should import involvement information" do 
+        @study.managed_by('NOTIS')
+        Edw.should_receive(:find_NOTIS_study_subjects)
+        val = Webservices::Importer.query_involvements_source(@study.irb_number, @study.managing_system)
+        val[:errors].should == []
+        val.keys.include?(:find_NOTIS_study_subjects).should be_true
+        #checking the other source
+        @study.managed_by('ANES')
+        Edw.should_receive(:find_ANES_study_subjects)
+        val = Webservices::Importer.query_involvements_source(@study.irb_number, @study.managing_system)
+        val[:errors].should == []
+        val.keys.include?(:find_ANES_study_subjects).should be_true
+      end
+  
+      describe "sanitize imported involvements" do
+
+
+        it "should sanitize NOTIS data sets" do
+          dset = {:find_NOTIS_study_subjects => [{:protocol_id=>"1746", 
+            :mrd_pt_id=>"244444444", :ethnicity=>"Non-Hispanic",
+            :sex=>"F", :completed_date=>"1/11/2011", :mrn=>"123321",
+            :mrn_type=>"NMFF G#", :last_name=>"Smith", :birth_date=>"1/11/1955",
+            :address_1=>"50 W. Street", :zip=>"10642", :death_date=>"", :withdrawn_date=>"",
+            :patient_created=>"2010-1-10T13:55:23", :irb_number=>"STU000123", 
+            :case_number=>"1106", :address_2=>"Apt 106", :patient_id=>"5587555", :race=>"Black",
+            :affiliate_id=>"1918", :first_name=>"Traci", :race_ethnicity_created=>"2010-1-10T13:55:23",
+            :phone=>"3215551233", :state=>"IL", :city=>"Chicago", :consented_date=>"1/12/2010"}]}
+          #Cleaned version below, from above data   
+          dset_clean = [{
+            :subject => {
+              :external_patient_id=>"5587555",
+              :nmff_mrn=>"123321",
+              :first_name=>"Traci", 
+              :last_name=>"Smith", 
+              :birth_date=>"1/11/1955", 
+              :import_source => 'NOTIS'
+             },
+            :involvement => {
+              :case_number=>"1106",  
+              :address_line1=>"50 W. Street", 
+              :address_line2=>"Apt 106", 
+              :zip=>"10642", 
+              :home_phone=>"3215551233", 
+              :state=>"IL", 
+              :city=>"Chicago", 
+              :ethnicity=>"Not Hispanic or Latino",
+              :gender=>"Female", 
+              :race_is_black_or_african_american => true,
+              :involvement_events => {
+                :consented_date => "1/12/2010",
+                :completed_date => "1/11/2011"}
+            }}]
+          
+          cleaned = Webservices::Importer.sanitize_NOTIS_involvements(dset[:find_NOTIS_study_subjects])
+          cleaned.first[:subject].should do |k,v| 
+            s = dset_clean.first[:subject][k]
+            s.should == v
+          end
+          cleaned.first[:involvement].each do |k,v|
+            s = dset_clean.first[:involvement][k]
+            unless s.is_a?(Hash)
+              (s == v).should be_true, k
+            end
+          end
+          cleaned.first[:involvement][:involvement_events].should == dset_clean.first[:involvement][:involvement_events]
+        end
+
+        it "should sanitize ANES data sets" do 
+           dset = {:find_ANES_study_subjects => [{:withdrawn_on=>"", :ethnicity=>"Not Hispanic or Latino",
+                :completed_on=>"2011-02-10", :mrn=>"091823888", :last_name=>"MIAOS", :birth_date=>"2/26/1982",
+                :gender=>"Female", :case_number=>"105", :race=>"White", :patient_id=>"3672", 
+                :first_name=>"LORI", :consented_on=>"2011-02-10"}]}
+          #Cleaned version below, from above data   
+          dset_clean = [{
+            :subject => {
+              :external_patient_id=>"3672",
+              :nmff_mrn=>"091823888",
+              :first_name=>"LORI", 
+              :last_name=>"MIAOS", 
+              :birth_date=>"2/26/1982", 
+              :import_source => 'ANES'
+             },
+            :involvement => {
+              :case_number=>"105",  
+              :ethnicity=>"Not Hispanic or Latino",
+              :gender=>"Female", 
+              :race_is_white => true,
+              :involvement_events => {
+                :consented_date => "2011-02-10",
+                :completed_date => "2011-02-10"}
+            }}]
+          
+          cleaned = Webservices::Importer.sanitize_ANES_involvements(dset[:find_ANES_study_subjects])
+          cleaned.first[:subject].should do |k,v| 
+            s = dset_clean.first[:subject][k]
+            s.should == v
+          end
+          cleaned.first[:involvement].each do |k,v|
+            s = dset_clean.first[:involvement][k]
+            unless s.is_a?(Hash)
+              (s == v).should be_true, k
+            end
+          end
+          cleaned.first[:involvement][:involvement_events].should == dset_clean.first[:involvement][:involvement_events]
+
+        end
+
       end
 
       it "should sanitize roles to remove bad data" do
@@ -96,8 +194,11 @@ describe Webservices::Importer do
         Webservices::Importer.sanitize_roles(good).should_not be_empty
       end
 
-      describe "with example data taken off the wire" do 
-
+      # I split the tests this way and added this describe block around 
+      # real-er data becuase it was easier to generate test data off the webservices
+      # by making actual queries and changing the data than typing out hashes by hand -blc
+      describe "with example data taken off the wire" do
+        #PHI has been de-id'd
         before(:each) do 
           # taken off the wire
           @example = {
@@ -187,9 +288,6 @@ describe Webservices::Importer do
 
           # the fake hash key is not included
           study_hash[:should_not_include].should be_nil
-
-          # involvement checks
-          study_hash[:involvements].should_not be_nil
         end
 
         it "should reject funding sources that are all blank" do 
@@ -202,6 +300,8 @@ describe Webservices::Importer do
           study_hash = Webservices::Importer.sanitize_study(@example)
           study_hash[:funding_sources].should be_empty
         end
+
+
       end 
 
       it "should not crash if some queries return empty arrays" do

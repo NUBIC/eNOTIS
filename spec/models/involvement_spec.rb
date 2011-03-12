@@ -75,11 +75,11 @@ describe Involvement do
         (Chronic.parse(ie.occurred_on.to_s)).should == Chronic.parse("2-9-2007")
       end
 
-      it "edits consent date" do
+      it "edits an event date (consent date)" do
         Involvement.import_update(@study, @dhash)
         ie = @study.involvements.first.event_detect("Completed")
         (Chronic.parse(ie.occurred_on)).should == Chronic.parse("3/10/2009")
-        
+        # changing the date        
         @dhash.first[:involvement][:involvement_events][:completed_date] = "4/10/2010"
 
         Involvement.import_update(@study, @dhash)
@@ -87,11 +87,12 @@ describe Involvement do
         (Chronic.parse(ie.occurred_on)).should == Chronic.parse("4/10/2010")
       end
 
-      it "deletes completed date" do
+      it "deletes an event (completed)" do
         Involvement.import_update(@study, @dhash)
         ie = @study.involvements.first.event_detect("Completed")
         (Chronic.parse(ie.occurred_on)).should == Chronic.parse("3/10/2009")
         @dhash.first[:involvement][:involvement_events].delete(:completed_date)
+
         # reloading with changes
         Involvement.import_update(@study, @dhash)
         ie = @study.involvements.first.event_detect("Completed")
@@ -100,12 +101,14 @@ describe Involvement do
 
     end
 
-    it "deletes involvements who are no longer on the study (but not withdrawn or completed)" do
+    it "deletes involvements for subjects who are no longer on the study, does not delet the subject" do
       # Deleted subjects we are assuming were added in error and it's therfore, okay to delete them.
       Involvement.import_update(@study, @dhash)
       @study.involvements.count.should == 1
+      sub = @study.involvements.first.subject
       Involvement.import_update(@study, [])
       @study.involvements.count.should == 0
+      Subject.find(sub.id).should_not be_nil
     end
 
   end
