@@ -8,6 +8,7 @@ class ExternalSystemFieldsAndCleanup < ActiveRecord::Migration
     remove_column(:studies, :multi_inst_study) #not being used
     remove_column(:subjects, :no_contact) # same
     remove_column(:subjects, :no_contact_reason) #same
+    change_column(:subjects, :external_patient_id, :string)
     drop_table(:resource_statuses) # not being used at all the model itself has been gone for many months
   end
 

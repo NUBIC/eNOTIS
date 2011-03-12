@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Involvement do
   before do
-    ResqueSpec.reset!
+  #  ResqueSpec.reset!
   end
 
   it "enques the involvement" do
@@ -17,50 +17,73 @@ describe Involvement do
     Involvement.new(:races => "asian").races.include?("Asian").should be_true
   end
 
-  describe "the bulk importing process for involments managed on other studies" do
+  describe "bulk importing process for involments managed on other studies" do
 
     before(:each) do
       @study = Factory(:study, :irb_number => "STU000123")
-      #Copied from prod but de-id'd
-      @dhash = [{:protocol_id=>"1746", 
-        :mrd_pt_id=>"244444444", :ethnicity=>"Non-Hispanic",
-        :sex=>"F", :completed_date=>"1/10/2011", :mrn=>"123321",
-        :mrn_type=>"NMFF G#", :last_name=>"Smith", :birth_date=>"1/11/1955",
-        :address_1=>"50 W. Street", :zip=>"10642", :death_date=>"", :withdrawn_date=>"",
-        :patient_created=>"2010-1-10T13:55:23", :irb_number=>"STU000123", 
-        :case_number=>"1106", :address_2=>"Apt 106", :patient_id=>"5587555", :race=>"White",
-        :affiliate_id=>"1918", :first_name=>"Traci", :race_ethnicity_created=>"2010-1-10T13:55:23",
-        :phone=>"3215551233", :state=>"IL", :city=>"Chicago", :consented_date=>"1/12/2010"}]
+      @dhash = [{
+          :subject => {
+            :external_patient_id=>"5587555",
+            :nmff_mrn=>"123321",
+            :first_name=>"Traci", 
+            :last_name=>"Smith", 
+            :birth_date=>"1/11/1955", 
+            :death_date=>"",
+            :import_source => 'NOTIS'
+          },
+          :involvement => {
+            :ethnicity=>"Not Hispanic or Latino",
+            :gender=>"Female", 
+            :address_line1=>"50 W. Street", 
+            :address_line2=>"Apt 106", 
+            :zip=>"10642", 
+            :case_number=>"1106",  
+            :race_is_black_or_african_american => true,
+            :home_phone=>"3215551233", 
+            :state=>"IL", 
+            :city=>"Chicago", 
+            :involvement_events => {:consented_date => "12/21/2004",
+             :completed_date => "3/10/2009"}
+           }
+      }]
     end
 
     it "adds involvement for study given the involvement/subject data" do
       @study.involvements.count.should == 0
-      Involvement.import_update(@study, @dhash, 'NOTIS')
+      Involvement.import_update(@study, @dhash)
       @study.involvements.count.should == 1
-    end
-
-    it "sets the proper management info" do
-      @study.is_managed?.should be_false
-      @study.read_only?.should be_false
-      Involvement.import_update(@study, @dhash, 'NOTIS')
-      @study.is_managed?.should be_true
-      @study.read_only?.should be_true
+      @study.involvements.first.involvement_events.count.should == 2
     end
 
     it "does not create duplicate involvements for the same study/subject" do
-      pending
+      @study.involvements.count.should == 0
+      Involvement.import_update(@study, @dhash)
+      Involvement.import_update(@study, @dhash)
+      @study.involvements.count.should == 1
     end
 
     describe "updates data on existing study/subject involvements" do
-      it "adds withdrawl date" do
-        pending
+      it "adds withdrawl date removes completed date" do
+        Involvement.import_update(@study, @dhash)
+        @study.involvements.first.event_detect("Completed").should_not be_nil
+        @dhash.first[:involvement][:involvement_events].delete(:completed_date)
+        @dhash.first[:involvement][:involvement_events][:withdrawn_date] = "2-9-2007"
+        Involvement.import_update(@study, @dhash)
+        @study.involvements.first.event_detect("Completed").should be_nil
+        ie = @study.involvements.first.event_detect("Withdrawn")
+        ie.should_not be_nil
+        ie.occurred_on.should == Chronic.parse("2-9-2007")
       end
 
       it "edits consent date" do
         pending
       end
 
-      it "deletes withdrawl date" do
+      it "does not create duplicate events with same name and date" do
+        pending
+      end
+
+      it "deletes completed date" do
         pending
       end
 
@@ -256,7 +279,7 @@ describe Involvement do
       @i.race_is_unknown_or_not_reported.should be_false
     end
 
-    it "involvment is not valid unless one of the race attrs are set" do
+    it "involvement is not valid unless one of the race attrs are set" do
       @i.send(:clear_all_races)
       @i.valid?.should be_false
       @i.race_is_black_or_african_american = true

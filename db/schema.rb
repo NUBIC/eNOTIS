@@ -194,7 +194,7 @@ ActiveRecord::Schema.define(:version => 20110310170322) do
     t.datetime "imported_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "external_patient_id"
+    t.string   "external_patient_id"
     t.string   "import_source"
     t.date     "empi_updated_date"
     t.string   "nmff_mrn"

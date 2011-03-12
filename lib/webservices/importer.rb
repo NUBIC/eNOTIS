@@ -71,7 +71,7 @@ module Webservices
         # Actally loading data into our data models
         Study.import_update(study, study_clean[:study]) unless study_clean[:study].blank?
         Role.import_update(study, study_clean[:roles]) unless study_clean[:roles].blank?
-        if study.is_managed? and !study_clean[:involvements].blank?
+        if study.is_managed?
           Involvement.import_update(study, study_clean[:involvements]) 
         end
 
@@ -86,7 +86,7 @@ module Webservices
       end      
 
       def sanitize(study_set)
-        clean_set = {:study => [], :roles => [], :subjects => [], :errors => []}
+        clean_set = {:study => [], :roles => [], :involvements => [], :errors => []}
         begin
           clean_set[:study] = sanitize_study(study_set[:study])
         rescue Exception => err
@@ -187,7 +187,7 @@ module Webservices
         # We will use the query name to identify the source system (eg NOTIS)
         # and then procede to sanitize the data based on that. We have to use
         # different sanitation for different sources.
-        return {}
+        return []
       end
 
       # Queries the sources and sets up our temporary data hash 
@@ -269,6 +269,48 @@ module Webservices
         dset
       end
 
-    end
+      # Aux methods for sanitization
+      def NOTIS_gender(gender)
+        case gender
+        when "F"
+          "Female"
+        when "M"
+          "Male"
+        else
+          "Unknown or Not Reported"
+        end
+      end
+
+      def NOTIS_ethnicity(ethnicity)
+        case ethnicity
+        when  "Hispanic or Latino"
+          "Hispanic or Latino"
+        when "Non-Hispanic"
+          "Not Hispanic or Latino"
+        else
+          "Unknown or Not Reported"
+        end
+      end
+
+      def NOTIS_race(race)
+        case race
+        when "White"
+          { :race_is_white => true }
+        when "Black"
+          { :race_is_black_or_african_american => true }
+        when "Asian"
+          { :race_is_asian => true }
+        when "Native Hawaiian or Other Pacific Islander"
+          { :race_is_native_hawaiian_or_other_pacific_islander => true }
+        when "American Indian or Alaska Native"
+          { :race_is_american_indian_or_alaska_native => true }
+        when "Unknown"
+          { :race_is_unknown_or_not_reported => true }
+        when "Placeholder"
+          { :race_is_unknown_or_not_reported => true }
+        end
+      end
+
+    end ## end class << self
   end
 end

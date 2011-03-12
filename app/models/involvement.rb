@@ -117,9 +117,35 @@ class Involvement < ActiveRecord::Base
     # Takes a study and the bulk update data which contains an array of hashes.
     # The hashes contain study participant/subject info 
     def import_update(study, bulk_data)
-       
-
-      study.save!
+      bulk_data.each do |inv_hash|
+        s = inv_hash[:subject]
+        subject = Subject.find_by_external_patient_id(s[:external_patient_id]) if s[:external_patient_id]
+        if subject.nil?
+          subject = Subject.create(s)
+        end
+        inv_data = inv_hash[:involvement].merge(:subject => subject)
+        inv_data.delete(:involvement_events) # removing this set of data to add manually (vs using accepts nested attrs for)
+        inv = Involvement.find(:first, :conditions => {:study_id => study.id, :subject_id => subject.id})
+        if inv.nil?
+          inv = study.involvements.create(inv_data)
+        end
+        # creating new events
+        inv_hash[:involvement][:involvement_events].each do |event_name,event_date|
+          ie = InvolvementEvent.new
+          ie.involvement = inv
+          ie.event       = event_name.to_s.split('_')[0].capitalize 
+          ie.occurred_on = event_date.split("T").join(" ")
+          ie.save
+        end
+        # cleaning up the inv events no longer in the inv_hash
+        ["Consented", "Completed", "Withdrawn"].each do |e_name|
+          e_key = "#{e_name.downcase}_date".to_sym
+          e = inv.event_detect(e_name)
+          if e && inv_hash[:involvement][:involvement_events].has_key?(e_key)
+            InvolvementEvent.delete(e)
+          end
+        end
+      end 
     end
 
 

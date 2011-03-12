@@ -15,6 +15,12 @@ describe InvolvementEvent do
     b.should be_valid
   end
 
+  it "should not throw an error when occurred_on is actually a date" do
+    event = Factory(:event_type)
+    involvement = Factory(:involvement)
+    lambda {involvement.involvement_events.create(:event_type => event, :occurred_on => Time.now)}.should_not raise_error
+  end
+
   it "should not be valid if the event being added on the SAME day" do 
     event = Factory(:event_type)
     involvement = Factory(:involvement)
@@ -27,8 +33,8 @@ describe InvolvementEvent do
   describe "setting event type" do
     before(:each) do 
       @study = Factory(:study)
-      inv = Factory(:involvement, :study => @study)
-      @evn = Factory(:involvement_event, :involvement => inv)
+      @inv = Factory(:involvement, :study => @study)
+      @evn = Factory(:involvement_event, :involvement => @inv)
     end
 
     it "can be set by passing the event name to a custom method" do
@@ -40,6 +46,13 @@ describe InvolvementEvent do
     it "can get the event name using a custom method" do
       @evn.event_type = @study.event_types.find_by_name("Completed")
       @evn.event.should == "Completed"
+    end
+
+    it "can be built using rails association calls" do
+      pending # this just straight up doesn't work... events cannot be assigned in this way
+      @inv.involvement_events.create(:occurred_on => Time.now.to_s, :event => "Consented")
+      e = @inv.involvement_events.detect("Consented")
+      e.should_not be_nil
     end
   end
 

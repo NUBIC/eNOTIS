@@ -5,9 +5,9 @@ class Study < ActiveRecord::Base
 
   # Some semi-static data about the external systems we get data from
   EXT_DATA = {
-    'NOTIS' => {:name => "NOTIS", :contact => "Peter Nyberg <p-nyberg@northwestern.edu>", :url => "https://notis.nubic.northwestern.edu"},
-    'EIRB' => {:name => "eIRB", :contact => "Brenda L. Bryant <b-bryant@northwestern.edu>", :url => "http://www.eirb.northwestern.edu"},
-    'ANES' => {:name => "Anesthesiology", :contact => "Thomas Rogers <trogers@northwestern.edu>", :url => ""}
+    'NOTIS' => {:name => "NOTIS"},
+    'EIRB' => {:name => "eIRB"},
+    'ANES' => {:name => "Anesthesiology"}
   }
  
   include Webservices::ImporterSupport
@@ -112,7 +112,7 @@ class Study < ActiveRecord::Base
   def managed_by(sys_name)
     sys_hash = EXT_DATA[sys_name]
     if sys_hash
-      msg = "This study's participants are managed by #{sys_hash[:name]}. You cannot edit them in eNOTIS. See the source system at #{sys_hash[:url]} or contact #{sys_hash[:contact]} for details."
+      msg = "This study's participants are managed by #{sys_hash[:name]}. You cannot edit them in eNOTIS."
       self.read_only!(msg)
       self.managing_system = sys_name
     end

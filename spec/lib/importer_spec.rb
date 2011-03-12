@@ -14,10 +14,17 @@ describe Webservices::Importer do
         @study.imported_since?(ts).should be_false
         Webservices::Importer.should_receive(:query_study_source).and_return({:errors => [], :find_basics =>{:name => "The study"}})
         Webservices::Importer.should_receive(:query_roles_source).and_return({:errors => [], :find_principal_investigators => {:netid => "abc154", :project_role => "PI", :consent_role => "None"}})
-        Webservices::Importer.import_external_study_data(@study)
         @study.imported_since?(ts).should be_true
       end
-     
+    
+      it "should call the subect involvement importer if the study is managed" do
+        @study.managed_by('NOTIS')
+        Webservices::Importer.should_receive(:query_study_source).and_return({:errors => [], :find_basics =>{:name => "The study"}})
+        Webservices::Importer.should_receive(:query_roles_source).and_return({:errors => [], :find_principal_investigators => {:netid => "abc154", :project_role => "PI", :consent_role => "None"}})
+        Webservices::Importer.should_receive(:query_involvements_source).and_return({:errors => [], :find_NOTIS_study_subjects => []})
+        Webservices::Importer.import_external_study_data(@study)
+      end
+
       it "should clear the import cache and reset error flag" do
         @study.import_cache = {:foo => "HELP"}
         @study.import_cache[:foo].should == "HELP"
@@ -71,13 +78,15 @@ describe Webservices::Importer do
       end
 
       it "should import subjects information" do
-        # Subject information is split accross multiple import sources.
-        # Currently two sources, 
-        # Also, only certain studies nave study subject data.
-        # The import subjects query should take a study number, and 
-        # a source ID to query. The source ID is related to the EDW 
-        # query not the source (eg not EDW/eIRB as in the study/roles data)
-        #
+           @dhash = [{:protocol_id=>"1746", 
+        :mrd_pt_id=>"244444444", :ethnicity=>"Non-Hispanic",
+        :sex=>"F", :completed_date=>"1/10/2011", :mrn=>"123321",
+        :mrn_type=>"NMFF G#", :last_name=>"Smith", :birth_date=>"1/11/1955",
+        :address_1=>"50 W. Street", :zip=>"10642", :death_date=>"", :withdrawn_date=>"",
+        :patient_created=>"2010-1-10T13:55:23", :irb_number=>"STU000123", 
+        :case_number=>"1106", :address_2=>"Apt 106", :patient_id=>"5587555", :race=>"White",
+        :affiliate_id=>"1918", :first_name=>"Traci", :race_ethnicity_created=>"2010-1-10T13:55:23",
+        :phone=>"3215551233", :state=>"IL", :city=>"Chicago", :consented_date=>"1/12/2010"}] 
       end
 
       it "should sanitize roles to remove bad data" do
@@ -135,7 +144,27 @@ describe Webservices::Importer do
               {
             :irb_number=>"STU00019833", 
             :description=>"Description of study"
-          }]
+          }],
+            :find_NOTIS_study_subjects => [
+              {:protocol_id=>"1746", 
+              :mrd_pt_id=>"244444444", :ethnicity=>"Non-Hispanic",
+              :sex=>"F", :completed_date=>"1/10/2011", :mrn=>"123321",
+              :mrn_type=>"NMFF G#", :last_name=>"Smith", :birth_date=>"1/11/1955",
+              :address_1=>"50 W. Street", :zip=>"10642", :death_date=>"", :withdrawn_date=>"",
+              :patient_created=>"2010-1-10T13:55:23", :irb_number=>"STU00019833", 
+              :case_number=>"1106", :address_2=>"Apt 106", :patient_id=>"5587555", :race=>"White",
+              :affiliate_id=>"1918", :first_name=>"Traci", :race_ethnicity_created=>"2010-1-10T13:55:23",
+              :phone=>"3215551233", :state=>"IL", :city=>"Chicago", :consented_date=>"1/12/2010"
+          }],
+            :find_ANES_study_subjects =>[  
+              {:withdrawn_on=>"", :ethnicity=>"Not Hispanic or Latino",
+                :completed_on=>"2011-02-10", :mrn=>"091823888", :last_name=>"MIAOS", :birth_date=>"2/26/1982",
+                :gender=>"Female", :case_number=>"105", :race=>"White", :patient_id=>"3672", 
+                :first_name=>"LORI", :consented_on=>"2011-02-10"}, 
+                {:withdrawn_on=>"", :ethnicity=>"Not Hispanic or Latino", 
+                  :completed_on=>"2011-03-08", :mrn=>"10268233", :last_name=>"Reyer", :birth_date=>"9/17/1978",
+                  :gender=>"Female", :case_number=>"111", :race=>"White", :patient_id=>"3737", 
+                  :first_name=>"Angelica", :consented_on=>"2011-03-07"}]
           }
         end
 
@@ -158,6 +187,9 @@ describe Webservices::Importer do
 
           # the fake hash key is not included
           study_hash[:should_not_include].should be_nil
+
+          # involvement checks
+          study_hash[:involvements].should_not be_nil
         end
 
         it "should reject funding sources that are all blank" do 

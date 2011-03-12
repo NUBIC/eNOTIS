@@ -79,11 +79,14 @@ class InvolvementEvent < ActiveRecord::Base
 
   # Public instance methods
   def occurred_on=(date)
-    write_attribute :occurred_on, Chronic.parse(date)
+    if date.is_a?(String)
+      write_attribute :occurred_on, Chronic.parse(date)
+    else
+      write_attribute :occurred_on, date
+    end
   end
 
   def event=(e)
-    # This assignment will fail without the involvement and study context because the event names are now stored on the study level -BLC
     raise "Involvement event= assignment this way requires study context: involvement=#{self.involvement.inspect}" if self.involvement.nil? or self.involvement.study.nil?
     ev_type = self.involvement.study.event_types.find_by_name(e)
     self.event_type = ev_type if ev_type
@@ -129,7 +132,6 @@ class InvolvementEvent < ActiveRecord::Base
        :event_type_id          => etype.id }
      ) || InvolvementEvent.create(params)
    end            
-
  
   def self.count_accruals(accrual_event = "Consented")
     e_types = EventType.find_by_name(accrual_event) 

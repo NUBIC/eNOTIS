@@ -75,44 +75,5 @@ class SubjectInvolvementPopulator
     end
   end
 
-  def self.calculate_gender(gender)
-    case gender
-    when "F"
-      "Female"
-    when "M"
-      "Male"
-    else
-      "Unknown or Not Reported"
-    end
-  end
 
-  def self.calculate_ethnicity(ethnicity)
-    case ethnicity
-    when  "Hispanic or Latino"
-      "Hispanic or Latino"
-    when "Non-Hispanic"
-      "Not Hispanic or Latino"
-    else
-      "Unknown or Not Reported"
-    end
-  end
-
-  def self.calculate_race(race)
-    case race
-    when "White"
-      { :race_is_white => true }
-    when "Black"
-      { :race_is_black_or_african_american => true }
-    when "Asian"
-      { :race_is_asian => true }
-    when "Native Hawaiian or Other Pacific Islander"
-      { :race_is_native_hawaiian_or_other_pacific_islander => true }
-    when "American Indian or Alaska Native"
-      { :race_is_american_indian_or_alaska_native => true }
-    when "Unknown"
-      { :race_is_unknown_or_not_reported => true }
-    when "Placeholder"
-      { :race_is_unknown_or_not_reported => true }
-    end
-  end
 end
