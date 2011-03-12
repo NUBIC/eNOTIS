@@ -154,7 +154,6 @@ class Involvement < ActiveRecord::Base
           end
         end
 
-
       end #end bulk data loop
       
       # cleaning up involvements no longer in the inv_hash

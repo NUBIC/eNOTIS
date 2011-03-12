@@ -39,6 +39,7 @@ class Role < ActiveRecord::Base
     # Add any new roles for this study
     roles_data.each do |role_hash|
       unless Role.find(:first, :conditions => role_hash.merge({:study_id => study.id}))
+        role_hash[:netid] = role_hash[:netid].downcase # formatting bug fix
         Role.create(role_hash.merge({:study_id => study.id}))
       end
     end
