@@ -293,7 +293,7 @@ module Webservices
         study_raw = {:errors => []}
         study_raw[:study] = query_study_source(study.irb_number)
         study_raw[:roles] = query_roles_source(study.irb_number)
-        study_raw[:involvements] = []
+        study_raw[:involvements] = {}
         if study.is_managed?
           study_raw[:involvements] = query_involvements_source(study.irb_number, study.managing_system)
         end
