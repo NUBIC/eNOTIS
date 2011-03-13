@@ -65,6 +65,7 @@ namespace :importer do
     tr = []
     puts "#{irb_numbers.count} studies to import"
     puts "This might take a while (~#{(irb_numbers.count*10)/60} minutes), you should probably take a walk or find a nice book to read" if irb_numbers.count > 500
+    puts "Note: studies with '(*)' are managed externally so import includes subjects and involvements"
     STDOUT.flush
     irb_numbers.each do |irb_num|
       # Import the data for the study
@@ -79,6 +80,7 @@ namespace :importer do
       t2 = Time.now
       tr << (t2-t1)
       print " in #{t2-t1} seconds"
+      print "(*)" if study.is_managed?
       study.reload
       print " with errors" if study.import_errors?
       print "\n"
