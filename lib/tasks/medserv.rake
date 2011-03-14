@@ -1,4 +1,4 @@
-namespace :emailer do
+namespace :medserv do
 
   desc 'email all PIs the service form'
   task :service_email => :environment do
@@ -56,6 +56,52 @@ namespace :emailer do
     # Done!
   end
 
+  desc 'email reminders for service forms'
+  task :service_email_reminder => [:environment, :set_medical_service_flag] do
+    #- Identify the studies that are currently active.
+    studies = get_studies
+    puts "Studies: #{studies.count}"
+    #- Remove the studies that have already responded to the survey. Any level of response. We will deal with partial responses separately
+    studies.reject!{|s| !s.uses_medical_services.nil?}
+    puts "Minus ones responded #{studies.count}"
+    #- Identify the PIs and study personnel for those studies
+    pi_nets = get_pi_nets_from_studies(studies)
+
+    #- for each PI, collect their studies and personnel for those studies
+    pi_nets.each do |pi_net|
+      puts "======== \nWorking on pi: #{pi_net}"
+      pi_studies = studies.select do |x| 
+        pi = x.principal_investigator
+        if pi && pi.netid == pi_net
+          true
+        else
+          false
+        end
+      end
+
+      #- send the PI an email with a list of their studies and cc:all the personnel listed on one or more of those studies.
+      all_personnel = []
+      pi_studies.each do |study|
+        all_personnel.concat( study.roles.map(&:netid) )
+      end
+      all_personnel.uniq!
+      to_pi = convert_to_emails([pi_net]).first
+      # remove the PI from all pers
+      all_personnel.reject!{|n| n == pi_net}
+      to_cc = convert_to_emails(all_personnel)
+      # to_cc might be blank
+      if Rails.env.production?
+         Notifier.deliver_pi_service_reminder(to_pi, to_cc)
+      else
+        puts "Would have sent email to #{to_pi}: and cc'd #{to_cc.join(',')} if ENV was prod \n"
+      end
+      sent_list << "Sent to #{to_pi}[#{pi_net}] and #{to_cc.join(',')} at #{Time.now}\n"
+
+    end
+    manifest_file("list_of_emailed_pi_reminder"){|f| sent_list.each{|l| f << l }}
+    puts "Done!"
+  end
+
   desc 'generate proxy lookup file'
   task :proxy_lookup => :environment do
     manifest_list = [] 
@@ -108,43 +154,21 @@ namespace :emailer do
     end
   end
 
+  desc 'set studies uses_medical_services flag to false from a csv list'
+  task :set_medical_service_flag => :environment do
 
-
-  desc 'email reminders for service forms'
-  task :service_email_reminder => :environment do
-    #- Identify the studies that are currently active.
-    studies = get_studies
-    puts "Studies: #{studies.count}"
-    #- Remove the studies that have already responded to the survey. Any level of response. We will deal with partial responses separately
-    studies.reject!{|s| !s.uses_medical_services.nil?}
-    puts "Minus ones responded #{studies.count}"
-    #- Identify the PIs and study personnel for those studies
-    pi_nets = get_pi_nets_from_studies(studies)
-    #- for each PI, collect their studies and personnel for those studies
-    pi_nets.each do |pi_net|
-      puts "======== \nWorking on pi: #{pi_net}"
-      pi_studies = studies.select do |x| 
-        pi = x.principal_investigator
-        if pi && pi.netid == pi_net
-          true
-        else
-          false
-        end
+    # List provided by Debbie 
+    FasterCSV.foreach(File.dirname(__FILE__) + '/studies_that_do_not_use_medical_services.csv', :headers => true) do |row|
+      s = Study.find_by_irb_number(row["IRB_number"])
+      if s
+        s.uses_medical_services = true
+        s.save!
+        puts "Updated med serv to 'true' on #{s.irb_number}"
+      else
+        puts "Could not find #{row["IRB_number"]}"
       end
-      #- send the PI an email with a list of their studies and cc:all the personnel listed on one or more of those studies.
-      all_personnel = []
-      pi_studies.each do |study|
-        all_personnel.concat( study.roles.map(&:netid) )
-      end
-      all_personnel.uniq!
-      to_pi = convert_to_emails([pi_net]).first
-      # remove the PI from all pers
-      all_personnel.reject!{|n| n == pi_net}
-      to_cc = convert_to_emails(all_personnel)
-      # to_cc might be blank
-      puts "Would have sent email to #{to_pi}: and cc'd #{to_cc.join(',')}\n"
     end
-    puts "Done!"
+
   end
 
   # HELPER METHODS ##################################################

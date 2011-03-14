@@ -64,7 +64,7 @@ namespace :importer do
     puts "Starting at #{t}"
     tr = []
     puts "#{irb_numbers.count} studies to import"
-    puts "This might take a while (~#{(irb_numbers.count*10)/60} minutes), you should probably take a walk or find a nice book to read" if irb_numbers.count > 500
+    puts "This might take a while (~#{(irb_numbers.count*17)/60} minutes), you should probably take a walk or find a nice book to read" if irb_numbers.count > 500
     puts "Note: studies with '(*)' are managed externally so import includes subjects and involvements"
     STDOUT.flush
     irb_numbers.each do |irb_num|
