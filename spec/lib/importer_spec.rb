@@ -150,7 +150,6 @@ describe Webservices::Importer do
                 :completed_on=>"2011-02-10", :mrn=>"091823888", :last_name=>"MIAOS", :birth_date=>"2/26/1982",
                 :gender=>"Female", :case_number=>"105", :race=>"White", :patient_id=>"3672", 
                 :first_name=>"LORI", :consented_on=>"2011-02-10"}]}
-          dset_blank_data = {:find_ANES_study_subjects => [{:withdraw_on=> }]}
           #Cleaned version below, from above data   
           dset_clean = [{
             :subject => {
