@@ -170,9 +170,11 @@ namespace :medserv do
       u = Bcsec.authority.find_user(net.downcase)
       u = User.find_by_netid(net.downcase) if u.nil? || u.email.nil? 
       if u && u.email
+        print "."
+        STDOUT.flush
         emails << u.email
       else
-        puts "ERROR not finding an email for :#{net}"
+        puts "\nERROR not finding an email for :#{net}"
       end
     end
     emails
