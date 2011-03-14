@@ -62,42 +62,26 @@ namespace :medserv do
     studies = get_studies
     puts "Studies: #{studies.count}"
     #- Remove the studies that have already responded to the survey. Any level of response. We will deal with partial responses separately
-    studies.reject!{|s| !s.uses_medical_services.nil?}
+    studies.reject!{|s| !s.uses_medical_services.nil?} #rejecting any level of response
     puts "Minus ones responded #{studies.count}"
-    #- Identify the PIs and study personnel for those studies
-    pi_nets = get_pi_nets_from_studies(studies)
-
-    #- for each PI, collect their studies and personnel for those studies
-    pi_nets.each do |pi_net|
-      puts "======== \nWorking on pi: #{pi_net}"
-      pi_studies = studies.select do |x| 
-        pi = x.principal_investigator
-        if pi && pi.netid == pi_net
-          true
-        else
-          false
-        end
+    all_personnel = []
+    studies.each do |s|
+      s.roles.each do |r|
+        all_personnel << r.netid
       end
-
-      #- send the PI an email with a list of their studies and cc:all the personnel listed on one or more of those studies.
-      all_personnel = []
-      pi_studies.each do |study|
-        all_personnel.concat( study.roles.map(&:netid) )
-      end
-      all_personnel.uniq!
-      to_pi = convert_to_emails([pi_net]).first
-      # remove the PI from all pers
-      all_personnel.reject!{|n| n == pi_net}
-      to_cc = convert_to_emails(all_personnel)
-      # to_cc might be blank
+    end
+    all_personnel.compact!
+    all_personnel.uniq!
+    puts "emails to go out: #{all_personnel.count}"
+    convert_to_emails(all_personnel).each do |p|
       if Rails.env.production?
-         Notifier.deliver_pi_service_reminder(to_pi, to_cc)
+        Notifier.deliver_pi_service_reminder(p)
       else
         puts "Would have sent email to #{to_pi}: and cc'd #{to_cc.join(',')} if ENV was prod \n"
       end
-      sent_list << "Sent to #{to_pi}[#{pi_net}] and #{to_cc.join(',')} at #{Time.now}\n"
-
+      sent_list << "Sent to #{p} at #{Time.now}\n"
     end
+
     manifest_file("list_of_emailed_pi_reminder"){|f| sent_list.each{|l| f << l }}
     puts "Done!"
   end
@@ -182,8 +166,8 @@ namespace :medserv do
   def convert_to_emails(net_arr)
     emails = []
     net_arr.each do |net|
-      u = User.find_by_netid(net.downcase)
-      if u
+      u = Pers::Person.find_by_username(net.downcase)
+      if u && u.email
         emails << u.email
       else
         puts "ERROR not finding an email for :#{net}"

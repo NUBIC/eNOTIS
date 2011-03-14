@@ -19,11 +19,10 @@ class Notifier < ActionMailer::Base
     body 
   end
   
-  def pi_service_reminder(pi_email,study_team)
+  def pi_service_reminder(person_email)
     from "r-chisholm@northwestern.edu"
     reply_to "d-gibson2@northwestern.edu"
-    recipients pi_email
-    cc study_team
+    recipients person_email
     subject "Reminder: Identification of Research Studies making use of medical services"
     body 
   end
