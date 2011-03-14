@@ -167,7 +167,8 @@ namespace :medserv do
   def convert_to_emails(net_arr)
     emails = []
     net_arr.each do |net|
-      u = Pers::Person.find_by_username(net.downcase)
+      u = Bcsec.authority.find_user(net.downcase)
+      u = User.find_by_netid(net.downcase) if u.nil? || u.email.nil? 
       if u && u.email
         emails << u.email
       else
