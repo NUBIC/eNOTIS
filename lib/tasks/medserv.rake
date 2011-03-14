@@ -73,11 +73,12 @@ namespace :medserv do
     all_personnel.compact!
     all_personnel.uniq!
     puts "emails to go out: #{all_personnel.count}"
+    sent_list = []
     convert_to_emails(all_personnel).each do |p|
       if Rails.env.production?
         Notifier.deliver_pi_service_reminder(p)
       else
-        puts "Would have sent email to #{to_pi}: and cc'd #{to_cc.join(',')} if ENV was prod \n"
+        puts "Would have sent email to #{p} if ENV was prod \n"
       end
       sent_list << "Sent to #{p} at #{Time.now}\n"
     end
