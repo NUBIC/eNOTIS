@@ -63,7 +63,7 @@ namespace :medserv do
     puts "Studies: #{studies.count}"
     #- Remove the studies that have already responded to the survey. Any level of response. We will deal with partial responses separately
     studies.reject!{|s| !s.uses_medical_services.nil?} #rejecting any level of response
-    puts "Minus ones responded #{studies.count}"
+    puts "After removing ones responded #{studies.count}"
     all_personnel = []
     studies.each do |s|
       s.roles.each do |r|
