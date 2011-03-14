@@ -5,14 +5,10 @@ namespace :importer do
  # TODO: add update to bcsec enotis roles!!!!
 
   desc "Does our full (weekender) update process - Don't wait up for this one! It likes to party all night"
-  task :full_mutha_trucking_update => [:environment, :all_studies, :update_managed_studies] do
-    puts "Full updating..."
-  end
+  task :full_mutha_trucking_update => [:environment, :all_studies, :update_managed_studies]
 
   desc "Does our priority update process, active studies and studies with managed participants - Takes about 2-3 hours to run"
-  task :priority_update => [:environment, :active_studies] do
-    puts "Priority updating..."
-  end
+  task :priority_update => [:environment, :active_studies]
 
   desc "Queries the eirb for a full list of studies and imports all these studies"
   task :all_studies => :environment do
@@ -25,8 +21,10 @@ namespace :importer do
   desc "Updates study data for studies active in eNOTIS (will not query the eIRB for a study list so no new studies are added with this task)"
   task :active_studies => :environment do
     puts "Querying eNOTIS DB for active studies..."
-    irb_numbers = Involvement.find(:all, :include => :study).map{|i| i.study.irb_number}.uniq
-    puts "Importing active studies (managed by eNOTIS or managed externall)"
+    irb_numbers = Involvement.find(:all, :include => :study).map{|i| i.study.irb_number}
+    irb_numbers.concat(Study.find(:all, :conditions => "managing_system is not null").map(&:irb_number))
+    irb_numbers.uniq!
+    puts "Importing active studies (managed by eNOTIS or managed externaly by some other system)"
     import_studies(irb_numbers)
   end
 
