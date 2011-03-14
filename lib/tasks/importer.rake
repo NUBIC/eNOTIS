@@ -39,6 +39,14 @@ namespace :importer do
     end
   end
 
+  desc "Retries all studies that have import errors"
+  task :retry_studies_with_errors => :environment do
+    puts "Querying the db for any studies that have import errors"
+    studies = Study.find(:all, :conditions => {:import_errors => true})
+    puts "retrying #{studies.count} studies"
+    import_studies(studies.map(&:irb_number))
+  end
+
   # ------ end of tasks - helper methods below --------
   
   # Gets as study, sets it to being managed by a source

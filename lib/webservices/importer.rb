@@ -269,10 +269,10 @@ module Webservices
           }
 
           invs[:involvement] = {
-            :gender      => subject_hash[:gender],
+            :gender      => subject_hash[:gender] || "Unknown or Not Reported",
             :case_number => subject_hash[:case_number],
-            :ethnicity   => subject_hash[:ethnicity]
-            }.merge(NOTIS_race(subject_hash[:race])) #sharing the notis race setting method
+            :ethnicity   => subject_hash[:ethnicity] || "Unknown or Not Reported"
+            }.merge(NOTIS_race(subject_hash[:race])) #sharing the notis race setting method. it was updated to return { :race_is_unknown_or_not_reported => true } for nil
 
           invs[:involvement][:involvement_events] = {
             :consented_date => subject_hash[:consented_on],
@@ -405,6 +405,8 @@ module Webservices
         when "Unknown"
           { :race_is_unknown_or_not_reported => true }
         when "Placeholder"
+          { :race_is_unknown_or_not_reported => true }
+        else
           { :race_is_unknown_or_not_reported => true }
         end
       end
