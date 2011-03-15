@@ -46,13 +46,24 @@ EDW_TO_NOTIS = {
   "withdrawl_date"          => :withdrawn_date, 
   "withdrawl_reason"        => :withdrawn_reason,
   "zip_code"                => :zip,
-  "eirb_number"              => :irb_number, #all below are unique to the ANES report
+  "eirb_number"              => :irb_number,
+  #all below are unique to the ANES report
   "consented_on"             => :consented_on,
   "case_number"              => :case_number,
   "withdrawn_on"             => :withdrawn_on,
   "gender"                   => :gender,
   "completed_on"             => :completed_on,
-  "studysubject_id"          => :patient_id
+  "studysubject_id"          => :patient_id,
+  #thes are uniq to registar
+  "birthdate"                => :birth_date,
+  "deathdate"                => :death_date,
+  "address_line1"            => :address_line1,
+  "address_line2"            => :address_line2,
+  "city"                     => :city,
+  "state"                    => :state,
+  "primary_phone_number"     => :primary_phone_number
+
+  
 }
 
 NOTIS_TO_EDW = {

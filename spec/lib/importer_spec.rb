@@ -90,10 +90,19 @@ describe Webservices::Importer do
         val = Webservices::Importer.query_involvements_source(@study.irb_number, @study.managing_system)
         val[:errors].should == []
         val.keys.include?(:find_ANES_study_subjects).should be_true
+        # and our other source
+        @study.managed_by('REGISTAR')
+        Edw.should_receive(:find_REGISTAR_study_subjects)
+        val = Webservices::Importer.query_involvements_source(@study.irb_number, @study.managing_system)
+        val[:errors].should == []
+        val.keys.include?(:find_REGISTAR_study_subjects).should be_true
       end
-  
-      describe "sanitize imported involvements" do
+ 
+      it "should scope subjects to the source system when looking them up by the external id" do
+        pending
+      end
 
+      describe "sanitize imported involvements" do
 
         it "should sanitize NOTIS data sets" do
           dset = {:find_NOTIS_study_subjects => [{:protocol_id=>"1746", 
@@ -185,6 +194,45 @@ describe Webservices::Importer do
 
         end
 
+        it "should sanitize REGISTAR data sets" do 
+           dset = {:find_REGISTAR_study_subjects => [{:withdrawn_on=>"", :ethnicity=>"Not Hispanic or Latino",
+                :completed_on=>"2011-02-10", :mrn=>"091823888", :last_name=>"MIAOS", :birth_date=>"2/26/1982",
+                :gender=>"Female", :case_number=>"105", :race=>"White", :patient_id=>"3672", 
+                :first_name=>"LORI", :consented_on=>"2011-02-10"}]}
+          #Cleaned version below, from above data   
+          dset_clean = [{
+            :subject => {
+              :external_patient_id=>"3672",
+              :nmff_mrn=>"091823888",
+              :first_name=>"LORI", 
+              :last_name=>"MIAOS", 
+              :birth_date=>"2/26/1982", 
+              :import_source => 'REGISTAR'
+             },
+            :involvement => {
+              :case_number=>"105",  
+              :ethnicity=>"Not Hispanic or Latino",
+              :gender=>"Female", 
+              :race_is_white => true,
+              :involvement_events => {
+                :consented_date => "2011-02-10",
+                :completed_date => "2011-02-10"}
+            }}]
+          
+          cleaned = Webservices::Importer.sanitize_ANES_involvements(dset[:find_REGISTAR_study_subjects])
+          cleaned.first[:subject].should do |k,v| 
+            s = dset_clean.first[:subject][k]
+            s.should == v
+          end
+          cleaned.first[:involvement].each do |k,v|
+            s = dset_clean.first[:involvement][k]
+            unless s.is_a?(Hash)
+              (s == v).should be_true, k
+            end
+          end
+          cleaned.first[:involvement][:involvement_events].should == dset_clean.first[:involvement][:involvement_events]
+
+        end
       end
 
       it "should sanitize roles to remove bad data" do

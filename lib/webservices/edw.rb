@@ -12,6 +12,8 @@ class Edw
     {:name => "eNOTISNOTISstudylist", :ext => "NOTIS_study_list"},
     {:name => "eNOTISANESstudysubjects", :ext => "ANES_study_subjects"},
     {:name => "eNOTISANESstudylist", :ext => "ANES_study_list"},
+    {:name => "eNOTISREGISTARstudysubjects", :ext => "REGISTAR_study_subjects"},
+    {:name => "eNOTISREGISTARstudylist", :ext => "REGISTAR_study_list"},
    ].freeze
 
   cattr_accessor :edw_adapter

@@ -7,7 +7,8 @@ class Study < ActiveRecord::Base
   EXT_DATA = {
     'NOTIS' => {:name => "NOTIS"},
     'EIRB' => {:name => "eIRB"},
-    'ANES' => {:name => "Anesthesiology"}
+    'ANES' => {:name => "Anesthesiology"},
+    'REGISTAR' => {:name => "Registar"}
   }
  
   include Webservices::ImporterSupport

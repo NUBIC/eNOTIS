@@ -288,6 +288,45 @@ module Webservices
         return invs_set
       end
 
+      def sanitize_REGISTAR_involvements(reg_set)
+        # Example data set from REGISTAR
+        # :find_REGISTAR_study_subjects => [{:middle_name=>"Lee", :consented_on=>"2010-05-24T00:00:00", 
+        # :ethnicity=>"not hispanic or latino", :email=>"bumpyb@u.northwestern.edu", :gender=>"female", 
+        # :irb_number=>"STU0001234", :race=>"multiracial", :last_name=>"Bumpy", :first_name=>"Joucce"}]
+        #
+        invs_set = []
+        anes_set.each do |subject_hash| 
+          invs = {}
+          subject_hash.reject!{|k,v| v.blank?}
+          invs[:subject] = {
+            :birth_date          => subject_hash[:birth_date],
+            :first_name          => subject_hash[:first_name],
+            :last_name           => subject_hash[:last_name],
+            :nmff_mrn            => subject_hash[:mrn],
+            :external_patient_id => subject_hash[:patient_id],
+            :import_source => 'ANES'
+          }
+
+          invs[:involvement] = {
+            :gender      => subject_hash[:gender] || "Unknown or Not Reported",
+            :case_number => subject_hash[:case_number],
+            :ethnicity   => subject_hash[:ethnicity] || "Unknown or Not Reported"
+            }.merge(NOTIS_race(subject_hash[:race])) #sharing the notis race setting method. it was updated to return { :race_is_unknown_or_not_reported => true } for nil
+
+          invs[:involvement][:involvement_events] = {
+            :consented_date => subject_hash[:consented_on],
+            :withdrawn_date => subject_hash[:withdrawn_on],
+            :completed_date => subject_hash[:completed_on]
+          }
+          #removing blank/nil events from above assignments
+           invs[:involvement][:involvement_events].reject!{|k,v| v.blank?}
+           invs[:involvement].reject!{|k,v| v.blank?}
+           invs[:subject].reject!{|k,v| v.blank?}
+           invs_set << invs
+        end
+        return invs_set
+      end
+
       # Queries the sources and sets up our temporary data hash 
       def query_sources(study)
         study_raw = {:errors => []}
