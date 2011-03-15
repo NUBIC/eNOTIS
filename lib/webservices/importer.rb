@@ -263,7 +263,7 @@ module Webservices
             :birth_date          => subject_hash[:birth_date],
             :first_name          => subject_hash[:first_name],
             :last_name           => subject_hash[:last_name],
-            :nmff_mrn            => subject_hash[:mrn],
+            :nmh_mrn            => subject_hash[:mrn], # only nmh nmrns from this source TODO:get codede type
             :external_patient_id => subject_hash[:patient_id],
             :import_source => 'ANES'
           }
@@ -290,9 +290,11 @@ module Webservices
 
       def sanitize_REGISTAR_involvements(reg_set)
         # Example data set from REGISTAR
-        # :find_REGISTAR_study_subjects => [{:middle_name=>"Lee", :consented_on=>"2010-05-24T00:00:00", 
-        # :ethnicity=>"not hispanic or latino", :email=>"bumpyb@u.northwestern.edu", :gender=>"female", 
-        # :irb_number=>"STU0001234", :race=>"multiracial", :last_name=>"Bumpy", :first_name=>"Joucce"}]
+        # :find_REGISTAR_study_subjects => [{:consented_on=>"2011-03-03T00:00:00",
+        # :state=>"illinois", :ethnicity=>"hispanic or latino",
+        # :birth_date=>"1984-11-22T00:00:00", :email=>"s-velaz123@northwestern.edu",
+        # :gender=>"female", :irb_number=>"STU00017234", :race=>"white", :primary_phone_number=>"773-494-1824",
+        # :last_name=>"Velaz", :address_line1=>"3018 W. Street Ave.", :first_name=>"Salty", :city=>"Chicago"}]
         #
         invs_set = []
         anes_set.each do |subject_hash| 
@@ -302,14 +304,15 @@ module Webservices
             :birth_date          => subject_hash[:birth_date],
             :first_name          => subject_hash[:first_name],
             :last_name           => subject_hash[:last_name],
-            :nmff_mrn            => subject_hash[:mrn],
+            :middle_name         => subject_hash[:middle_name],
+            #:nmff_mrn            => subject_hash[:mrn], # TODO: square this out with registar source. Get an MRN type in there!
             :external_patient_id => subject_hash[:patient_id],
-            :import_source => 'ANES'
+            :import_source => 'REGISTAR'
           }
 
           invs[:involvement] = {
             :gender      => subject_hash[:gender] || "Unknown or Not Reported",
-            :case_number => subject_hash[:case_number],
+            #:case_number => subject_hash[:case_number], # No case number for registar yet
             :ethnicity   => subject_hash[:ethnicity] || "Unknown or Not Reported"
             }.merge(NOTIS_race(subject_hash[:race])) #sharing the notis race setting method. it was updated to return { :race_is_unknown_or_not_reported => true } for nil
 
