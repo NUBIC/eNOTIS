@@ -138,14 +138,16 @@ describe Webservices::Importer do
             }}]
           
           cleaned = Webservices::Importer.sanitize_NOTIS_involvements(dset[:find_NOTIS_study_subjects])
-          cleaned.first[:subject].should do |k,v| 
+          cleaned.first[:subject].each do |k,v| 
             s = dset_clean.first[:subject][k]
-            s.should == v
+            unless s.is_a?(Hash)
+              (s == v).should be_true, k.to_s
+            end
           end
           cleaned.first[:involvement].each do |k,v|
             s = dset_clean.first[:involvement][k]
             unless s.is_a?(Hash)
-              (s == v).should be_true, k
+              (s == v).should be_true, k.to_s
             end
           end
           cleaned.first[:involvement][:involvement_events].should == dset_clean.first[:involvement][:involvement_events]
@@ -160,7 +162,7 @@ describe Webservices::Importer do
           dset_clean = [{
             :subject => {
               :external_patient_id=>"3672",
-              :nmff_mrn=>"091823888",
+              :nmh_mrn=>"091823888", # we map  mrn to nmh_mrn for this source... checking 
               :first_name=>"LORI", 
               :last_name=>"MIAOS", 
               :birth_date=>"2/26/1982", 
@@ -177,14 +179,16 @@ describe Webservices::Importer do
             }}]
           
           cleaned = Webservices::Importer.sanitize_ANES_involvements(dset[:find_ANES_study_subjects])
-          cleaned.first[:subject].should do |k,v| 
+          cleaned.first[:subject].each do |k,v| 
             s = dset_clean.first[:subject][k]
-            s.should == v
+            unless s.is_a?(Hash)
+              (s == v).should be_true, k.to_s
+            end
           end
           cleaned.first[:involvement].each do |k,v|
             s = dset_clean.first[:involvement][k]
             unless s.is_a?(Hash)
-              (s == v).should be_true, k
+              (s == v).should be_true, k.to_s
             end
           end
           cleaned.first[:involvement][:involvement_events].should == dset_clean.first[:involvement][:involvement_events]
@@ -200,7 +204,6 @@ describe Webservices::Importer do
           dset_clean = [{
             :subject => {
               :external_patient_id=>"3672",
-              :nmff_mrn=>"091823888",
               :first_name=>"LORI", 
               :last_name=>"MIAOS", 
               :birth_date=>"2/26/1982", 
@@ -216,15 +219,17 @@ describe Webservices::Importer do
                 :completed_date => "2011-02-10"}
             }}]
           
-          cleaned = Webservices::Importer.sanitize_ANES_involvements(dset[:find_REGISTAR_study_subjects])
-          cleaned.first[:subject].should do |k,v| 
+          cleaned = Webservices::Importer.sanitize_REGISTAR_involvements(dset[:find_REGISTAR_study_subjects])
+          cleaned.first[:subject].each do |k,v| 
             s = dset_clean.first[:subject][k]
-            s.should == v
+            unless s.is_a?(Hash)
+              (s == v).should be_true, k.to_s
+            end
           end
           cleaned.first[:involvement].each do |k,v|
             s = dset_clean.first[:involvement][k]
             unless s.is_a?(Hash)
-              (s == v).should be_true, k
+              (s == v).should be_true, k.to_s
             end
           end
           cleaned.first[:involvement][:involvement_events].should == dset_clean.first[:involvement][:involvement_events]

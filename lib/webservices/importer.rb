@@ -191,6 +191,8 @@ module Webservices
           return sanitize_NOTIS_involvements(inv_set[:find_NOTIS_study_subjects])
         elsif inv_set.has_key?(:find_ANES_study_subjects)
           return sanitize_ANES_involvements(inv_set[:find_ANES_study_subjects])
+        elsif inv_set.has_key?(:find_REGISTAR_study_subjects)
+          return sanitize_REGISTAR_involvements(inv_set[:find_REGISTAR_study_subjects])
         else
           return []
         end
@@ -297,7 +299,7 @@ module Webservices
         # :last_name=>"Velaz", :address_line1=>"3018 W. Street Ave.", :first_name=>"Salty", :city=>"Chicago"}]
         #
         invs_set = []
-        anes_set.each do |subject_hash| 
+        reg_set.each do |subject_hash| 
           invs = {}
           subject_hash.reject!{|k,v| v.blank?}
           invs[:subject] = {
