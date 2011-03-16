@@ -232,6 +232,8 @@ describe Webservices::Importer do
               (s == v).should be_true, k.to_s
             end
           end
+          cleaned.first[:subject][:import_source].should == 'REGISTAR'
+          cleaned.first[:subject][:external_patient_id].should == "3672"
           cleaned.first[:involvement][:involvement_events].should == dset_clean.first[:involvement][:involvement_events]
 
         end

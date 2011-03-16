@@ -54,6 +54,7 @@ EDW_TO_NOTIS = {
   "completed_on"             => :completed_on,
   "studysubject_id"          => :patient_id,
   #thes are uniq to registar
+  "id"                       => "patient_id",
   "birthdate"                => :birth_date,
   "deathdate"                => :death_date,
   "address_line1"            => :address_line1,
