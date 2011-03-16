@@ -62,6 +62,62 @@ describe Involvement do
       @study.involvements.count.should == 1
     end
 
+    # pulled from the importer spec and dumped here cause it's closer to the problem
+    it "should scope subjects to the source system when looking them up by the external id" do
+        s1 = Factory(:study)
+        s1.managed_by('NOTIS')
+        s2 = Factory(:study)
+        s2.managed_by('ANES')
+        subj_ANES = [{
+            :subject => {
+              :external_patient_id=>"123", #<<- this is what we're testing
+              :nmff_mrn=>"091823888",
+              :first_name=>"LORI", 
+              :last_name=>"MIAOS", 
+              :birth_date=>"2/26/1982", 
+              :import_source => 'ANES'
+             },
+            :involvement => {
+              :case_number=>"105",  
+              :ethnicity=>"Not Hispanic or Latino",
+              :gender=>"Female", 
+              :race_is_white => true,
+              :involvement_events => {
+                :consented_date => "2011-02-10",
+                :completed_date => "2011-02-10"}
+            }}]
+
+         subj_NOTIS = [{
+            :subject => {
+              :external_patient_id=>"123", #<<- this what we're testing
+              :nmff_mrn=>"123321",
+              :first_name=>"Traci", 
+              :last_name=>"Smith", 
+              :birth_date=>"1/11/1955", 
+              :import_source => 'NOTIS'
+             },
+            :involvement => {
+              :case_number=>"1106",  
+              :address_line1=>"50 W. Street", 
+              :address_line2=>"Apt 106", 
+              :zip=>"10642", 
+              :home_phone=>"3215551233", 
+              :state=>"IL", 
+              :city=>"Chicago", 
+              :ethnicity=>"Not Hispanic or Latino",
+              :gender=>"Female", 
+              :race_is_black_or_african_american => true,
+              :involvement_events => {
+                :consented_date => "1/12/2010",
+                :completed_date => "1/11/2011"}
+            }}]
+          Involvement.import_update(s1, subj_ANES)
+          Involvement.import_update(s2, subj_NOTIS)
+          sub1 = s1.involvements.first.subject
+          sub2 = s2.involvements.first.subject
+          sub1.id.should_not == sub2.id #same external id should not link to same internal obj!!!
+      end
+
     describe "updates data on existing study/subject involvements" do
       it "adds withdrawl date removes completed date" do
         Involvement.import_update(@study, @dhash)

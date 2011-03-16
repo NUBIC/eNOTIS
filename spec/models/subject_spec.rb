@@ -1,7 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Subject do
-  before(:each) do
+ 
+  it "has a nice class method to help us remember to scope searches by external patient/subject/participant ids by the source system" do
+    subj1 = Factory(:subject, :external_patient_id => '123', :import_source => 'ANES')
+    subj2 = Factory(:subject, :external_patient_id => '123', :import_source => 'NOTIS')
+    found = Subject.find_by_external_id('123', 'NOTIS')
+    found.id.should == subj2.id
+    found.id.should_not == subj1.id
   end
 
   it "should create a new instance given valid attributes" do

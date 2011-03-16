@@ -19,6 +19,10 @@ class Subject < ActiveRecord::Base
   # Mixins
   acts_as_reportable
   has_paper_trail
+
+  def self.find_by_external_id(id, source)
+    Subject.find(:first, :conditions => {:external_patient_id => id, :import_source => source})
+  end
   
   # Public instance methods
   def nmff_mrn=(mrn)

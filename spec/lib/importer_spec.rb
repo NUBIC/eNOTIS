@@ -98,14 +98,11 @@ describe Webservices::Importer do
         val.keys.include?(:find_REGISTAR_study_subjects).should be_true
       end
  
-      it "should scope subjects to the source system when looking them up by the external id" do
-        pending
-      end
 
       describe "sanitize imported involvements" do
 
         it "should sanitize NOTIS data sets" do
-          dset = {:find_NOTIS_study_subjects => [{:protocol_id=>"1746", 
+          dset = {:find_NOTIS_study_subjects => [{ 
             :mrd_pt_id=>"244444444", :ethnicity=>"Non-Hispanic",
             :sex=>"F", :completed_date=>"1/11/2011", :mrn=>"123321",
             :mrn_type=>"NMFF G#", :last_name=>"Smith", :birth_date=>"1/11/1955",

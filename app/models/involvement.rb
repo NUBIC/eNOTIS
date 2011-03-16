@@ -34,6 +34,7 @@ class Involvement < ActiveRecord::Base
 
   # Named scope
   default_scope :order => "case_number"
+  # TODO: WTF is this? does this scope even work?
   named_scope :with_coordinator, lambda {|user_id| { 
     :include => {:study => :coordinators}, 
     :conditions => ['coordinators.user_id = ?', user_id ]}}
@@ -119,7 +120,8 @@ class Involvement < ActiveRecord::Base
     def import_update(study, bulk_data)
       bulk_data.each do |inv_hash| # iterating over each involvement hash
         s = inv_hash[:subject]
-        subject = Subject.find_by_external_patient_id(s[:external_patient_id]) if s[:external_patient_id]
+        raise "Subject hash is missing external_id and source. These are required for imported subject data" if s[:external_patient_id].nil? or s[:import_source].nil?
+        subject = Subject.find_by_external_id(s[:external_patient_id],s[:import_source]) 
         if subject.nil?
           subject = Subject.create(s)
         end
