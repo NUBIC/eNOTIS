@@ -76,7 +76,11 @@ namespace :medserv do
     sent_list = []
     convert_to_emails(all_personnel).each do |p|
       if Rails.env.production?
-        Notifier.deliver_pi_service_reminder(p)
+        begin
+           Notifier.deliver_pi_service_reminder(p)
+        rescue
+           puts "Failed to send on email '#{p}'"
+        end
       else
         puts "Would have sent email to #{p} if ENV was prod \n"
       end
@@ -87,7 +91,7 @@ namespace :medserv do
     if Rails.env.production?
       Notifier.deliver_pi_service_reminder('wakibbe@northwestern.edu')
     else
-      puts "Would have sent email to 'wakibbe@northwestern.edu' if ENV was prod \n"
+      puts "Would have sent email to wakibbe@northwestern.edu if ENV was prod \n"
     end
 
     manifest_file("list_of_emailed_pi_reminder"){|f| sent_list.each{|l| f << l }}
