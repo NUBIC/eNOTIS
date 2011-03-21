@@ -82,6 +82,13 @@ namespace :medserv do
       end
       sent_list << "Sent to #{p} at #{Time.now}\n"
     end
+    # Emailing Warren Warren Kibbe <wakibbe@northwestern.edu>
+    # He wanted a copy of the email when it was sent out
+    if Rails.env.production?
+      Notifier.deliver_pi_service_reminder('wakibbe@northwestern.edu')
+    else
+      puts "Would have sent email to 'wakibbe@northwestern.edu' if ENV was prod \n"
+    end
 
     manifest_file("list_of_emailed_pi_reminder"){|f| sent_list.each{|l| f << l }}
     puts "Done!"
