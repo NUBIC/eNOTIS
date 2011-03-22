@@ -31,7 +31,8 @@ namespace :users do
     UsersToPers.setup
     UsersToPers.create_admins
   end
-  
+ 
+  # What is this used for? The netids are not correct.
   desc "creates non-admin users"
   task :create_non_admins => :environment do
     nons = [{:netid => "brian", :first_name => "Brian",   :last_name => "Chamberlain",     :email => "b-chamberlain@northwestern.edu"}, 
