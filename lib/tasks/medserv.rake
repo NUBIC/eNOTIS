@@ -214,7 +214,7 @@ namespace :medserv do
   def get_studies
     # Get studies based on our critera
     puts "Getting studies based on our critera"
-    studies = Study.find(:all, :conditions => "closed_or_completed_date is null and irb_status not in ('Closed/Terminated', 'Rejected','Exempt Review: Awaiting Correspondence', 'Exempt Approved', 'Exempt Review: Changes Requested', 'In Expedited Review')")
+    studies = Study.find(:all, :conditions => "closed_or_completed_date is null and irb_status not in ('Closed/Terminated', 'Withdrawn', 'Rejected','Exempt Review: Awaiting Correspondence', 'Exempt Approved', 'Exempt Review: Changes Requested', 'In Expedited Review')")
   end
 
   def manifest_file(name, &block)
