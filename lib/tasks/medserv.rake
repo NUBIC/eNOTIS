@@ -98,6 +98,40 @@ namespace :medserv do
     puts "Done!"
   end
 
+  desc 'email final reminder for service forms'
+  task :service_email_final_reminder => [:environment] do
+    studies = get_non_compliant_studies
+    pis = studies.map do |s|
+      if s.principal_investigator
+        s.principal_investigator.netid
+      end
+    end
+    pis.compact!
+    pis.uniq!
+    pis_and_studies = []
+    pis.each do |pi|
+      pis_and_studies << {:pi => pi, 
+        :studies => studies.select{|s| s.principal_investigator && s.principal_investigator.netid == pi} } 
+    end
+    # preparing the email group
+    pis_and_studies.each do |ps|
+      puts "-----------"
+      puts ps[:pi]
+      puts ps[:studies].map(&:irb_number)
+      cc_list = ps[:studies].map do |s| 
+        all_roles = s.roles.map(&:netid)
+        co_i = s.roles.select{|r| r.project_role == "Co-Investigator"}.map(&:netid)
+        all_roles.reject!{|n| co_i.include?(n)} # removing co-investigators
+        all_roles.delete!(ps[:pi]) # removing the pi
+        all_roles 
+      end
+      cc_list.flatten!
+      cc_list.uniq! #multiple roles and multiple studies is possible, removing dupes
+      puts cc_list.join(',')
+      puts ""
+    end
+  end
+
   desc 'generate proxy lookup file'
   task :proxy_lookup => :environment do
     manifest_list = [] 
@@ -214,7 +248,16 @@ namespace :medserv do
   def get_studies
     # Get studies based on our critera
     puts "Getting studies based on our critera"
-    studies = Study.find(:all, :conditions => "closed_or_completed_date is null and irb_status not in ('Closed/Terminated', 'Withdrawn', 'Rejected','Exempt Review: Awaiting Correspondence', 'Exempt Approved', 'Exempt Review: Changes Requested', 'In Expedited Review')")
+    studies = Study.find(:all, :conditions => "closed_or_completed_date is null and irb_status not in ('Pre Submission', 'Closed/Terminated', 'Withdrawn', 'Rejected','Exempt Review: Awaiting Correspondence', 'Exempt Approved', 'Exempt Review: Changes Requested', 'In Expedited Review')")
+  end
+
+  def get_non_compliant_studies
+     #- Identify the studies that are currently active.
+    studies = get_studies
+    puts "Studies: #{studies.count}"
+    #- Remove the studies that have already responded to the survey. Any level of response. We will deal with partial responses separately
+    studies.reject!{|s| !s.uses_medical_services.nil?} #rejecting any level of response
+    puts "After removing ones responded #{studies.count}"
   end
 
   def manifest_file(name, &block)
