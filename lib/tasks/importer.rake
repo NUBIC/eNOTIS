@@ -30,7 +30,7 @@ namespace :importer do
 
   desc "Queries the known subject/participant external sources and flags the appropriate eNOTIS study with the source which has subject/participants"
   task :update_managed_studies => :environment do
-    source_list = ['NOTIS', 'REGISTAR'] #and soon ANES! When they get their data straightend out 
+    source_list = ['NOTIS', 'REGISTAR', 'ANES'] #and soon ANES! When they get their data straightend out 
     source_list.each do |source|
       query = "find_#{source}_study_list".to_sym # building the query name we're gonna call based on our naming convention in edw.rb
       study_list = Edw.send(query)
