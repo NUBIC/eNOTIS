@@ -55,7 +55,7 @@ namespace :importer do
       study = Study.find_by_irb_number(irb_num)
       if study
         if study.is_managed?
-          puts "Found: #{irb_num} - alread managed by: #{study.managing_system}"
+          puts "Found: #{irb_num} - already managed by: #{study.managing_system}"
         else
           if study.involvements.empty?
             study.managed_by(source)
