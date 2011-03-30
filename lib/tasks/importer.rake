@@ -5,10 +5,10 @@ namespace :importer do
  # TODO: add update to bcsec enotis roles!!!!
 
   desc "Does our full (weekender) update process - Don't wait up for this one! It likes to party all night"
-  task :full_mutha_trucking_update => [:environment, :all_studies, :update_managed_studies]
+  task :full_mutha_trucking_update => [:environment, :all_studies, :update_managed_studies, "users:update_cc_pers"]
 
-  desc "Does our priority update process, active studies and studies with managed participants - Takes about 2-3 hours to run"
-  task :priority_update => [:environment, :active_studies]
+  desc "Does our priority update process, active studies and studies with managed participants. Then it updates cc_pers with new users - Takes about 2-3 hours to run"
+  task :priority_update => [:environment, :active_studies, "users:update_cc_pers"]
 
   desc "Queries the eirb for a full list of studies and imports all these studies"
   task :all_studies => :environment do
@@ -54,9 +54,17 @@ namespace :importer do
     irb_numbers.each do |irb_num|
       study = Study.find_by_irb_number(irb_num)
       if study
-        study.managed_by(source)
-        study.save!
-        puts "Found: #{irb_num} - Now managed by :#{source}"
+        if study.is_managed?
+          puts "Found: #{irb_num} - alread managed by: #{study.managing_system}"
+        else
+          if study.involvements.empty?
+            study.managed_by(source)
+            study.save!
+            puts "Found: #{irb_num} - Now managed by :#{source}"
+          else
+            puts "Participants exist on study #{irb_num}!!! setting it to managed by #{enotis} will clobber data on the next import. You'll have to set this mannually if that's what you really want to do"
+          end
+        end
       else
         puts "!!! Study not found: #{irb_num}"
       end
