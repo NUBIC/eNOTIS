@@ -116,8 +116,6 @@ module Webservices
           study[:expiration_date] = Chronic.parse(bh[:expiration_date])
           study[:created_date] = Chronic.parse(bh[:created_date])
           study[:modified_date] = Chronic.parse(bh[:modified_date])
-          study[:closed_or_completed_date] = Chronic.parse(bh[:closed_or_completed_date])
-
           study[:periodic_review_open] = bh[:periodic_review_open]
           study[:accrual_goal] = bh[:accrual_goal]
           study[:name] = bh[:name]
@@ -126,7 +124,10 @@ module Webservices
           study[:fda_unapproved_agent] = bh[:fda_unapproved_agent]
           study[:irb_status] = bh[:irb_status]
           study[:subject_expected_completion_count] = bh[:subject_expected_completion_count]
-          study[:closed_or_completed_date] = Chronic.parse(bh[:closed_or_completed_date])
+          # Adjusted to fix a bug in eIRB 
+          closed_or_completed_date = Chronic.parse(bh[:closed_or_completed_date])
+          study[:closed_or_completed_date] = fix_closed_completed_bug(closed_or_completed_date, study[:irb_status], study[:expired_date])
+
           study[:clinical_trial_submitter] = bh[:clinical_trial_submitter] 
           study[:research_type] = bh[:research_type]
           study[:review_type_requested] = bh[:review_type_requested]
@@ -412,6 +413,17 @@ module Webservices
       end
 
       # Aux methods for sanitization
+      
+      def fix_closed_completed_bug(clsd_comp_date, irb_status, exp_date)
+        # closed statuses
+        cs = ["Closed/Terminated", "Expired", "Completed"]
+        if cs.include?(irb_status) and exp_date < Time.now
+          clsd_comp_date
+        else
+          nil
+        end
+      end
+
       def NOTIS_gender(gender)
         case gender
         when "F"

@@ -353,6 +353,45 @@ describe Webservices::Importer do
           study_hash[:funding_sources].should be_empty
         end
 
+        # Based on a known issue in eIRB where the closed completed date 
+        # is set when the study is still approved.
+        # A) If the study state is still approved and the study's expiration date is in the future,
+        # then then that date should likely be ignored, and the study is assumed to be open.
+        # B) If the study state is closed/completed or expired and the study's expiration date is in the past,
+        # then then that date should likely be true
+        it "should not set closed_completed if this date is in the past and the study is currently approved" do
+          # condition A
+          clsd_comp = 1.year.ago #date in past
+          irb_status = "Approved" # study approved
+          exp_date = 1.year.from_now # study exp in the future
+          closed_comp_date = Webservices::Importer.fix_closed_completed_bug(clsd_comp, irb_status, exp_date)
+          closed_comp_date.should be_nil
+          # condition B.1
+          clsd_comp = 1.month.ago #date in past
+          irb_status = "Closed/Terminated" # study closed/terminated
+          exp_date = 1.year.ago # study exp in the past
+          closed_comp_date = Webservices::Importer.fix_closed_completed_bug(clsd_comp, irb_status, exp_date)
+          closed_comp_date.should_not be_nil
+          # condition B.2.1
+          clsd_comp = 1.month.ago #date in past
+          irb_status = "Expired" # study expired
+          exp_date = 1.year.ago # study exp in the past
+          closed_comp_date = Webservices::Importer.fix_closed_completed_bug(clsd_comp, irb_status, exp_date)
+          closed_comp_date.should_not be_nil
+          # condition B.2.2
+          clsd_comp = 1.month.ago #date in past
+          irb_status = "Expired" # study expired
+          exp_date = 1.year.from_now # study exp in the future
+          closed_comp_date = Webservices::Importer.fix_closed_completed_bug(clsd_comp, irb_status, exp_date)
+          closed_comp_date.should be_nil
+          # condition B.3
+          clsd_comp = 1.month.ago #date in past
+          irb_status = "Completed" # study completed
+          exp_date = 1.year.ago # study exp in the past 
+          closed_comp_date = Webservices::Importer.fix_closed_completed_bug(clsd_comp, irb_status, exp_date)
+          closed_comp_date.should_not be_nil
+        end
+
 
       end 
 
