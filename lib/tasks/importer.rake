@@ -62,7 +62,7 @@ namespace :importer do
             study.save!
             puts "Found: #{irb_num} - Now managed by :#{source}"
           else
-            puts "Participants exist on study #{irb_num}!!! setting it to managed by #{enotis} will clobber data on the next import. You'll have to set this mannually if that's what you really want to do"
+            puts "Participants exist on study #{irb_num}!!! setting it to managed by #{source} will clobber data on the next import. You'll have to set this mannually if that's what you really want to do"
           end
         end
       else
