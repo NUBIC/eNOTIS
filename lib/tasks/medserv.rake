@@ -111,7 +111,8 @@ namespace :medserv do
     pis_and_studies = []
     pis.each do |pi|
       pis_and_studies << {:pi => pi, 
-        :studies => studies.select{|s| s.principal_investigator && s.principal_investigator.netid == pi} } 
+        :studies => studies.select{|s| s.principal_investigator && s.principal_investigator.netid == pi}
+      } 
     end
     # preparing the email group
     pis_and_studies.each do |ps|
@@ -122,7 +123,7 @@ namespace :medserv do
         all_roles = s.roles.map(&:netid)
         co_i = s.roles.select{|r| r.project_role == "Co-Investigator"}.map(&:netid)
         all_roles.reject!{|n| co_i.include?(n)} # removing co-investigators
-        all_roles.delete!(ps[:pi]) # removing the pi
+        all_roles.delete(ps[:pi]) # removing the pi
         all_roles 
       end
       cc_list.flatten!
@@ -258,6 +259,7 @@ namespace :medserv do
     #- Remove the studies that have already responded to the survey. Any level of response. We will deal with partial responses separately
     studies.reject!{|s| !s.uses_medical_services.nil?} #rejecting any level of response
     puts "After removing ones responded #{studies.count}"
+    studies
   end
 
   def manifest_file(name, &block)
