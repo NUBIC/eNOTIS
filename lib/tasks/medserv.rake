@@ -120,7 +120,7 @@ namespace :medserv do
     pis_and_studies.each do |ps|
       puts "-----------"
       puts ps[:pi]
-      puts ps[:studies].map{|s| "#{s.irb_number} - #{s.irb_status}"
+      puts ps[:studies].map{|s| "#{s.irb_number} - #{s.irb_status}"}
       cc_list = ps[:studies].map do |s| 
         all_roles = s.roles.map(&:netid)
         co_i = s.roles.select{|r| r.project_role == "Co-Investigator"}.map(&:netid)
