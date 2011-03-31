@@ -251,7 +251,12 @@ namespace :medserv do
   def get_studies
     # Get studies based on our critera
     puts "Getting studies based on our critera"
-    studies = Study.find(:all, :conditions => "closed_or_completed_date is null and irb_status not in ('Pre Submission', 'Closed/Terminated', 'Withdrawn', 'Rejected','Exempt Review: Awaiting Correspondence', 'Exempt Approved', 'Exempt Review: Changes Requested', 'In Expedited Review')")
+    to_remove = [ "Withdrawn", "Rejected", "Exempt Review: Changes Requested",
+      "Original Version", "In Expedited Review", "Expired", "Expedited Review: Changes Requested",
+      "Expedited Review: Awaiting Correspondence", "Exempt Review: Changes Requested",
+      "Exempt Approved","Closed/Terminated", "Pre Submission"]
+
+    studies = Study.find(:all, :conditions => "closed_or_completed_date is null and irb_status not in (#{to_remove.map{|r| "'#{r}'"}.join(',')})")
   end
 
   def get_non_compliant_studies

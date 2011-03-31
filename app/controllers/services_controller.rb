@@ -47,7 +47,7 @@ class ServicesController < ApplicationController
     to_remove = [ "Withdrawn", "Rejected", "Exempt Review: Changes Requested",
       "Original Version", "In Expedited Review", "Expired", "Expedited Review: Changes Requested",
       "Expedited Review: Awaiting Correspondence", "Exempt Review: Changes Requested",
-      "Exempt Approved","Closed/Terminated"]
+      "Exempt Approved","Closed/Terminated", "Pre Submission"]
 
     @studies = all_studies.reject{ |s|  !s.closed_or_completed_date.nil? or to_remove.include?(s.irb_status)  }
     # HACK - added to handle the rush-request to give people not on IRB roles access to fill out this stupid medical services form
