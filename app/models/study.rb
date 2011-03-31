@@ -26,12 +26,12 @@ class Study < ActiveRecord::Base
   
   # Associations
   has_many :involvements
-  has_many :roles
+  has_many :roles, :dependent => :delete_all
   has_many :subjects, :through => :involvements
   has_many :involvement_events, :through => :involvements
   has_many :study_uploads
   has_many :funding_sources, :dependent => :delete_all
-  has_one  :medical_service
+  has_one  :medical_service, :dependent => :delete_all
   has_many :event_types, :order => "seq asc" do 
     def find_by_name(e_name)
       find(:first, :conditions => {:name =>EventType.event_name_formatter(e_name)})
