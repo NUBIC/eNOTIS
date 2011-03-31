@@ -112,7 +112,9 @@ namespace :medserv do
     pis.each do |pi|
       pis_and_studies << {:pi => pi, 
         :studies => studies.select{|s| s.principal_investigator && s.principal_investigator.netid == pi}
-      } 
+      }
+      print "."
+      STDOUT.flush
     end
     # preparing the email group
     pis_and_studies.each do |ps|
