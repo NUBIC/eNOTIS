@@ -16,7 +16,7 @@
 #back.heading= link_to "My Studies".html_safe, studies_path
 #study
   -if @study.read_only?
-    .study_msg= @study.read_only_msg || "This study has been set to READ ONLY! It cannot be modified in eNOTIS."
+    .study_msg= "#{@study.read_only_msg || "This study has been set to READ ONLY!"} It cannot be modified in eNOTIS."
   .title
     = irb_span @study
     = status_span @study
