@@ -31,7 +31,7 @@ class Study < ActiveRecord::Base
   has_many :involvement_events, :through => :involvements
   has_many :study_uploads
   has_many :funding_sources, :dependent => :delete_all
-  has_one  :medical_service, :dependent => :delete_all
+  has_one  :medical_service, :dependent => :delete
   has_many :event_types, :order => "seq asc" do 
     def find_by_name(e_name)
       find(:first, :conditions => {:name =>EventType.event_name_formatter(e_name)})
