@@ -116,6 +116,18 @@ namespace :medserv do
       print "."
       STDOUT.flush
     end
+    # proxy user processing 
+    proxy_list =  load_proxy_file
+    proxied_nets = get_proxy_netids(proxy_list) 
+    to_remove = []
+    pis_and_studies.each do |ps|
+      to_remove << ps if proxied_nets.include?(ps[:pi])
+    end
+    to_remove.each do |x|
+      pis_and_studies.delete(x)
+      puts "removing #{x[:pi]} - proxied"
+    end
+
     # preparing the email group
     pis_and_studies.each do |ps|
       puts "-----------"
@@ -135,7 +147,7 @@ namespace :medserv do
     end
   end
 
-  desc 'generate proxy lookup file'
+  desc 'generate proxy lookup file used by the app to display studies the services page for oversight users'
   task :proxy_lookup => :environment do
     manifest_list = [] 
     # Get studies from our custom list
