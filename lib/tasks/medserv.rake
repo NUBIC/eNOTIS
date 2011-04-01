@@ -246,7 +246,7 @@ namespace :medserv do
           puts "Failed to send on email '#{pi_email}' - tocc: #{cc_emails.join(',')}"
         end
       else
-        puts "Would have sent email to #{pi_email} if ENV was prod \n"
+        puts "Would have sent email to #{pi_email} <#{pi_name}> - #{cc_emails.join(',')} #{study_list.inspect}- if ENV was prod \n"
       end
       sent_list << "Sent to #{pi_email} and #{cc_emails.join(',')} at #{Time.now}\n"
     else
