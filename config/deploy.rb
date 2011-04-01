@@ -83,34 +83,6 @@ namespace :deploy do
   end
 end
 
-namespace :resque do
-  
-  desc "Requeue Failed Jobs"
-  task :requeue, :roles => :app  do
-    run "cd #{current_path} && rake RAILS_ENV=#{rails_env} redis:resque:requeue"
-  end
-  
-  desc "Restart workers"
-  task :restart, :roles => :app do
-    run "cd #{shared_path}/pids; for i in resque*.pid; do #{sudo} kill -QUIT `cat $i`; rm $i; done"
-  end
-  
-  desc "Pause workers"
-  task :pause,:roles => :app  do
-    run "cd #{shared_path}/pids; for i in resque*.pid; do #{sudo} kill -USR2 `cat $i`; done"
-  end
-  
-  desc "Resume workers"
-  task :resume, :roles => :app  do
-    run "cd #{shared_path}/pids; for i in resque*.pid; do #{sudo} kill -CONT `cat $i`; done"    
-  end
-  
-  desc "Kill workers"
-  task :kill , :roles => :app do
-    run "cd #{shared_path}/pids; for i in resque*.pid; do #{sudo} kill -TERM `cat $i`; rm $i; done"
-  end
-end
-
 # Administration tasks
 namespace :admin do
   desc "Creates admins via rake db:populate:admins"
@@ -125,11 +97,6 @@ namespace :admin do
         run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec script/poller #{t.to_s}"
       end
     end
-  end
-  
-  desc "Imports from redis"
-  task :import_from_redis, :roles => :app do
-    run "cd #{current_path} && rake RAILS_ENV=#{rails_env} redis"
   end
 end
 

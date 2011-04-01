@@ -27,6 +27,16 @@ class Notifier < ActionMailer::Base
     body 
   end
 
+  def pi_service_final_reminder(pi_email, pi_name, cc_list, studies)
+    from "r-chisholm@northwestern.edu"
+    reply_to "d-gibson2@northwestern.edu"
+    recipients pi_email
+    cc cc_list
+    subject "Final Reminder: Identification of Research Studies making use of medical services"
+    body {:pi_name => pi_name, :studies => studies}
+
+  end
+
   def proxy_service_form(to_emails, email_data)
     from "enotis@northwestern.edu"
     reply_to "enotis@northwestern.edu"
