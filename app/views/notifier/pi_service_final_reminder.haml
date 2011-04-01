@@ -1,13 +1,13 @@
 %p 
   Dear
-  = pi_name
+  = @pi_name
   ,
 
 %p This a reminder that the survey results for your research studies have not yet been submitted. The deadline for the survey is 9am on Monday, April 4th.
  
 %p The studies missing survey results are:
   %ul
-    - studies.each do |s|
+    - @studies.each do |s|
       %li 
         = s[:irb_number]
         &nbsp;
