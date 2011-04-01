@@ -127,24 +127,23 @@ namespace :medserv do
       pis_and_studies.delete(x)
       puts "removing #{x[:pi]} - proxied"
     end
-
+    
+    sent_list = [] #recording 
     # preparing the email group
     pis_and_studies.each do |ps|
-      puts "-----------"
-      puts ps[:pi]
-      puts ps[:studies].map{|s| "#{s.irb_number} - #{s.irb_status}"}
-      cc_list = ps[:studies].map do |s| 
-        all_roles = s.roles.map(&:netid)
-        co_i = s.roles.select{|r| r.project_role == "Co-Investigator"}.map(&:netid)
-        all_roles.reject!{|n| co_i.include?(n)} # removing co-investigators
-        all_roles.delete(ps[:pi]) # removing the pi
-        all_roles 
-      end
-      cc_list.flatten!
-      cc_list.uniq! #multiple roles and multiple studies is possible, removing dupes
-      puts cc_list.join(',')
-      puts ""
+      process_and_send(ps, sent_list)
     end
+    # Emailing Warren Warren Kibbe <wakibbe@northwestern.edu>
+    # He wanted a copy of the email when it was sent out
+    if Rails.env.production?
+      Notifier.deliver_pi_service_final_reminder('wakibbe@northwestern.edu', 'Warren A Kibbe', ['b-chamberlain@northwestern.edu'], [{:irb_number => "STU000ABC123", :study_name => "Study of Drug XYZ"}])
+    else
+      puts "Would have sent email to wakibbe@northwestern.edu if ENV was prod \n"
+    end
+
+    manifest_file("list_of_emailed_pi_final_reminder"){|f| sent_list.each{|l| f << l }}
+    puts "Done!"
+
   end
 
   desc 'generate proxy lookup file used by the app to display studies the services page for oversight users'
@@ -217,6 +216,43 @@ namespace :medserv do
   end
 
   # HELPER METHODS ##################################################
+
+  def process_and_send(ps, sent_list)
+
+    puts "-----------"
+    puts ps[:pi]
+    puts ps[:studies].map{|s| "#{s.irb_number} - #{s.irb_status}"}
+    cc_list = ps[:studies].map do |s| 
+      all_roles = s.roles.map(&:netid)
+      co_i = s.roles.select{|r| r.project_role == "Co-Investigator"}.map(&:netid)
+      all_roles.reject!{|n| co_i.include?(n)} # removing co-investigators
+      all_roles.delete(ps[:pi]) # removing the pi
+      all_roles 
+    end
+    cc_list.flatten!
+    cc_list.uniq! #multiple roles and multiple studies is possible, removing dupes
+    puts cc_list.join(',') # netid list
+
+    u = Bcsec.authority.find_user(ps[:pi].downcase) # look up PI email
+    if u # they should exist 
+      pi_name = "#{u.first_name} #{u.last_name}"
+      pi_email = u.email
+      cc_emails = convert_to_emails(cc_list)
+      study_list = ps[:studies].map{|s| {:irb_number => s.irb_number, :study_name => s.name}}
+      if Rails.env.production?
+        begin
+          Notifier.deliver_pi_service_final_reminder(pi_email, pi_name, cc_emails, study_list)
+        rescue
+          puts "Failed to send on email '#{pi_email}' - tocc: #{cc_emails.join(',')}"
+        end
+      else
+        puts "Would have sent email to #{pi_email} if ENV was prod \n"
+      end
+      sent_list << "Sent to #{pi_email} and #{cc_emails.join(',')} at #{Time.now}\n"
+    else
+      puts "COULD NOT FIND PI NETID: #{ps[:pi]} - No email sent"
+    end
+  end
 
   def load_proxy_file
     puts "Loading proxy email list"
