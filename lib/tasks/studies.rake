@@ -17,11 +17,14 @@ namespace :studies do
   desc 'print out a list of all the bad netids we have in study roles'
   task :print_bad_netids => :environment do
     puts "Finding bad netids in eIRB data..."
-    live_studies.each do |s|
-      s.roles.each do |r|
-        user = Bcsec.authority.find_user(r.netid)
-        unless user
-          puts "#{s.irb_number}, \"#{s.irb_status}\", #{r.netid}, \"#{(r.project_role.length > 50) ? "#{r.project_role[0..50]}..." : r.project_role }\"" 
+    netids = Role.connection.select_all("select distinct(netid) from roles")
+    netids.each do |netid|
+      user = Bcsec.authority.find_user(netid["netid"])
+      # users = Bcsec.authority.find_users(*[netids.map{|n| n["netid"]}])
+      unless user
+        roles = Role.find_all_by_netid(netid["netid"], :order => "study_id")
+        roles.each do |r|
+          puts "#{r.netid}, #{r.study.irb_number}, \"#{r.study.irb_status}\", \"#{(r.project_role.length > 50) ? "#{r.project_role[0..50]}..." : r.project_role }\"" 
         end
       end
     end
