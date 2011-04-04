@@ -57,7 +57,7 @@ namespace :db do
     raise "I cannot in good conscience let you do this in production" if Rails.env.production?
     without_versioning do
       Version.delete_all(:item_type => "Subject")
-      Subject.all.each{|subject| de_id_subject(subject)}
+      Subject.all.each{|subject| de_id_subject(subject);print (['\\','|','/','-'][rand(3)]);STDOUT.flush}
     end
   end
   
