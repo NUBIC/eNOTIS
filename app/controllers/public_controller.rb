@@ -20,7 +20,7 @@ class PublicController < ApplicationController
     end
   end
  
-  def active_studies
+  def open_studies
     respond_to do |format|
       format.json do 
         render :json => Study.open_studies.find(:all, :limit => 20).to_json(
