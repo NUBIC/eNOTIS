@@ -55,6 +55,8 @@ class StudiesController < ApplicationController
   end
   
   def help
-    
+    #?? help page? TODO: remove this -BLC    
   end
+
+
 end

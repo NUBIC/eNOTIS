@@ -19,7 +19,16 @@ class PublicController < ApplicationController
       format.js {render :layout => false}
     end
   end
-  
+ 
+  def active_studies
+    respond_to do |format|
+      format.json do 
+        render :json => Study.open_studies.find(:all, :limit => 20).to_json(
+        :only => [:irb_number, :irb_status, :title, :inclusion_criteria, :exclusion_criteria], :methods => :principal_investigator_name) 
+      end
+    end
+  end 
+
   # Protected instance methods
   protected
   def cas_base_url

@@ -23,7 +23,13 @@ class Study < ActiveRecord::Base
       :group => %w(id irb_status irb_number name title accrual_goal).map{|c| "studies.#{c}"}.join(", "), 
       :order => "accrual #{direction.upcase}"}}
   named_scope :with_user, lambda{|netid| {:include => :roles, :conditions => ["roles.netid =?", netid]}}
+  STATUS_TO_EXCLUDE = [ "Withdrawn", "Rejected", "Exempt Review: Changes Requested",
+      "Original Version", "In Expedited Review", "Expired", "Expedited Review: Changes Requested",
+      "Expedited Review: Awaiting Correspondence", "Exempt Review: Changes Requested",
+      "Exempt Approved","Closed/Terminated", "Pre Submission"]
   
+  named_scope :open_studies, :conditions => "closed_or_completed_date is null and irb_status not in (#{STATUS_TO_EXCLUDE.map{|r| "'#{r}'"}.join(',')})"
+
   # Associations
   has_many :involvements
   has_many :roles, :dependent => :delete_all
@@ -133,6 +139,18 @@ class Study < ActiveRecord::Base
 
   def principal_investigator
     roles.detect{|x| x.project_role =~ /P\.?I\.?|Principal Investigator/i}
+  end
+
+  def principal_investigator_name
+    pi = principal_investigator
+    if pi.netid
+      u = Bcsec.authority.find_user(pi.netid.downcase)
+      if u
+        return("#{u.last_name}, #{u.first_name}") 
+      end
+      return(pi.netid)
+    end
+    return("Unknown")
   end
  
   def user_roles(netid)
