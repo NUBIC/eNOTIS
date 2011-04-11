@@ -14,7 +14,7 @@ $(document).ready(function(){
   } else {
     var shouldOpenLoginWindow = ($.urlParam('logout') == "true") || ($.urlParam('return') != 0);
     // ie has a js error from the cas focus event inside the hidden iframe, load iframe content here instead of on the page itself
-    $("#loginframe iframe").attr('src', $('#login a[rel=#loginframe]').attr('href'));
+    $("#loginframe iframe").attr('src', $('#login a[rel=#loginframe]').attr('href').replace("?service=","?compact&service="));
     $("a[rel=#loginframe]").overlay({ load: shouldOpenLoginWindow }); 
     $("#loginframe iframe").load(function (){
       // do something once the iframe is loaded
