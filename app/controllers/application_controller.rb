@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
 
   #
   # Application version
-  APP_VERSION = "1.14.7"
+  APP_VERSION = "1.15.0"
 
 
   def redirect_with_message(path, message_type, message)
