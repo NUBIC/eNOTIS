@@ -38,7 +38,7 @@ class PublicController < ApplicationController
   end
   def cas_login_path
     uri = URI.join(cas_base_url, 'login')
-    uri.query = "service=#{request.scheme}://#{request.host}#{params[:return]}"
+    uri.query = "service=#{request.scheme}://#{request.host}#{params[:return].blank? ? '/' : params[:return]}"
     return uri.to_s
   end
   def cas_logout_path
