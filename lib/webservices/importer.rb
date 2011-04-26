@@ -180,6 +180,12 @@ module Webservices
         roles.reject! do |r|
           r[:netid].blank? or r[:project_role].blank? or r[:consent_role].blank?
         end
+        
+        #Our usage of netids is case sensitive, eIRB does not enforce case for netids
+        #Fixing the bad data at the source.
+        roles.each do |r|
+          r[:netid].downcase!
+        end
         return roles
       end
       

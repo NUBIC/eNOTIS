@@ -246,6 +246,12 @@ describe Webservices::Importer do
         Webservices::Importer.sanitize_roles(good).should_not be_empty
       end
 
+      it "dowcases the netids as part of the sanitiziation" do
+        d = {:find_authorized_personnel => [{:netid => "AbcBBB", :project_role => "PI", :consent_role => "Obtaining"}]}
+        ds = Webservices::Importer.sanitize_roles(d).first
+        ds[:netid].should == "abcbbb"
+      end
+
       # I split the tests this way and added this describe block around 
       # real-er data becuase it was easier to generate test data off the webservices
       # by making actual queries and changing the data than typing out hashes by hand -blc
