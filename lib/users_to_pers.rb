@@ -22,6 +22,7 @@ module UsersToPers
         login.portal_name = PORTAL # can't be bulk set
         login.save
       end
+      puts "updated/created #{netid} as admin"
       Pers::GroupMembership.create(:username => netid, :group_name => "Admin", :portal => PORTAL) unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(netid, PORTAL, "Admin")
       Pers::GroupMembership.create(:username => netid, :group_name => "User", :portal => PORTAL) unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(netid, PORTAL, "User")
     end
