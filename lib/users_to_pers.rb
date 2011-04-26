@@ -14,7 +14,7 @@ module UsersToPers
   end
   # Creates eNOTIS developers and admins in cc_pers
   def self.create_admins
-    %w(blc615 Brian Chamberlain daw286 David Were lmw351 Laura Wimbiscus\ Yoon myo628 Mark Wimbiscus\ Yoon wakibbe Warren Kibbe).each_slice(3) do |netid, first_name, last_name|
+    %w(pny668 Peter Nyberg blc615 Brian Chamberlain daw286 David Were lmw351 Laura Wimbiscus\ Yoon myo628 Mark Wimbiscus\ Yoon wakibbe Warren Kibbe).each_slice(3) do |netid, first_name, last_name|
       Pers::Person.create(:username => netid, :first_name => first_name, :last_name => last_name, :entered_by => "enotis-application") unless Pers::Person.find_by_username(netid)
       unless Pers::Login.find_by_username_and_portal(netid, PORTAL)
         login = Pers::Login.new
