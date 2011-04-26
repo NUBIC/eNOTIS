@@ -27,31 +27,7 @@ module UsersToPers
       Pers::GroupMembership.create(:username => netid, :group_name => "User", :portal => PORTAL) unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(netid, PORTAL, "User")
     end
   end
-  
-  # Fills in cc_pers from the redis copy of the ldap server
-  # TODO: untested!
-  def self.update_from_redis
-    users = REDIS.keys 'user:*'
-    users.each do |redis_user|
-      netid = redis_user.split(":")[1].downcase
-      user_hash = HashWithIndifferentAccess.new(REDIS.hgetall(redis_user))
-      insert_user_into_cc_pers(netid, {
-        :username       => (user_hash[:username].blank? ? nil : user_hash[:username][0,64]),
-        :first_name     => (user_hash[:first_name].blank? ? nil : user_hash[:first_name][0,40]),
-        :last_name      => (user_hash[:last_name].blank? ? nil : user_hash[:last_name][0,40]),
-        :middle_name    => (user_hash[:middle_name].blank? ? nil : user_hash[:middle_name][0,40]),
-        :title          => (user_hash[:title].blank? ? nil : user_hash[:title][0,64]),
-        :email          => (user_hash[:email].blank? ? nil : user_hash[:email][0,255]),
-        :business_phone => (user_hash[:phone_number].blank? ? nil : user_hash[:phone_number][0,40]),
-        :address1       => (user_hash[:address].split("\n")[1].blank? ? nil : user_hash[:address].split("\n")[1][0,500]),
-        :address2       => (user_hash[:address].split("\n")[2].blank? ? nil : user_hash[:address].split("\n")[2][0,80]),
-        :city           => (user_hash[:city].blank? ? nil : user_hash[:city][0,80]),
-        :state          => (user_hash[:state].blank? ? nil : user_hash[:state][0,40]),
-        :postal_code    => (user_hash[:zip].blank? ? nil : user_hash[:zip][0,15]),
-        :country        => (user_hash[:country].blank? ? nil : user_hash[:country][0,80])})
-    end
-  end
-
+ 
   def self.insert_user_into_cc_pers(netid, attrs, role = "User")
     Bcaudit::AuditInfo.current_user = Bcsec.authority.find_user('blc615')
     unless Pers::Person.find_by_username_or_id(netid)
