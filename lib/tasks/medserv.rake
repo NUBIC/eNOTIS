@@ -214,6 +214,17 @@ namespace :medserv do
     end
 
   end
+  
+  desc 'export medical services data'
+  task :export_medical_services => :environment do
+    cols = MedicalService.content_columns.map(&:name)
+    FasterCSV.open(RAILS_ROOT + "/tmp/medical_services_#{Time.now.strftime("%Y-%m-%d_%H-%M-%S")}.csv", "w") do |csv|
+      csv << ["irb_number", "irb_status", "name"] + cols
+      Study.find_all_by_uses_medical_services(true).each do |s|
+        csv << [s.irb_number, s.irb_status, s.name] + cols.map{|c| s.medical_service.send(c)}
+      end
+    end
+  end
 
   # HELPER METHODS ##################################################
 
