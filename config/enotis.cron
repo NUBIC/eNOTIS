@@ -1,0 +1,2 @@
+0 22 * * 6   cd /var/www/apps/enotis/current; bundle exec rake importer:full_mutha_trucking_update RAILS_ENV=production >> /var/www/apps/enotis/shared/log/import_cron.log 2>&1 # 10pm on Saturday night
+0 3  * * 1-5 cd /var/www/apps/enotis/current; bundle exec rake importer:priority_update RAILS_ENV=production >> /var/www/apps/enotis/shared/log/import_cron.log 2>&1            # 3am on Weekdays
