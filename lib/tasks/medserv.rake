@@ -224,7 +224,7 @@ namespace :medserv do
       Study.find_all_by_uses_medical_services(true).each do |s|
         print "."
         STDOUT.flush
-        csv << [s.irb_number, s.irb_status, s.name] + (s.medical_service ? cols.map{|c| s.medical_service.send(c)} : [])
+        csv << [s.irb_number, s.irb_status, s.name] + (s.medical_service ? cols.map{|c| s.medical_service[c]} : [])
       end
       puts "done"
     end
