@@ -38,12 +38,21 @@ class PublicController < ApplicationController
   end
   def cas_login_path
     uri = URI.join(cas_base_url, 'login')
-    uri.query = "service=#{request.scheme}://#{request.host}#{params[:return].blank? ? '/' : params[:return]}"
+    uri.query = "service=#{service_url_base}#{params[:return].blank? ? '/' : params[:return]}"
     return uri.to_s
   end
   def cas_logout_path
     uri = URI.join(cas_base_url, 'logout')
-    uri.query = "service=#{request.scheme}://#{request.host}"
+    uri.query = "service=#{service_url_base}"
     return uri.to_s
+  end
+  # copied from bcsec's cas mode because it's not trivially reusable
+  # from there.
+  def service_url_base
+    requested = "#{request.scheme}://#{request.host}".tap do |url|
+      unless [ ["https", 443], ["http", 80] ].include?([request.scheme, request.port])
+        url << ":#{request.port}"
+      end
+    end
   end
 end
