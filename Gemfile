@@ -36,7 +36,7 @@ gem "searchlogic"
 gem 'will_paginate', '~> 2.3'
 
 # Authentication
-gem "bcdatabase"
+gem "bcdatabase", '~> 1.0.6'
 gem "bcsec", '~>2.0'
 gem "bcsec-rails", '~> 2.0'
 
