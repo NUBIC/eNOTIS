@@ -4,7 +4,15 @@ require 'truncation' # monkey patch for database_cleaner's truncation: connectio
 
 describe UsersToPers do
   before(:all) do
-    DatabaseCleaner[:active_record, {:connection => Rails.env == 'hudson' ? :cc_pers_hudson : :cc_pers_test}]
+    DatabaseCleaner[:active_record,
+      {
+        :connection => case Rails.env
+                       when 'hudson'; :cc_pers_hudson;
+                       when 'test'; :cc_pers_test;
+                       else fail "Unexpected Rails.env=#{Rails.env.inspect}";
+                       end
+      }
+    ]
     DatabaseCleaner.strategy = :truncation
     Bcaudit::AuditInfo.current_user = Bcsec::User.new('rspec')
   end
