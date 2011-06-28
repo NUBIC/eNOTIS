@@ -27,4 +27,9 @@ config.after_initialize do
   end
 end
 require 'empi' # include the symbolize! Hash extension
-EMPI_SERVICE = YAML::load(File.read("/etc/nubic/empi-#{Rails.env}.yml")).symbolize!
+EMPI_SERVICE =
+  begin
+    YAML::load(File.read("/etc/nubic/empi-#{Rails.env}.yml")).symbolize!
+  rescue => e
+    $stderr.puts "Warning: could not load EMPI_SERVICE configuration:\n  #{e}"
+  end
