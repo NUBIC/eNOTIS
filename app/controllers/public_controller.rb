@@ -11,7 +11,7 @@ class PublicController < ApplicationController
     @accrual_count = Involvement.count # (:conditions => ["updated_at >= ?", 1.month.ago])
     @cas_login_url = cas_login_path.to_s
   end
-  
+
   def login_help
     @cas_url = params[:logout] ? cas_logout_path : cas_login_path.to_s
     respond_to do |format|
@@ -19,15 +19,16 @@ class PublicController < ApplicationController
       format.js {render :layout => false}
     end
   end
- 
+
   def open_studies
     respond_to do |format|
-      format.json do 
+      format.json do
         render :json => Study.open_studies.find(:all, :limit => 20).to_json(
-        :only => [:irb_number, :irb_status, :title, :inclusion_criteria, :exclusion_criteria], :methods => :principal_investigator_name) 
+          :only => [:irb_number, :irb_status, :title, :inclusion_criteria, :exclusion_criteria],
+          :methods => :principal_investigator_name)
       end
     end
-  end 
+  end
 
   # Protected instance methods
   protected
