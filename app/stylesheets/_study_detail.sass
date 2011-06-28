@@ -4,6 +4,7 @@
     :padding-left 20px
     :background transparent url('/images/icons/resultset_previous.png') no-repeat center left
 #report
+  
 #study
   .study_msg
     :padding 0.5em
@@ -53,86 +54,110 @@
       :display block
       :font-size 12px
       :color #222
-  #study_information
-    +column(48, true)
-    :display none
-    .details
-      +column(12)
-      :margin-right 4px
-      :border-right 1px solid #ccc
-      span
-        :display block
-    .charts
-      +column(36,true)
-      :margin-bottom 10px
-      .chart
-        :margin-top 10px
-        :width 238px
-        :height 150px
-        :float left
-      #timechart
-        :margin-top 10px
-        :float left
-        :clear left
-        :width 357px
-        :height 200px
-      #dotchart
-        :margin-top 10px
-        :float right
-        :width 357px
-        :height 200px
-      h3
-        :margin-left 40px
-        :margin-bottom 0
-        :color #3e576f
-        :font 16px "Lucida Grande","Lucida Sans Unicode",Verdana,Arial,Helvetica,sans-serif
-      #by_month_and_weekday
-        :height 275px
-        :margin-top -25px
-  #accrual
-    :clear left
-    #actions
-      :font-size 17px
-      :float right
-      a
-        :text-decoration none
-        :margin-left 10px
-        :padding-left 20px
-      a.charts
-        :padding-left 25px
-        :background transparent url('/images/icons/chart_pie.png') no-repeat center left    
-      a.add
-        :background transparent url('/images/icons/add.png') no-repeat center left    
-      a.import
-        :background transparent url('/images/icons/table_add.png') no-repeat center left
-      a.export
-        :background transparent url('/images/icons/table_save.png') no-repeat center left        
-      a.report
-        :background transparent url('/images/icons/report.png') no-repeat center left        
-    table.display
-      :clear both
-      th dtr.withdrawn, td span.withdrawn
-        :color #aaa  
-  #import
-    +column(48)
-    :display none
-    .upload
-      :margin-top 0
-      +column(16)
-    .instructions
-      +column(32, true)
-      table tr td
-        :padding 0 5px 0 0
-    .uploads
+  #actions
+    :display block
+    :margin-top 10px
+    height: 30px
+    border-bottom: 1px solid #666
+    :font-size 17px
+    a
+      :text-decoration none
+      :margin-left 10px
+    a.subjects
+      :padding-left 10px
+    a.charts
+      :padding-left 35px
+      :background transparent url('/images/icons/chart_pie.png') no-repeat 10px center
+    a.add
+      :background transparent url('/images/icons/add.png') no-repeat 10px center    
+    a.import
+      :background transparent url('/images/icons/table_add.png') no-repeat 10px center
+    a.export
+      :background transparent url('/images/icons/table_save.png') no-repeat 10px center     
+    a.report
+      :background transparent url('/images/icons/report.png') no-repeat 10px center       
+    a
+      float: left
+      font-size: 13px
+      display: block
+      padding: 5px 10px 5px 30px
+      text-decoration: none
+      border: 1px solid #666
+      border-bottom: 0px
+      height: 18px
+      background-color: transparent
+      color: #777
+      margin-right: 2px
+      position: relative
+      top: 1px
+      outline: 0
+      -moz-border-radius: 4px 4px 0 0
+      &:hover
+        background-color: #F7F7F7
+        color: #333
+      &.current
+        background-color: #C3D9FF
+        border-bottom: 1px solid #C3D9FF
+        color: #000
+        cursor: default
+  #panes
+    & > div
+      min-height: 150px
+      :padding 10px
+    #subjects
+      :padding 0
+      table.display
+        :clear both
+        th dtr.withdrawn, td span.withdrawn
+          :color #aaa  
+    #study_information
       +column(48, true)
+      .details
+        +column(12)
+        :margin-right 4px
+        span
+          :display block
+      .charts
+        +column(36,true)
+        :margin-bottom 10px
+        .chart
+          :margin-top 10px
+          :width 238px
+          :height 150px
+          :float left
+        #timechart
+          :margin-top 10px
+          :float left
+          :clear left
+          :width 357px
+          :height 200px
+        #dotchart
+          :margin-top 10px
+          :float right
+          :width 357px
+          :height 200px
+        h3
+          :margin-left 40px
+          :margin-bottom 0
+          :color #3e576f
+          :font 16px "Lucida Grande","Lucida Sans Unicode",Verdana,Arial,Helvetica,sans-serif
+        #by_month_and_weekday
+          :height 275px
+          :margin-top -25px
+    #import
+      +column(48)
+      :display none
+      .upload
+        :margin-top 0
+        +column(16)
+      .instructions
+        +column(32, true)
+        table tr td
+          :padding 0 5px 0 0
+      .uploads
+        +column(48, true)
   #involvement
     :width 900px
-  #report
-    :width 750px
-    .hidden
-      :display none
-  #export
-    :width 475px
   #other_studies
     :width 750px
   #intro

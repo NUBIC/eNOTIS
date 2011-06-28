@@ -4,51 +4,60 @@ var timeoutExpiredTimer;
 var importTable; // global variable to keep track of import data table, preventing reinitialization
 
 $(document).ready(function() {
- 
-  //Study service forms
+  // -------------- Common UI --------------
+  // flash messages
+  $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
+  
+  // help db language overlay
+  $("a[rel=#database-language]").overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
+    expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}
+  });
+  
+  // -------------- Medical services --------------
+  // Study service forms
   $("#medical_service_uses_services_before_completed_true").click(function(){
     $("#d1").fadeIn('slow');
   });
   $("#medical_service_uses_services_before_completed_false").click(function(){
     $("#d1").fadeOut('slow');
   });
-   //Also, if checked is the saved state
+  //Also, if checked is the saved state
   var d1 = $("#medical_service_uses_services_before_completed_true").attr("checked");
   if (d1 === true){
     $("#d1").fadeIn('slow');
   }
-
   $("#medical_service_expects_bedded_inpatients_true").click(function(){
     $("#d2").fadeIn('slow');
   });
   $("#medical_service_expects_bedded_inpatients_false").click(function(){
     $("#d2").fadeOut('slow');
   });  
-  // Also, if checked is teh saved state
+  // Also, if checked is the saved state
   var d2 = $("#medical_service_expects_bedded_inpatients_true").attr("checked");
   if (d2 === true){
     $("#d2").fadeIn('slow');
   }
-
   // The service bedding description overlay
   $("#bedded_helper_link").click(function(){
     $("#bedded_description").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }, api: true }).load(); 
   });
-
-  //update button activation
+  // update button activation
   $("#service_studies input[type=submit]").attr('disabled', true);
   $(".radios :input").click(function(){
     $("#service_studies input[type=submit]").attr('disabled', false);
   });
-
-  // flash messages
-  $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
-
+  
+  // -------------- My studies --------------
   // index (my studies) datatable
   $('#my_studies .display').dataTable( { "sPaginationType": "full_numbers" });
   
-  // show study: datatable
-  $("#accrual .display").dataTable({
+  // -------------- Show study --------------
+  // tabs
+  $("#actions").tabs("#panes > div", {history: true});
+    
+  // subjects: dataTable
+  $("#subjects .display").dataTable({
     "aoColumns": [null,null,null,null,null,null,{"sType":"date"},null,null,null,{"sType":"date"},{"sType":"date"},null],
     "fnDrawCallback": activateRows,
     "iDisplayLength": 30,
@@ -56,40 +65,41 @@ $(document).ready(function() {
     "oLanguage": {"sZeroRecords": "<p><strong>No subjects yet - click 'Add' or 'Import' to get started. Or watch our <a rel='#intro'>4 minute introduction to eNOTIS</a>.</strong></p>"}
   });
   
-  // help
-  // db language overlay
-  $("a[rel=#database-language]").overlay({
-    fixed: false, // allows user to scroll if overlay extends beyond viewport
-    expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}
-  });
+  // load some tab contents via ajax for minimal change from previous UI (overlays)
+  $('#add').load($('#add').attr('rel'), 'format=js');
+  $('#import').load($('#import').attr('rel'), 'format=js', activateImportDataTable);
+  $('#export').load($('#export').attr('rel'), 'format=js');
   
-  // add link involvement overlay
-  activateInvolvementOverlay("#actions a[rel=#involvement].add");
+  // import dataTable
+  function activateImportDataTable(){
+    console.log('activateImportDataTable');
+    $("#import .uploads .display").dataTable({
+      "iDisplayLength": 10,
+      "sPaginationType": "full_numbers",
+      "aoColumns": [{ "sType": "string", "asSorting": [ "desc", "asc" ] }, null, null, null, null]
+    });
+  }
   
   // show study: datatable paging - redraw dashes for empty cells, activate other studies and view/edit overlays
   function activateRows(){
     // introduction (for empty datatable) overlay
-    $("#accrual a[rel=#intro]").overlay({
+    $("#subjects a[rel=#intro]").overlay({
       fixed: false, // allows user to scroll if overlay extends beyond viewport
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
-  
     // dashes
-    $("#accrual .display td:empty, #import .display td:empty").html("--");
-    
+    $("#subjects .display td:empty, #import .display td:empty").html("--");
     // other studies overlay
-    $("#accrual a[rel=#other_studies]").overlay({
+    $("#subjects a[rel=#other_studies]").overlay({
       fixed: false, // allows user to scroll if overlay extends beyond viewport
       onBeforeLoad: function(){ $("#other_studies .wrap").load(this.getTrigger().attr("href"), "format=js", activateAccept); },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
       onClose: function(){$("#other_studies .wrap").html("");}
     });
-    
     // involvement overlay
     activateInvolvementOverlay(".display a[rel=#involvement]");
-
     // 'delete' links
-    $('#accrual a.delete').deleteWithAjax();
+    $('#subjects a.delete').deleteWithAjax();
   }
   
   // involvement overlay
@@ -161,44 +171,8 @@ $(document).ready(function() {
       e.preventDefault();
     });
   }
-  
-  // show study: import overlay
-  $("#actions a[rel=#import], #flash a[rel=#import]").overlay({
-    fixed: false, // allows user to scroll if overlay extends beyond viewport
-    // only load this once (using wrap:empty selector) since uploads trigger a reload of the page
-    onBeforeLoad: function(){ $("#import .wrap:empty").load(this.getTrigger().attr("href"), "format=js"); },
-    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
-    onLoad: function(){
-      if (typeof importTable == 'undefined') {
-        importTable = $("#import .display").dataTable({
-          "iDisplayLength": 10,
-          "sPaginationType": "full_numbers",
-          "aoColumns": [{ "sType": "string", "asSorting": [ "desc", "asc" ] }, null, null, null, null]
-        });
-      }
-    }
-  });
-
-  // show study: export overlay
-  $("#actions a[rel=#export]").overlay({
-    fixed: false, // allows user to scroll if overlay extends beyond viewport
-    onBeforeLoad: function(){ $("#export .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-  });
-  
-  // show study: report overlay
-  $("#actions a[rel=#report]").overlay({
-    fixed: false, // allows user to scroll if overlay extends beyond viewport
-    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-  });
-
-  // show study: study details and charts slider
-  $("#study a[rel=#study_information]").click(function(){
-    $('#study_information').slideToggle();
-    return false;
-  });
-
-  // search
+    
+  // -------------- Search --------------
   $('#study_results .display').dataTable( {
     "oLanguage": { "sProcessing": '/images/spinner.gif' },
     "bProcessing": true,
@@ -212,7 +186,7 @@ $(document).ready(function() {
     jQuery('#results a[rel=#study_information]').tooltip({position: 'center right', offset: [-1*jQuery('#results').offset().top, -1*jQuery('#results').offset().left]});
   });
   
-  // session timeouts
+  // -------------- session timeouts --------------
   function timeoutWarning(){ $("#session-expire").overlay({ expose: { color: '#fff', loadSpeed: 200, opacity: 0.93 }, closeOnClick: false, api: true }).load(); }
   function timeoutExpired(){ if(window.location.pathname != "/studies"){ window.location.href = '/studies'; } }
   function resetTimeouts(){
@@ -286,4 +260,3 @@ $.extend({
     return $.getUrlVars()[name];
   }
 });
-

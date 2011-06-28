@@ -29,76 +29,80 @@
   .name{:title => @study.title}
     = @study.title
     %span.short_name= @study.name
-
-  #study_information
-    .details
-      = render :partial => 'partials/study_info', :locals => {:study => @study}
+  %br.clear
+  #actions
+    = link_to("Subjects", "#subjects", :class => 'subjects')
+    = link_to("Details and Charts", '#study_information', :class => 'charts')
+    - unless @study.read_only?
+      = link_to("Add", '#add', :class => 'add')
+      = link_to("Import", "#import", :class => 'import')
     - unless @involvements.empty?
-      .charts
-        #gender.chart
-        #ethnicity.chart
-        #race.chart
-        #timechart
-        #dotchart
+      = link_to("Export", "#export", :class => 'export')
+    = link_to("Reports", '#reports', :class => 'report')
+  #panes
+    #subjects
+      %table.display
+        %thead
+          %tr
+            - %w(Case# Other\ Studies NMFF\ MRN NMH\ MRN RIC\ MRN Name Birth\ date Gender Ethnicity Race).each do |header|
+              %th= header
+            %th
+              %dtr{:title => @study.event_types.define_event("Consented")} Consented
+            %th
+              %dtr{:title => @study.event_types.define_event("Withdrawn"), :class => "withdrawn"} Withdrawn
+              %br
+              %dtr{:title => @study.event_types.define_event("Completed")} Completed
+            -unless @study.read_only?
+              %th Actions
+            -else
+              %th View
+        %tbody
+          - @involvements.each do |involvement|
+            %tr{:class => "subject_#{involvement.subject.id}"}
+              %td= involvement.case_number
+              %td= other_studies_flag(involvement)
+              %td= involvement.subject.nmff_mrn
+              %td= involvement.subject.nmh_mrn
+              %td= involvement.subject.ric_mrn
+              %td= involvement.subject_name_or_case_number
+              %td= involvement.subject.birth_date.to_s
+              %td= involvement.gender
+              %td= involvement.ethnicity
+              %td= involvement.race
+              %td= event_info(involvement.consented)
+              %td
+                = event_info(involvement.completed)
+                = event_info(involvement.withdrawn)
+              - unless @study.read_only?
+                %td<
+                  = link_to("Edit", edit_involvement_path(involvement), :rel => "#involvement") + "&nbsp;&nbsp;".html_safe + link_to('Delete', involvement_path(involvement), :confirm_msg => "You are about to delete this subject. Deleting will completely remove all of the subject's information from the study.", :method => :delete, :class=>'delete')
+              - else
+                %td= link_to "View", involvement_path(involvement), :rel => "#involvement"
+    #study_information
+      .details
+        = render :partial => 'partials/study_info', :locals => {:study => @study}
+      - unless @involvements.empty?
+        .charts
+          #gender.chart
+          #ethnicity.chart
+          #race.chart
+          #timechart
+          #dotchart
       %br.clear
-  #accrual
-    #actions
-      = link_to("Details and Charts", '#', :rel => '#study_information', :class => 'charts')
-      -unless @study.read_only?
-        = link_to("Add", new_involvement_path(:study => @study), :rel => '#involvement', :class => 'add')
-        = link_to("Import", import_study_path, :rel => "#import", :class => 'import')
-      = link_to("Export", new_report_path(:study => @study), :rel => '#export', :class => 'export') unless @involvements.empty?
-      = link_to("Reports", '#', :rel => '#report', :class => 'report')
-    %table.display
-      %thead
-        %tr
-          - %w(Case# Other\ Studies NMFF\ MRN NMH\ MRN RIC\ MRN Name Birth\ date Gender Ethnicity Race).each do |header|
-            %th= header
-          %th
-            %dtr{:title => @study.event_types.define_event("Consented")} Consented
-          %th
-            %dtr{:title => @study.event_types.define_event("Withdrawn"), :class => "withdrawn"} Withdrawn
-            %br
-            %dtr{:title => @study.event_types.define_event("Completed")} Completed
-          -unless @study.read_only?
-            %th Actions
-          -else
-            %th View
-      %tbody
-        - @involvements.each do |involvement|
-          %tr{:class => "subject_#{involvement.subject.id}"}
-            %td= involvement.case_number
-            %td= other_studies_flag(involvement)
-            %td= involvement.subject.nmff_mrn
-            %td= involvement.subject.nmh_mrn
-            %td= involvement.subject.ric_mrn
-            %td= involvement.subject_name_or_case_number
-            %td= involvement.subject.birth_date.to_s
-            %td= involvement.gender
-            %td= involvement.ethnicity
-            %td= involvement.race
-            %td= event_info(involvement.consented)
-            %td
-              = event_info(involvement.completed)
-              = event_info(involvement.withdrawn)
-            - unless @study.read_only?
-              %td<
-                = link_to("Edit", edit_involvement_path(involvement), :rel => "#involvement") + "&nbsp;&nbsp;".html_safe + link_to('Delete', involvement_path(involvement), :confirm_msg => "You are about to delete this subject. Deleting will completely remove all of the subject's information from the study.", :method => :delete, :class=>'delete')
-            - else
-              %td= link_to "View", involvement_path(involvement), :rel => "#involvement"
-  #involvement.overlay
-    .wrap
-  #export.overlay
-    .wrap
-  #import.overlay
-    .wrap
-  #other_studies.overlay
-    .wrap
-  #report.overlay
-    .wrap
+    - unless @study.read_only?
+      #add{:rel => new_involvement_path(:study => @study)}
+      #import{:rel => import_study_path}
+    - unless @involvements.empty?
+      #export{:rel => new_report_path(:study => @study)}
+    #report
       %h2 Available reports
       %ul
         %li= link_to "NIH Inclusion Enrollment Report", nih_reports_path(:study => @study.irb_number), :popup => true
+  %br.clear
+  #involvement.overlay
+    .wrap
+  #other_studies.overlay
+    .wrap
   #intro.overlay
     %p
       %a#player{:style => 'display: block; width: 550px; height: 386px; margin: 0 auto;', :href => '/media/enotis-tutorial-a.mov'}
