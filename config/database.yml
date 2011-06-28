@@ -3,28 +3,11 @@
   bcdb = Bcdatabase.load
 %>
 
-development:
-  adapter: postgresql
-  database: enotis_development
-  username: enotis
-  password: s1t_0n_3
-  encoding: utf8
-  template: template0
-# I added encoding and template to fix a problem on my dev machine with postgres 8.4 -BLC
+<%= bcdb.development :local_postgresql, :enotis %>
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
-test: &TEST
-  adapter: postgresql
-  database: enotis_test
-  username: enotis
-  password: s1t_0n_3
-  encoding: utf8
-  template: template0
+<%= bcdb.test :local_postgresql, :enotis_test %>
 
-cucumber:
-  <<: *TEST
+<%= bcdb.cucumber :local_postgresql, :enotis_test %>
 
 <%= bcdb.hudson :pdev, :enotis_hudson %>
 
