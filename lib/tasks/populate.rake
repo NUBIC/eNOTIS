@@ -11,8 +11,7 @@ namespace :db do
 
     task :default => [:environment, :clear_db,
       :admins, :roles_and_studies, :roles,
-      :involvements_and_subjects, :involvements,
-      :sample_netids
+      :involvements_and_subjects
     ]
 
     desc 'Clear models: Roles, Study, Involvement, Subject, InvolvementEvent'
@@ -78,23 +77,6 @@ namespace :db do
         Factory.create(
           :involvement_event, :event_type => type_candidates.rand, :involvement => involvement
           )
-      end
-      puts
-    end
-
-    desc 'Populate involvements: joins subjects(random) and studies(random)'
-    task :involvements => :environment do
-      puts "creating extra involvements..."
-      # weight this more heavily towards consent event types
-      events = InvolvementEvent.events.concat(Array.new(20, "Consented"))
-      200.times do |i|
-        blip
-        involvement = Factory.create(
-          :involvement, :study => random(Study), :subject => Factory.create(:fake_subject),
-          :gender => Involvement.genders.rand, :ethnicity => Involvement.ethnicities.rand,
-          :race => Involvement.races.rand
-          )
-        Factory.create( :involvement_event, :event => events.rand, :involvement => involvement )
       end
       puts
     end
