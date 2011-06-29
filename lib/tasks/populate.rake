@@ -81,6 +81,31 @@ namespace :db do
       puts
     end
 
+    desc 'Add COUNT involvements to a STUDY'
+    task :involvements_for_study => :environment do
+      study = if ENV['STUDY']
+                Study.find_by_irb_number(ENV['STUDY'])
+              else
+                Study.first
+              end
+      fail "Study not found" unless study
+      count = ENV['COUNT'].nil? ? 1000 : ENV['COUNT'].to_i
+      $stderr.puts "Adding #{count} involvements to #{study.name.inspect} (#{study.irb_number})"
+      consented = study.event_types.detect { |et| et.name == 'Consented' } or
+        fail "No consented type for #{study.irb_number}"
+      count.times do
+        blip
+        involvement = Factory.create(
+          :involvement, :study => study, :subject => Factory.create(:fake_subject),
+          :gender => Involvement.genders.rand, :ethnicity => Involvement.ethnicities.rand,
+          :race => Involvement.races.rand
+          )
+        Factory.create(
+          :involvement_event, :event_type => consented, :involvement => involvement
+          )
+      end
+    end
+
     desc 'Spit out random netids'
     task :sample_netids => :environment do
       puts "here are some netids..."
