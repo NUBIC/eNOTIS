@@ -8,14 +8,14 @@ class StudiesController < ApplicationController
 
   # Auditing
   has_view_trail :except => :index
-  
+
   # Public instance methods (actions)
   def index
     @title = "Studies"
     # raise "testing exception notifier - yoon" # http://weblog.jamisbuck.org/2007/3/7/raising-the-right-exception
-    
+
     # json datatables is causing issues with IE in some cases, and optimizes a problem that we don't really have (slow "my studies" page).
-    
+
     respond_to do |format|
       format.html do
         @my_studies = Study.with_user(current_user.netid)
@@ -32,7 +32,7 @@ class StudiesController < ApplicationController
       authorize! :show, @study
       @title = @study.irb_number
       @involvements = @study.involvements(:order => "case_number")
-      unless @involvements.empty?       
+      unless @involvements.empty?
         @ethnicity_stats = @involvements.count_all(:short_ethnicity)
         @gender_stats = @involvements.count_all(:short_gender)
         @race_stats = @involvements.count_all(:short_race)
@@ -43,7 +43,7 @@ class StudiesController < ApplicationController
       redirect_to studies_path
     end
   end
-  
+
   def import
     @study = Study.find_by_irb_number(params[:id])
     authorize! :import, @study
@@ -53,10 +53,8 @@ class StudiesController < ApplicationController
       format.js {render :layout => false}
     end
   end
-  
+
   def help
-    #?? help page? TODO: remove this -BLC    
+    #?? help page? TODO: remove this -BLC
   end
-
-
 end

@@ -25,23 +25,23 @@ describe Involvement do
           :subject => {
             :external_patient_id=>"5587555",
             :nmff_mrn=>"123321",
-            :first_name=>"Traci", 
-            :last_name=>"Smith", 
-            :birth_date=>"1/11/1955", 
+            :first_name=>"Traci",
+            :last_name=>"Smith",
+            :birth_date=>"1/11/1955",
             :death_date=>"",
             :import_source => 'NOTIS'
           },
           :involvement => {
             :ethnicity=>"Not Hispanic or Latino",
-            :gender=>"Female", 
-            :address_line1=>"50 W. Street", 
-            :address_line2=>"Apt 106", 
-            :zip=>"10642", 
-            :case_number=>"1106",  
+            :gender=>"Female",
+            :address_line1=>"50 W. Street",
+            :address_line2=>"Apt 106",
+            :zip=>"10642",
+            :case_number=>"1106",
             :race_is_black_or_african_american => true,
-            :home_phone=>"3215551233", 
-            :state=>"IL", 
-            :city=>"Chicago", 
+            :home_phone=>"3215551233",
+            :state=>"IL",
+            :city=>"Chicago",
             :involvement_events => {:consented_date => "12/21/2004",
              :completed_date => "3/10/2009"}
            }
@@ -72,15 +72,15 @@ describe Involvement do
             :subject => {
               :external_patient_id=>"123", #<<- this is what we're testing
               :nmff_mrn=>"091823888",
-              :first_name=>"LORI", 
-              :last_name=>"MIAOS", 
-              :birth_date=>"2/26/1982", 
+              :first_name=>"LORI",
+              :last_name=>"MIAOS",
+              :birth_date=>"2/26/1982",
               :import_source => 'ANES'
              },
             :involvement => {
-              :case_number=>"105",  
+              :case_number=>"105",
               :ethnicity=>"Not Hispanic or Latino",
-              :gender=>"Female", 
+              :gender=>"Female",
               :race_is_white => true,
               :involvement_events => {
                 :consented_date => "2011-02-10",
@@ -91,21 +91,21 @@ describe Involvement do
             :subject => {
               :external_patient_id=>"123", #<<- this what we're testing
               :nmff_mrn=>"123321",
-              :first_name=>"Traci", 
-              :last_name=>"Smith", 
-              :birth_date=>"1/11/1955", 
+              :first_name=>"Traci",
+              :last_name=>"Smith",
+              :birth_date=>"1/11/1955",
               :import_source => 'NOTIS'
              },
             :involvement => {
-              :case_number=>"1106",  
-              :address_line1=>"50 W. Street", 
-              :address_line2=>"Apt 106", 
-              :zip=>"10642", 
-              :home_phone=>"3215551233", 
-              :state=>"IL", 
-              :city=>"Chicago", 
+              :case_number=>"1106",
+              :address_line1=>"50 W. Street",
+              :address_line2=>"Apt 106",
+              :zip=>"10642",
+              :home_phone=>"3215551233",
+              :state=>"IL",
+              :city=>"Chicago",
               :ethnicity=>"Not Hispanic or Latino",
-              :gender=>"Female", 
+              :gender=>"Female",
               :race_is_black_or_african_american => true,
               :involvement_events => {
                 :consented_date => "1/12/2010",
@@ -135,7 +135,7 @@ describe Involvement do
         Involvement.import_update(@study, @dhash)
         ie = @study.involvements.first.event_detect("Completed")
         (Chronic.parse(ie.occurred_on)).should == Chronic.parse("3/10/2009")
-        # changing the date        
+        # changing the date
         @dhash.first[:involvement][:involvement_events][:completed_date] = "4/10/2010"
 
         Involvement.import_update(@study, @dhash)
@@ -168,11 +168,11 @@ describe Involvement do
     end
 
   end
-  
+
   describe "how it should tranlsate (for more forgiving uploads) gender terms" do
     #positive matches
     p_match = {
-      "Male" => %w(male M m MALE), 
+      "Male" => %w(male M m MALE),
       "Female" => %w(female F f FEMALE),
       "Unknown or Not Reported" => %w(u NR U nr UNKNOWN unknown not\ reported)}
 
@@ -181,9 +181,9 @@ describe Involvement do
         str2test.each{|s| Involvement.translate_gender(s).should == output}
       end
     end
-    
+
     #negative matches
-    n_match = %w(not\ male girl null not\ known reported) 
+    n_match = %w(not\ male girl null not\ known reported)
     n_match.each do | str2test|
       it "should NOT match '#{str2test}'. Should be nil" do
         str2test.each{|s| Involvement.translate_gender(s).should be_nil}
@@ -199,15 +199,15 @@ describe Involvement do
       "Hispanic or Latino" => %w(hispanic\ or\ latino hispanic latino latino\ or\ hispanic),
       "Not Hispanic or Latino" => ["not hispanic", "not hispanic or latino", "not latino", "not latino or hispanic"],
       "Unknown or Not Reported" => %w(u NR U nr UNKNOWN unknown not\ reported)}
-      
+
     p_match.each do |output, str2test|
       it "should translate '#{str2test}' to '#{output}'" do
         str2test.each{|s| Involvement.translate_ethnicity(s).should == output}
       end
     end
-    
+
     #negative matches
-    n_match = %w(not null not\ known reported) 
+    n_match = %w(not null not\ known reported)
     n_match.each do | str2test|
       it "should NOT match '#{str2test}'. Should be nil" do
         str2test.each{|s| Involvement.translate_ethnicity(s).should be_nil}
@@ -233,7 +233,7 @@ describe Involvement do
         str2test.each{|s| Involvement.translate_race(s).should == output}
       end
     end
-    
+
     #negative matches
     n_match = ["null", "not known", "reported", "not alaska native", "native", "indian", "Asian American", "NOt Asian", "a Black", "american",
       "not Hawaiian", "pacific", "not white", "w"]
@@ -245,7 +245,7 @@ describe Involvement do
 
     it "should be nil for nil" do
       Involvement.translate_race(nil).should == nil
-    end 
+    end
  end
 
   it "should destroy child involvement events" do
@@ -257,23 +257,23 @@ describe Involvement do
     InvolvementEvent.find_by_id(e1.id).should be_nil
     InvolvementEvent.find_by_id(e2.id).should be_nil
   end
- 
+
 
   describe "working with custom event_type methods" do
     before(:each) do
       @study = Factory(:study)
       @study.create_default_events
-      @subject = Factory(:subject) 
-      @involvement = Factory(:involvement, 
+      @subject = Factory(:subject)
+      @involvement = Factory(:involvement,
                            :races => ["White", "Asian"],
-                           :study => @study, 
-                           :subject => @subject, 
+                           :study => @study,
+                           :subject => @subject,
                            :case_number => "123abc123")
       # Adding all the events for testing purposes
       @event_date = "01/13/2010"
       %w(Consented Completed Withdrawn).each do |n|
         ev = @study.event_types.find_by_name(n)
-        Factory(:involvement_event, :involvement => @involvement, :occurred_on => @event_date, :event_type => ev) 
+        Factory(:involvement_event, :involvement => @involvement, :occurred_on => @event_date, :event_type => ev)
       end
       @involvement.involvement_events.should have(3).events
     end
@@ -289,7 +289,7 @@ describe Involvement do
 
   describe "NIH Race requirements" do
     before(:each) do
-      @i = Involvement.new(:gender => "Male", :ethnicity => "Hispanic or Latino", 
+      @i = Involvement.new(:gender => "Male", :ethnicity => "Hispanic or Latino",
                            :races => ["American Indian/Alaska Native", "Asian"])
     end
 
@@ -361,16 +361,16 @@ describe Involvement do
 
     it "sets attrs using the attributes setter" do
       p = {
-    "race_is_white"=>"0", 
-    "ethnicity"=>"Not Hispanic or Latino", 
-    "case_number"=>"ntnthn98798", 
-    "race_is_american_indian_or_alaska_native"=>"0", 
+    "race_is_white"=>"0",
+    "ethnicity"=>"Not Hispanic or Latino",
+    "case_number"=>"ntnthn98798",
+    "race_is_american_indian_or_alaska_native"=>"0",
     "gender"=>"Female",
-    "race_is_black_or_african_american"=>"1", 
-    "race_is_asian"=>"1", 
-    "race_is_native_hawaiian_or_other_pacific_islander"=>"1", 
+    "race_is_black_or_african_american"=>"1",
+    "race_is_asian"=>"1",
+    "race_is_native_hawaiian_or_other_pacific_islander"=>"1",
     "unknown_or_not_reported_race"=>"0"}
-      @i.send(:clear_all_races)    
+      @i.send(:clear_all_races)
       @i.race.should be_empty
       @i.attributes = p
       @i.race_is_black_or_african_american.should be_true
@@ -386,7 +386,7 @@ describe Involvement do
     inv.update_attributes("subject_attributes"=> {"birth_date"=>"12/18/07"})
     inv.subject.birth_date.should == Date.parse("2007-12-18")
   end
-  
+
   it "should sort involvements by case number by default" do
     s = Factory(:study)
     i1 = Factory(:involvement, :study => s, :case_number => "99")

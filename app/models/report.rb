@@ -1,10 +1,10 @@
- # This is a class for exporting data as reports in CSV or PDF 
+ # This is a class for exporting data as reports in CSV or PDF
 # It requires that the models it has to report on have been
-# extended by Ruport to have additional methods and behavior. 
+# extended by Ruport to have additional methods and behavior.
 # Ruport methods are called by this class.
 
 class Report
-  
+
  #  def self.nih_accrual_report(irb_number)
  #    study = Study.find_by_irb_number(irb_number)
  #  end
@@ -27,8 +27,8 @@ class Report
   },
   :event => {
     "Consented" => "consented_report",
-    "Completed" => "completed_report",  
-    "Withdrawn" => "withdrawn_report" 
+    "Completed" => "completed_report",
+    "Withdrawn" => "withdrawn_report"
   }}
 
   # The explicit ording for the columns we want to show in the output
@@ -42,7 +42,7 @@ class Report
     involvement[:methods] = [] unless involvement[:methods]
     involvement[:attributes] = [] unless involvement[:attributes]
     event = params[:event] || {}
- 
+
     # Converting 'all_events' into the event report methods
     involvement[:methods].concat self.expand_events(params)
     # Create report
@@ -61,7 +61,7 @@ class Report
     # Correcting column names
     report.rename_columns(self.name_changes)
 
-    # From form params adjusting data based on user selection 
+    # From form params adjusting data based on user selection
     cols_req = self.filter_columns(params)
     report.reorder(cols_req)
 
@@ -77,7 +77,7 @@ class Report
   # Given the parameters, determine what the report header should look like
   def self.filter_columns(params)
     columns = Array.new(ORDER.count)
-    if params[:involvement] 
+    if params[:involvement]
       if params[:involvement][:attributes]
         # Looking at the chosen involvement attrs
         pa = params[:involvement][:attributes]
@@ -85,7 +85,7 @@ class Report
           columns[ORDER.index(k)] = k if pa.include?(v)
         end
       end
-      if params[:involvement][:methods] 
+      if params[:involvement][:methods]
         pm = params[:involvement][:methods]
         HEADERS[:involvement].each do |k,v|
           columns[ORDER.index(k)] = k if pm.include?(v)
@@ -96,7 +96,7 @@ class Report
           end
         end
       end
-    end  
+    end
     if params[:subject]
       ps = params[:subject]
       HEADERS[:subject].each do |k,v|

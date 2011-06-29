@@ -1,9 +1,12 @@
-# This model represents the affiliation a subject can have with a study.
-# It holds non-temporal data only. For reporting purposes we capture gender, ethnicity, and race here
+# This model represents the affiliation a subject can have with a
+# study.  It holds non-temporal data only. For reporting purposes we
+# capture gender, ethnicity, and race here
 #
-# For example: Disease site would be found in the Involvement join record between a subject and study.
-# Disease site is a specific piece of data about why the subject is on the trial but not associated with
-# a specific event. It is a long term data element that can span the whole relationship of subject and study.
+# For example: Disease site would be found in the Involvement join
+# record between a subject and study.  Disease site is a specific
+# piece of data about why the subject is on the trial but not
+# associated with a specific event. It is a long term data element
+# that can span the whole relationship of subject and study.
 
 require 'ruport'
 class Involvement < ActiveRecord::Base
@@ -22,27 +25,28 @@ class Involvement < ActiveRecord::Base
   # Mixins
   has_paper_trail
   acts_as_reportable
-	
+
   # Associations
   belongs_to :subject
-	belongs_to :study
+  belongs_to :study
   has_many :involvement_events, :dependent => :destroy
-  
+
   # Atrributes
-  accepts_nested_attributes_for :involvement_events, :reject_if => lambda {|a| (a["occurred_on"].blank?) }
+  accepts_nested_attributes_for :involvement_events,
+    :reject_if => lambda {|a| (a["occurred_on"].blank?) }
   accepts_nested_attributes_for :subject, :update_only=>true
 
   # Named scope
   default_scope :order => "case_number"
   # TODO: WTF is this? does this scope even work?
-  named_scope :with_coordinator, lambda {|user_id| { 
-    :include => {:study => :coordinators}, 
+  named_scope :with_coordinator, lambda {|user_id| {
+    :include => {:study => :coordinators},
     :conditions => ['coordinators.user_id = ?', user_id ]}}
-    
-  named_scope :with_event_type, lambda {|event_type| { 
+
+  named_scope :with_event_type, lambda {|event_type| {
     :include => :involvement_events,
     :conditions => ['involvement_events.event_type_id = ?',event_type]}}
-  
+
   # Validations
   validates_presence_of :gender, :ethnicity
   # Custom validator for race
@@ -53,13 +57,14 @@ class Involvement < ActiveRecord::Base
       checked ||= inv.send(k)
     end
     unless checked
-      inv.errors.add_to_base("One of the race categories must be selected. If you do not know the race choose 'Unknown or Not Reported'") 
+      inv.errors.add_to_base(
+        "One of the race categories must be selected. If you do not know the race choose 'Unknown or Not Reported'")
     end
   end
-   
-  # Public class methods 
-  class << self 
-    def gender_definitions 
+
+  # Public class methods
+  class << self
+    def gender_definitions
       { "Male"                    => "A person identifying with the male sex or gender",
         "Female"                  => "A person identifying with the female sex or gender",
         "Unknown or Not Reported" => "A person not wishing to identify their gender or this person's gender is unknown" }
@@ -70,7 +75,7 @@ class Involvement < ActiveRecord::Base
         /^F(emale)?$/i, "Female",
         /Unknown|Not Reported|^U$|^NR$/i, "Unknown or Not Reported" ].each_slice(2){|rx, term| return term if val.to_s.match(rx)}
     end
-    
+
     def ethnicity_definitions
       { "Hispanic or Latino"      => "A person of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race. The term \"Spanish origin\" can also be used in addition to \"Hispanic or Latino.\"",
         "Not Hispanic or Latino"  => "A person NOT of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race.",
@@ -91,7 +96,7 @@ class Involvement < ActiveRecord::Base
         "White"                                  => "A person having origins in any of the original peoples of Europe, the Middle East, or North Africa.",
         "Unknown or Not Reported"                => "A person not wishing to identify their race or this person's race is unknown" }
     end
-    
+
     def translate_race(val)
       [ /^American Indian|^Alaskan?|^Native American/i, "American Indian/Alaska Native",
         /^Asian?$/i, "Asian",
@@ -100,7 +105,7 @@ class Involvement < ActiveRecord::Base
         /^White|^Caucasian/i, "White",
         /^Unknown|^Not Reported|^U$|^NR$/i, "Unknown or Not Reported" ].each_slice(2){|rx, term| return term if val.to_s.match(rx)}
     end
-    
+
     # genders, ethnicities, races
     %w(gender ethnicity race).each do |category|
       define_method("#{category.pluralize}".to_sym){ self.send("#{category}_definitions").keys }
@@ -116,32 +121,38 @@ class Involvement < ActiveRecord::Base
     end
 
     # Takes a study and the bulk update data which contains an array of hashes.
-    # The hashes contain study participant/subject info 
+    # The hashes contain study participant/subject info
     def import_update(study, bulk_data)
       bulk_data.each do |inv_hash| # iterating over each involvement hash
         s = inv_hash[:subject]
-        raise "Subject hash is missing external_id and source. These are required for imported subject data" if s[:external_patient_id].nil? or s[:import_source].nil?
-        subject = Subject.find_by_external_id(s[:external_patient_id],s[:import_source]) 
+        if s[:external_patient_id].nil? or s[:import_source].nil?
+          raise "Subject hash is missing external_id and source. These are required for imported subject data"
+        end
+        subject = Subject.find_by_external_id(s[:external_patient_id],s[:import_source])
         if subject.nil?
           subject = Subject.create(s)
         end
 
         #look for study/subject involvements already existing
-        inv = Involvement.find(:first, :conditions => {:study_id => study.id, :subject_id => subject.id})
-        if inv.nil? # create it 
-          inv_data = inv_hash[:involvement].merge({:study_id => study.id, :subject_id => subject.id})
-          inv_data.delete(:involvement_events) # removing this set of data to add manually (vs using accepts nested attrs for)
+        inv = Involvement.find(:first,
+          :conditions => {:study_id => study.id, :subject_id => subject.id})
+        if inv.nil? # create it
+          inv_data = inv_hash[:involvement].
+            merge({:study_id => study.id, :subject_id => subject.id})
+          # removing this set of data to add manually (vs using accepts nested attrs for)
+          inv_data.delete(:involvement_events)
           inv = study.involvements.create(inv_data)
         end
 
         # creating new events
         inv_hash[:involvement][:involvement_events].each do |event_sym,event_date|
-          event_name = event_sym.to_s.split('_')[0].capitalize  
+          event_name = event_sym.to_s.split('_')[0].capitalize
           event_type = study.event_types.find_by_name(event_name)
           occurred = event_date.split("T").join(" ")
           ie = inv.involvement_events.find(:first, :conditions => {:event_type_id => event_type.id})
           unless ie
-            InvolvementEvent.create(:involvement => inv, :event_type => event_type, :occurred_on => occurred)
+            InvolvementEvent.create(
+              :involvement => inv, :event_type => event_type, :occurred_on => occurred)
           else
             ie.occurred_on = occurred # updating teh date
             ie.save
@@ -157,7 +168,7 @@ class Involvement < ActiveRecord::Base
         end
 
       end #end bulk data loop
-      
+
       # cleaning up involvements no longer in the inv_hash
       subject_ids = bulk_data.map{|x| x[:subject][:external_patient_id]}
         study.involvements.each do |current_inv|
@@ -169,18 +180,19 @@ class Involvement < ActiveRecord::Base
 
 
   end # end of class << self
-  
+
   %w(gender ethnicity).each do |category|
     # gender=, ethnicity= (make case insensitive)
-    define_method("#{category}=") do |term| 
-      write_attribute(category.to_sym, self.class.send(category.pluralize).detect{|x| x.downcase == term.to_s.downcase})
+    define_method("#{category}=") do |term|
+      write_attribute(category.to_sym,
+        self.class.send(category.pluralize).detect { |x| x.downcase == term.to_s.downcase })
     end
   end
 
   # Sets the races by accepting an array or string of race terms
   def races=(terms)
     #clearing out any previous values
-    clear_all_races 
+    clear_all_races
     rterms = ([] << terms).flatten # takes a string or an array and makes it into an array
     if rterms.include?("Unknown or Not Reported") # don't set any thing else
        self.race_is_unknown_or_not_reported = true
@@ -199,7 +211,7 @@ class Involvement < ActiveRecord::Base
     end
     race_array.sort
   end
-  
+
   alias :race :races
   alias :race= :races=
 
@@ -210,12 +222,12 @@ class Involvement < ActiveRecord::Base
   def race_for_nih_report
     races.size == 1 ? races.first : "More Than One Race"
   end
-  
+
   alias :race_as_str :races_as_str
 
   # A setter for the race_is_unknown_or_not_reported attribute
   # because it has to clear all other races
-  # NOTE: Checking for "1" or true because rails passes the params 
+  # NOTE: Checking for "1" or true because rails passes the params
     # to the set attr methods as "1"s or "0"s from the checkboxes.
     # I'm assuming there is some magic going on to set the other model
     # attributes to their boolean values from the "1"s or "0"s
@@ -238,13 +250,13 @@ class Involvement < ActiveRecord::Base
     return "" if ethnicity.blank?
     (ethnicity[0..12].length == ethnicity.length) ? ethnicity : ethnicity[0..10] + "..."
   end
-  
+
   def short_race
     return "" if race.blank?
     return "multiple" if races.size > 1
     (races.first[0..12].length == races.first.length) ? races.first : races.first[0..10] + "..."
   end
-  
+
   def short_gender
     return "" if gender.blank?
     (gender[0..12].length == gender.length) ? gender : gender[0..10] + "..."
@@ -252,8 +264,8 @@ class Involvement < ActiveRecord::Base
   # END of methods used for graphs
 
   def all_events
-    # A placeholder method to get an easy checkbox? 
-    # Not sure why this is here but it's "method" is 
+    # A placeholder method to get an easy checkbox?
+    # Not sure why this is here but it's "method" is
     # used when generating reports. Basically it's used as
     # a flag, this method is never actually called
     # as far as I can tell. - BLC
@@ -316,19 +328,19 @@ class Involvement < ActiveRecord::Base
   def after_save
     unless self.study.read_only?
       begin
-        Resque.enqueue(EmpiWorker, self.id) 
+        Resque.enqueue(EmpiWorker, self.id)
       rescue Errno::ECONNREFUSED => e
         logger.debug("the EMPI would process involvement #{self.id} if resque was running")
       end
     end
   end
-  
+
   private
   def set_race_terms(rterms)
     rterms.map(&:downcase).each do |term|
       by_term = {}
       RACE_ATTRIBUTES.each{|k,v| by_term[v.downcase] = k} # Doing this because the conts is frozen
-      by_term.each_key {|k| k.downcase} #downcasing the term strings 
+      by_term.each_key {|k| k.downcase} #downcasing the term strings
       if by_term.keys.include?(term)
         send("#{by_term[term]}=",true) #setting the db attr for the race term passed in
       end
@@ -336,7 +348,6 @@ class Involvement < ActiveRecord::Base
   end
 
   def clear_all_races # includes the :race_is_unknown_or_not_reported "race"
-    RACE_ATTRIBUTES.each_key{|ra| send("#{ra}=", false)}    
+    RACE_ATTRIBUTES.each_key{|ra| send("#{ra}=", false)}
   end
-  
 end

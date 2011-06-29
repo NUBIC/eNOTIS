@@ -7,16 +7,16 @@ describe "Report generation from study data" do
 
     @study = Factory(:study)
     @study.create_default_events
-    @subject = Factory(:subject) 
-    @involvement = Factory(:involvement, 
+    @subject = Factory(:subject)
+    @involvement = Factory(:involvement,
                            :races => ["White", "Asian"],
-                           :study => @study, 
-                           :subject => @subject, 
+                           :study => @study,
+                           :subject => @subject,
                            :case_number => "123abc123")
     # Adding all the events for testing purposes
     %w(Consented Completed Withdrawn).each do |n|
       ev = @study.event_types.find_by_name(n)
-      Factory(:involvement_event, :involvement => @involvement, :occurred_on => 1.day.ago, :event_type => ev) 
+      Factory(:involvement_event, :involvement => @involvement, :occurred_on => 1.day.ago, :event_type => ev)
     end
 
     # Full params for export
@@ -28,8 +28,8 @@ describe "Report generation from study data" do
         "methods"=>["race_as_str","all_events"],
         "attributes"=>["case_number","gender", "ethnicity"]
       }
-    }) 
-    @csv_data = Report.export(params) 
+    })
+    @csv_data = Report.export(params)
   end
 
   # Birth_date does not work with the factories for some reason.
@@ -69,11 +69,11 @@ describe "Report generation from study data" do
       "subject.nmff_mrn"=>"NMFF MRN",
       "subject.ric_mrn" => "RIC MRN",
       "subject.nmh_mrn"=>"NMH MRN",
-      "gender"=>"Gender", 
-      "subject.first_name"=>"First Name",     
+      "gender"=>"Gender",
+      "subject.first_name"=>"First Name",
       "consented_report"=>"Consented",
-      "withdrawn_report"=>"Withdrawn", 
-      "completed_report"=>"Completed", 
+      "withdrawn_report"=>"Withdrawn",
+      "completed_report"=>"Completed",
       "race_as_str"=>"Races",
       "subject.birth_date"=>"Birth Date",
       "subject.last_name"=>"Last Name"}
@@ -86,7 +86,7 @@ describe "Report generation from study data" do
   end
 
   describe "determining output based on parameters" do
-   
+
     # A bit fragile, I know, but I will probably be revisting this
     # code once we add dynamic events
 
@@ -97,7 +97,7 @@ describe "Report generation from study data" do
            "methods"=>["race_as_str","all_events"],
            "attributes"=>["case_number","gender", "ethnicity"]
          }
-       }) 
+       })
        cols = Report.filter_columns(all_params)
        cols.should == Report::ORDER
     end
@@ -109,7 +109,7 @@ describe "Report generation from study data" do
       cols = Report.filter_columns(fnln_params)
       cols.should == ["Last Name", "First Name"]
     end
-   
+
     it "should only output all events" do
       evnt_params = HashWithIndifferentAccess.new({
         "involvement" => {"methods" => ["all_events"]}
