@@ -64,15 +64,20 @@ namespace :db do
     desc 'Populate involvements: joins subjects(fake) and studies(random)'
     task :involvements_and_subjects => :environment do
       puts "creating involvements and subjects..."
-      # weight this more heavily towards consent event types
-      events = InvolvementEvent.events.concat(Array.new(20, "Consented"))
       3000.times do |i|
         blip
+        study = random(Study)
+        # weight this more heavily towards consent event types
+        type_candidates = study.event_types +
+          (study.event_types.select { |et| et.name == 'Consented' } * 20)
         involvement = Factory.create(
-          :involvement, :study => random(Study), :subject => Factory.create(:fake_subject),
+          :involvement, :study => study, :subject => Factory.create(:fake_subject),
           :gender => Involvement.genders.rand, :ethnicity => Involvement.ethnicities.rand,
-          :race => Involvement.races.rand)
-        Factory.create( :involvement_event, :event => events.rand, :involvement => involvement )
+          :race => Involvement.races.rand
+          )
+        Factory.create(
+          :involvement_event, :event_type => type_candidates.rand, :involvement => involvement
+          )
       end
       puts
     end
@@ -130,7 +135,8 @@ def random_netid
   @netids[rand(20)]
 end
 def blip
-  print %w(\\ /).rand
+  $stderr.print %w(\\ /).rand
+  $stderr.flush
   return true
 end
 def ask(message)
