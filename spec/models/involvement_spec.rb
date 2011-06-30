@@ -48,11 +48,15 @@ describe Involvement do
       }]
     end
 
+    def first_involvement
+      Study.find_by_irb_number(@study.irb_number).involvements.first
+    end
+
     it "adds involvement for study given the involvement/subject data" do
       @study.involvements.count.should == 0
       Involvement.import_update(@study, @dhash)
       @study.involvements.count.should == 1
-      @study.involvements.first.involvement_events.count.should == 2
+      first_involvement.involvement_events.count.should == 2
     end
 
     it "does not create duplicate involvements for the same study/subject" do
@@ -121,37 +125,37 @@ describe Involvement do
     describe "updates data on existing study/subject involvements" do
       it "adds withdrawl date removes completed date" do
         Involvement.import_update(@study, @dhash)
-        @study.involvements.first.event_detect("Completed").should_not be_nil
+        first_involvement.event_detect("Completed").should_not be_nil
         @dhash.first[:involvement][:involvement_events].delete(:completed_date)
         @dhash.first[:involvement][:involvement_events][:withdrawn_date] = "2-9-2007"
         Involvement.import_update(@study, @dhash)
-        @study.involvements.first.event_detect("Completed").should be_nil
-        ie = @study.involvements.first.event_detect("Withdrawn")
+        first_involvement.event_detect("Completed").should be_nil
+        ie = first_involvement.event_detect("Withdrawn")
         ie.should_not be_nil
         (Chronic.parse(ie.occurred_on.to_s)).should == Chronic.parse("2-9-2007")
       end
 
       it "edits an event date (consent date)" do
         Involvement.import_update(@study, @dhash)
-        ie = @study.involvements.first.event_detect("Completed")
+        ie = first_involvement.event_detect("Completed")
         (Chronic.parse(ie.occurred_on)).should == Chronic.parse("3/10/2009")
         # changing the date
         @dhash.first[:involvement][:involvement_events][:completed_date] = "4/10/2010"
 
         Involvement.import_update(@study, @dhash)
-        ie = @study.involvements.first.event_detect("Completed")
+        ie = first_involvement.event_detect("Completed")
         (Chronic.parse(ie.occurred_on)).should == Chronic.parse("4/10/2010")
       end
 
       it "deletes an event (completed)" do
         Involvement.import_update(@study, @dhash)
-        ie = @study.involvements.first.event_detect("Completed")
+        ie = first_involvement.event_detect("Completed")
         (Chronic.parse(ie.occurred_on)).should == Chronic.parse("3/10/2009")
         @dhash.first[:involvement][:involvement_events].delete(:completed_date)
 
         # reloading with changes
         Involvement.import_update(@study, @dhash)
-        ie = @study.involvements.first.event_detect("Completed")
+        ie = first_involvement.event_detect("Completed")
         ie.should be_nil
       end
 
@@ -161,7 +165,7 @@ describe Involvement do
       # Deleted subjects we are assuming were added in error and it's therfore, okay to delete them.
       Involvement.import_update(@study, @dhash)
       @study.involvements.count.should == 1
-      sub = @study.involvements.first.subject
+      sub = first_involvement.subject
       Involvement.import_update(@study, [])
       @study.involvements.count.should == 0
       Subject.find(sub.id).should_not be_nil
