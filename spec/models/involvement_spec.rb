@@ -397,4 +397,39 @@ describe Involvement do
     i2 = Factory(:involvement, :study => s, :case_number => "2")
     s.involvements.should == [i2, i1]
   end
+
+  describe 'named event accessors' do
+    before do
+      @study = Factory(:study)
+      @all_events = Factory(:involvement, :study => @study)
+      @study.event_types.each do |type|
+        @all_events.involvement_events <<
+          Factory(:involvement_event,
+          :involvement => @all_events, :event_type => type, :occurred_on => Date.new(2010, 3, 7))
+      end
+      @no_events = Factory(:involvement, :study => @study)
+    end
+
+    %w(consented withdrawn completed).each  do |name|
+      describe "##{name}" do
+        it 'gives the correct event when a match exists' do
+          @all_events.send(name).event_type.name.should == name.titlecase
+        end
+
+        it 'gives nothing when no match exists' do
+          @no_events.send(name).should be_nil
+        end
+      end
+
+      describe "##{name}_report" do
+        it 'gives the date for the event when a match exists' do
+          @all_events.send("#{name}_report").should == Date.new(2010, 3, 7)
+        end
+
+        it 'gives nil when no match exists' do
+          @no_events.send("#{name}_report").should be_nil
+        end
+      end
+    end
+  end
 end
