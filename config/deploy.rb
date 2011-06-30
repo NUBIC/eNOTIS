@@ -6,7 +6,7 @@
 # Host enotis-staging*
 # Hostname enotis-staging.nubic.northwestern.edu
 # User xyz123
-# 
+#
 # Host code*
 # Hostname code.bioinformatics.northwestern.edu
 # User xyz123
@@ -24,7 +24,7 @@ ssh_options[:forward_agent] = true
 # Version control
 default_run_options[:pty]   = true # to get the passphrase prompt from git
 
-# System Path -- ensure that any capistrano command knows about Ruby Enterprise Edition. 
+# System Path -- ensure that any capistrano command knows about Ruby Enterprise Edition.
 # Caveat: Assumes we're using CENTOS with Kerberos
 # ensure that oci8 gem can be built
 default_environment['ORACLE_HOME'] = '/usr/lib/oracle/11.2/client64'
@@ -87,9 +87,9 @@ end
 namespace :admin do
   desc "Creates admins via rake db:populate:admins"
   task :create_admins, :roles => :app do
-    run "cd #{current_path} && rake RAILS_ENV=#{rails_env} db:populate:admins"  
+    run "cd #{current_path} && rake RAILS_ENV=#{rails_env} db:populate:admins"
   end
-  
+
   namespace :poller do
     [:start, :stop, :restart].each do |t|
       desc "#{t.to_s.capitalize}s poller"
@@ -133,7 +133,7 @@ namespace :web do
   task :static, :roles => :web, :except => { :no_release => true } do
     run "cp #{latest_release}/static/site/*.html #{latest_release}/public/"
   end
-  
+
   desc "Display static maintenance page"
   task :disable, :roles => :web, :except => { :no_release => true } do
     on_rollback { run "rm -f #{current_path}/public/index.html" }
@@ -141,25 +141,25 @@ namespace :web do
 
     # More Info: http://www.shiftcommathree.com/articles/make-your-rails-maintenance-page-respond-with-a-503
     # Add the following to the enotis apache configuration:
-    
+
     # ErrorDocument 503 /maintenance.html
     # RewriteEngine On
-    # 
+    #
     # # rewrites nearly everything to /maintenance, forcing redirect
     # RewriteCond %{REQUEST_URI} !\.(js|css|gif|jpg|png|mov|swf)$
     # RewriteCond %{DOCUMENT_ROOT}/maintenance.html -f
     # RewriteCond %{SCRIPT_FILENAME} !maintenance.html|policy.html|maintenance$
     # RewriteRule ^.*$  /maintenance [R]
-    # 
+    #
     # # rewrites /maintenance to error 503, maintenance.html, no redirect
     # RewriteRule ^/maintenance$ - [R=503,L]
   end
-  
+
   desc "Hide static maintenance page"
   task :enable, :roles => :web, :except => { :no_release => true } do
     run "rm -f #{current_path}/public/maintenance.html"
   end
-  
+
   desc "Link upload/result files"
   task :uploads_and_results, :roles => :web, :except => {:no_release => true} do
     run "mkdir -p #{shared_path}/uploads #{shared_path}/results"
