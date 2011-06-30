@@ -24,6 +24,12 @@ Feature: Manage studies
     And I should see "Innovera"
     And I should see "Dropov"
 
+  Scenario: A coordinator can view a study with many subjects in a reasonable time
+    Given the study "STU001248" has 300 subjects
+     When I am concerned with performance
+      And I go to the study page for id "STU001248"
+     Then I should wait less than 4 seconds
+
   Scenario: A coordinator can view all imports made to a study they have access to
     Given the study "STU001248" has an upload by "pi"
     When I go to the study page for id "STU001248"

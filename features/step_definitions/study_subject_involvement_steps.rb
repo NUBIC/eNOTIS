@@ -106,6 +106,13 @@ Given /^the study "([^\"]*)" has the following subjects$/ do |id, table|
   end
 end
 
+Given /^the study "([^\"]*)" has (\d+) subjects$/ do |id, ct|
+  study = Study.find_by_irb_number(id)
+  (ct.to_i - study.involvements.size).times do
+    Factory(:involvement, :study => study, :subject => Factory(:fake_subject))
+  end
+end
+
 Given /^the study "([^\"]*)" has an upload by "([^\"]*)"$/ do |id, netid|
   Factory.create(:study_upload, :study_id => Study.find_by_irb_number(id).id, :netid => netid)
 end
