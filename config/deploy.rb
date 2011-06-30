@@ -100,17 +100,6 @@ namespace :admin do
   end
 end
 
-# Bcdatabase
-namespace :bcdatabase do
-  desc "Copies files from local:/etc/nubic/db to remote:/etc/nubic/db"
-  task :copy do
-    run "mkdir -p #{shared_path}/nubic/db"
-    upload "/etc/nubic/db", "#{shared_path}/nubic/db", :via => :scp, :recursive => true
-    sudo "mv #{shared_path}/nubic/db/* /etc/nubic/db"
-    run "rm -r #{shared_path}/nubic"
-  end
-end
-
 # backup the database before migrating
 before 'deploy:migrate', 'db:backup'
 
