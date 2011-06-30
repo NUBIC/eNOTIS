@@ -5,5 +5,9 @@ When /^I am concerned with performance$/ do
 end
 
 Then /^I should wait less than (\d+(.\d+)?) seconds?$/ do |elapsed, _|
-  (Time.now - @start_time).should < elapsed.to_f
+  expected = elapsed.to_f
+  if ENV['RAILS_ENV'] =~ /hudson/i
+    expected = expected * 3
+  end
+  (Time.now - @start_time).should < expected
 end
