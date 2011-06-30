@@ -286,9 +286,12 @@ class Involvement < ActiveRecord::Base
     completed || withdrawn
   end
 
+  # This method deliberately does not go to the database. This allows
+  # it to be called performantly over long lists of involvements by
+  # preloading the involvement_events across every instance in the
+  # list.
   def event_detect(ev_name)
-    ev_type = self.study.event_types.find_by_name(ev_name)
-    involvement_events.find(:first, :conditions => {:event_type_id => ev_type.id}) if ev_type
+    involvement_events.detect { |e| e.event_type.name.downcase == ev_name.downcase }
   end
 
   def subject_name_or_case_number

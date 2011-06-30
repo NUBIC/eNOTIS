@@ -27,11 +27,16 @@ class StudiesController < ApplicationController
   end
 
   def show
-    @study = Study.find_by_irb_number(params[:id])#, :include => [{:involvements => [{:subject => :involvements}, :involvement_events]}, :roles])
+    @study = Study.find_by_irb_number(params[:id], :include => :roles)
     if @study
       authorize! :show, @study
       @title = @study.irb_number
-      @involvements = @study.involvements(:order => "case_number")
+      # Querying based on involvement to allow for server-side
+      # pagination later if necessary.
+      @involvements = Involvement.find_all_by_study_id(@study.id,
+        :order => :case_number,
+        :include => [ { :subject => :involvements }, { :involvement_events => :event_type } ]
+      )
       unless @involvements.empty?
         @ethnicity_stats = @involvements.count_all(:short_ethnicity)
         @gender_stats = @involvements.count_all(:short_gender)
