@@ -393,4 +393,41 @@ describe Involvement do
     i2 = Factory(:involvement, :study => s, :case_number => "2")
     s.involvements.should == [i2, i1]
   end
+  
+  describe :empi_eligible do
+    before(:each) do
+      @ro = Study.new(:read_only => true)
+      @rw = Study.new(:read_only => false)
+      @bob = Subject.new{|s| s.id = -123}
+      @ann = Subject.new{|s| s.id = -999}
+    end
+    
+    it "should only return involvement with read/write study" do
+      elig = Involvement.new(:study => @rw, :subject => @bob)
+      not_elig = Involvement.new(:study => @ro, :subject => @ann)
+      
+      Involvement.stub!(:all).and_return([elig, not_elig])      
+      
+      Involvement.empi_eligible.should == [elig]
+    end
+    
+    it "should only return one involvement per patients" do
+      first = Involvement.new(:study => @rw, :subject => @bob)
+      second = Involvement.new(:study => Study.new(:read_only => false), :subject => @bob)
+      
+      Involvement.stub!(:all).and_return([first, second])      
+      
+      Involvement.empi_eligible.should == [second]
+    end
+
+    it "should  return eligible involvement when patient has both types" do
+      elig = Involvement.new(:study => @rw, :subject => @bob)
+      not_elig = Involvement.new(:study => @ro, :subject => @bob)
+      
+      Involvement.stub!(:all).and_return([elig, not_elig])      
+      
+      Involvement.empi_eligible.should == [elig]
+    end
+    
+  end
 end
