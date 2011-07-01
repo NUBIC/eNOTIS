@@ -406,7 +406,7 @@ describe Involvement do
       elig = Involvement.new(:study => @rw, :subject => @bob)
       not_elig = Involvement.new(:study => @ro, :subject => @ann)
       
-      Involvement.stub!(:all).and_return([elig, not_elig])      
+      Involvement.stub!(:find).and_return([elig, not_elig])      
       
       Involvement.empi_eligible.should == [elig]
     end
@@ -415,7 +415,7 @@ describe Involvement do
       first = Involvement.new(:study => @rw, :subject => @bob)
       second = Involvement.new(:study => Study.new(:read_only => false), :subject => @bob)
       
-      Involvement.stub!(:all).and_return([first, second])      
+      Involvement.stub!(:find).and_return([first, second])      
       
       Involvement.empi_eligible.should == [second]
     end
@@ -424,7 +424,7 @@ describe Involvement do
       elig = Involvement.new(:study => @rw, :subject => @bob)
       not_elig = Involvement.new(:study => @ro, :subject => @bob)
       
-      Involvement.stub!(:all).and_return([elig, not_elig])      
+      Involvement.stub!(:find).and_return([elig, not_elig])      
       
       Involvement.empi_eligible.should == [elig]
     end

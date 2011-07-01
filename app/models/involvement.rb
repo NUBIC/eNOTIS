@@ -324,7 +324,7 @@ class Involvement < ActiveRecord::Base
   end
   
   def self.empi_eligible
-    Involvement.all.reject{ |i| i.study.read_only? }.inject({}) { |s, i| s.merge(i.subject.id => i) }.values
+    Involvement.find(:all, :include => [:study]).reject{ |i| i.study.read_only? }.inject({}) { |s, i| s.merge(i.subject.id => i) }.values
   end
   
   private
