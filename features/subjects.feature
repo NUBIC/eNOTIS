@@ -55,3 +55,9 @@ Feature: Manage subjects
     And subject "Jack" "Daripur" should have 2 events on study "STU001248"
     Then I remove subject "Jack" "Daripur"
     And subject "90210f" should not be involved with study "STU001248"
+  
+  Scenario: A coordinator can search a subject by NMFF-MRN
+    When I look up "nmff_mrn" "nmff-999"
+    Then I should see "Frank" "Costello" as a search result
+    
+    

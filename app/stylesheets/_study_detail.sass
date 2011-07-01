@@ -162,15 +162,14 @@
     :width 750px
   #intro
     :width 550px
+  #mrn_lookup
+    :width 955px
+    .col3
+      :width 300px
+      :padding-right 18px
+      :float left      
+    
 form#new_involvement, form.edit_involvement, #show_involvement
-  ol
-    :list-style none
-    :margin 0
-    li
-      label
-        :display block
-      label.box
-        :display inline
   .subject, .demographics, .accrual
     :float left
     :width 300px
@@ -181,22 +180,6 @@ form#new_involvement, form.edit_involvement, #show_involvement
       :display block
       :color #999
       :font-style italic      
-  .subject
-    li
-      :float left
-      :width 95px
-      input
-        :width 85px
-    li.address_line_1, li.last_name, li.first_name, li.email
-      :width 190px
-      input
-        :width 180px
-    li.state
-      :width 65px
-      input
-        :width 55px
-    li.last_name, li.first_name, li.birth_date, li.address_line_1, li.city, li.email, li.home_phone
-      :clear left
   .submit
     :clear both
     :text-align right
@@ -207,3 +190,42 @@ form#new_involvement, form.edit_involvement, #show_involvement
     :border 1px solid #333
     :border-color = !flash_border_color
     :color = !flash_color
+form#new_involvement, form.edit_involvement, #show_involvement, #empi_results
+  ol
+    :list-style none
+    :margin 0
+    li
+      label
+        :display block
+      label.box
+        :display inline
+  .subject
+    li
+      :float left
+      :width 95px
+      input
+        :width 85px
+    li.nmff_mrn
+      :clear left
+    a.lookup
+      :-moz-border-radius 5px
+      :cursor pointer
+      :margin 5px 0px
+      :padding 2px 5px
+      :background-color #DDD
+      :display block
+      :text-decoration underline
+      :width 100px
+    a.enabled
+      :background-color green
+    li.address_line_1, li.last_name, li.first_name, li.email
+      :width 190px
+      input
+        :width 180px
+    li.state
+      :width 65px
+      input
+        :width 55px
+    li.last_name, li.first_name, li.birth_date, li.address_line_1, li.city, li.email, li.home_phone
+      :clear left
+

@@ -122,6 +122,26 @@ class InvolvementsController < ApplicationController
     # redirect_to_studies_or_study(params[:study_id], success ? :notice : :error, success ? @up.summary : "Oops. Your upload had some issues.<br/>Please click <a href='#{@study.irb_number ? import_study_path(@study) : '#'}' rel='#import'>Import</a> to see the result.")
   end
   
+  def empi_lookup
+    unless params[:involvement] && params[:involvement][:subject_attributes]
+      flash[:notice] = "Please enter an MRN to look up"
+      return redirect_to(:back) 
+    end
+    Empi.connect(EMPI_SERVICE[:uri], EMPI_SERVICE[:credentials]) unless Empi.client
+    @systems = ActiveSupport::OrderedHash["nmff_mrn", "IDX", "nmh_mrn", "PRIMES", "ric_mrn", "IDX"]
+    @results = {}
+    @systems.each{|type, system| @results[type] = {}; @results[type][:query] = params[:involvement][:subject_attributes][type]}
+    if (mrns = @systems.map{|t,s| @results[t][:query]}.reject(&:blank?)).size == 1
+      # only one mrn specified, hit all systems
+      @results.each{|k,v| v[:query] = mrns.first}
+    end
+    @systems.each{|t,s| @results[t][:subjects] =  @results[t][:query].blank? ? [] : Empi.get(@results[t][:query], :source => s)[:response] || []}
+    respond_to do |format|
+      format.html
+      format.js {render :layout => false}
+    end
+  end
+  
   def merge
     # # syncs a local record to a selected medical record
     # @local = Subject.find(params[:local_id])

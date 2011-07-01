@@ -169,4 +169,19 @@ When /^I export the NIH report$/ do
   click_link("NIH Inclusion Enrollment Report")
 end
 
+When /^I look up "([^"]*)" "([^"]*)"$/ do |type, mrn|
+  Empi.stub!(:client).and_return(true)
+  Empi.stub!(:get).and_return({:response => [{:first_name => "Frank", :last_name => "Costello"}]})
+  visit empi_lookup_involvements_path({:involvement => {:subject_attributes => {type.to_sym => mrn}}})
+end
+
+Then /^I should see "([^"]*)" "([^"]*)" as a search result$/ do |fn, ln|
+  within "#empi_results" do |scope|
+    scope.should have_selector("input[value='#{fn}']")
+  end
+  within "#empi_results" do |scope|
+    scope.should have_selector("input[value='#{ln}']")
+  end
+  
+end
 

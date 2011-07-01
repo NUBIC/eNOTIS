@@ -1,0 +1,66 @@
+#empi_results
+  - @systems.each do |type, system|
+    .col3
+      %h3= "#{type.humanize.upcase}: " +  @results[type][:query]
+      - if @results[type][:subjects].blank?
+        %p No results
+      - @results[type][:subjects].each do |result|
+        .subject
+          %ol
+            %li.mrn
+              = label_tag type.to_sym, type.humanize.upcase
+              = text_field_tag type.to_sym, result[:unique_id]
+            %li.last_name
+              = label_tag :last_name, "Last name"
+              = text_field_tag :last_name, result[:last_name]
+            %li.suffix
+              = label_tag :suffix, "Suffix"
+              = text_field_tag :suffix, result[:suffix]
+            %br.clear
+            %li.first_name
+              = label_tag :first_name, "First name"
+              = text_field_tag :first_name, result[:first_name]
+            %li.middle_name
+              = label_tag :middle_name, "Middle"
+              = text_field_tag :middle_name, result[:middle_name]
+            %br.clear
+            %li.birth_date
+              = label_tag :birth_date
+              = text_field_tag :birth_date, result[:date_of_birth]
+            %li.death_date
+              = label_tag :death_date
+              = text_field_tag :death_date, result[:death_indicator]
+            %br.clear
+            %li.address_line_1
+              = label_tag :address_line1, "Address"
+              = text_field_tag :address_line1, result[:primary_street_address_1]
+            %li.address_line_2
+              = label_tag :address_line2, "Line 2"
+              = text_field_tag :address_line2, result[:primary_street_address_2]
+            %br.clear
+            %li.city      
+              = label_tag :city, "City"
+              = text_field_tag :city, result[:primary_city]
+            %li.state
+              = label_tag :state, "State"
+              = text_field_tag :state, result[:primary_state]
+            %li.zip
+              = label_tag :zip, "Zip"
+              = text_field_tag :zip, result[:primary_zip_code]
+            %br.clear
+            %li.home_phone
+              = label_tag :home_phone, "Home phone"
+              = text_field_tag :home_phone, result[:home_phone]
+            %li.work_phone
+              = label_tag :work_phone, "Work"
+              = text_field_tag :work_phone, result[:work_phone]
+            %li.cell_phone
+              = label_tag :cell_phone, "Cell"
+              = text_field_tag :cell_phone, result[:cell_phone]
+            %br.clear
+            %li.email
+              = label_tag :email, "E-mail"
+              = text_field_tag :email, result[:email]
+          %br.clear
+          = link_to "Use this", "#", :class => 'transfer'
+  %br.clear

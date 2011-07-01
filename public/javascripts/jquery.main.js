@@ -66,13 +66,13 @@ $(document).ready(function() {
   });
   
   // load some tab contents via ajax for minimal change from previous UI (overlays)
-  $('#add').load($('#add').attr('rel'), 'format=js');
+  $('#add').load($('#add').attr('rel'), 'format=js', activateMrnLookup);
   $('#import').load($('#import').attr('rel'), 'format=js', activateImportDataTable);
   $('#export').load($('#export').attr('rel'), 'format=js');
   
   // import dataTable
   function activateImportDataTable(){
-    console.log('activateImportDataTable');
+    // console.log('activateImportDataTable');
     $("#import .uploads .display").dataTable({
       "iDisplayLength": 10,
       "sPaginationType": "full_numbers",
@@ -101,6 +101,36 @@ $(document).ready(function() {
     // 'delete' links
     $('#subjects a.delete').deleteWithAjax();
   }
+  
+  function activateMrnLookup(){
+    // console.log('activateMrnLookup');
+    // look up MRN
+    $("a[rel=#mrn_lookup]").overlay({
+      fixed: false,
+      onBeforeLoad: function(){ 
+        mrns = $("#new_involvement #involvement_subject_attributes_nmff_mrn, #new_involvement #involvement_subject_attributes_nmh_mrn, #new_involvement #involvement_subject_attributes_ric_mrn");
+        if(_.all(mrns, function(a){ return $(a).val() == "";})){
+          alert('Please enter an MRN to look up');
+          return false;
+        }else{
+          $("#mrn_lookup .wrap").load(this.getTrigger().attr("href"), mrns.serialize() + "&format=js");
+        }
+      },
+      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
+      onClose: function(){$("#mrn_lookup .wrap").html("");}
+    });
+  }
+  
+  // MRN Lookup
+  $('#mrn_lookup .wrap .subject a.transfer').live("click", function(e){
+    e.preventDefault();
+    var fields = $(this).parent('.subject').find('input');
+    $.each(fields, function(i,a){
+      $('#involvement_subject_attributes_'+$(a).attr('id')).val($(a).val());
+      $('#involvement_'+$(a).attr('id')).val($(a).val());
+    });
+    $("a[rel=#mrn_lookup]").data("overlay").close();
+  });
   
   // involvement overlay
   function activateInvolvementOverlay(selector){
