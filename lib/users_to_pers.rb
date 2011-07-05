@@ -22,6 +22,7 @@ module UsersToPers
       myo628 Mark Wimbiscus\ Yoon
       wakibbe Warren Kibbe
       rms377 Rhett Sutphin
+      jdi613 John Dzak
     ).each_slice(3) do |netid, first_name, last_name|
       unless Pers::Person.find_by_username(netid)
         Pers::Person.create(

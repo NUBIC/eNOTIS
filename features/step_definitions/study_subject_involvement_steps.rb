@@ -50,12 +50,12 @@ When /^I add full information on "([^"]*)" "([^"]*)" with "([^"]*)" on "([^"]*)"
   fill_in "Suffix", :with => "Jr."
   fill_in "Birth date", :with => "8/7/65"
   fill_in "Death date", :with => "8/7/2010"
-  
-  fill_in "Address", :with => "3400 E. Wilson"  
+
+  fill_in "Address", :with => "3400 E. Wilson"
   fill_in "Line 2", :with => "Crib tower"
-  fill_in "City", :with => "Chicago"  
+  fill_in "City", :with => "Chicago"
   fill_in "State", :with => "IL"
-  fill_in "Zip", :with => "60640"  
+  fill_in "Zip", :with => "60640"
   fill_in "E-mail", :with => "x@y.com"
   fill_in "Home phone", :with => "312-512-3456"
   fill_in "Work", :with => "(773)-678-9012"
@@ -106,6 +106,13 @@ Given /^the study "([^\"]*)" has the following subjects$/ do |id, table|
   end
 end
 
+Given /^the study "([^\"]*)" has (\d+) subjects$/ do |id, ct|
+  study = Study.find_by_irb_number(id)
+  (ct.to_i - study.involvements.size).times do
+    Factory(:involvement, :study => study, :subject => Factory(:fake_subject))
+  end
+end
+
 Given /^the study "([^\"]*)" has an upload by "([^\"]*)"$/ do |id, netid|
   Factory.create(:study_upload, :study_id => Study.find_by_irb_number(id).id, :netid => netid)
 end
@@ -141,7 +148,7 @@ end
 
 When /^I upload the "([^"]*)" file$/ do |name|
   click_link("Import")
-  attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', name))  
+  attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', name))
   click_button "Upload"
 end
 

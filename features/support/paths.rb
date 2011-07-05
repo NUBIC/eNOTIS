@@ -7,10 +7,10 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
-    
+
     when /the home\s?page/
       '/'
-    
+
     when /the login page/
       login_path
 
@@ -22,10 +22,10 @@ module NavigationHelpers
 
     when /the hub page/
       hub_path
-    
+
     when /the studies page/
       studies_path
-    
+
     when /^the services page$/
       services_path
     when /^the services page for "([^\"]*)"$/
