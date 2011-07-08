@@ -9,8 +9,9 @@
   = f.label :ric_mrn, "RIC MRN"
   = f.text_field :ric_mrn
 %br.clear
-= link_to "Look up MRN", empi_lookup_involvements_path, :rel => "#mrn_lookup"
-%br.clear
+- if @involvement.new_record? 
+  = link_to "Look up MRN", empi_lookup_involvements_path, :rel => "#mrn_lookup"
+  %br.clear
 %li.last_name
   = f.label :last_name, "Last name"
   = f.text_field :last_name

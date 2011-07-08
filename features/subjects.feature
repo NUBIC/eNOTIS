@@ -59,5 +59,13 @@ Feature: Manage subjects
   Scenario: A coordinator can search a subject by NMFF-MRN
     When I look up "nmff_mrn" "nmff-999"
     Then I should see "Frank" "Costello" as a search result
-    
-    
+  @focus
+  Scenario: A coordinator can see the MRN lookup
+    When I follow "Add"
+    Then I should see "Look up MRN"
+  @focus  
+  Scenario: A coordinator should not see the MRN lookup for edits
+    When I add a subject "Jack" "Daripur" with "Consented" on "2009-07-01" and MRN "90210f"
+    Then I should be on the study page for id "STU001248"
+    And I follow "Edit"
+    Then I should not see "Look up MRN"
