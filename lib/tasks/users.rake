@@ -33,7 +33,7 @@ namespace :users do
   end
   
   desc "creates temp users"
-  task :create_admins => :environment do
+  task :create_temps => :environment do
     Bcaudit::AuditInfo.current_user = Bcsec::User.new('enotis-application')
     UsersToPers.setup
     UsersToPers.create_temps

@@ -14,7 +14,7 @@ module UsersToPers
   end
   # Creates eNOTIS developers and admins in cc_pers
   def self.create_admins
-    YAML.load_file("/etc/nubic/enotis-#{Rails.env}-users.yml")[:admin].each do |a|
+    YAML.load_file("/etc/nubic/enotis-#{RAILS_ENV}-users.yml")[:admin].each do |a|
       unless Pers::Person.find_by_username(a['netid'])
         Pers::Person.create(
           :username => a['netid'], :first_name => a['first_name'], :last_name => a['last_name'],
