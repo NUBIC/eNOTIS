@@ -15,7 +15,7 @@ Feature: View Readonly Studies
     When I go to the study page for id "STU009248"
     Then I should not see "Add" within "#actions"
     And I should not see "Import" within "#actions"
-    And I should not see "Edit" within "#accrual"
-    And I should see "View" within "#accrual"
+    And I should not see "Edit" within "#subjects"
+    And I should see "View" within "#subjects"
     #And I should see "Readonly" within ".study_message"
 

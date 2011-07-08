@@ -34,10 +34,10 @@
     = link_to("Subjects", "#subjects", :class => 'subjects')
     = link_to("Details and Charts", '#study_information', :class => 'charts')
     - unless @study.read_only?
-      = link_to("Add", '#add', :class => 'add')
-      = link_to("Import", "#import", :class => 'import')
+      = link_to("Add", new_involvement_path(:study => @study), :class => 'add')
+      = link_to("Import", import_study_path, :class => 'import')
     - unless @involvements.empty?
-      = link_to("Export", "#export", :class => 'export')
+      = link_to("Export", new_report_path(:study => @study), :class => 'export')
     = link_to("Reports", '#reports', :class => 'report')
   #panes
     #subjects

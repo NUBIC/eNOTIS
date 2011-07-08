@@ -54,7 +54,7 @@ $(document).ready(function() {
   
   // -------------- Show study --------------
   // tabs
-  $("#actions").tabs("#panes > div", {history: true});
+  $("#actions").tabs("#panes > div");
     
   // subjects: dataTable
   $("#subjects .display").dataTable({
