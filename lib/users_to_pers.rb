@@ -8,38 +8,53 @@ module UsersToPers
       enotis.portal = PORTAL
       enotis.save
     end
-    %w(Admin User).each do |gn|
+    %w(Admin User Temp).each do |gn|
       enotis.groups.create(:group_name => gn) unless enotis.groups.find_by_group_name(gn)
     end
   end
   # Creates eNOTIS developers and admins in cc_pers
   def self.create_admins
-    %w(
-      pny668 Peter Nyberg
-      blc615 Brian Chamberlain
-      daw286 David Were
-      lmw351 Laura Wimbiscus\ Yoon
-      myo628 Mark Wimbiscus\ Yoon
-      wakibbe Warren Kibbe
-      rms377 Rhett Sutphin
-      jdi613 John Dzak
-    ).each_slice(3) do |netid, first_name, last_name|
-      unless Pers::Person.find_by_username(netid)
+    YAML.load_file("/etc/nubic/enotis-#{Rails.env}-users.yml")[:admin].each do |a|
+      unless Pers::Person.find_by_username(a['netid'])
         Pers::Person.create(
-          :username => netid, :first_name => first_name, :last_name => last_name,
+          :username => a['netid'], :first_name => a['first_name'], :last_name => a['last_name'],
           :entered_by => "enotis-application"
           )
       end
-      unless Pers::Login.find_by_username_and_portal(netid, PORTAL)
+      unless Pers::Login.find_by_username_and_portal(a['netid'], PORTAL)
         login = Pers::Login.new
-        login.username = netid
+        login.username = a['netid']
         login.portal_name = PORTAL # can't be bulk set
         login.save
       end
       puts "updated/created #{netid} as admin"
       %w(Admin User).each do |group|
-        unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(netid, PORTAL, group)
-          Pers::GroupMembership.create(:username => netid, :group_name => group, :portal => PORTAL)
+        unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(a['netid'], PORTAL, group)
+          Pers::GroupMembership.create(:username => a['netid'], :group_name => group, :portal => PORTAL)
+        end
+      end
+    end
+  end
+
+  # Creates eNOTIS temps in cc_pers
+  def self.create_temps
+    YAML.load_file("/etc/nubic/enotis-users.yml")[:temp].each do |a|
+      unless Pers::Person.find_by_username(a['netid'])
+        Pers::Person.create(
+          :username => a['netid'], :first_name => a['first_name'], :last_name => a['last_name'],
+          :entered_by => "enotis-application"
+          )
+      end
+      unless Pers::Login.find_by_username_and_portal(a['netid'], PORTAL)
+        login = Pers::Login.new
+        login.username = a['netid']
+        login.portal_name = PORTAL # can't be bulk set
+        login.save
+      end
+      puts "updated/created #{netid} as temp"
+      %w(Temp User).each do |group|
+        unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(a['netid'], PORTAL, group)
+          Pers::GroupMembership.create(:username => a['netid'], :group_name => group, :portal => PORTAL)
         end
       end
     end
