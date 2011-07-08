@@ -119,6 +119,10 @@ $(document).ready(function() {
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
       onClose: function(){$("#mrn_lookup .wrap").html("");}
     });
+    
+    activateInvolvementFields("#add");
+    $("#add a.cancel").live("click", function(e){ e.preventDefault(); $("#add :input").val(''); $("#add :checkbox").attr('checked', '');});
+    
   }
   
   // MRN Lookup
@@ -143,53 +147,58 @@ $(document).ready(function() {
         // console log check to see if date inputs are loaded yet. usually inconsistent results. for debugging.
         // console.log($("#involvement input.occurred_on"));
         // console.log($("#involvement input.dob"));
-        
-        // these functions have been changed to "live", to counteract the timing problem of the objects not being loaded when onLoad is called
-        
+
         // involvement cancel link
         $("#involvement a.cancel").live("click", function(e){ e.preventDefault(); event.target.close();});
         
-        // clear race checkboxes if unknown or not reported is checked
-        $('#involvement_unknown_or_not_reported_race:checked').parents('li.race').find(':checkbox').not('#involvement_unknown_or_not_reported_race').attr('checked', false).attr('disabled', true);
-        
-        // race checkboxes should disble sibling checkboxes
-      	$('#involvement_unknown_or_not_reported_race:checkbox').live("click", function(){
-          var e = $(this);
-          var others = e.parents('li.race').find(':checkbox').not('#involvement_unknown_or_not_reported_race');
-          if(e.is(':checked')){
-            others.attr('checked', false).attr('disabled', true);
-          }else{
-            others.attr('disabled', false);
+        activateInvolvementFields("#involvement");
+      }
+    });
+  }
+
+  // involvement form checkboxes and datepickers
+  // these functions have been changed to "live", to counteract the timing problem of the objects not being loaded when onLoad is called
+  function activateInvolvementFields(selector){
+    
+    // clear race checkboxes if unknown or not reported is checked
+    $(selector + ' #involvement_unknown_or_not_reported_race:checked').parents('li.race').find(':checkbox').not('#involvement_unknown_or_not_reported_race').attr('checked', false).attr('disabled', true);
+    
+    // race checkboxes should disble sibling checkboxes
+  	$(selector + ' #involvement_unknown_or_not_reported_race:checkbox').live("click", function(){
+      var e = $(this);
+      var others = e.parents('li.race').find(':checkbox').not('#involvement_unknown_or_not_reported_race');
+      if(e.is(':checked')){
+        others.attr('checked', false).attr('disabled', true);
+      }else{
+        others.attr('disabled', false);
+      }
+    });
+    
+    // datepicker for involvements
+    $(selector + " input.occurred_on").live("click", function(){
+      if(!$(this).data("dateinput")){
+        $(this).dateinput({format: 'yyyy-mm-dd', selectors: true, yearRange: [-20, 1],
+          change: function(e, date){ e.target.getInput().val(e.target.getValue('yyyy-mm-dd')).data("date", date); return false; },
+          onShow: function(e){
+            $(selector + " #calmonth").unbind("change").change(function() { e.target.hide().setValue($(selector + " #calyear").val(), $(this).val(), e.target.getValue('d')).show(); });
+            $(selector + " #calyear").unbind("change").change(function() { e.target.hide().setValue($(this).val(), $(selector + " #calmonth").val(), e.target.getValue('d')).show(); });
           }
         });
-        
-        // datepicker for involvements
-        $("#involvement input.occurred_on").live("click", function(){
-          if(!$(this).data("dateinput")){
-            $(this).dateinput({format: 'yyyy-mm-dd', selectors: true, yearRange: [-20, 1],
-              change: function(e, date){ e.target.getInput().val(e.target.getValue('yyyy-mm-dd')).data("date", date); return false; },
-              onShow: function(e){
-                $("#calmonth").unbind("change").change(function() { e.target.hide().setValue($("#calyear").val(), $(this).val(), e.target.getValue('d')).show(); });
-                $("#calyear").unbind("change").change(function() { e.target.hide().setValue($(this).val(), $("#calmonth").val(), e.target.getValue('d')).show(); });
-              }
-            });
-            $(this).data("dateinput").show();
+        $(this).data("dateinput").show();
+      }
+    });
+    
+    // datepicker for birth date
+    $(selector + " input.dob").live("click", function(){
+      if(!$(this).data("dateinput")){
+        $(this).dateinput({format: 'yyyy-mm-dd', selectors: true, yearRange: [-120, 1],
+          change: function(e, date){ e.target.getInput().val(e.target.getValue('yyyy-mm-dd')).data("date", date); return false; },
+          onShow: function(e){
+            $(selector + " #calmonth").unbind("change").change(function() { e.target.hide().setValue($(selector + " #calyear").val(), $(this).val(), e.target.getValue('d')).show(); });
+            $(selector + " #calyear").unbind("change").change(function() { e.target.hide().setValue($(this).val(), $(selector + " #calmonth").val(), e.target.getValue('d')).show(); });
           }
         });
-        
-        // datepicker for birth date
-        $("#involvement input.dob").live("click", function(){
-          if(!$(this).data("dateinput")){
-            $(this).dateinput({format: 'yyyy-mm-dd', selectors: true, yearRange: [-120, 1],
-              change: function(e, date){ e.target.getInput().val(e.target.getValue('yyyy-mm-dd')).data("date", date); return false; },
-              onShow: function(e){
-                $("#calmonth").unbind("change").change(function() { e.target.hide().setValue($("#calyear").val(), $(this).val(), e.target.getValue('d')).show(); });
-                $("#calyear").unbind("change").change(function() { e.target.hide().setValue($(this).val(), $("#calmonth").val(), e.target.getValue('d')).show(); });
-              }
-            });
-            $(this).data("dateinput").show();
-          }
-        });
+        $(this).data("dateinput").show();
       }
     });
   }
