@@ -6,9 +6,6 @@ module Bcsec::EnotisUser
   def subjects
     Subject.with_user(username)
   end
-  def admin?
-    permit?(:admin)
-  end
   def name
     full_name
   end
