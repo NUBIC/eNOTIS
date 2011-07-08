@@ -24,7 +24,6 @@ Feature: User access to system
   #   When I log in as "pi" with password "314159"
   #   Then I should see "not currently associated"
   
-  @focus
   Scenario: A logged in user can access help and faq
     Given I log in as "usergey" on study "STU0001234"
     When I follow "Help"

@@ -2,7 +2,7 @@
 total = @studies.total_entries
 results = @studies.map do |study| 
   [ status_span(study),
-    if permit?(:admin) or study.has_coordinator?(current_user.netid)
+    if can? :show, study
       link_to(irb_span(study), study_path(study.irb_number), :title => "#{study.irb_status}: #{study.title}", :class => 'study')
     else
       irb_number_span(study) +

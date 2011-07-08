@@ -50,5 +50,16 @@ Feature: Developer admin access
     Then I should see "Uservich"
     Then I should see "STU00031416"
     And I should not see "STU00031417"
-    
-    
+
+  Scenario: A temp user should not be able to visit the hub
+    Given I log in as "tempi" on study "STU00144"
+    And I go to the hub page
+    Then I should not see "back to eNOTIS"
+    Then I should be on the studies page
+
+  Scenario: A temp user should be able to see study uploads
+    Given I log in as "tempi" on study "STU00144"
+    And a study "Vitamin C and concentration" with id "STU001248" and irb_status "Approved"
+    When I go to the study page for id "STU001248"
+    Then I should see "Import"
+    And I should be on the study page for id "STU001248"

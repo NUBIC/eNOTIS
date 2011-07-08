@@ -27,6 +27,14 @@ users:
     portals:            # portal & group auth info (optional)
       - eNOTIS:             # A portal with simple groups
         - User      
+  tempi:
+    first_name: Tempi
+    last_name: Tampa
+    password: secret          # password for :user auth (optional)
+    portals:            # portal & group auth info (optional)
+      - eNOTIS:             # A portal with simple groups
+        - Temp
+        - User
         
 groups:                  # groups for hierarchical portals
   eNOTIS:                 # (these aren't real NOTIS groups)
