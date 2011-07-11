@@ -27,7 +27,7 @@ module UsersToPers
         login.portal_name = PORTAL # can't be bulk set
         login.save
       end
-      puts "updated/created #{netid} as admin"
+      puts "updated/created #{a['netid']} as admin"
       %w(Admin User).each do |group|
         unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(a['netid'], PORTAL, group)
           Pers::GroupMembership.create(:username => a['netid'], :group_name => group, :portal => PORTAL)
@@ -51,7 +51,7 @@ module UsersToPers
         login.portal_name = PORTAL # can't be bulk set
         login.save
       end
-      puts "updated/created #{netid} as temp"
+      puts "updated/created #{a['netid']} as temp"
       %w(Temp User).each do |group|
         unless Pers::GroupMembership.find_by_username_and_portal_and_group_name(a['netid'], PORTAL, group)
           Pers::GroupMembership.create(:username => a['netid'], :group_name => group, :portal => PORTAL)
