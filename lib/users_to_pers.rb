@@ -12,9 +12,14 @@ module UsersToPers
       enotis.groups.create(:group_name => gn) unless enotis.groups.find_by_group_name(gn)
     end
   end
+  
+  def self.enotis_users_file
+    ENV['ENOTIS_USERS'] || "/etc/nubic/enotis-#{ENV['RAILS_ENV']}-users.yml"
+  end
+  
   # Creates eNOTIS developers and admins in cc_pers
   def self.create_admins
-    YAML.load_file("/etc/nubic/enotis-#{RAILS_ENV}-users.yml")['admin'].each do |a|
+    YAML.load_file(enotis_users_file)['admin'].each do |a|
       unless Pers::Person.find_by_username(a['netid'])
         Pers::Person.create(
           :username => a['netid'], :first_name => a['first_name'], :last_name => a['last_name'],
@@ -38,7 +43,7 @@ module UsersToPers
 
   # Creates eNOTIS temps in cc_pers
   def self.create_temps
-    YAML.load_file("/etc/nubic/enotis-#{RAILS_ENV}-users.yml")['temp'].each do |a|
+    YAML.load_file(enotis_users_file)['temp'].each do |a|
       unless Pers::Person.find_by_username(a['netid'])
         Pers::Person.create(
           :username => a['netid'], :first_name => a['first_name'], :last_name => a['last_name'],
