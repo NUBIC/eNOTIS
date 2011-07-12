@@ -5,7 +5,7 @@ results = @studies.map do |study|
     if can? :show, study
       link_to(irb_span(study), study_path(study.irb_number), :title => "#{study.irb_status}: #{study.title}", :class => 'study')
     else
-      irb_number_span(study) +
+      irb_span(study) +
       link_to(image_tag('/images/icons/information.png'), "#", :rel => "#study_information", :class => 'study_information') +
       render(:partial => 'partials/study_info', :locals => {:study => study})
     end,
