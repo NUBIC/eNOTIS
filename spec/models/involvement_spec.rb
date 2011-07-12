@@ -398,39 +398,59 @@ describe Involvement do
     s.involvements.should == [i2, i1]
   end
 
-  describe :empi_eligible do
+  describe :all_keyed_by_subject_id do
     before(:each) do
-      @ro = Study.new(:read_only => true)
-      @rw = Study.new(:read_only => false)
-      @bob = Subject.new{|s| s.id = -123}
-      @ann = Subject.new{|s| s.id = -999}
+      bob = Subject.new{|s| s.id = -123}
+      ann = Subject.new{|s| s.id = -999}
+      
+      @i1 = Involvement.new(:subject => bob)
+      @i2 = Involvement.new(:subject => ann)
+      @i3 = Involvement.new(:subject => ann)
+      
+      @involvments = [@i1, @i2, @i3]
     end
-
-    it "should only return involvement with read/write study" do
-      elig = Involvement.new(:study => @rw, :subject => @bob)
-      not_elig = Involvement.new(:study => @ro, :subject => @ann)
-
-      Involvement.stub!(:find).and_return([elig, not_elig])
-
-      Involvement.empi_eligible.should == [elig]
+    
+    it "should have a key for each subject id" do
+      Involvement.keyed_by_subject_id(@involvments).keys.sort.should == [-999, -123]
     end
-
-    it "should only return one involvement per patients" do
-      first = Involvement.new(:study => @rw, :subject => @bob)
-      second = Involvement.new(:study => Study.new(:read_only => false), :subject => @bob)
-
-      Involvement.stub!(:find).and_return([first, second])
-
-      Involvement.empi_eligible.should == [second]
+    
+    it "should have one involvement for bob" do
+      Involvement.keyed_by_subject_id(@involvments)[-123].should == [@i1]
     end
-
-    it "should  return eligible involvement when patient has both types" do
-      elig = Involvement.new(:study => @rw, :subject => @bob)
-      not_elig = Involvement.new(:study => @ro, :subject => @bob)
-
-      Involvement.stub!(:find).and_return([elig, not_elig])
-
-      Involvement.empi_eligible.should == [elig]
+    
+    it "should have two involvements for ann" do
+      Involvement.keyed_by_subject_id(@involvments)[-999].should == [@i2, @i3]
+    end
+    
+    it "should not include the same involvement more than once" do
+      Involvement.keyed_by_subject_id([@i1, @i1])[-123].should == [@i1]
+    end
+  end
+  
+  describe :empi_eligible do
+    it "should return read/write studies" do
+      ro = Factory(:study, :read_only => true)
+      rw = Factory(:study, :read_only => false)
+      
+      i1 = Factory(:involvement, :study => ro)
+      i2 = Factory(:involvement, :study => rw)
+      
+      Involvement.empi_eligible.should == [i2]
+    end
+  end
+  
+  describe :empi_exportable do
+    it "should have the latest involvement for each patient" do
+      i1 = Involvement.new(:updated_at => Date.new(1990, 1, 1), :subject_id => -999)
+      i2 = Involvement.new(:updated_at => Date.new(2010, 9, 9), :subject_id => 123)
+      i3 = Involvement.new(:updated_at => Date.new(2000, 5, 5), :subject_id => 123)
+      
+      Involvement.stub!(:keyed_by_subject_id).and_return(
+        -999 => [i1, nil],
+        123 => [i2, i3]
+      )
+      
+      Involvement.empi_exportable.sort{|a,b| a.subject_id <=> b.subject_id}.should == [i1, i2]
     end
   end
 

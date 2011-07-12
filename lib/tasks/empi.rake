@@ -2,7 +2,8 @@ namespace 'subjects' do
   desc "Push eNOTIS subjects to the EMPI"
   task 'empi_push' => :environment do
     LOGGER = Logger.new(STDOUT)
-    Involvement.empi_eligible.collect(&:id).each do |id|
+    Involvement.empi_exportable.each do |inv|
+      id = involvement.id
       begin
         LOGGER.info("Adding [Involvement id:#{id}] to the empi queue")
         Resque.enqueue(EmpiWorker, id) 

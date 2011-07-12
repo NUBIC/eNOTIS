@@ -338,8 +338,21 @@ class Involvement < ActiveRecord::Base
     end
   end
 
-  def self.empi_eligible
-    Involvement.find(:all, :include => [:study]).reject{ |i| i.study.read_only? }.inject({}) { |s, i| s.merge(i.subject.id => i) }.values
+  named_scope :empi_eligible, :joins => :study, :conditions => ['studies.read_only = ?', false]
+  
+  def self.keyed_by_subject_id(collection)
+    collection.inject({}) do |mem, inv|
+      subj_id = inv.subject.id
+      mem[subj_id] ||= []
+      mem[subj_id] << inv unless mem[subj_id].include?(inv)
+      mem
+    end
+  end
+  
+  def self.empi_exportable
+    keyed_by_subject_id(empi_eligible).values.collect do |involvments|
+      involvments.compact.sort{ |i1, i2| i1.updated_at <=> i2.updated_at }.last
+    end
   end
 
   private
