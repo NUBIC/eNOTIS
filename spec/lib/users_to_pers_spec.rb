@@ -52,7 +52,7 @@ describe UsersToPers do
   it "should create admins" do
     UsersToPers.setup
     UsersToPers.create_admins
-    %w(blc615 daw286 lmw351 myo628 wakibbe).each do |netid|
+    %w(daw286 lmw351 myo628 wakibbe).each do |netid|
       (user = Bcsec.authority.find_user(netid)).should_not be_nil
       user.permit?("Admin").should be_true
     end
