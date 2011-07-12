@@ -22,7 +22,7 @@
       = label_tag "involvement[methods][]", "Events"
     %p
       = label_tag "format","Choose the type of file to export:"
-      = select_tag('format',options_for_select([["PDF","pdf"],["CSV","csv"]]))
+      = select_tag('format',options_for_select([["CSV","csv"],["PDF","pdf"]]))
     %p= submit_tag("Export Data")
 
     

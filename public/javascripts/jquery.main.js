@@ -68,7 +68,7 @@ $(document).ready(function() {
   // load some tab contents via ajax for minimal change from previous UI (overlays)
   $('#add').load($('#add').attr('rel'), 'format=js', activateMrnLookup);
   $('#import').load($('#import').attr('rel'), 'format=js', activateImportDataTable);
-  $('#export').load($('#export').attr('rel'), 'format=js');
+  $('#export').load($('#export').attr('rel'), 'format=js', activateExportCheck);
   
   // import dataTable
   function activateImportDataTable(){
@@ -202,6 +202,17 @@ $(document).ready(function() {
       }
     });
   }
+  
+  // export tab
+  function activateExportCheck(){
+    $('#report :checkbox').click(disableEmptyReports);
+    disableEmptyReports();
+  }
+  function disableEmptyReports(){
+    // disable export button if no boxes are checked
+    $('#report :submit').attr('disabled', $('#report :checkbox:checked').length == 0);
+  }
+
   
   // show study: other studies overlay - bind an event onto the accept link that loads the other studies view into the same overlay
   function activateAccept(){
