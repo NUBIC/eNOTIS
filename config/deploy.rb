@@ -169,7 +169,7 @@ require "whenever/capistrano"
 set(:whenever_user, 'root')
 set(:whenever_update_flags, fetch(:whenever_update_flags) + " --user #{fetch(:whenever_user)}")
 set(:whenever_clear_flags, fetch(:whenever_clear_flags) + " --user #{fetch(:whenever_user)}")
-set :whenever_command, "sudo #{fetch(:rake, 'rake')} exec whenever"
+set(:whenever_command, "sudo bundle exec whenever")
 
 
 # Inspiration
