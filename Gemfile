@@ -66,6 +66,9 @@ gem 'resque', '~> 1.10.0'
 gem 'resque-jobs-per-fork', '~> 0.4.0'
 gem 'resque-scheduler', '~> 1.9.0'
 
+# Whenever
+gem 'whenever', :require => false
+
 # Testing
 group :test, :cucumber, :hudson do
   gem 'rcov'

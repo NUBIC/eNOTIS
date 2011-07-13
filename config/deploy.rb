@@ -164,6 +164,13 @@ namespace :db do
     run "cd #{current_path} && rake RAILS_ENV=#{rails_env} db:backup"
   end
 end
+
+set(:whenever_user, 'root')
+set(:whenever_update_flags, fetch(:whenever_update_flags) + " --user #{fetch(:whenever_user)}")
+set(:whenever_clear_flags, fetch(:whenever_clear_flags) + " --user #{fetch(:whenever_user)}")
+set :whenever_command, "bundle exec whenever"
+require "whenever/capistrano"
+
 # Inspiration
 # http://github.com/guides/deploying-with-capistrano
 # http://www.brynary.com/2008/8/3/our-git-deployment-workflow
