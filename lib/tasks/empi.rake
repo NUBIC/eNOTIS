@@ -1,15 +1,8 @@
 namespace 'subjects' do
   desc "Push eNOTIS subjects to the EMPI"
-  task 'empi_push' => :environment do
-    LOGGER = Logger.new(STDOUT)
-    Involvement.empi_exportable.each do |inv|
-      id = involvement.id
-      begin
-        LOGGER.info("Adding [Involvement id:#{id}] to the empi queue")
-        Resque.enqueue(EmpiWorker, id) 
-      rescue Errno::ECONNREFUSED => e
-        LOGGER.info("Failed to add [Involvement id:#{id}] to the empi queue... Please check the resque is started")
-      end
-    end
+  task 'empi_upload' => :environment do
+    v = %w(true yes on).include?(ENV['VERBOSE'])
+    i = Involvement.empi_exportable
+    Empi::Exporter.new(i, :verbose => v).export
   end
 end

@@ -431,11 +431,13 @@ describe Involvement do
     it "should return read/write studies" do
       ro = Factory(:study, :read_only => true)
       rw = Factory(:study, :read_only => false)
+      rw2 = Factory(:study, :read_only => nil)
       
       i1 = Factory(:involvement, :study => ro)
       i2 = Factory(:involvement, :study => rw)
+      i3 = Factory(:involvement, :study => rw2)
       
-      Involvement.empi_eligible.should == [i2]
+      Involvement.empi_eligible.should == [i2, i3]
     end
   end
   

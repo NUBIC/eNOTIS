@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Empi::Exporter do
   before(:all) do
     EMPI_SERVICE = {:uri => 'http://fake.local', :credentials => 'fake'}
+    Empi.stub!(:connect).and_return(true)
   end
 
   before(:each) do
@@ -13,18 +14,16 @@ describe Empi::Exporter do
   end
   
   it "should complete successfully once" do
-    @client.should_receive(:put).once
+    Empi.should_receive(:put).once
     instance.export_single(@a)
   end
   
   it "should complete successfully twice" do
-    @client.should_receive(:put).any_number_of_times.with(any_args())
+    Empi.should_receive(:put).twice
     instance([@a, @b]).export
   end
   
   def instance(involvements=nil)
-    i = Empi::Exporter.new(involvements)
-    i.stub!(:client).and_return(@client)
-    i
+    Empi::Exporter.new(involvements)
   end
 end

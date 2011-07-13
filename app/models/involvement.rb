@@ -338,7 +338,7 @@ class Involvement < ActiveRecord::Base
     end
   end
 
-  named_scope :empi_eligible, :joins => :study, :conditions => ['studies.read_only = ?', false]
+  named_scope :empi_eligible, :joins => :study, :conditions => ['studies.read_only = ? or studies.read_only IS NULL', false]
   
   def self.keyed_by_subject_id(collection)
     collection.inject({}) do |mem, inv|
