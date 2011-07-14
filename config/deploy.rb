@@ -17,7 +17,7 @@ require 'bundler/capistrano'
 set :application, "enotis"
 
 # User
-# set :user, "enotis-deployer"
+set :user, "enotis-deployer"
 set :use_sudo, false
 ssh_options[:forward_agent] = true
 
@@ -56,6 +56,7 @@ desc "Deploy to staging"
 task :staging do
   set :app_server, "enotis-staging.nubic.northwestern.edu"
   set :rails_env, "staging"
+  set :whenever_environment, fetch(:rails_env)
   set_roles
 end
 
@@ -64,6 +65,7 @@ desc "Deploy to production"
 task :production do
   set :app_server, "enotis.nubic.northwestern.edu"
   set :rails_env, "production"
+  set :whenever_environment, fetch(:rails_env)
   set_roles
 end
 
@@ -106,7 +108,7 @@ before 'deploy:migrate', 'db:backup'
 before 'deploy:update_code', 'admin:poller:stop'
 
 # after deploying, generate static pages, copy over uploads and results, cleanup old deploys, aggressively set permissions
-after 'deploy:update_code', 'web:static', 'web:uploads_and_results', 'deploy:cleanup', 'deploy:permissions'
+after 'deploy:update_code', 'web:static', 'web:uploads_and_results', 'deploy:cleanup'
 
 # the static maintenance page has to be generated before it can be displayed
 before 'web:disable', 'web:static'
@@ -166,11 +168,7 @@ namespace :db do
 end
 
 require "whenever/capistrano"
-set(:whenever_user, 'root')
-set(:whenever_update_flags, fetch(:whenever_update_flags) + " --user #{fetch(:whenever_user)}")
-set(:whenever_clear_flags, fetch(:whenever_clear_flags) + " --user #{fetch(:whenever_user)}")
-set(:whenever_command, "sudo bundle exec whenever")
-
+set(:whenever_command, "bundle exec whenever")
 
 # Inspiration
 # http://github.com/guides/deploying-with-capistrano
