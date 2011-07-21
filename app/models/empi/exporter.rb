@@ -14,20 +14,20 @@ class Empi::Exporter
   
   def export_single(involvement)
     Empi.connect(EMPI_SERVICE[:uri], EMPI_SERVICE[:credentials]) unless Empi.client # The unless clause prevents opening new connections
-    begin
       study = involvement.study
       subject = involvement.subject
       if study.read_only?
         info("[EMPI] #{Time.now} Not uploading read only study #{study.irb_number}")
       else
         info("[EMPI] #{Time.now} Uploading subject #{subject.id} on study #{study.irb_number}")
-        Empi.put(build_params(involvement))
-        subject.update_attribute(:empi_updated_date, Time.now)
-        info("[EMPI] #{Time.now} Uploaded subject #{subject.id} on study #{study.irb_number}")
+        begin
+          Empi.put(build_params(involvement))
+          subject.update_attribute(:empi_updated_date, Time.now)
+          info("[EMPI] #{Time.now} Uploaded subject #{subject.id} on study #{study.irb_number}")
+        rescue => e
+          info("[EMPI] Warning: could not upload [Involvement id: #{involvement.id}]", e)
+        end
       end
-    rescue => e
-      info("[EMPI] Warning: could not upload [Involvement id: #{involvement.id}]", e)
-    end
   end
   
   def build_params(involvement)
