@@ -2,7 +2,7 @@ class Empi::Exporter
   def initialize(involvements, opts={})
     @involvements = [*involvements]
     opts ||= {}
-    @verbose = opts[:verbose] || false
+    @silent = opts[:silent] || false
   end
   
   def export
@@ -54,7 +54,6 @@ class Empi::Exporter
   
   def info(msg, e = nil)
     msg += ": #{e}\n#{e.backtrace.join("\n")}" if e
-    ActiveRecord::Base.logger.info(msg) if defined?(ActiveRecord::Base)
-    puts msg if @verbose
+    (@logger ||= Logger.new(STDOUT)).info(msg) unless @silent
   end
 end

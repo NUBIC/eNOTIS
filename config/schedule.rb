@@ -1,5 +1,5 @@
 every 1.day do
-  rake 'subjects:empi_upload'
+  rake 'subjects:empi_upload', :output => '/var/www/apps/enotis/shared/log/export_cron.log'
 end
 
 every :saturday, :at => '10pm' do

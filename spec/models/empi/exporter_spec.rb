@@ -24,6 +24,6 @@ describe Empi::Exporter do
   end
   
   def instance(involvements=nil)
-    Empi::Exporter.new(involvements)
+    Empi::Exporter.new(involvements, :silent => true)
   end
 end
