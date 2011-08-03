@@ -64,6 +64,7 @@ class ServicesController < ApplicationController
         end
       end
     end
+    @studies = @studies.uniq
     @service_studies = @studies.select{|s| s.uses_medical_services == true } || []
     # Done when all @service_studies have completed medical_services forms
     unless @service_studies.empty?
