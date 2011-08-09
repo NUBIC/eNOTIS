@@ -9,7 +9,6 @@
   %p.a= "eNOTIS is IRB approved, and all studies may begin using eNOTIS without first updating their current consent forms. #{link_to 'The language that covers the use of eNOTIS', "#", :rel => '#database-language'} is now part of #{link_to 'the IRB consent template', 'http://www.research.northwestern.edu/OPRS/irb/templates/#informed-consent'}, in the \"Database\" section. Please note that the consent form must be updated to include the language covering eNOTIS during the next consent form revision or continuing review. eNOTIS is a secure and centrally managed resource for data that is already being tracked by all groups engaged in clinical research.".html_safe
 
 .col2
-
   %p.q Who will be able to accrue and view the subjects accrued on a study?
   %p.a Only the IRB authorized PI, co-investigators and coordinators will be able to view the identity of subjects accrued on a study. Any additional roles and responsibilities should be clarified with the IRB and added to the authorized personnel list in eIRB.
 
@@ -20,4 +19,7 @@
   %p.a The IRB is committed to providing expedited review and implementation of faculty and staff changes for any IRB study. The University has immediate termination of access procedures in place, including netID cutoffs synchronized with physical notification in cases of employee termination.
 
   %p.q What HIPAA or other security issues are raised by use of eNOTIS?
-  %p.a All subject identity searches in eNOTIS are logged. All eNOTIS users have CITI training, as validated by the IRB. We do not anticipate any additional security or HIPAA-related issues.
+  %p.a All subject searches are logged. All eNOTIS users have CITI training, as validated by the IRB. We do not anticipate any additional security or HIPAA-related issues.
+
+  %p.q What is the Study Patient Research Voucher (SPRV)?
+  %p.a= "A form that must be submitted, when a research participant receives medical services at NMH or NMFF, by close of business the following day. It should be encrypted before submission. For details e-mail #{mail_to 'SPRVsupport@northwestern.edu'}".html_safe
