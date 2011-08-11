@@ -27,11 +27,15 @@
   %h2 Study Participant Research Voucher (SPRV)
   = link_to image_tag( "sprv_thumb.png", :alt => "Study Participant Research Voucher", :class => "sprv_thumb" ), '/media/SPRV_ver20110719.xlsx'
   .col3
-    %p= "#{link_to 'A SPRV form', '/media/SPRV_ver20110719.xlsx'} must be submitted, when a research participant receives medical services at NMH or NMFF, by close of business the following day. For assistance, e-mail #{link_to 'SPRVsupport@northwestern.edu', 'mailto:SPRVsupport@northwestern.edu'}".html_safe
-  
+    %p= "When a research participant receives medical services at NMH or NMFF, #{link_to 'a SPRV form', '/media/SPRV_ver20110719.xlsx'} must be submitted by close of business the following day. Please complete and submit this form for every outpatient NMH and/or NMFF encounter on the date of service.".html_safe
+    %ul
+      %li For NMFF Services please email to SPRV@nmff.org (please encrypt this document with a password if sending as an email attachment) or fax to (312) 695-4667.
+      %li For NMH Services please email to SPRV@nmh.org (please encrypt this document with a password if sending as an email attachment) or fax to (312) 926-1688.
+      %li For assistance, e-mail #{link_to 'SPRVsupport@northwestern.edu', 'mailto:SPRVsupport@northwestern.edu'} or call (708) 274-7778
+
     %h3 Encryption details
     %p 
-      The form should be password protected in Excel with the following password: 
+      The SPRV should be password protected in Excel with the following password: 
       %strong sprv
     %ul
       %li= link_to "Excel 2003 password instructions", "http://office.microsoft.com/en-us/excel-help/overview-of-security-and-protection-in-excel-HP005238854.aspx?CTT=1"
