@@ -66,7 +66,7 @@ module UsersToPers
   end
 
   def self.insert_user_into_cc_pers(netid, attrs, role = "User")
-    Bcaudit::AuditInfo.current_user = Bcsec.authority.find_user('blc615')
+    Bcaudit::AuditInfo.current_user = Bcsec.authority.find_user('daw286')
     unless Pers::Person.find_by_username_or_id(netid)
       u = Pers::Person.new(attrs.merge({:username => netid, :entered_by => "enotis-application"}))
       if u.save
