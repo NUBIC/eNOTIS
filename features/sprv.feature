@@ -1,4 +1,4 @@
-Feature: Study patient research voucher
+Feature: Study participant research voucher
   In order to satisfy our clinical partners
   As a coordinator
   I want to download the SPRV and get instructions on encryption
