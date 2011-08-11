@@ -28,8 +28,13 @@ module NavigationHelpers
 
     when /^the services page$/
       services_path
+
     when /^the services page for "([^\"]*)"$/
       edit_service_path($1)
+
+    when /the help page/
+      help_path
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

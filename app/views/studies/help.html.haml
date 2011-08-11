@@ -22,6 +22,19 @@
       %br
       = mail_to 'enotis@northwestern.edu'
   %br.clear
+%br.clear
+#sprv
+  %h2 Study Patient Research Voucher (SPRV)
+  %p= "#{link_to 'A SPRV form', '/media/SPRV_ver20110719.xlsx'} must be submitted, when a research participant receives medical services at NMH or NMFF, by close of business the following day. For assistance, e-mail #{link_to 'SPRVsupport@northwestern.edu', 'mailto:SPRVsupport@northwestern.edu'}".html_safe
+  %h3 Encryption details
+  %p 
+    The form should be password protected in Excel with the following password: 
+    %strong sprv
+  %ul
+    %li= link_to "Excel 2003 password instructions", "http://office.microsoft.com/en-us/excel-help/overview-of-security-and-protection-in-excel-HP005238854.aspx?CTT=1"
+    %li= link_to "Excel 2007 password instructions", "http://office.microsoft.com/en-us/excel-help/password-protect-documents-workbooks-and-presentations-HA010148333.aspx?CTT=1#BM4"
+    %li= link_to "Excel 2010 password instructions", "http://office.microsoft.com/en-us/excel-help/protect-your-document-workbook-or-presentation-with-passwords-permission-and-other-restrictions-HA010354324.aspx?CTT=1#BM2"
+  
 #questions
   %h2 Frequently Asked Questions (FAQ)
   = render :partial => 'partials/faq'
