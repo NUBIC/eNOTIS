@@ -1,0 +1,23 @@
+.treeTable tr td .expander
+  :background-position left center
+  :background-repeat no-repeat
+  :cursor pointer
+  :padding-left 0
+  :zoom 1
+.treeTable tr.collapsed td .expander
+  :background-image url('/images/toggle-expand-dark.png')
+.treeTable tr.expanded td .expander
+  :background-image url('/images/toggle-collapse-dark.png')
+
+.treeTable
+  table
+    :line-height 1
+    :margin 1em auto
+    thead
+      :background url("/images/bg-table-thead.png") repeat-x scroll left top #AAAAAA
+      :font-size 0.9em
+      th
+        :background white
+        :font-weight normal
+        :padding 0.3em 1.67em 0.1em
+        text-align left

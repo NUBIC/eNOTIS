@@ -35,7 +35,7 @@ class StudiesController < ApplicationController
       # pagination later if necessary.
       @involvements = Involvement.find_all_by_study_id(@study.id,
         :order => :case_number,
-        :include => [ { :subject => :involvements }, { :involvement_events => :event_type } ]
+        :include => [ :response_sets,{ :subject => :involvements }, { :involvement_events => :event_type } ]
       )
       unless @involvements.empty?
         @ethnicity_stats = @involvements.count_all(:short_ethnicity)

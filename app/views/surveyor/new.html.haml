@@ -1,0 +1,10 @@
+-form_tag(take_survey_path(:survey_code=>'null')) do 
+  =hidden_field_tag :involvement_id,@involvement.id
+  %p
+    =label_tag 'active_survey_code','Select Form'
+    =select_tag('active_survey_code',options_for_select(@surveys.map{|survey|[survey.title,survey.access_code]}),{:prompt => 'Select Form'})
+  %p
+    =label_tag 'effective_date','Visit Date'
+    =text_field_tag("effective_date",Date.today.strftime("%m/%d/%Y"))
+  =submit_tag("Start")
+

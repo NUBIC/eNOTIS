@@ -1,37 +1,37 @@
 // This file contains all color definitions blueprint includes, custom mixins etc..
 
 // basics
-!nu_purple= #520063
-!page_background_color=#fff
-!border_color= #666
-!shadow_color= #000
+$nu_purple: #520063
+$page_background_color: #fff
+$border_color: #666
+$shadow_color: #000
 
 // environments
-!staging_color= #FF6633
-!development_color = #FFF6BF
+$staging_color: #FF6633
+$development_color: #FFF6BF
 
 // flash
-!flash_color = #514721
-!flash_background_color = #FFF6BF
-!flash_border_color = #FFD324
+$flash_color: #514721
+$flash_background_color: #FFF6BF
+$flash_border_color: #FFD324
 
 // text
-!font_color = #333
-!quiet_color = !font_color + #333
-!loud_color = !font_color - #222
-!blueprint_font_size = 12px
+$font_color: #333
+$quiet_color: $font_color + #333
+$loud_color: $font_color - #222
+$blueprint_font_size: 12px
 
 // links
-!link_color = #009
-!link_hover_color = #000
-!link_focus_color = !link_hover_color
-!link_active_color = !link_color + #C00
-!link_visited_color = !link_color - #333
+$link_color: #009
+$link_hover_color: #000
+$link_focus_color: $link_hover_color
+$link_active_color: $link_color + #C00
+$link_visited_color: $link_color - #333
 
 // grids
-!blueprint_grid_columns = 50
-!blueprint_grid_width = 15px
-!blueprint_grid_margin = 5px
+$blueprint_grid_columns: 50
+$blueprint_grid_width: 15px
+$blueprint_grid_margin: 5px
 
 // Because compass uses conditional assignment we define our vars first and the defaults take over the rest.
 // http://wiki.github.com/chriseppstein/compass/overriding-constants
@@ -43,36 +43,37 @@
 @import blueprint/modules/buttons.sass
 
 // rounded boxes
-= rounded_box( !bgcolor )
-  :background-color= !bgcolor
+=rounded_box( $bgcolor )
+  :background-color $bgcolor
   :-moz-border-radius 7px 7px
 
-= rounded_bottom_box( !bgcolor )
-  :background-color= !bgcolor
+=rounded_bottom_box( $bgcolor )
+  :background-color $bgcolor
   :-moz-border-radius 0 0 7px 7px
 
-= rounded_top_box( !bgcolor )
-  :background-color= !bgcolor
+=rounded_top_box( $bgcolor )
+  :background-color $bgcolor
   :-moz-border-radius 7px 7px 0 0
 
-= rounded_left_box( !bgcolor )
-  :background-color= !bgcolor
+=rounded_left_box( $bgcolor )
+  :background-color $bgcolor
   :-moz-border-radius 7px 0 0 7px
 
-= rounded_right_box( !bgcolor )
-  :background-color= !bgcolor
+=rounded_right_box( $bgcolor )
+  :background-color $bgcolor
   :-moz-border-radius 0 7px 7px 0
 
-= bold
+=bold
   :font-weight bold
 
 // adds x grids in left and right padding. squeezes the walls around the text of columnized elements
-= squeeze( !grids = 1)
-  +prepend( !grids )
-  +append( !grids )
+$grids: 1 !default
+=squeeze($grids)
+  +prepend( $grids )
+  +append( $grids )
 
 // adds x grid widths to the top and bottom padding
-= squish( !grids = 1 )
-  :margin-top= !grids * !blueprint_grid_outer_width
-  :margin-bottom= !grids * !blueprint_grid_outer_width
+=squish($grids)
+  :margin-top $grids * $blueprint_grid_outer_width
+  :margin-bottom $grids * $blueprint_grid_outer_width
   

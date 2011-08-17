@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110310170322) do
+ActiveRecord::Schema.define(:version => 20110815214533) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -23,6 +23,54 @@ ActiveRecord::Schema.define(:version => 20110310170322) do
     t.integer "activity_id"
     t.string  "key"
     t.text    "value"
+  end
+
+  create_table "answers", :force => true do |t|
+    t.integer  "question_id"
+    t.text     "text"
+    t.text     "short_text"
+    t.text     "help_text"
+    t.integer  "weight"
+    t.string   "response_class"
+    t.string   "reference_identifier"
+    t.string   "data_export_identifier"
+    t.string   "common_namespace"
+    t.string   "common_identifier"
+    t.integer  "display_order"
+    t.boolean  "is_exclusive"
+    t.integer  "display_length"
+    t.string   "custom_class"
+    t.string   "custom_renderer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "default_value"
+    t.string   "display_type"
+    t.string   "api_id"
+  end
+
+  create_table "dependencies", :force => true do |t|
+    t.integer  "question_id"
+    t.integer  "question_group_id"
+    t.string   "rule"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "dependency_conditions", :force => true do |t|
+    t.integer  "dependency_id"
+    t.string   "rule_key"
+    t.integer  "question_id"
+    t.string   "operator"
+    t.integer  "answer_id"
+    t.datetime "datetime_value"
+    t.integer  "integer_value"
+    t.float    "float_value"
+    t.string   "unit"
+    t.text     "text_value"
+    t.string   "string_value"
+    t.string   "response_other"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "event_types", :force => true do |t|
@@ -65,12 +113,12 @@ ActiveRecord::Schema.define(:version => 20110310170322) do
     t.string   "case_number"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "race_is_native_hawaiian_or_other_pacific_islander", :default => false
     t.boolean  "race_is_white",                                     :default => false
-    t.boolean  "race_is_unknown_or_not_reported",                   :default => false
-    t.boolean  "race_is_american_indian_or_alaska_native",          :default => false
-    t.boolean  "race_is_asian",                                     :default => false
     t.boolean  "race_is_black_or_african_american",                 :default => false
+    t.boolean  "race_is_asian",                                     :default => false
+    t.boolean  "race_is_native_hawaiian_or_other_pacific_islander", :default => false
+    t.boolean  "race_is_american_indian_or_alaska_native",          :default => false
+    t.boolean  "race_is_unknown_or_not_reported",                   :default => false
     t.string   "address_line1"
     t.string   "address_line2"
     t.string   "city"
@@ -105,6 +153,72 @@ ActiveRecord::Schema.define(:version => 20110310170322) do
     t.datetime "updated_at"
   end
 
+  create_table "question_groups", :force => true do |t|
+    t.text     "text"
+    t.text     "help_text"
+    t.string   "reference_identifier"
+    t.string   "data_export_identifier"
+    t.string   "common_namespace"
+    t.string   "common_identifier"
+    t.string   "display_type"
+    t.string   "custom_class"
+    t.string   "custom_renderer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "questions", :force => true do |t|
+    t.integer  "survey_section_id"
+    t.integer  "question_group_id"
+    t.string   "score_code"
+    t.text     "text"
+    t.text     "short_text"
+    t.text     "help_text"
+    t.string   "pick"
+    t.string   "reference_identifier"
+    t.string   "data_export_identifier"
+    t.string   "common_namespace"
+    t.string   "common_identifier"
+    t.integer  "display_order"
+    t.string   "display_type"
+    t.boolean  "is_mandatory"
+    t.integer  "display_width"
+    t.string   "custom_class"
+    t.string   "custom_renderer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "response_sets", :force => true do |t|
+    t.integer  "involvement_id"
+    t.integer  "survey_id"
+    t.date     "effective_date"
+    t.string   "access_code"
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "responses", :force => true do |t|
+    t.integer  "response_set_id"
+    t.integer  "question_id"
+    t.integer  "answer_id"
+    t.datetime "datetime_value"
+    t.integer  "integer_value"
+    t.float    "float_value"
+    t.string   "unit"
+    t.text     "text_value"
+    t.string   "string_value"
+    t.string   "response_other"
+    t.string   "response_group"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "survey_section_id"
+  end
+
+  # unrecognized index "index_responses_on_survey_section_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+
   create_table "roles", :force => true do |t|
     t.integer  "study_id"
     t.integer  "user_id"
@@ -120,6 +234,19 @@ ActiveRecord::Schema.define(:version => 20110310170322) do
   # unrecognized index "index_authorized_people_on_study_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
   # unrecognized index "index_authorized_people_on_user_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
   # unrecognized index "roles_netid_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+
+  create_table "score_configurations", :force => true do |t|
+    t.string  "name"
+    t.string  "algorithm"
+    t.integer "survey_id"
+    t.string  "question_code"
+  end
+
+  create_table "scores", :force => true do |t|
+    t.integer "score_configuration_id"
+    t.integer "response_set_id"
+    t.float   "value"
+  end
 
   create_table "studies", :force => true do |t|
     t.string   "irb_number"
@@ -204,6 +331,39 @@ ActiveRecord::Schema.define(:version => 20110310170322) do
 
   # unrecognized index "index_subjects_on_external_patient_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
+  create_table "survey_sections", :force => true do |t|
+    t.integer  "survey_id"
+    t.string   "title"
+    t.text     "description"
+    t.string   "reference_identifier"
+    t.string   "data_export_identifier"
+    t.string   "common_namespace"
+    t.string   "common_identifier"
+    t.integer  "display_order"
+    t.string   "custom_class"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "surveys", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "study_id"
+    t.string   "irb_number"
+    t.string   "access_code"
+    t.string   "reference_identifier"
+    t.string   "data_export_identifier"
+    t.string   "common_namespace"
+    t.string   "common_identifier"
+    t.datetime "active_at"
+    t.datetime "inactive_at"
+    t.string   "css_url"
+    t.string   "custom_class"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "api_id"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "netid"
     t.string   "email"
@@ -224,6 +384,32 @@ ActiveRecord::Schema.define(:version => 20110310170322) do
   end
 
   # unrecognized index "users_netid_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+
+  create_table "validation_conditions", :force => true do |t|
+    t.integer  "validation_id"
+    t.string   "rule_key"
+    t.string   "operator"
+    t.integer  "question_id"
+    t.integer  "answer_id"
+    t.datetime "datetime_value"
+    t.integer  "integer_value"
+    t.float    "float_value"
+    t.string   "unit"
+    t.text     "text_value"
+    t.string   "string_value"
+    t.string   "response_other"
+    t.string   "regexp"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "validations", :force => true do |t|
+    t.integer  "answer_id"
+    t.string   "rule"
+    t.string   "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "versions", :force => true do |t|
     t.string   "item_type",  :null => false

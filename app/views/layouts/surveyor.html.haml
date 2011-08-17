@@ -1,0 +1,33 @@
+!!! XML
+!!!
+%html
+  %head
+    %title= "eCapture #{@survey.title unless @survey.nil?}"
+    =stylesheet_link_tag 'compiled/surveyor'
+    /[if gt IE 5]
+      =stylesheet_link_tag 'compiled/surveyor_ie'
+    =stylesheet_link_tag("compiled/main","jquery-ui-1.7.2.custom","timepicker")
+    =surveyor_javascripts
+    =javascript_include_tag "jquery-ui-1.7.2.min","jquery.timepicker"
+    =yield :head
+  %body
+    #container
+      #header
+        #header_top
+          #current_user_badge
+            = "#{current_user.full_name} (#{current_user.username})"
+            |
+            = link_to('Logout', "/logout")
+        - unless Rails.env.production?
+          #environment{:class => Rails.env}= Rails.env.upcase
+        %br{:style => "clear: right"}
+        - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
+          #flash
+            = flash_messages(types)
+            .close
+      #main
+        =yield
+
+      #footer
+        %p!= "eCapture &mdash; created by #{link_to("NUBIC", "http://www.nucats.northwestern.edu/centers/nubic")} for Northwestern University and powered by #{link_to("Surveyor","https://github.com/NUBIC/surveyor")}"
+

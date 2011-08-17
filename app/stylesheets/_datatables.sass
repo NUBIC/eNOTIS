@@ -1,14 +1,14 @@
 // Some table specfic colors
-!th_bg_color = #C3D9FF
-!even_sorting_bg_color = #FFF6BF
-!odd_sorting_bg_color = #FFF6BF + 32
-!odd_bg_color = #fff
-!even_bg_color = #E8EFF2
-!even_border_color = #D0D8DD
-!sorted_bg_color = #fff
-!full_pagination_bg_color = #ddd
-!full_pagination_hover_color = #ccc
-!full_pagination_active_color = #99B3FF
+$th_bg_color:  #C3D9FF
+$even_sorting_bg_color:  #FFF6BF
+$odd_sorting_bg_color:  #FFF6BF + 32
+$odd_bg_color:  #fff
+$even_bg_color:  #E8EFF2
+$even_border_color:  #D0D8DD
+$sorted_bg_color:  #fff
+$full_pagination_bg_color:  #ddd
+$full_pagination_hover_color:  #ccc
+$full_pagination_active_color:  #99B3FF
 
 // DataTables features
 .dataTables_wrapper 
@@ -38,7 +38,7 @@
     :display none
   .dataTables_paginate
     :width 44px
-    * width: 50px
+    //* width: 50px
     :float right
     :text-align right
     :margin-top 0.25em
@@ -50,13 +50,13 @@
     :clear both
     thead th
       :padding 3px 10px
-      :border-bottom= 1px solid !even_border_color
+      :border-bottom 1px solid $even_border_color
       :font-weight bold
       :cursor pointer
-      * cursor: hand
+      //* cursor: hand
     tfoot th 
       :padding 3px 10px
-      :border-top= 1px solid !even_border_color
+      :border-top 1px solid $even_border_color
       :font-weight bold
     td 
       :padding 3px 10px
@@ -73,15 +73,15 @@
   
   // zebra, sorting
   table.display tr.odd td
-    :background-color= !odd_bg_color
+    :background-color $odd_bg_color
   table.display tr.even td
-    :background-color= !even_bg_color
-    :border= 1px solid !even_border_color
+    :background-color $even_bg_color
+    :border 1px solid $even_border_color
     :border-width 1px 0 1px 0
   table.display tr.odd td.sorting_1 
-    :background-color= !odd_sorting_bg_color
+    :background-color $odd_sorting_bg_color
   table.display tr.even td.sorting_1 
-    :background-color= !even_sorting_bg_color
+    :background-color $even_sorting_bg_color
   
   // full pagination
   .paging_full_numbers 
@@ -94,7 +94,7 @@
       :padding 2px 5px
       :margin 0 3px
       :cursor pointer
-      * cursor: hand
+      //* cursor: hand
     span.paginate_button 
       :background-color #ddd
     span.paginate_button:hover 
@@ -131,3 +131,14 @@
   .dataTables_empty 
     :text-align center
 
+  tr td.expander
+    :background-position left center
+    :background-repeat no-repeat
+    :cursor pointer
+    :padding-left 0
+    :zoom 1
+
+  tr.row_expandable td.expander
+    :background-image image_url('/images/toggle-expand-dark.png')
+  tr.row_expanded td.expander
+    :background-image image_url('/images/toggle-collapse-dark.png')

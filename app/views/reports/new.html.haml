@@ -25,4 +25,20 @@
       = select_tag('format',options_for_select([["CSV","csv"],["PDF","pdf"]]))
     %p= submit_tag("Export Data")
 
+  -unless @study.surveys.empty?
+    #forms
+      %h5 Form Data
+      -@study.surveys.each do |survey|
+        =survey.title
+        ="-"
+        -unless survey.score_configurations.empty?
+          =link_to('Scores',reports_path(:type=>'survey_score',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number,:format=>'csv'),:method=>:post) 
+          ="-"
+        =link_to('Data',reports_path(:type=>'survey_data',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number,:format=>'csv'),:method=>:post) 
+        ="-"
+        =link_to('Key',reports_path(:type=>'survey_key',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number,:format=>'csv'),:method=>:post) 
+        %br
+
+
+
     

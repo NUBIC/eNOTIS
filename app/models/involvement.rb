@@ -30,6 +30,7 @@ class Involvement < ActiveRecord::Base
   belongs_to :subject
   belongs_to :study
   has_many :involvement_events, :dependent => :destroy
+  has_many :response_sets, :dependent => :destroy
 
   # Atrributes
   accepts_nested_attributes_for :involvement_events,

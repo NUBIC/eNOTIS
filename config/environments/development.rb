@@ -20,9 +20,9 @@ require 'ruby-debug' if defined? Debugger # don't choke if we haven't the gem
 
 config.after_initialize do
   Bcsec.configure do
-    require 'pers'
+    #require 'pers'
     enotis = Bcsec::Authorities::Enotis.new
-    authorities :cas, :pers, enotis
+    authorities :cas,:pers, enotis
     central '/etc/nubic/bcsec-local.yml'
   end
 end

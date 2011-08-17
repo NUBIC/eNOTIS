@@ -12,6 +12,7 @@ class Study < ActiveRecord::Base
   }
  
   include Webservices::ImporterSupport
+
   before_save :flatten_import_cache
    
   # Named scopes
@@ -37,6 +38,7 @@ class Study < ActiveRecord::Base
   has_many :involvement_events, :through => :involvements
   has_many :study_uploads
   has_many :funding_sources, :dependent => :delete_all
+  has_many :surveys
   has_one  :medical_service, :dependent => :delete
   has_many :event_types, :order => "seq asc" do 
     def find_by_name(e_name)

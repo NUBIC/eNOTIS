@@ -1,9 +1,9 @@
 # Basics
-gem "rails", "2.3.9"
+gem "rails", "2.3.10"
 gem "pg", '~> 0.9.0'
-gem "haml", '~> 2.2.0'
+gem "haml", '3.1.2'
 gem "rdiscount"
-gem "compass", '~> 0.8.0'
+gem "compass", '0.10.6'
 gem "capistrano", '~> 2.5.0'
 gem "fastthread"
 gem 'erubis'
@@ -52,6 +52,9 @@ group :development do
   gem "wirble"
   gem "hirb"
 end
+
+#data capture
+gem "surveyor", '0.20.0'
 
 # # Debugging
 # group :development do

@@ -2,6 +2,14 @@
 var timeoutWarningTimer;
 var timeoutExpiredTimer;
 var importTable; // global variable to keep track of import data table, preventing reinitialization
+var subjectTable;
+
+function fnFormatDetails ( nTr )
+{
+	var aData = subjectTable.fnGetData( nTr );
+	var sOut = aData[aData.length - 1]
+	return sOut;
+}
 
 $(document).ready(function() {
   // -------------- Common UI --------------
@@ -14,6 +22,14 @@ $(document).ready(function() {
     expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}
   });
   
+  $("#subjects a[rel=#start_form]").overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
+    onBeforeLoad: function(){ $("#start_form .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
+    onLoad: function(){
+      $("#effective_date").datepicker({changeMonth: true, changeYear: true,yearRange: '-120:+0'});
+    }
+    });
   // -------------- Medical services --------------
   // Study service forms
   $("#medical_service_uses_services_before_completed_true").click(function(){
@@ -56,9 +72,22 @@ $(document).ready(function() {
   // tabs
   $("#actions").tabs("#panes > div");
     
+  $('#subject_list tr').click( function() {
+    if ( $(this).hasClass('row_expanded') ){
+      $(this).addClass('row_expandable');
+      $(this).removeClass('row_expanded');
+      subjectTable.fnClose(this)
+      }
+    else if ( $(this).hasClass('row_expandable')){
+      $(this).removeClass('row_expandable');
+      $(this).addClass('row_expanded');
+      added = subjectTable.fnOpen(this,fnFormatDetails(this),'details')
+      $(added).treeTable({initialState: "expanded"});
+    }
+  });
   // subjects: dataTable
-  $("#subjects .display").dataTable({
-    "aoColumns": [null,null,null,null,null,null,{"sType":"date"},null,null,null,{"sType":"date"},{"sType":"date"},null],
+  subjectTable =  $("#subjects .display").dataTable({
+    "aoColumns": [null,null,null,null,null,null,null,{"sType":"date"},{"sType":"date"},null,null],
     "fnDrawCallback": activateRows,
     "iDisplayLength": 30,
     "sPaginationType": "full_numbers", 
@@ -88,7 +117,7 @@ $(document).ready(function() {
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
     // dashes
-    $("#subjects .display td:empty, #import .display td:empty").html("--");
+    $("#import .display td:empty").html("--");
     // other studies overlay
     $("#subjects a[rel=#other_studies]").overlay({
       fixed: false, // allows user to scroll if overlay extends beyond viewport

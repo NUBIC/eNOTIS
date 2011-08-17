@@ -1,0 +1,52 @@
+%script{:type => "text/javascript"}
+  $(document).ready(function(){
+  $('#surveyor :input').attr('disabled', true);
+  $('#surveyor .add_row').remove()
+  $('#surveyor .disabled').remove()
+  $('input[type=text], textarea').each(function() {
+  if ($(this).val())
+  $(this).replaceWith($(this).val())
+  else
+  $(this).replaceWith("--")
+  });
+  });
+
+#subject_identity
+  %table.display
+    %tbody
+      %tr
+        -unless @response_set.involvement.case_number.blank?
+          %td="Case #: #{ @response_set.involvement.case_number}"
+        -unless @response_set.involvement.subject.name.blank?
+          %td="Name: #{@response_set.involvement.subject.name}"
+        %td="Date: #{@response_set.effective_date}"
+#surveyor
+  - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
+    .surveyor_flash
+      = flash_messages(types)
+      .close
+  - semantic_form_for(:r, @response_set, :url => update_my_survey_path, :html => {:method => :put, :id => "survey_form", :class => @survey.custom_class}) do |f|
+    #header
+      #header_text
+        .survey_title= @survey.title
+    -@survey.sections.each do |section|
+      - div_for section, :class => section.custom_class do
+        #section_header
+          .previous_section= ""
+          %span.title=section.title
+          .next_section=""
+        .section_questions
+          - qs ||= []
+          - (questions = section.questions).each_with_index do |q, i|
+            - if q.part_of_group?
+              - qs << q # gather up the group questions
+              - if (i+1 >= questions.size) or (q.question_group_id != questions[i+1].question_group_id)
+                - # this is the last question of the section, or the group
+                = render q.question_group.custom_renderer || "/partials/question_group", :g => q.question_group, :qs => qs, :f => f
+                - qs = []
+            - else # gather up the group questions
+              = render q.custom_renderer || "/partials/question", :q => q, :f => f
+        #section_footer
+          .previous_section=""
+          =""
+          .next_section=""

@@ -41,10 +41,12 @@
     = link_to("Reports", '#reports', :class => 'report')
   #panes
     #subjects
-      %table.display
+      -has_scored_form = @study.surveys.detect{|f| !f.score_configurations.empty?}
+      %table.display{:id=>'subject_list'}
         %thead
           %tr
-            - %w(Case# Other\ Studies NMFF\ MRN NMH\ MRN RIC\ MRN Name Birth\ date Gender Ethnicity Race).each do |header|
+            %th
+            - %w(Case# Other\ Studies NMFF\ MRN NMH\ MRN RIC\ MRN Name).each do |header|
               %th= header
             %th
               %dtr{:title => @study.event_types.define_event("Consented")} Consented
@@ -56,19 +58,17 @@
               %th Actions
             -else
               %th View
+            %th.hidden
         %tbody
           - @involvements.each do |involvement|
-            %tr{:class => "subject_#{involvement.subject.id}"}
+            %tr{:class => "subject_#{involvement.subject.id} #{involvement.response_sets.empty? ? '' : 'row_expandable'}"}
+              %td.expander
               %td= involvement.case_number
               %td= other_studies_flag(involvement)
               %td= involvement.subject.nmff_mrn
               %td= involvement.subject.nmh_mrn
               %td= involvement.subject.ric_mrn
               %td= involvement.subject_name_or_case_number
-              %td= involvement.subject.birth_date.to_s
-              %td= involvement.gender
-              %td= involvement.ethnicity
-              %td= involvement.race
               %td= event_info(involvement.consented)
               %td
                 = event_info(involvement.completed)
@@ -76,8 +76,55 @@
               - unless @study.read_only?
                 %td<
                   = link_to("Edit", edit_involvement_path(involvement), :rel => "#involvement") + "&nbsp;&nbsp;".html_safe + link_to('Delete', involvement_path(involvement), :confirm_msg => "You are about to delete this subject. Deleting will completely remove all of the subject's information from the study.", :method => :delete, :class=>'delete')
+                  -unless @study.surveys.empty?
+                    =link_to("Start Form",available_surveys_path(:involvement_id=>involvement.id,:study_id=>@study.id),:rel=>'#start_form')
               - else
-                %td= link_to "View", involvement_path(involvement), :rel => "#involvement"
+                %td
+                  = link_to "View", involvement_path(involvement), :rel => "#involvement"
+                  -unless @study.surveys.empty?
+                    =link_to("Start Form",available_surveys_path(:involvement_id=>involvement.id,:study_id=>@study_id),:rel=>'#start_form')
+              %td.hidden
+                -if involvement.response_sets.empty?
+                  .no_date="No forms filled for this subject"
+                -else
+                  %table.treeTable{:id=>'tree'}
+                    %thead
+                      %tr
+                        %th Form/Visit Date
+                        %th Form
+                        %th Status
+                        - if has_scored_form
+                          %th Score
+                        %th Actions
+                    %tbody
+                      -involvement.response_sets.collect{|r| r.effective_date}.uniq.each do |effective_date|
+                        %tr{:id=>"node-#{involvement.id}#{effective_date.to_s.gsub('-','')}"}
+                          %td=effective_date.blank? ? "--" : effective_date.strftime("%m/%d/%Y")
+                          %td=""
+                          %td=""
+                          - if has_scored_form
+                            %td=""
+                          %td=""
+                        -involvement.response_sets.select{|r| r.effective_date.eql?(effective_date)}.each do |r|
+                          %tr{:class=>"child-of-node-#{involvement.id}#{effective_date.to_s.gsub('-','')}"}
+                            %td=""
+                            %td=r.survey.title
+                            %td=r.status
+                            - if has_scored_form
+                              %td
+                                -r.scores.each do |score|
+                                  ="#{score.score_configuration.name} : #{score.value}"
+                                  %br
+                            %td
+                              -if r.completed_at.blank?
+                                =link_to("Edit",edit_my_survey_path(r.survey.access_code,r.access_code))
+                                =" - "
+                              =link_to("View",view_my_survey_path(r.survey.access_code,r.access_code))
+                              =" - "
+                              =link_to("Download",view_my_survey_path(r.survey.access_code,r.access_code,:format=>'pdf'))
+                              //=" - "
+                              //=link_to("Delete",response_set_path(r),:method=>:delete,:class=>'delete',:confirm=>"Are you sure you want to delete this subject's form?" )
+
     #study_information
       .details
         = render :partial => 'partials/study_info', :locals => {:study => @study}
@@ -104,6 +151,8 @@
   #other_studies.overlay
     .wrap
   #mrn_lookup.overlay
+    .wrap
+  #start_form.overlay
     .wrap
   #intro.overlay
     %p

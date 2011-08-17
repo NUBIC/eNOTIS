@@ -4,16 +4,12 @@
   %head
     %title= "eNOTIS :: #{@title}"
     = stylesheet_link_tag "compiled/main"
-    = javascript_include_tag "tools/jquery.tools.min", "tools/jquery.dataTables.min", "tools/underscore-min", "jquery.main", :cache => "cache/main"
+    = javascript_include_tag "tools/jquery.tools.min", "tools/jquery.dataTables.min", "tools/underscore-min", "tools/jquery.treeTable.min","jquery.main", :cache => "cache/main"
     = yield :head
   %body
     #container
       #header
         #header_top
-          #inter_app_navigation
-            ="eNOTIS"
-            |
-            =link_to("eCapture",@study.nil? ? ECAPTURE_CONFIG['studies_uri']: "#{ECAPTURE_CONFIG['studies_uri']}/#{@study.irb_number}/forms" )
           #current_user_badge
             = "#{current_user.name} (#{current_user.netid})"
             |

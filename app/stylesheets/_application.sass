@@ -5,7 +5,7 @@ html
   +blueprint-typography
   +blueprint-grid
 body
-  :background-color= !page_background_color
+  :background-color $page_background_color
   :background-image url('/images/main-fade-bg.png')
   :background-repeat repeat-x
 #container
@@ -31,7 +31,7 @@ body
     +column(15)
     :font-size 3em
     :font-weight bold
-    :color = !nu_purple
+    :color  $nu_purple
     img
       :margin-top 2px
 #flash
@@ -41,9 +41,9 @@ body
   :margin-left 297.5px
   :width 400px
   :text-align center
-  :color= !flash_color
+  :color $flash_color
   :font-size 16px
-  +rounded_box(!flash_border_color)
+  +rounded_box($flash_border_color)
   .close
     :display none
     :background-image url('/images/jquery-tools/apple-close.png')
@@ -59,10 +59,10 @@ body
 #main
   +column(48,true)
   +squeeze
-  :background-color= !page_background_color
+  :background-color $page_background_color
   :background-image url('/images/pane-texture-bg.png')
   :background-repeat repeat-x
-  +rounded_bottom_box( !page_background_color )
+  +rounded_bottom_box( $page_background_color )
   :background-position 0 -35px
 .heading
   +bold
@@ -71,12 +71,12 @@ body
   // must be initially hidden
   :display none
   :z-index 10
-  :background-color= !page_background_color
-  :border= 1px solid !border_color
+  :background-color $page_background_color
+  :border 1px solid $border_color
   :padding 10px
-  :color= !font_color
-  :-moz-box-shadow= 0 0 90px 5px !shadow_color
-  :-webkit-box-shadow=  0 0 90px !shadow_color
+  :color $font_color
+  :-moz-box-shadow 0 0 90px 5px $shadow_color
+  :-webkit-box-shadow  0 0 90px $shadow_color
 .overlay
   :z-index 11
 .overlay .close
@@ -91,7 +91,7 @@ body
 #footer
   :margin-top 20px
   :padding-top 10px
-  +rounded_box( !page_background_color )
+  +rounded_box( $page_background_color )
   +column(48,true)
   +squeeze
   p
@@ -105,11 +105,11 @@ body
   +bold
 #environment
   :position absolute
-  :background-color= !development_color
+  :background-color $development_color
   :font-size 18px
   :padding 0 5px
   :top 0
   :left 400px
   :z-index 1
   &.staging
-    +rounded_bottom_box(!flash_border_color)
+    +rounded_bottom_box($flash_border_color)

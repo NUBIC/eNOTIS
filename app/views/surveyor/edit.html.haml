@@ -1,0 +1,37 @@
+-if params[:review]
+  %script{:type => 'text/javascript'}
+    $(document).ready(function(){
+    -@section.questions.select{|q| q.is_mandatory and !q.display_type.eql?('label') and q.triggered?(@response_set) and @response_set.is_unanswered?(q)}.each do |q|
+      $("#q_#{q.id}").addClass('incomplete');
+    });
+
+#subject_identity
+  %table.display
+    %tbody
+      %tr
+        -unless @response_set.involvement.case_number.blank?
+          %td="Case #: #{ @response_set.involvement.case_number}"
+        -unless @response_set.involvement.subject.name.blank?
+          %td="Name: #{@response_set.involvement.subject.name}"
+        %td="Date: #{@response_set.effective_date}"
+#surveyor
+  -if params[:review]
+    .review_alert="Please complete all required questions"
+  - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
+    .surveyor_flash
+      = flash_messages(types)
+      .close
+  - semantic_form_for(:r, @response_set, :url => update_my_survey_path, :html => {:method => :put, :id => "survey_form", :class => @survey.custom_class}) do |f|
+    #header
+      #header_text
+        .survey_title= @survey.title
+    #menu
+      = render 'partials/section_menu' 
+    //.previous_section= previous_section
+    = render 'partials/dependents' unless @dependents.empty?
+    //- if @response_set.no_responses_for_section?(@section) # cache if response_set has no responses for current section
+    //  = cache("section_#{@section.id}"){ render "/partials/section", :f => f }
+    //- else # no cache
+    .survey_section
+      = render "/partials/section", :f => f
+  %br

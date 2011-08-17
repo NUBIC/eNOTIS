@@ -36,7 +36,17 @@ class Report
     "Birth Date", "Gender", "Ethnicity", "Races", "Consented", "Completed", "Withdrawn"]
 
   def self.export(params)
-    # Setup the data
+    #form report data
+    if params[:type].eql?("survey_data")
+      return Survey.find(params[:survey_id]).data_export(params)
+    elsif params[:type].eql?("survey_key")
+      return Survey.find(params[:survey_id]).key_export
+    elsif params[:type].eql?("survey_score")
+      return Survey.find(params[:survey_id]).score_export(params)
+    end
+
+    #TODO this needs to be readically cleaned up
+    # Setup the data 
     study = Study.find_by_irb_number(params[:study][:irb_number])
     involvement = params[:involvement] || {}
     involvement[:methods] = [] unless involvement[:methods]
