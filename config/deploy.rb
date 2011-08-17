@@ -17,7 +17,7 @@ require 'bundler/capistrano'
 set :application, "enotis"
 
 # User
-set :user, "enotis-deployer"
+#set :user, "enotis-deployer"
 set :use_sudo, false
 ssh_options[:forward_agent] = true
 
