@@ -224,7 +224,7 @@ DEPENDENCIES
   capistrano (~> 2.5.0)
   chronic (>= 0.2.3)
   ci_reporter (~> 1.6.0)
-  compass (~> 0.10.6)
+  compass (= 0.10.6)
   couchrest
   cucumber (= 0.8.4)
   cucumber-rails (~> 0.3.0)
