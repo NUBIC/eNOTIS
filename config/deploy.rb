@@ -96,7 +96,7 @@ namespace :admin do
     [:start, :stop, :restart].each do |t|
       desc "#{t.to_s.capitalize}s poller"
       task t, :roles => :app do
-        run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec script/poller #{t.to_s}"
+        #run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec script/poller #{t.to_s}"
       end
     end
   end

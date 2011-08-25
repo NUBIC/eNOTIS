@@ -1,0 +1,21 @@
+-if @survey.nil?
+  #error
+    .title="Invalid Form"
+    .explanation
+      The Link provided does not correspond to a valid questionaire. This may be due to a number of reasons, including the but not limited to the expiration of the the given questionaire. If you feel you received this message in error, please contact your research coordinator for more insurveyation.
+-else
+  //.title=@survey.title
+  //-unless @survey.description.blank?
+  //  #description
+  //    .tag="Description: "
+  //    .content=@survey.description
+  //-unless @survey.instructions.blank?
+  //  #instructions
+  //    .tag="Instructions: "
+  //    .content=@survey.instructions
+  #access_code
+    .instructions="Please enter your access code below"
+    -form_tag(create_my_public_survey_path(@survey.access_code)) do 
+      =text_field_tag('uuid','',:size=>50)
+      %br
+      =submit_tag('Start')

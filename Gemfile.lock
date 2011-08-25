@@ -260,6 +260,7 @@ DEPENDENCIES
   soap4r (>= 1.5.8)
   stomp (>= 1.1)
   surveyor (= 0.20.0)
+  uuid
   view_trail (>= 0.3.1)
   webrat (~> 0.6.0)
   whenever

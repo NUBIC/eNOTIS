@@ -5,6 +5,8 @@ class ResponseSet < ActiveRecord::Base
   has_many :scores
   belongs_to :involvement
 
+  named_scope :completed, :conditions => ['response_sets.completed_at IS NOT NULL']
+
     def status
       self.completed_at.nil? ? "Started" : "Completed"
     end
@@ -23,6 +25,7 @@ class ResponseSet < ActiveRecord::Base
         return false
       end
     end
+
     def progress_hash
       qs = survey.sections.collect{|s| s.questions.find(:all,:conditions=>["display_type != 'label' and display_type!='image'"])}.flatten!
       triggered = qs.select{|q| q.triggered?(self)}# qs - ds.select{|d| !d.is_met?(self)}.map(&:question)
@@ -45,5 +48,9 @@ class ResponseSet < ActiveRecord::Base
       return 100 if triggered.empty?
       answered = triggered.select{|q| is_answered?(q)}.compact.size
       return ((answered.to_f/triggered.size.to_f)*100).to_i
+    end
+
+    def next
+      survey.survey_group.nil? ? nil : survey.survey_group.next(self)
     end
 end

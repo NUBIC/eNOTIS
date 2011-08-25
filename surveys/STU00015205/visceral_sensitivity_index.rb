@@ -1,15 +1,15 @@
-survey "Visceral Sensitivity Index",:irb_number=>"STU00015205" do 
-  section "" do 
+survey "Visceral Sensitivity Index",:irb_number=>"STU00015205",:score_configurations_attributes=>[{:name=>'Total Score',:algorithm=>'total_sum'}] do 
+  section "iVisceral Sensitivity Index" do 
     label "<strong>PLEASE READ THIS CAREFULLY BEFORE ANSWERING</strong>"
 
     grid "Below are statements that describe how some people respond to symptoms or discomfort in their belly or lower abdomen. These may include pain, diarrhea, constipation, bloating or sense of urgency. Please answer how strongly you agree or disagree with each of these statements, AS THEY RELATE TO YOU. Answer all of the statements as honestly and thoughtfully as you can." do 
 
-      a_1 "Strongly Agree"
-      a_2 "Moderately Agree"
-      a_3 "Mildly Agree"
-      a_4 "Mildly Disagree"
-      a_5 "Moderately Disagree"
-      a_6 "Strongly Disagree"
+      a_1 "Strongly Agree",:weight=>1
+      a_2 "Moderately Agree",:weight=>2
+      a_3 "Mildly Agree",:weight=>3
+      a_4 "Mildly Disagree",:weight=>4
+      a_5 "Moderately Disagree",:weight=>5
+      a_6 "Strongly Disagree",:weight=>6
 
       q_1 "I worry that whenever I eat during the day, bloating and distension in my belly will get worse.",:pick=>:one
       q_2 "I get anxious when I go to a new restaurant.",:pick=>:one

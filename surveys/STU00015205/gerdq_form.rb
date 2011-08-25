@@ -4,7 +4,7 @@ survey "GerdQ",:irb_number=>"STU00015205",:score_configurations_attributes=>[{:n
 
     label "Think about the past seven days…"
 
-    image "surveyor/STU00020973/gerd_person.png"
+    image "surveyor/STU00015205/gerd_person.png"
 
     q_ec_gerdq1 "How often did you have a burning feeling behind your breastbone (heartburn)?", :pick => :one
       a_0 "0 days",:weight=>0

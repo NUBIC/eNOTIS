@@ -1,0 +1,23 @@
+survey_group:
+  access_code: "STU00015205"
+  title: "Basic Assement Questionaires"
+  progression: "random"
+  surveys:
+    -
+      file: "surveys/STU00015205/asi.rb"
+    -
+      file: "surveys/STU00015205/bsi.rb"
+    -
+      file: "surveys/STU00015205/heartburn_symptom.rb"
+    -
+      file: "surveys/STU00015205/heartburn_vigilance.rb"
+    -
+      file: "surveys/STU00015205/idq.rb"
+    -
+      file: "surveys/STU00015205/panas.rb"
+    -
+      file: "surveys/STU00015205/visceral_sensitivity_index.rb"
+    -
+      file: "surveys/STU00015205/gerdq_form.rb"
+    -
+      file: "surveys/STU00015205/discomfort_tolerance_scale.rb"

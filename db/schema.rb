@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110815214533) do
+ActiveRecord::Schema.define(:version => 20110824133942) do
 
   create_table "activities", :force => true do |t|
     t.string   "controller"
@@ -113,12 +113,12 @@ ActiveRecord::Schema.define(:version => 20110815214533) do
     t.string   "case_number"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "race_is_white",                                     :default => false
-    t.boolean  "race_is_black_or_african_american",                 :default => false
-    t.boolean  "race_is_asian",                                     :default => false
-    t.boolean  "race_is_native_hawaiian_or_other_pacific_islander", :default => false
-    t.boolean  "race_is_american_indian_or_alaska_native",          :default => false
-    t.boolean  "race_is_unknown_or_not_reported",                   :default => false
+    t.boolean  "race_is_white",                                                   :default => false
+    t.boolean  "race_is_black_or_african_american",                               :default => false
+    t.boolean  "race_is_asian",                                                   :default => false
+    t.boolean  "race_is_native_hawaiian_or_other_pacific_islander",               :default => false
+    t.boolean  "race_is_american_indian_or_alaska_native",                        :default => false
+    t.boolean  "race_is_unknown_or_not_reported",                                 :default => false
     t.string   "address_line1"
     t.string   "address_line2"
     t.string   "city"
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20110815214533) do
     t.string   "home_phone"
     t.string   "work_phone"
     t.string   "cell_phone"
+    t.string   "uuid",                                              :limit => 36
   end
 
   # unrecognized index "involvements_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
@@ -331,6 +332,12 @@ ActiveRecord::Schema.define(:version => 20110815214533) do
 
   # unrecognized index "index_subjects_on_external_patient_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
+  create_table "survey_groups", :force => true do |t|
+    t.string "access_code"
+    t.string "title"
+    t.string "progression"
+  end
+
   create_table "survey_sections", :force => true do |t|
     t.integer  "survey_id"
     t.string   "title"
@@ -362,6 +369,8 @@ ActiveRecord::Schema.define(:version => 20110815214533) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "api_id"
+    t.integer  "survey_group_id"
+    t.integer  "display_order"
   end
 
   create_table "users", :force => true do |t|

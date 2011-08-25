@@ -61,7 +61,8 @@
             %th.hidden
         %tbody
           - @involvements.each do |involvement|
-            %tr{:class => "subject_#{involvement.subject.id} #{involvement.response_sets.empty? ? '' : 'row_expandable'}"}
+            %tr{:class => "subject_#{involvement.subject.id} row_expandable"}
+              //#{involvement.response_sets.empty? ? '' : 'row_expandable'}"}
               %td.expander
               %td= involvement.case_number
               %td= other_studies_flag(involvement)
@@ -85,8 +86,9 @@
                     =link_to("Start Form",available_surveys_path(:involvement_id=>involvement.id,:study_id=>@study_id),:rel=>'#start_form')
               %td.hidden
                 -if involvement.response_sets.empty?
-                  .no_date="No forms filled for this subject"
+                  #sub_section="No forms filled for this subject - access code - #{involvement.uuid}"
                 -else
+                  #sub_section="Forms - access code - #{involvement.uuid} " 
                   %table.treeTable{:id=>'tree'}
                     %thead
                       %tr

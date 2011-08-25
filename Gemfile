@@ -43,6 +43,8 @@ gem "bcsec-rails", '~> 2.0'
 # Authorization
 gem "cancan"
 
+gem "uuid"
+
 # EMPI
 gem "savon", "0.7.9"
 gem "empi"

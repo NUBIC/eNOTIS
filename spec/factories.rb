@@ -138,3 +138,34 @@ Factory.define :study_upload do |s|
   # s.result_content_type     {"text/csv"}
   # s.result_file_size        {1023}
 end
+
+Factory.define :survey do |s|
+  s.assoctiation :study
+  s.title         {['test1','test2','test3','test4'].rand}
+  s.access_code         {['test1','test2','test3','test4'].rand}
+end
+
+Factory.define :response_set do |r|
+  r.association :survey
+  r.access_code {"tester"}
+end
+
+Factory.define :survey_section do |s|
+  s.association :survey
+  s.title   {['test1','test2','test3','test4'].rand}
+end
+
+Factory.define :question do |q|
+  q.association :survey_section
+  q.text   {['test1','test2','test3','test4'].rand}
+  q.pick   {["one","any"].rand}
+end
+Factory.define :answer do |a|
+  a.association :question
+  a.text   {['No','Yes'].rand}
+end
+
+Factory.define :response do |r|
+  r.association :answer
+
+end

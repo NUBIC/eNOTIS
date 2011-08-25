@@ -1,0 +1,419 @@
+
+// Styles for public views - authentication controller
+//@import partials/application.
+// This file contains all color definitions blueprint includes, custom mixins etc..
+
+// basics
+@import awesome-buttons.sass
+$nu_purple: #520063
+$background_color: #FFFFFF
+$surveyor_flash_background_color: #FFF1A8
+$surveyor_color: #FFFFFF
+$surveyor_text_color: #333333
+$surveyor_dependent_color: #FFFFDF
+$surveyor_menus_color: #BB9FC4
+$surveyor_menus_text_color: #666666
+$surveyor_menus_border_color: #ccc
+$nu_purple: #520063
+$nu_light_purple: #803E8E
+$nu_site_footer_bg: #FFFFFF  // #CECECE
+$nu_bg_color: $nu_site_footer_bg
+$page_background_color: #fff
+$border_color: #666
+$shadow_color: #000
+$nu_light_bg_color: #F5F5F5
+
+// environments
+$staging_color: #FF6633
+$development_color: #FFF6BF
+
+// flash
+$flash_color: #514721
+$flash_background_color: #FFF6BF
+$flash_border_color: #FFD324
+
+// text
+$font_color: #333
+$quiet_color: $font_color + #333
+$extra_quiet_color: $quiet_color + #444
+$loud_color: $font_color - #222
+$blueprint_font_size: 12px
+
+// links
+$link_color: #009
+$link_hover_color: #000
+$link_focus_color: $link_hover_color
+$link_active_color: $link_color + #C00
+$link_visited_color: $link_color - #333
+
+// grids
+$blueprint_grid_columns: 50
+$blueprint_grid_width: 15px
+$blueprint_grid_margin: 5px
+
+// Because compass uses conditional assignment we define our vars first and the defaults take over the rest.
+// http://wiki.github.com/chriseppstein/compass/overriding-constants
+
+// Base imports
+@import compass/reset.sass
+@import compass/utilities.sass
+@import blueprint.sass
+@import blueprint/modules/buttons.sass
+
+// rounded boxes
+= rounded_box( $bgcolor )
+  :background-color $bgcolor
+  :-moz-border-radius 7px 7px
+
+= rounded_bottom_box( $bgcolor )
+  :background-color $bgcolor
+  :-moz-border-radius 0 0 7px 7px
+
+= rounded_top_box( $bgcolor )
+  :background-color $bgcolor
+  :-moz-border-radius 7px 7px 0 0
+
+= rounded_left_box( $bgcolor )
+  :background-color $bgcolor
+  :-moz-border-radius 7px 0 0 7px
+
+= rounded_right_box( $bgcolor )
+  :background-color $bgcolor
+  :-moz-border-radius 0 7px 7px 0
+
+= bold
+  :font-weight bold
+
+// adds x grids in left and right padding. squeezes the walls around the text of columnized elements
+$grids: 1 !default
+=squeeze($grids)
+= squeeze( $grids)
+  +prepend( $grids )
+  +append( $grids )
+
+// adds x grid widths to the top and bottom padding
+= squish( $grids )
+  :margin-top $grids * $blueprint_grid_outer_width
+  :margin-bottom $grids * $blueprint_grid_outer_width
+
+= test_border
+  :border 1px solid #ff0000
+$nu_site_footer_bg: #FFFFFF  // #CECECE
+body
+  :font 80% Arial,Helvetica,sans-serif
+  :background-image  image_url("nu_public_header_bg_full.png") 
+  :background-repeat repeat-x 
+  :background-scroll 0 0 
+
+table
+  :margin-bottom 30px
+  th 
+    :font-weight bold
+  tr
+    :margin-top 20px !important
+    :margin-bottom 20px
+    th
+      :padding-left 10px
+      :padding-right 10px
+  tr.q_grid
+    th
+      :padding-left 0px
+      :padding-right 0px
+
+
+#container
+  +container
+
+#survey_header
+  :color #754586
+  :font-size 2em 
+  :font-weight bold
+  :padding-top 9px
+  :text-align center
+
+
+#header
+  +column(50,true)
+  :color #754586
+  :font-size 1em 
+  :font-weight bold
+  :padding-top 9px
+  :height 250px
+    
+  #header_wrap
+    :height 21px
+    +column(49, true)
+    :text-transform uppercase
+    :text-align right
+  #header_left_home
+    :padding-top 1em
+    +column(10)
+    +squeeze
+      
+  #header_right_home
+    +column(37,true)
+    :height 220px
+
+
+#flash
+  #message
+    :top 13px
+    :margin-left auto 
+    :margin-right auto 
+    :width 400px
+    :text-align center
+    :color $flash_color
+    :font-size 16px
+    +rounded_box($flash_border_color)
+
+#main
+  .title
+    :font-size 2em
+    :text-align center
+    :color #754586
+    :margin-top 600px
+  #error
+    .title
+      :color red
+    .explanation
+      :padding-top 20px
+      :padding-bottom 20px
+      :font-size 1.3em
+      :font-type italic 
+      :text-align center
+  #description, #instructions
+    :border-type solid
+    :border-color #754586
+    :border-width 5px
+    :margin-top 10px
+    .tag
+      +bold
+      :font-size 14px
+    .content
+      :color grey
+      :font-size 14px
+      :margin-left 10px
+  #access_code
+    :padding-top 20px
+    :margin-top 250px
+    :height 100px
+    :width 600px
+    :text-align center
+    :margin-left auto 
+    :margin-right auto 
+  #surveyor
+    +column(49,true)
+    :font-family "Century Gothic"
+    :padding 1em
+    :margin 0 auto
+    :background-color $surveyor_color
+    :color $surveyor_text_color
+
+    #header
+      +column(48,true)
+      #header_text
+        +column(38,true)
+        :font-family "Century Gothic"
+        :padding 0.5em 0.5em 0.2em 0.3em
+        :margin-left auto
+        :margin-right auto
+        :text-align center
+        :font-size 2em
+        :font-weight bold
+
+    #menu
+      +column(10,true)
+      :float right
+      :font-weight bold
+      :color #999
+      :border-top 1px solid #BB9FC4
+      :border-right 1px solid #BB9FC4
+      #menu_section
+        :border-bottom 1px solid #BB9FC4
+        :border-left 1px solid #BB9FC4
+        input[type="submit"]
+          :text-align left
+          :background-color transparent
+          :border 0px !important
+        .ui-progressbar-value
+          :background-color $surveyor_menus_color
+      #menu_section.active
+        :background-color $nu_purple
+        input[type="submit"]
+          :text-align left
+          :font-weight bold
+          :color white
+      #options
+        :margin-top 20px
+        .option
+          :margin-top 20px
+        .awesome.regular.option
+          :width 160px !important
+        input[type="submit"].awesome.regular.option
+          :width 175px !important
+
+
+    .surveyor_flash
+      :background-color $surveyor_flash_background_color
+      :margin 0 auto
+      :padding 5px
+      :width 300px
+      :font-weight bold
+      :text-align center
+    .survey_section
+      +column(37.1,true)
+      :padding 0
+      fieldset
+        :color $surveyor_text_color !important
+        legend
+          :white-space normal !important
+      span.title
+        :display block
+        :padding 5px 0
+        :font-weight bold
+        :font-size 1.5em
+      .previous_section
+        +column(10,true)
+        :margin 1.2em 0 0 0
+        :float left
+        :text-align left
+      .next_section
+        +column(10,true)
+        :float right
+        :margin 1.2em 0 0 0
+        :text-align right
+      .section_questions
+        +column(37,true)
+        :margin 0
+        :padding 1em 0.3em
+
+      #section_header
+        +column(37,true)
+        :border-bottom 2px solid #999
+        .title
+          +column(17,true)
+          :font-weight bold
+          :font-size 1.6em
+          :text-align center
+          :padding-bottom 5px
+          :margin-top 15px
+      #section_footer
+        +column(37,true)
+        :margin-left auto
+        :margin-right auto
+        :border-top 2px solid #999
+      // question groups
+      fieldset.g_inline fieldset
+        :display inline
+      fieldset.g_grid
+        table
+          :border-collapse collapse
+          tr 
+            :margin-bottom 40px
+          th
+            :color $surveyor_text_color
+            :text-align center
+            ul
+              :text-align left
+          td
+            :text-align center
+        li.surveyor_radio label, li.surveyor_check_boxes label
+          :visibility hidden
+          :text-align center
+          input
+            :visibility visible
+            :text-align center !important
+            :vertical-align center !important
+      fieldset.g_repeater
+        ol fieldset
+          :display inline
+        table.repeater
+          :width auto
+          th
+            :background $surveyor_color
+            :text-align center 
+          td .question
+            :padding 0.2em
+        input[type="submit"].add_row
+          :font-size 0.7em    
+      fieldset
+        :padding-top 5px
+          :margin-bottom 10px
+        ol
+          fieldset
+            :vertical-align top
+          li
+            label, input
+              :vertical-align top
+            :padding 1px 0
+            p.inline-hints
+              :margin 0
+              :padding 0
+              :display inline
+          li.inline
+            :display inline
+          li.datetime, li.time
+            input, fieldset, fieldset ol li
+              :display inline
+        &.q_inline ol li
+          :display inline
+        input, textarea, select
+          :margin 0 3px
+        input[type="text"], textarea
+          :font-size 1.0em
+
+      fieldset.q_hidden, fieldset.g_hidden
+        :display none
+      fieldset.q_dependent, fieldset.g_dependent
+        :background-color $surveyor_dependent_color
+        legend
+          :background-color $surveyor_dependent_color
+          :padding 3px 3px 3px 0
+      ol
+        li
+          :color $background_color
+          label
+            :color $surveyor_text_color
+      // buttons
+      input[type="submit"]
+        :font-size 1em
+        :border 1px
+        :padding 5px
+        :cursor pointer
+        :background-color $background_color
+    
+      // question groups and questions
+      fieldset>ol
+        :padding-left 1em  
+      fieldset.incomplete
+        :border-style solid
+        :border-width 2px
+        :border-color #FF0000
+      
+.awesome.regular
+  :font-weight bold !important
+  :font-size 12px !important
+  :background-color #520063 !important
+  :color #fff !important
+  :padding 4px 7px 5px !important
+.awesome.regular:active
+  padding: 5px 7px 4px !important
+
+.aweseom.regular.email
+  :background-color #DDDDDD !important
+  //:color= !nu_purple !important
+
+#footer
+  :width 100%
+  :background-color  $nu_site_footer_bg
+  :font-size 0.9em
+  #nascar
+    :width 900px
+    :margin-left auto
+    :margin-right auto
+    .nulogo, .fsmlogo, .nucatslogo, .nubiclogo, .nmhlogo, .nmfflogo
+      :float left
+      :margin 3px
+    p.version
+      :clear left
+      :padding-top 10px
