@@ -91,21 +91,10 @@ namespace :admin do
   task :create_admins, :roles => :app do
     run "cd #{current_path} && rake RAILS_ENV=#{rails_env} db:populate:admins"
   end
-
-  namespace :poller do
-    [:start, :stop, :restart].each do |t|
-      desc "#{t.to_s.capitalize}s poller"
-      task t, :roles => :app do
-        #run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec script/poller #{t.to_s}"
-      end
-    end
-  end
 end
 
 # backup the database before migrating
 before 'deploy:migrate', 'db:backup'
-
-before 'deploy:update_code', 'admin:poller:stop'
 
 # after deploying, generate static pages, copy over uploads and results, cleanup old deploys, aggressively set permissions
 after 'deploy:update_code', 'web:static', 'web:uploads_and_results', 'deploy:cleanup'
@@ -116,7 +105,6 @@ before 'web:disable', 'web:static'
 # restart the app after hiding the static maintenance page
 after 'web:enable', 'deploy:restart'
 
-after 'deploy:symlink', 'admin:poller:start'
 
 # Maintenance
 namespace :web do
@@ -167,8 +155,8 @@ namespace :db do
   end
 end
 
-require "whenever/capistrano"
-set(:whenever_command, "bundle exec whenever")
+#require "whenever/capistrano"
+#set(:whenever_command, "bundle exec whenever")
 
 # Inspiration
 # http://github.com/guides/deploying-with-capistrano
