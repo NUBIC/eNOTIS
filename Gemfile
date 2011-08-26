@@ -1,5 +1,5 @@
 # Basics
-gem "rails", "2.3.10"
+gem "rails", "2.3.14"
 gem "pg", '~> 0.9.0'
 gem "haml", '3.1.2'
 gem "rdiscount"

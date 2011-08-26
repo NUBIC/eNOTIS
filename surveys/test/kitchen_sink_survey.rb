@@ -1,4 +1,4 @@
-survey "Kitchen Sink survey" do
+survey "Kitchen Sink survey",:irb_number=>"STU00029464" do
 
   section "Basic questions" do
     # A label is a question that accepts no answers

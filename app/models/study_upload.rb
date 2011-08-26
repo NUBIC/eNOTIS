@@ -10,8 +10,8 @@ class StudyUpload < ActiveRecord::Base
   belongs_to :study
 
   # Mixins
-  has_attached_file :upload
-  has_attached_file :result
+  has_attached_file :upload,:path=> "/data/uploads/:id/:style/:basename.:extension"
+  has_attached_file :result,:path=> "/data/results/:id/:style/:basename.:extension"
   
   # Validators  
   validates_attachment_presence :upload # upload must be present on create, result is added later (update) by processor

@@ -97,7 +97,7 @@ end
 before 'deploy:migrate', 'db:backup'
 
 # after deploying, generate static pages, copy over uploads and results, cleanup old deploys, aggressively set permissions
-after 'deploy:update_code', 'web:static', 'web:uploads_and_results', 'deploy:cleanup'
+after 'deploy:update_code', 'web:static', 'deploy:cleanup'
 
 # the static maintenance page has to be generated before it can be displayed
 before 'web:disable', 'web:static'
@@ -139,12 +139,12 @@ namespace :web do
     run "rm -f #{current_path}/public/maintenance.html"
   end
 
-  desc "Link upload/result files"
-  task :uploads_and_results, :roles => :web, :except => {:no_release => true} do
-    run "mkdir -p #{shared_path}/uploads #{shared_path}/results"
-    run "ln -fs #{shared_path}/uploads #{latest_release}/public/uploads"
-    run "ln -fs #{shared_path}/results #{latest_release}/public/results"
-  end
+  #desc "Link upload/result files"
+  #task :uploads_and_results, :roles => :web, :except => {:no_release => true} do
+  #  run "mkdir -p #{shared_path}/uploads #{shared_path}/results"
+  #  run "ln -fs #{shared_path}/uploads #{latest_release}/public/uploads"
+  #  run "ln -fs #{shared_path}/results #{latest_release}/public/results"
+  #end
 end
 
 # Database
