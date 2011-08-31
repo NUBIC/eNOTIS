@@ -1,6 +1,0 @@
-development: localhost:6379
-test: localhost:6379
-cucumber: localhost:6379
-hudson: localhost:6379
-staging: q-staging.nubic.northwestern.edu:6379
-production: q-prod.nubic.northwestern.edu:6379
