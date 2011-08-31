@@ -1,4 +1,4 @@
-module SurveyorControllerCustomMethods
+module PublicSurveyorControllerCustomMethods
   def self.included(base)
     # base.send :before_filter, :require_user   # AuthLogic
     # base.send :before_filter, :login_required  # Restful Authentication
@@ -82,5 +82,5 @@ module SurveyorControllerCustomMethods
 end
 class PublicSurveyorController < ApplicationController
   include Surveyor::SurveyorControllerMethods
-  include SurveyorControllerCustomMethods
+  include PublicSurveyorControllerCustomMethods
 end

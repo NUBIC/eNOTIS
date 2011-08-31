@@ -140,7 +140,7 @@ Factory.define :study_upload do |s|
 end
 
 Factory.define :survey do |s|
-  s.assoctiation :study
+  s.association :study
   s.title         {['test1','test2','test3','test4'].rand}
   s.access_code         {['test1','test2','test3','test4'].rand}
 end

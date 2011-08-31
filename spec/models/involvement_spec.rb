@@ -5,10 +5,6 @@ describe Involvement do
   #  ResqueSpec.reset!
   end
 
-  it "enques the involvement" do
-    involvement = Factory(:involvement)
-    EmpiWorker.should have_queued(involvement.id)
-  end
 
   it "should accept gender, ethnicity, and race (case insensitive) and set the right case" do
     Involvement.new(:gender => "FEMALE").gender.should == "Female"

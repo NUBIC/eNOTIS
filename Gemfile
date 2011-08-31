@@ -12,8 +12,8 @@ gem 'erubis'
 gem "soap4r", '>=1.5.8'
 gem "libxml-ruby", '>=1.1.3'
 gem "daemons"
-gem "aasm"
-gem "couchrest"
+#gem "aasm"
+#gem "couchrest"
 
 # Import/export
 gem "fastercsv", '>=1.5.0'
@@ -63,22 +63,22 @@ gem "surveyor", '0.20.0'
 # end
 
 # Resque
-gem 'SystemTimer'
-gem 'redis' , '~> 2.0.0'
-gem 'resque', '~> 1.10.0'
-gem 'resque-jobs-per-fork', '~> 0.4.0'
-gem 'resque-scheduler', '~> 1.9.0'
+#gem 'SystemTimer'
+#gem 'redis' , '~> 2.0.0'
+#gem 'resque', '~> 1.10.0'
+#gem 'resque-jobs-per-fork', '~> 0.4.0'
+#gem 'resque-scheduler', '~> 1.9.0'
 
 # Whenever
-gem 'whenever', :require => false
+#gem 'whenever', :require => false
 
 # Testing
 group :test, :cucumber, :hudson do
   gem 'rcov'
-  gem 'cucumber', "0.8.4"
+  gem 'cucumber'
   gem "rspec", "~> 1.3.0"
   gem "rspec-rails", "~> 1.3.0"
-  gem "resque_spec", '~> 0.2.0', :require => nil
+  #gem "resque_spec", '~> 0.2.0', :require => nil
   gem "cucumber-rails", "~> 0.3.0"
   gem "webrat", "~> 0.6.0"
   gem "database_cleaner", "~> 0.0"

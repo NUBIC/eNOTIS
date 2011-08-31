@@ -32,6 +32,8 @@ class Involvement < ActiveRecord::Base
   has_many :involvement_events, :dependent => :destroy
   has_many :response_sets, :dependent => :destroy
 
+  before_create :set_uuid
+
   # Atrributes
   accepts_nested_attributes_for :involvement_events,
     :reject_if => lambda {|a| (a["occurred_on"].blank?) }
@@ -328,16 +330,6 @@ class Involvement < ActiveRecord::Base
   end
 
 
-  # TODO: learn how to mock this for testing
-  def after_save
-    unless self.study.read_only?
-      begin
-        Resque.enqueue(EmpiWorker, self.id)
-      rescue Errno::ECONNREFUSED => e
-        logger.debug("the EMPI would process involvement #{self.id} if resque was running")
-      end
-    end
-  end
 
   named_scope :empi_eligible, :joins => :study, :conditions => ['studies.read_only = ? or studies.read_only IS NULL', false]
   
@@ -357,6 +349,10 @@ class Involvement < ActiveRecord::Base
   end
 
   private
+
+  def set_uuid
+    self.uuid = UUID.generate unless self.study.surveys.empty?
+  end
   def set_race_terms(rterms)
     rterms.map(&:downcase).each do |term|
       by_term = {}

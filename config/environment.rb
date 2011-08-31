@@ -13,7 +13,7 @@ Rails::Initializer.run do |config|
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
-  config.autoload_paths += %W( #{RAILS_ROOT}/app/workers )
+  #config.autoload_paths += %W( #{RAILS_ROOT}/app/workers )
   
   # Specify gems that this application depends on and have them installed with rake gems:install
 
@@ -23,7 +23,7 @@ Rails::Initializer.run do |config|
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
-  config.middleware.use 'ResqueWeb'
+  #config.middleware.use 'ResqueWeb'
   # Skip frameworks you're not going to use. To use Rails without a database,
   # you must remove the Active Record framework.
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]

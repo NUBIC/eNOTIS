@@ -8,7 +8,7 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
-require 'resque/tasks'
-require 'resque_scheduler/tasks'
-task "resque:setup" => :environment
+#require 'resque/tasks'
+#require 'resque_scheduler/tasks'
+#task "resque:setup" => :environment
 require 'tasks/surveyor'

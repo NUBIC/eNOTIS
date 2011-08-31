@@ -40,4 +40,4 @@ end
 # config.active_record.schema_format = :sql
 require 'empi' # include the symbolize! Hash extension
 EMPI_SERVICE = {:uri => nil, :credentials => nil}
-config.middleware.delete('ResqueWeb')
+#config.middleware.delete('ResqueWeb')

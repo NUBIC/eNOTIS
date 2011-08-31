@@ -118,6 +118,12 @@ class InvolvementsController < ApplicationController
     authorize! :import, @study
     @up = StudyUpload.create(:netid => current_user.netid, :study_id => @study.id, :upload => params[:file])
     flash[:notice] = (!@up.upload_exists? or @up.legit?) ? @up.summary : "Oops. Your upload had some issues.<br/>Please click <a href='#{@study.irb_number ? import_study_path(@study) : '#'}' rel='#import'>Import</a> to see the result."
+    #if (!@up.upload_exists? or @up.legit?)
+    #  flash[:notice]= @up.summary
+    #  return redirect_to study_path(@study)
+    #else
+    # @up.result_file_name.blank? ? redirect_to(study_path(@study)) : send_data(File.read(@up.result.path), :filename => @up.result_file_name, :content_type => 'text/csv') #"Oops. Your upload had some issues.<br/>Please click <a href='#{@study.irb_number ? import_study_path(@study) : '#'}' rel='#import'>Import</a> to see the result."
+    #end
     redirect_to study_path(@study)
     # redirect_to_studies_or_study(params[:study_id], success ? :notice : :error, success ? @up.summary : "Oops. Your upload had some issues.<br/>Please click <a href='#{@study.irb_number ? import_study_path(@study) : '#'}' rel='#import'>Import</a> to see the result.")
   end
