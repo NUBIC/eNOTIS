@@ -37,10 +37,11 @@ module SurveyorControllerCustomMethods
     super
   end
   def update
-      @response_set = ResponseSet.find_by_access_code(params[:response_set_code], :include => {:responses => :answer}, :lock => true)
+      @response_set = ResponseSet.find_by_access_code(params[:response_set_code], :include => {:responses => :answer})
       return redirect_with_message(available_surveys_path, :notice, t('surveyor.unable_to_find_your_responses')) if @response_set.blank?
       saved = false
       ActiveRecord::Base.transaction do
+        @response_set = ResponseSet.find_by_access_code(params[:response_set_code], :include => {:responses => :answer}, :lock => true)
         saved = @response_set.update_attributes(:responses_attributes => ResponseSet.reject_or_destroy_blanks(params[:r]))
         saved &=@response_set.complete_with_validation! if saved && params[:finish]
         #saved &= @response_set.save
