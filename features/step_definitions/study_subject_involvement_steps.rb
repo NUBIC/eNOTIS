@@ -98,7 +98,7 @@ Given /^the readonly study "([^\"]*)" has the following subjects$/ do |id, table
 end
 
 Given /^the study "([^\"]*)" has the following subjects$/ do |id, table|
-  ResqueSpec.reset!
+  #ResqueSpec.reset!
   study = Study.find_by_irb_number(id)
   table.hashes.each do |hash|
     _involvement = Factory(:involvement, :study => study, :subject => Factory(:fake_subject, hash))
