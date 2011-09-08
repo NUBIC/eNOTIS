@@ -10,7 +10,7 @@ gem 'erubis'
 
 # External services
 gem "soap4r", '>=1.5.8'
-gem "libxml-ruby", '>=1.1.3'
+gem "libxml-ruby", '>=2.1.1'
 gem "daemons"
 #gem "aasm"
 #gem "couchrest"
