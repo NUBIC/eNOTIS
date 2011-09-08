@@ -1,0 +1,46 @@
+.instructions
+  %h3 Instructions
+  = "Your upload <strong>must</strong>: (#{link_to 'see our sample file', sample_involvements_path})".html_safe
+  %ol
+    %li
+      %strong Be a .csv file.
+      In Excel save as "Comma Separated Values (.csv)"
+    %li
+      %strong= "Have all of the required column headings"
+      = "(#{link_to 'see our sample file', sample_involvements_path}), even if you don't have data for them.".html_safe
+    %li
+      %strong Use exactly these NIH reporting values:
+      %ul
+        %li= "Gender: #{Involvement.genders.join(', ')}"
+        %li= "Ethnicity: #{Involvement.ethnicities.join(', ')}"
+        %li= "Race: #{Involvement.races.join(', ')}"
+
+.upload
+  %h3 Import subjects
+  - form_tag(study_study_uploads_path(@study), :multipart => true) do
+    = hidden_field_tag("study_id", @study.irb_number.to_s)
+    = file_field_tag(:file)
+    = submit_tag( "Upload" )
+  %br
+
+- unless @uploads.blank?
+  .uploads
+    %table.display
+      %thead
+        %tr
+          %th Uploaded
+          %th By
+          %th Original
+          %th Result
+          %th Status
+      %tbody
+        - @uploads.each do |u|
+          %tr
+            %td
+              %span{:title => u.created_at.to_s(:db)}
+                = time_ago_in_words(u.created_at)
+                ago
+            %td= u.netid
+            %td= link_to("Original", study_study_upload_path(@study,u,:type=>'upload'))
+            %td= link_to("Result", study_study_upload_path(@study,u,:type=>'result'))
+            %td= u.summary

@@ -49,16 +49,6 @@ class StudiesController < ApplicationController
     end
   end
 
-  def import
-    @study = Study.find_by_irb_number(params[:id])
-    authorize! :import, @study
-    @uploads = @study.study_uploads
-    respond_to do |format|
-      format.html
-      format.js {render :layout => false}
-    end
-  end
-
   def help
     #?? help page? TODO: remove this -BLC
   end

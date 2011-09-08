@@ -140,7 +140,7 @@
       %br.clear
     - unless @study.read_only?
       #add{:rel => new_involvement_path(:study => @study)}
-      #import{:rel => import_study_path}
+      #import{:rel => study_study_uploads_path(@study)}
     - unless @involvements.empty?
       #export{:rel => new_report_path(:study => @study)}
     #report
