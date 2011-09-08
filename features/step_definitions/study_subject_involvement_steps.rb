@@ -92,7 +92,7 @@ Given /^the readonly study "([^\"]*)" has the following subjects$/ do |id, table
   study = Study.find_by_irb_number(id)
   table.hashes.each do |hash|
     _involvement = Factory(:involvement, :study => study, :subject => Factory(:fake_subject, hash))
-    EmpiWorker.should_not have_queued(_involvement.id)
+    #EmpiWorker.should_not have_queued(_involvement.id)
   end
 end
 
