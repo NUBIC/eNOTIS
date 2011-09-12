@@ -39,8 +39,8 @@ Feature: Audit trail
     Then there should be 4 activities with
       | controller   | action | whodiddit |
       | studies      | show   | usergey   |
-      | studies      | import | usergey   |
-      | involvements | upload | usergey   |
+      | uploads      | index | usergey   |
+      | uploads | create | usergey   |
     Then there should be 26 versions with
       | item_type        | event  | whodunnit |
       | Subject          | create | usergey   |

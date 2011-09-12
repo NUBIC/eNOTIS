@@ -35,7 +35,7 @@
     = link_to("Details and Charts", '#study_information', :class => 'charts')
     - unless @study.read_only?
       = link_to("Add", new_involvement_path(:study => @study), :class => 'add')
-      = link_to("Import", study_study_upload_path(@study), :class => 'import')
+      = link_to("Import", study_uploads_path(@study), :class => 'import')
     - unless @involvements.empty?
       = link_to("Export", new_report_path(:study => @study), :class => 'export')
     = link_to("Reports", '#reports', :class => 'report')
@@ -140,7 +140,7 @@
       %br.clear
     - unless @study.read_only?
       #add{:rel => new_involvement_path(:study => @study)}
-      #import{:rel => study_study_uploads_path(@study)}
+      #import{:rel => study_uploads_path(@study)}
     - unless @involvements.empty?
       #export{:rel => new_report_path(:study => @study)}
     #report

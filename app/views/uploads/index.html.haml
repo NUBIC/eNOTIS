@@ -17,7 +17,7 @@
 
 .upload
   %h3 Import subjects
-  - form_tag(study_study_uploads_path(@study), :multipart => true) do
+  - form_tag(study_uploads_path(@study), :multipart => true) do
     = hidden_field_tag("study_id", @study.irb_number.to_s)
     = file_field_tag(:file)
     = submit_tag( "Upload" )
@@ -41,6 +41,6 @@
                 = time_ago_in_words(u.created_at)
                 ago
             %td= u.netid
-            %td= link_to("Original", study_study_upload_path(@study,u,:type=>'upload'))
-            %td= link_to("Result", study_study_upload_path(@study,u,:type=>'result'))
+            %td= link_to("Original", study_upload_path(@study,u,:type=>'upload'))
+            %td= link_to("Result", study_upload_path(@study,u,:type=>'result'))
             %td= u.summary
