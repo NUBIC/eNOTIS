@@ -43,8 +43,10 @@ module PublicSurveyorControllerCustomMethods
       saved = false
       ActiveRecord::Base.transaction do
         @response_set = ResponseSet.find_by_access_code(params[:response_set_code], :include => {:responses => :answer},:lock=>true)
-        saved = @response_set.update_attributes(:responses_attributes => ResponseSet.reject_or_destroy_blanks(params[:r]))
-        saved &=@response_set.complete_with_validation! if saved && params[:finish]
+        if @response_set.completed_at.blank?
+          saved = @response_set.update_attributes(:responses_attributes => ResponseSet.reject_or_destroy_blanks(params[:r]))
+          saved &=@response_set.complete_with_validation! if saved && params[:finish]
+        end
       end
      return redirect_to(edit_my_public_survey_path({:review=>true,:section=>@response_set.first_incomplete_section,:response_set_code=>@response_set.access_code})) if params[:finish] and !saved
      if saved && params[:finish]
