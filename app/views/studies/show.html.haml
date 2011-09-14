@@ -61,7 +61,7 @@
             %th.hidden
         %tbody
           - @involvements.each do |involvement|
-            %tr{:class => "subject_#{involvement.subject.id} row_expandable"}
+            %tr{:class => "subject_#{involvement.subject.id} #{@study.surveys.empty? ? '' : 'row_expandable'} "}
               //#{involvement.response_sets.empty? ? '' : 'row_expandable'}"}
               %td.expander
               %td= involvement.case_number
