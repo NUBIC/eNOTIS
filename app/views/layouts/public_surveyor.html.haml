@@ -18,6 +18,7 @@
         #header_left_home
           #logo
             = image_tag("large_nu_logo.gif")
+        #survey_title=@survey.title unless @survey.nil? or @response_set.nil?
       #main
         =yield
     #footer

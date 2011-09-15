@@ -1,7 +1,8 @@
 - div_for @section, :class => @section.custom_class do
   #section_header
     .previous_section= previous_section
-    %span.title=@section.title
+    -if @section.survey.sections.size > 1
+      %span.title=@section.title
     .next_section= next_section
   .section_questions
     - qs ||= []
