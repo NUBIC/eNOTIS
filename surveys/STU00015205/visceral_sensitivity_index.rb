@@ -1,4 +1,4 @@
-survey "Visceral Sensitivity Index",:irb_number=>"STU00015205",:score_configurations_attributes=>[{:name=>'Total Score',:algorithm=>'total_sum'}] do 
+survey "Visceral Sensitivity Index",:irb_number=>"STU00015205",:score_configurations_attributes=>[{:name=>'Total Score',:algorithm=>'total_sum'}],:is_public => true  do 
   section "iVisceral Sensitivity Index" do 
     label "<strong>PLEASE READ THIS CAREFULLY BEFORE ANSWERING</strong>"
 

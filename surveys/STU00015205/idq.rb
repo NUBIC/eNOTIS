@@ -1,4 +1,4 @@
-survey "Impaction Dysphagia Questionnaire" ,:irb_number=>'STU00015205' do 
+survey "Impaction Dysphagia Questionnaire" ,:irb_number=>'STU00015205',:is_public =>true  do 
   section "main" do
 
     grid "Over the past 30 days, on average, how often have you had the following?" do

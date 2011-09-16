@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "default_value"
-    t.string   "display_type"
     t.string   "api_id"
+    t.string   "display_type"
   end
 
   create_table "dependencies", :force => true do |t|
@@ -188,6 +188,8 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.string   "custom_renderer"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "correct_answer_id"
+    t.string   "api_id"
   end
 
   create_table "response_sets", :force => true do |t|
@@ -200,6 +202,8 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  # unrecognized index "response_sets_ac_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
   create_table "responses", :force => true do |t|
     t.integer  "response_set_id"
@@ -362,16 +366,19 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.string   "data_export_identifier"
     t.string   "common_namespace"
     t.string   "common_identifier"
+    t.boolean  "is_public"
     t.datetime "active_at"
     t.datetime "inactive_at"
     t.string   "css_url"
     t.string   "custom_class"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "display_order"
     t.string   "api_id"
     t.integer  "survey_group_id"
-    t.integer  "display_order"
   end
+
+  # unrecognized index "surveys_ac_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
   create_table "users", :force => true do |t|
     t.string   "netid"

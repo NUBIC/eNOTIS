@@ -1,4 +1,4 @@
-survey "BSI-18" ,:irb_number=>'STU00015205' ,:score_configurations_attributes=>[{:name=>'General Distress Scale',:algorithm=>'total_sum'},{:name=>'Somatization',:algorithm=>"partial_sum",:question_code=>"somatization"},{:name=>'Depression', :algorithm=>"partial_sum",:question_code=>"depression"},{:name=>'Anxiety', :algorithm=>"partial_sum",:question_code=>"anxiety"}]do 
+survey "BSI-18" ,:irb_number=>'STU00015205' ,:score_configurations_attributes=>[{:name=>'General Distress Scale',:algorithm=>'total_sum'},{:name=>'Somatization',:algorithm=>"partial_sum",:question_code=>"somatization"},{:name=>'Depression', :algorithm=>"partial_sum",:question_code=>"depression"},{:name=>'Anxiety', :algorithm=>"partial_sum",:question_code=>"anxiety"}], :is_public=>true do 
   section "main" do
 
     label"Instructions: Below is a list of problems people sometimes have. Please read each one carefully, and blacken the circle that best describes HOW MUCH THAT PROBLEM HAS DISTRESSED OR BOTHERED YOU DURING THE PAST 7 DAYS INCLUDING TODAY."

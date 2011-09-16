@@ -1,4 +1,4 @@
-survey "Heartburn Vigilance and Awareness Scale" ,:irb_number=>'STU00015205',:score_configurations_attributes=>[{:name=>'Heart Vigilance and Awareness Scale',:algorithm=>'total_sum'},{:name=>'Attention to Pain',:algorithm=>'partial_sum',:question_code=>'pain'},{:name=>"Attention to change in pain",:algorithm=>'partial_sum',:question_code=>'pain_delta'}] do 
+survey "Heartburn Vigilance and Awareness Scale" ,:irb_number=>'STU00015205',:score_configurations_attributes=>[{:name=>'Heart Vigilance and Awareness Scale',:algorithm=>'total_sum'},{:name=>'Attention to Pain',:algorithm=>'partial_sum',:question_code=>'pain'},{:name=>"Attention to change in pain",:algorithm=>'partial_sum',:question_code=>'pain_delta'}],:is_public=>true  do 
   section "main" do
 
     group "Please rate on the following scale how often the statements below are true for you.",:display_type=>"manual_grid" do

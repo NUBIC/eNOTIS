@@ -4,6 +4,6 @@ class AddUuidToInvolvement < ActiveRecord::Migration
   end
 
   def self.down
-    remove_columng :involvements
+    remove_column :involvements, :uuid
   end
 end

@@ -1,4 +1,4 @@
-survey "Anxiety Sensitivity Inventory" ,:irb_number=>'STU00015205',:score_configurations_attributes=>[{:name=>'Anxiety Sensitivity Index',:algorithm=>'total_sum'}] do 
+survey "Anxiety Sensitivity Inventory" ,:irb_number=>'STU00015205',:score_configurations_attributes=>[{:name=>'Anxiety Sensitivity Index',:algorithm=>'total_sum'}],:is_public=>true do 
   section "main" do
 
     grid "Choose the one phrase that best represents the extent to which

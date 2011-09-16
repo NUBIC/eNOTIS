@@ -5,7 +5,7 @@ class Survey < ActiveRecord::Base
   belongs_to :study
 
   default_scope :order => "title"
-  named_scope :public, :conditions=>["surveys.public is true"]
+  named_scope :public, :conditions=>["surveys.is_public is true"]
   accepts_nested_attributes_for :score_configurations
 
   before_create :associate_study

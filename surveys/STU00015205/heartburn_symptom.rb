@@ -1,4 +1,4 @@
-survey "Heartburn Symptom Experience Questionnaire" ,:irb_number=>'STU00015205',:score_configurations_attributes=>[{:name=>"catastrophizing scale",:algorithm=>'total_sum'}] do 
+survey "Heartburn Symptom Experience Questionnaire" ,:irb_number=>'STU00015205',:score_configurations_attributes=>[{:name=>"catastrophizing scale",:algorithm=>'total_sum'}], :is_public => true do 
   section "main" do
 
     label "We are interested in the types of thoughts and feelings that you have when you experience heartburn sensations. Listed below are 13 statements describing different thoughts and feelings that may be associated with the discomfort in your chest. <strong>Using the following scale, please indicate the degree to which you have these thoughts and feelings when you are experiencing heartburn symptoms.</strong>"

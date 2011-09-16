@@ -1,4 +1,4 @@
-survey "iPad™ Feasibility and Satisfaction " ,:irb_number=>'STU00015205' do 
+survey "iPad™ Feasibility and Satisfaction " ,:irb_number=>'STU00015205',:is_public=> true do 
   section "main" do
 
       q_ipad_1 "How easy was it to read the iPad™?",:pick=>:one

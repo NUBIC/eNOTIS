@@ -9,7 +9,7 @@ module PublicSurveyorControllerCustomMethods
   # Actions
 
   def new
-    @survey = Survey.find_by_access_code(params[:survey_code])
+    @survey = Survey.public.find_by_access_code(params[:survey_code])
     respond_to do |format|
       format.js {render :layout => false}
       format.html
@@ -17,7 +17,7 @@ module PublicSurveyorControllerCustomMethods
   end
 
   def create
-    @survey = Survey.find_by_access_code(params[:survey_code])    
+    @survey = Survey.public.find_by_access_code(params[:survey_code])    
     @involvement = @survey.study.involvements.find_by_uuid(params[:uuid])
     if @involvement.blank?
       flash[:notice] = "Unknown access code"

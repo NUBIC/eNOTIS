@@ -1,4 +1,4 @@
-survey "Discomfort Tolerance Scale",:irb_number=>"STU00015205", :score_configurations_attributes=>[{:name=>'Discomfort Tolerance Scale',:algorithm=>'total_sum'}] do 
+survey "Discomfort Tolerance Scale",:irb_number=>"STU00015205", :score_configurations_attributes=>[{:name=>'Discomfort Tolerance Scale',:algorithm=>'total_sum'}],:is_public => true do 
   section "main" do 
 
     group "Below are a list of statements regarding your ability to tolerate physical discomfort. Please indicate the degree to which each statement is like you, using the following scale:",:display_type=>"manual_grid" do 

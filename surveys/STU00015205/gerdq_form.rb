@@ -1,4 +1,4 @@
-survey "GerdQ",:irb_number=>"STU00015205",:score_configurations_attributes=>[{:name=>"Total Score",:algorithm=>'total_sum'},{:name=>"Disease Impact Score",:algorithm=>'partial_sum',:question_code=>'disease_impact'}] do
+survey "GerdQ",:irb_number=>"STU00015205",:score_configurations_attributes=>[{:name=>"Total Score",:algorithm=>'total_sum'},{:name=>"Disease Impact Score",:algorithm=>'partial_sum',:question_code=>'disease_impact'}],:is_public => true do
   
   section "GerdQ" do
 
