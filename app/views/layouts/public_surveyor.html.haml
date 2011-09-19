@@ -4,7 +4,9 @@
   %head
     %title= "eCapture"
     =stylesheet_link_tag("compiled/public_surveyor")
-    =surveyor_javascripts
+    //TODO
+    //need to find a way to fix the issue with javascript
+    //=surveyor_javascripts
   %body
     #container
       #header
@@ -18,7 +20,7 @@
         #header_left_home
           #logo
             = image_tag("large_nu_logo.gif")
-        #survey_title=@survey.title unless @survey.nil? or @response_set.nil?
+        #survey_title=@survey.title unless @survey.nil? 
       #main
         =yield
     #footer
