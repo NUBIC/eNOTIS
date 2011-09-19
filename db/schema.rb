@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
   end
 
   # unrecognized index "involvements_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  # unrecognized index "involvements_uuid_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
   create_table "medical_services", :force => true do |t|
     t.integer  "study_id"

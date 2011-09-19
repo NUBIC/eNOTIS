@@ -351,7 +351,7 @@ class Involvement < ActiveRecord::Base
   private
 
   def set_uuid
-    self.uuid = UUID.generate unless self.study.surveys.empty?
+    self.uuid = UUID.generate if self.uuid.blank?
   end
   def set_race_terms(rterms)
     rterms.map(&:downcase).each do |term|
