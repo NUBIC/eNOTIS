@@ -25,12 +25,12 @@ class Survey < ActiveRecord::Base
 
   def data_export(params)
     #need to add participant attributes to the answers table
-    answers= ["first_name","last_name","case_number","nmh_mrn","ric_mrn","nmff_mrn","date"]
+    answers= ["first_name","last_name","case_number","nmh_mrn","ric_mrn","nmff_mrn","effective_date"]
     answers += self.sections.collect{|sec| sec.questions}.flatten.collect{|q| q.answers}.flatten.collect{|a| a.id.to_s}.flatten
     t = Ruport.Table(answers)
     response_sets.each do |response_set|
       result = {"fist_name"=>response_set.involvement.first_name,"last_name"=>response_set.involvement.last_name,"case_number"=>response_set.involvement.case_number,
-               "ric_mrn"=> response_set.involvement.subject.ric_mrn,"nmh_mrn"=>response_set.involvement.subject.nmh_mrn,"nmff_mrn"=>response_set.involvement.subject.nmff_mrn}
+               "ric_mrn"=> response_set.involvement.subject.ric_mrn,"nmh_mrn"=>response_set.involvement.subject.nmh_mrn,"nmff_mrn"=>response_set.involvement.subject.nmff_mrn,"effective_date"=>response_set.effective_date}
       response_set.responses.each do |response|
         result[response.answer.id.to_s] = response.to_s
       end
@@ -59,13 +59,12 @@ class Survey < ActiveRecord::Base
   end
 
   def score_export(params)
-    headers = ["first_name","last_name","case_number","date"]
+    headers = ["first_name","last_name","case_number","nmh_mrn","ric_mrn","nmff_mrn","effective_date"]
     headers << score_configurations.collect{|sc| sc.name}
     t = Ruport.Table(headers.flatten!)
     response_sets.each do |response_set|
-      #score_hash= involvements.detect{|involvement| involvement.id==response_set.involvement_id}.identifiers
-      score_hash = {"fist_name"=>response_set.involvement.first_name,"last_name"=>response_set.involvement.last_name,"case_number"=>response_set.involvement.case_number}
-      score_hash.merge!({"date"=>response_set.completed_at.to_date})
+      score_hash = {"fist_name"=>response_set.involvement.first_name,"last_name"=>response_set.involvement.last_name,"case_number"=>response_set.involvement.case_number,
+                   "ric_mrn"=> response_set.involvement.subject.ric_mrn,"nmh_mrn"=>response_set.involvement.subject.nmh_mrn,"nmff_mrn"=>response_set.involvement.subject.nmff_mrn,"effective_date"=>response_set.effective_date}
       response_set.scores.each do  |score|
         score_hash.merge!({score.score_configuration.name=>score.value})
       end
