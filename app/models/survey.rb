@@ -25,16 +25,14 @@ class Survey < ActiveRecord::Base
 
   def data_export(params)
     #need to add participant attributes to the answers table
-    answers= ["first_name","last_name","case_number","date"]
-    sections.collect{|sec| sec.questions}.flatten.collect{|q| q.answers}.flatten.each do |answer|
-      answers << "q_#{answer.question.id}_a_#{answer.id}"
-    end
+    answers= ["first_name","last_name","case_number","nmh_mrn","ric_mrn","nmff_mrn","date"]
+    answers += self.sections.collect{|sec| sec.questions}.flatten.collect{|q| q.answers}.flatten.collect{|a| a.id.to_s}.flatten
     t = Ruport.Table(answers)
     response_sets.each do |response_set|
-      result = {"fist_name"=>response_set.involvement.first_name,"last_name"=>response_set.involvement.last_name,"case_number"=>response_set.involvement.case_number}
-      #result= involvements.detect{|involvement| involvement.id==response_set.involvement_id}.identifiers
+      result = {"fist_name"=>response_set.involvement.first_name,"last_name"=>response_set.involvement.last_name,"case_number"=>response_set.involvement.case_number,
+               "ric_mrn"=> response_set.involvement.subject.ric_mrn,"nmh_mrn"=>response_set.involvement.subject.nmh_mrn,"nmff_mrn"=>response_set.involvement.subject.nmff_mrn}
       response_set.responses.each do |response|
-        result["q_#{response.question.id}_a_#{response.answer.id}"] = response.to_s 
+        result[response.answer.id.to_s] = response.to_s
       end
       t << result
     end
@@ -44,17 +42,17 @@ class Survey < ActiveRecord::Base
   def key_export
     t = Ruport.Table('id','question_data_export_identifier',
                      'question_reference_identifier','question_text',
-                     'answer_data_export_identifier','answer_reference_identifier','answer_text')
-    qs = sections.collect{|sec| sec.questions}.flatten
-    answers =   qs.collect{|q| q.answers}.flatten
+                     'answer_data_export_identifier','answer_reference_identifier','answer_text','answer_weight')
+    answers = self.sections.collect{|sec| sec.questions}.flatten.collect{|q| q.answers}.flatten
     answers.each do |a|
-      t << {"id" => "q_#{a.question.id}_a_#{a.id}", 
+      t << {"id" => a.id.to_s, 
         'question_data_export_identifier' => a.question.data_export_identifier,
         'question_reference_identifier'=>a.question.reference_identifier,
         'question_text'=>a.question.text,
         'answer_data_export_identifier'=>a.data_export_identifier,
         'answer_reference_identifier'=> a.reference_identifier,
-        'answer_text'=>a.text
+        'answer_text'=>a.text,
+        'answer_weight'=>a.weight
            }
     end
     return t.as(:csv)
@@ -75,16 +73,6 @@ class Survey < ActiveRecord::Base
     end
     return t.as(:csv)
   end
-
-  #def send_access_codes(current_user,params)
-  #  involvements = Involvement.with_user_and_study(current_user,self.irb_number)
-  #  involvements = involvements.select{|i| params[:recipients].include?(i.id.to_s)}
-  #  raise "ASDFsdgdasg" if involvements.empty?
-  #  involvements.each do |involvement|
-  #    rs = ResponseSet.create(:survey => self, :involvement_id => involvement.id,:effective_date=> Date.today)
-  #    Notifier.deliver_access_code(params.merge({:involvement=>involvement,:survey=>self,:response_set=>rs}))
-  #  end
-  #end
 
   private
   def associate_study
