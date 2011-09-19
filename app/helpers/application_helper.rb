@@ -67,16 +67,6 @@ module ApplicationHelper
     end
   end
 
-  def event_info(inv_event)
-    if inv_event
-      content_tag("span", "#{inv_event.occurred_on.strftime("%m/%d/%Y")} #{image_tag('/images/icons/note.png', :title => inv_event.note) unless inv_event.note.blank?}".html_safe ,
-                :class => inv_event.event_type.name.downcase,
-                :title => inv_event.event_type.name).html_safe
-    else
-      content_tag("span", "").html_safe
-    end
-  end
-
   def gender_options(selected = nil)
     options_for_select(Involvement.genders, selected)
   end

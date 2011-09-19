@@ -70,12 +70,12 @@
               %td= involvement.subject.nmh_mrn
               %td= involvement.subject.ric_mrn
               %td= involvement.subject_name_or_case_number
-              %td= event_info(involvement.consented)
-              %td
-                = event_info(involvement.completed)
-                = event_info(involvement.withdrawn)
+              %td= involvement.consented.occurred_on unless involvement.consented.nil?
+              %td{:class => "#{involvement.withdrawn.nil? ? '' : 'withdrawn'}"}
+                = involvement.completed.occurred_on unless involvement.completed.nil?
+                = involvement.withdrawn.occurred_on unless involvement.withdrawn.nil?
               - unless @study.read_only?
-                %td<
+                %td
                   = link_to("Edit", edit_involvement_path(involvement), :rel => "#involvement") + "&nbsp;&nbsp;".html_safe + link_to('Delete', involvement_path(involvement), :confirm_msg => "You are about to delete this subject. Deleting will completely remove all of the subject's information from the study.", :method => :delete, :class=>'delete')
                   -unless @study.surveys.empty?
                     =link_to("Start Form",available_surveys_path(:involvement_id=>involvement.id,:study_id=>@study.id),:rel=>'#start_form')
