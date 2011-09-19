@@ -73,11 +73,11 @@ module PublicSurveyorControllerCustomMethods
   # Paths
   def surveyor_index
     # most of the above actions redirect to this method
-    super # available_surveys_path
+    #super # available_surveys_path
   end
   def surveyor_finish
     # the update action redirects to this method if given params[:finish]
-    super # available_surveys_path
+    #super # available_surveys_path
   end
 end
 class PublicSurveyorController < ApplicationController
