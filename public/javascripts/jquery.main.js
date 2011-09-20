@@ -91,6 +91,9 @@ $(document).ready(function() {
     "fnDrawCallback": activateRows,
     "iDisplayLength": 30,
     "sPaginationType": "full_numbers", 
+    "sScrollX": "100%",
+    "sScrollXInner": "110%",
+    "bScrollCollapse": true,
     "oLanguage": {"sZeroRecords": "<p><strong>No subjects yet - click 'Add' or 'Import' to get started. Or watch our <a rel='#intro'>4 minute introduction to eNOTIS</a>.</strong></p>"}
   });
   
