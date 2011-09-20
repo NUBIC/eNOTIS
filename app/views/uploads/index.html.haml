@@ -42,5 +42,5 @@
                 ago
             %td= u.netid
             %td= link_to("Original", study_upload_path(@study,u,:type=>'upload'))
-            %td= link_to("Result", study_upload_path(@study,u,:type=>'result'))
+            %td= link_to("Result", study_upload_path(@study,u,:type=>'result')) unless u.result_file_name.nil?
             %td= u.summary

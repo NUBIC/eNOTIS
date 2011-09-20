@@ -72,8 +72,8 @@
               ago
           %td= link_to u.netid, role_path(u.netid), :rel => '#roles'
           %td= link_to u.study.irb_number, study_path(u.study)
-          %td= link_to "Original", u.upload.url
-          %td= link_to("Result", u.result.url) unless u.result_file_name.nil?
+          %td= link_to("Original", study_upload_path(u.study,u,:type=>'upload'))
+          %td= link_to("Result", study_upload_path(u.study,u,:type=>'result')) unless u.result_file_name.nil?
           %td= u.summary
 
 #roles.overlay
