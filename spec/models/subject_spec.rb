@@ -22,11 +22,11 @@ describe Subject do
   # TODO:consider similar constraints on death_date? 
 
   it "should not accept crazy birthdate from the future" do
-    pending
+    #pending
     # a user actually entered this and we allowed it to go through. It stored it the DB okay
     # but the EDW import process broke.
-    s = Subject.new("birth_date" => "19556-06-10")
-    s.birth_date.should be_nil
+    s = Subject.create("birth_date" => Date.tomorrow.to_s)
+    s.id.should be_nil
     # And there should be errors
     s.should have(1).errors_on(:birth_date)
   end
@@ -37,4 +37,5 @@ describe Subject do
     s.birth_date.should be_nil
     s.should have(1).errors_on(:birth_date)
   end
+
 end

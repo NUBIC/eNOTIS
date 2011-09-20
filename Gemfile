@@ -7,13 +7,12 @@ gem "compass", '0.10.6'
 gem "capistrano", '~> 2.5.0'
 gem "fastthread"
 gem 'erubis'
+gem "validates_timeliness","2.3.1"
 
 # External services
 gem "soap4r", '>=1.5.8'
 gem "libxml-ruby", '>=2.1.1'
 gem "daemons"
-#gem "aasm"
-#gem "couchrest"
 
 # Import/export
 gem "fastercsv", '>=1.5.0'
