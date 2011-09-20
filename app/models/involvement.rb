@@ -176,7 +176,7 @@ class Involvement < ActiveRecord::Base
       subject_ids = bulk_data.map{|x| x[:subject][:external_patient_id]}
         study.involvements.each do |current_inv|
          unless subject_ids.include?(current_inv.subject.external_patient_id)
-           Involvement.delete(current_inv)
+           Involvement.destroy(current_inv)
          end
       end
     end

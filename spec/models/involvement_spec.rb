@@ -161,9 +161,12 @@ describe Involvement do
       # Deleted subjects we are assuming were added in error and it's therfore, okay to delete them.
       Involvement.import_update(@study, @dhash)
       @study.involvements.count.should == 1
-      sub = first_involvement.subject
+      inv = first_involvement
+      sub = inv.subject
       Involvement.import_update(@study, [])
       @study.involvements.count.should == 0
+      involvement_ids = @study.involvements.collect{|i| i.id}
+      InvolvementEvent.find_by_involvement_id(involvement_ids).should be nil
       Subject.find(sub.id).should_not be_nil
     end
 
