@@ -32,9 +32,8 @@ describe Subject do
   end
 
   it "should not accept a crazy bithdate from the past" do
-    pending
     s = Subject.new("birth_date" => "921-03-29")
-    s.birth_date.should be_nil
+    s.id.should be_nil
     s.should have(1).errors_on(:birth_date)
   end
 
