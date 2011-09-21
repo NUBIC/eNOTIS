@@ -25,6 +25,7 @@ class InvolvementsController < ApplicationController
   
   def show 
     @involvement = Involvement.find(params[:id])
+    @study = @involvement.study
     authorize! :show, @involvement
     params[:study] = @involvement.study.irb_number
     respond_to do |format|

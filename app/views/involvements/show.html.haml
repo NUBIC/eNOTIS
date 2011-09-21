@@ -1,42 +1,60 @@
-#show_involvement
-  - if @involvement.study.read_only?
-    .patient_msg= "This patient record is part of a study that is managed in a different system. To edit this information you will need to go to the source system" 
-  .subject
-    %h4 Subject
-    .case_number
-      Case Number:
-      = case_number_helper(@involvement.case_number)
-    .mrn
-      MRN: 
-      = mrn_and_type_helper(@involvement.subject)
-    .full_name
-      Name: 
-      = subject_name_helper(@involvement.subject)
-  .demographics
-    %h4 Demographics
-    %ol
-      %li
-        Gender:
-        %span.gender.bold
-          = @involvement.gender
-      %li
-        Ethnicity:
-        %span.ethnicity.bold
-          = @involvement.ethnicity
-      %li
-        Race:
-        %span.race.bold
-          = @involvement.race
-  .accrual
-    %h4 Accrual
-    Events:
-    %ul
-      - @involvement.involvement_events.each do |ie|
-        %li.event.bold
-          = ie.event
-          &mdash;
-          = ie.occurred_on
-          &mdash;
-          = ie.note
+#study
+  -if @study.read_only?
+    .study_msg= "#{@study.read_only_msg || "This study has been set to READ ONLY!"} It cannot be modified in eNOTIS."
+  .title
+    = irb_span @study
+    = status_span @study
+  .accrual_count
+    = @study.involvements.size
+    %label Subjects
+  .accrual_goal
+    != @study.accrual_goal.blank? ? "&nbsp;" : @study.accrual_goal
+    %label Goal
+  .name{:title => @study.title}
+    = @study.title
+    %span.short_name= @study.name
+  %br.clear
+  #actions
+    = link_to("Subject Detail", "#subject", :class => 'subjects')
+  #involvement_detail
+    - if @involvement.study.read_only?
+      .patient_msg= "This patient record is part of a study that is managed in a different system. To edit this information you will need to go to the source system" 
+    .subject
+      %h4 Subject
+      .case_number
+        Case Number:
+        = case_number_helper(@involvement.case_number)
+      .mrn
+        MRN: 
+        = mrn_and_type_helper(@involvement.subject)
+      .full_name
+        Name: 
+        = subject_name_helper(@involvement.subject)
+    .demographics
+      %h4 Demographics
+      %ol
+        %li
+          Gender:
+          %span.gender.bold
+            = @involvement.gender
+        %li
+          Ethnicity:
+          %span.ethnicity.bold
+            = @involvement.ethnicity
+        %li
+          Race:
+          %span.race.bold
+            = @involvement.race
+    .accrual
+      %h4 Accrual
+      Events:
+      %ul
+        - @involvement.involvement_events.each do |ie|
+          %li.event.bold
+            = ie.event
+            &mdash;
+            = ie.occurred_on
+            &mdash;
+            = ie.note
 
 

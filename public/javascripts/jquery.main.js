@@ -72,22 +72,9 @@ $(document).ready(function() {
   // tabs
   $("#actions").tabs("#panes > div");
     
-  $('#subject_list tr').click( function() {
-    if ( $(this).hasClass('row_expanded') ){
-      $(this).addClass('row_expandable');
-      $(this).removeClass('row_expanded');
-      subjectTable.fnClose(this)
-      }
-    else if ( $(this).hasClass('row_expandable')){
-      $(this).removeClass('row_expandable');
-      $(this).addClass('row_expanded');
-      added = subjectTable.fnOpen(this,fnFormatDetails(this),'details')
-      $(added).treeTable({initialState: "expanded"});
-    }
-  });
   // subjects: dataTable
-  subjectTable =  $("#subjects .display").dataTable({
-    "aoColumns": [null,null,null,null,null,null,null,{"sType":"date"},{"sType":"date"},null,null],
+  $("#subjects .display").dataTable({
+    "aoColumns": [null,null,null,null,null,null,{"sType":"date"},{"sType":"date"},null],
     "fnDrawCallback": activateRows,
     "iDisplayLength": 30,
     "sPaginationType": "full_numbers", 
