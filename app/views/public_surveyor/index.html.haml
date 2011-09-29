@@ -1,0 +1,28 @@
+-if @involvement.nil?
+  #access_code
+    .instructions="Please enter your access code below"
+    -form_tag(public_available_surveys_path ,:method=>:get) do 
+      =text_field_tag('uuid','',:size=>50)
+      %br
+      =submit_tag('Start')
+-elsif !@response_sets.empty?
+  #access_code
+    .instructions="The following are the forms requiring completion: "
+    %br
+    -@response_sets.each do |rs|
+      %ul
+        %li=link_to(rs.survey.title,edit_my_public_survey_path(:survey_code => rs.survey.access_code,:response_set_code  => rs.access_code))
+-else
+  #access_code
+    .instructions="You currently Have no forms to fill out"
+      
+
+  //.title=@survey.title
+  //-unless @survey.description.blank?
+  //  #description
+  //    .tag="Description: "
+  //    .content=@survey.description
+  //-unless @survey.instructions.blank?
+  //  #instructions
+  //    .tag="Instructions: "
+  //    .content=@survey.instructions

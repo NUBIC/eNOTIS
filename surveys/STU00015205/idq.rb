@@ -17,11 +17,11 @@ survey "Impaction Dysphagia Questionnaire" ,:irb_number=>'STU00015205',:is_publi
 
     grid "Over the past year (12 months), how often have you had the following?" do 
       a_1 "Never"
-      a_2 "Less than once a month"
-      a_3 "1-9 times a month"
-      a_4 "10-19 times a month"
-      a_5 "20-29 times a month"
-      a_6 "Daily"
+      a_2 "1 time in the past year"
+      a_3 "2 times in the past year"
+      a_4 "3 times in the past year"
+      a_5 "4 times in the past year"
+      a_6 "More than 4 times in the past year"
 
       q_idq_12_months_6 "Food stuck in throat or esophagus for more than 30 minutes",:pick=>:one
       q_idq_12_months_7 "An emergency room visit because of food being stuck in throat or esophagus",:pick=>:one
