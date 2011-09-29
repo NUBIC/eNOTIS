@@ -8,6 +8,11 @@ module PublicSurveyorControllerCustomMethods
 
   # Actions
 
+  def index
+    @involvement = Involvement.find_by_uuid(params[:uuid]) if params[:uuid]
+    @response_sets = @involvement.response_sets.select{|rs| rs.completed_at.blank?} unless @involvement.nil?
+  end
+
   def new
     @survey = Survey.public.find_by_access_code(params[:survey_code])
     respond_to do |format|
@@ -49,7 +54,7 @@ module PublicSurveyorControllerCustomMethods
      return redirect_to(edit_my_public_survey_path({:review=>true,:section=>@response_set.first_incomplete_section,:response_set_code=>@response_set.access_code})) if params[:finish] and !saved
      if saved && params[:finish]
        next_response_set = @response_set.next
-       return redirect_to take_public_survey_path(@response_set.survey.access_code) if next_response_set.nil?
+       return redirect_to public_available_surveys_path(:uuid=>@response_set.involvement.uuid) if next_response_set.nil?
        return redirect_to edit_my_public_survey_path(:survey_code => next_response_set.survey.access_code,:response_set_code  => next_response_set.access_code) 
      end
       respond_to do |format|

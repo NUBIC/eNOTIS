@@ -11,7 +11,7 @@ module SurveyorControllerCustomMethods
   # Actions
   def new
     @involvement = Involvement.find(params[:involvement_id])
-    @surveys = Study.find(params[:study_id]).surveys
+    @surveys = Study.find(params[:study_id]).surveys.select{|s| s.active?}
     @title = "Forms for Study  #{params[:irb_number]}"
     #redirect_to surveyor_index unless surveyor_index == available_surveys_path
     respond_to do |format|
