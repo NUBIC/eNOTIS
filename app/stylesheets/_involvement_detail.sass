@@ -1,3 +1,39 @@
 #involvement_detail
   :margin-top 20px
   :margin-left 10px
+  h4
+    :text-decoration underline
+  //th
+  //  :background-color white
+  #involvement_actions
+    :font-size 17px
+    :float right
+    a
+      :text-decoration none
+      :margin-left 10px
+    a.add
+      :padding-left 20px
+      :background transparent url('/images/icons/add.png') no-repeat 2px center
+
+  #involvement_events
+    +column(40)
+    :margin-top 20px
+  #involvement_forms
+    +column(40)
+    :margin-top 20px
+
+    
+div.wrap
+  label
+    :display block
+    :float left
+    :text-align left
+    :width 100px
+  input
+    :margin 0.5em
+  input[type="submit"]
+    :margin 1.0em
+  select
+    :margin 0.5em
+  textarea
+    :marging 0.5em

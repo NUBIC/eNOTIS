@@ -328,6 +328,10 @@ class Involvement < ActiveRecord::Base
   def ric_mrn
     subject.ric_mrn
   end
+  def address
+    return nil if address_line1.blank? and address_line2.blank? and city.blank? and state.blank? and zip.blank?
+    "#{self.address_line1} #{self.address_line2} \n #{self.city} #{self.state} #{self.zip}"
+  end
 
 
 

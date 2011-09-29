@@ -1,22 +1,5 @@
-#study
-  -if @study.read_only?
-    .study_msg= "#{@study.read_only_msg || "This study has been set to READ ONLY!"} It cannot be modified in eNOTIS."
-  .title
-    = irb_span @study
-    = status_span @study
-  .accrual_count
-    = @study.involvements.size
-    %label Subjects
-  .accrual_goal
-    != @study.accrual_goal.blank? ? "&nbsp;" : @study.accrual_goal
-    %label Goal
-  .name{:title => @study.title}
-    = @study.title
-    %span.short_name= @study.name
-  %br.clear
-  #actions
-    = link_to("Subject Detail", "#subject", :class => 'subjects')
-  #involvement_detail
+#involvement_detail
+  #involvement_demographics
     - if @involvement.study.read_only?
       .patient_msg= "This patient record is part of a study that is managed in a different system. To edit this information you will need to go to the source system" 
     .subject
@@ -25,36 +8,112 @@
         Case Number:
         = case_number_helper(@involvement.case_number)
       .mrn
-        MRN: 
-        = mrn_and_type_helper(@involvement.subject)
+        NMF MRN: 
+        %span.bold
+          = @involvement.subject.nmff_mrn || "None Given"
+        %br
+        NMH MRN:
+        %span.bold
+          = @involvement.subject.nmh_mrn || "None Given"
+        %br
+        RIC MRN:
+        %span.bold
+          = @involvement.subject.ric_mrn || "None Given"
       .full_name
         Name: 
         = subject_name_helper(@involvement.subject)
     .demographics
       %h4 Demographics
-      %ol
-        %li
-          Gender:
-          %span.gender.bold
-            = @involvement.gender
-        %li
-          Ethnicity:
-          %span.ethnicity.bold
-            = @involvement.ethnicity
-        %li
-          Race:
-          %span.race.bold
-            = @involvement.race
+      .gender
+        Gender:
+        %span.bold
+          = @involvement.gender
+      .ethnicity
+        Ethnicity:
+        %span.bold
+          = @involvement.ethnicity
+      .race
+        Race:
+        %span.bold
+          = @involvement.race
     .accrual
-      %h4 Accrual
-      Events:
-      %ul
-        - @involvement.involvement_events.each do |ie|
-          %li.event.bold
-            = ie.event
-            &mdash;
-            = ie.occurred_on
-            &mdash;
-            = ie.note
+      %h4 Contact
+      .address
+        Address
+        %span.bold
+          =@involvement.address || "None Given"
+      .home_phone
+        Home Phone
+        %span.bold
+          =@involvement.home_phone || "None Given"
+      .work_phone
+        Work Phone
+        %span.bold
+          =@involvement.work_phone || "None Given"
+      .cell_phone
+        Cell Phone
+        %span.bold
+          =@involvement.cell_phone || "None Given"
+      .email
+        Email
+        %span.bold
+          =@involvement.email || "None Given"
 
+  #involvement_events
+    #involvement_actions
+      =link_to('new',new_involvement_event_path(@involvement),:rel=>'#new_event',:class=>"add")
+    %table
+      %thead 
+        %tr
+          %th Event
+          %th Occured On
+          %th Notes
+          %th
+      %tbody
+        -@involvement.involvement_events.each do |ie|
+          %tr
+            %td=ie.event_type.name
+            %td=ie.occurred_on
+            %td=ie.note
+            %td
+              =link_to('edit',edit_involvement_event_path(@involvement,ie),:rel=>'#edit_event')
+              =" - "
+              =link_to('delete',involvement_event_path(@involvement,ie),:method=>'delete')
+
+  -unless @study.surveys.empty?
+    #involvement_forms
+      #involvement_actions
+        =link_to("add",available_surveys_path(:involvement_id=>@involvement.id,:study_id=>@study.id),:rel=>'#start_form',:class=>"add")
+      %table.display
+        %thead 
+          %tr
+            %th Form/Visit Date
+            %th Form
+            %th Status
+            %th Score
+            %th Actions
+        %tbody
+          -@involvement.response_sets.each do |rs|
+            %tr
+              %td=rs.effective_date
+              %td=rs.survey.title
+              %td=rs.completed_at.blank? ? "Started" : "Completed"
+              %td
+                -rs.scores.each do |s|
+                  ="#{s.score_configuration.name} - #{s.value}"
+              %td
+                -if rs.completed_at.blank?
+                  =link_to("Edit",edit_my_survey_path(rs.survey.access_code,rs.access_code))
+                  =" - "
+                =link_to("View",view_my_survey_path(rs.survey.access_code,rs.access_code))
+                //=" - "
+                //=link_to("Delete",response_set_path(r),:method=>:delete,:class=>'delete',:confirm=>"Are you sure you want to delete this subject's form?" )
+
+      
+#start_form.overlay
+  .wrap
+#new_event.overlay
+  .wrap
+#edit_event.overlay
+  .wrap
 

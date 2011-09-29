@@ -1,0 +1,54 @@
+#back.heading= link_to "Back to Study".html_safe, study_path(@study)
+#study_settings
+  #title="Settings for study #{@study.irb_number}"
+  %table
+    %tbody
+      %tr
+        %td IRB Number:
+        %td=@study.irb_number
+      %tr
+        %td Title
+        %td= @study.title
+  #event_types
+    %h4 Event Types
+    %table
+      %thead
+        %tr
+          %th Name
+          %th Description
+          %th Actions
+      %tbody
+        -@uneditable_events.each do |ev|
+          %tr.uneditable
+            %td=ev.name
+            %td=ev.description
+            %td This is event type is not editable
+        -@editable_events.each do |ev|
+          %tr.editable
+            %td=ev.name 
+            %td=ev.description
+            %td
+              =link_to ('edit',edit_study_event_type_path(@study,ev),:rel=>'#event_type')
+              =" - "
+              =link_to ('delete',study_event_type_path(@study,ev),:method=>:delete)
+  #forms
+    %table
+      %thead
+        %tr
+          %th Title
+          %th State
+          %th Interface
+          %th Active at
+          %th Inactive at
+      %tbody
+        -@study.surveys.each do |survey|
+          %tr
+            %td=survey.title
+            %td=survey.active? ? "Active" : "Inactive"
+            %td=survey.is_public ? "coordinator" : "subject"
+            %td=survey.active_at.blank? ? "--" : survey.active_at.to_date
+            %td=survey.inactive_at.blank? ? "--" : survey.inactive_at.to_date
+
+  #event_type
+
+

@@ -31,63 +31,56 @@
     %span.short_name= @study.name
   %br.clear
   #actions
-    = link_to("Subjects", "#subjects", :class => 'subjects')
-    = link_to("Details and Charts", '#study_information', :class => 'charts')
+    = link_to("Subjects", involvements_path(:study_id=>@study.irb_number), :class => 'subjects')
+    //= link_to("Details and Charts", '#study_information', :class => 'charts')
     - unless @study.read_only?
       = link_to("Add", new_involvement_path(:study => @study), :class => 'add')
       = link_to("Import", study_uploads_path(@study), :class => 'import')
     - unless @involvements.empty?
       = link_to("Export", new_report_path(:study => @study), :class => 'export')
-    = link_to("Reports", '#reports', :class => 'report')
+    //= link_to("Reports", '#reports', :class => 'report')
   #panes
     #subjects
-      %table.display{:id=>'subject_list'}
-        %thead
-          %tr
-            - %w(Case# Other\ Studies NMFF\ MRN NMH\ MRN RIC\ MRN Name).each do |header|
-              %th= header
-            %th
-              %dtr{:title => @study.event_types.define_event("Consented")} Consented
-            %th
-              %dtr{:title => @study.event_types.define_event("Withdrawn"), :class => "withdrawn"} Withdrawn
-              %br
-              %dtr{:title => @study.event_types.define_event("Completed")} Completed
-            %th 
-        %tbody
-          - @involvements.each do |involvement|
-            %tr{:class => "subject_#{involvement.subject.id}"}
-              %td= involvement.case_number
-              %td= other_studies_flag(involvement)
-              %td= involvement.subject.nmff_mrn
-              %td= involvement.subject.nmh_mrn
-              %td= involvement.subject.ric_mrn
-              %td= involvement.subject_name_or_case_number
-              %td= involvement.consented.occurred_on unless involvement.consented.nil?
-              %td{:class => "#{involvement.withdrawn.nil? ? '' : 'withdrawn'}"}
-                = involvement.completed.occurred_on unless involvement.completed.nil?
-                = involvement.withdrawn.occurred_on unless involvement.withdrawn.nil?
-              %td= link_to "View", involvement_path(involvement)
+      //%table.display{:id=>'subject_list'}
+      //  %thead
+      //    %tr
+      //      - %w(Case# Other\ Studies NMFF\ MRN NMH\ MRN RIC\ MRN Name).each do |header|
+      //        %th= header
+      //      %th
+      //        %dtr{:title => @study.event_types.define_event("Consented")} Consented
+      //      %th 
+      //  %tbody
+      //    - @involvements.each do |involvement|
+      //      %tr{:class => "subject_#{involvement.subject.id}"}
+      //        %td= involvement.case_number
+      //        %td= other_studies_flag(involvement)
+      //        %td= involvement.subject.nmff_mrn
+      //        %td= involvement.subject.nmh_mrn
+      //        %td= involvement.subject.ric_mrn
+      //        %td= involvement.subject_name_or_case_number
+      //        %td= involvement.consented.occurred_on unless involvement.consented.nil?
+      //        %td= link_to "Detail", involvement_path(involvement),:rel=>'#involvement_detail'
 
-    #study_information
-      .details
-        = render :partial => 'partials/study_info', :locals => {:study => @study}
-      - unless @involvements.empty?
-        .charts
-          #gender.chart
-          #ethnicity.chart
-          #race.chart
-          #timechart
-          #dotchart
-      %br.clear
-    - unless @study.read_only?
-      #add{:rel => new_involvement_path(:study => @study)}
-      #import{:rel => study_uploads_path(@study)}
-    - unless @involvements.empty?
-      #export{:rel => new_report_path(:study => @study)}
-    #report
-      %h2 Available reports
-      %ul
-        %li= link_to "NIH Inclusion Enrollment Report", nih_reports_path(:study => @study.irb_number), :popup => true
+    //#study_information
+    //  .details
+    //    = render :partial => 'partials/study_info', :locals => {:study => @study}
+    //  - unless @involvements.empty?
+    //    .charts
+    //      #gender.chart
+    //      #ethnicity.chart
+    //      #race.chart
+    //      #timechart
+    //      #dotchart
+    //  %br.clear
+    //- unless @study.read_only?
+    //  #add{:rel => new_involvement_path(:study => @study)}
+    //  #import{:rel => study_uploads_path(@study)}
+    //- unless @involvements.empty?
+    //  #export{:rel => new_report_path(:study => @study)}
+    //#report
+    //  %h2 Available reports
+    //  %ul
+    //    %li= link_to "NIH Inclusion Enrollment Report", nih_reports_path(:study => @study.irb_number), :popup => true
   %br.clear
   #involvement.overlay
     .wrap

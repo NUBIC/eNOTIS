@@ -21,15 +21,41 @@ $(document).ready(function() {
     fixed: false, // allows user to scroll if overlay extends beyond viewport
     expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}
   });
-  
-  $("#subjects a[rel=#start_form]").overlay({
+ 
+  // start a new form for a participant
+  $("#involvement_forms a[rel=#start_form]").overlay({
     fixed: false, // allows user to scroll if overlay extends beyond viewport
     onBeforeLoad: function(){ $("#start_form .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
-    onLoad: function(){
-      $("#effective_date").datepicker({changeMonth: true, changeYear: true,yearRange: '-120:+0'});
-    }
+    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
     });
+
+  //create a new involvement event for a participant
+  $("#involvement_events a[rel=#new_event]").overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
+    onBeforeLoad: function(){ $("#new_event .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+    });
+  //create a new involvement event for a participant
+  $("#involvement_events a[rel=#edit_event]").overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
+    onBeforeLoad: function(){ $("#edit_event .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+    });
+
+  //create and edit event type for a study
+  $("#event_types a[rel=#event_type]").overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
+    onBeforeLoad: function(){ $("#event_type .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+    });
+
+  //create and edit event type for a study
+  $("#subjects a[rel=#involvement_detail]").livequery(
+    'click', function(){
+      $("#subjects").load( $(this).attr("href")); 
+      return false;
+      }
+      );
   // -------------- Medical services --------------
   // Study service forms
   $("#medical_service_uses_services_before_completed_true").click(function(){
@@ -70,11 +96,11 @@ $(document).ready(function() {
   
   // -------------- Show study --------------
   // tabs
-  $("#actions").tabs("#panes > div");
+  $("#actions").tabs("#panes > div", {effect: 'ajax'});
     
   // subjects: dataTable
-  $("#subjects .display").dataTable({
-    "aoColumns": [null,null,null,null,null,null,{"sType":"date"},{"sType":"date"},null],
+  $("#subject_list").livequery(function(){$(this).dataTable({
+    "aoColumns": [null,null,null,null,null,null,{"sType":"date"},null],
     "fnDrawCallback": activateRows,
     "iDisplayLength": 30,
     "sPaginationType": "full_numbers", 
@@ -82,8 +108,18 @@ $(document).ready(function() {
     "sScrollXInner": "110%",
     "bScrollCollapse": true,
     "oLanguage": {"sZeroRecords": "<p><strong>No subjects yet - click 'Add' or 'Import' to get started. Or watch our <a rel='#intro'>4 minute introduction to eNOTIS</a>.</strong></p>"}
-  });
+  });});
+
+  $("#involvement_forms .display").dataTable({
+    "aoColumns": [{"sType":"date"},null,null,null,null],
+    "iDisplayLength": 10,
+    "sPaginationType": "full_numbers", 
+    "sScrollX": "100%",
+    "sScrollXInner": "110%",
+    "bScrollCollapse": true,
+    "oLanguage": {"sZeroRecords": "<p><strong>No forms yet - click 'Add' to get started. </strong></p>"}
   
+  });
   // load some tab contents via ajax for minimal change from previous UI (overlays)
   $('#add').load($('#add').attr('rel'), 'format=js', activateMrnLookup);
   $('#import').load($('#import').attr('rel'), 'format=js', activateImportDataTable);

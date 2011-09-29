@@ -13,13 +13,11 @@ class InvolvementsController < ApplicationController
     
   # Public instance methods (actions)
   def index
-    @study = Study.find_by_irb_number(params[:irb_number])
+    @study = Study.find_by_irb_number(params[:study_id])
     @involvements = @study.involvements
     authorize! :show, @study
     respond_to do |format|
-      format.json do 
-        render :json => @involvements.to_json(:methods => [:first_name,:last_name,:nmff_mrn, :nmh_mrn, :ric_mrn])
-      end
+      format.js{render :layout=>false}
     end
   end
   
@@ -50,7 +48,6 @@ class InvolvementsController < ApplicationController
     @involvement = Involvement.new
     @involvement.subject = Subject.new
     @involvement.involvement_events.build(:event_type => @study.event_types.find_by_name("Consented"))
-    @involvement.involvement_events.build(:event_type => @study.event_types.find_by_name("Completed"))
     respond_to do |format|
       format.html
       format.js {render :layout => false}

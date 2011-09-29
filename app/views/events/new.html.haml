@@ -1,0 +1,13 @@
+-form_for(@involvement_event) do |f|
+
+  = f.label :event_type,"Event Type"
+  = f.select :event_type_id,@study.event_types.collect{|et| [et.name,et.id] }
+  %br
+  %br
+  = f.label      :occurred_on, "On"
+  = f.text_field :occurred_on, :class => 'occurred_on', :autocomplete => "off"
+  %br
+  = f.label :note,"Notes"
+  = f.text_field :note
+  %br
+  =f.submit "create"

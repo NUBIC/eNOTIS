@@ -26,6 +26,11 @@ class StudiesController < ApplicationController
     end
   end
 
+  def edit
+    @study = Study.find_by_irb_number(params[:id])
+    @uneditable_events, @editable_events = @study.event_types.partition{|ev| ev.editable == false }
+  end
+
   def show
     @study = Study.find_by_irb_number(params[:id], :include => :roles)
     if @study
