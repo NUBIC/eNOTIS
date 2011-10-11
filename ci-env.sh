@@ -27,6 +27,7 @@ echo ". ~/.rvm/scripts/rvm"
 set -x
 
 RVM_RUBY=ree-1.8.7-2010.01
+BUNDLER_VERSION=1.0.17
 GEMSET=enotis
 
 if [ -z "$RVM_RUBY" ]; then
@@ -57,5 +58,13 @@ gem list -i rake
 if [ $? -ne 0 ]; then
     echo "Installing rake since it is not available"
     gem install rake
+fi
+set -e
+
+set +e
+gem list -i bundler -v $BUNDLER_VERSION
+if [ $? -ne 0 ]; then
+  set -e
+    gem install bundler -v $BUNDLER_VERSION
 fi
 set -e
