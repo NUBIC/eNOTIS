@@ -10,6 +10,16 @@ class EventsController < ApplicationController
 
   # Public instance methods (actions)
 
+  def index
+    @involvement = Involvement.find(params[:involvement_id])
+    @study = @involvement.study
+    @events = @involvement.involvement_events
+    respond_to do |format|
+      format.html
+      format.js {render :layout => false}
+    end
+  end
+
   def new
     @involvement = Involvement.find(params[:involvement_id])
     @study = @involvement.study

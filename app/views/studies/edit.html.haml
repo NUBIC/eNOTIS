@@ -1,14 +1,6 @@
 #back.heading= link_to "Back to Study".html_safe, study_path(@study)
 #study_settings
   #title="Settings for study #{@study.irb_number}"
-  %table
-    %tbody
-      %tr
-        %td IRB Number:
-        %td=@study.irb_number
-      %tr
-        %td Title
-        %td= @study.title
   #event_types
     %h4 Event Types
     %table

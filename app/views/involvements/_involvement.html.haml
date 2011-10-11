@@ -1,8 +1,7 @@
 #involvement_detail
   #involvement_demographics
-    #pane_menu
-      #pane_actions
-        =link_to "Edit",edit_involvement_path(@involvement),:rel=>"#edit_involvement"  
+    #menu_actions
+      =link_to "Edit",edit_involvement_path(@involvement),:rel=>"#edit_involvement"  
     - if @involvement.study.read_only?
       .patient_msg= "This patient record is part of a study that is managed in a different system. To edit this information you will need to go to the source system" 
     .subject
@@ -63,9 +62,8 @@
           =@involvement.email || "None Given"
 
   #involvement_events
-    #pane_menu
-      #pane_actions
-        =link_to('new',new_involvement_event_path(@involvement),:rel=>'#new_event')
+    #menu_actions
+      =link_to('new',new_involvement_event_path(@involvement),:rel=>'#new_event')
     %table
       %thead 
         %tr
@@ -84,11 +82,10 @@
               =" - "
               =link_to('delete',involvement_event_path(@involvement,ie),:method=>'delete')
 
-  -unless @study.surveys.empty?
+  -unless @involvement.study.surveys.empty?
     #involvement_forms
-      #pane_menu
-        #pane_actions
-          =link_to("add",available_surveys_path(:involvement_id=>@involvement.id,:study_id=>@study.id),:rel=>'#start_form',:class=>"add")
+      #menu_actions
+        =link_to("add",available_surveys_path(:involvement_id=>@involvement.id,:study_id=>@involvement.study.id),:rel=>'#start_form',:class=>"add")
       %table.display
         %thead 
           %tr

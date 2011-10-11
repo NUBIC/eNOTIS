@@ -23,36 +23,105 @@ $(document).ready(function() {
   });
  
   // start a new form for a participant
-  $("#involvement_forms a[rel=#start_form]").overlay({
-    fixed: false, // allows user to scroll if overlay extends beyond viewport
-    onBeforeLoad: function(){ $("#start_form .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    });
+  //$("#involvement_forms a[rel=#start_form]").overlay({
+  //  fixed: false, // allows user to scroll if overlay extends beyond viewport
+  //  onBeforeLoad: function(){ $("#start_form .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+  //  expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+  //  });
+
+  $(".date").livequery("click", function(){
+    if(!$(this).data("dateinput")){
+      $(this).dateinput({format: 'yyyy-mm-dd', selectors: true, yearRange: [-20, 1],
+        change: function(e, date){ e.target.getInput().val(e.target.getValue('yyyy-mm-dd')).data("date", date); return false; },
+        onShow: function(e){
+          $("#calmonth").unbind("change").change(function() { e.target.hide().setValue($(selector + " #calyear").val(), $(this).val(), e.target.getValue('d')).show(); });
+          $("#calyear").unbind("change").change(function() { e.target.hide().setValue($(this).val(), $(selector + " #calmonth").val(), e.target.getValue('d')).show(); });
+        }
+      });
+      $(this).data("dateinput").show();
+    }
+  });
 
   //create a new involvement event for a participant
-  $("#involvement_events a[rel=#new_event]").overlay({
-    fixed: false, // allows user to scroll if overlay extends beyond viewport
-    onBeforeLoad: function(){ $("#new_event .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    });
+  //$("#involvement_events a[rel=#new_event]").overlay({
+  //  fixed: false, // allows user to scroll if overlay extends beyond viewport
+  //  onBeforeLoad: function(){ $("#new_event .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+  //  expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+  //  });
   //create a new involvement event for a participant
-  $("#involvement_events a[rel=#edit_event]").overlay({
-    fixed: false, // allows user to scroll if overlay extends beyond viewport
-    onBeforeLoad: function(){ $("#edit_event .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    });
+  //$("#involvement_events a[rel=#edit_event]").overlay({
+  //  fixed: false, // allows user to scroll if overlay extends beyond viewport
+  //  onBeforeLoad: function(){ $("#edit_event .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+  //  expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+  //  });
 
   //create and edit event type for a study
-  $("#event_types a[rel=#event_type]").overlay({
-    fixed: false, // allows user to scroll if overlay extends beyond viewport
-    onBeforeLoad: function(){ $("#event_type .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    });
+  //$("#event_types a[rel=#event_type]").overlay({
+  //  fixed: false, // allows user to scroll if overlay extends beyond viewport
+  //  onBeforeLoad: function(){ $("#event_type .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+  //  expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+  //  });
 
-  //create and edit event type for a study
-  $("#subjects a[rel=#involvement_detail]").livequery(
+
+  //create involvement
+  $("#new_involvement").livequery(
+    'submit', function(){
+      $.post($(this).attr("action"),$(this).serialize(),
+      function(data) {
+      $("#pane").html(data);
+      },
+      "html");
+      return false;
+      }
+      );
+
+  //cancel events creation/edit
+  $("#involvement_events a[rel=#cancel_event]").livequery(
     'click', function(){
-      $("#subjects").load( $(this).attr("href")); 
+      $("#involvement_events").load( $(this).attr("href")); 
+      return false;
+      }
+      );
+
+  //new event
+  $("#involvement_events a[rel=#new_event]").livequery(
+    'click', function(){
+      $("#involvement_events").load( $(this).attr("href")); 
+      return false;
+      }
+      );
+  //edit event
+  $("#involvement_events a[rel=#edit_event]").livequery(
+    'click', function(){
+      $("#involvement_events").load( $(this).attr("href")); 
+      return false;
+      }
+      );
+
+  //edit involvement
+  $("#pane_actions a[rel=#edit_involvement]").livequery(
+    'click', function(){
+      $("#involvement_demographics").load( $(this).attr("href")); 
+      return false;
+      }
+      );
+
+  //create and edit event type for a study
+  $("#pane a[rel=#involvement_detail]").livequery(
+    'click', function(){
+      $("#pane").load( $(this).attr("href")); 
+      return false;
+      }
+      );
+  $("#pane_actions a[rel=#add_subject]").livequery(
+    'click', function(){
+      $("#pane").load( $(this).attr("href")); 
+      return false;
+      }
+      );
+  $("#pane_actions a[rel=#import_subjects]").livequery(
+    'click', function(){
+      $("#pane").load( $(this).attr("href")); 
       return false;
       }
       );
@@ -96,19 +165,21 @@ $(document).ready(function() {
   
   // -------------- Show study --------------
   // tabs
-  $("#actions").tabs("#panes > div", {effect: 'ajax'});
+  $("#actions").tabs("#pane", {effect: 'ajax'});
     
   // subjects: dataTable
   $("#subject_list").livequery(function(){$(this).dataTable({
     "aoColumns": [null,null,null,null,null,null,{"sType":"date"},null],
-    "fnDrawCallback": activateRows,
     "iDisplayLength": 30,
     "sPaginationType": "full_numbers", 
     "sScrollX": "100%",
     "sScrollXInner": "110%",
     "bScrollCollapse": true,
+    "bFilter": true,
     "oLanguage": {"sZeroRecords": "<p><strong>No subjects yet - click 'Add' or 'Import' to get started. Or watch our <a rel='#intro'>4 minute introduction to eNOTIS</a>.</strong></p>"}
   });});
+
+  $('#subject_list_filter').livequery(function(){$(this).appendTo($('#search'));});
 
   $("#involvement_forms .display").dataTable({
     "aoColumns": [{"sType":"date"},null,null,null,null],
@@ -230,18 +301,6 @@ $(document).ready(function() {
     });
     
     // datepicker for involvements
-    $(selector + " input.occurred_on").live("click", function(){
-      if(!$(this).data("dateinput")){
-        $(this).dateinput({format: 'yyyy-mm-dd', selectors: true, yearRange: [-20, 1],
-          change: function(e, date){ e.target.getInput().val(e.target.getValue('yyyy-mm-dd')).data("date", date); return false; },
-          onShow: function(e){
-            $(selector + " #calmonth").unbind("change").change(function() { e.target.hide().setValue($(selector + " #calyear").val(), $(this).val(), e.target.getValue('d')).show(); });
-            $(selector + " #calyear").unbind("change").change(function() { e.target.hide().setValue($(this).val(), $(selector + " #calmonth").val(), e.target.getValue('d')).show(); });
-          }
-        });
-        $(this).data("dateinput").show();
-      }
-    });
     
     // datepicker for birth date
     $(selector + " input.dob").live("click", function(){

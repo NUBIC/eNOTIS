@@ -27,5 +27,34 @@
   img.sprv_thumb
     :float left
     :padding-right 10px
+
+form
+  a, input[type="submit"]
+    :margin 0px !important
+
+#pane_menu
+  +column(48,true)
+  :background-color #DDE5FF
+  :float left
+  :height 40px
+  #search
+    :margin 10px 30px 10px 0px
+    :padding-left 20px
+    :float left
+  #pane_actions
+    :margin 12px 0px 0px 20px
+    a, input[type="submit"]
+      :height 2em
+      :margin-top 20px
+      :background-color #E3E3E3
+      :color black
+      :border 1px solid #BBB
+      :border-top-color #CCC
+      :border-bottom-color #A0A0A0
+      :padding 3px 8px
+      :text-align center
+      :text-decoration none
+    input[type="submit"]
+      :font-weight bold
 .hidden
   :display none

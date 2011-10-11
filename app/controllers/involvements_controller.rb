@@ -17,7 +17,8 @@ class InvolvementsController < ApplicationController
     @involvements = @study.involvements
     authorize! :show, @study
     respond_to do |format|
-      format.js{render :layout=>false}
+      format.html
+      format.js {render :layout => false}
     end
   end
   
@@ -59,11 +60,9 @@ class InvolvementsController < ApplicationController
     authorize! :edit, @involvement
     @study = @involvement.study
     params[:study] = @study.irb_number
-    @involvement.involvement_events.build(:event_type => @study.event_types.find_by_name("Consented")) unless @involvement.consented
-    @involvement.involvement_events.build(:event_type => @study.event_types.find_by_name("Completed")) unless @involvement.completed_or_withdrawn
     respond_to do |format|
-      format.html {render :action => :new}
-      format.js {render :layout => false, :action => :new}
+      format.html 
+      format.js {render :layout => false}
     end
   end
   
@@ -72,6 +71,7 @@ class InvolvementsController < ApplicationController
     authorize! :import, study
     pr = params[:involvement].merge(:study => study)
     @involvement = Involvement.new(pr)
+    @study = @involvement.study
 
     if @involvement.save
       flash[:notice] = "Created"
@@ -79,8 +79,12 @@ class InvolvementsController < ApplicationController
       logger.debug "#{@involvement.inspect}"
       logger.debug "ERRORS123:#{@involvement.errors.full_messages.inspect}"
       flash[:error] = "Error: #{@involvement.errors.full_messages} #{@involvement.inspect}"
+      return redirect_to study_path(study)
     end
-    redirect_to study_path(study)
+    respond_to do |format|
+      format.html {redirect_to study_path(study)}
+      format.js  {render :layout => false}
+    end
   end
   
   def update
@@ -93,7 +97,10 @@ class InvolvementsController < ApplicationController
     else
       flash[:error] = "Error: #{@involvement.errors.full_messages}"
     end
-    redirect_to study_path(study)
+    respond_to do |format|
+      format.html  {redirect_to study}
+      format.js {render :layout => false}
+    end
   end
   
   # The delete action should remove the involvement and any child involvement events. 

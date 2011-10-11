@@ -1,19 +1,25 @@
-%table.display{:id=>'subject_list'}
-  %thead
-    %tr
-      - %w(Case# Other\ Studies NMFF\ MRN NMH\ MRN RIC\ MRN Name).each do |header|
-        %th= header
-      %th
-        %dtr{:title => @study.event_types.define_event("Consented")} Consented
-      %th 
-  %tbody
-    - @involvements.each do |involvement|
-      %tr{:class => "subject_#{involvement.subject.id}"}
-        %td= involvement.case_number
-        %td= other_studies_flag(involvement)
-        %td= involvement.subject.nmff_mrn
-        %td= involvement.subject.nmh_mrn
-        %td= involvement.subject.ric_mrn
-        %td= involvement.subject_name_or_case_number
-        %td= involvement.consented.occurred_on unless involvement.consented.nil?
-        %td= link_to "Detail", involvement_path(involvement),:rel=>'#involvement_detail'
+#subjects
+  #pane_menu
+    #search
+    #pane_actions
+      = link_to("Add", new_involvement_path(:study=>@study),:rel=>"#add_subject")
+      = link_to("Bulk Import", study_uploads_path(@study),:rel=>"#import_subjects")
+  %table.display{:id=>'subject_list'}
+    %thead
+      %tr
+        - %w(Case# Other\ Studies NMFF\ MRN NMH\ MRN RIC\ MRN Name).each do |header|
+          %th= header
+        %th
+          %dtr{:title => @study.event_types.define_event("Consented")} Consented
+        %th 
+    %tbody
+      - @involvements.each do |involvement|
+        %tr{:class => "subject_#{involvement.subject.id}"}
+          %td= involvement.case_number
+          %td= other_studies_flag(involvement)
+          %td= involvement.subject.nmff_mrn
+          %td= involvement.subject.nmh_mrn
+          %td= involvement.subject.ric_mrn
+          %td= involvement.subject_name_or_case_number
+          %td= involvement.consented.occurred_on unless involvement.consented.nil?
+          %td= link_to "Detail", involvement_path(involvement),:rel=>'#involvement_detail'
