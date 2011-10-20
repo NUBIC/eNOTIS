@@ -75,10 +75,11 @@ gem "surveyor", '0.20.0'
 group :test, :cucumber, :hudson do
   gem 'rcov'
   gem 'cucumber'
-  gem "rspec", "~> 1.3.0"
-  gem "rspec-rails", "~> 1.3.0"
+  gem "rspec", "~> 1.3.1"
+  gem "rspec-rails", "~> 1.3.02"
   #gem "resque_spec", '~> 0.2.0', :require => nil
-  gem "cucumber-rails", "~> 0.3.0"
+  gem "capybara", :git => 'git://github.com/jnicklas/capybara.git'
+  gem "cucumber-rails"
   gem "webrat", "~> 0.6.0"
   gem "database_cleaner", "~> 0.0"
   gem "activerecord-oracle_enhanced-adapter"
