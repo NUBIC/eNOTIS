@@ -51,7 +51,7 @@ class Involvement < ActiveRecord::Base
     :conditions => ['involvement_events.event_type_id = ?',event_type]}}
 
   # Validations
-  validates_presence_of :gender, :ethnicity
+  validates_presence_of :gender, :ethnicity, :study
   # Custom validator for race
   validate do |inv|
     checked = false

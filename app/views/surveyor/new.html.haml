@@ -5,6 +5,6 @@
     =select_tag('active_survey_code',options_for_select(@surveys.map{|survey|[survey.title,survey.access_code]}),{:prompt => 'Select Form'})
   %p
     =label_tag 'effective_date','Visit Date'
-    =text_field_tag("effective_date",Date.today.strftime("%m/%d/%Y"))
+    =text_field_tag("effective_date",Date.today.strftime("%m/%d/%Y"),:class=>"date")
   =submit_tag("Start")
 

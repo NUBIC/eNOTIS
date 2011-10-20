@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   filter_parameter_logging :password, :involvement, :subject unless Rails.env == "development" # Scrub sensitive parameters from your log
 
+  after_filter :flash_headers
+
   # Rails basic session timeout is set in config/initializers/session_store.rb to 30 mins, shorter than the CAS 6 hour (for single sign-on) timeout  
   # Client-side javascript shows an overlay after 5 minutes of inactivity, and gets "/studies" after 30 mins
   
@@ -46,5 +48,18 @@ class ApplicationController < ActionController::Base
     @@whodiddit = lambda {
       self.respond_to?(:current_user) ? self.current_user.username : nil
     }
+  end
+
+  def flash_headers
+    # This will discontinue execution if Rails detects that the request is not
+    # from an AJAX request, i.e. the header wont be added for normal requests
+    return unless request.xhr?
+         
+    # add flash notices to reesponse header
+    response.headers['x-flash'] = flash[:error]  unless flash[:error].blank?
+    response.headers['x-flash'] = flash[:notice]  unless flash[:notice].blank?
+                    
+    # Stops the flash appearing when you next refresh the page
+    flash.discard
   end
 end

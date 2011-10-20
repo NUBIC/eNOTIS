@@ -15,7 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   map.open_studies '/open_studies.:format', :conditions => {:method => :get}, :controller => 'public', :action => 'open_studies'
   map.study_involvements 'studies/:irb_number/involvements',{:controller => 'involvements',:action=>'index'}
   
-  map.resources   :studies, :except => %w(delete destroy update),:has_many=>[:uploads,:event_types]
+  map.resources   :studies, :except => %w(delete destroy update),:member => {:charts => :get},:has_many=>[:uploads,:event_types]
   map.resources   :involvements, :collection => {:sample => :get, :empi_lookup => :get}, :member => {:other => :get},:has_many=>:events
   map.resource    :search, :controller => :search, :only => %w(show create)
   map.resources   :reports, :collection => {:nih => :get}, :except => %w(update destroy)

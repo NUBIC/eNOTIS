@@ -14,7 +14,11 @@ class InvolvementsController < ApplicationController
   # Public instance methods (actions)
   def index
     @study = Study.find_by_irb_number(params[:study_id])
-    @involvements = @study.involvements
+    @involvements = Involvement.find_all_by_study_id(@study.id,
+       :order => :case_number,
+       :include => [ :response_sets,{ :subject => :involvements }, { :involvement_events => :event_type } ]
+    )
+    #@involvements = @study.involvements
     authorize! :show, @study
     respond_to do |format|
       format.html
@@ -73,17 +77,18 @@ class InvolvementsController < ApplicationController
     @involvement = Involvement.new(pr)
     @study = @involvement.study
 
-    if @involvement.save
+    saved = @involvement.save
+    if saved
       flash[:notice] = "Created"
     else
       logger.debug "#{@involvement.inspect}"
       logger.debug "ERRORS123:#{@involvement.errors.full_messages.inspect}"
       flash[:error] = "Error: #{@involvement.errors.full_messages} #{@involvement.inspect}"
-      return redirect_to study_path(study)
+      @involvement.involvement_events.build(:event_type => @study.event_types.find_by_name("Consented")) if @involvement.involvement_events.empty?
     end
     respond_to do |format|
       format.html {redirect_to study_path(study)}
-      format.js  {render :layout => false}
+      format.js {render (saved ? :show : :new), :layout => false}
     end
   end
   
@@ -99,7 +104,7 @@ class InvolvementsController < ApplicationController
     end
     respond_to do |format|
       format.html  {redirect_to study}
-      format.js {render :layout => false}
+      format.js {render :partial=> 'involvement_basics', :layout => false}
     end
   end
   
@@ -111,10 +116,7 @@ class InvolvementsController < ApplicationController
     authorize! :destroy, @involvement
     @study       = @involvement.study
     @involvement.destroy # :dependent => :destroy takes care of removing involvement events # @involvement.involvement_events.destroy_all
-    respond_to do |format|
-      format.html {redirect_to @study}
-      format.js {render :layout => false}
-    end
+    return redirect_to @study
   end
   
   

@@ -5,8 +5,12 @@ class Ability
       can :manage, :all
     else
       #control access for study actions
-      can [:show,:import], Study do |study|
+      can [:show], Study do |study|
         study.has_coordinator?(user)
+      end
+
+      can [:edit,:import], Study do |study|
+        study.has_coordinator?(user) and !study.is_managed?
       end
       #control access for involvement actions
       can [:destroy,:update,:show], Involvement do |involvement|

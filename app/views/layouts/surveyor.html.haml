@@ -6,25 +6,29 @@
     =stylesheet_link_tag 'compiled/surveyor'
     /[if gt IE 5]
       =stylesheet_link_tag 'compiled/surveyor_ie'
-    =stylesheet_link_tag("compiled/main","jquery-ui-1.7.2.custom","timepicker")
+    =stylesheet_link_tag("compiled/main","timepicker")
     =surveyor_javascripts
-    =javascript_include_tag "jquery-ui-1.7.2.min","jquery.timepicker"
+    =javascript_include_tag "tools/jquery.tools.min","tools/jquery.livequery.min","jquery-ui-1.7.2.min","jquery.timepicker"
     =yield :head
   %body
     #container
       #header
         #header_top
           #current_user_badge
-            = "#{current_user.full_name} (#{current_user.username})"
+            = "#{current_user.name} (#{current_user.netid})"
+            |
+            = link_to "Help, SPRV, and FAQ", help_path
             |
             = link_to('Logout', "/logout")
         - unless Rails.env.production?
           #environment{:class => Rails.env}= Rails.env.upcase
+        #app_name= link_to_unless_current image_tag("enotis-safe_small.png", :alt => "eNOTIS"), default_path, :title => "eNOTIS Home"
         %br{:style => "clear: right"}
         - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
           #flash
-            = flash_messages(types)
-            .close
+            - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
+              = flash_messages(types)
+              .close
       #main
         =yield
 

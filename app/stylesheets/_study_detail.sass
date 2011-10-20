@@ -99,22 +99,13 @@
         background-color: #C3D9FF
         border-bottom: 1px solid #C3D9FF
         color: #000
-  #panes
+  #pane
     & > div
       min-height: 150px
-      :padding 10px
     #subjects
       :padding 0
       table.display
         :clear both
-        th dtr.withdrawn, td.withdrawn
-          :color #aaa  
-      #sub_section
-        :font-size 16px
-        :text-align center
-        a
-          :font-size 12px
-          :text-decoration none
     #study_information
       +column(48, true)
       .details
@@ -122,6 +113,11 @@
         :margin-right 4px
         span
           :display block
+        .study_settings
+          :margin-top 10px
+          a
+            :font-size 1.2em
+            :text-decoration none
       .charts
         +column(36,true)
         :margin-bottom 10px

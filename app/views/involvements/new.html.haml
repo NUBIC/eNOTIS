@@ -2,8 +2,8 @@
   #pane_menu
     #pane_actions
       = f.submit "Save"
-      = link_to "Cancel", study_path(params[:study])
-  = hidden_field_tag 'study[irb_number]', params[:study]
+      = link_to "Cancel", study_path(@study)
+  = hidden_field_tag 'study[irb_number]', @study.irb_number
   .subject
     %h4 Subject
     %ol
@@ -73,6 +73,5 @@
         = render 'involvement_event_fields', :f => builder, :study => @study
   #pane_menu
     #pane_actions
-      .submit
-        = f.submit "Save"
-        = link_to "Cancel", study_path(params[:study])
+      = f.submit "Save"
+      = link_to "Cancel", study_path(@study)

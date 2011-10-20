@@ -4,16 +4,12 @@
   %head
     %title= "eNOTIS :: #{@title}"
     = stylesheet_link_tag "compiled/main"
-    = javascript_include_tag "tools/jquery.tools.min", "tools/jquery.dataTables.min", "tools/underscore-min","tools/jquery.livequery.min","jquery.main", :cache => "cache/main"
+    = javascript_include_tag "tools/jquery.tools.min", "jquery.address.min","tools/jquery.dataTables.min", "tools/underscore-min","tools/jquery.livequery.min","jquery.main", :cache => "cache/main"
     = yield :head
   %body
     #container
       #header
         #header_top
-          -unless  @study.nil?
-            #study_settings_link
-              =link_to_unless_current ("study settings",edit_study_path(@study))
-              
           #current_user_badge
             = "#{current_user.name} (#{current_user.netid})"
             |
@@ -28,9 +24,10 @@
           - form_tag(search_path, :method => :get) do 
             = text_field_tag("query")
             = submit_tag("Search")
-        - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
-          #flash
-            = flash_messages(types)
+        //- unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
+        #flash
+          - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
+            = flash_messages(types) 
             .close
       #main
         #livesearch-results

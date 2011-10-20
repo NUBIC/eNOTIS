@@ -1,8 +1,9 @@
-#back.heading= link_to "Back to Study".html_safe, study_path(@study)
 #study_settings
-  #title="Settings for study #{@study.irb_number}"
   #event_types
     %h4 Event Types
+    #pane_menu
+      #pane_actions
+        =link_to 'new', new_study_event_type_path(@study),:rel=>"#event_type"
     %table
       %thead
         %tr
@@ -24,7 +25,8 @@
               =" - "
               =link_to ('delete',study_event_type_path(@study,ev),:method=>:delete)
   #forms
-    %table
+    %h4 Study Forms
+    %table.display
       %thead
         %tr
           %th Title
@@ -40,7 +42,5 @@
             %td=survey.is_public ? "coordinator" : "subject"
             %td=survey.active_at.blank? ? "--" : survey.active_at.to_date
             %td=survey.inactive_at.blank? ? "--" : survey.inactive_at.to_date
-
-  #event_type
-
-
+#event_type.overlay
+  .wrap

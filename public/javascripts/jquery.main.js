@@ -1,20 +1,16 @@
-// Globals
 var timeoutWarningTimer;
 var timeoutExpiredTimer;
 var importTable; // global variable to keep track of import data table, preventing reinitialization
 var subjectTable;
 
-function fnFormatDetails ( nTr )
-{
-	var aData = subjectTable.fnGetData( nTr );
-	var sOut = aData[aData.length - 1]
-	return sOut;
-}
 
 $(document).ready(function() {
+
   // -------------- Common UI --------------
   // flash messages
-  $("#flash .close").click(function(){$("#flash").fadeOut(300); return false;});
+  $("#flash .close").livequery(
+  'click',function(){
+   $("#flash").empty(300); return false;});
   
   // help db language overlay
   $("a[rel=#database-language]").overlay({
@@ -23,11 +19,16 @@ $(document).ready(function() {
   });
  
   // start a new form for a participant
-  //$("#involvement_forms a[rel=#start_form]").overlay({
-  //  fixed: false, // allows user to scroll if overlay extends beyond viewport
-  //  onBeforeLoad: function(){ $("#start_form .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-  //  expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-  //  });
+  $("#involvement_forms a[rel=#start_form]").livequery(function(){$(this).overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
+    onBeforeLoad: function(){ $("#start_form .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+    });});
+
+  $("#study_charts").livequery( function(){
+    var x = $(this).html();
+    jQuery.globalEval(x);
+  });
 
   $(".date").livequery("click", function(){
     if(!$(this).data("dateinput")){
@@ -56,19 +57,68 @@ $(document).ready(function() {
   //  });
 
   //create and edit event type for a study
-  //$("#event_types a[rel=#event_type]").overlay({
-  //  fixed: false, // allows user to scroll if overlay extends beyond viewport
-  //  onBeforeLoad: function(){ $("#event_type .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-  //  expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-  //  });
+  $("#event_types a[rel=#event_type]").livequery(function(){$(this).overlay({
+    fixed: false, // allows user to scroll if overlay extends beyond viewport
+    onBeforeLoad: function(){ $("#event_type .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+    });});
 
-
+  //create event
+  $("#new_involvement_event").livequery(
+    'submit', function(){
+      $.post($(this).attr("action"),$(this).serialize(),
+      function(data,textStatus,jqXHR) {
+      $("#involvement_events").html(data);
+      $("#flash").html(jqXHR.getResponseHeader('x-flash') + '<div class=close></div>');
+      },
+      "html");
+      return false;
+      }
+      );
+  //edit event
+  $(".edit_involvement_event").livequery(
+    'submit', function(){
+      $.post($(this).attr("action"),$(this).serialize(),
+      function(data,textStatus,jqXHR) {
+      $("#involvement_events").html(data);
+      $("#flash").html(jqXHR.getResponseHeader('x-flash') + '<div class=close></div>');
+      },
+      "html");
+      return false;
+      }
+      );
   //create involvement
   $("#new_involvement").livequery(
     'submit', function(){
       $.post($(this).attr("action"),$(this).serialize(),
-      function(data) {
+      function(data,textStatus,jqXHR) {
       $("#pane").html(data);
+      $("#flash").html(jqXHR.getResponseHeader('x-flash') + '<div class=close></div>');
+      },
+      "html");
+      return false;
+      }
+      );
+
+  //create/update event_type
+  $("#new_event_type").livequery(
+    'submit', function(){
+      $.post($(this).attr("action"),$(this).serialize(),
+      function(data,textStatus,jqXHR) {
+      $("#event_types").html(data);
+      $("#flash").html(jqXHR.getResponseHeader('x-flash') + '<div class=close></div>');
+      },
+      "html");
+      return false;
+      }
+      );
+  //edi involvement
+  $(".edit_involvement").livequery(
+    'submit', function(){
+      $.post($(this).attr("action"),$(this).serialize(),
+      function(data,textStatus,jqXHR) {
+      $("#involvement_demographics").html(data);
+      $("#flash").html(jqXHR.getResponseHeader('x-flash') + '<div class=close></div>');
       },
       "html");
       return false;
@@ -125,6 +175,15 @@ $(document).ready(function() {
       return false;
       }
       );
+  //load study settings
+  $("#study_information a[rel=#study_settings]").livequery(
+    'click', function(){
+      $("#pane").load( $(this).attr("href")); 
+      return false;
+      }
+      );
+
+
   // -------------- Medical services --------------
   // Study service forms
   $("#medical_service_uses_services_before_completed_true").click(function(){
@@ -181,57 +240,78 @@ $(document).ready(function() {
 
   $('#subject_list_filter').livequery(function(){$(this).appendTo($('#search'));});
 
-  $("#involvement_forms .display").dataTable({
+  $("#form_list").livequery(function(){$(this).dataTable({
     "aoColumns": [{"sType":"date"},null,null,null,null],
     "iDisplayLength": 10,
     "sPaginationType": "full_numbers", 
-    "sScrollX": "100%",
-    "sScrollXInner": "110%",
-    "bScrollCollapse": true,
     "oLanguage": {"sZeroRecords": "<p><strong>No forms yet - click 'Add' to get started. </strong></p>"}
   
-  });
+  });});
   // load some tab contents via ajax for minimal change from previous UI (overlays)
-  $('#add').load($('#add').attr('rel'), 'format=js', activateMrnLookup);
-  $('#import').load($('#import').attr('rel'), 'format=js', activateImportDataTable);
-  $('#export').load($('#export').attr('rel'), 'format=js', activateExportCheck);
+  //$('#add').load($('#add').attr('rel'), 'format=js', activateMrnLookup);
+  //$('#import').load($('#import').attr('rel'), 'format=js', activateImportDataTable);
+  //$('#export').load($('#export').attr('rel'), 'format=js', activateExportCheck);
   
   // import dataTable
-  function activateImportDataTable(){
     // console.log('activateImportDataTable');
-    $("#import .uploads .display").dataTable({
+    $("#pane .uploads .display").livequery(function(){$(this).dataTable({
       "iDisplayLength": 10,
       "sPaginationType": "full_numbers",
       "aoColumns": [{ "sType": "string", "asSorting": [ "desc", "asc" ] }, null, null, null, null]
-    });
-  }
+    });});
   
   // show study: datatable paging - redraw dashes for empty cells, activate other studies and view/edit overlays
-  function activateRows(){
-    // introduction (for empty datatable) overlay
-    $("#subjects a[rel=#intro]").overlay({
-      fixed: false, // allows user to scroll if overlay extends beyond viewport
-      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    });
-    // dashes
-    $("#import .display td:empty").html("--");
-    // other studies overlay
-    $("#subjects a[rel=#other_studies]").overlay({
-      fixed: false, // allows user to scroll if overlay extends beyond viewport
-      onBeforeLoad: function(){ $("#other_studies .wrap").load(this.getTrigger().attr("href"), "format=js", activateAccept); },
-      expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
-      onClose: function(){$("#other_studies .wrap").html("");}
-    });
-    // involvement overlay
-    activateInvolvementOverlay(".display a[rel=#involvement]");
-    // 'delete' links
-    $('#subjects a.delete').deleteWithAjax();
-  }
+  //function activateRows(){
+  //  // introduction (for empty datatable) overlay
+  //   $("#subjects a[rel=#intro]").overlay({
+  //    fixed: false, // allows user to scroll if overlay extends beyond viewport
+  //    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+  //  });
+  //  // dashes
+  //  $("#import .display td:empty").html("--");
+  //  // other studies overlay
+  //  $("#subjects a[rel=#other_studies]").overlay({
+  //    fixed: false, // allows user to scroll if overlay extends beyond viewport
+  //    onBeforeLoad: function(){ $("#other_studies .wrap").load(this.getTrigger().attr("href"), "format=js", activateAccept); },
+  //    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
+  //    onClose: function(){$("#other_studies .wrap").html("");}
+  //  });
+  //  // involvement overlay
+  //  activateInvolvementOverlay(".display a[rel=#involvement]");
+  //  // 'delete' links
+  //  $('#subjects a.delete').deleteWithAjax();
+ // }
   
-  function activateMrnLookup(){
+  //function activateMrnLookup(){
     // console.log('activateMrnLookup');
     // look up MRN
-    $("a[rel=#mrn_lookup]").overlay({
+   $("a.delete_event").livequery(function() {
+       if ($(this).attr("confirm_msg")) {
+       var confirm_msg = this.attr("confirm_msg");
+       } else {
+       var confirm_msg = "Are you sure?";
+       }
+       $(this).removeAttr('onclick');
+       $(this).unbind('click', false);
+       $(this).click(function(e) {
+       if (confirm(confirm_msg)) {
+         $.delete_($(this).attr("href"), $(this).serialize(), 
+         function(data,textStatus,jqXHR) {
+         $("#involvement_events").html(data);
+         $("#flash").html(jqXHR.getResponseHeader('x-flash') + '<div class=close></div>');
+         }, "html");
+         return false;
+       }else{
+         e.preventDefault();
+       }
+       });
+       return this;
+     }
+   );
+
+    $("a[rel=#mrn_lookup]").livequery(function()
+     {$(this).overlay(
+      {
       fixed: false,
       onBeforeLoad: function(){ 
         mrns = $("#new_involvement #involvement_subject_attributes_nmff_mrn, #new_involvement #involvement_subject_attributes_nmh_mrn, #new_involvement #involvement_subject_attributes_ric_mrn");
@@ -244,12 +324,12 @@ $(document).ready(function() {
       },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
       onClose: function(){$("#mrn_lookup .wrap").html("");}
-    });
+    });});
     
     activateInvolvementFields("#add");
     $("#add a.cancel").live("click", function(e){ e.preventDefault(); $("#add :input").val(''); $("#add :checkbox").attr('checked', '');});
     
-  }
+  //}
   
   // MRN Lookup
   $('#mrn_lookup .wrap .subject a.transfer').live("click", function(e){

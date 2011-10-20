@@ -42,20 +42,41 @@ class EventsController < ApplicationController
   def update
     @involvement = Involvement.find(params[:involvement_id])
     @involvement_event = InvolvementEvent.find(params[:id])
-    @involvement_event.update_attributes(params[:involvement_event])
-    redirect_to @involvement
+    saved = @involvement_event.update_attributes(params[:involvement_event])
+    if saved
+      flash[:notice] = "Event Updated"
+    else
+      flash[:error] = "Error: #{@involvement_event.errors.full_messages}"
+    end
+    respond_to do |format|
+      format.html {redirect_to @involvement}
+      format.js {render (saved ? :index : :edit),:layout => false}
+    end
   end
 
 
   def create
     @involvement = Involvement.find(params[:involvement_id])
-    @involvement.involvement_events.create(params[:involvement_event])
-    redirect_to @involvement
+    @involvement_event = @involvement.involvement_events.create(params[:involvement_event])
+    if @involvement_event.save
+      flash[:notice] = "Event Created"
+    else
+      flash[:error] = "Error: #{@involvement_event.errors.full_messages}"
+    end
+    respond_to do |format|
+      format.html {redirect_to @involvement}
+      format.js {render (@involvement_event.save ? :index : :new),:layout => false}
+    end
   end
 
   def destroy
     @involvement_event = InvolvementEvent.find(params[:id])
     @involvement_event.destroy
-    redirect_to @involvement_event.involvement
+    @involvement= Involvement.find(params[:involvement_id])
+    flash[:notice] = "Event Deleted"
+    respond_to do |format|
+      format.html {redirect_to study_path(study)}
+      format.js {render (:index), :layout => false}
+    end
   end
 end

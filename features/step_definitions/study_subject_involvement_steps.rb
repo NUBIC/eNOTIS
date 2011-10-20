@@ -144,13 +144,13 @@ Then /^subject "([^\"]*)" should not be involved with study "([^\"]*)"$/ do |mrn
 end
 
 When /^I upload the "([^"]*)" file$/ do |name|
-  click_link("Import")
+  click_link("Bulk Import")
   attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', name))
   click_button "Upload"
 end
 
 When /^I upload a blank file$/ do
-  click_link("Import")
+  click_link("Bulk Import")
   click_button "Upload"
 end
 

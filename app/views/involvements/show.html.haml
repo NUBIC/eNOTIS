@@ -2,7 +2,9 @@
   #involvement_demographics
     #pane_menu
       #pane_actions
-        =link_to "Edit",edit_involvement_path(@involvement),:rel=>"#edit_involvement"  
+        -unless @involvement.study.is_managed?
+          =link_to "Edit",edit_involvement_path(@involvement),:rel=>"#edit_involvement"  
+          =link_to "Delete",involvement_path(@involvement),:method=>'delete',:confirm => "You are about to delete this subject. Deleting will completely remove all of the subject's information from the study."
     - if @involvement.study.read_only?
       .patient_msg= "This patient record is part of a study that is managed in a different system. To edit this information you will need to go to the source system" 
     .subject
@@ -63,33 +65,14 @@
           =@involvement.email || "None Given"
 
   #involvement_events
-    #pane_menu
-      #pane_actions
-        =link_to('new',new_involvement_event_path(@involvement),:rel=>'#new_event')
-    %table
-      %thead 
-        %tr
-          %th Event
-          %th Occured On
-          %th Notes
-          %th
-      %tbody
-        -@involvement.involvement_events.each do |ie|
-          %tr
-            %td=ie.event_type.name
-            %td=ie.occurred_on
-            %td=ie.note
-            %td
-              =link_to('edit',edit_involvement_event_path(@involvement,ie),:rel=>'#edit_event')
-              =" - "
-              =link_to('delete',involvement_event_path(@involvement,ie),:method=>'delete')
+    = render :partial => 'partials/involvement_event_list', :locals => {:study => @involvement}
 
   -unless @study.surveys.empty?
     #involvement_forms
       #pane_menu
         #pane_actions
           =link_to("add",available_surveys_path(:involvement_id=>@involvement.id,:study_id=>@study.id),:rel=>'#start_form',:class=>"add")
-      %table.display
+      %table{:id=>"form_list"}
         %thead 
           %tr
             %th Form/Visit Date

@@ -22,6 +22,7 @@ Feature: Developer admin access
     And I should see "active users"
     And I should see "passive users"
     
+  @selenium
   Scenario: An admin user should be able to see study uploads
     Given I log in as "adminnie" on study "STU00144"
     And a study "Vitamin C and concentration" with id "STU001248" and irb_status "Approved"

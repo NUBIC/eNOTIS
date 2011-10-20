@@ -5,7 +5,7 @@
       =link_to "cancel",involvement_events_path(@involvement_event.involvement),:rel=>'#cancel_event'
 
   = f.label :event_type,"Event Type"
-  = f.select :event_type_id,@study.event_types.collect{|et| [et.name,et.id] }
+  = f.select :event_type_id,@involvement.study.event_types.collect{|et| [et.name,et.id] }
   %br
   %br
   = f.label      :occurred_on, "On"
