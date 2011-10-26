@@ -2,8 +2,9 @@
   #pane_menu
     #search
     #pane_actions
-      = link_to("Add", new_involvement_path(:study=>@study),:rel=>"#add_subject")
-      = link_to("Bulk Import", study_uploads_path(@study),:rel=>"#import_subjects")
+      -unless @study.read_only?
+        = link_to("Add", new_involvement_path(:study=>@study),:rel=>"#add_subject")
+        = link_to("Bulk Import", study_uploads_path(@study),:rel=>"#import_subjects")
   %table.display{:id=>'subject_list'}
     %thead
       %tr

@@ -285,14 +285,14 @@ $(document).ready(function() {
   //function activateMrnLookup(){
     // console.log('activateMrnLookup');
     // look up MRN
-   $("a.delete_event").livequery(function() {
+   $("#involvement_events .delete_event").livequery(function() {
        if ($(this).attr("confirm_msg")) {
        var confirm_msg = this.attr("confirm_msg");
        } else {
        var confirm_msg = "Are you sure?";
        }
-       $(this).removeAttr('onclick');
-       $(this).unbind('click', false);
+       //$(this).removeAttr('onclick');
+       //$(this).unbind('click', false);
        $(this).click(function(e) {
        if (confirm(confirm_msg)) {
          $.delete_($(this).attr("href"), $(this).serialize(), 
@@ -300,7 +300,7 @@ $(document).ready(function() {
          $("#involvement_events").html(data);
          $("#flash").html(jqXHR.getResponseHeader('x-flash') + '<div class=close></div>');
          }, "html");
-         return false;
+        return false;
        }else{
          e.preventDefault();
        }

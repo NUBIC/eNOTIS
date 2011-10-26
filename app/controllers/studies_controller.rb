@@ -40,7 +40,7 @@ class StudiesController < ApplicationController
     if @study
       @involvements = @study.involvements
       @title = @study.irb_number
-      #authorize! :show, @study
+      authorize! :show, @study
       #@title = @study.irb_number
       # Querying based on involvement to allow for server-side
       # pagination later if necessary.

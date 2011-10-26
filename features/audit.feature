@@ -12,6 +12,7 @@ Feature: Audit trail
     Given a study "Vitamin D and delerium" with id "STU001992" and irb_status "Approved"
     And I log in as "usergey" on study "STU001992"
     And I go to the study page for id "STU001992"
+    And I navigate to the "subjects" tab
     When I add a subject "Jack" "Daripur" with "Consented" on "2009-07-01"
     Then I should be on the study page for id "STU001992"
     Then there should be 4 activities with
@@ -35,6 +36,7 @@ Feature: Audit trail
   Scenario: Uploads
     Given I log in as "usergey" on study "STU001994"
     When I go to the study page for id "STU001994"
+    And I navigate to the "subjects" tab
     And I upload the "good.csv" file
     Then there should be 4 activities with
       | controller   | action | whodiddit |

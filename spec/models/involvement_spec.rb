@@ -292,7 +292,8 @@ describe Involvement do
 
   describe "NIH Race requirements" do
     before(:each) do
-      @i = Involvement.new(:gender => "Male", :ethnicity => "Hispanic or Latino",
+      @study = Factory(:study)
+      @i = Involvement.new(:study=>@study,:gender => "Male", :ethnicity => "Hispanic or Latino",
                            :races => ["American Indian/Alaska Native", "Asian"])
     end
 

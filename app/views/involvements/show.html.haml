@@ -2,7 +2,7 @@
   #involvement_demographics
     #pane_menu
       #pane_actions
-        -unless @involvement.study.is_managed?
+        -unless @involvement.study.read_only?
           =link_to "Edit",edit_involvement_path(@involvement),:rel=>"#edit_involvement"  
           =link_to "Delete",involvement_path(@involvement),:method=>'delete',:confirm => "You are about to delete this subject. Deleting will completely remove all of the subject's information from the study."
     - if @involvement.study.read_only?

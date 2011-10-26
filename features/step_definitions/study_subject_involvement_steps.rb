@@ -74,16 +74,31 @@ end
 Then /^I add edit subject "([^\"]*)" "([^\"]*)" with 2nd event "([^\"]*)" on "([^\"]*)"$/ do |first, last, event, date|
   sid = Subject.find_by_first_name_and_last_name(first, last).id
   within ".subject_#{sid}" do |scope|
-    scope.click_link "Edit"
+    scope.click_link "Detail"
   end
-  select event, :from => :involvement_involvement_events_attributes_1_event_type_id
-  fill_in :involvement_involvement_events_attributes_1_occurred_on, :with => date
-  click_button "Save"
+  within "#involvement_events" do |scope|
+    scope.click_link "New"
+  end
+  select event, :from => :involvement_event_event_type_id
+  fill_in :involvement_event_occurred_on, :with => date
+  click_button "create"
+end
+
+Then /^I navigate to the edit page for subject "([^\"]*)" "([^\"]*)"$/ do |first,last|
+  sid = Subject.find_by_first_name_and_last_name(first, last).id
+  within ".subject_#{sid}" do |scope|
+    scope.click_link "Detail"
+  end
+  click_link "Edit"
+
 end
 
 Then /^I remove subject "([^"]*)" "([^"]*)"$/ do |first, last|
   sid = Subject.find_by_first_name_and_last_name(first, last).id
   within ".subject_#{sid}" do |scope|
+    scope.click_link "Detail"
+  end
+  within "#involvement_demographics" do |scope|
     scope.click_link "Delete"
   end
 end
@@ -143,14 +158,19 @@ Then /^subject "([^\"]*)" should not be involved with study "([^\"]*)"$/ do |mrn
   Involvement.find_by_subject_id_and_study_id(Subject.find_by_nmff_mrn(mrn), Study.find_by_irb_number(irb_number)).should be_blank
 end
 
+When /^I navigate to the "([^\"]*)" tab$/ do |tab|
+  click_link(tab)
+end
+  
+
 When /^I upload the "([^"]*)" file$/ do |name|
-  click_link("Bulk Import")
+  click_link("Import")
   attach_file(:file, File.join(RAILS_ROOT, 'spec', 'uploads', name))
   click_button "Upload"
 end
 
 When /^I upload a blank file$/ do
-  click_link("Bulk Import")
+  click_link("Import")
   click_button "Upload"
 end
 

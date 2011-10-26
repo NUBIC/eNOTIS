@@ -7,6 +7,7 @@ Feature: Manage subjects
     Given a study "Vitamin D and delerium" with id "STU001248" and irb_status "Approved"
     And I log in as "usergey" on study "STU001248"
     And I go to the study page for id "STU001248"
+    And I navigate to the "subjects" tab
 
   Scenario: A coordinator can add a subject
     When I add a subject "Jack" "Daripur" with "Consented" on "2009-07-01"
@@ -27,6 +28,7 @@ Feature: Manage subjects
     When I add a subject "Jack" "Daripur" with "Consented" on "2009-07-01"
     Then I should be on the study page for id "STU001248"
     And I should see "Created"
+    And I follow "subjects"
     And I add edit subject "Jack" "Daripur" with 2nd event "Completed" on "2010-04-19"
     And subject "Jack" "Daripur" should have 2 events on study "STU001248"
 
@@ -34,6 +36,7 @@ Feature: Manage subjects
     When I add a subject "Jack" "Daripur" with "Consented" on "2009-07-01"
     Then I should be on the study page for id "STU001248"
     And I should see "Created"
+    And I follow "subjects"
     And I add edit subject "Jack" "Daripur" with 2nd event "Consented" on "2009-07-01"
     Then I should see " has already been entered"
     And subject "Jack" "Daripur" should have 1 events on study "STU001248"
@@ -43,6 +46,7 @@ Feature: Manage subjects
     Then I should be on the study page for id "STU001248"
     And I should see "Created"
     And subject "Jack" "Daripur" should have 1 events on study "STU001248"
+    And I follow "subjects"
     Then I remove subject "Jack" "Daripur"
     And subject "90210f" should not be involved with study "STU001248"
 
@@ -51,8 +55,11 @@ Feature: Manage subjects
     Then I should be on the study page for id "STU001248"
     And I should see "Created"
     And subject "Jack" "Daripur" should have 1 events on study "STU001248"
+    And I follow "subjects"
     And I add edit subject "Jack" "Daripur" with 2nd event "Completed" on "2010-04-19"
     And subject "Jack" "Daripur" should have 2 events on study "STU001248"
+    And I go to the study page for id "STU001248"
+    And I follow "subjects"
     Then I remove subject "Jack" "Daripur"
     And subject "90210f" should not be involved with study "STU001248"
   
@@ -67,5 +74,6 @@ Feature: Manage subjects
   Scenario: A coordinator should not see the MRN lookup for edits
     When I add a subject "Jack" "Daripur" with "Consented" on "2009-07-01" and MRN "90210f"
     Then I should be on the study page for id "STU001248"
-    And I follow "Edit"
+    And I follow "subjects"
+    When I navigate to the edit page for subject "Jack" "Daripur"
     Then I should not see "Look up MRN"

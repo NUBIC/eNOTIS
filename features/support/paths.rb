@@ -11,35 +11,39 @@ module NavigationHelpers
     when /the home\s?page/
       '/'
 
+    when /the login page/
+      login_path
+
+    when /the study page for id "([^\"]*)"/
+      "/studies/#{$1}"
+
+    when /the search page/
+      search_path
+
+    when /the hub page/
+      hub_path
+
+    when /the studies page/
+      studies_path
+
+    when /^the services page$/
+      services_path
+
+    when /^the services page for "([^\"]*)"$/
+      edit_service_path($1)
+
+    when /the help page/
+      help_path
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
     #   when /^(.*)'s profile page$/i
     #     user_profile_path(User.find_by_login($1))
-    when /the new portals page/
-      new_portals_path
-
-    when /administrations page/
-      administrations_path
-
-    when /the portal page for code "([^\"]*)"/
-      "/portals/#{$1}"
-
-    when /the participant page for email "([^\"]*)"/
-      part = Participant.find_by_email($1)
-      "/participants/#{part.id}"   
- 
-    # Add more mappings here.
 
     else
-      begin
-        page_name =~ /the (.*) page/
-        path_components = $1.split(/\s+/)
-        self.send(path_components.push('path').join('_').to_sym)
-      rescue Object => e
-        raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
-          "Now, go and add a mapping in #{__FILE__}"
-      end
+      raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
+        "Now, go and add a mapping in #{__FILE__}"
     end
   end
 end
