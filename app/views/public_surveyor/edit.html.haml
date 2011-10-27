@@ -14,7 +14,7 @@
       .close
   - semantic_form_for(:r, @response_set, :url => update_my_public_survey_path(@survey.access_code,@response_set.access_code), :html => {:method => :put, :id => "survey_form", :class => @survey.custom_class}) do |f|
     #menu
-      = render 'partials/section_menu' 
+      = render 'partials/public_section_menu' 
     //.previous_section= previous_section
     = render 'partials/dependents' unless @dependents.empty?
     //- if @response_set.no_responses_for_section?(@section) # cache if response_set has no responses for current section
