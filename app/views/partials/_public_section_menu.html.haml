@@ -6,6 +6,6 @@
         #menu_text{:class => ("active" if s == @section)}= menu_button_for(s)
   #options
     .option
-      //=link_to("Save and Exit", public_available_surveys_path(:uuid=>@response_set.involvement.uuid), :class=>"awesome regular option")
+      =link_to("Save and Exit", public_available_surveys_path(:uuid=>@response_set.involvement.uuid), :class=>"awesome regular option")
     .option
       =submit_tag(t('surveyor.click_here_to_finish'), :class=>"awesome regular option", :name => "finish") 
