@@ -29,7 +29,7 @@ def group_cohesion
     a_6 "Quite agree"
     a_7 "Strongly agree"
     
-    q_4 "This group is the best anywhere", :pick => :one
+    q_4 "This group is one of the best anywhere", :pick => :one
     a_1 "Strongly disagree"
     a_2 "Quite disagree"
     a_3 "Slightly disagree"

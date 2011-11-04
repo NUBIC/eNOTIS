@@ -9,7 +9,7 @@ Dir["#{Rails.root}/surveys/STU00017350/partials/*.rb"].each {|file| require file
 #require "#{Rails.root}/surveys/STU00017350/therapeutic_alliance.rb"
 #require File.expand_path(File.dirname(__FILE__) + "/surveys/physical_measures_height_weight_bmi.rb")
 #require File.expand_path(File.dirname(__FILE__) + "/surveys/physical_measures_waist_circ_blood_pressure.rb")
-survey "12 month - Standard Group (Paper Pencil)" ,:irb_number=>'STU00017350' do
+survey "12 month - Standard" ,:irb_number=>'STU00017350' do
   #calling methods that represent sections defined as the separate modules
   self_efficacy_for_weight_loss 
   self_reported_habit_strength_formation

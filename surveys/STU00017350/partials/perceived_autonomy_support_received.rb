@@ -1,5 +1,5 @@
 def perceived_autonomy_support_received
-  section "PAS-R" do
+  section "PAS-G" do
     label "Instructions. These questions are related to your team members. Teams have different styles, and we would like to know 
     more about how you have felt about your encounters with your team. Your responces are confidential. Please be honest and candid"
      

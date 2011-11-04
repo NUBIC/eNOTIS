@@ -11,7 +11,7 @@ def therapeutic_alliance
       <br/> 6 = Very Often
       <br/> 7 = Always<br/></b>"
 
-    label_1_3 "If the statement describes the way you <b>always</b> feel (or think) circle the number <b>7</b>; if it never applies to you circle the number <b>1</b>. 
+    label_1_3 "If the statement describes the way you <b>always</b> feel (or think) select the number <b>7</b>; if it never applies to you select the number <b>1</b>. 
     Use the numbers in between to describe the variations between these extremes."
     
     grid "My coach  and I agree about the things I will need to do in therapy to help improve my situation." do

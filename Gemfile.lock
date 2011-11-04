@@ -26,7 +26,7 @@ GEM
     bcsec (2.0.6)
       activerecord (~> 2.3.5)
       activesupport (~> 2.3.5)
-      bcaudit (>= 0.0.3, ~> 0.0)
+      bcaudit (~> 0.0, >= 0.0.3)
       bcdatabase (~> 1.0)
       composite_primary_keys (~> 2.3.5)
       net-ldap (~> 0.1.1)
