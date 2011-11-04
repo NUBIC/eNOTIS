@@ -1,7 +1,7 @@
 survey "PANAS Questionnaire",:irb_number=>"STU00015205",:score_configurations_attributes=>[{:name=>"Positive Affect Score:",:algorithm=>'partial_sum',:question_code=>'pas'},{:name=>"Negative Affect Score",:algorithm=>'partial_sum',:question_code=>'nas'}],:is_public=>true  do 
   section "PANAS Questionnaire" do 
 
-    grid "This scale consists of a number of words that describe different feelings and emotions. Read each item and then list the number from the scale below next to each word. <strong>Indicate to what extent you feel this way right now, that is, at the present moment OR indicate the extent you have felt this way over the past week (circle the instructions you followed when taking this measure)</strong>" do 
+    grid "This scale consists of a number of words that describe different feelings and emotions. Read each item and then list the number from the scale below next to each word. <strong>Indicate to what extent you feel this way right now, that is, at the present moment OR indicate the extent you have felt this way over the past week (select the instructions you followed when taking this measure)</strong>" do 
 
       a_1 "Very Slightly or Not at All",:weight=>1
       a_2 "A Little",:weight=>2
