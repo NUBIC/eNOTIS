@@ -10,6 +10,7 @@ class SurveyGroup < ActiveRecord::Base
       remaining = surveys.reject{|s| !survey.active? and response_set.involvement.response_sets.collect{|r| r.survey}.include?(s)}
       next_response =  ResponseSet.create(:involvement=>response_set.involvement,:survey=>remaining.rand,:effective_date=>response_set.effective_date) unless remaining.empty?
     elsif self.progression.eql?('sequential')      
+      debugger
       survey = surveys.find_by_display_order(response_set.survey.display_order +1)
       next_response =  ResponseSet.create(:involvement=>response_set.involvement,:survey=>survey,:effective_date=>response_set.effective_date) unless survey.nil
     end

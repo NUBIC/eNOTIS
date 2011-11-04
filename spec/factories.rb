@@ -55,12 +55,14 @@ Factory.define :fake_subject, :parent => :subject do |p|
   p.email                     {Faker::Internet.email}
   # p.no_contact                
   # p.no_contact_reason         
- 
- 
 end
 
 Factory.sequence :irb_number do |n|
-  "STU009999#{"%03d" % n}"
+  "STU008888#{"%03d" % n}"
+end
+
+Factory.sequence :access_code do |n|
+  "access#{n+10000}"
 end
 
 Factory.define :study do |p|
@@ -141,13 +143,21 @@ end
 
 Factory.define :survey do |s|
   s.association :study
-  s.title         {['test1','test2','test3','test4'].rand}
-  s.access_code         {['test1','test2','test3','test4'].rand}
+  s.association :survey_group
+  s.title       {['test1','test2','test3','test4'].rand}
+  s.irb_number  {Factory.next :irb_number}
+  s.access_code {Factory.next :access_code}
+end
+
+Factory.define :survey_group do |sg|
+  sg.title        {['test_title1','test_title2','test_title3','test_title4'].rand}
+  sg.access_code  {Factory.next :access_code}
+  sg.progression  {"sequential"}
 end
 
 Factory.define :response_set do |r|
   r.association :survey
-  r.access_code {"tester"}
+  r.access_code {Factory.next :access_code}
 end
 
 Factory.define :survey_section do |s|
@@ -166,6 +176,7 @@ Factory.define :answer do |a|
 end
 
 Factory.define :response do |r|
+  r.association :response_set
+  r.association :question
   r.association :answer
-
 end

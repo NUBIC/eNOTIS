@@ -102,8 +102,8 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.integer  "event_type_id"
   end
 
-  # unrecognized index "index_involvement_events_on_event_type_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
-  # unrecognized index "inv_events_occurred_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  add_index "involvement_events", ["event_type_id"], :name => "index_involvement_events_on_event_type_id"
+  add_index "involvement_events", ["occurred_on"], :name => "inv_events_occurred_idx"
 
   create_table "involvements", :force => true do |t|
     t.integer  "subject_id"
@@ -113,12 +113,12 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.string   "case_number"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "race_is_white",                                                   :default => false
-    t.boolean  "race_is_black_or_african_american",                               :default => false
     t.boolean  "race_is_asian",                                                   :default => false
     t.boolean  "race_is_native_hawaiian_or_other_pacific_islander",               :default => false
     t.boolean  "race_is_american_indian_or_alaska_native",                        :default => false
     t.boolean  "race_is_unknown_or_not_reported",                                 :default => false
+    t.boolean  "race_is_white",                                                   :default => false
+    t.boolean  "race_is_black_or_african_american",                               :default => false
     t.string   "address_line1"
     t.string   "address_line2"
     t.string   "city"
@@ -131,8 +131,8 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.string   "uuid",                                              :limit => 36
   end
 
-  # unrecognized index "involvements_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
-  # unrecognized index "involvements_uuid_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  add_index "involvements", ["subject_id", "study_id", "ethnicity", "gender"], :name => "involvements_attr_idx", :unique => true
+  add_index "involvements", ["uuid"], :name => "involvements_uuid_idx", :unique => true
 
   create_table "medical_services", :force => true do |t|
     t.integer  "study_id"
@@ -204,7 +204,7 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.datetime "updated_at"
   end
 
-  # unrecognized index "response_sets_ac_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  add_index "response_sets", ["access_code"], :name => "response_sets_ac_idx", :unique => true
 
   create_table "responses", :force => true do |t|
     t.integer  "response_set_id"
@@ -223,7 +223,7 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.integer  "survey_section_id"
   end
 
-  # unrecognized index "index_responses_on_survey_section_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  add_index "responses", ["survey_section_id"], :name => "index_responses_on_survey_section_id"
 
   create_table "roles", :force => true do |t|
     t.integer  "study_id"
@@ -235,11 +235,11 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.string   "netid"
   end
 
-  # unrecognized index "index_authorized_people_on_consent_role" with type ActiveRecord::ConnectionAdapters::IndexDefinition
-  # unrecognized index "index_authorized_people_on_project_role" with type ActiveRecord::ConnectionAdapters::IndexDefinition
-  # unrecognized index "index_authorized_people_on_study_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
-  # unrecognized index "index_authorized_people_on_user_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
-  # unrecognized index "roles_netid_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  add_index "roles", ["consent_role"], :name => "index_authorized_people_on_consent_role"
+  add_index "roles", ["netid"], :name => "roles_netid_idx"
+  add_index "roles", ["project_role"], :name => "index_authorized_people_on_project_role"
+  add_index "roles", ["study_id"], :name => "index_authorized_people_on_study_id"
+  add_index "roles", ["user_id"], :name => "index_authorized_people_on_user_id"
 
   create_table "score_configurations", :force => true do |t|
     t.string  "name"
@@ -289,7 +289,7 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.string   "managing_system"
   end
 
-  # unrecognized index "studies_irb_number_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  add_index "studies", ["irb_number"], :name => "studies_irb_number_idx", :unique => true
 
   create_table "study_uploads", :force => true do |t|
     t.integer  "study_id"
@@ -335,7 +335,7 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.string   "ric_mrn"
   end
 
-  # unrecognized index "index_subjects_on_external_patient_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  add_index "subjects", ["external_patient_id"], :name => "index_subjects_on_external_patient_id"
 
   create_table "survey_groups", :force => true do |t|
     t.string "access_code"
@@ -379,7 +379,7 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.integer  "survey_group_id"
   end
 
-  # unrecognized index "surveys_ac_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  add_index "surveys", ["access_code"], :name => "surveys_ac_idx", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "netid"
@@ -400,7 +400,7 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.datetime "updated_at"
   end
 
-  # unrecognized index "users_netid_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  add_index "users", ["netid"], :name => "users_netid_idx", :unique => true
 
   create_table "validation_conditions", :force => true do |t|
     t.integer  "validation_id"
@@ -437,6 +437,6 @@ ActiveRecord::Schema.define(:version => 20110824133942) do
     t.datetime "created_at"
   end
 
-  # unrecognized index "versions_attr_idx" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  add_index "versions", ["item_type", "item_id"], :name => "versions_attr_idx"
 
 end
