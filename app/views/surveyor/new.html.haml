@@ -1,4 +1,7 @@
 -form_tag(take_survey_path(:survey_code=>'null')) do 
+  #pane_menu
+    #pane_actions
+      =submit_tag("Start")
   =hidden_field_tag :involvement_id,@involvement.id
   %p
     =label_tag 'active_survey_code','Select Form'
@@ -6,5 +9,7 @@
   %p
     =label_tag 'effective_date','Visit Date'
     =text_field_tag("effective_date",Date.today.strftime("%m/%d/%Y"),:class=>"date")
-  =submit_tag("Start")
+  #pane_menu
+    #pane_actions
+      =submit_tag("Start")
 

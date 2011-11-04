@@ -2,7 +2,7 @@
 #pane_menu
   #pane_actions
     =link_to 'new', new_study_event_type_path(@study),:rel=>"#event_type"
-%table
+%table{:id=>"event_types"}
   %thead
     %tr
       %th Name
@@ -19,6 +19,9 @@
         %td=ev.name 
         %td=ev.description
         %td
-          =link_to ('edit',edit_study_event_type_path(@study,ev),:rel=>'#event_type')
-          =" - "
-          =link_to ('delete',study_event_type_path(@study,ev),:method=>:delete)
+          #action
+            =link_to ('edit',edit_study_event_type_path(@study,ev),:rel=>'#event_type')
+          #action
+            -form_tag(study_event_type_path(@study,ev),:method=>"delete",:class=>"delete_event_type") do
+              =submit_tag('delete')
+            //=link_to ('delete',study_event_type_path(@study,ev),:method=>:delete)

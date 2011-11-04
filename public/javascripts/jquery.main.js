@@ -1,7 +1,5 @@
 var timeoutWarningTimer;
 var timeoutExpiredTimer;
-var importTable; // global variable to keep track of import data table, preventing reinitialization
-var subjectTable;
 
 
 $(document).ready(function() {
@@ -19,11 +17,22 @@ $(document).ready(function() {
   });
  
   // start a new form for a participant
-  $("#involvement_forms a[rel=#start_form]").livequery(function(){$(this).overlay({
-    fixed: false, // allows user to scroll if overlay extends beyond viewport
-    onBeforeLoad: function(){ $("#start_form .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    });});
+  //$("#involvement_forms a[rel=#start_form]").livequery(function(){$(this).overlay({
+ //   fixed: false, // allows user to scroll if overlay extends beyond viewport
+  //  onBeforeLoad: function(){ $("#start_form .wrap").load(this.getTrigger().attr("href"), "format=js"); },
+  //  expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
+  //  });});
+  $("#involvement_forms a[rel=#start_form]").livequery(
+    'click', function(){
+      $("#involvement_forms").load( $(this).attr("href")); 
+      return false;
+      }
+      );
+
+   
+
+
+
 
   $("#study_charts").livequery( function(){
     var x = $(this).html();
@@ -42,19 +51,6 @@ $(document).ready(function() {
       $(this).data("dateinput").show();
     }
   });
-
-  //create a new involvement event for a participant
-  //$("#involvement_events a[rel=#new_event]").overlay({
-  //  fixed: false, // allows user to scroll if overlay extends beyond viewport
-  //  onBeforeLoad: function(){ $("#new_event .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-  //  expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-  //  });
-  //create a new involvement event for a participant
-  //$("#involvement_events a[rel=#edit_event]").overlay({
-  //  fixed: false, // allows user to scroll if overlay extends beyond viewport
-  //  onBeforeLoad: function(){ $("#edit_event .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-  //  expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-  //  });
 
   //create and edit event type for a study
   $("#event_types a[rel=#event_type]").livequery(function(){$(this).overlay({
@@ -134,7 +130,7 @@ $(document).ready(function() {
       );
 
   //new event
-  $("#involvement_events a[rel=#new_event]").livequery(
+  $("#involvement_events a[rel=#new_event]").live(
     'click', function(){
       $("#involvement_events").load( $(this).attr("href")); 
       return false;
@@ -147,6 +143,35 @@ $(document).ready(function() {
       return false;
       }
       );
+
+  //delete event
+   $('#involvement_events .delete_event').livequery(function() {
+      if ($(this).attr("confirm_msg")) {
+         var confirm_msg = $(this).attr("confirm_msg");
+     } else {
+         var confirm_msg = "Are you sure?";
+     }
+     //$(this).removeAttr('onclick');
+     //$(this).unbind('click', false);
+     $(this).click(function(e) {
+     if (confirm(confirm_msg)) {
+        $.post($(this).attr("action"), $(this).serialize(),
+        function(data,textStatus,jqXHR) {
+        $('#involvement_events').html(data);
+        $("#flash").html(jqXHR.getResponseHeader('x-flash') + '<div class=close></div>');
+        
+        },
+        'html');
+         return false;
+       }else{
+          e.preventDefault();
+         return $(this);
+       }
+     });
+      }
+    
+   );
+
 
   //edit involvement
   $("#pane_actions a[rel=#edit_involvement]").livequery(
@@ -281,33 +306,37 @@ $(document).ready(function() {
   //  // 'delete' links
   //  $('#subjects a.delete').deleteWithAjax();
  // }
+ 
   
+  
+/*
   //function activateMrnLookup(){
     // console.log('activateMrnLookup');
     // look up MRN
-   $("#involvement_events .delete_event").livequery(function() {
-       if ($(this).attr("confirm_msg")) {
-       var confirm_msg = this.attr("confirm_msg");
-       } else {
-       var confirm_msg = "Are you sure?";
-       }
+   $("#involvement_events a[rel=#delete_event]").livequery('click',function() {
+       //if ($(this).attr("confirm_msg")) {
+       //var confirm_msg = this.attr("confirm_msg");
+       //} else {
+       //var confirm_msg = "Are you sure?";
+       //}
        //$(this).removeAttr('onclick');
        //$(this).unbind('click', false);
        $(this).click(function(e) {
-       if (confirm(confirm_msg)) {
+       //if (confirm(confirm_msg)) {
          $.delete_($(this).attr("href"), $(this).serialize(), 
          function(data,textStatus,jqXHR) {
          $("#involvement_events").html(data);
          $("#flash").html(jqXHR.getResponseHeader('x-flash') + '<div class=close></div>');
          }, "html");
         return false;
-       }else{
-         e.preventDefault();
-       }
+       //}else{
+       //  e.preventDefault();
+       //}
        });
-       return this;
+       //return this;
      }
    );
+*/
 
     $("a[rel=#mrn_lookup]").livequery(function()
      {$(this).overlay(
@@ -342,11 +371,11 @@ $(document).ready(function() {
     $("a[rel=#mrn_lookup]").data("overlay").close();
   });
   
-  // involvement overlay
-  function activateInvolvementOverlay(selector){
-    $(selector).overlay({
-      fixed: false, // allows user to scroll if overlay extends beyond viewport
-      closeOnClick: false, // to prevent closing accidentally when dismissing datepickers
+ /** // involvement overlay
+  //function activateInvolvementOverlay(selector){
+  //  $(selector).overlay({
+  //    fixed: false, // allows user to scroll if overlay extends beyond viewport
+  //    closeOnClick: false, // to prevent closing accidentally when dismissing datepickers
       onBeforeLoad: function(){ $("#involvement .wrap").load(this.getTrigger().attr("href"), "format=js"); },
       expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 },
       onLoad: function(event){
@@ -361,6 +390,7 @@ $(document).ready(function() {
       }
     });
   }
+*/
 
   // involvement form checkboxes and datepickers
   // these functions have been changed to "live", to counteract the timing problem of the objects not being loaded when onLoad is called
@@ -460,33 +490,6 @@ function _ajax_request(url, data, callback, type, method) {
   });
 }
 
-jQuery.extend({
-  put: function(url, data, callback, type) {
-    return _ajax_request(url, data, callback, type, 'PUT');
-  },
-  delete_: function(url, data, callback, type) {
-    return _ajax_request(url, data, callback, type, 'DELETE');
-  }
-});
-
-jQuery.fn.deleteWithAjax = function() {
-  if (this.attr("confirm_msg")) {
-    var confirm_msg = this.attr("confirm_msg");
-  } else {
-    var confirm_msg = "Are you sure?";
-  }
-  this.removeAttr('onclick');
-  this.unbind('click', false);
-  this.click(function(e) {
-    if (confirm(confirm_msg)) {
-      $.delete_($(this).attr("href"), $(this).serialize(), null, "script");
-      return false;
-    }else{
-      e.preventDefault();
-    }
-  });
-  return this;
-};
 
 // getUrlVar used in search
 $.extend({

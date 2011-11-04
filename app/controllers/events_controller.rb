@@ -75,8 +75,8 @@ class EventsController < ApplicationController
     @involvement= Involvement.find(params[:involvement_id])
     flash[:notice] = "Event Deleted"
     respond_to do |format|
-      format.html {redirect_to study_path(study)}
-      format.js {render (:index), :layout => false}
+      format.html {redirect_to study_path(@involvement.study)}
+      format.js {render :index, :layout => false}
     end
   end
 end

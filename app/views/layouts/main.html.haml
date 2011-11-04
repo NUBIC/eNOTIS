@@ -4,7 +4,7 @@
   %head
     %title= "eNOTIS :: #{@title}"
     = stylesheet_link_tag "compiled/main"
-    = javascript_include_tag "tools/jquery.tools.min", "jquery.address.min","tools/jquery.dataTables.min", "tools/underscore-min","tools/jquery.livequery.min","jquery.main", :cache => "cache/main"
+    = javascript_include_tag "tools/jquery.tools.min","tools/jquery.dataTables.min", "tools/underscore-min","tools/jquery.livequery.min","jquery.main", :cache => "cache/main"
     = yield :head
   %body
     #container
