@@ -10,7 +10,7 @@ Dir["#{Rails.root}/surveys/STU00017350/partials/*.rb"].each {|file| require file
 #require File.expand_path(File.dirname(__FILE__) + "/surveys/condition_preference_post_test.rb")
 #require File.expand_path(File.dirname(__FILE__) + "/surveys/physical_measures_height_weight_bmi.rb")
 #require File.expand_path(File.dirname(__FILE__) + "/surveys/physical_measures_waist_circ_blood_pressure.rb")
-survey "6 month - Technology Group",:irb_number=>'STU00017350' do
+survey "6 month - Technology",:irb_number=>'STU00017350' do
   #calling methods that represent sections defined as the separate modules
   self_efficacy_for_weight_loss 
   self_reported_habit_strength_formation
@@ -21,6 +21,5 @@ survey "6 month - Technology Group",:irb_number=>'STU00017350' do
   therapeutic_alliance 
   technology_acceptance_model
   condition_preference_post_test
-  physical_measures_height_weight_bmi
-  physical_measures_waist_circumference_blood_pressure    
+  physical_measures_weight_waist_circumference_blood_pressure    
 end

@@ -79,7 +79,7 @@ def promis_measure_qol
       q "Completely|Not at all" , :pick => :one
     end     
     
-    grid "How often have you been bothered by emotional problems such as feeling anxious, depressed or irritable?
+    grid "In the past 7 days, how often have you been bothered by emotional problems such as feeling anxious, depressed or irritable?
         <br/>
           <br/><b> 5 = Never
           <br/> 4 = Rarely
@@ -95,7 +95,7 @@ def promis_measure_qol
       q "Never|Always" , :pick => :one
     end  
     
-    grid "How would you rate your fatigue on average? 
+    grid "In the past 7 days, how would you rate your fatigue on average? 
       <br/>
         <br/><b> 5 = None
         <br/> 4 = Mild
@@ -111,7 +111,7 @@ def promis_measure_qol
       q "None|Very severe" , :pick => :one
     end
     
-    grid "How would you rate your pain on average?" do
+    grid "In the past 7 days, how would you rate your pain on average?" do
       a "0"
       a "1"
       a "2"

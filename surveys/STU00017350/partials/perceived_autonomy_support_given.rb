@@ -1,9 +1,9 @@
 def perceived_autonomy_support_given
-  section "PAS-G" do
+  section "PAS-R" do
     label "Instructions. These questions are related to your team members. Teams have different styles, and we would like to know 
     more about how you have felt about your encounters with your team. Your responces are confidential. Please be honest and candid"
      
-    grid "I feel that my team cares about me as a person, regardless of my level of participation or success at loosing weight." do
+    grid "I feel that my team cares about me as a person, regardless of my level of participation or success at losing weight." do
       a "-3"
       a "-2"
       a "-1"

@@ -1,5 +1,8 @@
-def physical_measures_waist_circumference_blood_pressure
-  section "WC" do
+def physical_measures_weight_waist_circumference_blood_pressure
+  section "Weight, WC, and Blood Pressure" do
+    q_weight "Weight (pounds):"
+    a :string
+    
     q_waist "Waist Circumference",
     :help_text => "(cm)"
     a :string
