@@ -1,6 +1,6 @@
 def self_reported_habit_strength_formation
   section "HS" do
-    label_1 "Self-Reported Habit Strength Formation (For eating fewer calories & physical activity)<br/>"
+    # label_1 "Self-Reported Habit Strength Formation (For eating fewer calories & physical activity)<br/>"
 
     grid "Eating fewer calories is something....." do
       a "1 = Fully Disagree"
