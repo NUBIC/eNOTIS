@@ -12,9 +12,9 @@ def technology_acceptance_model
       a "6- Quite disagree"
       a "7- Extremely disagree"
       
-      q "Difficulties in finding and installing the E2 application has a negative impact on my usage."
-      q "Difficult configuration of E2 has a negative impact on my usage."
-      q "Poor performance of E2 has a negative aspect on my usage."
+      q "Difficulties in finding and installing the E2 application has a negative impact on my usage.",:pick=>:one
+      q "Difficult configuration of E2 has a negative impact on my usage.",:pick=>:one
+      q "Poor performance of E2 has a negative aspect on my usage.",:pick=>:one
     end
   
     grid "Behavioral Control" do
@@ -26,9 +26,9 @@ def technology_acceptance_model
       a "6- Quite disagree"
       a "7- Extremely disagree"
       
-      q "I can use the E2 application without help from others."
-      q "I have the means and resources to use the E2 application."
-      q "I have the knowledge and skills to use the E2 application."
+      q "I can use the E2 application without help from others.",:pick=>:one
+      q "I have the means and resources to use the E2 application.",:pick=>:one
+      q "I have the knowledge and skills to use the E2 application.",:pick=>:one
     end
     
     grid "Perceived Enjoyment" do 
@@ -40,9 +40,9 @@ def technology_acceptance_model
       a "6- Quite disagree"
       a "7- Extremely disagree"
       
-      q "I think it is fun to use the E2 applicaton."
-      q "The E2 application brings enjoyment."
-      q "I use the E2 application to kill time."
+      q "I think it is fun to use the E2 applicaton.",:pick=>:one
+      q "The E2 application brings enjoyment.",:pick=>:one
+      q "I use the E2 application to kill time.",:pick=>:one
     end
     
     grid "Perceived Usefulness" do 
@@ -54,9 +54,9 @@ def technology_acceptance_model
       a "6- Quite disagree"
       a "7- Extremely disagree"
       
-      q "The E2 application is useful in my weight management efforts."
-      q "The E2 application improves my efficiency."
-      q "Using the E2 application saves time."  
+      q "The E2 application is useful in my weight management efforts.",:pick=>:one
+      q "The E2 application improves my efficiency.",:pick=>:one
+      q "Using the E2 application saves time.",:pick=>:one
     end
     
     grid "Intention to Use" do
@@ -68,8 +68,8 @@ def technology_acceptance_model
       a "6- Quite disagree"
       a "7- Extremely disagree"
       
-      q "If it were possible, I would use the E2 application over the next two months."
-      q "If it were possible, I would use the E2 application/DROID over the next year."
+      q "If it were possible, I would use the E2 application over the next two months.",:pick=>:one
+      q "If it were possible, I would use the E2 application/DROID over the next year.",:pick=>:one
     end
     
     # q_1 "<i>Barriers</i>", :pick => :one

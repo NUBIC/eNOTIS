@@ -21,6 +21,5 @@ survey "6 month - Technology",:irb_number=>'STU00017350' do
   therapeutic_alliance 
   technology_acceptance_model
   condition_preference_post_test
-  physical_measures_height_weight_bmi
-  physical_measures_waist_circumference_blood_pressure    
+  physical_measures_weight_waist_circumference_blood_pressure    
 end
