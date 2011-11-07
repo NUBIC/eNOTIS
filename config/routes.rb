@@ -7,8 +7,7 @@ ActionController::Routing::Routes.draw do |map|
     p.edit_my_public_survey    "public/surveys/:survey_code/take",    :conditions => {:method => :get}, :action => "edit"                     # GET editable survey 
     p.update_my_public_survey  "public/surveys/:survey_code/:response_set_code",         :conditions => {:method => :put}, :action => "update"                   # PUT edited survey 
   end
-
-
+  
   map.login       '/login', :conditions => {:method => :get}, :controller => 'public', :action => 'index'
   map.login_help  '/login_help', :conditions => {:method => :get}, :controller => 'public', :action => 'login_help'
   map.help        '/help', :conditions => {:method => :get}, :controller => 'studies', :action => 'help'
@@ -16,7 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   map.study_involvements 'studies/:irb_number/involvements',{:controller => 'involvements',:action=>'index'}
   
   map.resources   :studies, :except => %w(delete destroy update),:member => {:charts => :get},:has_many=>[:uploads,:event_types]
-  map.resources   :involvements, :collection => {:sample => :get, :empi_lookup => :get}, :member => {:other => :get},:has_many=>:events
+  map.resources   :involvements, :collection => {:sample => :get, :empi_lookup => :get}, :member => {:other => :get,:forms=>:get},:has_many=>:events
   map.resource    :search, :controller => :search, :only => %w(show create)
   map.resources   :reports, :collection => {:nih => :get}, :except => %w(update destroy)
   map.resources   :services, :collection => {:services_update => :post}

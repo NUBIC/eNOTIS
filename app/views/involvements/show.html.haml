@@ -2,39 +2,10 @@
   #involvement_demographics
     =render :partial => 'involvement_basics', :locals => {:study => @involvement}  
   #involvement_events
-    = render :partial => 'partials/involvement_event_list', :locals => {:study => @involvement}
+    = render :partial => 'partials/involvement_event_list'
 
   -unless @study.surveys.empty?
     #involvement_forms
-      #pane_menu
-        #pane_actions
-          =link_to("add",available_surveys_path(:involvement_id=>@involvement.id,:study_id=>@study.id),:rel=>'#start_form',:class=>"add")
-      %table{:id=>"form_list"}
-        %thead 
-          %tr
-            %th Form/Visit Date
-            %th Form
-            %th Status
-            %th Score
-            %th Actions
-        %tbody
-          -@involvement.response_sets.each do |rs|
-            %tr
-              %td=rs.effective_date
-              %td=rs.survey.title
-              %td=rs.completed_at.blank? ? "Started" : "Completed"
-              %td
-                -rs.scores.each do |s|
-                  ="#{s.score_configuration.name} - #{s.value}"
-              %td
-                -if rs.completed_at.blank?
-                  =link_to("Edit",edit_my_survey_path(rs.survey.access_code,rs.access_code))
-                  =" - "
-                =link_to("View",view_my_survey_path(rs.survey.access_code,rs.access_code))
-                //=" - "
-                //=link_to("Delete",response_set_path(r),:method=>:delete,:class=>'delete',:confirm=>"Are you sure you want to delete this subject's form?" )
+      = render :partial => 'partials/involvement_forms_list'
 
-      
-#start_form.overlay
-  .wrap
 

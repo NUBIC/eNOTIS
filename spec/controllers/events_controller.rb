@@ -8,14 +8,14 @@ describe EventsController do
   before(:each) do
     @study = Factory(:study, :irb_number => 'STU00002629')
     @involvement = Factory(:involvement,:study=>@study)
-    @role = Factory(:role, :study => @study, :netid => 'brian') 
+    #@role = Factory(:role, :study => @study, :netid => 'brian') 
     login_as("brian")
     controller.current_user.should == Bcsec.authority.find_user("brian")
   end
   
   it "should deny access to an attempt to create an involvement event on an unauthorized study" do
     study = Factory(:study, :irb_number => 'STU00002630')
-    post :create, {:study_id=>"STU00002630",:involvement=>{}}
+    post :create, {:involvement_id=>@involvement.id,:involvement=>{}}
     response.should redirect_to(studies_path)
     flash[:notice].should == "Access Denied"
   end
@@ -24,7 +24,7 @@ describe EventsController do
     study = Factory(:study, :irb_number => 'STU00002630')
     subject = Factory(:fake_subject)
     involvement = Factory(:involvement)
-    post :edit, {:id=>involvement.id}
+    post :edit, {:involvement_id=>@involvement.id}
     response.should redirect_to(studies_path)
     flash[:notice].should == "Access Denied"
   end

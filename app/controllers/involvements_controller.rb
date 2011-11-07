@@ -116,7 +116,7 @@ class InvolvementsController < ApplicationController
     authorize! :destroy, @involvement
     @study       = @involvement.study
     @involvement.destroy # :dependent => :destroy takes care of removing involvement events # @involvement.involvement_events.destroy_all
-    return redirect_to @study
+    return redirect_to study_path(@study)
   end
   
   
@@ -154,6 +154,14 @@ class InvolvementsController < ApplicationController
     headers.merge!({'Pragma' => 'public', 'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0', 'Expires' => '0'}) if request.env['HTTP_USER_AGENT'] =~ /msie/i
     # download, don't view in browser
     send_data StudyUpload.required_columns.join(","), :filename => 'sample.csv', :content_type => 'text/csv'
+  end
+
+  def forms
+    @involvement = Involvement.find(params[:id])
+    @study = @involvement.study
+    respond_to do |format|
+      format.js {render :layout => false}
+    end
   end
   
   # Private instance methods

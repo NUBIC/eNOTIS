@@ -16,12 +16,7 @@ $(document).ready(function() {
     expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}
   });
  
-  // start a new form for a participant
-  //$("#involvement_forms a[rel=#start_form]").livequery(function(){$(this).overlay({
- //   fixed: false, // allows user to scroll if overlay extends beyond viewport
-  //  onBeforeLoad: function(){ $("#start_form .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-  //  expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-  //  });});
+  // start/cancel a new form for a participant
   $("#involvement_forms a[rel=#start_form]").livequery(
     'click', function(){
       $("#involvement_forms").load( $(this).attr("href")); 
@@ -29,10 +24,12 @@ $(document).ready(function() {
       }
       );
 
-   
-
-
-
+  $("#involvement_forms a[rel=#cancel_form]").livequery(
+    'click', function(){
+      $("#involvement_forms").load( $(this).attr("href")); 
+      return false;
+      }
+      );
 
   $("#study_charts").livequery( function(){
     var x = $(this).html();
@@ -52,12 +49,13 @@ $(document).ready(function() {
     }
   });
 
-  //create and edit event type for a study
-  $("#event_types a[rel=#event_type]").livequery(function(){$(this).overlay({
-    fixed: false, // allows user to scroll if overlay extends beyond viewport
-    onBeforeLoad: function(){ $("#event_type .wrap").load(this.getTrigger().attr("href"), "format=js"); },
-    expose: { color: '#fff', loadSpeed: 200, opacity: 0.5 }
-    });});
+  //new and edit event type for a study
+  $("#event_types a[rel=#event_type]").livequery(
+    'click', function(){
+     $("#event_types").load( $(this).attr("href"));
+     return false;
+           }
+     );
 
   //create event
   $("#new_involvement_event").livequery(
@@ -108,6 +106,32 @@ $(document).ready(function() {
       return false;
       }
       );
+
+
+  //create/update event_type
+  $(".edit_event_type").livequery(
+    'submit', function(){
+      $.post($(this).attr("action"),$(this).serialize(),
+      function(data,textStatus,jqXHR) {
+      $("#event_types").html(data);
+      $("#flash").html(jqXHR.getResponseHeader('x-flash') + '<div class=close></div>');
+      },
+      "html");
+      return false;
+      });
+
+  //create/update event_type
+  $(".delete_event_type").livequery(
+    'submit', function(){
+      $.post($(this).attr("action"),$(this).serialize(),
+      function(data,textStatus,jqXHR) {
+      $("#event_types").html(data);
+      $("#flash").html(jqXHR.getResponseHeader('x-flash') + '<div class=close></div>');
+      },
+      "html");
+      return false;
+      });
+
   //edi involvement
   $(".edit_involvement").livequery(
     'submit', function(){
