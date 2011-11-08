@@ -33,6 +33,7 @@ class EventsController < ApplicationController
   def edit
     @involvement_event = InvolvementEvent.find(params[:id])
     @involvement = @involvement_event.involvement
+    authorize! :edit, @involvement
     respond_to do |format|
       format.html
       format.js {render :layout => false}
@@ -42,6 +43,7 @@ class EventsController < ApplicationController
   def update
     @involvement = Involvement.find(params[:involvement_id])
     @involvement_event = InvolvementEvent.find(params[:id])
+    authorize! :update, @involvement
     saved = @involvement_event.update_attributes(params[:involvement_event])
     if saved
       flash[:notice] = "Event Updated"
@@ -57,6 +59,7 @@ class EventsController < ApplicationController
 
   def create
     @involvement = Involvement.find(params[:involvement_id])
+    authorize! :update, @involvement
     @involvement_event = @involvement.involvement_events.create(params[:involvement_event])
     if @involvement_event.save
       flash[:notice] = "Event Created"
@@ -71,6 +74,7 @@ class EventsController < ApplicationController
 
   def destroy
     @involvement_event = InvolvementEvent.find(params[:id])
+    authorize! :destroy, @involvement
     @involvement_event.destroy
     @involvement= Involvement.find(params[:involvement_id])
     flash[:notice] = "Event Deleted"

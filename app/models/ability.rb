@@ -13,8 +13,11 @@ class Ability
         study.has_coordinator?(user) and !study.is_managed?
       end
       #control access for involvement actions
-      can [:destroy,:update,:show], Involvement do |involvement|
+      can [:show], Involvement do |involvement|
         involvement.study.has_coordinator?(user)
+      end
+      can [:destroy,:update,:edit], Involvement do |involvement|
+        involvement.study.has_coordinator?(user) and !involvement.study.is_managed?
       end
     end
   end

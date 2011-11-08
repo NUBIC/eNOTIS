@@ -12,6 +12,7 @@ class EventTypesController < ApplicationController
 
   def index
     @study = Study.find_by_irb_number(params[:study_id])
+    authorize! :edit, @study
     @uneditable_events, @editable_events = @study.event_types.partition{|ev| ev.editable == false }
     respond_to do |format|
       format.js {render :layout => false}
@@ -20,6 +21,7 @@ class EventTypesController < ApplicationController
 
   def new
     @study = Study.find_by_irb_number(params[:study_id])
+    authorize! :edit, @study
     @event_type = @study.event_types.new
     respond_to do |format|
       format.html
@@ -30,6 +32,7 @@ class EventTypesController < ApplicationController
   def edit
     @event_type = EventType.find(params[:id])
     @study = @event_type.study
+    authorize! :edit, @study
     respond_to do |format|
       format.html
       format.js {render :layout => false}
@@ -39,6 +42,7 @@ class EventTypesController < ApplicationController
   def update
     @event_type = EventType.find(params[:id])
     @study = @event_type.study
+    authorize! :edit, @study
     @event_type.update_attributes(params[:event_type]) 
     if @event_type.save
       flash[:notice] = "Successfully updated event_type."
@@ -55,6 +59,7 @@ class EventTypesController < ApplicationController
 
   def create
     @study = Study.find_by_irb_number(params[:study_id])
+    authorize! :edit, @study
     @event_type = @study.event_types.create(params[:event_type])
     @uneditable_events, @editable_events = @study.event_types.partition{|ev| ev.editable == false }
     if @event_type.save
@@ -71,6 +76,7 @@ class EventTypesController < ApplicationController
   def destroy
     @event_type = EventType.find(params[:id])
     @study = @event_type.study
+    authorize! :edit, @study
     if @event_type.destroy
       flash[:notice] = "Successfully deleted event_type."
     else
