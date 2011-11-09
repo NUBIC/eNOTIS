@@ -280,16 +280,10 @@ $(document).ready(function() {
     "aoColumns": [null,null,null,null,null,null,{"sType":"date"},null],
     "iDisplayLength": 30,
     "sPaginationType": "full_numbers", 
-<<<<<<< HEAD
-    //"sScrollX": "100%",
-    //"sScrollXInner": "110%",
-    //"bScrollCollapse": true,
-=======
     "sScrollX": "100%",
     "sScrollXInner": "110%",
     "bScrollCollapse": true,
     "bFilter": true,
->>>>>>> master
     "oLanguage": {"sZeroRecords": "<p><strong>No subjects yet - click 'Add' or 'Import' to get started. Or watch our <a rel='#intro'>4 minute introduction to eNOTIS</a>.</strong></p>"}
   });});
 
