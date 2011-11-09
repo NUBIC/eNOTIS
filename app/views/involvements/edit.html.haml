@@ -1,0 +1,73 @@
+- form_for(@involvement) do |f|
+  = hidden_field_tag 'study[irb_number]', params[:study]
+  #pane_menu
+    #pane_actions
+      = f.submit "Save"
+      = link_to "Cancel", involvement_path(@involvement),:rel=>'#involvement_detail'
+  .subject
+    %h4 Subject
+    %ol
+      %li.case_number
+        = f.label      :case_number
+        = f.text_field :case_number
+      - f.fields_for :subject do |s|
+        = render :partial => "subject_fields", :locals => {:f => s}
+  .demographics
+    %h4 Demographics
+    %span.hint Gender, ethnicity, race required
+    %ol
+      %li
+        = f.label  :gender, "Gender"
+        = f.select :gender, gender_options(@involvement.gender)
+      %li
+        = f.label  :ethnicity, "Ethnicity"
+        = f.select :ethnicity, ethnicity_options(@involvement.ethnicity)
+      %li.race
+        = f.label  :race, "Race"
+        - del_key = :race_is_unknown_or_not_reported
+        - race_options(del_key).each do |k|
+          %label{:for => "involvement_#{k}"}
+            = f.check_box k
+            = Involvement::RACE_ATTRIBUTES[k]
+        &mdash; OR &mdash;
+          
+        %label{:for => "involvement_unknown_or_not_reported_race"}
+          = f.check_box :unknown_or_not_reported_race
+          = Involvement::RACE_ATTRIBUTES[del_key] # del_key is the attr... "unknown_or_not_reported" is the method
+  .accrual
+    %h4 Contact
+    %ol
+      %li.address_line_1
+        = f.label :address_line1, "Address"
+        = f.text_field :address_line1
+      %li.address_line_2
+        = f.label :address_line2, "Line 2"
+        = f.text_field :address_line2
+      %br.clear
+      %li.city      
+        = f.label :city, "City"
+        = f.text_field :city
+      %li.state
+        = f.label :state, "State"
+        = f.text_field :state
+      %li.zip
+        = f.label :zip, "Zip"
+        = f.text_field :zip
+      %br.clear
+      %li.home_phone
+        = f.label :home_phone, "Home phone"
+        = f.text_field :home_phone
+      %li.work_phone
+        = f.label :work_phone, "Work"
+        = f.text_field :work_phone
+      %li.cell_phone
+        = f.label :cell_phone, "Cell"
+        = f.text_field :cell_phone
+      %br.clear
+      %li.email
+        = f.label :email, "E-mail"
+        = f.text_field :email
+  #pane_menu
+    #pane_actions
+      = f.submit "Save"
+      = link_to "Cancel", involvement_path(@involvement), :class => "cancel",:rel=>'#involvement_detail'

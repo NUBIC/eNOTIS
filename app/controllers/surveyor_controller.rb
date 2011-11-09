@@ -9,6 +9,15 @@ module SurveyorControllerCustomMethods
   end
 
   # Actions
+
+
+  def index
+    @involvement = Involvement.find(params[:involvement_id])
+    respond_to do |format|
+      format.js {render :layout => false}
+    end
+  end
+
   def new
     @involvement = Involvement.find(params[:involvement_id])
     @surveys = Study.find(params[:study_id]).surveys.select{|s| s.active?}

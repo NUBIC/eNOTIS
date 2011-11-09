@@ -85,7 +85,7 @@ module ApplicationHelper
   end
 
   def event_options(study_events, selected = nil)
-    culled_events = study_events.select{|e| %w(Consented Completed Withdrawn).include?(e.name)} # Just temporary until the UI is updated
+    culled_events = study_events.select{|e| %w(Consented).include?(e.name)} # Just temporary until the UI is updated
     options_for_select(culled_events.map{|s| [s.name, s.id]}, selected)
   end
 

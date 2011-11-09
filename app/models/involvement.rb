@@ -51,7 +51,7 @@ class Involvement < ActiveRecord::Base
     :conditions => ['involvement_events.event_type_id = ?',event_type]}}
 
   # Validations
-  validates_presence_of :gender, :ethnicity
+  validates_presence_of :gender, :ethnicity, :study
   # Custom validator for race
   validate do |inv|
     checked = false
@@ -327,6 +327,10 @@ class Involvement < ActiveRecord::Base
 
   def ric_mrn
     subject.ric_mrn
+  end
+  def address
+    return nil if address_line1.blank? and address_line2.blank? and city.blank? and state.blank? and zip.blank?
+    "#{self.address_line1} #{self.address_line2} \n #{self.city} #{self.state} #{self.zip}"
   end
 
 

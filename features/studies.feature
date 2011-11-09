@@ -21,6 +21,7 @@ Feature: Manage studies
     | Dewey      | Cheetham  |
     When I go to the study page for id "STU001248"
     Then I should see "3"
+    And I follow "subjects"
     And I should see "Innovera"
     And I should see "Dropov"
 
@@ -33,6 +34,7 @@ Feature: Manage studies
   Scenario: A coordinator can view all imports made to a study they have access to
     Given the study "STU001248" has an upload by "pi"
     When I go to the study page for id "STU001248"
+    And I follow "subjects"
     And I follow "Import"
     Then I should see "By"
     And I should see "Original"

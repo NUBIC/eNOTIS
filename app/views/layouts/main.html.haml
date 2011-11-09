@@ -4,7 +4,7 @@
   %head
     %title= "eNOTIS :: #{@title}"
     = stylesheet_link_tag "compiled/main"
-    = javascript_include_tag "tools/jquery.tools.min", "tools/jquery.dataTables.min", "tools/underscore-min", "tools/jquery.treeTable.min","jquery.main", :cache => "cache/main"
+    = javascript_include_tag "tools/jquery.tools.min","tools/jquery.dataTables.min", "tools/underscore-min","tools/jquery.livequery.min","jquery.main", :cache => "cache/main"
     = yield :head
   %body
     #container
@@ -24,9 +24,10 @@
           - form_tag(search_path, :method => :get) do 
             = text_field_tag("query")
             = submit_tag("Search")
-        - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
-          #flash
-            = flash_messages(types)
+        //- unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
+        #flash
+          - unless (types = flash.keys.select{|k| [:notice, :error, :warning].include?(k)}).blank?
+            = flash_messages(types) 
             .close
       #main
         #livesearch-results

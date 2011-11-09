@@ -2,17 +2,7 @@
   = stylesheet_link_tag "dateinput"
   = javascript_include_tag 'charts/protovis-r3.2', 'tools/flowplayer-3.2.4.min', :cache => "cache/study"
   %script{:type => "text/javascript+protovis"}
-    $(document).ready(function(){
-    - if @involvements.empty?
-      if($('#player').length){ flowplayer("player", "/media/flowplayer-3.2.4.swf", {clip: {autoPlay: false}, canvas: {backgroundColor: '#dddddd', backgroundGradient: 'medium'}}); }
-    - else
-      = render :file => "public/javascripts/charts/protovis.charts.js" # must be rendered inline, unfortunately, because ie doesn't process scripts with type=text/javascript+protovis
-      = "months('timechart', 'Monthly and total accruals, last 12 months', #{@time_stats[0].inspect}, #{@time_stats[1].inspect}, #{@time_stats[2].inspect});".html_safe
-      = "donut('gender', #{@gender_stats.map(&:last).inspect}, #{@gender_stats.map(&:first).inspect});".html_safe
-      = "donut('race', #{@race_stats.map(&:last).inspect}, #{@race_stats.map(&:first).inspect});".html_safe
-      = "donut('ethnicity', #{@ethnicity_stats.map(&:last).inspect}, #{@ethnicity_stats.map(&:first).inspect});".html_safe
-      = "dots('dotchart', 'All accruals by month and weekday', #{@dot_stats});".html_safe
-    });
+    =render :file => "public/javascripts/charts/protovis.charts.js" # must be rendered inline, unfortunately, because ie doesn't process scripts with type=text/javascript+protovis
 #back.heading= link_to "My Studies".html_safe, studies_path
 #study
   -if @study.read_only?
@@ -31,6 +21,7 @@
     %span.short_name= @study.name
   %br.clear
   #actions
+<<<<<<< HEAD
     = link_to("Subjects", "#subjects", :class => 'subjects')
     = link_to("Details and Charts", '#study_information', :class => 'charts')
     - unless @study.read_only?
@@ -147,14 +138,17 @@
       %h2 Available reports
       %ul
         %li= link_to "NIH Inclusion Enrollment Report", nih_reports_path(:study => @study.irb_number), :popup => true
+=======
+    = link_to("Subjects", involvements_path(:study_id=>@study.irb_number), :class => 'subjects')
+    = link_to("Details and Charts",charts_study_path(@study), :class => 'charts')
+    - unless @study.involvements.empty?
+      = link_to("Reports/Export", new_report_path(:study => @study), :class => 'export')
+  #pane
+>>>>>>> master
   %br.clear
-  #involvement.overlay
-    .wrap
   #other_studies.overlay
     .wrap
   #mrn_lookup.overlay
-    .wrap
-  #start_form.overlay
     .wrap
   #intro.overlay
     %p

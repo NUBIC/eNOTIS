@@ -13,18 +13,22 @@ class InvolvementsController < ApplicationController
     
   # Public instance methods (actions)
   def index
-    @study = Study.find_by_irb_number(params[:irb_number])
-    @involvements = @study.involvements
+    @study = Study.find_by_irb_number(params[:study_id])
+    @involvements = Involvement.find_all_by_study_id(@study.id,
+       :order => :case_number,
+       :include => [ :response_sets,{ :subject => :involvements }, { :involvement_events => :event_type } ]
+    )
+    #@involvements = @study.involvements
     authorize! :show, @study
     respond_to do |format|
-      format.json do 
-        render :json => @involvements.to_json(:methods => [:first_name,:last_name,:nmff_mrn, :nmh_mrn, :ric_mrn])
-      end
+      format.html
+      format.js {render :layout => false}
     end
   end
   
   def show 
     @involvement = Involvement.find(params[:id])
+    @study = @involvement.study
     authorize! :show, @involvement
     params[:study] = @involvement.study.irb_number
     respond_to do |format|
@@ -49,7 +53,6 @@ class InvolvementsController < ApplicationController
     @involvement = Involvement.new
     @involvement.subject = Subject.new
     @involvement.involvement_events.build(:event_type => @study.event_types.find_by_name("Consented"))
-    @involvement.involvement_events.build(:event_type => @study.event_types.find_by_name("Completed"))
     respond_to do |format|
       format.html
       format.js {render :layout => false}
@@ -61,11 +64,9 @@ class InvolvementsController < ApplicationController
     authorize! :edit, @involvement
     @study = @involvement.study
     params[:study] = @study.irb_number
-    @involvement.involvement_events.build(:event_type => @study.event_types.find_by_name("Consented")) unless @involvement.consented
-    @involvement.involvement_events.build(:event_type => @study.event_types.find_by_name("Completed")) unless @involvement.completed_or_withdrawn
     respond_to do |format|
-      format.html {render :action => :new}
-      format.js {render :layout => false, :action => :new}
+      format.html 
+      format.js {render :layout => false}
     end
   end
   
@@ -74,15 +75,21 @@ class InvolvementsController < ApplicationController
     authorize! :import, study
     pr = params[:involvement].merge(:study => study)
     @involvement = Involvement.new(pr)
+    @study = @involvement.study
 
-    if @involvement.save
+    saved = @involvement.save
+    if saved
       flash[:notice] = "Created"
     else
       logger.debug "#{@involvement.inspect}"
       logger.debug "ERRORS123:#{@involvement.errors.full_messages.inspect}"
       flash[:error] = "Error: #{@involvement.errors.full_messages} #{@involvement.inspect}"
+      @involvement.involvement_events.build(:event_type => @study.event_types.find_by_name("Consented")) if @involvement.involvement_events.empty?
     end
-    redirect_to study_path(study)
+    respond_to do |format|
+      format.html {redirect_to study_path(study)}
+      format.js {render (saved ? :show : :new), :layout => false}
+    end
   end
   
   def update
@@ -95,7 +102,10 @@ class InvolvementsController < ApplicationController
     else
       flash[:error] = "Error: #{@involvement.errors.full_messages}"
     end
-    redirect_to study_path(study)
+    respond_to do |format|
+      format.html  {redirect_to study}
+      format.js {render :partial=> 'involvement_basics', :layout => false}
+    end
   end
   
   # The delete action should remove the involvement and any child involvement events. 
@@ -106,10 +116,7 @@ class InvolvementsController < ApplicationController
     authorize! :destroy, @involvement
     @study       = @involvement.study
     @involvement.destroy # :dependent => :destroy takes care of removing involvement events # @involvement.involvement_events.destroy_all
-    respond_to do |format|
-      format.html {redirect_to @study}
-      format.js {render :layout => false}
-    end
+    return redirect_to study_path(@study)
   end
   
   
@@ -147,6 +154,14 @@ class InvolvementsController < ApplicationController
     headers.merge!({'Pragma' => 'public', 'Cache-Control' => 'no-cache, must-revalidate, post-check=0, pre-check=0', 'Expires' => '0'}) if request.env['HTTP_USER_AGENT'] =~ /msie/i
     # download, don't view in browser
     send_data StudyUpload.required_columns.join(","), :filename => 'sample.csv', :content_type => 'text/csv'
+  end
+
+  def forms
+    @involvement = Involvement.find(params[:id])
+    @study = @involvement.study
+    respond_to do |format|
+      format.js {render :layout => false}
+    end
   end
   
   # Private instance methods

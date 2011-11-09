@@ -1,42 +1,11 @@
-#show_involvement
-  - if @involvement.study.read_only?
-    .patient_msg= "This patient record is part of a study that is managed in a different system. To edit this information you will need to go to the source system" 
-  .subject
-    %h4 Subject
-    .case_number
-      Case Number:
-      = case_number_helper(@involvement.case_number)
-    .mrn
-      MRN: 
-      = mrn_and_type_helper(@involvement.subject)
-    .full_name
-      Name: 
-      = subject_name_helper(@involvement.subject)
-  .demographics
-    %h4 Demographics
-    %ol
-      %li
-        Gender:
-        %span.gender.bold
-          = @involvement.gender
-      %li
-        Ethnicity:
-        %span.ethnicity.bold
-          = @involvement.ethnicity
-      %li
-        Race:
-        %span.race.bold
-          = @involvement.race
-  .accrual
-    %h4 Accrual
-    Events:
-    %ul
-      - @involvement.involvement_events.each do |ie|
-        %li.event.bold
-          = ie.event
-          &mdash;
-          = ie.occurred_on
-          &mdash;
-          = ie.note
+#involvement_detail
+  #involvement_demographics
+    =render :partial => 'involvement_basics', :locals => {:study => @involvement}  
+  #involvement_events
+    = render :partial => 'partials/involvement_event_list'
+
+  -unless @study.surveys.empty?
+    #involvement_forms
+      = render :partial => 'partials/involvement_forms_list'
 
 

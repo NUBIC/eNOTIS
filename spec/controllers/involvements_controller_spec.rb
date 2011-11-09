@@ -7,6 +7,8 @@ end
 describe InvolvementsController do
   before(:each) do
     @study = Factory(:study, :irb_number => 'STU00002629')
+    @subject = Factory(:fake_subject)
+    @involvement = Factory(:involvement,:study=>@study,:subject=>@subject)
     StudyUpload.stub!(:create).and_return(@up = Factory(:study_upload))
     @role = Factory(:role, :study => @study, :netid => 'brian') 
     login_as("brian")
@@ -56,4 +58,32 @@ describe InvolvementsController do
     flash[:notice].should == "Access Denied"
   end
 
+  
+  it "should deny access to an attempt to create an involvement on a managed study" do
+    @study.update_attributes(:managing_system=>"NOTIS")
+    post :create, {:study => {:irb_number=>@study.irb_number},:involvement=>{}}
+    response.should redirect_to(studies_path)
+    flash[:notice].should == "Access Denied"
+  end
+
+  it "should deny access to an attempt to edit an involvement on a managed study" do
+    @study.update_attributes(:managing_system=>"NOTIS")
+    post :edit, {:id=>@involvement.id}
+    response.should redirect_to(studies_path)
+    flash[:notice].should == "Access Denied"
+  end
+
+  it "should deny access to an attempt to update an involvement on a managed study" do
+    @study.update_attributes(:managing_system=>"NOTIS")
+    post :update, {:id=>@involvement.id}
+    response.should redirect_to(studies_path)
+    flash[:notice].should == "Access Denied"
+  end
+
+  it "should deny access to an attempt to delete an involvement on a managed study" do
+    @study.update_attributes(:managing_system=>"NOTIS")
+    post :destroy, {:id=>@involvement.id}
+    response.should redirect_to(studies_path)
+    flash[:notice].should == "Access Denied"
+  end
 end

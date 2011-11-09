@@ -11,11 +11,12 @@ Feature: View Readonly Studies
     Given the readonly study "STU009248" has the following subjects
     | first_name | last_name |
     | Bob        | Jones     |
-    | Nerd       | Poindexter|
     When I go to the study page for id "STU009248"
-    Then I should not see "Add" within "#actions"
-    And I should not see "Import" within "#actions"
-    And I should not see "Edit" within "#subjects"
-    And I should see "View" within "#subjects"
+    And I navigate to the "subjects" tab
+    Then I should not see "Add" within "#pane_actions"
+    And I should not see "Bulk Import" within "#pane_actions"
+    And I follow "Detail"
+    And I should not see "Edit" within "#pane_actions"
+    #And I should see "View" within "#subjects"
     #And I should see "Readonly" within ".study_message"
 

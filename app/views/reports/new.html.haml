@@ -1,4 +1,7 @@
 #report
+  %h2 Available reports
+  %ul
+    %li= link_to "NIH Inclusion Enrollment Report", nih_reports_path(:study => @study.irb_number), :popup => true
   - form_tag(reports_path) do
     = hidden_field_tag 'study[irb_number]', params[:study]
     %h3= "Export data from #{@study.irb_number}"
@@ -28,16 +31,18 @@
   -unless @study.surveys.empty?
     #forms
       %h5 Form Data
-      -@study.surveys.each do |survey|
-        =survey.title
-        ="-"
-        -unless survey.score_configurations.empty?
-          =link_to('Scores',reports_path(:type=>'survey_score',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number,:format=>'csv'),:method=>:post) 
-          ="-"
-        =link_to('Data',reports_path(:type=>'survey_data',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number,:format=>'csv'),:method=>:post) 
-        ="-"
-        =link_to('Key',reports_path(:type=>'survey_key',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number,:format=>'csv'),:method=>:post) 
-        %br
+      %table
+        %tbody
+          -@study.surveys.each do |survey|
+            %tr
+              %td=survey.title
+              %td
+                -unless survey.score_configurations.empty?
+                  =link_to('Scores',reports_path(:type=>'survey_score',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number,:format=>'csv'),:method=>:post) 
+                -else
+                  ="N/A"
+              %td=link_to('Data',reports_path(:type=>'survey_data',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number,:format=>'csv'),:method=>:post) 
+              %td=link_to('Key',reports_path(:type=>'survey_key',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number,:format=>'csv'),:method=>:post) 
 
 
 
