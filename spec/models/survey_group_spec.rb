@@ -4,13 +4,19 @@ describe SurveyGroup do
  
  before(:each) do
    @response = Factory.create(:response)
-   @survey_group = @response.response_set.survey.survey_group
-   @first_survey = @survey_group.surveys.first
    @response_set = @response.response_set
+   
+   @first_survey = @response_set.survey
+   @first_survey.update_attribute(:display_order, 1)
+   
+   @second_survey = Factory.create(:survey)
+   @second_survey.update_attributes({:survey_group => @survey_group, :display_order => 2})
+   
+   @survey_group = @first_survey.survey_group
  end
  
  it "should return the next survey in a group when 'next' is called" do
-   next_squential_response_set = @survey_group.next(@response_set)
+   next_sequential_response_set = @survey_group.next(@response_set)
    
    next_sequential_response_set.class.should be ResponseSet.class
    next_sequential_response_set.should_not be nil
