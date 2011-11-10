@@ -7,11 +7,11 @@ class SurveyGroup < ActiveRecord::Base
   def next(response_set)
     next_response = nil
     if self.progression.eql?('random')
-      remaining = surveys.reject{|s| !survey.active? and response_set.involvement.response_sets.collect{|r| r.survey}.include?(s)}
-      next_response =  ResponseSet.create(:involvement=>response_set.involvement,:survey=>remaining.rand,:effective_date=>response_set.effective_date) unless remaining.empty?
+      unanswered_surveys = active_unanswered_surveys(response_set.involvement)
+      next_response =  ResponseSet.create(:involvement=>response_set.involvement,:survey=>unanswered_surveys.rand,:effective_date=>response_set.effective_date) unless unanswered_surveys.empty?
     elsif self.progression.eql?('sequential')
-      survey = surveys.find_by_display_order(response_set.survey.display_order + 1)
-      next_response =  ResponseSet.create(:involvement=>response_set.involvement,:survey=>survey,:effective_date=>response_set.effective_date) unless survey.nil?
+      next_survey = next_sequential_active_survey_following(response_set.survey)
+      next_response =  ResponseSet.create(:involvement=>response_set.involvement,:survey=>next_survey,:effective_date=>response_set.effective_date) unless next_survey.nil?
     end
     return next_response
   end
@@ -19,5 +19,15 @@ class SurveyGroup < ActiveRecord::Base
   def access_code=(value)
     super(Survey.to_normalized_string(value))
   end
-
+  
+  def active_unanswered_surveys(involvement)
+    # BUG!
+    # This method continues to return the same survey for sequentials, even after a new ResponseSet has been created
+    surveys.reject{|s| !s.active? || involvement.response_sets.collect{|r| r.survey}.include?(s) || involvement.survey}
+  end
+  
+  private
+  def next_sequential_active_survey_following(survey)
+    surveys.reject{|s| !s.active? || s.display_order <= survey.display_order}.sort_by{|s| s.display_order}.first
+  end
 end
