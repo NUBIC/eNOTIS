@@ -21,12 +21,10 @@ class SurveyGroup < ActiveRecord::Base
   end
   
   def active_unanswered_surveys(involvement)
-    # BUG!
-    # This method continues to return the same survey for sequentials, even after a new ResponseSet has been created
-    surveys.reject{|s| !s.active? || involvement.response_sets.collect{|r| r.survey}.include?(s) || involvement.survey}
+    answered_surveys = involvement.response_sets.collect{|r| r.survey}
+    surveys.reject{|s| !s.active? || answered_surveys.include?(s)}
   end
   
-  private
   def next_sequential_active_survey_following(survey)
     surveys.reject{|s| !s.active? || s.display_order <= survey.display_order}.sort_by{|s| s.display_order}.first
   end

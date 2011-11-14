@@ -14,6 +14,18 @@ describe SurveyGroup do
     @second_survey = Factory.create(:survey)
     @second_survey.update_attributes({:survey_group => @survey_group, :display_order => 2, :active_at => Time.now-5.minutes, :inactive_at => nil})
   end
+  
+  it "should know how many surveys have not been answered in a group, given a ResponseSet object" do
+    @survey_group.surveys.count.should be 2
+    @survey_group.active_unanswered_surveys(@response_set.involvement).count.should be 1
+    
+    third_survey = Factory.create(:survey)
+    third_survey.update_attributes({:survey_group => @survey_group, :display_order => 3, :active_at => Time.now-5.minutes, :inactive_at => nil})
+    
+    @survey_group.reload
+    @survey_group.surveys.count.should be 3
+    @survey_group.active_unanswered_surveys(@response_set.involvement).count.should be 2
+  end
  
   it "should give you the next sequential survey in a group" do
     next_response_set = @survey_group.next(@response_set)
@@ -75,7 +87,7 @@ describe SurveyGroup do
     first_survey_count.should be 0
     second_survey_count.should be > 1
     third_survey_count.should be > 1
-    (first_survey_count+second_survey_count+third_survey_count).shoud be 100
+    (first_survey_count+second_survey_count+third_survey_count).should be 100
   end
   
   it "should ignore random surveys that are inactive"

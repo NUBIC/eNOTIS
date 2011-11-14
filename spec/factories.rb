@@ -157,6 +157,7 @@ end
 
 Factory.define :response_set do |r|
   r.association :survey
+  r.association :involvement
   r.access_code {Factory.next :access_code}
 end
 
