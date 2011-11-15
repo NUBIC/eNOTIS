@@ -1,7 +1,9 @@
 #pane_menu
+  #pane_title="Study Event Types"
   #pane_actions
     =link_to 'new', new_study_event_type_path(@study),:rel=>"#event_type"
-%table{:id=>"event_types"}
+#edit_create_event_type
+%table.display
   %thead
     %tr
       %th Name

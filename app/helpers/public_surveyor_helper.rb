@@ -84,4 +84,14 @@ module PublicSurveyorHelper
     @rc ||= 0
     (increment ? @rc += 1 : @rc).to_s
   end  
+
+
+  #survey count
+  def response_set_order(response_set)
+    survey_group = response_set.survey.survey_group
+    return "" if survey_group.nil?
+    surveys = survey_group.surveys
+    survey_roup_responses = response_set.involvement.response_sets.select{|r| surveys.include?(r.survey)}
+    "#{survey_group_responses.size}/#{survey.size}"
+  end
 end

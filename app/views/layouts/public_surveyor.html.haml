@@ -22,6 +22,7 @@
           //-unless @survey.survey_group.blank?
           //  ="/#{@survey.survey_group.surveys.size}"
           =@survey.title unless @survey.nil? 
+          =response_set_order(@response_set) unless @response_set.blank?
       #main
         =yield
     #footer

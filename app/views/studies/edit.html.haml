@@ -2,8 +2,10 @@
   -if can? :edit, @study
     #event_types
       #pane_menu
+        #pane_title="Study Event Types"
         #pane_actions
           =link_to 'new', new_study_event_type_path(@study),:rel=>"#event_type"
+      #edit_create_event_type
       %table.display
         %thead
           %tr

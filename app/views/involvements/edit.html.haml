@@ -4,16 +4,16 @@
     #pane_actions
       = f.submit "Save"
       = link_to "Cancel", involvement_path(@involvement),:rel=>'#involvement_detail'
-  .subject
-    %h4 Subject
+  .section
+    .section_heading Identifiers
     %ol
       %li.case_number
         = f.label      :case_number
         = f.text_field :case_number
       - f.fields_for :subject do |s|
         = render :partial => "subject_fields", :locals => {:f => s}
-  .demographics
-    %h4 Demographics
+  .section
+    .section_heading Demographics
     %span.hint Gender, ethnicity, race required
     %ol
       %li
@@ -34,8 +34,8 @@
         %label{:for => "involvement_unknown_or_not_reported_race"}
           = f.check_box :unknown_or_not_reported_race
           = Involvement::RACE_ATTRIBUTES[del_key] # del_key is the attr... "unknown_or_not_reported" is the method
-  .accrual
-    %h4 Contact
+  .section
+    .section_heading Contact
     %ol
       %li.address_line_1
         = f.label :address_line1, "Address"
