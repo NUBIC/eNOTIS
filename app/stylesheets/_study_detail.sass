@@ -171,11 +171,15 @@
       :float left      
     
 form#new_involvement, form.edit_involvement, #involvement_detail
-  .subject, .demographics, .accrual
+  .section
     :float left
-    :width 300px
-    h4
+    +column(16.15, true)
+    .section_heading
+      :padding-left 2px
+      :line-height 2em
+      :background-color #C3D9FF
       :margin-bottom 0
+      :font-weight bold
     span.hint
       :margin-bottom 1.25em
       :display block

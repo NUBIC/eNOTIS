@@ -1,32 +1,10 @@
 #study_settings
   -if can? :edit, @study
     #event_types
-      #pane_menu
-        #pane_actions
-          =link_to 'new', new_study_event_type_path(@study),:rel=>"#event_type"
-      %table.display
-        %thead
-          %tr
-            %th Event
-            %th Description
-            %th Actions
-        %tbody
-          -@uneditable_events.each do |ev|
-            %tr.uneditable
-              %td=ev.name
-              %td=ev.description
-              %td This is event type is not editable
-          -@editable_events.each do |ev|
-            %tr.editable
-              %td=ev.name 
-              %td=ev.description
-              %td
-                #action
-                  =link_to ('edit',edit_study_event_type_path(@study,ev),:rel=>'#event_type')
-                #action
-                  -form_tag(study_event_type_path(@study,ev),:method=>"delete",:class=>"delete_event_type") do
-                    =submit_tag('delete')
+      = render :partial => 'partials/study_event_types', :locals => {:involvement => @study}
   #study_forms
+    #pane_menu
+      #pane_title="Study Forms"
     %table.display
       %thead
         %tr

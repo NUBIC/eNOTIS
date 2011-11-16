@@ -1,26 +1,29 @@
 #pane_menu
+  #pane_title="Forms"
   #pane_actions
-    =link_to("add",available_surveys_path(:involvement_id=>@involvement.id,:study_id=>@study.id),:rel=>'#start_form',:class=>"add")
+    =link_to("Add",available_surveys_path(:involvement_id=>@involvement.id,:study_id=>@study.id),:rel=>'#start_form',:class=>"add")
+#new_form
 %table{:id=>"form_list"}
   %thead 
     %tr
-      %th Form/Visit Date
       %th Form
+      %th Visit Date
       %th Status
       %th Score
-      %th Actions
+      %th 
   %tbody
     -@involvement.response_sets.each do |rs|
       %tr
-        %td=rs.effective_date
         %td=rs.survey.title
+        %td=rs.effective_date
         %td=rs.completed_at.blank? ? "Started" : "Completed"
         %td
           -rs.scores.each do |s|
             ="#{s.score_configuration.name} - #{s.value}"
         %td
           -if rs.completed_at.blank?
-            =link_to("Edit",edit_my_survey_path(rs.survey.access_code,rs.access_code))
-            =" - "
-          =link_to("View",view_my_survey_path(rs.survey.access_code,rs.access_code))
+            #action
+              =link_to("Edit",edit_my_survey_path(rs.survey.access_code,rs.access_code))
+          #action
+            =link_to("View",view_my_survey_path(rs.survey.access_code,rs.access_code))
 

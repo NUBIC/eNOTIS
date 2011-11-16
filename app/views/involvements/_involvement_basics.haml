@@ -1,15 +1,21 @@
 #pane_menu
+  #pane_title
+    -if @involvement.subject.name.eql?("(no name)") and !@involvement.case_number.blank?
+      =@involvement.case_number
+    -else
+      =@involvement.subject.name
   #pane_actions
     -unless @involvement.study.read_only?
       =link_to "Edit",edit_involvement_path(@involvement),:rel=>"#edit_involvement"  
       =link_to "Delete",involvement_path(@involvement),:method=>'delete',:confirm => "You are about to delete this subject. Deleting will completely remove all of the subject's information from the study."
 - if @involvement.study.read_only?
   .patient_msg= "This patient record is part of a study that is managed in a different system. To edit this information you will need to go to the source system" 
-.subject
-  %h4 Subject
-  .case_number
-    Case Number:
-    = case_number_helper(@involvement.case_number)
+.section
+  .section_heading Identifiers
+  -unless @involvement.subject.name.eql?("(no name)") and !@involvement.case_number.blank?
+    .case_number
+      Case Number:
+      = case_number_helper(@involvement.case_number)
   .mrn
     NMF MRN: 
     %span.bold
@@ -22,11 +28,12 @@
     RIC MRN:
     %span.bold
       = @involvement.subject.ric_mrn || "None Given"
-  .full_name
-    Name: 
-    = subject_name_helper(@involvement.subject)
-.demographics
-  %h4 Demographics
+  -if @involvement.subject.name.eql?("(no name)") and !@involvement.case_number.blank?
+    .full_name
+      Name: 
+      = subject_name_helper(@involvement.subject)
+.section
+  .section_heading Demographics
   .gender
     Gender:
     %span.bold
@@ -39,8 +46,8 @@
     Race:
     %span.bold
       = @involvement.race
-.accrual
-  %h4 Contact
+.section
+  .section_heading Contact
   .address
     Address
     %span.bold

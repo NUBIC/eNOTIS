@@ -1,6 +1,8 @@
 #pane_menu
+  #pane_title="Events"
   #pane_actions
-    =link_to('new',new_involvement_event_path(@involvement),:rel=>'#new_event')
+    =link_to('Add',new_involvement_event_path(@involvement),:rel=>'#new_event')
+#new_event
 %table{:id=>"event_list"}
   %thead 
     %tr
@@ -16,7 +18,7 @@
         %td=ie.note
         %td
           #action
-            =link_to('edit',edit_involvement_event_path(@involvement,ie),:rel=>'#edit_event')
+            =link_to('Edit',edit_involvement_event_path(@involvement,ie),:rel=>'#edit_event')
           #action
             -form_tag(involvement_event_path(@involvement,ie),:method=>"delete",:class=>"delete_event") do
-              =submit_tag('delete')
+              =submit_tag('Delete')

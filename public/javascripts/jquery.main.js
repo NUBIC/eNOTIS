@@ -1,15 +1,11 @@
 var timeoutWarningTimer;
 var timeoutExpiredTimer;
-
-
 $(document).ready(function() {
-
   // -------------- Common UI --------------
   // flash messages
   $("#flash .close").livequery(
   'click',function(){
    $("#flash").empty(300); return false;});
-  
   // help db language overlay
   $("a[rel=#database-language]").overlay({
     fixed: false, // allows user to scroll if overlay extends beyond viewport
@@ -19,23 +15,20 @@ $(document).ready(function() {
   // start/cancel a new form for a participant
   $("#involvement_forms a[rel=#start_form]").livequery(
     'click', function(){
-      $("#involvement_forms").load( $(this).attr("href")); 
+      $("#new_form").load( $(this).attr("href")); 
       return false;
       }
       );
-
   $("#involvement_forms a[rel=#cancel_form]").livequery(
     'click', function(){
       $("#involvement_forms").load( $(this).attr("href")); 
       return false;
       }
       );
-
   $("#study_charts").livequery( function(){
     var x = $(this).html();
     jQuery.globalEval(x);
   });
-
   $(".date").livequery("click", function(){
     if(!$(this).data("dateinput")){
       $(this).dateinput({format: 'yyyy-mm-dd', selectors: true, yearRange: [-20, 1],
@@ -48,15 +41,20 @@ $(document).ready(function() {
       $(this).data("dateinput").show();
     }
   });
-
   //new and edit event type for a study
   $("#event_types a[rel=#event_type]").livequery(
     'click', function(){
-     $("#event_types").load( $(this).attr("href"));
+     $("#edit_create_event_type").load( $(this).attr("href"));
      return false;
            }
      );
-
+  //cancel event_type creation/edit
+  $("#event_types a[rel=#cancel_eventtype]").livequery(
+    'click', function(){
+     $("#edit_create_event_type").empty();
+     return false;
+           }
+     );
   //create event
   $("#new_involvement_event").livequery(
     'submit', function(){
@@ -156,14 +154,14 @@ $(document).ready(function() {
   //new event
   $("#involvement_events a[rel=#new_event]").live(
     'click', function(){
-      $("#involvement_events").load( $(this).attr("href")); 
+      $("#new_event").load( $(this).attr("href")); 
       return false;
       }
       );
   //edit event
   $("#involvement_events a[rel=#edit_event]").livequery(
     'click', function(){
-      $("#involvement_events").load( $(this).attr("href")); 
+      $("#new_event").load( $(this).attr("href")); 
       return false;
       }
       );
@@ -205,19 +203,21 @@ $(document).ready(function() {
       }
       );
 
-  //create and edit event type for a study
+  //view involvement details
   $("#pane a[rel=#involvement_detail]").livequery(
     'click', function(){
       $("#pane").load( $(this).attr("href")); 
       return false;
       }
       );
+  //add a new subject
   $("#pane_actions a[rel=#add_subject]").livequery(
     'click', function(){
       $("#pane").load( $(this).attr("href")); 
       return false;
       }
       );
+  //import subjects
   $("#pane_actions a[rel=#import_subjects]").livequery(
     'click', function(){
       $("#pane").load( $(this).attr("href")); 
@@ -289,13 +289,37 @@ $(document).ready(function() {
 
   $('#subject_list_filter').livequery(function(){$(this).appendTo($('#search'));});
 
+  //involvement forms list
   $("#form_list").livequery(function(){$(this).dataTable({
     "aoColumns": [{"sType":"date"},null,null,null,null],
     "iDisplayLength": 10,
     "sPaginationType": "full_numbers", 
     "oLanguage": {"sZeroRecords": "<p><strong>No forms yet - click 'Add' to get started. </strong></p>"}
-  
   });});
+
+
+  //involvement event list datatable
+  $("#event_list").livequery(function(){$(this).dataTable({
+    "aoColumns": [null,{"sType":"date"},null,null],
+    "iDisplayLength": 10,
+    "sPaginationType": "full_numbers", 
+    "oLanguage": {"sZeroRecords": "<p><strong>No forms yet - click 'Add' to get started. </strong></p>"}
+  });});
+
+  //study forms datatable
+  $("#study_forms .display").livequery(function(){$(this).dataTable({
+    "aoColumns": [null,null,null,{"sType":"date"},{"sType":"date"}],
+    "iDisplayLength": 10,
+    "sPaginationType": "full_numbers"
+  });});
+
+  //study event types datatable
+  $("#event_types .display").livequery(function(){$(this).dataTable({
+    "aoColumns": [null,null,null],
+    "iDisplayLength": 10,
+    "sPaginationType": "full_numbers"
+  });});
+
   // load some tab contents via ajax for minimal change from previous UI (overlays)
   //$('#add').load($('#add').attr('rel'), 'format=js', activateMrnLookup);
   //$('#import').load($('#import').attr('rel'), 'format=js', activateImportDataTable);

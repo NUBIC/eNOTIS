@@ -37,6 +37,12 @@ form
   :background-color #DDE5FF
   :float left
   :height 40px
+  #pane_title
+    :font-weight bold
+    :font-size 1.5em
+    :margin 12px 20px 0px 20px
+    :padding-bottom 10px
+    :float left
   #search
     :margin 10px 30px 10px 0px
     :padding-left 20px
@@ -57,20 +63,21 @@ form
     input[type="submit"]
       :font-weight bold
 
-#event_list,#event_types
+#event_list,#event_types,#involvement_forms,#subjects
   #action
     +column(2,true)
     :padding-right 2px
 
   a, input[type="submit"]
-    :margin 0px
+    :height 1.7em
+    :margin-top 5px
     :text-align center
     :border 1px solid #BBB
     :background-color #E3E3E3
     :color black
     :text-decoration none
-  a
-    :padding 0.8px 8px
+    :padding 1px 8px
+
 
 .hidden
   :display none
