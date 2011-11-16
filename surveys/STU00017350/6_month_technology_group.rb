@@ -20,6 +20,5 @@ survey "6 month - Technology",:irb_number=>'STU00017350' do
   perceived_autonomy_support_received  
   therapeutic_alliance 
   technology_acceptance_model
-  condition_preference_post_test
-  physical_measures_weight_waist_circumference_blood_pressure    
+  condition_preference_post_test    
 end

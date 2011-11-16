@@ -16,6 +16,5 @@ survey "3 month - Standard" ,:irb_number=>'STU00017350' do
   promis_measure_qol
   perceived_autonomy_support_given
   perceived_autonomy_support_received  
-  therapeutic_alliance
-  physical_measures_weight_waist_circumference_blood_pressure   
+  therapeutic_alliance   
 end
