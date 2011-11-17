@@ -11,5 +11,4 @@ survey "12 month - Self-Guided" ,:irb_number=>'STU00017350' do
   self_reported_habit_strength_formation
   promis_measure_qol
   plans_for_money_earned_post_test
-  physical_measures_weight_waist_circumference_blood_pressure
 end
