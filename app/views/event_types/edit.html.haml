@@ -1,8 +1,4 @@
 -form_for(@event_type,:url=>study_event_type_path(@study,@event_type)) do |f|
-  #pane_menu
-    #pane_actions
-      =f.submit "update"
-      =link_to 'cancel',study_event_types_path(@study),:rel=>"#event_type"
   = f.label :name
   = f.text_field :name
   %br
@@ -12,4 +8,4 @@
   #pane_menu
     #pane_actions
       =f.submit "update"
-      =link_to 'cancel',study_event_types_path(@study),:rel=>"#event_type"
+      =link_to 'cancel',study_event_types_path(@study),:rel=>"#cancel_eventtype"

@@ -80,6 +80,9 @@ namespace :db do
   end
   
   def de_id_subject(subject)
+    subject.nmff_mrn = "%09d" % rand(999999999) unless subject.nmff_mrn.blank?
+    subject.nmh_mrn = "%012d" % rand(999999999999) unless subject.nmh_mrn.blank?
+    subject.ric_mrn = "%09d" % rand(999999999) unless subject.ric_mrn.blank?
     subject.first_name = Faker::Name.first_name unless subject.first_name.blank?
     subject.middle_name = Faker::Name.first_name unless subject.middle_name.blank?
     subject.last_name = Faker::Name.last_name unless subject.last_name.blank?

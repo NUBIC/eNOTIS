@@ -2,7 +2,7 @@ def self_reported_habit_strength_formation
   section "HS" do
     # label_1 "Self-Reported Habit Strength Formation (For eating fewer calories & physical activity)<br/>"
 
-    grid "Eating fewer calories is something....." do
+    grid "<b>Eating fewer calories is something...</b>" do
       a "1 = Fully Disagree"
       a "2 = Quite Disagree"
       a "3 = Somewhat Disagree"
@@ -21,10 +21,10 @@ def self_reported_habit_strength_formation
       q "I would find hard not to do it.", :pick => :one
       q "I have no need to think about doing.", :pick => :one
       q "That's typically \"me\".", :pick => :one
-      q "I have being doing for a long time.", :pick => :one
+      q "I have been doing for a long time.", :pick => :one
     end
     
-    grid "Being physically active is something....." do
+    grid "<b>Being physically active is something.....</b>" do
       a "1 = Fully Disagree"
       a "2 = Quite Disagree"
       a "3 = Somewhat Disagree"
@@ -43,7 +43,7 @@ def self_reported_habit_strength_formation
       q "I would find hard not to do it.", :pick => :one
       q "I have no need to think about doing.", :pick => :one
       q "That's typically \"me\".", :pick => :one
-      q "I have being doing for a long time.", :pick => :one
+      q "I have been doing for a long time.", :pick => :one
     end
 
   end

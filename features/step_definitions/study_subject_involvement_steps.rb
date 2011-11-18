@@ -77,7 +77,7 @@ Then /^I add edit subject "([^\"]*)" "([^\"]*)" with 2nd event "([^\"]*)" on "([
     scope.click_link "Detail"
   end
   within "#involvement_events" do |scope|
-    scope.click_link "New"
+    scope.click_link "Add"
   end
   select event, :from => :involvement_event_event_type_id
   fill_in :involvement_event_occurred_on, :with => date

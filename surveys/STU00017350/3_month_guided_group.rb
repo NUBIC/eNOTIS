@@ -10,6 +10,5 @@ survey "3 month - Self-Guided",:irb_number=>'STU00017350' do
   self_efficacy_for_weight_loss 
   self_reported_habit_strength_formation
   promis_measure_qol
-  dpp_group_lifestyle_balance_materials
-  physical_measures_weight_waist_circumference_blood_pressure  
+  dpp_group_lifestyle_balance_materials  
 end

@@ -1,7 +1,7 @@
 def technology_acceptance_model
   section "TAM" do
     
-    label_tam_instructions "Please answer the following questions to accurately describe your attitudes about the ENGAGED application."
+    label_tam_instructions "Please answer the following questions to accurately describe your attitudes about the ENGAGED Smartphone (E2) application."
     
     grid "Barriers" do
       a "1- Extremely agree"

@@ -1,8 +1,4 @@
 -form_tag(take_survey_path(:survey_code=>'null'),:id=>"new_form") do 
-  #pane_menu
-    #pane_actions
-      =submit_tag("Start")
-      =link_to "cancel", forms_involvement_path(@involvement),:rel=>"#cancel_form"
   =hidden_field_tag :involvement_id,@involvement.id
   %p
     =label_tag 'active_survey_code','Select Form'

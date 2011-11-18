@@ -4,8 +4,8 @@
       = f.submit "Save"
       = link_to "Cancel", study_path(@study)
   = hidden_field_tag 'study[irb_number]', @study.irb_number
-  .subject
-    %h4 Subject
+  .section
+    .section_heading Subject
     %ol
       %li.case_number
         = f.label      :case_number
@@ -43,8 +43,8 @@
         = f.label :email, "E-mail"
         = f.text_field :email
         
-  .demographics
-    %h4 Demographics
+  .section
+    .section_heading Demographics
     %span.hint Gender, ethnicity, race required
     %ol
       %li
@@ -65,8 +65,8 @@
         %label{:for => "involvement_unknown_or_not_reported_race"}
           = f.check_box :unknown_or_not_reported_race
           = Involvement::RACE_ATTRIBUTES[del_key] # del_key is the attr... "unknown_or_not_reported" is the method
-  .accrual
-    %h4 Accrual
+  .section
+    .section_heading Accrual
     %span.hint Consent Date require
     %ol
       - f.fields_for :involvement_events do |builder|

@@ -1,4 +1,4 @@
-def physical_measures_weight_waist_circumference_blood_pressure
+survey "3 month - Physical Measures" ,:irb_number=>'STU00017350' do
   section "Weight, WC, and Blood Pressure" do
     q_weight "Weight (pounds):"
     a :string

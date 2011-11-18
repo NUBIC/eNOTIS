@@ -1,7 +1,7 @@
 def self_efficacy_for_weight_loss
   section "SE" do
-    label_1 "This questionnare looks at how confident you are about <b><u>losing weight</u></b> when other things get in the way. 
-    Read the following items and write the number that best epresses how each item relates to you. 
+    label_1 "This questionnaire looks at how confident you are about <b><u>losing weight</u></b> when other things get in the way. 
+    Read the following items and write the number that best expresses how each item relates to you. 
     Please answer using the following 5-point scale:
       <br/>"
 
@@ -26,8 +26,8 @@ def self_efficacy_for_weight_loss
       q_13 "I am eating fast foods." , :pick => :one
     end
  
-    label_2 "This questionnare looks at how confident you are about <b><u>exercising</u></b> when other things get in the way. 
-    Read the following items and write the number that best epresses how each item relates to you. 
+    label_2 "This questionnaire looks at how confident you are about <b><u>exercising</u></b> when other things get in the way. 
+    Read the following items and write the number that best expresses how each item relates to you. 
     Please answer using the following 5-point scale:<br/>"
 
     grid_2 "" do
@@ -46,18 +46,19 @@ def self_efficacy_for_weight_loss
       q_2h "I have to exercise alone." , :pick => :one
       q_2i "My exercise partner decides not to exercise that day" , :pick => :one
       q_2j "I don't have access to exercise equipment." , :pick => :one
-      q_2k "I am travelling." , :pick => :one
+      q_2k "I am traveling." , :pick => :one
       q_2l "My gym is closed." , :pick => :one
       q_2m "My friends don't want me to exercise." , :pick => :one
       q_2n "I am spending time with friends or family who do not exercise.",:pick => :one
       q_2o "It's raining or snowing.",:pick => :one
       q_2p "It's cold outside.",:pick => :one
       q_2q "The roads or sidewalks are snowy.",:pick => :one
+      q_2q "My significant other doesn’t want me to exercise.",:pick => :one
     end
 
     
-    label_3 "This questionnare looks at how confident you are about <b><u>eating fewer calories</u></b> when other things get in the way. 
-      Read the following items and write the number that best epresses how each item relates to you. 
+    label_3 "This questionnaire looks at how confident you are about <b><u>eating fewer calories</u></b> when other things get in the way. 
+      Read the following items and write the number that best expresses how each item relates to you. 
       Please answer using the following 5-point scale:
        <br/>"
 
@@ -76,15 +77,15 @@ def self_efficacy_for_weight_loss
       q_7 "I am in a rush." , :pick => :one
       q_8 "I am tired." , :pick => :one
       q_9 "Reduced calorie foods are not available." , :pick => :one
-      q_10 "I am travelling." , :pick => :one
+      q_10 "I am traveling." , :pick => :one
       q_11 "I only have high calorie foods at home." , :pick => :one
       q_12 "I am eating at a restaurant." , :pick => :one
       q_13 "I am eating fast foods." , :pick => :one
     end
 
 
-     label_4 "This questionnare looks at how confident you are about <b><u>eating less saturated fat</u></b> when other things get in the way. 
-      Read the following items and write the number that best epresses how each item relates to you. 
+     label_4 "This questionnaire looks at how confident you are about <b><u>eating less saturated fat</u></b> when other things get in the way. 
+      Read the following items and write the number that best expresses how each item relates to you. 
       Please answer using the following 5-point scale:<br/>"
 
       label_4_1 "<b>1 = Not at all confident
@@ -108,7 +109,7 @@ def self_efficacy_for_weight_loss
         q_7 "I am in a rush." , :pick => :one
         q_8 "I am tired." , :pick => :one
         q_9 "Lower saturated foods are not available." , :pick => :one
-        q_10 "I am travelling." , :pick => :one
+        q_10 "I am traveling." , :pick => :one
         q_11 "I only have high saturated fat foods at home." , :pick => :one
         q_12 "I am eating at a restaurant." , :pick => :one
         q_13 "I am eating fast foods." , :pick => :one
