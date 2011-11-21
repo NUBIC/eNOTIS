@@ -67,7 +67,7 @@
           = Involvement::RACE_ATTRIBUTES[del_key] # del_key is the attr... "unknown_or_not_reported" is the method
   .section
     .section_heading Accrual
-    %span.hint Consent Date require
+    %span.hint Consent Date required
     %ol
       - f.fields_for :involvement_events do |builder|
         = render 'involvement_event_fields', :f => builder, :study => @study
