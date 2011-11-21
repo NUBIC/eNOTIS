@@ -64,40 +64,22 @@ describe SurveyGroup do
     third_response_set.should be nil
   end
   
-  it "random survey progression should actually be random" do
-    @survey_group.update_attribute(:progression, "random")
-    third_survey = Factory.create(:survey)
-    third_survey.update_attributes({:survey_group => @survey_group, :display_order => 3, :active_at => Time.now-5.minutes, :inactive_at => nil})
-    
-    first_survey_count = 0
-    second_survey_count = 0
-    third_survey_count = 0
-    100.times do
-      next_response_set = @survey_group.next(@response_set)
-      
-      if next_response_set.survey.id == @first_survey.id
-        first_survey_count += 1
-      elsif next_response_set.survey.id == @second_survey.id
-        second_survey_count += 1
-      elsif next_response_set.survey.id == third_survey.id
-        third_survey_count += 1
-      end
-    end
-    
-    first_survey_count.should be 0
-    second_survey_count.should be > 1
-    third_survey_count.should be > 1
-    (first_survey_count+second_survey_count+third_survey_count).should be 100
+  it "should ignore inactive surveys in SurveyGroups with random progression" do
+    @survey_group.update_attribute(:progression, 'random')
+    @second_survey.update_attributes({:active_at => nil, :inactive_at => Time.now-5.minutes})
+
+    next_response_set = @survey_group.next(@response_set)
+    next_response_set.should be nil
   end
-  
-  it "should ignore random surveys that are inactive"
  
   it "random progression cannot return the current survey from the next method" do
     @survey_group.update_attribute(:progression, "random")
     
     100.times do
       next_response_set = @survey_group.next(@response_set)
-      next_response_set.survey.id.should_not be @first_survey.id
+      unless next_response_set.nil?
+        next_response_set.survey.id.should_not be @first_survey.id
+      end
     end
   end
  

@@ -31,6 +31,7 @@ class Involvement < ActiveRecord::Base
   belongs_to :study
   has_many :involvement_events, :dependent => :destroy
   has_many :response_sets, :dependent => :destroy
+  has_many :surveys, :through => :response_sets
 
   before_create :set_uuid
 
