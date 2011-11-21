@@ -10,7 +10,7 @@
       #dotchart
     %br.clear
 
-%script{:type => "text/javascript+protovis",:id=>"study_charts"}
+%script{:type => 'text/javascript+protovis',:id=>"study_charts"}
   - if @study.involvements.empty?
     if($('#player').length){ flowplayer("player", "/media/flowplayer-3.2.4.swf", {clip: {autoPlay: false}, canvas: {backgroundColor: '#dddddd', backgroundGradient: 'medium'}}); }
   - else
