@@ -277,7 +277,7 @@ $(document).ready(function() {
     
   // subjects: dataTable
   $("#subject_list").livequery(function(){$(this).dataTable({
-    "aoColumns": [null,null,null,null,null,null,{"sType":"date"},null],
+    "aoColumns": [null,null,null,null,null,{"sType":"date"},null],
     "iDisplayLength": 30,
     "sPaginationType": "full_numbers", 
     "sScrollX": "100%",
@@ -292,8 +292,7 @@ $(document).ready(function() {
   //involvement forms list
   $("#form_list").livequery(function(){$(this).dataTable({
     "aoColumns": [{"sType":"date"},null,null,null,null],
-    "iDisplayLength": 10,
-    "sPaginationType": "full_numbers", 
+    "bPaginate" : false,
     "oLanguage": {"sZeroRecords": "<p><strong>No forms yet - click 'Add' to get started. </strong></p>"}
   });});
 
@@ -301,8 +300,7 @@ $(document).ready(function() {
   //involvement event list datatable
   $("#event_list").livequery(function(){$(this).dataTable({
     "aoColumns": [null,{"sType":"date"},null,null],
-    "iDisplayLength": 10,
-    "sPaginationType": "full_numbers", 
+    "bPaginate" : false,
     "oLanguage": {"sZeroRecords": "<p><strong>No forms yet - click 'Add' to get started. </strong></p>"}
   });});
 
@@ -461,7 +459,7 @@ $(document).ready(function() {
     // datepicker for involvements
     
     // datepicker for birth date
-    $(selector + " input.dob").live("click", function(){
+    $("input.dob").livequery("click", function(){
       if(!$(this).data("dateinput")){
         $(this).dateinput({format: 'yyyy-mm-dd', selectors: true, yearRange: [-120, 1],
           change: function(e, date){ e.target.getInput().val(e.target.getValue('yyyy-mm-dd')).data("date", date); return false; },

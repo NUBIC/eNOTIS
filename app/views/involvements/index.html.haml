@@ -8,7 +8,7 @@
   %table.display{:id=>'subject_list'}
     %thead
       %tr
-        - %w(Case# Other\ Studies NMFF\ MRN NMH\ MRN RIC\ MRN Name).each do |header|
+        - %w(Case# NMFF\ MRN NMH\ MRN RIC\ MRN Name).each do |header|
           %th= header
         %th
           %dtr{:title => @study.event_types.define_event("Consented")} Consented
@@ -17,7 +17,7 @@
       - @involvements.each do |involvement|
         %tr{:class => "subject_#{involvement.subject.id}"}
           %td= involvement.case_number
-          %td= other_studies_flag(involvement)
+          //%td= other_studies_flag(involvement)
           %td= involvement.subject.nmff_mrn
           %td= involvement.subject.nmh_mrn
           %td= involvement.subject.ric_mrn

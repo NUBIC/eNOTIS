@@ -3,7 +3,7 @@
 %html
   %head
     %title= "eCapture #{@survey.title unless @survey.nil?}"
-    =stylesheet_link_tag 'compiled/surveyor'
+    =stylesheet_link_tag 'compliled/main','compiled/surveyor'
     /[if gt IE 5]
       =stylesheet_link_tag 'compiled/surveyor_ie'
     =stylesheet_link_tag("compiled/main","timepicker")
