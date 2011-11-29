@@ -54,9 +54,10 @@ module SurveyorControllerCustomMethods
         if @response_set.completed_at.blank?
           saved = @response_set.update_attributes(:responses_attributes => ResponseSet.reject_or_destroy_blanks(params[:r]))
           saved &=@response_set.complete_with_validation! if saved && params[:finish]
-        end
+        else
         #saved &= @response_set.save
-        saved = true
+          saved = true
+        end
       end
      return redirect_to(edit_my_survey_path({:review=>true,:section=>@response_set.first_incomplete_section,:response_set_code=>@response_set.access_code})) if params[:finish] and !saved
       return redirect_to study_path(@response_set.survey.study) if saved && params[:finish]
