@@ -46,6 +46,16 @@
     Race:
     %span.bold
       = @involvement.race
+  .birth_date
+    Date of Birth:
+    %span.bold
+      = @involvement.subject.birth_date
+  -unless @involvement.subject.death_date.blank?
+    .death_date
+      Date of Death:
+      %span.bold
+        = @involvement.subject.birth_date
+
 .section
   .section_heading Contact
   .address
