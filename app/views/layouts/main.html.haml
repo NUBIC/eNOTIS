@@ -3,8 +3,8 @@
 %html
   %head
     %title= "eNOTIS :: #{@title}"
-    = stylesheet_link_tag "compiled/main"
-    = javascript_include_tag "tools/jquery.tools.min","tools/jquery.dataTables.min", "tools/underscore-min","tools/jquery.livequery.min","jquery.main", :cache => "cache/main"
+    = stylesheet_link_tag "compiled/main","jquery-ui-1.8.16.custom"
+    = javascript_include_tag "tools/jquery.tools.min","tools/jquery-ui-1.8.16.custom.min","tools/jquery.dataTables.min", "tools/underscore-min","tools/jquery.livequery.min","jquery.main", :cache => "cache/main"
     = yield :head
   %body
     #container

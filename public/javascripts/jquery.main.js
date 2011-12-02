@@ -3,6 +3,13 @@ var timeoutExpiredTimer;
 $(document).ready(function() {
   // -------------- Common UI --------------
   // flash messages
+
+  $("#study a[rel=#study_information]").click(function(){
+       $('#study_information').slideToggle();
+       $(this).toggleClass('open');
+      return false;
+     });
+
   $("#flash .close").livequery(
   'click',function(){
    $("#flash").empty(300); return false;});
@@ -29,17 +36,11 @@ $(document).ready(function() {
     var x = $(this).html();
     jQuery.globalEval(x);
   });
-  $(".date").livequery("click", function(){
-    if(!$(this).data("dateinput")){
-      $(this).dateinput({format: 'yyyy-mm-dd', selectors: true, yearRange: [-20, 1],
-        change: function(e, date){ e.target.getInput().val(e.target.getValue('yyyy-mm-dd')).data("date", date); return false; },
-        onShow: function(e){
-          $("#calmonth").unbind("change").change(function() { e.target.hide().setValue($(selector + " #calyear").val(), $(this).val(), e.target.getValue('d')).show(); });
-          $("#calyear").unbind("change").change(function() { e.target.hide().setValue($(this).val(), $(selector + " #calmonth").val(), e.target.getValue('d')).show(); });
-        }
-      });
-      $(this).data("dateinput").show();
-    }
+  $(".date").livequery(function(){
+      $(this).datepicker({ changeYear: true , changeMonth: true , dateFormat: 'yy-mm-dd',yearRange: '-20:+0', autoSize: true });
+  });
+  $(".dob").livequery(function(){
+      $(this).datepicker({ changeYear: true , changeMonth: true , dateFormat: 'yy-mm-dd',yearRange: '-120:+0', autoSize: true });
   });
   //new and edit event type for a study
   $("#event_types a[rel=#event_type]").livequery(
@@ -459,18 +460,18 @@ $(document).ready(function() {
     // datepicker for involvements
     
     // datepicker for birth date
-    $("input.dob").livequery("click", function(){
-      if(!$(this).data("dateinput")){
-        $(this).dateinput({format: 'yyyy-mm-dd', selectors: true, yearRange: [-120, 1],
-          change: function(e, date){ e.target.getInput().val(e.target.getValue('yyyy-mm-dd')).data("date", date); return false; },
-          onShow: function(e){
-            $(selector + " #calmonth").unbind("change").change(function() { e.target.hide().setValue($(selector + " #calyear").val(), $(this).val(), e.target.getValue('d')).show(); });
-            $(selector + " #calyear").unbind("change").change(function() { e.target.hide().setValue($(this).val(), $(selector + " #calmonth").val(), e.target.getValue('d')).show(); });
-          }
-        });
-        $(this).data("dateinput").show();
-      }
-    });
+   // $("input.dob").livequery("click", function(){
+   //   if(!$(this).data("dateinput")){
+   //     $(this).dateinput({format: 'yyyy-mm-dd', selectors: true, yearRange: [-120, 1],
+   //       change: function(e, date){ e.target.getInput().val(e.target.getValue('yyyy-mm-dd')).data("date", date); return false; },
+   //       onShow: function(e){
+   //         $(selector + " #calmonth").unbind("change").change(function() { e.target.hide().setValue($(selector + " #calyear").val(), $(this).val(), e.target.getValue('d')).show(); });
+   //         $(selector + " #calyear").unbind("change").change(function() { e.target.hide().setValue($(this).val(), $(selector + " #calmonth").val(), e.target.getValue('d')).show(); });
+   //       }
+   //     });
+   //     $(this).data("dateinput").show();
+   //   }
+   // });
   }
   
   // export tab

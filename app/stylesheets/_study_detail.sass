@@ -52,8 +52,51 @@
     :padding-left 15px
     span.short_name
       :display block
-      :font-size 12px
+      :font-size 13px
       :color #222
+    a.charts
+      :padding-left 35px
+      :background transparent url('/images/icons/chart_pie.png') no-repeat 10px center
+      :text-decoration none
+      :color #777
+  #study_information
+    +column(48, true)
+    .details
+      +column(12)
+      :margin-right 4px
+      span
+        :display block
+      .study_settings
+        :margin-top 10px
+        a
+          :font-size 1.2em
+          :text-decoration none
+    .charts
+      +column(36,true)
+      :margin-bottom 10px
+      .chart
+        :margin-top 10px
+        :width 238px
+        :height 150px
+        :float left
+      #timechart
+        :margin-top 10px
+        :float left
+        :clear left
+        :width 357px
+        :height 200px
+      #dotchart
+        :margin-top 10px
+        :float right
+        :width 357px
+        :height 200px
+      h3
+        :margin-left 40px
+        :margin-bottom 0
+        :color #3e576f
+        :font 16px "Lucida Grande","Lucida Sans Unicode",Verdana,Arial,Helvetica,sans-serif
+      #by_month_and_weekday
+        :height 275px
   #actions
     :display block
     :margin-top 10px
@@ -68,6 +111,8 @@
     a.charts
       :padding-left 35px
       :background transparent url('/images/icons/chart_pie.png') no-repeat 10px center
+    a.settings
+      :background transparent url('/images/icons/cog.png') no-repeat 10px center    
     a.add
       :background transparent url('/images/icons/add.png') no-repeat 10px center    
     a.import

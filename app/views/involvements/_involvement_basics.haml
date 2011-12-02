@@ -15,19 +15,19 @@
   -unless @involvement.subject.name.eql?("(no name)") and !@involvement.case_number.blank?
     .case_number
       Case Number:
-      = case_number_helper(@involvement.case_number)
+      = @involvement.case_number
   .mrn
     NMF MRN: 
     %span.bold
-      = @involvement.subject.nmff_mrn || "None Given"
+      = @involvement.subject.nmff_mrn
     %br
     NMH MRN:
     %span.bold
-      = @involvement.subject.nmh_mrn || "None Given"
+      = @involvement.subject.nmh_mrn 
     %br
     RIC MRN:
     %span.bold
-      = @involvement.subject.ric_mrn || "None Given"
+      = @involvement.subject.ric_mrn 
   -if @involvement.subject.name.eql?("(no name)") and !@involvement.case_number.blank?
     .full_name
       Name: 
@@ -46,26 +46,36 @@
     Race:
     %span.bold
       = @involvement.race
+  .birth_date
+    Date of Birth:
+    %span.bold
+      = @involvement.subject.birth_date
+  -unless @involvement.subject.death_date.blank?
+    .death_date
+      Date of Death:
+      %span.bold
+        = @involvement.subject.death_date
+
 .section
   .section_heading Contact
   .address
     Address
     %span.bold
-      =@involvement.address || "None Given"
+      =@involvement.address 
   .home_phone
     Home Phone
     %span.bold
-      =@involvement.home_phone || "None Given"
+      =@involvement.home_phone
   .work_phone
     Work Phone
     %span.bold
-      =@involvement.work_phone || "None Given"
+      =@involvement.work_phone 
   .cell_phone
     Cell Phone
     %span.bold
-      =@involvement.cell_phone || "None Given"
+      =@involvement.cell_phone 
   .email
     Email
     %span.bold
-      =@involvement.email || "None Given"
+      =@involvement.email 
 
