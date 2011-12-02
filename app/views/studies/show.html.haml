@@ -2,7 +2,17 @@
   = stylesheet_link_tag "dateinput"
   = javascript_include_tag 'charts/protovis-r3.2','tools/flowplayer-3.2.4.min', :cache => "cache/study"
   %script{:type => "text/javascript+protovis"}
-    =render :file => "public/javascripts/charts/protovis.charts.js" # must be rendered inline, unfortunately, because ie doesn't process scripts with type=text/javascript+protovis
+    $(document).ready(function(){
+    - if @study.involvements.empty?
+      if($('#player').length){ flowplayer("player", "/media/flowplayer-3.2.4.swf", {clip: {autoPlay: false}, canvas: {backgroundColor: '#dddddd', backgroundGradient: 'medium'}}); }
+    - else
+      = render :file => "public/javascripts/charts/protovis.charts.js" # must be rendered inline, unfortunately, because ie doesn't process scripts with type=text/javascript+protovis
+      = "months('timechart', 'Monthly and total accruals, last 12 months', #{@time_stats[0].inspect}, #{@time_stats[1].inspect}, #{@time_stats[2].inspect});".html_safe
+      = "donut('gender', #{@gender_stats.map(&:last).inspect}, #{@gender_stats.map(&:first).inspect});".html_safe
+      = "donut('race', #{@race_stats.map(&:last).inspect}, #{@race_stats.map(&:first).inspect});".html_safe
+      = "donut('ethnicity', #{@ethnicity_stats.map(&:last).inspect}, #{@ethnicity_stats.map(&:first).inspect});".html_safe
+      = "dots('dotchart', 'All accruals by month and weekday', #{@dot_stats});".html_safe
+      });
   %script{:type => "text/javascript"}
     $(document).ready(function(){
     $('#study_information').hide(10);
@@ -35,17 +45,6 @@
         #timechart
         #dotchart
       %br.clear
-
-  %script{:type => 'text/javascript+protovis'}
-    - if @study.involvements.empty?
-      if($('#player').length){ flowplayer("player", "/media/flowplayer-3.2.4.swf", {clip: {autoPlay: false}, canvas: {backgroundColor: '#dddddd', backgroundGradient: 'medium'}}); }
-    - else
-      //= render :file => "public/javascripts/charts/protovis.charts.js" # must be rendered inline, unfortunately, because ie doesn't process scripts with type=text/javascript+protovis
-      = "months('timechart', 'Monthly and total accruals, last 12 months', #{@time_stats[0].inspect}, #{@time_stats[1].inspect}, #{@time_stats[2].inspect});".html_safe
-      = "donut('gender', #{@gender_stats.map(&:last).inspect}, #{@gender_stats.map(&:first).inspect});".html_safe
-      = "donut('race', #{@race_stats.map(&:last).inspect}, #{@race_stats.map(&:first).inspect});".html_safe
-      = "donut('ethnicity', #{@ethnicity_stats.map(&:last).inspect}, #{@ethnicity_stats.map(&:first).inspect});".html_safe
-      = "dots('dotchart', 'All accruals by month and weekday', #{@dot_stats});".html_safe
 
   %br.clear
   #actions
