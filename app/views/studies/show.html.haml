@@ -1,8 +1,12 @@
 - content_for :head do
   = stylesheet_link_tag "dateinput"
-  = javascript_include_tag 'charts/protovis-r3.2', 'tools/flowplayer-3.2.4.min', :cache => "cache/study"
+  = javascript_include_tag 'charts/protovis-r3.2','tools/flowplayer-3.2.4.min', :cache => "cache/study"
   %script{:type => "text/javascript+protovis"}
     =render :file => "public/javascripts/charts/protovis.charts.js" # must be rendered inline, unfortunately, because ie doesn't process scripts with type=text/javascript+protovis
+  %script{:type => "text/javascript"}
+    $(document).ready(function(){
+    $('#study_information').hide(10);
+    });
 #back.heading= link_to "My Studies".html_safe, studies_path
 #study
   -if @study.read_only?
@@ -18,13 +22,37 @@
     %label Goal
   .name{:title => @study.title}
     = @study.title
-    %span.short_name= @study.name
+    %span.short_name= link_to 'Details and Charts', '#',:rel => "#study_information",:class=>'charts'#@study.name
+  %br.clear
+  #study_information
+    .details
+      = render :partial => 'partials/study_info', :locals => {:study => @study}
+    - unless @involvements.empty?
+      .charts
+        #gender.chart
+        #ethnicity.chart
+        #race.chart
+        #timechart
+        #dotchart
+      %br.clear
+
+  %script{:type => 'text/javascript+protovis'}
+    - if @study.involvements.empty?
+      if($('#player').length){ flowplayer("player", "/media/flowplayer-3.2.4.swf", {clip: {autoPlay: false}, canvas: {backgroundColor: '#dddddd', backgroundGradient: 'medium'}}); }
+    - else
+      //= render :file => "public/javascripts/charts/protovis.charts.js" # must be rendered inline, unfortunately, because ie doesn't process scripts with type=text/javascript+protovis
+      = "months('timechart', 'Monthly and total accruals, last 12 months', #{@time_stats[0].inspect}, #{@time_stats[1].inspect}, #{@time_stats[2].inspect});".html_safe
+      = "donut('gender', #{@gender_stats.map(&:last).inspect}, #{@gender_stats.map(&:first).inspect});".html_safe
+      = "donut('race', #{@race_stats.map(&:last).inspect}, #{@race_stats.map(&:first).inspect});".html_safe
+      = "donut('ethnicity', #{@ethnicity_stats.map(&:last).inspect}, #{@ethnicity_stats.map(&:first).inspect});".html_safe
+      = "dots('dotchart', 'All accruals by month and weekday', #{@dot_stats});".html_safe
+
   %br.clear
   #actions
     = link_to("Subjects", involvements_path(:study_id=>@study.irb_number), :class => 'subjects')
-    = link_to("Details and Charts",charts_study_path(@study), :class => 'charts')
     - unless @study.involvements.empty?
       = link_to("Reports/Export", new_report_path(:study => @study), :class => 'export')
+    = link_to("Settings",edit_study_path(@study), :class => 'settings')
   #pane
   %br.clear
   #other_studies.overlay

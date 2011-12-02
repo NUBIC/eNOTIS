@@ -3,6 +3,13 @@ var timeoutExpiredTimer;
 $(document).ready(function() {
   // -------------- Common UI --------------
   // flash messages
+
+  $("#study a[rel=#study_information]").click(function(){
+       $('#study_information').slideToggle();
+       $(this).toggleClass('open');
+      return false;
+     });
+
   $("#flash .close").livequery(
   'click',function(){
    $("#flash").empty(300); return false;});

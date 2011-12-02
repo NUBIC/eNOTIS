@@ -14,9 +14,6 @@
 .funding_sources.irb_data
   %em Funding Source(s):
   = study_funding_source_info(study)
--unless study.is_managed?
-  .study_settings
-    =link_to ("study settings",edit_study_path(study),:rel=>"#study_settings")
 %br
 .study_team
   %em Study Team:
