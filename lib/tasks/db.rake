@@ -54,10 +54,11 @@ namespace :db do
 
   desc "de-identify current database"
   task :de_id => :environment do 
-    raise "I cannot in good conscience let you do this in production" if Rails.env.production?
+    raise "I cannot, in good conscience, let you do this in production" if Rails.env.production?
     without_versioning do
       Version.delete_all(:item_type => "Subject")
-      Subject.all.each{|subject| de_id_subject(subject);print (['\\','|','/','-'][rand(3)]);STDOUT.flush}
+      Subject.all.each{|subject| de_id_subject(subject);print (['\\','|','/','-'][rand(4)]);STDOUT.flush}
+      Involvement.all.each{|involvement| de_id_involvement(involvement);print (['\\','|','/','-'][rand(4)]);STDOUT.flush}
     end
   end
   
@@ -86,6 +87,7 @@ namespace :db do
     subject.first_name = Faker::Name.first_name unless subject.first_name.blank?
     subject.middle_name = Faker::Name.first_name unless subject.middle_name.blank?
     subject.last_name = Faker::Name.last_name unless subject.last_name.blank?
+    subject.suffix = ""
     subject.birth_date =(rand(60.years).ago - 18.years).to_date unless subject.birth_date.blank?
     subject.death_date = rand(5.years).ago.to_date unless subject.birth_date.blank?
     subject.address_line1  =Faker::Address.street_address unless subject.address_line1.blank?
@@ -93,6 +95,19 @@ namespace :db do
     subject.address_line3=Faker::Address.secondary_address unless subject.address_line3.blank?
     subject.phone_number = Faker::PhoneNumber.phone_number.split(" x")[0] unless subject.phone_number.blank?
     subject.email = Faker::Internet.email  unless subject.email.blank?
+    
     subject.save
+  end
+  
+  def de_id_involvement(involvement)
+    involvement.case_number = "%09d" % rand(999999999) unless involvement.case_number.blank?
+    involvement.address_line1 =Faker::Address.street_address unless involvement.address_line1.blank?
+    involvement.address_line2 =Faker::Address.secondary_address unless involvement.address_line2.blank?
+    involvement.email = Faker::Internet.email unless involvement.email.blank?
+    involvement.home_phone = Faker::PhoneNumber.phone_number.split(" x")[0] unless involvement.home_phone.blank?
+    involvement.work_phone = Faker::PhoneNumber.phone_number.split(" x")[0] unless involvement.work_phone.blank?
+    involvement.cell_phone = Faker::PhoneNumber.phone_number.split(" x")[0] unless involvement.cell_phone.blank?
+    
+    involvement.save
   end
 end
