@@ -1,4 +1,9 @@
 #involvement_detail
+  #pane_title
+    -if @involvement.subject.name.eql?("(no name)") and !@involvement.case_number.blank?
+      =@involvement.case_number
+    -else
+      =@involvement.subject.name
   #involvement_demographics
     =render :partial => 'involvement_basics', :locals => {:study => @involvement}  
   #involvement_events

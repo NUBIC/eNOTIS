@@ -472,23 +472,14 @@ describe Involvement do
     %w(consented withdrawn completed).each  do |name|
       describe "##{name}" do
         it 'gives the correct event when a match exists' do
-          @all_events.send(name).event_type.name.should == name.titlecase
+          @all_events.event_detect(name).event_type.name.should == name.titlecase
         end
 
         it 'gives nothing when no match exists' do
-          @no_events.send(name).should be_nil
+          @no_events.event_detect(name).should be_nil
         end
       end
 
-      describe "##{name}_report" do
-        it 'gives the date for the event when a match exists' do
-          @all_events.send("#{name}_report").should == Date.new(2010, 3, 7)
-        end
-
-        it 'gives nil when no match exists' do
-          @no_events.send("#{name}_report").should be_nil
-        end
-      end
     end
   end
 end

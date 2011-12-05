@@ -176,9 +176,8 @@ end
 
 
 When /^I export a csv of subjects$/ do
-  click_link("Export")
-  select "CSV", :from=> :format
-  click_button("Export Data")
+  click_link("Reports/Export")
+  click_link("Subject Export")
 end
 
 Given /^the study "([^"]*)" has a subject accrued on "([^"]*)"$/ do |irb_number, date|

@@ -14,6 +14,7 @@
           %dtr{:title => @study.event_types.define_event("Consented")} Consented
         %th 
     %tbody
+      - consent_event = @study.event_types.find_by_name('Consented')
       - @involvements.each do |involvement|
         %tr{:class => "subject_#{involvement.subject.id}"}
           %td= involvement.case_number
@@ -22,5 +23,5 @@
           %td= involvement.subject.nmh_mrn
           %td= involvement.subject.ric_mrn
           %td= involvement.subject_name_or_case_number
-          %td= involvement.consented.occurred_on unless involvement.consented.nil?
+          %td= involvement.event_dates(consent_event).join(', ')
           %td= link_to "Detail", involvement_path(involvement),:rel=>'#involvement_detail'

@@ -97,7 +97,7 @@ end
 before 'deploy:migrate', 'db:backup'
 
 # after deploying, generate static pages, copy over uploads and results, cleanup old deploys, aggressively set permissions
-after 'deploy:update_code', 'web:static', 'deploy:cleanup'
+after 'deploy:update_code', 'web:static', 'deploy:permissions','deploy:cleanup'
 
 # the static maintenance page has to be generated before it can be displayed
 before 'web:disable', 'web:static'

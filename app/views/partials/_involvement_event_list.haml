@@ -1,5 +1,5 @@
 #pane_menu.expanded
-  #pane_title="Events"
+  #pane_menu_title="Events"
   #pane_actions
     -unless @involvement.study.is_managed?
       =link_to('Add',new_involvement_event_path(@involvement),:rel=>'#new_event')

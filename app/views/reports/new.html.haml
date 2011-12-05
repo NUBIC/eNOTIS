@@ -1,32 +1,12 @@
-#report
-  %h2 Reports
+#reports
+  #pane_menu
+    #pane_menu_title="Reports"
   %ul
     %li= link_to "NIH Inclusion Enrollment Report", nih_reports_path(:study => @study.irb_number), :popup => true
-  %h2 Exports
-  - form_tag(reports_path) do
-    = hidden_field_tag 'study[irb_number]', params[:study]
-    %p Select what to export:
-    %p 
-      = check_box_tag "involvement[attributes][]",:case_number, :checked => true
-      = label_tag "involvement[attributes][]", "Case Number"
-      %br
-      - ['nmff_mrn', 'nmh_mrn','ric_mrn', 'first_name','last_name','birth_date'].each do |val|
-        = check_box_tag "subject[]",val, :checked => true
-        = label_tag "subject[]", val.split("_")[1] == "mrn" ? val.titleize.upcase : val.titleize
-        %br
-      -['gender','ethnicity'].each do |attr|
-        = check_box_tag "involvement[attributes][]",attr, :checked => true
-        = label_tag "involvement[attributes][]",attr.titleize
-        %br
-      = check_box_tag "involvement[methods][]", :race_as_str, :checked => true
-      = label_tag "involvement[methods][]", "Race"
-      %br
-      = check_box_tag "involvement[methods][]", :all_events, :checked => true
-      = label_tag "involvement[methods][]", "Events"
-    %p
-      = label_tag "format","Choose the type of file to export:"
-      = select_tag('format',options_for_select([["CSV","csv"],["PDF","pdf"]]))
-    %p= submit_tag("Export Data")
+  #pane_menu
+    #pane_menu_title="Exports"
+  %ul
+    %li=link_to('Subject Export',reports_path(:type=>'subjects','study[irb_number]'=>@study.irb_number),:method=>:post) 
 
   -unless @study.surveys.empty?
     #forms
@@ -38,11 +18,11 @@
               %td=survey.title
               %td
                 -unless survey.score_configurations.empty?
-                  =link_to('Scores',reports_path(:type=>'survey_score',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number,:format=>'csv'),:method=>:post) 
+                  =link_to('Scores',reports_path(:type=>'survey_score',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number),:method=>:post) 
                 -else
                   ="N/A"
-              %td=link_to('Data',reports_path(:type=>'survey_data',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number,:format=>'csv'),:method=>:post) 
-              %td=link_to('Key',reports_path(:type=>'survey_key',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number,:format=>'csv'),:method=>:post) 
+              %td=link_to('Data',reports_path(:type=>'survey_data',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number),:method=>:post) 
+              %td=link_to('Key',reports_path(:type=>'survey_key',:survey_id=>survey.id,'study[irb_number]'=>survey.irb_number),:method=>:post) 
 
 
 

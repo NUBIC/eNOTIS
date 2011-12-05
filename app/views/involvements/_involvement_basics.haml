@@ -1,9 +1,5 @@
 #pane_menu
-  #pane_title
-    -if @involvement.subject.name.eql?("(no name)") and !@involvement.case_number.blank?
-      =@involvement.case_number
-    -else
-      =@involvement.subject.name
+  #pane_menu_title="Subject Detail"
   #pane_actions
     -unless @involvement.study.read_only?
       =link_to "Edit",edit_involvement_path(@involvement),:rel=>"#edit_involvement"  

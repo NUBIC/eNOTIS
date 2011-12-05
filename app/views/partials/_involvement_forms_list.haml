@@ -1,5 +1,5 @@
 #pane_menu
-  #pane_title="Forms"
+  #pane_menu_title="Forms"
   #pane_actions
     =link_to("Add",available_surveys_path(:involvement_id=>@involvement.id,:study_id=>@study.id),:rel=>'#start_form',:class=>"add")
     =link_to("Subject Access",public_available_surveys_path(:uuid=>@involvement.uuid)) unless @involvement.uuid.blank?

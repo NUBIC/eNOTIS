@@ -32,10 +32,6 @@ $(document).ready(function() {
       return false;
       }
       );
-  $("#study_charts").livequery( function(){
-    var x = $(this).html();
-    jQuery.globalEval(x);
-  });
   $(".date").livequery(function(){
       $(this).datepicker({ changeYear: true , changeMonth: true , dateFormat: 'yy-mm-dd',yearRange: '-20:+0', autoSize: true });
   });
@@ -220,13 +216,6 @@ $(document).ready(function() {
       );
   //import subjects
   $("#pane_actions a[rel=#import_subjects]").livequery(
-    'click', function(){
-      $("#pane").load( $(this).attr("href")); 
-      return false;
-      }
-      );
-  //load study settings
-  $("#study_information a[rel=#study_settings]").livequery(
     'click', function(){
       $("#pane").load( $(this).attr("href")); 
       return false;
@@ -474,16 +463,6 @@ $(document).ready(function() {
    // });
   }
   
-  // export tab
-  function activateExportCheck(){
-    $('#report :checkbox').click(disableEmptyReports);
-    disableEmptyReports();
-  }
-  function disableEmptyReports(){
-    // disable export button if no boxes are checked
-    $('#report :submit').attr('disabled', $('#report :checkbox:checked').length == 0);
-  }
-
   
   // show study: other studies overlay - bind an event onto the accept link that loads the other studies view into the same overlay
   function activateAccept(){

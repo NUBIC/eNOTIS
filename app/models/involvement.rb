@@ -223,6 +223,10 @@ class Involvement < ActiveRecord::Base
     races.join(", ")
   end
 
+  def event_dates(event_type)
+    self.involvement_events.find_all_by_event_type_id(event_type.id).collect{|ie| ie.occurred_on}
+  end
+
   def race_for_nih_report
     races.size == 1 ? races.first : "More Than One Race"
   end
@@ -267,25 +271,6 @@ class Involvement < ActiveRecord::Base
   end
   # END of methods used for graphs
 
-  def all_events
-    # A placeholder method to get an easy checkbox?
-    # Not sure why this is here but it's "method" is
-    # used when generating reports. Basically it's used as
-    # a flag, this method is never actually called
-    # as far as I can tell. - BLC
-  end
-
-  # Generating some methods for the reporting plugin
-  %w(consented withdrawn completed).each  do |name|
-    define_method("#{name}_report".to_sym) do
-       ev = self.send(:event_detect, name)
-       ev.occurred_on if ev
-    end
-    define_method(name.to_sym) do
-      self.send(:event_detect, name)
-    end
-  end
-
   def completed_or_withdrawn
     completed || withdrawn
   end
@@ -328,6 +313,10 @@ class Involvement < ActiveRecord::Base
 
   def ric_mrn
     subject.ric_mrn
+  end
+
+  def birth_date
+    subject.birth_date
   end
   def address
     return nil if address_line1.blank? and address_line2.blank? and city.blank? and state.blank? and zip.blank?
