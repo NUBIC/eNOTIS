@@ -1,17 +1,17 @@
 #reports
-  #pane_menu
-    #pane_menu_title="Reports"
-  %ul
-    %li= link_to "NIH Inclusion Enrollment Report", nih_reports_path(:study => @study.irb_number), :popup => true
-  #pane_menu
-    #pane_menu_title="Exports"
-  %ul
+  %ul 
+    %li=link_to "NIH Inclusion Enrollment Report", nih_reports_path(:study => @study.irb_number), :popup => true
     %li=link_to('Subject Export',reports_path(:type=>'subjects','study[irb_number]'=>@study.irb_number),:method=>:post) 
 
   -unless @study.surveys.empty?
     #forms
-      %h5 Form Data
       %table
+        %thead
+          %tr
+            %th Form List
+            %th
+            %th
+            %th
         %tbody
           -@study.surveys.each do |survey|
             %tr
