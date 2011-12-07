@@ -1,5 +1,5 @@
 -form_for(@involvement_event) do |f|
-  = f.label :event_type,"Event Type"
+  = f.label :event_type,"Event Type*"
   = f.select :event_type_id,@involvement.study.event_types.collect{|et| [et.name,et.id] }
   %br
   %br
@@ -8,6 +8,8 @@
   %br
   = f.label :note,"Notes"
   = f.text_field :note
+  %br
+  .footnote="*You can add event types by clicking on the 'Settings' tab"
   %br
   #pane_menu
     #pane_actions
