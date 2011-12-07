@@ -298,6 +298,7 @@ $(document).ready(function() {
   //study forms datatable
   $("#study_forms .display").livequery(function(){$(this).dataTable({
     "aoColumns": [null,null,null,{"sType":"date"},{"sType":"date"}],
+    "bPaginate" : false,
     "iDisplayLength": 10,
     "sPaginationType": "full_numbers"
   });});
@@ -305,6 +306,7 @@ $(document).ready(function() {
   //study event types datatable
   $("#event_types .display").livequery(function(){$(this).dataTable({
     "aoColumns": [null,null,null],
+    "bPaginate" : false,
     "iDisplayLength": 10,
     "sPaginationType": "full_numbers"
   });});
