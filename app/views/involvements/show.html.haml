@@ -1,5 +1,11 @@
+%script
+  $("#demographics_expand_arrow").click(function() { $(this).toggleClass("collapse_point_right collapse_point_down"); $("#involvement_demographics").toggle(400); });
+  $("#event_expand_arrow").click(function() { $(this).toggleClass("collapse_point_right collapse_point_down"); $("#event_list").toggle(400); });
+  $("#form_expand_arrow").click(function() { $(this).toggleClass("collapse_point_right collapse_point_down"); $("#form_list").toggle(400); });
+  
 #involvement_detail
   #pane_title
+    #demographics_expand_arrow{:class=>"collapse_arrow collapse_point_down"}
     -if @involvement.subject.name.eql?("(no name)") and !@involvement.case_number.blank?
       =@involvement.case_number
     -else
@@ -12,5 +18,3 @@
   -unless @study.surveys.empty?
     #involvement_forms
       = render :partial => 'partials/involvement_forms_list'
-
-
