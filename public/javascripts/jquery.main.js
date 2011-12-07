@@ -291,6 +291,7 @@ $(document).ready(function() {
   $("#event_list").livequery(function(){$(this).dataTable({
     "aoColumns": [null,{"sType":"date"},null,null],
     "bPaginate" : false,
+    "aaSorting": [[ 1, "desc" ]],
     "oLanguage": {"sZeroRecords": "<p><strong>No forms yet - click 'Add' to get started. </strong></p>"}
   });});
 
