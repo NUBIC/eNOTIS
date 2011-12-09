@@ -145,12 +145,13 @@ module Webservices
           study[:inclusion_criteria] = incl[:inclusion_criteria]
         end
 
-        study_set[:find_funding_sources].each do |fs|
-          study[:funding_sources] ||= []
-          unless fs[:funding_source_name].blank? or fs[:funding_source_id].blank? or fs[:funding_source_category_name].blank?
-            study[:funding_sources] << {:name => fs[:funding_source_name], :code => fs[:funding_source_id], :category => fs[:funding_source_category_name]}
-          end
-        end
+        #temporarily removing funding sources till we figure out a way to improve performace issues with eirb
+        #study_set[:find_funding_sources].each do |fs|
+        #  study[:funding_sources] ||= []
+        #  unless fs[:funding_source_name].blank? or fs[:funding_source_id].blank? or fs[:funding_source_category_name].blank?
+        #    study[:funding_sources] << {:name => fs[:funding_source_name], :code => fs[:funding_source_id], :category => fs[:funding_source_category_name]}
+        #  end
+        #end
         return study
       end
 
@@ -362,11 +363,11 @@ module Webservices
       # irb_number as the key to request the data
       def query_study_source(irb_number)
         query_list = [
-          :find_basics,
-          :find_description,
-          :find_inc_excl,
-          :find_funding_sources
-        ]
+          :find_basics]
+        #  :find_description,
+        #  :find_inc_excl,
+        #  :find_funding_sources
+        #]
         do_import_queries(Eirb, irb_number, query_list)
       end
 
