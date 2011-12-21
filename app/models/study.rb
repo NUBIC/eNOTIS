@@ -174,6 +174,16 @@ class Study < ActiveRecord::Base
     end
   end  
 
+  def accrual_during_period(start_date=1.month.ago,end_date=Date.today)
+    start_date=start_date.to_date
+    end_date=end_date.to_date
+    if et = event_types.detect{|et| et.name == "Consented"}
+      involvement_events.select{|ie| ie.event_type_id == et.id and ie.occurred_on >= start_date and ie.occurred_on <= end_date}.size
+    else
+      0
+    end
+  end  
+
   def can_accrue?
     # For possible eIRB statuses, see doc/terms.csv
     ["Approved", "Exempt Approved", "Not Under IRB Purview",
