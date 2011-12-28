@@ -30,6 +30,7 @@ class Study < ActiveRecord::Base
       "Exempt Approved","Closed/Terminated", "Pre Submission"]
   
   named_scope :open_studies, :conditions => "closed_or_completed_date is null and irb_status not in (#{STATUS_TO_EXCLUDE.map{|r| "'#{r}'"}.join(',')})"
+  named_scope :has_medical_services, :conditions => "uses_medical_services = true"
 
   # Associations
   has_many :involvements
@@ -172,6 +173,23 @@ class Study < ActiveRecord::Base
     else
       0
     end
+  end  
+
+  def accrual_during_period(start_date=1.month.ago,end_date=Date.today)
+    start_date=start_date.to_date
+    end_date=end_date.to_date
+    if et = event_types.detect{|et| et.name == "Consented"}
+      involvement_events.select{|ie| ie.event_type_id == et.id and ie.occurred_on >= start_date and ie.occurred_on <= end_date}.size
+    else
+      0
+    end
+  end  
+  
+  
+  def entries_during_period(start_date=1.month.ago,end_date=Date.today)
+    start_date=start_date.to_date
+    end_date=end_date.to_date
+    involvement_events.select{|ie| ie.created_at >= start_date and ie.created_at <= end_date}.size
   end  
 
   def can_accrue?
