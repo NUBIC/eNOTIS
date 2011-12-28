@@ -81,7 +81,7 @@ Then /^I add edit subject "([^\"]*)" "([^\"]*)" with 2nd event "([^\"]*)" on "([
   end
   select event, :from => :involvement_event_event_type_id
   fill_in :involvement_event_occurred_on, :with => date
-  click_button "save"
+  click_button "Save"
 end
 
 Then /^I navigate to the edit page for subject "([^\"]*)" "([^\"]*)"$/ do |first,last|
