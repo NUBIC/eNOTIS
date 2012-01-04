@@ -4,6 +4,13 @@ class Notifier < ActionMailer::Base
     %w(eNOTISsupport@northwestern.edu)
   end
 
+  def empi_error(error)
+    recipients support_email
+    from support_email
+    subject "[eNOTIS] EMPI error - #{error.message}"
+    body :error => error
+  end
+
   def study_upload_failure(upload)
     recipients support_email
     from support_email

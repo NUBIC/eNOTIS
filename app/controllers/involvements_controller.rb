@@ -125,15 +125,20 @@ class InvolvementsController < ApplicationController
       flash[:notice] = "Please enter an MRN to look up"
       return redirect_to(:back) 
     end
-    Empi.connect(EMPI_SERVICE[:uri], EMPI_SERVICE[:credentials]) unless Empi.client
-    @systems = ActiveSupport::OrderedHash["nmff_mrn", "IDX", "nmh_mrn", "PRIMES", "ric_mrn", "IDX"]
-    @results = {}
-    @systems.each{|type, system| @results[type] = {}; @results[type][:query] = params[:involvement][:subject_attributes][type]}
-    if (mrns = @systems.map{|t,s| @results[t][:query]}.reject(&:blank?)).size == 1
-      # only one mrn specified, hit all systems
-      @results.each{|k,v| v[:query] = mrns.first}
+    begin
+      Empi.connect(EMPI_SERVICE[:uri], EMPI_SERVICE[:credentials]) unless Empi.client
+      @systems = ActiveSupport::OrderedHash["nmff_mrn", "IDX", "nmh_mrn", "PRIMES", "ric_mrn", "IDX"]
+      @results = {}
+      @systems.each{|type, system| @results[type] = {}; @results[type][:query] = params[:involvement][:subject_attributes][type]}
+      if (mrns = @systems.map{|t,s| @results[t][:query]}.reject(&:blank?)).size == 1
+        # only one mrn specified, hit all systems
+        @results.each{|k,v| v[:query] = mrns.first}
+      end
+      @systems.each{|t,s| @results[t][:subjects] =  @results[t][:query].blank? ? [] : Empi.get(@results[t][:query], :source => s)[:response] || []}
+    rescue Exception => e 
+      Notifier.deliver_empi_error(e) if Rails.env.eql?("production")
+      @error = e
     end
-    @systems.each{|t,s| @results[t][:subjects] =  @results[t][:query].blank? ? [] : Empi.get(@results[t][:query], :source => s)[:response] || []}
     respond_to do |format|
       format.html
       format.js {render :layout => false}
