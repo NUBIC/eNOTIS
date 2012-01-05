@@ -38,13 +38,7 @@ $(document).ready(function(){
   
   // scrollable
   $("div.panes").scrollable({size: 1}).navigator({navi: "ul.tabs", naviItem: "a", activeClass: "current"});
-  
-  // db language overlay
-  $("a[rel=#database-language]").overlay({
-    fixed: false, // allows user to scroll if overlay extends beyond viewport
-    expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}
-  });
-      
+        
   // video
   if($('#player').length){
     flowplayer("player", "/media/flowplayer-3.2.4.swf", {clip: {autoPlay: false}, canvas: {backgroundColor: '#dddddd', backgroundGradient: 'medium'}});
