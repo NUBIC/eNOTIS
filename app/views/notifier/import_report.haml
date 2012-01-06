@@ -1,0 +1,16 @@
+="Import completed at: #{@params[:end_time]} "
+%br
+="Took #{@params[:total_time]} minutes"
+%br
+="#{@params[:created_study_count]} studies created"
+%br
+="#{@params[:updated_study_count]} studies updated"
+%br
+="#{@params[:error_irb_numbers].size} studies had errors"
+%br
+- if @params[:error_irb_numbers].size < 10
+  ="The following studies had errors during the import process"
+  %br
+  %ul
+    -@params[:error_irb_numbers].each do |number|
+      %li=number

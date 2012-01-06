@@ -77,6 +77,9 @@ namespace :importer do
     t= Time.now
     puts "Starting at #{t}"
     tr = []
+    created = 0
+    updated = 0
+    error_irb_numbers=[]
     puts "#{irb_numbers.count} studies to import"
     puts "This might take a while (~#{(irb_numbers.count*17)/60} minutes), you should probably take a walk or find a nice book to read" if irb_numbers.count > 500
     puts "Note: studies with '(*)' are managed externally so import includes subjects and involvements"
@@ -87,6 +90,9 @@ namespace :importer do
       if study.nil?
         print "#{irb_num} not found, creating it"
         study = Study.create(:irb_number => irb_num)
+        created = created+1
+      else
+        updated = updated+1
       end
       t1 = Time.now
       print " Importing #{irb_num}"
@@ -97,6 +103,7 @@ namespace :importer do
       print "(*)" if study.is_managed?
       study.reload
       print " with errors" if study.import_errors?
+      error_irb_numbers << study.irb_number if study.import_errors?
       print "\n"
       STDOUT.flush       
     end
@@ -105,6 +112,11 @@ namespace :importer do
     mean = tr.inject{ |sum, el| sum + el }.to_f / tr.size
     puts "Ending at #{tn} - Import time:#{total} minutes"
     puts "Mean: #{mean}"
+    Notifier.deliver_import_report({:end_time=>tn,
+                                 :total_time=>total,
+                                 :created_study_count=>created,
+                                 :updated_study_count=>updated,
+                                 :error_irb_numbers=>error_irb_numbers})
   end
 
 end

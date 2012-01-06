@@ -4,6 +4,14 @@ class Notifier < ActionMailer::Base
     %w(eNOTISsupport@northwestern.edu)
   end
 
+
+  def import_report(params)
+    recipients 'd-were@northwestern.edu'
+    from support_email
+    subject "[eNOTIS - #{Rails.env}] Import report"
+    body :params => params
+  end
+
   def empi_error(error)
     recipients support_email
     from support_email
