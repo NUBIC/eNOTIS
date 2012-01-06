@@ -36,7 +36,7 @@ class Survey < ActiveRecord::Base
       end
       t << result
     end
-    return t.as(:csv)
+    return {:report=>t.as(:csv),:name=>"#{self.access_code}_data"}
   end
 
   def key_export
@@ -55,7 +55,7 @@ class Survey < ActiveRecord::Base
         'answer_weight'=>a.weight
            }
     end
-    return t.as(:csv)
+    return {:report=>t.as(:csv),:name=>"#{self.access_code}_key"}
   end
 
   def score_export(params)
@@ -70,7 +70,7 @@ class Survey < ActiveRecord::Base
       end
       t << score_hash
     end
-    return t.as(:csv)
+    return {:report=>t.as(:csv),:name=>"#{self.access_code}_scores"}
   end
 
   private

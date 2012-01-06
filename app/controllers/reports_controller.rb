@@ -34,7 +34,7 @@ class ReportsController < ApplicationController
     study = Study.find_by_irb_number(params[:study][:irb_number])
     authorize! :show, study
     result = Report.export(params)
-    send_data(result,:type => 'text/csv; charset=utf-8; header=present',:filename => "#{params[:study][:irb_number]}_#{params[:type]}.csv")
+    send_data(result[:report],:type => 'text/csv; charset=utf-8; header=present',:filename => "#{params[:study][:irb_number]}_#{result[:name]}.csv")
   end
 
   def render_report(report);  end

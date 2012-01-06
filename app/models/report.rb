@@ -29,7 +29,7 @@ class Report
     involvements = study.involvements
     report.add_columns(study.event_types.collect{|et| et.name})
     report.each{|r| i = Involvement.find(r['id']);study.event_types.each{|et| r[et.name]=i.event_dates(et).join(":")}}
-    report.as(:csv)
+    {:report=>report.as(:csv),:name=>'subject_export'}
   end
 end
 

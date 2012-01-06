@@ -24,7 +24,7 @@ describe "Report generation from study data" do
       "type"=>"subjects",
       "study"=>{"irb_number"=>@study.irb_number}
       })
-    @csv_data = Report.export(params)
+    @csv_data = Report.export(params)[:report]
   end
 
   # Birth_date does not work with the factories for some reason.
