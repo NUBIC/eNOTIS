@@ -130,7 +130,7 @@ body {
   float: left;
   margin-right: 0;
   width: 955px;
-  height: 490px;
+  height: 600px;
   padding-top: 20px;
 }
 /* line 100 */
@@ -191,6 +191,10 @@ body {
   font-weight: bold;
   margin-bottom: 5px;
   font-size: 13px;
+}
+/* line 144 */
+#main div.panes div.items div.item p.upload {
+  margin-bottom: 0px;
 }
 /* line 146 */
 #main div.panes div.items div.current {
