@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
   include ExceptionNotifiable
   ExceptionNotifier.exception_recipients = %w(eNOTISsupport@northwestern.edu)
   ExceptionNotifier.sender_address = %("eNOTIS"<eNOTISsupport@northwestern.edu>) 
+  ExceptionNotifier.email_prefix = " [#{Rails.env}] "
   # Uncomment below to get exeception_notifier working in development, see comment at http://agilewebdevelopment.com/plugins/exception_notifier
   # alias :rescue_action_locally :rescue_action_in_public
   # local_addresses.clear
