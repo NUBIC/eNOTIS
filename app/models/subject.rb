@@ -21,7 +21,8 @@ class Subject < ActiveRecord::Base
   acts_as_reportable
   has_paper_trail
 
-  validates_date :birth_date, :on_or_before => Date.today, :on_or_before_message => "must be a date in the past",:on_or_after=> 200.years.ago.to_date, :on_or_before_message => "is further back than we currently support",:allow_blank=>true
+  #turning off date validation till we figure out how to deal with bad dates from eNOTIS
+  #validates_date :birth_date, :on_or_before => Date.today, :on_or_before_message => "must be a date in the past",:on_or_after=> 200.years.ago.to_date, :on_or_before_message => "is further back than we currently support",:allow_blank=>true
 
   def self.find_by_external_id(id, source)
     Subject.find(:first, :conditions => {:external_patient_id => id, :import_source => source})
