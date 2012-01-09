@@ -6,10 +6,10 @@
   %p.a You must enter: first name, last name, date of birth, NIH race and ethnicity, gender, consent and completion dates. Study information will come from the eIRB and will not require double entry.
   
   %p.q How do I bulk import my data into eNOTIS?
-  %p.a.upload= "Your upload must: (see our #{link_to 'sample file', '/sample.csv'})"
+  %p.a.upload= "Your upload must: (see our #{link_to 'sample file', '/sample.csv'})".html_safe
   %ol
     %li Be a .csv file. In Excel save as "Comma Separated Values (.csv)"
-    %li= "Have all of the required column headings (see our #{link_to 'sample file', '/sample.csv'}), even if you don't have data for them."
+    %li= "Have all of the required column headings (see our #{link_to 'sample file', '/sample.csv'}), even if you don't have data for them.".html_safe
     %li
       Use exactly these NIH reporting values:
       %ul
