@@ -74,7 +74,7 @@ class EventsController < ApplicationController
 
   def destroy
     @involvement_event = InvolvementEvent.find(params[:id])
-    authorize! :destroy, @involvement
+    authorize! :destroy, @involvement_event.involvement
     @involvement_event.destroy
     @involvement= Involvement.find(params[:involvement_id])
     flash[:notice] = "Event Deleted"
