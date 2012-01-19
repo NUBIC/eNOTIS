@@ -1,199 +1,127 @@
-survey "Bravo pH monitoring",:irb_number=>"STU00015205",:category=>"crf" do
+survey "Bravo pH",:irb_number=>"STU00015205",:active_at=>Time.now,:inactive_at=>nil do
   
-  section "Study Date" do 
-    q_bravo_date "Date of Bravo pH study"
-      a :date, :custom_class => 'date'
-  end
+  section "Main" do 
+  question_1 "INITIAL"
+  a :string
+  question_2 "Bravo #"
+  a :string
+  question_3 "Date of Procedure"
+  a :date
+  q_4 "Baseline-0/ FU - month"
+  a :string
+  q_5 "MED BEFORE TEST- PREVIOUS 4 WEEKS",:pick=>:one
+   a_0 "None"
+   a_1 "Single Dose PPI"
+   a_2 "Double Dose PPI"
+   a_3 "Double Dose PPI"
+   a_4 "Hoarseness/sore throat/throat burning"
+   a_5 "Cough"
+   a_6 "GLobus"
+   a_7 "Other"
 
-  section "Day 1" do 
-    q_dayone_1 "Test performed on or off medication?", :pick=>:one
-      a_1 "Off medication"
-      a_2 "On medication"
+  
 
-    repeater "Medication regimen (PPI)" do    
-      dependency :rule => "A"
-      condition_A :q_dayone_1, "==", :a_2
-        q_dayone_2 "Medication", :pick=> :one, :display_type => :dropdown
-          a_0 "None"
-          a_1 "Dexlansoprazole (Kapidex)"
-          a_2 "Esomeprazole (Nexium)"
-          a_3 "Lansoprazole (Prevacid)"
-          a_4 "Omeprazole (Prilosec)"
-          a_5 "Omeprazole, Sodium Bicarbonate (Zegerid)"
-          a_6 "Pantoprazole (Protonix)"
-          a_7 "Rabeprazole (Aciphex)"
-          a_8 "Other", :string
+  q_6 "TEST- OFF/ON",:pick=>:one
+    a_0 "Off"
+    a_1 "On Single"
+    a_2 "On Double"
 
-        q_dayone_3 "Dose (mg)"
-          a :string
-        q_dayone_4 "Frequency", :pick => :one, :display_type => :dropdown
-          a_1 "Daily (AM)"
-          a_2  "Daily (PM)"
-          a_3 "Twice daily"
-    end
+  q_7 "Indication-physician",:pick=>:one
+    a_1 "heartburn"
+    a_2 "regurgitation"
+    a_3 "chest pain"
+    a_4 "hoarseness/sore throat/throat burning"
+    a_5 "cough" 
+    a_6 "globus"
+    a_7 "other"
 
-    q_dayone_5 "Total # of reflux episodes"
-      a_1 :integer
+  q_8 "Pt primary complaint",:pick=>:one
+    a_1 "heartburn"
+    a_2 "regurgitation"
+    a_3 "chest pain"
+    a_4 "hoarseness/sore throat/throat burning"
+    a_5 "cough" 
+    a_6 "globus"
+    a_77 "other"
 
-    q_dayone_6 "No. of reflux episodes >5 minutes"
-      a_1 :integer
+  q_9 "% IMPROVE OF HB/CP"
+   a :string
+  q_10 "% IMPROVE OF 1-SYMPT"
+   a :string
 
-    q_dayone_7 "Longest reflux episode (min)"
-      a_1 :integer
+  q_11 "RECORDING TIME"
+   a :string
+  q_12 "NUMBER OF DAYS-ADEQ"
+   a :string
 
-    q_dayone_8 "Total time pH<4 (min)"
-      a_1 :integer
+  q_13 "D1-U-%TIME Ph<4"
+   a :string
+  q_14 "D1-S-%TIME Ph<4"
+   a :string
 
-    q_dayone_9 "% time pH<4"
-      a_1 :integer
-  end
+  q_15 "D1-T-%TIME Ph<4"
+   a :string
+  q_16 "D1-TOTAL RE"
+   a :string
+  q_17 "D1-TOTAL SYMP"
+   a :string
+  q_18 "D1-SI ACID ONLY"
+   a :string
+  q_20 "D1-SAP ACID ONLY"
+   a :string
 
+  q_21 "D2-U-%TIME Ph<4"
+   a :string
 
-  section "Day 2" do 
-    q_daytwo_1 "Test performed on or off medication?", :pick=>:one
-      a_1 "Off medication"
-      a_2 "On medication"
+  q_22 "D2-S-%TIME Ph<4"
+   a :string
+  q_23 "D2-T-%TIME Ph<4"
+   a :string
+  q_24 "D2-TOTAL RE"
+   a :string
+  q_25 "D2-TOTAL SYMP"
+   a :string
+  q_26 "D2-SI ACID ONLY"
+   a :string
+  q_27 "D2-SAP ACID ONLY"
+   a :string
+  q_28 "D3-U-%TIME Ph<4"
+   a :string
+  q_29 "D3-S-%TIME Ph<4"
+   a :string
+  q_30 "3-T-%TIME Ph<4"
+   a :string
 
-    repeater "Medication regimen (PPI)" do    
-      dependency :rule => "A"
-      condition_A :q_daytwo_1, "==", :a_2
-        q_daytwo_2 "Medication", :pick=> :one, :display_type => :dropdown
-          a_0 "None"
-          a_1 "Dexlansoprazole (Kapidex)"
-          a_2 "Esomeprazole (Nexium)"
-          a_3 "Lansoprazole (Prevacid)"
-          a_4 "Omeprazole (Prilosec)"
-          a_5 "Omeprazole, Sodium Bicarbonate (Zegerid)"
-          a_6 "Pantoprazole (Protonix)"
-          a_7 "Rabeprazole (Aciphex)"
-          a_8 "Other", :string
-
-        q_daytwo_3 "Dose (mg)"
-          a :string
-        q_daytwo_4 "Frequency", :pick => :one, :display_type => :dropdown
-          a_1 "Daily (AM)"
-          a_2  "Daily (PM)"
-          a_3 "Twice daily"
-    end
-    q_daytwo_5 "Total # of reflux episodes"
-      a_1 :integer
-
-    q_daytwo_6 "No. of reflux episodes >5 minutes"
-      a_1 :integer
-
-    q_daytwo_7 "Longest reflux episode (min)"
-      a_1 :integer
-
-    q_daytwo_8 "Total time pH<4 (min)"
-      a_1 :integer
-
-    q_daytwo_9 "% time pH<4"
-      a_1 :integer
-  end
-
-  section "Day 3" do 
-    q_daythree_1 "Test performed on or off medication?", :pick=>:one
-      a_1 "Off medication"
-      a_2 "On medication"
-
-    repeater "Medication regimen (PPI)" do    
-      dependency :rule => "A"
-      condition_A :q_daythree_1, "==", :a_2
-        q_daythree_2 "Medication", :pick=> :one, :display_type => :dropdown
-          a_0 "None"
-          a_1 "Dexlansoprazole (Kapidex)"
-          a_2 "Esomeprazole (Nexium)"
-          a_3 "Lansoprazole (Prevacid)"
-          a_4 "Omeprazole (Prilosec)"
-          a_5 "Omeprazole, Sodium Bicarbonate (Zegerid)"
-          a_6 "Pantoprazole (Protonix)"
-          a_7 "Rabeprazole (Aciphex)"
-          a_8 "Other", :string
-
-        q_daythree_3 "Dose (mg)"
-          a :string
-        q_daythree_4 "Frequency", :pick => :one, :display_type => :dropdown
-          a_1 "Daily (AM)"
-          a_2  "Daily (PM)"
-          a_3 "Twice daily"
-    end
-    q_daythree_5 "Total # of reflux episodes"
-      a_1 :integer
-
-    q_daythree_6 "No. of reflux episodes >5 minutes"
-      a_1 :integer
-
-    q_daythree_7 "Longest reflux episode (min)"
-      a_1 :integer
-
-    q_daythree_8 "Total time pH<4 (min)"
-      a_1 :integer
-
-    q_daythree_9 "% time pH<4"
-      a_1 :integer
-  end
-
-  section "Day 4" do 
-    q_dayfour_1 "Test performed on or off medication?", :pick=>:one
-      a_1 "Off medication"
-      a_2 "On medication"
-
-    repeater "Medication regimen (PPI)" do    
-      dependency :rule => "A"
-      condition_A :q_dayfour_1, "==", :a_2
-        q_dayfour_2 "Medication", :pick=> :one, :display_type => :dropdown
-          a_0 "None"
-          a_1 "Dexlansoprazole (Kapidex)"
-          a_2 "Esomeprazole (Nexium)"
-          a_3 "Lansoprazole (Prevacid)"
-          a_4 "Omeprazole (Prilosec)"
-          a_5 "Omeprazole, Sodium Bicarbonate (Zegerid)"
-          a_6 "Pantoprazole (Protonix)"
-          a_7 "Rabeprazole (Aciphex)"
-          a_8 "Other", :string
-
-        q_dayfour_3 "Dose (mg)"
-          a :string
-        q_dayfour_4 "Frequency", :pick => :one, :display_type => :dropdown
-          a_1 "Daily (AM)"
-          a_2  "Daily (PM)"
-          a_3 "Twice daily"
-    end
-    q_dayfour_5 "Total # of reflux episodes"
-      a_1 :integer
-
-    q_dayfour_6 "No. of reflux episodes >5 minutes"
-      a_1 :integer
-
-    q_dayfour_7 "Longest reflux episode (min)"
-      a_1 :integer
-
-    q_dayfour_8 "Total time pH<4 (min)"
-      a_1 :integer
-
-    q_dayfour_9 "% time pH<4"
-      a_1 :integer
-  end
-
-  section "Symptom Index" do
-
-   q_bravo_si_1 "Symptom Index, Day 1"
-    a_1 :string
-
-   q_bravo_si_2 "Symptom Index, Day 2"
-    a_1 :string
-
-   q_bravo_si_3 "Symptom Index, Day 3"
-    a_1 :string
-
-   q_bravo_si_4 "Symptom Index, Day 4"
-    a_1 :string
-  end
-
-  section "Comments" do
-     q_bravo_comments "Comments"
-       a_1 :text
+  q_31 "D3-TOTAL RE"
+   a :string
+  q_32 "D3-TOTAL SYMP"
+   a :string
+  q_33 "D3-SI ACID ONLY"
+   a :string
+  
+  q_34 "D3-SAP ACID ONLY"
+   a :string
+  q_35 "D4-U-%TIME Ph<4"
+   a :string
+  q_36 "D4-S-%TIME Ph<4"
+   a :string
+  q_38 "D4-T-%TIME Ph<4"
+   a :string
+  q_39 "D4-TOTAL RE"
+   a :string
+  q_40 "D4-TOTAL SYMP"
+   a :string
+  q_41 "D4-SI ACID ONLY"
+   a :string
+  q_42 "D4-SAP ACID ONLY"
+   a :string
+  q_43 "Impedance Phenotype",:pick=>:one
+    a_1 "Acid reflux disease (> 2 days)"
+    a_2 "hypersensitive"
+    a_3 "intermittent GER-1 day positive"
+    a_4 "Functional heartburn (4 days neg)"
 
   end
+
 
 end
