@@ -55,12 +55,12 @@ describe Role do
   end
   
   it "should print last name" do
-    Pers::Person.stub!(:find_by_username).and_return(mock(Pers::Person, :last_name => "Smith"))
+    Bcsec.authority.stub!(:find_user).and_return(mock(Bcsec::User, :last_name => "Smith"))
     Factory(:role, :netid => "smithy").last_name.should == "Smith"
   end
 
   it "should print last name, first middle" do
-    Pers::Person.stub!(:find_by_username).and_return(mock(Pers::Person, :last_name => "Smith", :first_name => "John", :middle_name => "Q"))
+    Bcsec.authority.stub!(:find_user).and_return(mock(Bcsec::User, :last_name => "Smith", :first_name => "John", :middle_name => "Q"))
     Factory(:role, :netid => "smithy").last_first_middle.should == "Smith, John Q"
   end
 

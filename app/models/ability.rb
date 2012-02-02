@@ -1,7 +1,7 @@
 class Ability
   include CanCan::Ability
   def initialize(user)
-    if user.permit?(:admin)
+    if user.admin? #user.permit?(:admin)
       can :manage, :all
     else
       #control access for study actions

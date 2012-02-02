@@ -1,11 +1,11 @@
 module SurveyorControllerCustomMethods
   def self.included(base)
-    # base.send :before_filter, :require_user   # AuthLogic
+    base.send :before_filter, :require_user 
     # base.send :before_filter, :login_required  # Restful Authentication
     # base.send :layout, 'surveyor_custom'
-     base.send :include, Bcsec::Rails::SecuredController
+     #base.send :include, Bcsec::Rails::SecuredController
      base.send :layout, 'surveyor'
-     base.send :permit, :user
+     #base.send :permit, :user
   end
 
   # Actions

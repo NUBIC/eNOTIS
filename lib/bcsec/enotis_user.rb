@@ -12,4 +12,11 @@ module Bcsec::EnotisUser
   def netid
     username
   end
+  def admin?
+    ENOTIS_ROLES['admin'].collect{|admin| admin['netid']}.include?(username)
+  end
+
+  def has_system_access?
+    self.admin? || !Role.find_by_netid(username).nil?
+  end
 end

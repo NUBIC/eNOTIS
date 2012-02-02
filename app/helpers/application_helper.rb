@@ -42,7 +42,8 @@ module ApplicationHelper
   def people_info(arr)
     people = [*arr].compact.map do |p|
       # we need the info in static_auth.yml for tests, but Pers::Person is much faster due to a bcsec bug
-      user =  %w(test cucumber hudson).include?(Rails.env) ? Bcsec.authority.find_user(p.netid) : Pers::Person.find_by_username(p.netid)
+      #user =  %w(test cucumber hudson).include?(Rails.env) ? Bcsec.authority.find_user(p.netid) #: Pers::Person.find_by_username(p.netid)
+      user = Bcsec.authority.find_user(p.netid) #: Pers::Person.find_by_username(p.netid)
       content_tag(:span, (user ? user.email ? mail_to(user.email, user.full_name) : user.full_name : p.netid), :title => "Project Role: #{p.project_role}")
     end.uniq.compact
     (people.empty? ? nil : people.join.html_safe)

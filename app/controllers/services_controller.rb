@@ -2,8 +2,9 @@ class ServicesController < ApplicationController
   layout "main"
 
   # Authorization
-  include Bcsec::Rails::SecuredController
-  permit :user, :oversight
+  #include Bcsec::Rails::SecuredController
+  #permit :user, :oversight
+  before_filter :require_user
 
   # Users complained we lost their data because we had this in
   skip_before_filter :verify_authenticity_token

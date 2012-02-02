@@ -29,16 +29,14 @@ config.action_mailer.delivery_method = :test
 EMPI_SERVICE = {:uri => nil, :credentials => nil}
 
 config.after_initialize do
-  require 'pers'
-  ActiveRecord::Base.schemas = {:cc_pers => :cc_pers_hudson_enotis}
   
   Bcsec.configure do
     static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
     enotis = Bcsec::Authorities::Enotis.new
     ui_mode :form
-    authorities static, :pers, enotis
+    authorities static, enotis
     cas_parameters :base_url => "http://fake.cas.example.org"
   end
   # this has to come after Bcsec.configure, which strangely wipes this connection
-  Pers::Base.establish_connection :cc_pers_hudson
+  #Pers::Base.establish_connection :cc_pers_hudson
 end

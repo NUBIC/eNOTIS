@@ -28,13 +28,11 @@ config.action_mailer.delivery_method = :test
 #config.gem 'rspec-rails',      :lib => false, :version => '>=1.3.2' unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
 
 config.after_initialize do
-  require 'pers'
-  ActiveRecord::Base.schemas = {:cc_pers => :cc_pers_test}
   Bcsec.configure do
     static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
     enotis = Bcsec::Authorities::Enotis.new
     ui_mode :form
-    authorities static, :pers, enotis
+    authorities static,enotis
     central '/etc/nubic/bcsec-test.yml'
   end
 end

@@ -34,6 +34,17 @@ class ApplicationController < ActionController::Base
   APP_VERSION = "2.1.0"
 
 
+
+  def require_user
+    unless current_user and current_user.has_system_access?
+      store_location
+      current_user.nil? ? flash[:notice] = "Please login to access this page" : flash[:notice] = "Access Denied"
+      current_user.nil? ? (redirect_to login_url) : (redirect_to '/logout')
+      return false
+    end
+  end
+
+
   def redirect_with_message(path, message_type, message)
     flash[message_type] = message if !message.blank? and !message_type.blank?
     redirect_to path
@@ -62,5 +73,11 @@ class ApplicationController < ActionController::Base
                     
     # Stops the flash appearing when you next refresh the page
     flash.discard
+  end
+
+  private
+
+  def store_location
+    session[:return_to] = request.request_uri
   end
 end

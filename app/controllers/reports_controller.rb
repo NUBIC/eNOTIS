@@ -2,8 +2,9 @@ class ReportsController < ApplicationController
   layout "main"
 
   # Authorization
-  include Bcsec::Rails::SecuredController
-  permit :user
+  #include Bcsec::Rails::SecuredController
+  #permit :user
+  before_filter :require_user
 
   has_view_trail :except => :index
 
