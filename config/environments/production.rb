@@ -30,7 +30,7 @@ config.action_view.cache_template_loading            = true
 config.after_initialize do
   Bcsec.configure do
     enotis = Bcsec::Authorities::Enotis.new
-    authorities :cas,enotis
+    authorities :cas,:netid,enotis
     central '/etc/nubic/bcsec-prod.yml'
   end
 end
