@@ -1,7 +1,7 @@
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 
 When /^I add a subject "([^\"]*)" "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do |first, last, event, date|
-  When %(I follow "Add")
+  step %(I follow "Add")
   fill_in "First name", :with => first
   fill_in "Last name", :with => last
   fill_in "Birth date", :with => "8/7/65"
@@ -14,7 +14,7 @@ When /^I add a subject "([^\"]*)" "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do 
 end
 
 When /^I add a subject "([^"]*)" "([^"]*)" with "([^"]*)" on "([^"]*)" and MRN "([^\"]*)"$/ do |first, last, event, date, mrn|
-  When %(I follow "Add")
+  step %(I follow "Add")
   fill_in "First name", :with => first
   fill_in "Last name", :with => last
   fill_in "Birth date", :with => "8/7/65"
@@ -28,7 +28,7 @@ When /^I add a subject "([^"]*)" "([^"]*)" with "([^"]*)" on "([^"]*)" and MRN "
 end
 
 When /^I add a case number "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do |case_number, event, date|
-  When %(I follow "Add")
+  step %(I follow "Add")
   fill_in "Case number", :with => case_number
   fill_in "Birth date", :with => "8/7/65"
   select "Female", :from => "Gender"
@@ -40,7 +40,7 @@ When /^I add a case number "([^\"]*)" with "([^\"]*)" on "([^\"]*)"$/ do |case_n
 end
 
 When /^I add full information on "([^"]*)" "([^"]*)" with "([^"]*)" on "([^"]*)"$/ do |first, last, event, date|
-  When %(I follow "Add")
+  step %(I follow "Add")
   fill_in "NMH MRN", :with => "G10203040"
   fill_in "NMFF MRN", :with => "Q0293u2"
   fill_in "RIC MRN", :with => "J23023a"
@@ -90,7 +90,14 @@ Then /^I navigate to the edit page for subject "([^\"]*)" "([^\"]*)"$/ do |first
     scope.click_link "Detail"
   end
   click_link "Edit"
+end
 
+Given /^I navigate to the edit page for case "([^"]*)"$/ do |case_number|
+  sid = Involvement.find_by_case_number(case_number).subject.id
+  within ".subject_#{sid}" do |scope|
+    scope.click_link "Detail"
+  end
+  click_link "Edit"
 end
 
 Then /^I remove subject "([^"]*)" "([^"]*)"$/ do |first, last|

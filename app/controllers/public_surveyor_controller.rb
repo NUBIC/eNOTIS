@@ -77,6 +77,11 @@ module PublicSurveyorControllerCustomMethods
       end
   end
   
+  def gi_diaries
+    success = {:status => "success"}
+    render :json => success
+  end
+      # p.gi_diaries               "public/gi_survey/" :conditions => {:method => :put}, :action => "gi_diaries"
   # Paths
   def surveyor_index
     # most of the above actions redirect to this method
