@@ -13,7 +13,7 @@ survey "Bravo pH",:irb_number=>"STU00015205",:active_at=>Time.now,:inactive_at=>
    a_0 "None"
    a_1 "Single Dose PPI"
    a_2 "Double Dose PPI"
-   a_3 "Double Dose PPI"
+   a_3 "> Double Dose PPI"
    a_4 "Hoarseness/sore throat/throat burning"
    a_5 "Cough"
    a_6 "GLobus"
@@ -46,6 +46,7 @@ survey "Bravo pH",:irb_number=>"STU00015205",:active_at=>Time.now,:inactive_at=>
 
   q_9 "% IMPROVE OF HB/CP"
    a :string
+
   q_10 "% IMPROVE OF 1-SYMPT"
    a :string
 
@@ -89,7 +90,7 @@ survey "Bravo pH",:irb_number=>"STU00015205",:active_at=>Time.now,:inactive_at=>
    a :string
   q_29 "D3-S-%TIME Ph<4"
    a :string
-  q_30 "3-T-%TIME Ph<4"
+  q_30 "D3-T-%TIME Ph<4"
    a :string
 
   q_31 "D3-TOTAL RE"

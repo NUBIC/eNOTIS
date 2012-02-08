@@ -6,28 +6,32 @@ survey "iPad™ Feasibility and Satisfaction " ,:irb_number=>'STU00015205',:is_p
         a_2 "Somewhat easy"
         a_3 "Neither difficult or easy"
         a_4 "Somewhat difficult"
-        a_5 "Skipped question"
+        a_5 "Very difficult"
+        a_6 "Skipped question"
 
       q_ipad_2 "How easy was it to use the iPad™ tablet to respond to the questions",:pick=>:one
         a_1 "Very Easy"
         a_2 "Somewhat easy"
         a_3 "Neither difficult or easy"
         a_4 "Somewhat difficult"
-        a_5 "Skipped question"
+        a_5 "Very difficult"
+        a_6 "Skipped question"
 
       q_ipad_3 "How easy was it to navigate with your fingers on the iPad™ tablet?",:pick=>:one
         a_1 "Very Easy"
         a_2 "Somewhat easy"
         a_3 "Neither difficult or easy"
         a_4 "Somewhat difficult"
-        a_5 "Skipped question"
+        a_5 "Very difficult"
+        a_6 "Skipped question"
 
       q_ipad_4 "Was the weight of the iPad™ tablet comfortable for your use?",:pick=>:one
-        a_1 "Very Easy"
-        a_2 "Somewhat easy"
-        a_3 "Neither difficult or easy"
-        a_4 "Somewhat difficult"
-        a_5 "Skipped question"
+        a_1 "Very comfortable"
+        a_2 "Somewhat comfortable"
+        a_3 "Neither comfortable nor uncomfortable"
+        a_4 "Somewhat uncomfortable"
+        a_5 "Very uncomfortable"
+        a_6 "Skipped question"
 
       q_ipad_5 "?",:pick=>:one
         a_1 "Very satisfied"
