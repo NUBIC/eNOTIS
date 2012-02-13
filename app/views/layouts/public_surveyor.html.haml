@@ -4,7 +4,8 @@
   %head
     %title= "eCapture"
     =stylesheet_link_tag("compiled/public_surveyor")
-    //=surveyor_javascripts
+    =surveyor_javascripts
+    =javascript_include_tag "tools/jquery.tools.min","tools/jquery.livequery.min","jquery-ui-1.7.2.min","jquery.timepicker"
   %body
     #container
       #header
