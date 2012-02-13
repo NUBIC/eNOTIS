@@ -7,12 +7,12 @@ survey "GI Diaries", :irb_number=>"STU00039540" do
       a "regurgitation"
       a "both"
     
-      q_morning_severity "How severe were your symptoms?", :pick => :one
+      q_morning_severity "How severe were your symptoms?", :pick => :one, :is_mandatory => false
       a "mild"
       a "moderate"
       a "severe"
     
-      q_morning_sleep "Did symptoms interfere with your sleep?", :pick => :one
+      q_morning_sleep "Did symptoms interfere with your sleep?", :pick => :one, :is_mandatory => false
       a "yes"
       a "no"
     
@@ -26,7 +26,7 @@ survey "GI Diaries", :irb_number=>"STU00039540" do
       a "regurgitation"
       a "both"
     
-      q_evening_severity "How severe were your symptoms?", :pick => :one
+      q_evening_severity "How severe were your symptoms?", :pick => :one, :is_mandatory => false
       a "mild"
       a "moderate"
       a "severe"

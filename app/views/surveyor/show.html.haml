@@ -30,6 +30,7 @@
       #header_text
         .survey_title= @survey.title
     -@survey.sections.each do |section|
+      - @section = section
       - div_for section, :class => section.custom_class do
         #section_header
           .previous_section= ""
