@@ -92,12 +92,11 @@ Then /^I navigate to the edit page for subject "([^\"]*)" "([^\"]*)"$/ do |first
   click_link "Edit"
 end
 
-Given /^I navigate to the edit page for case "([^"]*)"$/ do |case_number|
+Given /^I navigate to the detail page for case "([^"]*)"$/ do |case_number|
   sid = Involvement.find_by_case_number(case_number).subject.id
   within ".subject_#{sid}" do |scope|
     scope.click_link "Detail"
   end
-  click_link "Edit"
 end
 
 Then /^I remove subject "([^"]*)" "([^"]*)"$/ do |first, last|
