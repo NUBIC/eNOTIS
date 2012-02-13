@@ -21,5 +21,12 @@ describe ResponseSet do
     response_set.mandatory_questions_complete?.should == true
     response_set.complete_with_validation!.should == true
   end
- 
+  it "should accept json responses from gi diaries" do
+    `rake surveyor FILE=surveys/STU00039540/gi_diaries.rb`
+    params = [{"started_at"=>"2012-02-08 09:00:00", "antacids"=>"0", "symptoms"=>"none", "severity"=>"", "completed_at"=>"2012-02-08 09:01:01", "survey"=>"morning", "sleep"=>""}, {"started_at"=>"2012-02-08 21:00:00", "antacids"=>"0", "symptoms"=>"none", "severity"=>"", "completed_at"=>"2012-02-08 21:01:01", "survey"=>"evening"}]
+    survey = Survey.find_by_title("GI Diaries")
+    response_set = ResponseSet.create(:survey => survey)
+    response_set.gi_responses = params
+    response_set.should have(4).responses
+  end
 end

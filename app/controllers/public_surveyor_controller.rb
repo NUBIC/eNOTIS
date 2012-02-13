@@ -78,7 +78,7 @@ module PublicSurveyorControllerCustomMethods
   end
   
   def gi_diaries
-    logger.info params.inspect
+    # logger.info params.inspect
     if params[:case_number].blank?
       render :json => {:status => "failure", :message => "No case number provided"}
     elsif params[:response_sets].blank?
@@ -87,17 +87,19 @@ module PublicSurveyorControllerCustomMethods
       study = Study.find_by_irb_number("STU00039540")
       if study && inv = study.involvements.find_by_case_number(params[:case_number])
         survey = study.surveys.find_by_title("GI Diaries")
-        ResponseSet.create(:involvement => inv, :survey => survey)
+        rs = ResponseSet.create(:involvement => inv, :survey => survey)
+        rs.gi_responses = params[:responses_sets]
         render :json => {:status => "success", :message => "Created GI Diaries form for case #{params[:case_number]}"}
       else
         survey = study.surveys.find_by_title("GI Diaries")
-        ResponseSet.create(:involvement => inv, :survey => survey)
+        rs = ResponseSet.create(:involvement => inv, :survey => survey)
+        rs.gi_responses = params[:responses_sets]
         inv = study.involvements.create(:case_number => params[:case_number], :subject => Subject.create, :gender => "Unknown or Not Reported", :ethnicity => "Unknown or Not Reported", :race => "Unknown or Not Reported")
         render :json => {:status => "success", :message => "Created case and GI Diaries form for case #{params[:case_number]}"}
       end
     end
   end
-      # p.gi_diaries               "public/gi_survey/" :conditions => {:method => :put}, :action => "gi_diaries"
+
   # Paths
   def surveyor_index
     # most of the above actions redirect to this method
