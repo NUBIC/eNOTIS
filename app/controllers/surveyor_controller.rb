@@ -64,7 +64,7 @@ module SurveyorControllerCustomMethods
       respond_to do |format|
         format.html do
           flash[:notice] = t('surveyor.unable_to_update_survey') unless saved
-          redirect_to :action => "edit", :anchor => anchor_from(params[:section]), :params => {:section => section_id_from(params[:section])}
+          redirect_to :action => "edit", :anchor => anchor_from(params[:section]), :params => {:section => section_id_from(params[:section]),:response_set_code=>@response_set.access_code}
         end
         format.js do
           ids, remove, question_ids = {}, {}, []
