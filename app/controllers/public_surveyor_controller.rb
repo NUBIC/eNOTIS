@@ -91,11 +91,7 @@ module PublicSurveyorControllerCustomMethods
         rs.gi_responses = params[:response_sets]
         render :json => {:status => "success", :message => "Created GI Diaries form for case #{params[:case_number]}"}
       else
-        inv = study.involvements.create(:case_number => params[:case_number], :subject => Subject.create, :gender => "Unknown or Not Reported", :ethnicity => "Unknown or Not Reported", :race => "Unknown or Not Reported")
-        survey = study.surveys.find_by_title("GI Diaries")
-        rs = ResponseSet.create(:involvement => inv, :survey => survey)
-        rs.gi_responses = params[:response_sets]
-        render :json => {:status => "success", :message => "Created case and GI Diaries form for case #{params[:case_number]}"}
+        render :json => {:status => "failure", :message => "Case #{params[:case_number]} does not exist"}
       end
     end
   end

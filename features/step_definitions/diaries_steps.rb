@@ -29,8 +29,12 @@ Then /^I should receive a JSON success with message "([^"]*)"$/ do |message|
   @response.body.should == '{"status":"success","message":"' + message + '"}'
 end
 
-Then /^I should receive a JSON error "([^"]*)"$/ do |message|
+Then /^I should receive a JSON error with message "([^"]*)"$/ do |message|
   @response.body.should == '{"status":"failure","message":"' + message + '"}'
+end
+
+Given /^a case "([^"]*)" on "([^"]*)"$/ do |case_number, irb_number|
+  Factory(:involvement, :case_number => case_number, :study => Study.find_by_irb_number(irb_number))
 end
 
 Given /^I upload a blank JSON response set for case "([^"]*)"$/ do |case_number|
