@@ -4,6 +4,6 @@ class Score < ActiveRecord::Base
    
 
   validates_presence_of :value
-
+  validates_uniqueness_of :response_set_id, :scope => :score_configuration_id
 
 end
