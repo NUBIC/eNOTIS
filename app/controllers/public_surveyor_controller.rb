@@ -77,6 +77,25 @@ module PublicSurveyorControllerCustomMethods
       end
   end
   
+  def gi_diaries
+    # logger.info params.inspect
+    if params[:case_number].blank?
+      render :json => {:status => "failure", :message => "No case number provided"}
+    elsif params[:response_sets].blank?
+      render :json => {:status => "failure", :message => "No responses provided"}
+    else
+      study = Study.find_by_irb_number("STU00039540")
+      if study && inv = study.involvements.find_by_case_number(params[:case_number])
+        survey = study.surveys.find_by_title("GI Diaries")
+        rs = ResponseSet.create(:involvement => inv, :survey => survey)
+        rs.gi_responses = params[:response_sets]
+        render :json => {:status => "success", :message => "Created GI Diaries form for case #{params[:case_number]}"}
+      else
+        render :json => {:status => "failure", :message => "Case #{params[:case_number]} does not exist"}
+      end
+    end
+  end
+
   # Paths
   def surveyor_index
     # most of the above actions redirect to this method

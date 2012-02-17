@@ -2,11 +2,12 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.with_options :controller=>'public_surveyor' do |p|
-    p.public_available_surveys "public/surveys/",                      :conditions => {:method=>:get},:action=>"index"                  
-    p.take_public_survey       "public/surveys/:survey_code",                            :conditions => {:method => :get}, :action => "new"                  # Only POST of survey to create
-    p.create_my_public_survey  "public/surveys/:survey_code",                       :conditions => {:method => :post}, :action => "create"
-    p.edit_my_public_survey    "public/surveys/:survey_code/take",    :conditions => {:method => :get}, :action => "edit"                     # GET editable survey 
-    p.update_my_public_survey  "public/surveys/:survey_code/:response_set_code",         :conditions => {:method => :put}, :action => "update"                   # PUT edited survey 
+    p.public_available_surveys "public/surveys/",                                 :conditions => {:method=>:get},:action=>"index"                  
+    p.take_public_survey       "public/surveys/:survey_code",                     :conditions => {:method => :get}, :action => "new"        # Only POST of survey to create
+    p.create_my_public_survey  "public/surveys/:survey_code",                     :conditions => {:method => :post}, :action => "create"
+    p.edit_my_public_survey    "public/surveys/:survey_code/take",                :conditions => {:method => :get}, :action => "edit"       # GET editable survey 
+    p.update_my_public_survey  "public/surveys/:survey_code/:response_set_code",  :conditions => {:method => :put}, :action => "update"     # PUT edited survey 
+    p.gi_diaries               "public/gi_survey",                                :conditions => {:method => :post}, :action => "gi_diaries"
   end
   
   map.login       '/login', :conditions => {:method => :get}, :controller => 'public', :action => 'index'

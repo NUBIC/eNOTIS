@@ -53,4 +53,33 @@ class ResponseSet < ActiveRecord::Base
     def next
       survey.survey_group.nil? ? nil : survey.survey_group.next(self)
     end
+    
+    def gi_responses=(params)
+      morning = 0
+      evening = 0
+      params.each do |hash|
+        repeater = hash["survey"]
+        if repeater == "morning"
+          i = morning
+          morning += 1
+        elsif repeater == "evening"
+          i = evening
+          evening += 1
+        end
+        %w(symptoms severity sleep).each do |question|
+          # debugger
+          unless hash[question].blank?
+            q = self.survey.sections.first.questions.find_by_reference_identifier("#{repeater}_#{question}")
+            a = q.answers.find_by_text(hash[question])
+            self.responses.create(:question => q, :answer => a, :survey_section_id => self.survey.sections.first.id, :created_at => hash["started_at"], :updated_at => hash["completed_at"], :response_group => i)
+          end
+        end
+        unless hash["antacids"].blank?
+          # debugger
+          q = self.survey.sections.first.questions.find_by_reference_identifier("#{repeater}_antacids")
+          a = q.answers.first
+          self.responses.create(:question => q, :answer => a, :survey_section_id => self.survey.sections.first.id, :integer_value => hash["antacids"], :created_at => hash["started_at"], :updated_at => hash["completed_at"], :response_group => i)
+        end
+      end
+    end
 end

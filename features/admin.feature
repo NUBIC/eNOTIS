@@ -58,10 +58,3 @@ Feature: Developer admin access
     Then I should not see "back to eNOTIS"
     Then I should be on the studies page
 
-  Scenario: A temp user should be able to see study uploads
-    Given I log in as "tempi" on study "STU00144"
-    And a study "Vitamin C and concentration" with id "STU001248" and irb_status "Approved"
-    When I go to the study page for id "STU001248"
-    And I navigate to the "subjects" tab
-    Then I should see "Bulk Import"
-    #And I should be on the study page for id "STU001248"

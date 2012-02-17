@@ -2,8 +2,9 @@ class EventsController < ApplicationController
 
   layout 'main'
   # Authorization
-  include Bcsec::Rails::SecuredController
-  permit :user
+  #include Bcsec::Rails::SecuredController
+  #permit :user
+  before_filter :require_user
 
   # Auditing
   has_view_trail 

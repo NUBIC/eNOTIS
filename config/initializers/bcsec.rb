@@ -10,7 +10,7 @@ Bcsec.configure do
   api_mode :cas_proxy
 
   # The portal to which this application belongs.  Optional.
-  portal :eNOTIS # should match PORTAL in lib/users_to_pers.rb
+  #portal :eNOTIS # should match PORTAL in lib/users_to_pers.rb
 end
 # to prevent lots of logging by bcaudit. bcaudit is neede, though, to log who is creating objects in cc_pers
 Bcaudit::Configuration.add_audit_logger(lambda{|x|})

@@ -34,7 +34,7 @@ gem 'will_paginate', '~> 2.3'
 
 # Authentication
 gem "bcdatabase", '~> 1.0.6'
-gem "bcsec", '~>2.0'
+gem "bcsec", '2.0.6'
 gem "bcsec-rails", '~> 2.0'
 
 # Authorization
@@ -56,20 +56,10 @@ end
 gem "surveyor", '0.20.0'
 
 # # Debugging
-# group :development do
-#   gem "ruby-debug-base"
-#   gem "ruby-debug"
-# end
+group :development do
+  gem "ruby-debug"
+end
 
-# Resque
-#gem 'SystemTimer'
-#gem 'redis' , '~> 2.0.0'
-#gem 'resque', '~> 1.10.0'
-#gem 'resque-jobs-per-fork', '~> 0.4.0'
-#gem 'resque-scheduler', '~> 1.9.0'
-
-# Whenever
-#gem 'whenever', :require => false
 
 # Testing
 group :test, :cucumber, :hudson do
@@ -77,12 +67,10 @@ group :test, :cucumber, :hudson do
   gem 'cucumber'
   gem "rspec", "~> 1.3.0"
   gem "rspec-rails", "~> 1.3.0"
-  #gem "resque_spec", '~> 0.2.0', :require => nil
   gem "cucumber-rails", "~> 0.3.0"
   gem "webrat", "~> 0.6.0"
   gem "database_cleaner", "~> 0.0"
-  gem "activerecord-oracle_enhanced-adapter"
-  gem "ruby-oci8"
+  gem 'launchy','0.3.7'
 end
 
 gem "ci_reporter", "~> 1.6.0", :group => [:hudson]

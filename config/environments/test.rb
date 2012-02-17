@@ -24,12 +24,10 @@ config.action_mailer.delivery_method = :test
 
 
 config.after_initialize do
-  require 'pers'
-  ActiveRecord::Base.schemas = {:cc_pers => :cc_pers_test}
   Bcsec.configure do
     static = Bcsec::Authorities::Static.from_file(File.expand_path("../../static_auth.yml", __FILE__))
     enotis = Bcsec::Authorities::Enotis.new
-    authorities static, :pers, enotis
+    authorities static,enotis
     central '/etc/nubic/bcsec-test.yml'
   end
 end

@@ -23,7 +23,7 @@ Given /^a READONLY study "([^\"]*)" with id "([^\"]*)" and irb_status "([^\"]*)"
 end
 
 Given /^I log in as "([^\"]*)" on study "([^\"]*)"$/ do |netid, irb_number|
-  Given %("#{netid}" is on study "#{irb_number}")
+  step %("#{netid}" is on study "#{irb_number}")
   visit "/login"
   fill_in :username, :with => netid
   fill_in :password, :with => "secret"

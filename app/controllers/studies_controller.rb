@@ -3,8 +3,7 @@ class StudiesController < ApplicationController
   require 'array'
 
   # Authorization
-  include Bcsec::Rails::SecuredController
-  permit :user
+  before_filter :require_user
 
   # Auditing
   has_view_trail :except => :index
@@ -12,9 +11,6 @@ class StudiesController < ApplicationController
   # Public instance methods (actions)
   def index
     @title = "Studies"
-    # raise "testing exception notifier - yoon" # http://weblog.jamisbuck.org/2007/3/7/raising-the-right-exception
-
-    # json datatables is causing issues with IE in some cases, and optimizes a problem that we don't really have (slow "my studies" page).
 
     respond_to do |format|
       format.html do

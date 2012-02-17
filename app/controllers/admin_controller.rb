@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
-  include Bcsec::Rails::SecuredController  
+  #include Bcsec::Rails::SecuredController  
   require_dependency 'activity'
-  before_filter :require_admin
+ before_filter :require_admin
   
   # Public instance methods (actions)
   def index
@@ -36,6 +36,6 @@ class AdminController < ApplicationController
   private
   
   def require_admin
-    redirect_to studies_path unless current_user.permit? :admin
+    raise CanCan::AccessDenied unless current_user.admin?
   end
 end
