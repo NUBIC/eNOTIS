@@ -21,7 +21,7 @@ Then /^I should be redirected to (.+?)$/ do |page_name|
   request.headers['HTTP_REFERER'].should_not be_nil
   request.headers['HTTP_REFERER'].should_not == request.request_uri
 
-  Then "I should be on #{page_name}"
+  step "I should be on #{page_name}"
 end
 
 When /^I visit the roles page for "([^"]*)"$/ do |netid|
@@ -29,7 +29,7 @@ When /^I visit the roles page for "([^"]*)"$/ do |netid|
 end
 
 When /^I export a PI study report for "([^"]*)"$/ do |year|
-  When "I go to the hub page"
+  step "I go to the hub page"
   select year, :from => "Year"
   click_button("Export PI Study Report")
 end

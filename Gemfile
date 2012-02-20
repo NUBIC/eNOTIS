@@ -34,8 +34,8 @@ gem 'will_paginate', '~> 2.3'
 
 # Authentication
 gem "bcdatabase", '~> 1.0.6'
-gem "bcsec", '2.0.6'
-gem "bcsec-rails", '~> 2.0'
+gem "bcsec","2.0.6"
+gem "bcsec-rails",'~>2.0.0'
 
 # Authorization
 gem "cancan"
