@@ -33,7 +33,7 @@ survey "iPad™ Feasibility and Satisfaction " ,:irb_number=>'STU00015205',:is_p
         a_5 "Very uncomfortable"
         a_6 "Skipped question"
 
-      q_ipad_5 "?",:pick=>:one
+      q_ipad_5 "In general, how satisfied were you with using the iPad™ to report your symptoms?",:pick=>:one
         a_1 "Very satisfied"
         a_2 "Satisfied"
         a_3 "Neither satisfied or dissatisfied"
