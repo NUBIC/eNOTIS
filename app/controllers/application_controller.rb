@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
 
   #
   # Application version
-  APP_VERSION = "2.1.2"
+  APP_VERSION = "2.2.0"
 
 
 
