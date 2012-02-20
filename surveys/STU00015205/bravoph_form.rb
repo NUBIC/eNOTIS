@@ -44,7 +44,13 @@ survey "Bravo pH",:irb_number=>"STU00015205",:active_at=>Time.now,:inactive_at=>
     a_6 "globus"
     a_77 "other"
 
-  q_9 "% IMPROVE OF HB/CP"
+  q_9a "% IMPROVE OF HB"
+   a :string
+
+  q_9b "% IMPROVE OF CP"
+   a :string
+
+ q_9c "% Improvement of regurgitation"
    a :string
 
   q_10 "% IMPROVE OF 1-SYMPT"
