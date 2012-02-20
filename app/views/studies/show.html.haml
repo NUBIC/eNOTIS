@@ -12,7 +12,7 @@
       = "donut('race', #{@race_stats.map(&:last).inspect}, #{@race_stats.map(&:first).inspect});".html_safe
       = "donut('ethnicity', #{@ethnicity_stats.map(&:last).inspect}, #{@ethnicity_stats.map(&:first).inspect});".html_safe
       = "dots('dotchart', 'All accruals by month and weekday', #{@dot_stats});".html_safe
-      });
+    });
   %script{:type => "text/javascript"}
     $(document).ready(function(){
     $('#study_information').hide(10);
