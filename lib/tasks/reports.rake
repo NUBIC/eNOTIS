@@ -85,7 +85,7 @@ namespace :reports do
         month_range.each do |month_index|
           start_date = now.advance(:months => -month_index) +1 
           end_date = now.advance(:months => 1-month_index)
-          accrual_array << study.accrual_during_period(start_date,end_date)
+          accrual_array << study.consents_that_occurred_during_period(start_date,end_date)
         end
 
         STDOUT.flush
@@ -121,4 +121,90 @@ namespace :reports do
       puts "done"
     end
   end
+
+  desc "generate eNOTIS weekly accrual report"
+  task :enotis_weekly_accrual => :environment do
+    studies = Study.has_medical_services
+    now = Date.today
+    weekly_range=(1..26)
+  
+    cols = ["study_id", "irb_number", "irb_status", "name", "title", "accrual_goal"]
+    file_name = RAILS_ROOT + "/tmp/weekly_accrual_#{Time.now.strftime("%Y-%m-%d")}.csv"
+    puts "Writing file to " + file_name
+    FasterCSV.open(file_name, "w") do |csv|
+      csv <<  cols + ["approved_date","current_accrual"] + weekly_range.map{|i| now.advance(:weeks => -i).to_date}
+      studies.each do |study|
+        accrual_array = [((study.approved_date.blank?) ? nil : study.approved_date.to_date)]
+        accrual_array << [study.accrual]
+        weekly_range.each do |week_index|
+          start_date = now.advance(:weeks => -week_index) +1 
+          end_date = now.advance(:weeks => 1-week_index)
+          accrual_array << study.consents_that_occurred_during_period(start_date,end_date)
+        end
+
+        STDOUT.flush
+        csv << cols.map{|c| study[c]} + accrual_array
+      end
+      puts "done"
+    end
+  end
+
+  desc "generate eNOTIS weekly usage report"
+  task :enotis_weekly_usage => :environment do
+    studies = Study.has_medical_services
+    now = Date.today
+    weekly_range=(1..26)
+  
+    cols = ["study_id", "irb_number", "irb_status", "name", "title", "accrual_goal"]
+    file_name = RAILS_ROOT + "/tmp/weekly_usage_#{Time.now.strftime("%Y-%m-%d")}.csv"
+    puts "Writing file to " + file_name
+    FasterCSV.open(file_name, "w") do |csv|
+      csv <<  cols + ["approved_date","current_accrual"] + weekly_range.map{|i| now.advance(:weeks => -i).to_date}
+      studies.each do |study|
+        accrual_array = [((study.approved_date.blank?) ? nil : study.approved_date.to_date)]
+        accrual_array << [study.accrual]
+        weekly_range.each do |week_index|
+          start_date = now.advance(:weeks => -week_index) +1
+          end_date = now.advance(:weeks => 1-week_index)
+          accrual_array << study.entries_during_period(start_date,end_date)
+        end
+
+        STDOUT.flush
+        csv << cols.map{|c| study[c]} + accrual_array
+      end
+      puts "done"
+    end
+  end
+
+
+  desc "generate eNOTIS event type report"
+  task :enotis_monthly_events => :environment do
+    studies = Study.has_medical_services
+    now = Date.today
+    year_range=(1..4).to_a.reverse
+    
+    cols = ["name", "type"]
+    all_events = EventType.all(:select=>'Distinct name', :group=>'name')
+    file_name = RAILS_ROOT + "/tmp/events_by_year_#{Time.now.strftime("%Y-%m-%d")}.csv"
+    puts "Writing file to " + file_name
+    FasterCSV.open(file_name, "w") do |csv|
+      csv <<  cols + ["event_name","current_accrual"] + year_range.map{|i| now.advance(:years => -i).to_date.to_s}
+      all_events.each do |event|
+        event_name = event.name
+        activity_array = [event_name, 'event']
+        #event_ids = EventType.all(:select=>'id', :conditions=>["name = :name", {:name=>event_name}]).map(&:id)
+        month_range.each do |year_index|
+          start_date = now.advance(:years => -year_index) +1
+          end_date = now.advance(:years => 1-year_index)
+          
+          activity_array << InvolvementEvent.events_that_occurred_during_period(event_name, start_date,end_date).count
+        end
+
+        STDOUT.flush
+        csv << activity_array
+      end
+      puts "done"
+    end
+  end
+
 end
