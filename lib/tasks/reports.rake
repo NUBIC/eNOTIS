@@ -85,7 +85,7 @@ namespace :reports do
         month_range.each do |month_index|
           start_date = now.advance(:months => -month_index) +1 
           end_date = now.advance(:months => 1-month_index)
-          accrual_array << study.consents_that_occurred_during_period(start_date,end_date)
+          accrual_array << study.accrual_during_period(start_date,end_date)
         end
 
         STDOUT.flush
@@ -139,7 +139,7 @@ namespace :reports do
         weekly_range.each do |week_index|
           start_date = now.advance(:weeks => -week_index) +1 
           end_date = now.advance(:weeks => 1-week_index)
-          accrual_array << study.consents_that_occurred_during_period(start_date,end_date)
+          accrual_array << study.accrual_during_period(start_date,end_date)
         end
 
         STDOUT.flush
