@@ -3,7 +3,7 @@ survey "Impedence",:irb_number=>"STU00015205",:active_at=>Time.now,:inactive_at=
   section "Main" do 
     question_1 "INITIALS"
       a :string
-  question_2 "pH-mil #"
+  question_2 "pH-MII number"
   a :string
   question_3 "Date of Procedure"
   a :date
@@ -77,9 +77,9 @@ survey "Impedence",:irb_number=>"STU00015205",:active_at=>Time.now,:inactive_at=
 
   q_24 "Impedance Phenotype",:pick=>:one
 
-    a_1 "persistent acid"
-    a_2 "hypersensitive"
-    a_3 "functional overlap"
+    a_1 "Persistent acid"
+    a_2 "Hypersensitive"
+    a_3 "Functional overlap"
     a_4 "Functional heartburn"
 
   end

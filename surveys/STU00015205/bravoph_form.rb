@@ -14,10 +14,9 @@ survey "Bravo pH",:irb_number=>"STU00015205",:active_at=>Time.now,:inactive_at=>
    a_1 "Single Dose PPI"
    a_2 "Double Dose PPI"
    a_3 "> Double Dose PPI"
-   a_4 "Hoarseness/sore throat/throat burning"
-   a_5 "Cough"
-   a_6 "GLobus"
-   a_7 "Other"
+   a_4 "PPI + H2 blocker"
+   a_5 "H2 blocker only"
+   a_6 "Antacids"
 
   
 
