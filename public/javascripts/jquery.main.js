@@ -292,7 +292,7 @@ $(document).ready(function() {
     "aoColumns": [null,{"sType":"date"},null,null],
     "bPaginate" : false,
     "aaSorting": [[ 1, "desc" ]],
-    "oLanguage": {"sZeroRecords": "<p><strong>No forms yet - click 'Add' to get started. </strong></p>"}
+    "oLanguage": {"sZeroRecords": "<p><strong>No events yet - click 'Add' to get started. </strong></p>"}
   });});
 
   //study forms datatable
