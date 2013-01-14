@@ -1,2 +1,2 @@
 rvm use ree
-rvm_gemset_create_on_use_flag=1; rvm gemset use enotis
+rvm_gemset_create_on_use_flag=1; rvm gemset use enotis_publics
